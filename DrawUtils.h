@@ -20,6 +20,4 @@
 
 + (void) draw1PxStroke:(CGContextRef)context startPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint color:(CGColorRef) color;
 
-+ (CGRect) rectPercent:(CGRect)rect startX:(float)sx startY:(float)sy percentWidth:(float)pw percentHeight:(float)ph;
-
 @end

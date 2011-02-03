@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "PlaceHolderView.h"
 #import "DrawUtils.h"
+#import "LayoutUtils.h"
 
 #pragma mark -
 #pragma mark Private Interface
@@ -89,7 +90,7 @@
 	// Put iPos logo on the screen
 	
 	// Login entry
-	CGRect loginFrame = [DrawUtils rectPercent:[containerView frame] startX:0.0f startY:60.0f percentWidth:100.0f percentHeight:25.0f];
+	CGRect loginFrame = [LayoutUtils rectPercent:[containerView frame] startX:0.0f startY:60.0f percentWidth:100.0f percentHeight:25.0f];
 	
 	self.loginEntryView = [[UITableView alloc] initWithFrame:loginFrame style:UITableViewStyleGrouped];
 	loginEntryView.delegate = self;
