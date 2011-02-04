@@ -28,7 +28,6 @@
 		D61C3BDF12FC9CB0003C3A47 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61C3BDE12FC9CB0003C3A47 /* SystemConfiguration.framework */; };
 		D61C3BE112FC9CBE003C3A47 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D61C3BE012FC9CBE003C3A47 /* MobileCoreServices.framework */; };
 		D61C3BE312FC9CD0003C3A47 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D61C3BE212FC9CD0003C3A47 /* libz.1.2.3.dylib */; };
-		D61C3C1012FCA036003C3A47 /* SessionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C0F12FCA036003C3A47 /* SessionInfo.m */; };
 		D61C3C3212FCA530003C3A47 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3112FCA530003C3A47 /* Customer.m */; };
 		D61C3C3512FCA535003C3A47 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3412FCA535003C3A47 /* Order.m */; };
 		D61C3C3A12FCA55D003C3A47 /* ManagerApprovalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3912FCA55D003C3A47 /* ManagerApprovalInfo.m */; };
@@ -41,9 +40,6 @@
 		D62853D512FB9D090024228B /* CXMLNode_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D62853D312FB9D090024228B /* CXMLNode_CreationExtensions.m */; };
 		D64B7E3612F9D8FD006AB141 /* SampleUnitTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D64B7E3512F9D8FD006AB141 /* SampleUnitTestCase.m */; };
 		D64B7EC112F9DFF5006AB141 /* iPOSServiceIntTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */; };
-		D69BEFEE12F9C9CA0035D358 /* iPOSServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D69BEFED12F9C9CA0035D358 /* iPOSServiceImpl.m */; };
-		D69BEFF512F9CA510035D358 /* iPOSServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D69BEFF412F9CA510035D358 /* iPOSServiceMock.m */; };
-		D69BEFF812F9CB450035D358 /* InventoryServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D69BEFF712F9CB450035D358 /* InventoryServiceImpl.m */; };
 		D6AE9E0C12FB956200ABD6F0 /* CXHTMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AE9DF312FB956200ABD6F0 /* CXHTMLDocument.m */; };
 		D6AE9E0D12FB956200ABD6F0 /* CXMLDocument_PrivateExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AE9DF512FB956200ABD6F0 /* CXMLDocument_PrivateExtensions.m */; };
 		D6AE9E0E12FB956200ABD6F0 /* CXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AE9DF712FB956200ABD6F0 /* CXMLDocument.m */; };
@@ -54,10 +50,14 @@
 		D6AE9E1312FB956200ABD6F0 /* CXMLNode_PrivateExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AE9E0112FB956200ABD6F0 /* CXMLNode_PrivateExtensions.m */; };
 		D6AE9E1412FB956200ABD6F0 /* CXMLNode_XPathExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AE9E0312FB956200ABD6F0 /* CXMLNode_XPathExtensions.m */; };
 		D6AE9E1512FB956200ABD6F0 /* CXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AE9E0512FB956200ABD6F0 /* CXMLNode.m */; };
-		D6C63BB612F9D231002DC254 /* InventoryServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D69BEFFA12F9CB600035D358 /* InventoryServiceMock.m */; };
+		D6BCD40112FCB3D80029F4B2 /* InventoryServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3F712FCB3D80029F4B2 /* InventoryServiceImpl.m */; };
+		D6BCD40212FCB3D80029F4B2 /* InventoryServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3F912FCB3D80029F4B2 /* InventoryServiceMock.m */; };
+		D6BCD40312FCB3D80029F4B2 /* iPOSFacade.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FB12FCB3D80029F4B2 /* iPOSFacade.m */; };
+		D6BCD40412FCB3D80029F4B2 /* iPOSServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */; };
+		D6BCD40512FCB3D80029F4B2 /* iPOSServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD40012FCB3D80029F4B2 /* iPOSServiceMock.m */; };
+		D6BCD40812FCB3F70029F4B2 /* SessionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */; };
 		D6CAA3CD12FA416C00EC1BEB /* libLineaSDK_arm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6CAA3CA12FA416C00EC1BEB /* libLineaSDK_arm.a */; };
 		D6CAA3CE12FA416C00EC1BEB /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6CAA3CB12FA416C00EC1BEB /* libLineaSDK.a */; };
-		D6F796A412F9FFBD00B467CA /* iPOSFacade.m in Sources */ = {isa = PBXBuildFile; fileRef = D6F796A312F9FFBD00B467CA /* iPOSFacade.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,8 +119,6 @@
 		D61C3BDE12FC9CB0003C3A47 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D61C3BE012FC9CBE003C3A47 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		D61C3BE212FC9CD0003C3A47 /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
-		D61C3C0E12FCA036003C3A47 /* SessionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionInfo.h; sourceTree = "<group>"; };
-		D61C3C0F12FCA036003C3A47 /* SessionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionInfo.m; sourceTree = "<group>"; };
 		D61C3C3012FCA530003C3A47 /* Customer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Customer.h; sourceTree = "<group>"; };
 		D61C3C3112FCA530003C3A47 /* Customer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Customer.m; sourceTree = "<group>"; };
 		D61C3C3312FCA535003C3A47 /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
@@ -149,16 +147,6 @@
 		D64B7EB112F9DFA7006AB141 /* IntegrationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IntegrationTests-Info.plist"; sourceTree = "<group>"; };
 		D64B7EBF12F9DFF5006AB141 /* iPOSServiceIntTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSServiceIntTestCase.h; sourceTree = "<group>"; };
 		D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPOSServiceIntTestCase.m; sourceTree = "<group>"; };
-		D69BEFE512F9C70E0035D358 /* iPOSService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSService.h; sourceTree = "<group>"; };
-		D69BEFE612F9C7210035D358 /* InventoryService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryService.h; sourceTree = "<group>"; };
-		D69BEFEC12F9C9CA0035D358 /* iPOSServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSServiceImpl.h; sourceTree = "<group>"; };
-		D69BEFED12F9C9CA0035D358 /* iPOSServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPOSServiceImpl.m; sourceTree = "<group>"; };
-		D69BEFF312F9CA510035D358 /* iPOSServiceMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSServiceMock.h; sourceTree = "<group>"; };
-		D69BEFF412F9CA510035D358 /* iPOSServiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPOSServiceMock.m; sourceTree = "<group>"; };
-		D69BEFF612F9CB450035D358 /* InventoryServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryServiceImpl.h; sourceTree = "<group>"; };
-		D69BEFF712F9CB450035D358 /* InventoryServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryServiceImpl.m; sourceTree = "<group>"; };
-		D69BEFF912F9CB600035D358 /* InventoryServiceMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryServiceMock.h; sourceTree = "<group>"; };
-		D69BEFFA12F9CB600035D358 /* InventoryServiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryServiceMock.m; sourceTree = "<group>"; };
 		D6AE9DF212FB956200ABD6F0 /* CXHTMLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXHTMLDocument.h; sourceTree = "<group>"; };
 		D6AE9DF312FB956200ABD6F0 /* CXHTMLDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXHTMLDocument.m; sourceTree = "<group>"; };
 		D6AE9DF412FB956200ABD6F0 /* CXMLDocument_PrivateExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXMLDocument_PrivateExtensions.h; sourceTree = "<group>"; };
@@ -180,14 +168,26 @@
 		D6AE9E0412FB956200ABD6F0 /* CXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXMLNode.h; sourceTree = "<group>"; };
 		D6AE9E0512FB956200ABD6F0 /* CXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXMLNode.m; sourceTree = "<group>"; };
 		D6AE9E0912FB956200ABD6F0 /* TouchXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchXML.h; sourceTree = "<group>"; };
+		D6BCD3F512FCB3D80029F4B2 /* InventoryService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryService.h; path = Classes/InventoryService.h; sourceTree = "<group>"; };
+		D6BCD3F612FCB3D80029F4B2 /* InventoryServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryServiceImpl.h; path = Classes/InventoryServiceImpl.h; sourceTree = "<group>"; };
+		D6BCD3F712FCB3D80029F4B2 /* InventoryServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InventoryServiceImpl.m; path = Classes/InventoryServiceImpl.m; sourceTree = "<group>"; };
+		D6BCD3F812FCB3D80029F4B2 /* InventoryServiceMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryServiceMock.h; path = Classes/InventoryServiceMock.h; sourceTree = "<group>"; };
+		D6BCD3F912FCB3D80029F4B2 /* InventoryServiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InventoryServiceMock.m; path = Classes/InventoryServiceMock.m; sourceTree = "<group>"; };
+		D6BCD3FA12FCB3D80029F4B2 /* iPOSFacade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPOSFacade.h; path = Classes/iPOSFacade.h; sourceTree = "<group>"; };
+		D6BCD3FB12FCB3D80029F4B2 /* iPOSFacade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPOSFacade.m; path = Classes/iPOSFacade.m; sourceTree = "<group>"; };
+		D6BCD3FC12FCB3D80029F4B2 /* iPOSService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPOSService.h; path = Classes/iPOSService.h; sourceTree = "<group>"; };
+		D6BCD3FD12FCB3D80029F4B2 /* iPOSServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPOSServiceImpl.h; path = Classes/iPOSServiceImpl.h; sourceTree = "<group>"; };
+		D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPOSServiceImpl.m; path = Classes/iPOSServiceImpl.m; sourceTree = "<group>"; };
+		D6BCD3FF12FCB3D80029F4B2 /* iPOSServiceMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPOSServiceMock.h; path = Classes/iPOSServiceMock.h; sourceTree = "<group>"; };
+		D6BCD40012FCB3D80029F4B2 /* iPOSServiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPOSServiceMock.m; path = Classes/iPOSServiceMock.m; sourceTree = "<group>"; };
+		D6BCD40612FCB3F70029F4B2 /* SessionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionInfo.h; path = Classes/SessionInfo.h; sourceTree = "<group>"; };
+		D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionInfo.m; path = Classes/SessionInfo.m; sourceTree = "<group>"; };
 		D6CAA3CA12FA416C00EC1BEB /* libLineaSDK_arm.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLineaSDK_arm.a; path = "thirdParty/Linea-Pro-SDK-v1.10-BETA/LineaSDK/libLineaSDK_arm.a"; sourceTree = DEVELOPER_DIR; };
 		D6CAA3CB12FA416C00EC1BEB /* libLineaSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLineaSDK.a; path = "thirdParty/Linea-Pro-SDK-v1.10-BETA/LineaSDK/libLineaSDK.a"; sourceTree = DEVELOPER_DIR; };
 		D6CAA3CC12FA416C00EC1BEB /* LineaSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LineaSDK.h; path = "thirdParty/Linea-Pro-SDK-v1.10-BETA/LineaSDK/LineaSDK.h"; sourceTree = DEVELOPER_DIR; };
 		D6F7965912F9FE2600B467CA /* iPOS-Device-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iPOS-Device-Info.plist"; sourceTree = "<group>"; };
 		D6F7967412F9FE4300B467CA /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info copy.plist"; sourceTree = "<group>"; };
 		D6F796A112F9FF4A00B467CA /* Info copy 2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info copy 2.plist"; sourceTree = "<group>"; };
-		D6F796A212F9FFBD00B467CA /* iPOSFacade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSFacade.h; sourceTree = "<group>"; };
-		D6F796A312F9FFBD00B467CA /* iPOSFacade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPOSFacade.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -417,20 +417,20 @@
 		D69BEFD412F9C66A0035D358 /* POSInterface */ = {
 			isa = PBXGroup;
 			children = (
-				D6F796A212F9FFBD00B467CA /* iPOSFacade.h */,
-				D6F796A312F9FFBD00B467CA /* iPOSFacade.m */,
-				D69BEFE512F9C70E0035D358 /* iPOSService.h */,
-				D69BEFEC12F9C9CA0035D358 /* iPOSServiceImpl.h */,
-				D69BEFED12F9C9CA0035D358 /* iPOSServiceImpl.m */,
-				D69BEFF312F9CA510035D358 /* iPOSServiceMock.h */,
-				D69BEFF412F9CA510035D358 /* iPOSServiceMock.m */,
-				D69BEFE612F9C7210035D358 /* InventoryService.h */,
-				D69BEFF612F9CB450035D358 /* InventoryServiceImpl.h */,
-				D69BEFF712F9CB450035D358 /* InventoryServiceImpl.m */,
-				D69BEFF912F9CB600035D358 /* InventoryServiceMock.h */,
-				D69BEFFA12F9CB600035D358 /* InventoryServiceMock.m */,
-				D61C3C0E12FCA036003C3A47 /* SessionInfo.h */,
-				D61C3C0F12FCA036003C3A47 /* SessionInfo.m */,
+				D6BCD40612FCB3F70029F4B2 /* SessionInfo.h */,
+				D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */,
+				D6BCD3F512FCB3D80029F4B2 /* InventoryService.h */,
+				D6BCD3F612FCB3D80029F4B2 /* InventoryServiceImpl.h */,
+				D6BCD3F712FCB3D80029F4B2 /* InventoryServiceImpl.m */,
+				D6BCD3F812FCB3D80029F4B2 /* InventoryServiceMock.h */,
+				D6BCD3F912FCB3D80029F4B2 /* InventoryServiceMock.m */,
+				D6BCD3FA12FCB3D80029F4B2 /* iPOSFacade.h */,
+				D6BCD3FB12FCB3D80029F4B2 /* iPOSFacade.m */,
+				D6BCD3FC12FCB3D80029F4B2 /* iPOSService.h */,
+				D6BCD3FD12FCB3D80029F4B2 /* iPOSServiceImpl.h */,
+				D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */,
+				D6BCD3FF12FCB3D80029F4B2 /* iPOSServiceMock.h */,
+				D6BCD40012FCB3D80029F4B2 /* iPOSServiceMock.m */,
 			);
 			name = POSInterface;
 			path = ..;
@@ -644,16 +644,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D6C63BB612F9D231002DC254 /* InventoryServiceMock.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* iPOSAppDelegate.m in Sources */,
 				B47AA7EF12F7DD1000AAD34C /* PlaceHolderView.m in Sources */,
 				B47AA7F612F7DD7200AAD34C /* LoginViewController.m in Sources */,
 				B4B367C612F936AC00F37FE9 /* DrawUtils.m in Sources */,
-				D69BEFEE12F9C9CA0035D358 /* iPOSServiceImpl.m in Sources */,
-				D69BEFF512F9CA510035D358 /* iPOSServiceMock.m in Sources */,
-				D69BEFF812F9CB450035D358 /* InventoryServiceImpl.m in Sources */,
-				D6F796A412F9FFBD00B467CA /* iPOSFacade.m in Sources */,
 				D6AE9E0C12FB956200ABD6F0 /* CXHTMLDocument.m in Sources */,
 				D6AE9E0D12FB956200ABD6F0 /* CXMLDocument_PrivateExtensions.m in Sources */,
 				D6AE9E0E12FB956200ABD6F0 /* CXMLDocument.m in Sources */,
@@ -677,13 +672,18 @@
 				D61C3BD512FC9C45003C3A47 /* ASIInputStream.m in Sources */,
 				D61C3BD612FC9C45003C3A47 /* ASINetworkQueue.m in Sources */,
 				D61C3BD912FC9C57003C3A47 /* Reachability.m in Sources */,
-				D61C3C1012FCA036003C3A47 /* SessionInfo.m in Sources */,
 				D61C3C3212FCA530003C3A47 /* Customer.m in Sources */,
 				D61C3C3512FCA535003C3A47 /* Order.m in Sources */,
 				D61C3C3A12FCA55D003C3A47 /* ManagerApprovalInfo.m in Sources */,
 				D61C3C6412FCA97F003C3A47 /* ProductItem.m in Sources */,
 				D61C3C6712FCA99E003C3A47 /* PaymentInfo.m in Sources */,
 				D61C3C6A12FCA9C0003C3A47 /* OrderItem.m in Sources */,
+				D6BCD40112FCB3D80029F4B2 /* InventoryServiceImpl.m in Sources */,
+				D6BCD40212FCB3D80029F4B2 /* InventoryServiceMock.m in Sources */,
+				D6BCD40312FCB3D80029F4B2 /* iPOSFacade.m in Sources */,
+				D6BCD40412FCB3D80029F4B2 /* iPOSServiceImpl.m in Sources */,
+				D6BCD40512FCB3D80029F4B2 /* iPOSServiceMock.m in Sources */,
+				D6BCD40812FCB3F70029F4B2 /* SessionInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
