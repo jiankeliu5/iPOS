@@ -12,6 +12,7 @@
 
 @interface iPOSServiceImpl : NSObject <iPOSService> {
 
+
 }
 
 @end

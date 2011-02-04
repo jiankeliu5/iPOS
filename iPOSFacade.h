@@ -8,41 +8,45 @@
 
 #import <Foundation/Foundation.h>
 
-#import "iPOSService.h"
 #import "iPOSServiceImpl.h"
 #import "iPOSServiceMock.h"
-#import "InventoryService.h"
 #import "InventoryServiceImpl.h"
 #import "InventoryServiceMock.h"
 
 @interface iPOSFacade : NSObject {
     id<iPOSService> posService;
     id<InventoryService> inventoryService;
+    
+    SessionInfo * sessionInfo;
 }
 
 @property (nonatomic, retain) id<iPOSService> posService;
 @property (nonatomic, retain) id<InventoryService> inventoryService;
+@property (assign) SessionInfo *sessionInfo;
 
 #pragma mark Shared Instance
 + (iPOSFacade *) sharedInstance;
 
 #pragma mark iPOS Session Mgmt
-- (void) login;
-- (void) verifySession;
-- (void) logout;
+- (BOOL) login;
+- (BOOL) verifySession;
+- (BOOL) logout;
 
 #pragma mark iPOS Customer Management
--(void) lookupCustomer;
--(void) newCustomer;
--(void) updateCustomer;
+-(Customer *) lookupCustomerByEmail: (NSString *) emailAddress;
+-(Customer *) lookupCustomerByPhone: (NSString *) phoneNumber;
+-(Customer *) newCustomer: (Customer *) customer;
+-(void) updateCustomer: (Customer *) customer;
 
 #pragma mark iPOS Order Management
--(void) newOrder;
--(void) discountItemPrice;
--(void) processPayment;
+-(Order *) newOrder;
+-(void) updateOrder: (Order *) order;
+-(BOOL) allowDiscountedPrice: (NSDecimal *) discountPrice forQuantity: (NSDecimal *) quantity;
+-(BOOL) allowDiscountedPrice: (NSDecimal *) discountPrice forQuantity: (NSDecimal *) quantity managerApproval: (ManagerApprovalInfo *) managerApproval;
 
-#pragma mark Inventory Services
--(void) lookupProductItem;
--(BOOL) isProductItemAvailable;
+
+#pragma mark Inventory Management
+-(void) lookupProductItem:(NSString *) itemSku;
+-(BOOL) isProductItemAvailable: (NSString *) itemId forQuantity: (NSDecimal *) quantity;
 
 @end
