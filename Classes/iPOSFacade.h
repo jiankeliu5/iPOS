@@ -28,7 +28,7 @@
 + (iPOSFacade *) sharedInstance;
 
 #pragma mark iPOS Session Mgmt
-- (BOOL) login;
+- (BOOL) login: (NSString *) username password: (NSString *) password;
 - (BOOL) verifySession;
 - (BOOL) logout;
 
