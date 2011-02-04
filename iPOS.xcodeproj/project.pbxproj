@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,7 +16,47 @@
 		B47AA7EF12F7DD1000AAD34C /* PlaceHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B47AA7EE12F7DD1000AAD34C /* PlaceHolderView.m */; };
 		B47AA7F612F7DD7200AAD34C /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B47AA7F512F7DD7200AAD34C /* LoginViewController.m */; };
 		B4B367C612F936AC00F37FE9 /* DrawUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B4B367C512F936AC00F37FE9 /* DrawUtils.m */; };
+		D62853C612FB9B650024228B /* LayoutUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = D62853C512FB9B650024228B /* LayoutUtils.m */; };
+		D62853CF12FB9CFB0024228B /* CTidy.m in Sources */ = {isa = PBXBuildFile; fileRef = D62853CE12FB9CFB0024228B /* CTidy.m */; };
+		D62853D412FB9D090024228B /* CXMLDocument_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D62853D112FB9D090024228B /* CXMLDocument_CreationExtensions.m */; };
+		D62853D512FB9D090024228B /* CXMLNode_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D62853D312FB9D090024228B /* CXMLNode_CreationExtensions.m */; };
+		D64B7E3612F9D8FD006AB141 /* SampleUnitTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D64B7E3512F9D8FD006AB141 /* SampleUnitTestCase.m */; };
+		D64B7EC112F9DFF5006AB141 /* iPOSServiceIntTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */; };
+		D69BEFEE12F9C9CA0035D358 /* iPOSServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D69BEFED12F9C9CA0035D358 /* iPOSServiceImpl.m */; };
+		D69BEFF512F9CA510035D358 /* iPOSServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D69BEFF412F9CA510035D358 /* iPOSServiceMock.m */; };
+		D69BEFF812F9CB450035D358 /* InventoryServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D69BEFF712F9CB450035D358 /* InventoryServiceImpl.m */; };
+		D6AE9E0C12FB956200ABD6F0 /* CXHTMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AE9DF312FB956200ABD6F0 /* CXHTMLDocument.m */; };
+		D6AE9E0D12FB956200ABD6F0 /* CXMLDocument_PrivateExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AE9DF512FB956200ABD6F0 /* CXMLDocument_PrivateExtensions.m */; };
+		D6AE9E0E12FB956200ABD6F0 /* CXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AE9DF712FB956200ABD6F0 /* CXMLDocument.m */; };
+		D6AE9E0F12FB956200ABD6F0 /* CXMLElement_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AE9DF912FB956200ABD6F0 /* CXMLElement_CreationExtensions.m */; };
+		D6AE9E1012FB956200ABD6F0 /* CXMLElement_ElementTreeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AE9DFB12FB956200ABD6F0 /* CXMLElement_ElementTreeExtensions.m */; };
+		D6AE9E1112FB956200ABD6F0 /* CXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AE9DFD12FB956200ABD6F0 /* CXMLElement.m */; };
+		D6AE9E1212FB956200ABD6F0 /* CXMLNamespaceNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AE9DFF12FB956200ABD6F0 /* CXMLNamespaceNode.m */; };
+		D6AE9E1312FB956200ABD6F0 /* CXMLNode_PrivateExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AE9E0112FB956200ABD6F0 /* CXMLNode_PrivateExtensions.m */; };
+		D6AE9E1412FB956200ABD6F0 /* CXMLNode_XPathExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AE9E0312FB956200ABD6F0 /* CXMLNode_XPathExtensions.m */; };
+		D6AE9E1512FB956200ABD6F0 /* CXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AE9E0512FB956200ABD6F0 /* CXMLNode.m */; };
+		D6C63BB612F9D231002DC254 /* InventoryServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D69BEFFA12F9CB600035D358 /* InventoryServiceMock.m */; };
+		D6CAA3CD12FA416C00EC1BEB /* libLineaSDK_arm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6CAA3CA12FA416C00EC1BEB /* libLineaSDK_arm.a */; };
+		D6CAA3CE12FA416C00EC1BEB /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6CAA3CB12FA416C00EC1BEB /* libLineaSDK.a */; };
+		D6F796A412F9FFBD00B467CA /* iPOSFacade.m in Sources */ = {isa = PBXBuildFile; fileRef = D6F796A312F9FFBD00B467CA /* iPOSFacade.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D64B7E2812F9D89E006AB141 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D6058900D05DD3D006BFB54;
+			remoteInfo = iPOS;
+		};
+		D64B7EB612F9DFAF006AB141 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D6058900D05DD3D006BFB54;
+			remoteInfo = iPOS;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -36,6 +76,61 @@
 		B47AA7F512F7DD7200AAD34C /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		B4B367C412F936AC00F37FE9 /* DrawUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawUtils.h; sourceTree = "<group>"; };
 		B4B367C512F936AC00F37FE9 /* DrawUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawUtils.m; sourceTree = "<group>"; };
+		D62853C412FB9B650024228B /* LayoutUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutUtils.h; sourceTree = "<group>"; };
+		D62853C512FB9B650024228B /* LayoutUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutUtils.m; sourceTree = "<group>"; };
+		D62853CD12FB9CFB0024228B /* CTidy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTidy.h; sourceTree = "<group>"; };
+		D62853CE12FB9CFB0024228B /* CTidy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTidy.m; sourceTree = "<group>"; };
+		D62853D012FB9D090024228B /* CXMLDocument_CreationExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXMLDocument_CreationExtensions.h; sourceTree = "<group>"; };
+		D62853D112FB9D090024228B /* CXMLDocument_CreationExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXMLDocument_CreationExtensions.m; sourceTree = "<group>"; };
+		D62853D212FB9D090024228B /* CXMLNode_CreationExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXMLNode_CreationExtensions.h; sourceTree = "<group>"; };
+		D62853D312FB9D090024228B /* CXMLNode_CreationExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXMLNode_CreationExtensions.m; sourceTree = "<group>"; };
+		D64B7E1312F9D7EA006AB141 /* UnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D64B7E1412F9D7EA006AB141 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
+		D64B7E3412F9D8FD006AB141 /* SampleUnitTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleUnitTestCase.h; sourceTree = "<group>"; };
+		D64B7E3512F9D8FD006AB141 /* SampleUnitTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleUnitTestCase.m; sourceTree = "<group>"; };
+		D64B7EB012F9DFA7006AB141 /* IntegrationTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntegrationTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D64B7EB112F9DFA7006AB141 /* IntegrationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IntegrationTests-Info.plist"; sourceTree = "<group>"; };
+		D64B7EBF12F9DFF5006AB141 /* iPOSServiceIntTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSServiceIntTestCase.h; sourceTree = "<group>"; };
+		D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPOSServiceIntTestCase.m; sourceTree = "<group>"; };
+		D69BEFE512F9C70E0035D358 /* iPOSService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSService.h; sourceTree = "<group>"; };
+		D69BEFE612F9C7210035D358 /* InventoryService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryService.h; sourceTree = "<group>"; };
+		D69BEFEC12F9C9CA0035D358 /* iPOSServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSServiceImpl.h; sourceTree = "<group>"; };
+		D69BEFED12F9C9CA0035D358 /* iPOSServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPOSServiceImpl.m; sourceTree = "<group>"; };
+		D69BEFF312F9CA510035D358 /* iPOSServiceMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSServiceMock.h; sourceTree = "<group>"; };
+		D69BEFF412F9CA510035D358 /* iPOSServiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPOSServiceMock.m; sourceTree = "<group>"; };
+		D69BEFF612F9CB450035D358 /* InventoryServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryServiceImpl.h; sourceTree = "<group>"; };
+		D69BEFF712F9CB450035D358 /* InventoryServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryServiceImpl.m; sourceTree = "<group>"; };
+		D69BEFF912F9CB600035D358 /* InventoryServiceMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryServiceMock.h; sourceTree = "<group>"; };
+		D69BEFFA12F9CB600035D358 /* InventoryServiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryServiceMock.m; sourceTree = "<group>"; };
+		D6AE9DF212FB956200ABD6F0 /* CXHTMLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXHTMLDocument.h; sourceTree = "<group>"; };
+		D6AE9DF312FB956200ABD6F0 /* CXHTMLDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXHTMLDocument.m; sourceTree = "<group>"; };
+		D6AE9DF412FB956200ABD6F0 /* CXMLDocument_PrivateExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXMLDocument_PrivateExtensions.h; sourceTree = "<group>"; };
+		D6AE9DF512FB956200ABD6F0 /* CXMLDocument_PrivateExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXMLDocument_PrivateExtensions.m; sourceTree = "<group>"; };
+		D6AE9DF612FB956200ABD6F0 /* CXMLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXMLDocument.h; sourceTree = "<group>"; };
+		D6AE9DF712FB956200ABD6F0 /* CXMLDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXMLDocument.m; sourceTree = "<group>"; };
+		D6AE9DF812FB956200ABD6F0 /* CXMLElement_CreationExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXMLElement_CreationExtensions.h; sourceTree = "<group>"; };
+		D6AE9DF912FB956200ABD6F0 /* CXMLElement_CreationExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXMLElement_CreationExtensions.m; sourceTree = "<group>"; };
+		D6AE9DFA12FB956200ABD6F0 /* CXMLElement_ElementTreeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXMLElement_ElementTreeExtensions.h; sourceTree = "<group>"; };
+		D6AE9DFB12FB956200ABD6F0 /* CXMLElement_ElementTreeExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXMLElement_ElementTreeExtensions.m; sourceTree = "<group>"; };
+		D6AE9DFC12FB956200ABD6F0 /* CXMLElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXMLElement.h; sourceTree = "<group>"; };
+		D6AE9DFD12FB956200ABD6F0 /* CXMLElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXMLElement.m; sourceTree = "<group>"; };
+		D6AE9DFE12FB956200ABD6F0 /* CXMLNamespaceNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXMLNamespaceNode.h; sourceTree = "<group>"; };
+		D6AE9DFF12FB956200ABD6F0 /* CXMLNamespaceNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXMLNamespaceNode.m; sourceTree = "<group>"; };
+		D6AE9E0012FB956200ABD6F0 /* CXMLNode_PrivateExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXMLNode_PrivateExtensions.h; sourceTree = "<group>"; };
+		D6AE9E0112FB956200ABD6F0 /* CXMLNode_PrivateExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXMLNode_PrivateExtensions.m; sourceTree = "<group>"; };
+		D6AE9E0212FB956200ABD6F0 /* CXMLNode_XPathExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXMLNode_XPathExtensions.h; sourceTree = "<group>"; };
+		D6AE9E0312FB956200ABD6F0 /* CXMLNode_XPathExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXMLNode_XPathExtensions.m; sourceTree = "<group>"; };
+		D6AE9E0412FB956200ABD6F0 /* CXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXMLNode.h; sourceTree = "<group>"; };
+		D6AE9E0512FB956200ABD6F0 /* CXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXMLNode.m; sourceTree = "<group>"; };
+		D6AE9E0912FB956200ABD6F0 /* TouchXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchXML.h; sourceTree = "<group>"; };
+		D6CAA3CA12FA416C00EC1BEB /* libLineaSDK_arm.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLineaSDK_arm.a; path = "thirdParty/Linea-Pro-SDK-v1.10-BETA/LineaSDK/libLineaSDK_arm.a"; sourceTree = DEVELOPER_DIR; };
+		D6CAA3CB12FA416C00EC1BEB /* libLineaSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLineaSDK.a; path = "thirdParty/Linea-Pro-SDK-v1.10-BETA/LineaSDK/libLineaSDK.a"; sourceTree = DEVELOPER_DIR; };
+		D6CAA3CC12FA416C00EC1BEB /* LineaSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LineaSDK.h; path = "thirdParty/Linea-Pro-SDK-v1.10-BETA/LineaSDK/LineaSDK.h"; sourceTree = DEVELOPER_DIR; };
+		D6F7965912F9FE2600B467CA /* iPOS-Device-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iPOS-Device-Info.plist"; sourceTree = "<group>"; };
+		D6F7967412F9FE4300B467CA /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info copy.plist"; sourceTree = "<group>"; };
+		D6F796A112F9FF4A00B467CA /* Info copy 2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info copy 2.plist"; sourceTree = "<group>"; };
+		D6F796A212F9FFBD00B467CA /* iPOSFacade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSFacade.h; sourceTree = "<group>"; };
+		D6F796A312F9FFBD00B467CA /* iPOSFacade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPOSFacade.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +141,22 @@
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
+				D6CAA3CD12FA416C00EC1BEB /* libLineaSDK_arm.a in Frameworks */,
+				D6CAA3CE12FA416C00EC1BEB /* libLineaSDK.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D64B7E1012F9D7EA006AB141 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D64B7EAD12F9DFA7006AB141 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,6 +166,10 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D69BEFD412F9C66A0035D358 /* POSInterface */,
+				D69BEFD712F9C6890035D358 /* Model */,
+				D69BF02312F9CCC80035D358 /* Helper */,
+				D60EE18B12FB6F0C00885396 /* Utility */,
 				1D3623240D0F684500981E51 /* iPOSAppDelegate.h */,
 				1D3623250D0F684500981E51 /* iPOSAppDelegate.m */,
 			);
@@ -65,6 +180,8 @@
 			isa = PBXGroup;
 			children = (
 				1D6058910D05DD3D006BFB54 /* iPOS.app */,
+				D64B7E1312F9D7EA006AB141 /* UnitTests.octest */,
+				D64B7EB012F9DFA7006AB141 /* IntegrationTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -72,6 +189,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				D6F7963212F9FD6B00B467CA /* LineaSDK */,
+				D64B7E3312F9D8B4006AB141 /* TestSuites */,
 				B4B367C312F9368D00F37FE9 /* Util */,
 				B47AA7EB12F7DCE500AAD34C /* Login */,
 				B47AA7EA12F7DCD900AAD34C /* PlaceHolder */,
@@ -80,6 +199,9 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				D64B7E1412F9D7EA006AB141 /* UnitTests-Info.plist */,
+				D64B7EB112F9DFA7006AB141 /* IntegrationTests-Info.plist */,
+				D6F7965912F9FE2600B467CA /* iPOS-Device-Info.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -97,6 +219,8 @@
 			isa = PBXGroup;
 			children = (
 				8D1107310486CEB800E47090 /* Info.plist */,
+				D6F7967412F9FE4300B467CA /* Info copy.plist */,
+				D6F796A112F9FF4A00B467CA /* Info copy 2.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -132,12 +256,143 @@
 		B4B367C312F9368D00F37FE9 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				D62853C412FB9B650024228B /* LayoutUtils.h */,
+				D62853C512FB9B650024228B /* LayoutUtils.m */,
 				B4B367C412F936AC00F37FE9 /* DrawUtils.h */,
 				B4B367C512F936AC00F37FE9 /* DrawUtils.m */,
 				B40F003112FA962500B2AB73 /* LayoutUtils.h */,
 				B40F003212FA962500B2AB73 /* LayoutUtils.m */,
 			);
 			name = Util;
+			sourceTree = "<group>";
+		};
+		D60EE18B12FB6F0C00885396 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				D6AE9D3D12FB79B800ABD6F0 /* TouchXML */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
+		D62853C912FB9CD30024228B /* Creation */ = {
+			isa = PBXGroup;
+			children = (
+				D62853D012FB9D090024228B /* CXMLDocument_CreationExtensions.h */,
+				D62853D112FB9D090024228B /* CXMLDocument_CreationExtensions.m */,
+				D62853D212FB9D090024228B /* CXMLNode_CreationExtensions.h */,
+				D62853D312FB9D090024228B /* CXMLNode_CreationExtensions.m */,
+			);
+			name = Creation;
+			sourceTree = "<group>";
+		};
+		D62853CA12FB9CDA0024228B /* Tidy */ = {
+			isa = PBXGroup;
+			children = (
+				D62853CD12FB9CFB0024228B /* CTidy.h */,
+				D62853CE12FB9CFB0024228B /* CTidy.m */,
+			);
+			name = Tidy;
+			sourceTree = "<group>";
+		};
+		D64B7E2612F9D869006AB141 /* Unit */ = {
+			isa = PBXGroup;
+			children = (
+				D64B7E3412F9D8FD006AB141 /* SampleUnitTestCase.h */,
+				D64B7E3512F9D8FD006AB141 /* SampleUnitTestCase.m */,
+			);
+			name = Unit;
+			sourceTree = "<group>";
+		};
+		D64B7E2712F9D87C006AB141 /* Integration */ = {
+			isa = PBXGroup;
+			children = (
+				D64B7EBF12F9DFF5006AB141 /* iPOSServiceIntTestCase.h */,
+				D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */,
+			);
+			name = Integration;
+			sourceTree = "<group>";
+		};
+		D64B7E3312F9D8B4006AB141 /* TestSuites */ = {
+			isa = PBXGroup;
+			children = (
+				D64B7E2712F9D87C006AB141 /* Integration */,
+				D64B7E2612F9D869006AB141 /* Unit */,
+			);
+			name = TestSuites;
+			sourceTree = "<group>";
+		};
+		D69BEFD412F9C66A0035D358 /* POSInterface */ = {
+			isa = PBXGroup;
+			children = (
+				D6F796A212F9FFBD00B467CA /* iPOSFacade.h */,
+				D6F796A312F9FFBD00B467CA /* iPOSFacade.m */,
+				D69BEFE512F9C70E0035D358 /* iPOSService.h */,
+				D69BEFEC12F9C9CA0035D358 /* iPOSServiceImpl.h */,
+				D69BEFED12F9C9CA0035D358 /* iPOSServiceImpl.m */,
+				D69BEFF312F9CA510035D358 /* iPOSServiceMock.h */,
+				D69BEFF412F9CA510035D358 /* iPOSServiceMock.m */,
+				D69BEFE612F9C7210035D358 /* InventoryService.h */,
+				D69BEFF612F9CB450035D358 /* InventoryServiceImpl.h */,
+				D69BEFF712F9CB450035D358 /* InventoryServiceImpl.m */,
+				D69BEFF912F9CB600035D358 /* InventoryServiceMock.h */,
+				D69BEFFA12F9CB600035D358 /* InventoryServiceMock.m */,
+			);
+			name = POSInterface;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		D69BEFD712F9C6890035D358 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		D69BF02312F9CCC80035D358 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
+		D6AE9D3D12FB79B800ABD6F0 /* TouchXML */ = {
+			isa = PBXGroup;
+			children = (
+				D62853CA12FB9CDA0024228B /* Tidy */,
+				D62853C912FB9CD30024228B /* Creation */,
+				D6AE9E0912FB956200ABD6F0 /* TouchXML.h */,
+				D6AE9DF212FB956200ABD6F0 /* CXHTMLDocument.h */,
+				D6AE9DF312FB956200ABD6F0 /* CXHTMLDocument.m */,
+				D6AE9DF412FB956200ABD6F0 /* CXMLDocument_PrivateExtensions.h */,
+				D6AE9DF512FB956200ABD6F0 /* CXMLDocument_PrivateExtensions.m */,
+				D6AE9DF612FB956200ABD6F0 /* CXMLDocument.h */,
+				D6AE9DF712FB956200ABD6F0 /* CXMLDocument.m */,
+				D6AE9DF812FB956200ABD6F0 /* CXMLElement_CreationExtensions.h */,
+				D6AE9DF912FB956200ABD6F0 /* CXMLElement_CreationExtensions.m */,
+				D6AE9DFA12FB956200ABD6F0 /* CXMLElement_ElementTreeExtensions.h */,
+				D6AE9DFB12FB956200ABD6F0 /* CXMLElement_ElementTreeExtensions.m */,
+				D6AE9DFC12FB956200ABD6F0 /* CXMLElement.h */,
+				D6AE9DFD12FB956200ABD6F0 /* CXMLElement.m */,
+				D6AE9DFE12FB956200ABD6F0 /* CXMLNamespaceNode.h */,
+				D6AE9DFF12FB956200ABD6F0 /* CXMLNamespaceNode.m */,
+				D6AE9E0012FB956200ABD6F0 /* CXMLNode_PrivateExtensions.h */,
+				D6AE9E0112FB956200ABD6F0 /* CXMLNode_PrivateExtensions.m */,
+				D6AE9E0212FB956200ABD6F0 /* CXMLNode_XPathExtensions.h */,
+				D6AE9E0312FB956200ABD6F0 /* CXMLNode_XPathExtensions.m */,
+				D6AE9E0412FB956200ABD6F0 /* CXMLNode.h */,
+				D6AE9E0512FB956200ABD6F0 /* CXMLNode.m */,
+			);
+			name = TouchXML;
+			sourceTree = "<group>";
+		};
+		D6F7963212F9FD6B00B467CA /* LineaSDK */ = {
+			isa = PBXGroup;
+			children = (
+				D6CAA3CA12FA416C00EC1BEB /* libLineaSDK_arm.a */,
+				D6CAA3CB12FA416C00EC1BEB /* libLineaSDK.a */,
+				D6CAA3CC12FA416C00EC1BEB /* LineaSDK.h */,
+			);
+			name = LineaSDK;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,13 +415,51 @@
 			productReference = 1D6058910D05DD3D006BFB54 /* iPOS.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D64B7E1212F9D7EA006AB141 /* UnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D64B7E1712F9D7EA006AB141 /* Build configuration list for PBXNativeTarget "UnitTests" */;
+			buildPhases = (
+				D64B7E0E12F9D7EA006AB141 /* Resources */,
+				D64B7E0F12F9D7EA006AB141 /* Sources */,
+				D64B7E1012F9D7EA006AB141 /* Frameworks */,
+				D64B7E1112F9D7EA006AB141 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D64B7E2912F9D89E006AB141 /* PBXTargetDependency */,
+			);
+			name = UnitTests;
+			productName = UnitTests;
+			productReference = D64B7E1312F9D7EA006AB141 /* UnitTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		D64B7EAF12F9DFA7006AB141 /* IntegrationTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D64B7EB512F9DFA8006AB141 /* Build configuration list for PBXNativeTarget "IntegrationTests" */;
+			buildPhases = (
+				D64B7EAB12F9DFA7006AB141 /* Resources */,
+				D64B7EAC12F9DFA7006AB141 /* Sources */,
+				D64B7EAD12F9DFA7006AB141 /* Frameworks */,
+				D64B7EAE12F9DFA7006AB141 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D64B7EB712F9DFAF006AB141 /* PBXTargetDependency */,
+			);
+			name = IntegrationTests;
+			productName = IntegrationTests;
+			productReference = D64B7EB012F9DFA7006AB141 /* IntegrationTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "iPOS" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -180,6 +473,8 @@
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* iPOS */,
+				D64B7E1212F9D7EA006AB141 /* UnitTests */,
+				D64B7EAF12F9DFA7006AB141 /* IntegrationTests */,
 			);
 		};
 /* End PBXProject section */
@@ -192,23 +487,114 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D64B7E0E12F9D7EA006AB141 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D64B7EAB12F9DFA7006AB141 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D64B7E1112F9D7EA006AB141 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		D64B7EAE12F9DFA7006AB141 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6C63BB612F9D231002DC254 /* InventoryServiceMock.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* iPOSAppDelegate.m in Sources */,
 				B47AA7EF12F7DD1000AAD34C /* PlaceHolderView.m in Sources */,
 				B47AA7F612F7DD7200AAD34C /* LoginViewController.m in Sources */,
 				B4B367C612F936AC00F37FE9 /* DrawUtils.m in Sources */,
 				B40F003312FA962500B2AB73 /* LayoutUtils.m in Sources */,
+				D69BEFEE12F9C9CA0035D358 /* iPOSServiceImpl.m in Sources */,
+				D69BEFF512F9CA510035D358 /* iPOSServiceMock.m in Sources */,
+				D69BEFF812F9CB450035D358 /* InventoryServiceImpl.m in Sources */,
+				D6F796A412F9FFBD00B467CA /* iPOSFacade.m in Sources */,
+				D6AE9E0C12FB956200ABD6F0 /* CXHTMLDocument.m in Sources */,
+				D6AE9E0D12FB956200ABD6F0 /* CXMLDocument_PrivateExtensions.m in Sources */,
+				D6AE9E0E12FB956200ABD6F0 /* CXMLDocument.m in Sources */,
+				D6AE9E0F12FB956200ABD6F0 /* CXMLElement_CreationExtensions.m in Sources */,
+				D6AE9E1012FB956200ABD6F0 /* CXMLElement_ElementTreeExtensions.m in Sources */,
+				D6AE9E1112FB956200ABD6F0 /* CXMLElement.m in Sources */,
+				D6AE9E1212FB956200ABD6F0 /* CXMLNamespaceNode.m in Sources */,
+				D6AE9E1312FB956200ABD6F0 /* CXMLNode_PrivateExtensions.m in Sources */,
+				D6AE9E1412FB956200ABD6F0 /* CXMLNode_XPathExtensions.m in Sources */,
+				D6AE9E1512FB956200ABD6F0 /* CXMLNode.m in Sources */,
+				D62853C612FB9B650024228B /* LayoutUtils.m in Sources */,
+				D62853CF12FB9CFB0024228B /* CTidy.m in Sources */,
+				D62853D412FB9D090024228B /* CXMLDocument_CreationExtensions.m in Sources */,
+				D62853D512FB9D090024228B /* CXMLNode_CreationExtensions.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D64B7E0F12F9D7EA006AB141 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D64B7E3612F9D8FD006AB141 /* SampleUnitTestCase.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D64B7EAC12F9DFA7006AB141 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D64B7EC112F9DFF5006AB141 /* iPOSServiceIntTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D64B7E2912F9D89E006AB141 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1D6058900D05DD3D006BFB54 /* iPOS */;
+			targetProxy = D64B7E2812F9D89E006AB141 /* PBXContainerItemProxy */;
+		};
+		D64B7EB712F9DFAF006AB141 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1D6058900D05DD3D006BFB54 /* iPOS */;
+			targetProxy = D64B7EB612F9DFAF006AB141 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
@@ -221,6 +607,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../docs/Linea-Pro-SDK-v1.10-BETA/LineaSDK\"",
+					"\"$(SRCROOT)\"",
+					"\"$(DEVELOPER_DIR)/thirdParty/Linea-Pro-SDK-v1.10-BETA/LineaSDK\"",
+				);
 				PRODUCT_NAME = iPOS;
 			};
 			name = Debug;
@@ -233,6 +625,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../docs/Linea-Pro-SDK-v1.10-BETA/LineaSDK\"",
+					"\"$(SRCROOT)\"",
+					"\"$(DEVELOPER_DIR)/thirdParty/Linea-Pro-SDK-v1.10-BETA/LineaSDK\"",
+				);
 				PRODUCT_NAME = iPOS;
 			};
 			name = Release;
@@ -245,7 +643,9 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-lxml2";
 				PREBINDING = NO;
 				SDKROOT = iphoneos4.2;
 			};
@@ -260,7 +660,127 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos2.2;
+				SDKROOT = iphoneos4.2;
+			};
+			name = Release;
+		};
+		D64B7E1512F9D7EA006AB141 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "UnitTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					SenTestingKit,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = UnitTests;
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		D64B7E1612F9D7EA006AB141 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				INFOPLIST_FILE = "UnitTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					SenTestingKit,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = UnitTests;
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = octest;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		D64B7EB312F9DFA8006AB141 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "IntegrationTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					SenTestingKit,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = IntegrationTests;
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		D64B7EB412F9DFA8006AB141 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				INFOPLIST_FILE = "IntegrationTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					SenTestingKit,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = IntegrationTests;
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = octest;
+				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -281,6 +801,24 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D64B7E1712F9D7EA006AB141 /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D64B7E1512F9D7EA006AB141 /* Debug */,
+				D64B7E1612F9D7EA006AB141 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D64B7EB512F9DFA8006AB141 /* Build configuration list for PBXNativeTarget "IntegrationTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D64B7EB312F9DFA8006AB141 /* Debug */,
+				D64B7EB412F9DFA8006AB141 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
