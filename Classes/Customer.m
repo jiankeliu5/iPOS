@@ -11,4 +11,27 @@
 
 @implementation Customer
 
+@synthesize firstName, lastName, phoneNumber, emailAddress, address;
+
+#pragma mark Initializer and Memory Mgmt
+-(id) init {
+    self = [super init];
+    
+    if (self == nil) {
+        
+        return nil;
+    }
+    
+    return self;
+}
+
+-(void) dealloc {
+    [firstName release];
+    [lastName release];
+    [phoneNumber release];
+    [emailAddress release];
+    [address release];
+    [super dealloc];
+}
+
 @end

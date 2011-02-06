@@ -40,6 +40,7 @@
 		D62853D512FB9D090024228B /* CXMLNode_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D62853D312FB9D090024228B /* CXMLNode_CreationExtensions.m */; };
 		D64B7E3612F9D8FD006AB141 /* SampleUnitTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D64B7E3512F9D8FD006AB141 /* SampleUnitTestCase.m */; };
 		D64B7EC112F9DFF5006AB141 /* iPOSServiceIntTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */; };
+		D692BBA412FDFF4C007EC03A /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = D692BBA312FDFF4C007EC03A /* Address.m */; };
 		D6AE9E0C12FB956200ABD6F0 /* CXHTMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AE9DF312FB956200ABD6F0 /* CXHTMLDocument.m */; };
 		D6AE9E0D12FB956200ABD6F0 /* CXMLDocument_PrivateExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AE9DF512FB956200ABD6F0 /* CXMLDocument_PrivateExtensions.m */; };
 		D6AE9E0E12FB956200ABD6F0 /* CXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D6AE9DF712FB956200ABD6F0 /* CXMLDocument.m */; };
@@ -147,6 +148,8 @@
 		D64B7EB112F9DFA7006AB141 /* IntegrationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IntegrationTests-Info.plist"; sourceTree = "<group>"; };
 		D64B7EBF12F9DFF5006AB141 /* iPOSServiceIntTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSServiceIntTestCase.h; sourceTree = "<group>"; };
 		D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPOSServiceIntTestCase.m; sourceTree = "<group>"; };
+		D692BBA212FDFF4C007EC03A /* Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Address.h; sourceTree = "<group>"; };
+		D692BBA312FDFF4C007EC03A /* Address.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Address.m; sourceTree = "<group>"; };
 		D6AE9DF212FB956200ABD6F0 /* CXHTMLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXHTMLDocument.h; sourceTree = "<group>"; };
 		D6AE9DF312FB956200ABD6F0 /* CXHTMLDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXHTMLDocument.m; sourceTree = "<group>"; };
 		D6AE9DF412FB956200ABD6F0 /* CXMLDocument_PrivateExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXMLDocument_PrivateExtensions.h; sourceTree = "<group>"; };
@@ -439,6 +442,8 @@
 		D69BEFD712F9C6890035D358 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D692BBA212FDFF4C007EC03A /* Address.h */,
+				D692BBA312FDFF4C007EC03A /* Address.m */,
 				D61C3C3312FCA535003C3A47 /* Order.h */,
 				D61C3C3412FCA535003C3A47 /* Order.m */,
 				D61C3C3012FCA530003C3A47 /* Customer.h */,
@@ -684,6 +689,7 @@
 				D6BCD40412FCB3D80029F4B2 /* iPOSServiceImpl.m in Sources */,
 				D6BCD40512FCB3D80029F4B2 /* iPOSServiceMock.m in Sources */,
 				D6BCD40812FCB3F70029F4B2 /* SessionInfo.m in Sources */,
+				D692BBA412FDFF4C007EC03A /* Address.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
