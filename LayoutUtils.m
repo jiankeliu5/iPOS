@@ -25,4 +25,9 @@
 	return CGRectMake(newX, newY, newW, newH);
 }
 
++ (CGRect) swapRect:(CGRect)rect
+{
+	return CGRectMake(rect.origin.y, rect.origin.x, rect.size.height, rect.size.width);
+}
+
 @end

@@ -14,5 +14,6 @@
 }
 
 + (CGRect) rectPercent:(CGRect)rect startX:(float)sx startY:(float)sy percentWidth:(float)pw percentHeight:(float)ph;
++ (CGRect) swapRect:(CGRect) rect;
 
 @end
