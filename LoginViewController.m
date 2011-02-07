@@ -202,17 +202,20 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
 	self.currentFirstResponder = nil;
-}
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-	[textField resignFirstResponder];
-	// User 
+	// Want to set these here since if the user shifts fields
+	// without dismissing the keyboard then textFieldShouldReturn
+	// is not called.
 	if (textField.tag == 0) {
 		self.empId = textField.text;
 	} else if (textField.tag == 1) {
 		self.password = textField.text;
 	}
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+	[textField resignFirstResponder];
 	return YES;
 }
 
