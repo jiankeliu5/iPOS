@@ -24,5 +24,10 @@
 	<string>1.0.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UISupportedExternalAccessoryProtocols</key>
+	<array>
+		<string>com.datecs.linea.pro.msr</string>
+		<string>com.datecs.linea.pro.bar</string>
+	</array>
 </dict>
 </plist>

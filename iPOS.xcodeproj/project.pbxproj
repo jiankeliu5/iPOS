@@ -88,7 +88,7 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iPOS_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOS_Prefix.pch; sourceTree = "<group>"; };
-		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* iPOS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "iPOS-Info.plist"; sourceTree = "<group>"; };
 		B47AA7ED12F7DD1000AAD34C /* PlaceHolderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceHolderView.h; sourceTree = "<group>"; };
 		B47AA7EE12F7DD1000AAD34C /* PlaceHolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceHolderView.m; sourceTree = "<group>"; };
 		B47AA7F412F7DD7200AAD34C /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -299,7 +299,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107310486CEB800E47090 /* Info.plist */,
+				8D1107310486CEB800E47090 /* iPOS-Info.plist */,
 				D6F7967412F9FE4300B467CA /* Info copy.plist */,
 				D6F796A112F9FF4A00B467CA /* Info copy 2.plist */,
 				B4F3EBA612FE2A08000D96EE /* Info copy 3.plist */,
@@ -762,7 +762,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				GCC_USE_STANDARD_INCLUDE_SEARCHING = YES;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = "iPOS-Info.plist";
 				INFOPLIST_PREPROCESS = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -779,7 +779,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = "iPOS-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../docs/Linea-Pro-SDK-v1.10-BETA/LineaSDK\"",
