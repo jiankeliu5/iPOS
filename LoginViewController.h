@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+
 @class LoginView;
 
 @interface LoginViewController : UIViewController
@@ -22,7 +23,6 @@
 	UITableView *loginTableView;
 	id currentFirstResponder;
 	NSIndexPath *topRowBeforeKeyboardShown;
-	
 }
 
 @property (nonatomic, retain) NSString *empId;

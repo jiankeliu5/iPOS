@@ -14,6 +14,7 @@
 @synthesize window;
 @synthesize navigationController;
 @synthesize loginViewController;
+@synthesize scannerReaderDelegate;
 
 #pragma mark Constructors
 - (void) applicationDidFinishLaunching:(UIApplication*)application 
@@ -33,12 +34,22 @@
 	[window addSubview:[navigationController view]];
 	
     [window makeKeyAndVisible];
+    
+    // Create the barcode scanner/reader & Connect
+    scannerReaderDelegate = [[BarcodeScannerCardReaderDelegate alloc] init];
+    
+    // TODO: Add scannerReaderDelegate to appropriate controllers.
+    // TODO: Add appropriate view controllers to scannerReaderDelegate to control views
+    // TODO: connecting of the device will happen upon successful login.  Successful logout will disconnect.
+    [scannerReaderDelegate connectToDevice];
 }
 
-- (void) applicationWillTerminate:(UIApplication*)application
-{
+- (void) applicationWillTerminate:(UIApplication*)application {
+    [scannerReaderDelegate release];
 	[navigationController release];
     [window release];
+    
+    [super dealloc];
 }
 
 @end

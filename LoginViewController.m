@@ -55,8 +55,8 @@
 	[self setPassword:nil];
 	[self setStoreId:nil];
 	[self setDeviceId:nil];
-	
-	[super dealloc];
+    
+  	[super dealloc];
 }
 
 #pragma mark -
@@ -92,8 +92,7 @@
 	
 	self.loginTableView.backgroundColor = [UIColor clearColor];
 	self.loginTableView.dataSource = self;
-	self.loginTableView.delegate = self;
-	
+	self.loginTableView.delegate = self;    	
 }
 
 - (void)viewDidUnload
