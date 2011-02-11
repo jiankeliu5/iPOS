@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "iPOSFacade.h"
 
-
 @interface MainMenuViewController : UIViewController {
 	iPOSFacade *facade;
 }

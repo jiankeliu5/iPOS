@@ -30,6 +30,7 @@
 
 @synthesize loginTableView;
 @synthesize currentFirstResponder;
+@synthesize scannerReaderDelegate;
 
 #pragma mark Constructors
 - (id)init
@@ -60,6 +61,8 @@
 	[self setPassword:nil];
 	[self setStoreId:nil];
 	[self setDeviceId:nil];
+    
+    [scannerReaderDelegate release];
     
   	[super dealloc];
 }
@@ -111,6 +114,8 @@
 	// TODO check if we were logged in, and log out
 	self.empId = nil;
 	self.password = nil;
+    [self.scannerReaderDelegate disconnectFromDevice];
+    
 	
 	CGRect viewBounds = self.view.bounds;
 	
@@ -227,6 +232,10 @@
 			[AlertUtils dismissAlertMessage: alert];
 			MainMenuViewController *mainMenuViewController = [[MainMenuViewController alloc] init];
 			[[self navigationController] pushViewController:mainMenuViewController animated:TRUE];
+            
+            // This is where we would connect to the linea-pro device
+            [self.scannerReaderDelegate connectToDevice];
+
 		} else {
 			[AlertUtils dismissAlertMessage:alert];
 			[AlertUtils showModalAlertMessage:@"Login failure.  Please try again."];

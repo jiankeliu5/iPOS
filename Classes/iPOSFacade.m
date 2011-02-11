@@ -13,7 +13,7 @@
 
 static iPOSFacade *facade = nil;
 
-@synthesize posService, inventoryService;
+@synthesize posService, inventoryService, sessionInfo;
 
 #pragma mark Singleton Initializer
 + (iPOSFacade *) sharedInstance {

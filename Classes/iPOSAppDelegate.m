@@ -42,7 +42,7 @@
     // TODO: Add scannerReaderDelegate to appropriate controllers.
     // TODO: Add appropriate view controllers to scannerReaderDelegate to control views
     // TODO: connecting of the device will happen upon successful login.  Successful logout will disconnect.
-    [scannerReaderDelegate connectToDevice];
+    loginViewController.scannerReaderDelegate = scannerReaderDelegate;
 }
 
 - (void) applicationWillTerminate:(UIApplication*)application {

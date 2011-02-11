@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "iPOSFacade.h"
+#import "BarcodeScannerCardReaderDelegate.h"
 
 @interface LoginViewController : UIViewController
 {
@@ -23,6 +24,7 @@
 	id currentFirstResponder;
 	NSIndexPath *topRowBeforeKeyboardShown;
 	
+    BarcodeScannerCardReaderDelegate *scannerReaderDelegate;
 	iPOSFacade *facade;
 }
 
@@ -33,5 +35,7 @@
 
 @property (nonatomic, retain) UITableView *loginTableView;
 @property (nonatomic, retain) id currentFirstResponder;
+
+@property (nonatomic, retain) BarcodeScannerCardReaderDelegate *scannerReaderDelegate;
 
 @end
