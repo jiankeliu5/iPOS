@@ -27,6 +27,7 @@
 	
 	// Create navigation controller with login view controller as contents
 	navigationController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+	navigationController.navigationBar.barStyle = UIBarStyleBlack;
 	
 	[loginViewController release];
 	

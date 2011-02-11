@@ -7,8 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class LoginView;
+#import "iPOSFacade.h"
 
 @interface LoginViewController : UIViewController
 {
@@ -23,6 +22,8 @@
 	UITableView *loginTableView;
 	id currentFirstResponder;
 	NSIndexPath *topRowBeforeKeyboardShown;
+	
+	iPOSFacade *facade;
 }
 
 @property (nonatomic, retain) NSString *empId;

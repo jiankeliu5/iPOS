@@ -9,7 +9,9 @@
 #import "LoginViewController.h"
 #import "DrawUtils.h"
 #import "LayoutUtils.h"
+#import "AlertUtils.h"
 #import "PlaceholderView.h"
+#import "MainMenuViewController.h"
 
 #pragma mark -
 #pragma mark Private Interface
@@ -38,10 +40,13 @@
     
 	// Set up the items that will appear in a navigation controller bar if
 	// this view controller is added to a UINavigationController.
-	[[self navigationItem] setTitle:@"iPOS"];
+	// If we come back here from another view, we are logging out.
+	[[self navigationItem] setTitle:@"Logout"];
 	
 	// Set up the right side button if desired, edit button for example.
 	//[[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
+	
+	facade = [iPOSFacade sharedInstance];
 	
     return self;
 }
@@ -83,11 +88,6 @@
 	// Do this at the beginning
 	[super viewDidLoad];
 	
-	if (self.navigationController != nil) 
-	{
-		[self.navigationController setNavigationBarHidden:YES];
-	}
-	
 	self.view.backgroundColor = [UIColor blackColor];
 	
 	self.loginTableView.backgroundColor = [UIColor clearColor];
@@ -102,6 +102,16 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+	
+	if (self.navigationController != nil) 
+	{
+		[self.navigationController setNavigationBarHidden:YES];
+	}
+	
+	// TODO check if we were logged in, and log out
+	self.empId = nil;
+	self.password = nil;
+	
 	CGRect viewBounds = self.view.bounds;
 	
 	if (self.loginTableView) {
@@ -210,6 +220,19 @@
 	} else if (textField.tag == 1) {
 		self.password = textField.text;
 	}
+	
+	if (self.empId != nil && self.password != nil) {
+		UIAlertView *alert = [AlertUtils showProgressAlertMessage:@"Logging In"];
+		if([facade login:self.empId password:self.password]) {
+			[AlertUtils dismissAlertMessage: alert];
+			MainMenuViewController *mainMenuViewController = [[MainMenuViewController alloc] init];
+			[[self navigationController] pushViewController:mainMenuViewController animated:TRUE];
+		} else {
+			[AlertUtils dismissAlertMessage:alert];
+			[AlertUtils showModalAlertMessage:@"Login failure.  Please try again."];
+		}
+
+	}
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -311,11 +334,12 @@
 	static NSString *LoginTableIdentifier = @"LoginTableIdentifier";
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:LoginTableIdentifier];
 	
+	NSInteger row = indexPath.row;
+
 	if (cell == nil) {
 		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:LoginTableIdentifier] autorelease];
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 		
-		NSInteger row = indexPath.row;
 		
 		UITextField *loginTextField = [[UITextField alloc] initWithFrame:CGRectMake(0.0f, 0.0f, floorf(tableView.frame.size.width / 2.0f), 21.0f)];
 		loginTextField.adjustsFontSizeToFitWidth = YES;
@@ -328,18 +352,32 @@
 		switch (row) {
 			case 0:
 				cell.textLabel.text = @"Employee Id";
-				loginTextField.returnKeyType = UIReturnKeyNext;
+				loginTextField.returnKeyType = UIReturnKeyDone;
+				loginTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+				loginTextField.text = self.empId;
 				break;
 			case 1:
 				cell.textLabel.text = @"Password";
-				loginTextField.returnKeyType = UIReturnKeyGo;
+				loginTextField.returnKeyType = UIReturnKeyDone;
 				loginTextField.secureTextEntry = YES;
+				loginTextField.text = self.password;
 				break;
 			default:
 				break;
 		}
 		cell.accessoryView = loginTextField;
 		[loginTextField release];
+	}
+	
+	switch (row) {
+		case 0:
+			((UITextField *)cell.accessoryView).text = self.empId;
+			break;
+		case 1:
+			((UITextField *)cell.accessoryView).text = self.password;
+			break;
+		default:
+			break;
 	}
 	
 	return cell;

@@ -35,5 +35,10 @@ static iPOSFacade *facade = nil;
 +(id) allocWithZone:(NSZone *)zone {
     return [[self sharedInstance] retain];}
 
+#pragma mark -
+#pragma mark Instance methods
+- (BOOL) login: (NSString *) username password: (NSString *) password {
+	return TRUE;
+}
 
 @end
