@@ -1,16 +1,16 @@
 //
-//  MainMenuViewController.m
+//  ReceiptOptionsViewController.m
 //  iPOS
 //
 //  Created by Steven McCoole on 2/10/11.
 //  Copyright 2011 NA. All rights reserved.
 //
 
-#import "MainMenuViewController.h"
+#import "ReceiptOptionsViewController.h"
 #include "PlaceHolderView.h"
 
 
-@implementation MainMenuViewController
+@implementation ReceiptOptionsViewController
 
 #pragma mark Constructors
 - (id)init
@@ -21,7 +21,7 @@
     
 	// Set up the items that will appear in a navigation controller bar if
 	// this view controller is added to a UINavigationController.
-	[[self navigationItem] setTitle:@"iPOS"];
+	[[self navigationItem] setTitle:@"Receipt"];
 
 	// Set up the right side button if desired, edit button for example.
 	//[[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
@@ -48,7 +48,7 @@
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
 	[self setView:[[[PlaceHolderView alloc] initWithFrame:CGRectZero] autorelease]];
-	self.contentView.placeHolderLabel.text = @"Main Menu";
+	self.contentView.placeHolderLabel.text = @"Receipt Options";
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.

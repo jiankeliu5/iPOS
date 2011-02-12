@@ -1,16 +1,16 @@
 //
-//  MainMenuViewController.m
+//  AddItemViewController.m
 //  iPOS
 //
 //  Created by Steven McCoole on 2/10/11.
 //  Copyright 2011 NA. All rights reserved.
 //
 
-#import "MainMenuViewController.h"
+#import "AddItemViewController.h"
 #include "PlaceHolderView.h"
 
 
-@implementation MainMenuViewController
+@implementation AddItemViewController
 
 #pragma mark Constructors
 - (id)init
@@ -48,7 +48,7 @@
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
 	[self setView:[[[PlaceHolderView alloc] initWithFrame:CGRectZero] autorelease]];
-	self.contentView.placeHolderLabel.text = @"Main Menu";
+	self.contentView.placeHolderLabel.text = @"Add Item";
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.

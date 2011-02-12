@@ -17,6 +17,13 @@
 		B47AA7EF12F7DD1000AAD34C /* PlaceHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B47AA7EE12F7DD1000AAD34C /* PlaceHolderView.m */; };
 		B47AA7F612F7DD7200AAD34C /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B47AA7F512F7DD7200AAD34C /* LoginViewController.m */; };
 		B4B367C612F936AC00F37FE9 /* DrawUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B4B367C512F936AC00F37FE9 /* DrawUtils.m */; };
+		B4C469C0130701DF001EADE4 /* AddItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469BF130701DF001EADE4 /* AddItemViewController.m */; };
+		B4C469D513070300001EADE4 /* CustomerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469D413070300001EADE4 /* CustomerViewController.m */; };
+		B4C469E11307047F001EADE4 /* CartItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469E01307047F001EADE4 /* CartItemsViewController.m */; };
+		B4C469E913070C48001EADE4 /* TenderPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469E813070C48001EADE4 /* TenderPaymentViewController.m */; };
+		B4C469FB13070D84001EADE4 /* ReceiptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469FA13070D84001EADE4 /* ReceiptViewController.m */; };
+		B4C46A091307141B001EADE4 /* ItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46A081307141B001EADE4 /* ItemDetailViewController.m */; };
+		B4C46A131307199F001EADE4 /* SignatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46A121307199F001EADE4 /* SignatureViewController.m */; };
 		D61C3C3212FCA530003C3A47 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3112FCA530003C3A47 /* Customer.m */; };
 		D61C3C3512FCA535003C3A47 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3412FCA535003C3A47 /* Order.m */; };
 		D61C3C3A12FCA55D003C3A47 /* ManagerApprovalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3912FCA55D003C3A47 /* ManagerApprovalInfo.m */; };
@@ -101,6 +108,20 @@
 		B47AA7F512F7DD7200AAD34C /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		B4B367C412F936AC00F37FE9 /* DrawUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawUtils.h; sourceTree = "<group>"; };
 		B4B367C512F936AC00F37FE9 /* DrawUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawUtils.m; sourceTree = "<group>"; };
+		B4C469BE130701DF001EADE4 /* AddItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddItemViewController.h; sourceTree = "<group>"; };
+		B4C469BF130701DF001EADE4 /* AddItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddItemViewController.m; sourceTree = "<group>"; };
+		B4C469D313070300001EADE4 /* CustomerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerViewController.h; sourceTree = "<group>"; };
+		B4C469D413070300001EADE4 /* CustomerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerViewController.m; sourceTree = "<group>"; };
+		B4C469DF1307047F001EADE4 /* CartItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartItemsViewController.h; sourceTree = "<group>"; };
+		B4C469E01307047F001EADE4 /* CartItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartItemsViewController.m; sourceTree = "<group>"; };
+		B4C469E713070C48001EADE4 /* TenderPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TenderPaymentViewController.h; sourceTree = "<group>"; };
+		B4C469E813070C48001EADE4 /* TenderPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TenderPaymentViewController.m; sourceTree = "<group>"; };
+		B4C469F913070D84001EADE4 /* ReceiptOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptOptionsViewController.h; sourceTree = "<group>"; };
+		B4C469FA13070D84001EADE4 /* ReceiptViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptViewController.m; sourceTree = "<group>"; };
+		B4C46A071307141B001EADE4 /* ItemDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemDetailViewController.h; sourceTree = "<group>"; };
+		B4C46A081307141B001EADE4 /* ItemDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemDetailViewController.m; sourceTree = "<group>"; };
+		B4C46A111307199F001EADE4 /* SignatureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignatureViewController.h; sourceTree = "<group>"; };
+		B4C46A121307199F001EADE4 /* SignatureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignatureViewController.m; sourceTree = "<group>"; };
 		B4F3EB5B12FE29AB000D96EE /* iPOS Simulator-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iPOS Simulator-Info.plist"; sourceTree = "<group>"; };
 		B4F3EBA412FE2A08000D96EE /* iPOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4F3EBA612FE2A08000D96EE /* Info copy 3.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info copy 3.plist"; sourceTree = "<group>"; };
@@ -249,6 +270,13 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B4C46A0C1307148B001EADE4 /* Signature */,
+				B4C46A021307140D001EADE4 /* ItemDetail */,
+				B4C469F013070D0D001EADE4 /* ReceiptOptions */,
+				B4C469E613070C3A001EADE4 /* TenderPayment */,
+				B4C469DA13070471001EADE4 /* CartItems */,
+				B4C469C1130702E0001EADE4 /* Customer */,
+				B4C469BB1307011B001EADE4 /* AddItem */,
 				B40B942E1304EF1A0024C2DC /* MainMenu */,
 				B4B367C312F9368D00F37FE9 /* Util */,
 				B47AA7EB12F7DCE500AAD34C /* Login */,
@@ -370,6 +398,69 @@
 			);
 			name = Util;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		B4C469BB1307011B001EADE4 /* AddItem */ = {
+			isa = PBXGroup;
+			children = (
+				B4C469BE130701DF001EADE4 /* AddItemViewController.h */,
+				B4C469BF130701DF001EADE4 /* AddItemViewController.m */,
+			);
+			name = AddItem;
+			sourceTree = "<group>";
+		};
+		B4C469C1130702E0001EADE4 /* Customer */ = {
+			isa = PBXGroup;
+			children = (
+				B4C469D313070300001EADE4 /* CustomerViewController.h */,
+				B4C469D413070300001EADE4 /* CustomerViewController.m */,
+			);
+			name = Customer;
+			sourceTree = "<group>";
+		};
+		B4C469DA13070471001EADE4 /* CartItems */ = {
+			isa = PBXGroup;
+			children = (
+				B4C469DF1307047F001EADE4 /* CartItemsViewController.h */,
+				B4C469E01307047F001EADE4 /* CartItemsViewController.m */,
+			);
+			name = CartItems;
+			sourceTree = "<group>";
+		};
+		B4C469E613070C3A001EADE4 /* TenderPayment */ = {
+			isa = PBXGroup;
+			children = (
+				B4C469E713070C48001EADE4 /* TenderPaymentViewController.h */,
+				B4C469E813070C48001EADE4 /* TenderPaymentViewController.m */,
+			);
+			name = TenderPayment;
+			sourceTree = "<group>";
+		};
+		B4C469F013070D0D001EADE4 /* ReceiptOptions */ = {
+			isa = PBXGroup;
+			children = (
+				B4C469F913070D84001EADE4 /* ReceiptOptionsViewController.h */,
+				B4C469FA13070D84001EADE4 /* ReceiptViewController.m */,
+			);
+			name = ReceiptOptions;
+			sourceTree = "<group>";
+		};
+		B4C46A021307140D001EADE4 /* ItemDetail */ = {
+			isa = PBXGroup;
+			children = (
+				B4C46A071307141B001EADE4 /* ItemDetailViewController.h */,
+				B4C46A081307141B001EADE4 /* ItemDetailViewController.m */,
+			);
+			name = ItemDetail;
+			sourceTree = "<group>";
+		};
+		B4C46A0C1307148B001EADE4 /* Signature */ = {
+			isa = PBXGroup;
+			children = (
+				B4C46A111307199F001EADE4 /* SignatureViewController.h */,
+				B4C46A121307199F001EADE4 /* SignatureViewController.m */,
+			);
+			name = Signature;
 			sourceTree = "<group>";
 		};
 		D60EE18B12FB6F0C00885396 /* Utility */ = {
@@ -740,6 +831,13 @@
 				D6BA07F91302583500B77769 /* Reachability.m in Sources */,
 				B40B94251304ED500024C2DC /* AlertUtils.m in Sources */,
 				B40B94311304EF620024C2DC /* MainMenuViewController.m in Sources */,
+				B4C469C0130701DF001EADE4 /* AddItemViewController.m in Sources */,
+				B4C469D513070300001EADE4 /* CustomerViewController.m in Sources */,
+				B4C469E11307047F001EADE4 /* CartItemsViewController.m in Sources */,
+				B4C469E913070C48001EADE4 /* TenderPaymentViewController.m in Sources */,
+				B4C469FB13070D84001EADE4 /* ReceiptViewController.m in Sources */,
+				B4C46A091307141B001EADE4 /* ItemDetailViewController.m in Sources */,
+				B4C46A131307199F001EADE4 /* SignatureViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
