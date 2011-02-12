@@ -61,6 +61,8 @@
 	[self setPassword:nil];
 	[self setStoreId:nil];
 	[self setDeviceId:nil];
+	
+	[self setLoginTableView:nil];
     
     [scannerReaderDelegate release];
     
@@ -79,8 +81,10 @@
 {
 	
 	[self setView:[[[UIView alloc] initWithFrame:CGRectZero] autorelease]];
+	self.view.backgroundColor = [UIColor blackColor];
 	
 	[self setLoginTableView:[[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped] autorelease]];
+	self.loginTableView.backgroundColor = [UIColor clearColor];
 	
 	[self.view addSubview:self.loginTableView];
 	
@@ -91,9 +95,6 @@
 	// Do this at the beginning
 	[super viewDidLoad];
 	
-	self.view.backgroundColor = [UIColor blackColor];
-	
-	self.loginTableView.backgroundColor = [UIColor clearColor];
 	self.loginTableView.dataSource = self;
 	self.loginTableView.delegate = self;    	
 }

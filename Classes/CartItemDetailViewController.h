@@ -1,5 +1,5 @@
 //
-//  ItemDetailViewController.h
+//  CartItemDetailViewController.h
 //  iPOS
 //
 //  Created by Steven McCoole on 2/10/11.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "iPOSFacade.h"
 
-@interface ItemDetailViewController : UIViewController {
+@interface CartItemDetailViewController : UIViewController {
 	iPOSFacade *facade;
 }
 

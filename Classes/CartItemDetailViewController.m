@@ -1,16 +1,16 @@
 //
-//  ItemDetailViewController.m
+//  CartItemDetailViewController.m
 //  iPOS
 //
 //  Created by Steven McCoole on 2/10/11.
 //  Copyright 2011 NA. All rights reserved.
 //
 
-#import "ItemDetailViewController.h"
+#import "CartItemDetailViewController.h"
 #include "PlaceHolderView.h"
 
 
-@implementation ItemDetailViewController
+@implementation CartItemDetailViewController
 
 #pragma mark Constructors
 - (id)init
@@ -48,7 +48,7 @@
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
 	[self setView:[[[PlaceHolderView alloc] initWithFrame:CGRectZero] autorelease]];
-	self.contentView.placeHolderLabel.text = @"Item Detail";
+	self.contentView.placeHolderLabel.text = @"Cart Item Detail";
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.

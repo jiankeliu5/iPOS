@@ -11,6 +11,16 @@
 
 @interface MainMenuViewController : UIViewController {
 	iPOSFacade *facade;
+	
+	UILabel *scanItemLabel;
+	UIButton *lookupItemButton;
+	UIButton *lookupOrderButton;
+	UIButton *customerButton;
 }
+
+@property (nonatomic, retain) UILabel *scanItemLabel;
+@property (nonatomic, retain) UIButton *lookupItemButton;
+@property (nonatomic, retain) UIButton *lookupOrderButton;
+@property (nonatomic, retain) UIButton *customerButton;
 
 @end
