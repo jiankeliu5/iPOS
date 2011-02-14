@@ -10,11 +10,9 @@
 #include "PlaceHolderView.h"
 
 @interface MainMenuViewController() <UITextFieldDelegate>
-	
-- (void) lookupItemPressed;
-- (void) lookupOrderPressed;
 - (void) customerPressed;
-
+- (void) keyboardWillShow:(NSNotification *)notification;
+- (void) keyboardWillHide:(NSNotification *)notification;
 @end
 
 
@@ -22,11 +20,14 @@
 
 @synthesize scanItemLabel;
 @synthesize lookupItemField;
-@synthesize lookupOrderButton;
+@synthesize lookupOrderField;
 @synthesize customerButton;
+
+@synthesize currentFirstResponder;
 
 @synthesize lookupItemSku;
 @synthesize scannedItemSku;
+@synthesize lookupOrderNum;
 
 #pragma mark Constructors
 - (id)init
@@ -48,13 +49,18 @@
 }
 
 - (void)dealloc {
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:self]; 
+	[self setCurrentFirstResponder:nil];
+	 
 	[self setScanItemLabel:nil];
 	[self setLookupItemField:nil];
-	[self setLookupOrderButton:nil];
+	//[self setLookupOrderField:nil];
 	[self setCustomerButton:nil];
 	
 	[self setLookupItemSku:nil];
 	[self setScannedItemSku:nil];
+	[self setLookupOrderNum:nil];
 	
     [super dealloc];
 }
@@ -95,22 +101,28 @@
 	self.scanItemLabel.textAlignment = UITextAlignmentCenter;
 	[self.view addSubview:self.scanItemLabel];
 	
-	[self setLookupItemField:[[[UITextField alloc] initWithFrame:CGRectZero] autorelease]];
+	[self setLookupItemField:[[[ExtUITextField alloc] initWithFrame:CGRectZero] autorelease]];
 	self.lookupItemField.textColor = [UIColor blackColor];
 	self.lookupItemField.borderStyle = UITextBorderStyleRoundedRect;
 	self.lookupItemField.textAlignment = UITextAlignmentCenter;
 	self.lookupItemField.clearsOnBeginEditing = YES;
 	self.lookupItemField.placeholder = @"Look Up Item";
+	self.lookupItemField.tagName = @"LookupItem";
 	self.lookupItemField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	
 	[self.view addSubview:self.lookupItemField];
 	
-	// Lookup Order will be in a later version
-	//[self setLookupOrderButton:[UIButton buttonWithType:UIButtonTypeRoundedRect]];
-	//[self.view addSubview:self.lookupOrderButton];
-	//self.lookupOrderButton.buttonType = UIButtonTypeRoundedRect;
-	//[self.lookupOrderButton setTitle:@"Look Up Order" forState:UIControlStateNormal];
-	//[self.lookupOrderButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+	// Look up order will be in a later release
+	//[self setLookupOrderField:[[[ExtUITextField alloc] initWithFrame:CGRectZero] autorelease]];
+	//self.lookupOrderField.textColor = [UIColor blackColor];
+	//self.lookupOrderField.borderStyle = UITextBorderStyleRoundedRect;
+	//self.lookupOrderField.textAlignment = UITextAlignmentCenter;
+	//self.lookupOrderField.clearsOnBeginEditing = YES;
+	//self.lookupOrderField.placeholder = @"Look Up Order";
+	//self.lookupOrderField.tagName = @"LookupOrder";
+	//self.lookupOrderField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+	
+	//[self.view addSubview:self.lookupOrderField];
 	
 	[self setCustomerButton:[UIButton buttonWithType:UIButtonTypeRoundedRect]];
 	[self.customerButton setTitle:@"Add Customer" forState:UIControlStateNormal];
@@ -129,7 +141,7 @@
 	}
 	
 	self.lookupItemField.delegate = self;
-	[self.lookupOrderButton addTarget:self action:@selector(lookupOrderPressed) forControlEvents:UIControlEventTouchUpInside];
+	//self.lookupOrderField.delegate = self;
 	[self.customerButton addTarget:self action:@selector(customerPressed) forControlEvents:UIControlEventTouchUpInside];
 	
 }
@@ -155,44 +167,83 @@
 	
 	self.lookupItemField.frame = CGRectOffset(self.scanItemLabel.frame, 0.0f, labelButtonSpacing);
 	
-	//self.lookupOrderButton.frame = CGRectOffset(self.lookupItemButton.frame, 0.0f, labelButtonSpacing);
+	//self.lookupOrderField.frame = CGRectOffset(self.lookupItemField.frame, 0.0f, labelButtonSpacing);
 	
-	// Change to work from lookupOrderButton position when that is implemented
+	// Change to work from lookupOrderField position when that is implemented
 	self.customerButton.frame = CGRectOffset(self.lookupItemField.frame, 0.0f, labelButtonSpacing);
 	
 	// Do this last
 	[super viewWillAppear:animated];
 }
+	 
+- (void)viewDidAppear:(BOOL)animated {
+	// Call super at the beginning
+	[super viewDidAppear:animated];
+	NSNotificationCenter *noteCenter = [NSNotificationCenter defaultCenter];
+	[noteCenter addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+	[noteCenter addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+	if ([self.currentFirstResponder canResignFirstResponder]) {
+		[self.currentFirstResponder resignFirstResponder];
+	}
+	
+	// Do this at the end
+	[super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+	// Do this at the end
+	[super viewDidDisappear:animated];
+}
 
 #pragma mark -
 #pragma mark UIButton callbacks
-- (void)lookupItemPressed {
-}
-
-- (void)lookupOrderPressed {
-}
 
 - (void)customerPressed {
 }
 
 #pragma mark -
-#pragma mark UITextFieldDelegate
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+#pragma mark ExtUITextFieldDelegate
+- (BOOL)textFieldShouldBeginEditing:(ExtUITextField *)textField {
+	self.currentFirstResponder = textField;
 	return YES;
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
+- (void)textFieldDidBeginEditing:(ExtUITextField *)textField {
+	self.currentFirstResponder = textField;
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-	// Do the work here
+- (void)textFieldDidEndEditing:(ExtUITextField *)textField {
+	
+	self.currentFirstResponder = nil;
+	
+	// Set the values and do the work here
+	if ([textField.tagName isEqualToString:@"LookupItem"]) {
+		self.lookupItemSku = textField.text;
+		// Call the service and display the overlay view
+	} else if ([textField.tagName isEqualToString:@"LookupOrder"]) {
+		self.lookupOrderNum = textField.text;
+		// Call the service and set up the order review (later revision)
+	}
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+- (BOOL)textFieldShouldReturn:(ExtUITextField *)textField {
 	[textField resignFirstResponder];
 	return YES;
 }
 
+#pragma mark -
+#pragma mark Keyboard Management
+- (void)keyboardWillShow:(NSNotification *)notification {
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+}
 
 @end

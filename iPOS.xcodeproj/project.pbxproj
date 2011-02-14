@@ -25,6 +25,7 @@
 		B4C46A091307141B001EADE4 /* CartItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46A081307141B001EADE4 /* CartItemDetailViewController.m */; };
 		B4C46A131307199F001EADE4 /* SignatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46A121307199F001EADE4 /* SignatureViewController.m */; };
 		B4C46B0613075F5D001EADE4 /* AddItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46B0513075F5D001EADE4 /* AddItemView.m */; };
+		B4C46B981308BBE7001EADE4 /* ExtUITextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46B971308BBE7001EADE4 /* ExtUITextField.m */; };
 		D61C3C3212FCA530003C3A47 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3112FCA530003C3A47 /* Customer.m */; };
 		D61C3C3512FCA535003C3A47 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3412FCA535003C3A47 /* Order.m */; };
 		D61C3C3A12FCA55D003C3A47 /* ManagerApprovalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3912FCA55D003C3A47 /* ManagerApprovalInfo.m */; };
@@ -125,6 +126,8 @@
 		B4C46A121307199F001EADE4 /* SignatureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignatureViewController.m; sourceTree = "<group>"; };
 		B4C46B0413075F5D001EADE4 /* AddItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddItemView.h; sourceTree = "<group>"; };
 		B4C46B0513075F5D001EADE4 /* AddItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddItemView.m; sourceTree = "<group>"; };
+		B4C46B961308BBE7001EADE4 /* ExtUITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtUITextField.h; sourceTree = "<group>"; };
+		B4C46B971308BBE7001EADE4 /* ExtUITextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtUITextField.m; sourceTree = "<group>"; };
 		B4F3EB5B12FE29AB000D96EE /* iPOS Simulator-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iPOS Simulator-Info.plist"; sourceTree = "<group>"; };
 		B4F3EBA412FE2A08000D96EE /* iPOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4F3EBA612FE2A08000D96EE /* Info copy 3.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info copy 3.plist"; sourceTree = "<group>"; };
@@ -273,6 +276,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B4C46B951308BBCB001EADE4 /* Components */,
 				B4C46A0C1307148B001EADE4 /* Signature */,
 				B4C469F013070D0D001EADE4 /* ReceiptOptions */,
 				B4C469E613070C3A001EADE4 /* TenderPayment */,
@@ -458,6 +462,15 @@
 				B4C46A121307199F001EADE4 /* SignatureViewController.m */,
 			);
 			name = Signature;
+			sourceTree = "<group>";
+		};
+		B4C46B951308BBCB001EADE4 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				B4C46B961308BBE7001EADE4 /* ExtUITextField.h */,
+				B4C46B971308BBE7001EADE4 /* ExtUITextField.m */,
+			);
+			name = Components;
 			sourceTree = "<group>";
 		};
 		D60EE18B12FB6F0C00885396 /* Utility */ = {
@@ -836,6 +849,7 @@
 				B4C46A091307141B001EADE4 /* CartItemDetailViewController.m in Sources */,
 				B4C46A131307199F001EADE4 /* SignatureViewController.m in Sources */,
 				B4C46B0613075F5D001EADE4 /* AddItemView.m in Sources */,
+				B4C46B981308BBE7001EADE4 /* ExtUITextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -179,7 +179,7 @@
 	[super viewDidDisappear:animated];
 }
 
-- (BOOL) houldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
 	// This will keep the interface locked to portrait
 	//return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
