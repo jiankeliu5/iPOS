@@ -13,14 +13,21 @@
 	iPOSFacade *facade;
 	
 	UILabel *scanItemLabel;
-	UIButton *lookupItemButton;
+	UITextField *lookupItemField;
 	UIButton *lookupOrderButton;
 	UIButton *customerButton;
+	
+	NSString *lookupItemSku;
+	NSString *scannedItemSku;
+	
 }
 
 @property (nonatomic, retain) UILabel *scanItemLabel;
-@property (nonatomic, retain) UIButton *lookupItemButton;
+@property (nonatomic, retain) UITextField *lookupItemField;
 @property (nonatomic, retain) UIButton *lookupOrderButton;
 @property (nonatomic, retain) UIButton *customerButton;
+
+@property (nonatomic, copy) NSString *lookupItemSku;
+@property (nonatomic, copy) NSString *scannedItemSku;
 
 @end

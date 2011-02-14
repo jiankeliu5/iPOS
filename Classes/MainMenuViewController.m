@@ -9,7 +9,7 @@
 #import "MainMenuViewController.h"
 #include "PlaceHolderView.h"
 
-@interface MainMenuViewController()
+@interface MainMenuViewController() <UITextFieldDelegate>
 	
 - (void) lookupItemPressed;
 - (void) lookupOrderPressed;
@@ -21,9 +21,12 @@
 @implementation MainMenuViewController
 
 @synthesize scanItemLabel;
-@synthesize lookupItemButton;
+@synthesize lookupItemField;
 @synthesize lookupOrderButton;
 @synthesize customerButton;
+
+@synthesize lookupItemSku;
+@synthesize scannedItemSku;
 
 #pragma mark Constructors
 - (id)init
@@ -45,6 +48,14 @@
 }
 
 - (void)dealloc {
+	[self setScanItemLabel:nil];
+	[self setLookupItemField:nil];
+	[self setLookupOrderButton:nil];
+	[self setCustomerButton:nil];
+	
+	[self setLookupItemSku:nil];
+	[self setScannedItemSku:nil];
+	
     [super dealloc];
 }
 
@@ -84,14 +95,15 @@
 	self.scanItemLabel.textAlignment = UITextAlignmentCenter;
 	[self.view addSubview:self.scanItemLabel];
 	
-	[self setLookupItemButton:[UIButton buttonWithType:UIButtonTypeRoundedRect]];
-	//self.lookupItemButton.backgroundColor = [UIColor whiteColor];
-	//self.lookupItemButton.titleLabel.textColor = [UIColor blackColor];
-	//self.lookupItemButton.titleLabel.textAlignment = UITextAlignmentCenter;
-	[self.lookupItemButton setTitle:@"Look Up Item" forState:UIControlStateNormal];
-	[self.lookupItemButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+	[self setLookupItemField:[[[UITextField alloc] initWithFrame:CGRectZero] autorelease]];
+	self.lookupItemField.textColor = [UIColor blackColor];
+	self.lookupItemField.borderStyle = UITextBorderStyleRoundedRect;
+	self.lookupItemField.textAlignment = UITextAlignmentCenter;
+	self.lookupItemField.clearsOnBeginEditing = YES;
+	self.lookupItemField.placeholder = @"Look Up Item";
+	self.lookupItemField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	
-	[self.view addSubview:self.lookupItemButton];
+	[self.view addSubview:self.lookupItemField];
 	
 	// Lookup Order will be in a later version
 	//[self setLookupOrderButton:[UIButton buttonWithType:UIButtonTypeRoundedRect]];
@@ -116,7 +128,7 @@
 		[self.navigationController setNavigationBarHidden:NO];
 	}
 	
-	[self.lookupItemButton addTarget:self action:@selector(lookupItemPressed) forControlEvents:UIControlEventTouchUpInside];
+	self.lookupItemField.delegate = self;
 	[self.lookupOrderButton addTarget:self action:@selector(lookupOrderPressed) forControlEvents:UIControlEventTouchUpInside];
 	[self.customerButton addTarget:self action:@selector(customerPressed) forControlEvents:UIControlEventTouchUpInside];
 	
@@ -141,12 +153,12 @@
 	self.scanItemLabel.frame = CGRectMake(0.0f, 0.0f, labelButtonWidth, 40.0f);
 	self.scanItemLabel.center = CGPointMake((viewBounds.size.width / 2.0f), labelButtonSpacing);
 	
-	self.lookupItemButton.frame = CGRectOffset(self.scanItemLabel.frame, 0.0f, labelButtonSpacing);
+	self.lookupItemField.frame = CGRectOffset(self.scanItemLabel.frame, 0.0f, labelButtonSpacing);
 	
 	//self.lookupOrderButton.frame = CGRectOffset(self.lookupItemButton.frame, 0.0f, labelButtonSpacing);
 	
 	// Change to work from lookupOrderButton position when that is implemented
-	self.customerButton.frame = CGRectOffset(self.lookupItemButton.frame, 0.0f, labelButtonSpacing);
+	self.customerButton.frame = CGRectOffset(self.lookupItemField.frame, 0.0f, labelButtonSpacing);
 	
 	// Do this last
 	[super viewWillAppear:animated];
@@ -162,6 +174,24 @@
 }
 
 - (void)customerPressed {
+}
+
+#pragma mark -
+#pragma mark UITextFieldDelegate
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+	return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+	// Do the work here
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+	[textField resignFirstResponder];
+	return YES;
 }
 
 

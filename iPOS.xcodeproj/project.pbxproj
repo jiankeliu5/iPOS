@@ -24,6 +24,7 @@
 		B4C469FB13070D84001EADE4 /* ReceiptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469FA13070D84001EADE4 /* ReceiptViewController.m */; };
 		B4C46A091307141B001EADE4 /* CartItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46A081307141B001EADE4 /* CartItemDetailViewController.m */; };
 		B4C46A131307199F001EADE4 /* SignatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46A121307199F001EADE4 /* SignatureViewController.m */; };
+		B4C46B0613075F5D001EADE4 /* AddItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46B0513075F5D001EADE4 /* AddItemView.m */; };
 		D61C3C3212FCA530003C3A47 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3112FCA530003C3A47 /* Customer.m */; };
 		D61C3C3512FCA535003C3A47 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3412FCA535003C3A47 /* Order.m */; };
 		D61C3C3A12FCA55D003C3A47 /* ManagerApprovalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3912FCA55D003C3A47 /* ManagerApprovalInfo.m */; };
@@ -122,6 +123,8 @@
 		B4C46A081307141B001EADE4 /* CartItemDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartItemDetailViewController.m; sourceTree = "<group>"; };
 		B4C46A111307199F001EADE4 /* SignatureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignatureViewController.h; sourceTree = "<group>"; };
 		B4C46A121307199F001EADE4 /* SignatureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignatureViewController.m; sourceTree = "<group>"; };
+		B4C46B0413075F5D001EADE4 /* AddItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddItemView.h; sourceTree = "<group>"; };
+		B4C46B0513075F5D001EADE4 /* AddItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddItemView.m; sourceTree = "<group>"; };
 		B4F3EB5B12FE29AB000D96EE /* iPOS Simulator-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iPOS Simulator-Info.plist"; sourceTree = "<group>"; };
 		B4F3EBA412FE2A08000D96EE /* iPOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4F3EBA612FE2A08000D96EE /* Info copy 3.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info copy 3.plist"; sourceTree = "<group>"; };
@@ -404,6 +407,8 @@
 			children = (
 				B4C469BE130701DF001EADE4 /* AddItemViewController.h */,
 				B4C469BF130701DF001EADE4 /* AddItemViewController.m */,
+				B4C46B0413075F5D001EADE4 /* AddItemView.h */,
+				B4C46B0513075F5D001EADE4 /* AddItemView.m */,
 			);
 			name = AddItem;
 			sourceTree = "<group>";
@@ -830,6 +835,7 @@
 				B4C469FB13070D84001EADE4 /* ReceiptViewController.m in Sources */,
 				B4C46A091307141B001EADE4 /* CartItemDetailViewController.m in Sources */,
 				B4C46A131307199F001EADE4 /* SignatureViewController.m in Sources */,
+				B4C46B0613075F5D001EADE4 /* AddItemView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
