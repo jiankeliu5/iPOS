@@ -11,7 +11,7 @@
 
 @implementation SessionInfo
 
-@synthesize deviceId;
+@synthesize employeeId, storeId, deviceId, serverSessionId;
 
 #pragma mark -
 #pragma mark Initializing and Memory Mgmt
@@ -29,7 +29,10 @@
 }
 
 -(void) dealloc {
+    [storeId release];
+    [employeeId release];
     [deviceId release];
+    [serverSessionId release];
     
     [super dealloc];
 }

@@ -46,7 +46,7 @@
 
 
 #pragma mark Inventory Management
--(void) lookupProductItem:(NSString *) itemSku;
+-(ProductItem *) lookupProductItem:(NSString *) itemSku;
 -(BOOL) isProductItemAvailable: (NSString *) itemId forQuantity: (NSDecimal *) quantity;
 
 @end

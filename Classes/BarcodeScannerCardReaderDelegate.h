@@ -14,8 +14,11 @@
 @interface BarcodeScannerCardReaderDelegate : NSObject <LineaDelegate> {
     Linea *linea;
     
-    // TODO: Reference to UI controllers needed to pass data from the device to UI views. (eg:  ItemDetailsController, PaymentProcessController)
+    // TODO:  Referencing the navigationController may be sufficient.
+    UINavigationController *navigationController;
 }
+
+@property (nonatomic, retain) UINavigationController *navigationController;
 
 -(void) connectToDevice;
 - (void) disconnectFromDevice;

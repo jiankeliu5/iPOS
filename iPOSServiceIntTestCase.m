@@ -7,6 +7,7 @@
 //
 
 #import "iPOSServiceIntTestCase.h"
+#import "SessionInfo.h"
 
 
 @implementation iPOSServiceIntTestCase
@@ -14,6 +15,7 @@
 #if USE_APPLICATION_UNIT_TEST     // all code under test is in the iPhone Application
 
 - (void) testMath {
+    SessionInfo *sessionInfo = [[SessionInfo alloc] init];
     
     STAssertTrue((1+1)==2, @"Compiler isn't feeling well today :-(" );
     

@@ -8,13 +8,11 @@
 
 #import "SampleUnitTestCase.h"
 
-
 @implementation SampleUnitTestCase
 
 #if USE_APPLICATION_UNIT_TEST     // all code under test is in the iPhone Application
 
-- (void) testMath {
-    
+- (void) testMath {    
     STAssertTrue((1+1)==2, @"Compiler isn't feeling well today :-(" );
     
 }

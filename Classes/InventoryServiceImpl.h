@@ -11,7 +11,11 @@
 #import "InventoryService.h"
 
 @interface InventoryServiceImpl : NSObject <InventoryService> {
-
+    NSString *baseUrl;
+    NSString *posInventoryMgmtUri;
 }
+
+@property(nonatomic, retain) NSString *baseUrl;
+@property(nonatomic, retain) NSString *posInventoryMgmtUri;
 
 @end

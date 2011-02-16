@@ -10,9 +10,15 @@
 
 
 @interface SessionInfo : NSObject {
+    NSNumber *employeeId;
+    NSNumber *storeId;
     NSString *deviceId;
+    NSString *serverSessionId;
 }
 
+@property (nonatomic, retain) NSNumber *employeeId;
+@property (nonatomic, retain) NSNumber *storeId;
 @property (nonatomic, retain) NSString *deviceId;
+@property (nonatomic, retain) NSString *serverSessionId;
 
 @end

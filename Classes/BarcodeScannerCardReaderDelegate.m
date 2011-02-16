@@ -11,6 +11,7 @@
 
 @implementation BarcodeScannerCardReaderDelegate
 
+@synthesize navigationController;
 
 #pragma mark Initializer and Memory mgmt
 -(id) init {
@@ -28,6 +29,8 @@
 }
 
 -(void) dealloc {
+    [navigationController release];
+    
     [self disconnectFromDevice];
     [linea removeDelegate:self];
     [linea release];

@@ -11,8 +11,11 @@
 #import "iPOSService.h"
 
 @interface iPOSServiceImpl : NSObject <iPOSService> {
-
-
+    NSString *baseUrl;
+    NSString *posSessionMgmtUri;
 }
+
+@property(nonatomic,retain) NSString *baseUrl;
+@property(nonatomic, retain) NSString *posSessionMgmtUri;
 
 @end

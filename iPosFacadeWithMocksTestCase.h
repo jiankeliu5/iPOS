@@ -1,8 +1,8 @@
 //
-//  SampleUnitTestCase.h
+//  iPosFacadeWithMocksTestCase.h
 //  iPOS
 //
-//  Created by Torey Lomenda on 2/2/11.
+//  Created by Torey Lomenda on 2/15/11.
 //  Copyright 2011 Object Partners Inc. All rights reserved.
 //
 //  See Also: http://developer.apple.com/iphone/library/documentation/Xcode/Conceptual/iphone_development/135-Unit_Testing_Applications/unit_testing_applications.html
@@ -17,12 +17,15 @@
 //#import "application_headers" as required
 
 
-@interface SampleUnitTestCase : SenTestCase {
+@interface iPosFacadeWithMocksTestCase : SenTestCase {
 
 }
 
 #if USE_APPLICATION_UNIT_TEST
-- (void) testMath;              // simple standalone test
+- (void) testPosFacadeLogin;
+- (void) testPosFacadeLogout;
+
+- (void) testPosFacadeLookupProductItem;
 #else
 #endif
 
