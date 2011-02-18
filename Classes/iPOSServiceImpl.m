@@ -24,15 +24,17 @@
         return nil;
     }
     
-    // TODO: Replace these with the actual service URLs.  Perhaps set a Preprocessor macro
-#if IPOS_USE_DEMO_SERVICES
-    self.baseUrl = @"http://ipad.demo.objectpartners.com:8080/ipos-demo-services-0.1/webservices";
-    self.posSessionMgmtUri = @"ipos/SessionService";
-#else
-    self.baseUrl = @"http://tsipos01/webservices";
-    self.posSessionMgmtUri = @"ipos/SessionService";
-#endif
+    // Get user preference for demo mode
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL enabled = [defaults boolForKey:@"enableDemoMode"];
     
+    if (enabled) {
+        self.baseUrl = @"http://ipad.demo.objectpartners.com:8080/ipos-demo-services-0.1/webservices";
+        self.posSessionMgmtUri = @"ipos/SessionService";
+    } else {
+        self.baseUrl = @"http://tsipos01/webservices";
+        self.posSessionMgmtUri = @"ipos/SessionService";
+    }
     
     return self;
 }

@@ -17,6 +17,13 @@
 #pragma mark Constructors
 - (void) applicationDidFinishLaunching:(UIApplication*)application 
 {   
+    // Set the application setting defaults
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *appDefaults = [NSDictionary dictionaryWithObject:@"YES" forKey:@"enableDemoMode"];
+    
+    [defaults registerDefaults:appDefaults];
+    [defaults synchronize];
+    
     // Create window
     window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 	

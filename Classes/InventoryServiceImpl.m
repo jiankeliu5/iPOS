@@ -24,13 +24,17 @@
         return nil;
     }
     
-#if IPOS_USE_DEMO_SERVICES
-    self.baseUrl = @"http://ipad.demo.objectpartners.com:8080/ipos-demo-services-0.1/webservices";
-    self.posInventoryMgmtUri = @"ipos/ItemService";
-#else
-    self.baseUrl = @"http://tsipos01/webservices";
-    self.posInventoryMgmtUri = @"ipos/ItemService";
-#endif
+    // Get user preference for demo mode
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL enabled = [defaults boolForKey:@"enableDemoMode"];
+    
+    if (enabled) {
+        self.baseUrl = @"http://ipad.demo.objectpartners.com:8080/ipos-demo-services-0.1/webservices";
+        self.posInventoryMgmtUri = @"ipos/ItemService";
+    } else {
+        self.baseUrl = @"http://tsipos01/webservices";
+        self.posInventoryMgmtUri = @"ipos/ItemService";
+    }
 
     return self;
 }
