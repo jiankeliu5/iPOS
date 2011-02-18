@@ -22,9 +22,10 @@
 }
 
 #if USE_APPLICATION_UNIT_TEST
-- (void) testAppDelegate;       // simple test on application
-#else
-- (void) testMath;              // simple standalone test
+- (void) testPosFacadeLogin;
+- (void) testPosFacadeLogout;
+
+- (void) testPosFacadeLookupProductItem;
 #endif
 
 @end

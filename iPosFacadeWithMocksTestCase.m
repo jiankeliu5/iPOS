@@ -47,17 +47,14 @@
     iPOSFacade *facade = [iPOSFacade sharedInstance];
     facade.inventoryService = [[[InventoryServiceMock alloc] init] retain];
     
-    ProductItem *productItem = [facade lookupProductItem:440915];
+    ProductItem *productItem = [facade lookupProductItem:@"440915"];
     
     STAssertEquals([productItem.itemId intValue], 283186, @"I expected this to be equal to 283186");
     STAssertEquals([productItem.storeId intValue], 1200, @"I expected this to be equal to 283186");
     STAssertEquals(productItem.description, @"Driftwood Hon. Martel", @"I expected this to be equal to 283186");
 }
 
-
-#else                           // all code under test must be linked into the Unit Test bundle
-
-#endif
+#endif // all code under test must be linked into the Unit Test bundle
 
 
 @end

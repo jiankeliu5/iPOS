@@ -26,7 +26,6 @@
 - (void) testPosFacadeLogout;
 
 - (void) testPosFacadeLookupProductItem;
-#else
 #endif
 
 @end

@@ -29,20 +29,29 @@
     BOOL enabled = [defaults boolForKey:@"enableDemoMode"];
     
     if (enabled) {
-        self.baseUrl = @"http://ipad.demo.objectpartners.com:8080/ipos-demo-services-0.1/webservices";
-        self.posSessionMgmtUri = @"ipos/SessionService";
+        [self setToDemoMode];
     } else {
-        self.baseUrl = @"http://tsipos01/webservices";
-        self.posSessionMgmtUri = @"ipos/SessionService";
+        [self setToReleaseMode];
     }
     
     return self;
 }
+
 -(void) dealloc {
     [baseUrl release];
     [posSessionMgmtUri release];
     
     [super dealloc];
+}
+
+-(void) setToDemoMode {
+    self.baseUrl = @"http://ipad.demo.objectpartners.com:8080/ipos-demo-services-0.1/webservices";
+    self.posSessionMgmtUri = @"ipos/SessionService";
+}
+
+-(void) setToReleaseMode {
+    self.baseUrl = @"http://tsipos01/webservices";
+    self.posSessionMgmtUri = @"ipos/SessionService";
 }
 
 #pragma mark -
