@@ -8,8 +8,10 @@
 
 #import "MainMenuViewController.h"
 #import "AlertUtils.h"
+#import "ProductItem.h"
 
 #include "PlaceHolderView.h"
+
 
 
 @interface MainMenuViewController() <UITextFieldDelegate>
@@ -79,13 +81,22 @@
 #pragma mark Linea Delegate
 -(void)barcodeData:(NSString *)barcode type:(int)type {
     NSMutableString *status = [[[NSMutableString alloc] init] autorelease];
-    [status setString:@""];
-	[status appendFormat:@"Type: %d\n",type];
-	[status appendFormat:@"Type text: %@\n",[linea barcodeType2Text:type]];
-	[status appendFormat:@"Barcode: %@",barcode];
+    ProductItem *item = [facade lookupProductItem:barcode];
     
-    // TODO:  This is where you will initialize and show the Item Overlay View
-    [AlertUtils showModalAlertMessage: status];
+    if (item == nil) {
+        [AlertUtils showModalAlertMessage: @"Item not found"];
+    } else {
+        // TODO:  This is where you will initialize and show the Item Overlay View
+    
+        [status setString:@""];
+        [status appendFormat:@"Item Id:  %d\n", [item.itemId intValue]];
+        [status appendFormat:@"Item Number:  %d\n", [item.sku intValue]];
+        [status appendFormat:@"Description:  %@\n", item.description];
+        [status appendFormat:@"In-Store Stock:  %f\n", [item.storeAvailability doubleValue]];
+        [status appendFormat:@"DC Stock:  %f\n", [item.distributionCenterAvailability doubleValue]];
+        
+        [AlertUtils showModalAlertMessage: status];
+    }
 }
 
 #pragma mark -
