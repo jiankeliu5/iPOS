@@ -25,8 +25,14 @@
     }
     
     // TODO: Replace these with the actual service URLs.  Perhaps set a Preprocessor macro
+#if IPOS_USE_DEMO_SERVICES
     self.baseUrl = @"http://ipad.demo.objectpartners.com:8080/ipos-demo-services-0.1/webservices";
     self.posSessionMgmtUri = @"ipos/SessionService";
+#else
+    self.baseUrl = @"http://tsipos01/webservices";
+    self.posSessionMgmtUri = @"ipos/SessionService";
+#endif
+    
     
     return self;
 }
