@@ -122,6 +122,15 @@
 		D65FD4BB1302303A00F4C19D /* BarcodeScannerCardReaderDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D65FD4BA1302303A00F4C19D /* BarcodeScannerCardReaderDelegate.m */; };
 		D692BBA412FDFF4C007EC03A /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = D692BBA312FDFF4C007EC03A /* Address.m */; };
 		D6A96659130F0C3C004D90C4 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D6A96658130F0C3C004D90C4 /* Settings.bundle */; };
+		D6A9670A130F17E9004D90C4 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FC1302586800B77769 /* CFNetwork.framework */; };
+		D6A9670B130F17E9004D90C4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		D6A9670C130F17E9004D90C4 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
+		D6A9670D130F17E9004D90C4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		D6A9670E130F17E9004D90C4 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FE1302586800B77769 /* MobileCoreServices.framework */; };
+		D6A9670F130F17E9004D90C4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
+		D6A96710130F17E9004D90C4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		D6A96711130F17E9004D90C4 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08021302586800B77769 /* libz.1.2.3.dylib */; };
+		D6A96712130F17F5004D90C4 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 		D6BA07CD1302580500B77769 /* CTidy.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B31302580500B77769 /* CTidy.m */; };
 		D6BA07CE1302580500B77769 /* CXHTMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B51302580500B77769 /* CXHTMLDocument.m */; };
 		D6BA07CF1302580500B77769 /* CXMLDocument_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B71302580500B77769 /* CXMLDocument_CreationExtensions.m */; };
@@ -353,6 +362,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6A9670A130F17E9004D90C4 /* CFNetwork.framework in Frameworks */,
+				D6A9670B130F17E9004D90C4 /* CoreGraphics.framework in Frameworks */,
+				D6A9670C130F17E9004D90C4 /* ExternalAccessory.framework in Frameworks */,
+				D6A9670D130F17E9004D90C4 /* Foundation.framework in Frameworks */,
+				D6A9670E130F17E9004D90C4 /* MobileCoreServices.framework in Frameworks */,
+				D6A9670F130F17E9004D90C4 /* SystemConfiguration.framework in Frameworks */,
+				D6A96710130F17E9004D90C4 /* UIKit.framework in Frameworks */,
+				D6A96711130F17E9004D90C4 /* libz.1.2.3.dylib in Frameworks */,
+				D6A96712130F17F5004D90C4 /* libLineaSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1252,7 +1270,12 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				INFOPLIST_FILE = "IntegrationTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				OTHER_LDFLAGS = (
+					"-lxml2",
 					"-framework",
 					Foundation,
 					"-framework",
@@ -1281,6 +1304,10 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				INFOPLIST_FILE = "IntegrationTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
