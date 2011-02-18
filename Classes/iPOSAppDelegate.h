@@ -14,16 +14,10 @@
 {
     UIWindow* window;
 	UINavigationController* navigationController;
-	LoginViewController* loginViewController;
-    
-    BarcodeScannerCardReaderDelegate* scannerReaderDelegate;
-}
+	LoginViewController* loginViewController;}
 
 @property (retain) UIWindow* window;
 @property (retain) UINavigationController* navigationController;
 @property (retain) LoginViewController* loginViewController;
-
-@property (retain) BarcodeScannerCardReaderDelegate* scannerReaderDelegate;
-
 @end
 

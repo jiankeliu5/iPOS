@@ -7,7 +7,10 @@
 //
 
 #import "MainMenuViewController.h"
+#import "AlertUtils.h"
+
 #include "PlaceHolderView.h"
+
 
 @interface MainMenuViewController() <UITextFieldDelegate>
 - (void) customerPressed;
@@ -70,6 +73,19 @@
 - (UIView *) contentView
 {
 	return (UIView *)[self view];
+}
+
+#pragma mark -
+#pragma mark Linea Delegate
+-(void)barcodeData:(NSString *)barcode type:(int)type {
+    NSMutableString *status = [[[NSMutableString alloc] init] autorelease];
+    [status setString:@""];
+	[status appendFormat:@"Type: %d\n",type];
+	[status appendFormat:@"Type text: %@\n",[linea barcodeType2Text:type]];
+	[status appendFormat:@"Barcode: %@",barcode];
+    
+    // TODO:  This is where you will initialize and show the Item Overlay View
+    [AlertUtils showModalAlertMessage: status];
 }
 
 #pragma mark -
@@ -143,7 +159,9 @@
 	self.lookupItemField.delegate = self;
 	//self.lookupOrderField.delegate = self;
 	[self.customerButton addTarget:self action:@selector(customerPressed) forControlEvents:UIControlEventTouchUpInside];
-	
+    
+    // Add itself as a delegate
+    linea = [Linea sharedDevice];
 }
 
 - (void)viewDidUnload {
@@ -153,6 +171,10 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+
+    // Add this controller as a Linea Device Delegate
+    [linea addDelegate:self];
+
 
 	if (self.navigationController != nil) {
 		[self.navigationController setNavigationBarHidden:NO];
@@ -184,8 +206,11 @@
 	[noteCenter addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
+
+    // Remove this controller as a linea delegate
+    [linea removeDelegate: self];
+
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
 	if ([self.currentFirstResponder canResignFirstResponder]) {
 		[self.currentFirstResponder resignFirstResponder];

@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "iPOSFacade.h"
-#import "BarcodeScannerCardReaderDelegate.h"
+#import "LineaSDK.h"
 
-@interface LoginViewController : UIViewController
+@interface LoginViewController : UIViewController <LineaDelegate>
 {
 	
 	// I'm assuming at some point we will have a domain/model object for this?  For now
@@ -24,8 +24,9 @@
 	id currentFirstResponder;
 	NSIndexPath *topRowBeforeKeyboardShown;
 	
-    BarcodeScannerCardReaderDelegate *scannerReaderDelegate;
-	iPOSFacade *facade;
+   	iPOSFacade *facade;
+    
+    Linea *linea;
 }
 
 @property (nonatomic, retain) NSString *empId;
@@ -35,7 +36,5 @@
 
 @property (nonatomic, retain) UITableView *loginTableView;
 @property (nonatomic, retain) id currentFirstResponder;
-
-@property (nonatomic, retain) BarcodeScannerCardReaderDelegate *scannerReaderDelegate;
 
 @end

@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "iPOSFacade.h"
 #import "ExtUITextField.h"
 
-@interface MainMenuViewController : UIViewController {
+#import "iPOSFacade.h"
+#import "LineaSDK.h"
+
+@interface MainMenuViewController : UIViewController <LineaDelegate> {
 	iPOSFacade *facade;
 	
 	UILabel *scanItemLabel;
@@ -23,6 +25,8 @@
 	NSString *lookupItemSku;
 	NSString *scannedItemSku;
 	NSString *lookupOrderNum;
+    
+    Linea *linea;
 	
 }
 

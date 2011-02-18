@@ -30,7 +30,6 @@
 
 @synthesize loginTableView;
 @synthesize currentFirstResponder;
-@synthesize scannerReaderDelegate;
 
 #pragma mark Constructors
 - (id)init
@@ -55,6 +54,8 @@
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [linea disconnect];
 	
 	[self setCurrentFirstResponder:nil];
 	[self setEmpId:nil];
@@ -63,8 +64,6 @@
 	[self setDeviceId:nil];
 	
 	[self setLoginTableView:nil];
-    
-    [scannerReaderDelegate release];
     
   	[super dealloc];
 }
@@ -76,6 +75,21 @@
 #pragma mark -
 #pragma mark Methods
 
+#pragma mark -
+#pragma mark Linea Delegate
+-(void)connectionState:(int)state {
+    switch (state) {
+		case CONN_DISCONNECTED:	
+            [AlertUtils showModalAlertMessage: @"Linea-Pro Device is disconnected!!"];
+            break;
+        case CONN_CONNECTING:
+            break; 
+		case CONN_CONNECTED:
+            [AlertUtils showModalAlertMessage: @"Linea-Pro Device is connected!!"];
+            break;
+	}
+    
+}
 #pragma mark UIViewController overrides
 - (void)loadView
 {
@@ -96,7 +110,11 @@
 	[super viewDidLoad];
 	
 	self.loginTableView.dataSource = self;
-	self.loginTableView.delegate = self;    	
+	self.loginTableView.delegate = self;   
+    
+    // Get a reference to the shared Linea instance and add this controller as a delegate
+    linea = [Linea sharedDevice];
+    [linea addDelegate:self];
 }
 
 - (void)viewDidUnload
@@ -112,10 +130,12 @@
 		[self.navigationController setNavigationBarHidden:YES];
 	}
 	
-	// TODO check if we were logged in, and log out
+	// Make sure we logout and disconnect from Linea device
 	self.empId = nil;
 	self.password = nil;
-    [self.scannerReaderDelegate disconnectFromDevice];
+    
+    [facade logout]; 
+    [linea disconnect];
     
 	
 	CGRect viewBounds = self.view.bounds;
@@ -235,7 +255,7 @@
 			[[self navigationController] pushViewController:mainMenuViewController animated:TRUE];
             
             // This is where we would connect to the linea-pro device
-            [self.scannerReaderDelegate connectToDevice];
+            [linea connect];
 
 		} else {
 			[AlertUtils dismissAlertMessage:alert];
