@@ -202,8 +202,7 @@
 - (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
 	// This will keep the interface locked to portrait
-	//return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
-	return YES;
+	return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation 

@@ -21,6 +21,7 @@
 	UIButton *customerButton;
 	
 	id currentFirstResponder;
+	CGFloat previousViewOriginY;
 	
 	NSString *lookupItemSku;
 	NSString *scannedItemSku;

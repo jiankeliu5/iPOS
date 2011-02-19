@@ -9,6 +9,7 @@
 #import "MainMenuViewController.h"
 #import "AlertUtils.h"
 #import "ProductItem.h"
+#import "LayoutUtils.h"
 
 #include "PlaceHolderView.h"
 
@@ -277,9 +278,63 @@
 #pragma mark -
 #pragma mark Keyboard Management
 - (void)keyboardWillShow:(NSNotification *)notification {
+	if (self.navigationController.topViewController == self) {
+		NSDictionary* userInfo = [notification userInfo];
+		
+		// we don't use SDK constants here to be universally compatible with all SDKs ≥ 3.0
+		NSValue* keyboardFrameValue = [userInfo objectForKey:@"UIKeyboardBoundsUserInfoKey"];
+		if (!keyboardFrameValue) {
+			keyboardFrameValue = [userInfo objectForKey:@"UIKeyboardFrameEndUserInfoKey"];
+		}
+		
+		// Reduce the tableView height by the part of the keyboard that actually covers the tableView
+		CGRect windowRect = [[UIApplication sharedApplication] keyWindow].bounds;
+		if (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation ||UIInterfaceOrientationLandscapeRight == self.interfaceOrientation ) {
+			windowRect = [LayoutUtils swapRect:windowRect];
+		}
+		
+		UITextField *tf = (UITextField *)self.currentFirstResponder;
+		
+		CGRect viewRectAbsolute = [tf convertRect:tf.bounds toView:[[UIApplication sharedApplication] keyWindow]];
+		if (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation ||UIInterfaceOrientationLandscapeRight == self.interfaceOrientation ) {
+			viewRectAbsolute = [LayoutUtils swapRect:viewRectAbsolute];
+		}
+		
+		CGRect frame = self.view.frame;
+		previousViewOriginY = frame.origin.y;
+		CGFloat adjustUpBy = [keyboardFrameValue CGRectValue].size.height - CGRectGetMaxY(windowRect) + CGRectGetMaxY(viewRectAbsolute);
+		
+		if (adjustUpBy < 0) {
+			frame.origin.y = adjustUpBy;
+			[UIView beginAnimations:nil context:NULL];
+			[UIView setAnimationDuration:[[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
+			[UIView setAnimationCurve:[[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
+			self.view.frame = frame;
+			[UIView commitAnimations];
+		}
+		// iOS 3 sends hide and show notifications right after each other
+		// when switching between textFields, so cancel -scrollToOldPosition requests
+		[NSObject cancelPreviousPerformRequestsWithTarget:self];
+		
+	}
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification {
+	if (self.navigationController.topViewController == self) {
+		NSDictionary* userInfo = [notification userInfo];
+		
+
+		CGRect frame = self.view.frame;
+		if (frame.origin.y != previousViewOriginY) {
+			[UIView beginAnimations:nil context:NULL];
+			[UIView setAnimationDuration:[[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
+			[UIView setAnimationCurve:[[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
+			frame.origin.y = previousViewOriginY;
+			self.view.frame = frame;
+			[UIView commitAnimations];
+			previousViewOriginY = 0.0f;
+		}
+	}
 }
 
 @end
