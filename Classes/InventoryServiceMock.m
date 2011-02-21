@@ -31,7 +31,7 @@
     item.secondaryUnitOfMeasure = @"EA";
     item.conversion = [NSDecimalNumber decimalNumberWithString:@"1.00"];
     item.priceGroupId = [NSNumber numberWithInt:123];
-    item.retailPrice = [NSDecimalNumber decimalNumberWithString:@""];
+    item.retailPrice = [NSDecimalNumber decimalNumberWithString:@"18.99"];
     item.standardCost = [NSDecimalNumber decimalNumberWithString:@"3.99"];
     item.taxRate = [NSDecimalNumber decimalNumberWithString:@"0.7"];
     item.taxExempt = NO;
