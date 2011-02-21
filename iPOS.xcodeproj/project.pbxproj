@@ -42,24 +42,11 @@
 		D64E5AE8130262B0002EAD70 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 		D64E5B8813026566002EAD70 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
 		D656013E130B71B4000968BA /* iPosFacadeWithMocksTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D656013D130B71B4000968BA /* iPosFacadeWithMocksTestCase.m */; };
-		D6560246130B7CEA000968BA /* SessionInfo.h in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD40612FCB3F70029F4B2 /* SessionInfo.h */; };
 		D6560247130B7CEA000968BA /* SessionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */; };
-		D6560248130B7CEA000968BA /* InventoryService.h in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3F512FCB3D80029F4B2 /* InventoryService.h */; };
-		D6560249130B7CEA000968BA /* InventoryServiceImpl.h in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3F612FCB3D80029F4B2 /* InventoryServiceImpl.h */; };
-		D656024A130B7CEA000968BA /* InventoryServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3F712FCB3D80029F4B2 /* InventoryServiceImpl.m */; };
-		D656024B130B7CEA000968BA /* InventoryServiceMock.h in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3F812FCB3D80029F4B2 /* InventoryServiceMock.h */; };
 		D656024C130B7CEA000968BA /* InventoryServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3F912FCB3D80029F4B2 /* InventoryServiceMock.m */; };
-		D656024D130B7CEA000968BA /* iPOSFacade.h in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FA12FCB3D80029F4B2 /* iPOSFacade.h */; };
 		D656024E130B7CEA000968BA /* iPOSFacade.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FB12FCB3D80029F4B2 /* iPOSFacade.m */; };
-		D656024F130B7CEA000968BA /* iPOSService.h in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FC12FCB3D80029F4B2 /* iPOSService.h */; };
-		D6560250130B7CEA000968BA /* iPOSServiceImpl.h in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FD12FCB3D80029F4B2 /* iPOSServiceImpl.h */; };
-		D6560251130B7CEA000968BA /* iPOSServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */; };
-		D6560252130B7CEA000968BA /* iPOSServiceMock.h in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FF12FCB3D80029F4B2 /* iPOSServiceMock.h */; };
 		D6560253130B7CEA000968BA /* iPOSServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD40012FCB3D80029F4B2 /* iPOSServiceMock.m */; };
-		D6560294130B802A000968BA /* AddItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46B0513075F5D001EADE4 /* AddItemView.m */; };
-		D6560295130B802A000968BA /* AddItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469BF130701DF001EADE4 /* AddItemViewController.m */; };
 		D6560296130B802A000968BA /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = D692BBA312FDFF4C007EC03A /* Address.m */; };
-		D6560297130B802A000968BA /* AlertUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B40B94241304ED500024C2DC /* AlertUtils.m */; };
 		D6560298130B802A000968BA /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07DC1302583500B77769 /* ASIAuthenticationDialog.m */; };
 		D6560299130B802A000968BA /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07DF1302583500B77769 /* ASIDataCompressor.m */; };
 		D656029A130B802A000968BA /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07E11302583500B77769 /* ASIDataDecompressor.m */; };
@@ -68,12 +55,8 @@
 		D656029D130B802A000968BA /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07E71302583500B77769 /* ASIHTTPRequest.m */; };
 		D656029E130B802A000968BA /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07EB1302583500B77769 /* ASIInputStream.m */; };
 		D656029F130B802A000968BA /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07ED1302583500B77769 /* ASINetworkQueue.m */; };
-		D65602A0130B802A000968BA /* BarcodeScannerCardReaderDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D65FD4BA1302303A00F4C19D /* BarcodeScannerCardReaderDelegate.m */; };
-		D65602A1130B802A000968BA /* CartItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46A081307141B001EADE4 /* CartItemDetailViewController.m */; };
-		D65602A2130B802A000968BA /* CartItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469E01307047F001EADE4 /* CartItemsViewController.m */; };
 		D65602A3130B802A000968BA /* CTidy.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B31302580500B77769 /* CTidy.m */; };
 		D65602A4130B802A000968BA /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3112FCA530003C3A47 /* Customer.m */; };
-		D65602A5130B802A000968BA /* CustomerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469D413070300001EADE4 /* CustomerViewController.m */; };
 		D65602A6130B802A000968BA /* CXHTMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B51302580500B77769 /* CXHTMLDocument.m */; };
 		D65602A7130B802A000968BA /* CXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07BB1302580500B77769 /* CXMLDocument.m */; };
 		D65602A8130B802A000968BA /* CXMLDocument_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B71302580500B77769 /* CXMLDocument_CreationExtensions.m */; };
@@ -86,44 +69,27 @@
 		D65602AF130B802A000968BA /* CXMLNode_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C51302580500B77769 /* CXMLNode_CreationExtensions.m */; };
 		D65602B0130B802A000968BA /* CXMLNode_PrivateExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C71302580500B77769 /* CXMLNode_PrivateExtensions.m */; };
 		D65602B1130B802A000968BA /* CXMLNode_XPathExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C91302580500B77769 /* CXMLNode_XPathExtensions.m */; };
-		D65602B2130B802A000968BA /* DrawUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B4B367C512F936AC00F37FE9 /* DrawUtils.m */; };
-		D65602B3130B802A000968BA /* ExtUITextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46B971308BBE7001EADE4 /* ExtUITextField.m */; };
 		D65602B4130B802A000968BA /* InventoryServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3F712FCB3D80029F4B2 /* InventoryServiceImpl.m */; };
 		D65602B5130B802A000968BA /* InventoryServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3F912FCB3D80029F4B2 /* InventoryServiceMock.m */; };
-		D65602B6130B802A000968BA /* iPOSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* iPOSAppDelegate.m */; };
 		D65602B7130B802A000968BA /* iPOSFacade.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FB12FCB3D80029F4B2 /* iPOSFacade.m */; };
 		D65602B8130B802A000968BA /* iPOSServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */; };
 		D65602B9130B802A000968BA /* iPOSServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD40012FCB3D80029F4B2 /* iPOSServiceMock.m */; };
-		D65602BA130B802A000968BA /* LayoutUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = D62853C512FB9B650024228B /* LayoutUtils.m */; };
-		D65602BB130B802A000968BA /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B47AA7F512F7DD7200AAD34C /* LoginViewController.m */; };
 		D65602BC130B802A000968BA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
-		D65602BD130B802A000968BA /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B40B94301304EF620024C2DC /* MainMenuViewController.m */; };
 		D65602BE130B802A000968BA /* ManagerApprovalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3912FCA55D003C3A47 /* ManagerApprovalInfo.m */; };
 		D65602BF130B802A000968BA /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3412FCA535003C3A47 /* Order.m */; };
 		D65602C0130B802A000968BA /* OrderItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6912FCA9C0003C3A47 /* OrderItem.m */; };
 		D65602C1130B802A000968BA /* PaymentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6612FCA99E003C3A47 /* PaymentInfo.m */; };
-		D65602C2130B802A000968BA /* PlaceHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B47AA7EE12F7DD1000AAD34C /* PlaceHolderView.m */; };
 		D65602C3130B802A000968BA /* ProductItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6312FCA97F003C3A47 /* ProductItem.m */; };
 		D65602C4130B802A000968BA /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07F01302583500B77769 /* Reachability.m */; };
-		D65602C5130B802A000968BA /* ReceiptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469FA13070D84001EADE4 /* ReceiptViewController.m */; };
 		D65602C6130B802A000968BA /* SessionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */; };
-		D65602C7130B802A000968BA /* SignatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46A121307199F001EADE4 /* SignatureViewController.m */; };
-		D65602C8130B802A000968BA /* TenderPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469E813070C48001EADE4 /* TenderPaymentViewController.m */; };
-		D65602F0130B8665000968BA /* Address.h in Sources */ = {isa = PBXBuildFile; fileRef = D692BBA212FDFF4C007EC03A /* Address.h */; };
 		D65602F1130B8665000968BA /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = D692BBA312FDFF4C007EC03A /* Address.m */; };
-		D65602F2130B8665000968BA /* Order.h in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3312FCA535003C3A47 /* Order.h */; };
 		D65602F3130B8665000968BA /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3412FCA535003C3A47 /* Order.m */; };
-		D65602F4130B8665000968BA /* Customer.h in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3012FCA530003C3A47 /* Customer.h */; };
 		D65602F5130B8665000968BA /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3112FCA530003C3A47 /* Customer.m */; };
-		D65602F6130B8665000968BA /* ManagerApprovalInfo.h in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3812FCA55D003C3A47 /* ManagerApprovalInfo.h */; };
 		D65602F7130B8665000968BA /* ManagerApprovalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3912FCA55D003C3A47 /* ManagerApprovalInfo.m */; };
-		D65602F8130B8665000968BA /* ProductItem.h in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6212FCA97F003C3A47 /* ProductItem.h */; };
-		D65602F9130B8665000968BA /* ProductItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6312FCA97F003C3A47 /* ProductItem.m */; };
-		D65602FA130B8665000968BA /* PaymentInfo.h in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6512FCA99E003C3A47 /* PaymentInfo.h */; };
 		D65602FB130B8665000968BA /* PaymentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6612FCA99E003C3A47 /* PaymentInfo.m */; };
-		D65602FC130B8665000968BA /* OrderItem.h in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6812FCA9C0003C3A47 /* OrderItem.h */; };
 		D65602FD130B8665000968BA /* OrderItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6912FCA9C0003C3A47 /* OrderItem.m */; };
 		D65FD4BB1302303A00F4C19D /* BarcodeScannerCardReaderDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D65FD4BA1302303A00F4C19D /* BarcodeScannerCardReaderDelegate.m */; };
+		D67BE06E13103B5800C843A6 /* ProductItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6312FCA97F003C3A47 /* ProductItem.m */; };
 		D692BBA412FDFF4C007EC03A /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = D692BBA312FDFF4C007EC03A /* Address.m */; };
 		D6A96659130F0C3C004D90C4 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D6A96658130F0C3C004D90C4 /* Settings.bundle */; };
 		D6A9670A130F17E9004D90C4 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FC1302586800B77769 /* CFNetwork.framework */; };
@@ -167,6 +133,15 @@
 		D6BCD40412FCB3D80029F4B2 /* iPOSServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */; };
 		D6BCD40512FCB3D80029F4B2 /* iPOSServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD40012FCB3D80029F4B2 /* iPOSServiceMock.m */; };
 		D6BCD40812FCB3F70029F4B2 /* SessionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */; };
+		D6ED3D2513102C3F00D4DB85 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FC1302586800B77769 /* CFNetwork.framework */; };
+		D6ED3D2613102C3F00D4DB85 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		D6ED3D2713102C3F00D4DB85 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
+		D6ED3D2813102C3F00D4DB85 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		D6ED3D2913102C3F00D4DB85 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FE1302586800B77769 /* MobileCoreServices.framework */; };
+		D6ED3D2A13102C3F00D4DB85 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
+		D6ED3D2B13102C3F00D4DB85 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		D6ED3D2C13102C3F00D4DB85 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08021302586800B77769 /* libz.1.2.3.dylib */; };
+		D6ED3D2D13102C4D00D4DB85 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -368,6 +343,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6ED3D2513102C3F00D4DB85 /* CFNetwork.framework in Frameworks */,
+				D6ED3D2613102C3F00D4DB85 /* CoreGraphics.framework in Frameworks */,
+				D6ED3D2713102C3F00D4DB85 /* ExternalAccessory.framework in Frameworks */,
+				D6ED3D2813102C3F00D4DB85 /* Foundation.framework in Frameworks */,
+				D6ED3D2913102C3F00D4DB85 /* MobileCoreServices.framework in Frameworks */,
+				D6ED3D2A13102C3F00D4DB85 /* SystemConfiguration.framework in Frameworks */,
+				D6ED3D2B13102C3F00D4DB85 /* UIKit.framework in Frameworks */,
+				D6ED3D2C13102C3F00D4DB85 /* libz.1.2.3.dylib in Frameworks */,
+				D6ED3D2D13102C4D00D4DB85 /* libLineaSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,6 +377,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D66892E11311DE320046C68F /* ThirdParty */,
 				B4C46B951308BBCB001EADE4 /* Components */,
 				B4C46A0C1307148B001EADE4 /* Signature */,
 				B4C469F013070D0D001EADE4 /* ReceiptOptions */,
@@ -407,7 +392,6 @@
 				D69BEFD412F9C66A0035D358 /* POSInterface */,
 				D69BEFD712F9C6890035D358 /* Model */,
 				D69BF02312F9CCC80035D358 /* Helper */,
-				D60EE18B12FB6F0C00885396 /* Utility */,
 				1D3623240D0F684500981E51 /* iPOSAppDelegate.h */,
 				1D3623250D0F684500981E51 /* iPOSAppDelegate.m */,
 				D65FD4B91302303A00F4C19D /* BarcodeScannerCardReaderDelegate.h */,
@@ -607,15 +591,6 @@
 			name = Components;
 			sourceTree = "<group>";
 		};
-		D60EE18B12FB6F0C00885396 /* Utility */ = {
-			isa = PBXGroup;
-			children = (
-				D6BA07DA1302580A00B77769 /* ASIHTTPRequest */,
-				D6BA07B1130257C200B77769 /* TouchXML */,
-			);
-			name = Utility;
-			sourceTree = "<group>";
-		};
 		D64B7E2612F9D869006AB141 /* Unit */ = {
 			isa = PBXGroup;
 			children = (
@@ -643,6 +618,15 @@
 				D64B7E2612F9D869006AB141 /* Unit */,
 			);
 			name = TestSuites;
+			sourceTree = "<group>";
+		};
+		D66892E11311DE320046C68F /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				D6BA07B1130257C200B77769 /* TouchXML */,
+				D6BA07DA1302580A00B77769 /* ASIHTTPRequest */,
+			);
+			name = ThirdParty;
 			sourceTree = "<group>";
 		};
 		D69BEFD412F9C66A0035D358 /* POSInterface */ = {
@@ -997,36 +981,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D65602F0130B8665000968BA /* Address.h in Sources */,
-				D65602F1130B8665000968BA /* Address.m in Sources */,
-				D65602F2130B8665000968BA /* Order.h in Sources */,
-				D65602F3130B8665000968BA /* Order.m in Sources */,
-				D65602F4130B8665000968BA /* Customer.h in Sources */,
-				D65602F5130B8665000968BA /* Customer.m in Sources */,
-				D65602F6130B8665000968BA /* ManagerApprovalInfo.h in Sources */,
-				D65602F7130B8665000968BA /* ManagerApprovalInfo.m in Sources */,
-				D65602F8130B8665000968BA /* ProductItem.h in Sources */,
-				D65602F9130B8665000968BA /* ProductItem.m in Sources */,
-				D65602FA130B8665000968BA /* PaymentInfo.h in Sources */,
-				D65602FB130B8665000968BA /* PaymentInfo.m in Sources */,
-				D65602FC130B8665000968BA /* OrderItem.h in Sources */,
-				D65602FD130B8665000968BA /* OrderItem.m in Sources */,
-				D6560246130B7CEA000968BA /* SessionInfo.h in Sources */,
 				D6560247130B7CEA000968BA /* SessionInfo.m in Sources */,
-				D6560248130B7CEA000968BA /* InventoryService.h in Sources */,
-				D6560249130B7CEA000968BA /* InventoryServiceImpl.h in Sources */,
-				D656024A130B7CEA000968BA /* InventoryServiceImpl.m in Sources */,
-				D656024B130B7CEA000968BA /* InventoryServiceMock.h in Sources */,
 				D656024C130B7CEA000968BA /* InventoryServiceMock.m in Sources */,
-				D656024D130B7CEA000968BA /* iPOSFacade.h in Sources */,
 				D656024E130B7CEA000968BA /* iPOSFacade.m in Sources */,
-				D656024F130B7CEA000968BA /* iPOSService.h in Sources */,
-				D6560250130B7CEA000968BA /* iPOSServiceImpl.h in Sources */,
-				D6560251130B7CEA000968BA /* iPOSServiceImpl.m in Sources */,
-				D6560252130B7CEA000968BA /* iPOSServiceMock.h in Sources */,
 				D6560253130B7CEA000968BA /* iPOSServiceMock.m in Sources */,
+				D65602F1130B8665000968BA /* Address.m in Sources */,
+				D65602F3130B8665000968BA /* Order.m in Sources */,
+				D65602F5130B8665000968BA /* Customer.m in Sources */,
+				D65602F7130B8665000968BA /* ManagerApprovalInfo.m in Sources */,
+				D65602FB130B8665000968BA /* PaymentInfo.m in Sources */,
+				D65602FD130B8665000968BA /* OrderItem.m in Sources */,
 				D64B7E3612F9D8FD006AB141 /* SampleUnitTestCase.m in Sources */,
 				D656013E130B71B4000968BA /* iPosFacadeWithMocksTestCase.m in Sources */,
+				D67BE06E13103B5800C843A6 /* ProductItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1034,10 +1001,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D6560294130B802A000968BA /* AddItemView.m in Sources */,
-				D6560295130B802A000968BA /* AddItemViewController.m in Sources */,
 				D6560296130B802A000968BA /* Address.m in Sources */,
-				D6560297130B802A000968BA /* AlertUtils.m in Sources */,
 				D6560298130B802A000968BA /* ASIAuthenticationDialog.m in Sources */,
 				D6560299130B802A000968BA /* ASIDataCompressor.m in Sources */,
 				D656029A130B802A000968BA /* ASIDataDecompressor.m in Sources */,
@@ -1046,12 +1010,8 @@
 				D656029D130B802A000968BA /* ASIHTTPRequest.m in Sources */,
 				D656029E130B802A000968BA /* ASIInputStream.m in Sources */,
 				D656029F130B802A000968BA /* ASINetworkQueue.m in Sources */,
-				D65602A0130B802A000968BA /* BarcodeScannerCardReaderDelegate.m in Sources */,
-				D65602A1130B802A000968BA /* CartItemDetailViewController.m in Sources */,
-				D65602A2130B802A000968BA /* CartItemsViewController.m in Sources */,
 				D65602A3130B802A000968BA /* CTidy.m in Sources */,
 				D65602A4130B802A000968BA /* Customer.m in Sources */,
-				D65602A5130B802A000968BA /* CustomerViewController.m in Sources */,
 				D65602A6130B802A000968BA /* CXHTMLDocument.m in Sources */,
 				D65602A7130B802A000968BA /* CXMLDocument.m in Sources */,
 				D65602A8130B802A000968BA /* CXMLDocument_CreationExtensions.m in Sources */,
@@ -1064,29 +1024,19 @@
 				D65602AF130B802A000968BA /* CXMLNode_CreationExtensions.m in Sources */,
 				D65602B0130B802A000968BA /* CXMLNode_PrivateExtensions.m in Sources */,
 				D65602B1130B802A000968BA /* CXMLNode_XPathExtensions.m in Sources */,
-				D65602B2130B802A000968BA /* DrawUtils.m in Sources */,
-				D65602B3130B802A000968BA /* ExtUITextField.m in Sources */,
 				D65602B4130B802A000968BA /* InventoryServiceImpl.m in Sources */,
 				D65602B5130B802A000968BA /* InventoryServiceMock.m in Sources */,
-				D65602B6130B802A000968BA /* iPOSAppDelegate.m in Sources */,
 				D65602B7130B802A000968BA /* iPOSFacade.m in Sources */,
 				D65602B8130B802A000968BA /* iPOSServiceImpl.m in Sources */,
 				D65602B9130B802A000968BA /* iPOSServiceMock.m in Sources */,
-				D65602BA130B802A000968BA /* LayoutUtils.m in Sources */,
-				D65602BB130B802A000968BA /* LoginViewController.m in Sources */,
 				D65602BC130B802A000968BA /* main.m in Sources */,
-				D65602BD130B802A000968BA /* MainMenuViewController.m in Sources */,
 				D65602BE130B802A000968BA /* ManagerApprovalInfo.m in Sources */,
 				D65602BF130B802A000968BA /* Order.m in Sources */,
 				D65602C0130B802A000968BA /* OrderItem.m in Sources */,
 				D65602C1130B802A000968BA /* PaymentInfo.m in Sources */,
-				D65602C2130B802A000968BA /* PlaceHolderView.m in Sources */,
 				D65602C3130B802A000968BA /* ProductItem.m in Sources */,
 				D65602C4130B802A000968BA /* Reachability.m in Sources */,
-				D65602C5130B802A000968BA /* ReceiptViewController.m in Sources */,
 				D65602C6130B802A000968BA /* SessionInfo.m in Sources */,
-				D65602C7130B802A000968BA /* SignatureViewController.m in Sources */,
-				D65602C8130B802A000968BA /* TenderPaymentViewController.m in Sources */,
 				D64B7EC112F9DFF5006AB141 /* iPOSServiceIntTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1187,7 +1137,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_PREPROCESSOR_DEFINITIONS = "APP_IN_UNITTEST=1";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
@@ -1230,6 +1180,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "APP_IN_UNITTEST=1";
 				INFOPLIST_FILE = "UnitTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
