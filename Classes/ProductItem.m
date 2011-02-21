@@ -38,7 +38,6 @@
     [storeAvailability release];
     [distributionCenterAvailability release];
     
-    [defaultToBox release];
     [piecesPerBox release];
     [primaryUnitOfMeasure release];
     [secondaryUnitOfMeasure release];
@@ -48,7 +47,6 @@
     [retailPrice release];
     [standardCost release];
     [taxRate release];
-    [taxExempt release];
     
     [super dealloc];
 }
