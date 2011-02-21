@@ -25,6 +25,7 @@
     session.employeeId = [NSNumber numberWithInt:123];
     session.storeId = [NSNumber numberWithInt: 1200];
     session.serverSessionId = @"1234-test-34";
+    session.passwordForVerification = [password copy];
     
     return session;
 }
@@ -33,8 +34,13 @@
     return YES;
 }
 
-- (BOOL) verifySession:(SessionInfo *)sessionInfo {
-    return YES;
+- (BOOL) verifySession:(SessionInfo *)sessionInfo withPassword: (NSString *) password {
+
+    if (password && [password isEqualToString: sessionInfo.passwordForVerification]) {
+        return YES;
+    };
+    
+    return NO;
 }
 
 @end

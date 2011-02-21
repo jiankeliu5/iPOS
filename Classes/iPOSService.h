@@ -16,7 +16,7 @@
 #pragma mark iPOS Session Management
 @required 
 -(SessionInfo *) login: (NSString *) employeeNumber withPassword: (NSString *) password;
--(BOOL) verifySession: (SessionInfo *) sessionInfo;
+-(BOOL) verifySession: (SessionInfo *) sessionInfo withPassword: (NSString *) password;
 -(BOOL) logout: (SessionInfo *) sessionInfo;
 
 #pragma mark iPOS Customer Management

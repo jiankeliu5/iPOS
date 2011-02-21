@@ -11,7 +11,7 @@
 
 @implementation SessionInfo
 
-@synthesize employeeId, storeId, deviceId, serverSessionId;
+@synthesize employeeId, storeId, deviceId, serverSessionId, passwordForVerification;
 
 #pragma mark -
 #pragma mark Initializing and Memory Mgmt

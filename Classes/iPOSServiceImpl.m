@@ -101,6 +101,9 @@
         element = [nodes lastObject];
         sessionInfo.serverSessionId = [element stringValue];
         
+        // Store the valid password for verification when app wakes up from the background/sleep
+        sessionInfo.passwordForVerification = [password copy];
+        
     } else {
         return nil;
     }
@@ -108,8 +111,13 @@
     return sessionInfo;
 }
 
--(BOOL) verifySession: (SessionInfo *) sessionInfo {
-    return YES;
+-(BOOL) verifySession: (SessionInfo *) sessionInfo withPassword: (NSString *) password {
+
+    if (password && [password isEqualToString:sessionInfo.passwordForVerification]) {
+        return YES;
+    }
+
+    return NO;
 }
 
 -(BOOL) logout: (SessionInfo *) sessionInfo {

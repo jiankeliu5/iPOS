@@ -14,11 +14,15 @@
     NSNumber *storeId;
     NSString *deviceId;
     NSString *serverSessionId;
+    
+    NSString *passwordForVerification;
 }
 
 @property (nonatomic, retain) NSNumber *employeeId;
 @property (nonatomic, retain) NSNumber *storeId;
 @property (nonatomic, retain) NSString *deviceId;
 @property (nonatomic, retain) NSString *serverSessionId;
+
+@property (nonatomic, retain) NSString *passwordForVerification;
 
 @end

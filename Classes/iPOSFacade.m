@@ -36,13 +36,13 @@ static iPOSFacade *facade = nil;
         return nil;
     }
     
-    #if TARGET_IPHONE_SIMULATOR
+#if TARGET_IPHONE_SIMULATOR | APP_IN_UNITTEST
     self.posService = [[[iPOSServiceMock alloc] init] retain];
     self.inventoryService = [[[InventoryServiceMock alloc] init] retain];
-    #else
+#else
     self.posService = [[[iPOSServiceImpl alloc] init] retain];
     self.inventoryService = [[[InventoryServiceImpl alloc] init] retain];    
-    #endif
+#endif
     
     return self;
 }
@@ -65,6 +65,10 @@ static iPOSFacade *facade = nil;
     }
     
 	return FALSE;
+}
+
+-(BOOL) verifySession:(NSString *)passwordToVerify {
+    return [self.posService verifySession:self.sessionInfo withPassword:passwordToVerify];
 }
 
 -(BOOL) logout {

@@ -1,6 +1,7 @@
 //
 //  iPOSFacade.h
 //  iPOS
+
 //
 //  Created by Torey Lomenda on 2/2/11.
 //  Copyright 2011 Object Partners Inc. All rights reserved.
@@ -8,10 +9,13 @@
 
 #import <Foundation/Foundation.h>
 
-#import "iPOSServiceImpl.h"
-#import "iPOSServiceMock.h"
-#import "InventoryServiceImpl.h"
-#import "InventoryServiceMock.h"
+#if TARGET_IPHONE_SIMULATOR | APP_IN_UNITTEST
+    #import "iPOSServiceMock.h"
+    #import "InventoryServiceMock.h"
+#else
+    #import "iPOSServiceImpl.h"
+    #import "InventoryServiceImpl.h"
+#endif
 
 @interface iPOSFacade : NSObject {
     id<iPOSService> posService;
@@ -29,7 +33,7 @@
 
 #pragma mark iPOS Session Mgmt
 - (BOOL) login: (NSString *) username password: (NSString *) password;
-- (BOOL) verifySession;
+- (BOOL) verifySession: (NSString *) passwordToVerify;
 - (BOOL) logout;
 
 #pragma mark iPOS Customer Management
