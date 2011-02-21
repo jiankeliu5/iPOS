@@ -12,11 +12,14 @@
 #import "LayoutUtils.h"
 
 #include "PlaceHolderView.h"
+#include "AddItemView.h"
 
 
 
-@interface MainMenuViewController() <UITextFieldDelegate>
-- (void) customerPressed;
+@interface MainMenuViewController()
+- (void) addKeyboardListeners;
+- (void) removeKeyboardListeners;
+- (void) customerPressed:(id)sender;
 - (void) keyboardWillShow:(NSNotification *)notification;
 - (void) keyboardWillHide:(NSNotification *)notification;
 @end
@@ -81,22 +84,18 @@
 #pragma mark -
 #pragma mark Linea Delegate
 -(void)barcodeData:(NSString *)barcode type:(int)type {
-    NSMutableString *status = [[[NSMutableString alloc] init] autorelease];
     ProductItem *item = [facade lookupProductItem:barcode];
     
     if (item == nil) {
         [AlertUtils showModalAlertMessage: @"Item not found"];
     } else {
-        // TODO:  This is where you will initialize and show the Item Overlay View
-    
-        [status setString:@""];
-        [status appendFormat:@"Item Id:  %d\n", [item.itemId intValue]];
-        [status appendFormat:@"Item Number:  %d\n", [item.sku intValue]];
-        [status appendFormat:@"Description:  %@\n", item.description];
-        [status appendFormat:@"In-Store Stock:  %f\n", [item.storeAvailability doubleValue]];
-        [status appendFormat:@"DC Stock:  %f\n", [item.distributionCenterAvailability doubleValue]];
-        
-        [AlertUtils showModalAlertMessage: status];
+		[linea removeDelegate:self];
+		[self removeKeyboardListeners];
+		AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
+		[overlay setViewDelegate:self];
+		[self.view addSubview:overlay];
+		[overlay setProductItem:item];
+		[overlay release];
     }
 }
 
@@ -137,6 +136,8 @@
 	self.lookupItemField.placeholder = @"Look Up Item";
 	self.lookupItemField.tagName = @"LookupItem";
 	self.lookupItemField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+	self.lookupItemField.returnKeyType = UIReturnKeyGo;
+	self.lookupItemField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
 	
 	[self.view addSubview:self.lookupItemField];
 	
@@ -213,9 +214,7 @@
 - (void)viewDidAppear:(BOOL)animated {
 	// Call super at the beginning
 	[super viewDidAppear:animated];
-	NSNotificationCenter *noteCenter = [NSNotificationCenter defaultCenter];
-	[noteCenter addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-	[noteCenter addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+	[self addKeyboardListeners];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -223,10 +222,7 @@
     // Remove this controller as a linea delegate
     [linea removeDelegate: self];
 
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-	if ([self.currentFirstResponder canResignFirstResponder]) {
-		[self.currentFirstResponder resignFirstResponder];
-	}
+	[self removeKeyboardListeners];
 	
 	// Do this at the end
 	[super viewWillDisappear:animated];
@@ -234,7 +230,7 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+	//[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 	// Do this at the end
 	[super viewDidDisappear:animated];
 }
@@ -242,7 +238,21 @@
 #pragma mark -
 #pragma mark UIButton callbacks
 
-- (void)customerPressed {
+- (void)customerPressed:(id)sender {
+}
+
+- (void)addKeyboardListeners {
+	NSNotificationCenter *noteCenter = [NSNotificationCenter defaultCenter];
+	[noteCenter addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+	[noteCenter addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void) removeKeyboardListeners {
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
+		[self.currentFirstResponder resignFirstResponder];
+	}
 }
 
 #pragma mark -
@@ -264,6 +274,18 @@
 	if ([textField.tagName isEqualToString:@"LookupItem"]) {
 		self.lookupItemSku = textField.text;
 		// Call the service and display the overlay view
+		ProductItem *item = [facade lookupProductItem:self.lookupItemSku];
+		if (item != nil) {
+			[linea removeDelegate:self];
+			[self removeKeyboardListeners];
+			AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
+			[overlay setViewDelegate:self];
+			[self.view addSubview:overlay];
+			[overlay setProductItem:item];
+			[overlay release];
+			textField.text = nil;
+		}
+		
 	} else if ([textField.tagName isEqualToString:@"LookupOrder"]) {
 		self.lookupOrderNum = textField.text;
 		// Call the service and set up the order review (later revision)
@@ -287,7 +309,7 @@
 			keyboardFrameValue = [userInfo objectForKey:@"UIKeyboardFrameEndUserInfoKey"];
 		}
 		
-		// Reduce the tableView height by the part of the keyboard that actually covers the tableView
+		// Find out how much of the keyboard overlaps the textfield and move the view up out of the way
 		CGRect windowRect = [[UIApplication sharedApplication] keyWindow].bounds;
 		if (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation ||UIInterfaceOrientationLandscapeRight == self.interfaceOrientation ) {
 			windowRect = [LayoutUtils swapRect:windowRect];
@@ -301,8 +323,10 @@
 		}
 		
 		CGRect frame = self.view.frame;
+		CGRect keyboardRect = [keyboardFrameValue CGRectValue];
+		
 		previousViewOriginY = frame.origin.y;
-		CGFloat adjustUpBy = [keyboardFrameValue CGRectValue].size.height - CGRectGetMaxY(windowRect) + CGRectGetMaxY(viewRectAbsolute);
+		CGFloat adjustUpBy = (windowRect.size.height - keyboardRect.size.height) - (CGRectGetMaxY(viewRectAbsolute) + 10.0f);
 		
 		if (adjustUpBy < 0) {
 			frame.origin.y = adjustUpBy;
@@ -335,6 +359,28 @@
 			previousViewOriginY = 0.0f;
 		}
 	}
+}
+
+- (void) cancelAddItem:(AddItemView *)addItemView {
+	[addItemView removeFromSuperview];
+	[linea addDelegate:self];
+	[self addKeyboardListeners];
+}
+
+- (void) addItem:(AddItemView *)addItemView orderQuantity:(NSDecimalNumber *)quantity ofUnits:(NSString *)unitOfMeasure {
+	
+	// TODO: set up the order and push to the cart view
+	NSMutableString *status = [[[NSMutableString alloc] init] autorelease];
+	[status setString:@""];
+	[status appendFormat:@"Would Order:  %.2f\n", [quantity doubleValue]];
+	[status appendFormat:@"Units:  %@\n", unitOfMeasure];
+	
+	[addItemView removeFromSuperview];
+	[linea addDelegate:self];
+	[self addKeyboardListeners];
+		 
+	[AlertUtils showModalAlertMessage: status];
+		 
 }
 
 @end

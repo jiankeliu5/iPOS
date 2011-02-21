@@ -14,8 +14,12 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		B40B94251304ED500024C2DC /* AlertUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B40B94241304ED500024C2DC /* AlertUtils.m */; };
 		B40B94311304EF620024C2DC /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B40B94301304EF620024C2DC /* MainMenuViewController.m */; };
+		B40FC05C1311890700D7D79D /* MOButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B40FC0591311890700D7D79D /* MOButton.m */; };
+		B40FC05D1311890700D7D79D /* MOGlassButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B40FC05B1311890700D7D79D /* MOGlassButton.m */; };
+		B40FC0F21311928600D7D79D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
 		B47AA7EF12F7DD1000AAD34C /* PlaceHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B47AA7EE12F7DD1000AAD34C /* PlaceHolderView.m */; };
 		B47AA7F612F7DD7200AAD34C /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B47AA7F512F7DD7200AAD34C /* LoginViewController.m */; };
+		B48A7E1013107EEE00F6412C /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = B48A7E0F13107EEE00F6412C /* GradientView.m */; };
 		B4B367C612F936AC00F37FE9 /* DrawUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B4B367C512F936AC00F37FE9 /* DrawUtils.m */; };
 		B4C469C0130701DF001EADE4 /* AddItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469BF130701DF001EADE4 /* AddItemViewController.m */; };
 		B4C469D513070300001EADE4 /* CustomerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469D413070300001EADE4 /* CustomerViewController.m */; };
@@ -196,10 +200,18 @@
 		B40B94241304ED500024C2DC /* AlertUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertUtils.m; sourceTree = "<group>"; };
 		B40B942F1304EF620024C2DC /* MainMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuViewController.h; sourceTree = "<group>"; };
 		B40B94301304EF620024C2DC /* MainMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuViewController.m; sourceTree = "<group>"; };
+		B40FC0571311890700D7D79D /* Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Global.h; sourceTree = "<group>"; };
+		B40FC0581311890700D7D79D /* MOButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOButton.h; sourceTree = "<group>"; };
+		B40FC0591311890700D7D79D /* MOButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOButton.m; sourceTree = "<group>"; };
+		B40FC05A1311890700D7D79D /* MOGlassButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOGlassButton.h; sourceTree = "<group>"; };
+		B40FC05B1311890700D7D79D /* MOGlassButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOGlassButton.m; sourceTree = "<group>"; };
+		B40FC0F11311928600D7D79D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B47AA7ED12F7DD1000AAD34C /* PlaceHolderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceHolderView.h; sourceTree = "<group>"; };
 		B47AA7EE12F7DD1000AAD34C /* PlaceHolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceHolderView.m; sourceTree = "<group>"; };
 		B47AA7F412F7DD7200AAD34C /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		B47AA7F512F7DD7200AAD34C /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		B48A7E0E13107EEE00F6412C /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
+		B48A7E0F13107EEE00F6412C /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
 		B4B367C412F936AC00F37FE9 /* DrawUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawUtils.h; sourceTree = "<group>"; };
 		B4B367C512F936AC00F37FE9 /* DrawUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawUtils.m; sourceTree = "<group>"; };
 		B4C469BE130701DF001EADE4 /* AddItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddItemViewController.h; sourceTree = "<group>"; };
@@ -341,6 +353,7 @@
 				D6BA08031302586800B77769 /* libz.1.2.3.dylib in Frameworks */,
 				D64E5AE8130262B0002EAD70 /* libLineaSDK.a in Frameworks */,
 				D64E5B8813026566002EAD70 /* ExternalAccessory.framework in Frameworks */,
+				B40FC0F21311928600D7D79D /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,6 +477,7 @@
 				D6BA07FE1302586800B77769 /* MobileCoreServices.framework */,
 				D6BA08001302586800B77769 /* SystemConfiguration.framework */,
 				D6BA08021302586800B77769 /* libz.1.2.3.dylib */,
+				B40FC0F11311928600D7D79D /* QuartzCore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -475,6 +489,18 @@
 				B40B94301304EF620024C2DC /* MainMenuViewController.m */,
 			);
 			name = MainMenu;
+			sourceTree = "<group>";
+		};
+		B40FC056131188F800D7D79D /* GlassButtons */ = {
+			isa = PBXGroup;
+			children = (
+				B40FC0571311890700D7D79D /* Global.h */,
+				B40FC0581311890700D7D79D /* MOButton.h */,
+				B40FC0591311890700D7D79D /* MOButton.m */,
+				B40FC05A1311890700D7D79D /* MOGlassButton.h */,
+				B40FC05B1311890700D7D79D /* MOGlassButton.m */,
+			);
+			name = GlassButtons;
 			sourceTree = "<group>";
 		};
 		B47AA7EA12F7DCD900AAD34C /* PlaceHolder */ = {
@@ -572,8 +598,11 @@
 		B4C46B951308BBCB001EADE4 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				B40FC056131188F800D7D79D /* GlassButtons */,
 				B4C46B961308BBE7001EADE4 /* ExtUITextField.h */,
 				B4C46B971308BBE7001EADE4 /* ExtUITextField.m */,
+				B48A7E0E13107EEE00F6412C /* GradientView.h */,
+				B48A7E0F13107EEE00F6412C /* GradientView.m */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -958,6 +987,9 @@
 				B4C46A131307199F001EADE4 /* SignatureViewController.m in Sources */,
 				B4C46B0613075F5D001EADE4 /* AddItemView.m in Sources */,
 				B4C46B981308BBE7001EADE4 /* ExtUITextField.m in Sources */,
+				B48A7E1013107EEE00F6412C /* GradientView.m in Sources */,
+				B40FC05C1311890700D7D79D /* MOButton.m in Sources */,
+				B40FC05D1311890700D7D79D /* MOGlassButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

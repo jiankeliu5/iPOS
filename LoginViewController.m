@@ -15,7 +15,7 @@
 
 #pragma mark -
 #pragma mark Private Interface
-@interface LoginViewController () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface LoginViewController () 
 - (void) keyboardWillShow:(NSNotification *)notification;
 - (void) keyboardWillHide:(NSNotification *)notification;
 @end
@@ -80,12 +80,12 @@
 -(void)connectionState:(int)state {
     switch (state) {
 		case CONN_DISCONNECTED:	
-            [AlertUtils showModalAlertMessage: @"Linea-Pro Device is disconnected!!"];
+            //[AlertUtils showModalAlertMessage: @"Linea-Pro Device is disconnected!!"];
             break;
         case CONN_CONNECTING:
             break; 
 		case CONN_CONNECTED:
-            [AlertUtils showModalAlertMessage: @"Linea-Pro Device is connected!!"];
+            //[AlertUtils showModalAlertMessage: @"Linea-Pro Device is connected!!"];
             break;
 	}
     
@@ -259,6 +259,8 @@
 		} else {
 			[AlertUtils dismissAlertMessage:alert];
 			[AlertUtils showModalAlertMessage:@"Login failure.  Please try again."];
+			[self setEmpId:nil];
+			[self setPassword:nil];
 		}
 
 	}

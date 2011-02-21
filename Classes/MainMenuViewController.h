@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "ExtUITextField.h"
+#import "AddItemView.h"
 
 #import "iPOSFacade.h"
 #import "LineaSDK.h"
 
-@interface MainMenuViewController : UIViewController <LineaDelegate> {
+@interface MainMenuViewController : UIViewController <LineaDelegate, UITextFieldDelegate, AddItemViewDelegate> {
 	iPOSFacade *facade;
 	
 	UILabel *scanItemLabel;

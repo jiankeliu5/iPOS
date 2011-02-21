@@ -10,7 +10,7 @@
 #import "iPOSFacade.h"
 #import "LineaSDK.h"
 
-@interface LoginViewController : UIViewController <LineaDelegate>
+@interface LoginViewController : UIViewController <LineaDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 {
 	
 	// I'm assuming at some point we will have a domain/model object for this?  For now
