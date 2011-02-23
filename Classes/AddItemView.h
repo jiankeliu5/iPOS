@@ -63,28 +63,6 @@
 
 @property (nonatomic, retain) id productItem;
 @property (nonatomic, assign) NSObject<AddItemViewDelegate>* viewDelegate;
-
-@property (nonatomic, retain) GradientView *roundedView;
-@property (nonatomic, retain) UILabel *skuLabel;
-@property (nonatomic, retain) UILabel *descriptionLabel;
-@property (nonatomic, retain) UILabel *priceLabel;
-@property (nonatomic, retain) UIView *storeInfo;
-@property (nonatomic, retain) UILabel *storeIdLabel;
-@property (nonatomic, retain) UILabel *storeAvailableLabel;
-@property (nonatomic, retain) UILabel *storeOnHandLabel;
-@property (nonatomic, retain) UIView *warehouseInfo;
-@property (nonatomic, retain) UILabel *warehouseIdLabel;
-@property (nonatomic, retain) UILabel *warehouseAvailableLabel;
-@property (nonatomic, retain) UILabel *warehouseOnHandLabel;
-@property (nonatomic, retain) MOGlassButton *addToCartButton;
-@property (nonatomic, retain) MOGlassButton *exitButton;
-@property (nonatomic, retain) GradientView *addQuantityView;
-@property (nonatomic, retain) UILabel *addQuantityUnitsLabel;
-@property (nonatomic, retain) ExtUITextField *addQuantityField;
-
-@property (nonatomic, retain) NSNumberFormatter *priceFormatter;
-@property (nonatomic, retain) NSNumberFormatter *availableFormatter;
-
 @property (nonatomic, retain) id currentFirstResponder;
 
 @end

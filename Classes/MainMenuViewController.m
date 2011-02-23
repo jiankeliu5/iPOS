@@ -275,7 +275,9 @@
 		self.lookupItemSku = textField.text;
 		// Call the service and display the overlay view
 		ProductItem *item = [facade lookupProductItem:self.lookupItemSku];
-		if (item != nil) {
+		if (item == nil) {
+			[AlertUtils showModalAlertMessage: @"Item not found"];
+		} else {
 			[linea removeDelegate:self];
 			[self removeKeyboardListeners];
 			AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];

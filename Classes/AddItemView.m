@@ -30,29 +30,6 @@
 // This is our data item to display and work with
 @synthesize productItem;
 
-// Page components
-@synthesize roundedView;
-@synthesize skuLabel;
-@synthesize descriptionLabel;
-@synthesize priceLabel;
-@synthesize storeInfo;
-@synthesize storeIdLabel;
-@synthesize storeAvailableLabel;
-@synthesize storeOnHandLabel;
-@synthesize warehouseInfo;
-@synthesize warehouseIdLabel;
-@synthesize warehouseAvailableLabel;
-@synthesize warehouseOnHandLabel;
-@synthesize addToCartButton;
-@synthesize exitButton;
-@synthesize	addQuantityView;
-@synthesize addQuantityUnitsLabel;
-@synthesize addQuantityField;
-
-// NSDecimalNumber formatters.  Instance vars so we don't have to make release them all the time.
-@synthesize priceFormatter;
-@synthesize availableFormatter;
-
 // Our delegate to hand off to when we either cancel or enter a quantity.
 @synthesize viewDelegate;
 
@@ -65,12 +42,12 @@
     if (self == nil)
         return nil;
     
-	[self setPriceFormatter:[[NSNumberFormatter alloc] init]];
-	[self.priceFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-	[self setAvailableFormatter:[[NSNumberFormatter alloc] init]];
-	[self.availableFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-	[self.availableFormatter setMaximumFractionDigits:2];
-	[self.availableFormatter setMinimumFractionDigits:2];
+	priceFormatter = [[NSNumberFormatter alloc] init];
+	[priceFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+	availableFormatter = [[NSNumberFormatter alloc] init];
+	[availableFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+	[availableFormatter setMaximumFractionDigits:2];
+	[availableFormatter setMinimumFractionDigits:2];
 	
     return self;
 }
@@ -78,30 +55,15 @@
 - (void) dealloc {
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self]; 
+	
 	[self setCurrentFirstResponder:nil];
 	
 	[self setViewDelegate:nil];
 	
-	[self setPriceFormatter:nil];
-	[self setAvailableFormatter:nil];
-	
-	[self setSkuLabel:nil];
-	[self setDescriptionLabel:nil];
-	[self setPriceLabel:nil];
-	[self setStoreIdLabel:nil];
-	[self setStoreAvailableLabel:nil];
-	[self setStoreOnHandLabel:nil];
-	[self setWarehouseIdLabel:nil];
-	[self setWarehouseAvailableLabel:nil];
-	[self setWarehouseOnHandLabel:nil];
-	[self setAddToCartButton:nil];
-	[self setExitButton:nil];
-	[self setAddQuantityField:nil];
-	[self setAddQuantityUnitsLabel:nil];
-	[self setAddQuantityView:nil];
-	[self setStoreInfo:nil];
-	[self setWarehouseInfo:nil];
-	[self setRoundedView:nil];
+	[priceFormatter release];
+	priceFormatter = nil;
+	[availableFormatter release];
+	availableFormatter = nil;
 	
 	[self setProductItem:nil];
     [super dealloc];
@@ -131,193 +93,210 @@
 - (void) layoutSubviews {
 		
 	self.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-	if (self.roundedView == nil) {
-		[self setRoundedView:[[GradientView alloc] initWithFrame:CGRectMake(40.0f, 60.0f, ROUND_VIEW_WIDTH, ROUND_VIEW_HEIGHT)]];
-		[self.roundedView.layer setCornerRadius:5.0f];
-		[self.roundedView.layer setMasksToBounds:YES];
-		[self.roundedView.layer setBorderWidth:1.0f];
-		[self.roundedView.layer setBorderColor:[[UIColor blackColor] CGColor]];
-		[self.roundedView setStart:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0] andEndColor:[UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1.0]];
-		[self addSubview:self.roundedView];
+	if (roundedView == nil) {
+		roundedView = [[GradientView alloc] initWithFrame:CGRectMake(40.0f, 60.0f, ROUND_VIEW_WIDTH, ROUND_VIEW_HEIGHT)];
+		[roundedView.layer setCornerRadius:5.0f];
+		[roundedView.layer setMasksToBounds:YES];
+		[roundedView.layer setBorderWidth:1.0f];
+		[roundedView.layer setBorderColor:[[UIColor blackColor] CGColor]];
+		[roundedView setStart:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0] andEndColor:[UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1.0]];
+		[self addSubview:roundedView];
+		[roundedView release];
 	}
 	
 	// Keep track of how far down we are in the view
 	CGFloat cy = 10.0f;
 	
-	if (self.skuLabel == nil) {
-		[self setSkuLabel:[[UILabel alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, BIG_LABEL_HEIGHT)]];
-		self.skuLabel.backgroundColor = [UIColor clearColor];
-		self.skuLabel.textColor = [UIColor blackColor];
-		self.skuLabel.textAlignment = UITextAlignmentCenter;
-		self.skuLabel.font = [UIFont boldSystemFontOfSize:LARGE_FONT_SIZE];
-		self.skuLabel.text = @"NA";
-		[self.roundedView addSubview:self.skuLabel];
+	if (skuLabel == nil) {
+		skuLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, BIG_LABEL_HEIGHT)];
+		skuLabel.backgroundColor = [UIColor clearColor];
+		skuLabel.textColor = [UIColor blackColor];
+		skuLabel.textAlignment = UITextAlignmentCenter;
+		skuLabel.font = [UIFont boldSystemFontOfSize:LARGE_FONT_SIZE];
+		skuLabel.text = @"NA";
+		[roundedView addSubview:skuLabel];
+		[skuLabel release];
 	}
 	
 	cy += BIG_LABEL_HEIGHT;
 	
-	if (self.descriptionLabel == nil) {
-		[self setDescriptionLabel:[[UILabel alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, BIG_LABEL_HEIGHT)]];
-		self.descriptionLabel.backgroundColor = [UIColor clearColor];
-		self.descriptionLabel.textColor = [UIColor blackColor];
-		self.descriptionLabel.textAlignment = UITextAlignmentCenter;
-		self.descriptionLabel.font = [UIFont boldSystemFontOfSize:LARGE_FONT_SIZE];
-		self.descriptionLabel.text = @"NA";
-		[self.roundedView addSubview:self.descriptionLabel];
+	if (descriptionLabel == nil) {
+		descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, BIG_LABEL_HEIGHT)];
+		descriptionLabel.backgroundColor = [UIColor clearColor];
+		descriptionLabel.textColor = [UIColor blackColor];
+		descriptionLabel.textAlignment = UITextAlignmentCenter;
+		descriptionLabel.font = [UIFont boldSystemFontOfSize:LARGE_FONT_SIZE];
+		descriptionLabel.text = @"NA";
+		[roundedView addSubview:descriptionLabel];
+		[descriptionLabel release];
 	}
 	
 	cy += BIG_LABEL_HEIGHT;
 	
-	if (self.priceLabel == nil) {
-		[self setPriceLabel:[[UILabel alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, BIG_LABEL_HEIGHT)]];
-		self.priceLabel.backgroundColor = [UIColor clearColor];
-		self.priceLabel.textColor = [UIColor blackColor];
-		self.priceLabel.textAlignment = UITextAlignmentCenter;
-		self.priceLabel.font = [UIFont boldSystemFontOfSize:LARGE_FONT_SIZE];
-		self.priceLabel.text = @"NA";
-		[self.roundedView addSubview:self.priceLabel];
+	if (priceLabel == nil) {
+		priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, BIG_LABEL_HEIGHT)];
+		priceLabel.backgroundColor = [UIColor clearColor];
+		priceLabel.textColor = [UIColor blackColor];
+		priceLabel.textAlignment = UITextAlignmentCenter;
+		priceLabel.font = [UIFont boldSystemFontOfSize:LARGE_FONT_SIZE];
+		priceLabel.text = @"NA";
+		[roundedView addSubview:priceLabel];
+		[priceLabel release];
 	}
 	
 	cy += BIG_LABEL_HEIGHT + 10.0f;
 	
-	if (self.storeInfo == nil) {
+	if (storeInfo == nil) {
 		
-		[self setStoreInfo:[[UIView alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, (SMALL_LABEL_HEIGHT * 4.0))]];
-		self.storeInfo.backgroundColor = AVAILABLE_COLOR;
-		[self.storeInfo.layer setBorderWidth:1.0f];
-		[self.storeInfo.layer setBorderColor:[[UIColor blackColor] CGColor]];
-		[self.roundedView addSubview:self.storeInfo];
+		storeInfo = [[UIView alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, (SMALL_LABEL_HEIGHT * 4.0))];
+		storeInfo.backgroundColor = AVAILABLE_COLOR;
+		[storeInfo.layer setBorderWidth:1.0f];
+		[storeInfo.layer setBorderColor:[[UIColor blackColor] CGColor]];
+		[roundedView addSubview:storeInfo];
+		[storeInfo release];
 		
-		CGFloat sy = (SMALL_LABEL_HEIGHT / 2.0f);					
-		if (self.storeIdLabel == nil) {
-			[self setStoreIdLabel:[[UILabel alloc] initWithFrame:CGRectMake(0.0f, sy, ROUND_VIEW_WIDTH, SMALL_LABEL_HEIGHT)]];
-			self.storeIdLabel.backgroundColor = [UIColor clearColor];
-			self.storeIdLabel.textColor = [UIColor blackColor];
-			self.storeIdLabel.textAlignment = UITextAlignmentCenter;
-			self.storeIdLabel.font = [UIFont boldSystemFontOfSize:SMALL_FONT_SIZE];
-			self.storeIdLabel.text = @"NA";
-			[self.storeInfo addSubview:self.storeIdLabel];
+		CGFloat sy = (SMALL_LABEL_HEIGHT / 2.0f);
+		
+		if (storeIdLabel == nil) {
+			storeIdLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, sy, ROUND_VIEW_WIDTH, SMALL_LABEL_HEIGHT)];
+			storeIdLabel.backgroundColor = [UIColor clearColor];
+			storeIdLabel.textColor = [UIColor blackColor];
+			storeIdLabel.textAlignment = UITextAlignmentCenter;
+			storeIdLabel.font = [UIFont boldSystemFontOfSize:SMALL_FONT_SIZE];
+			storeIdLabel.text = @"NA";
+			[storeInfo addSubview:storeIdLabel];
+			[storeIdLabel release];
 		}
 		
 		sy += SMALL_LABEL_HEIGHT;
 		
-		if (self.storeAvailableLabel == nil) {
-			[self setStoreAvailableLabel:[[UILabel alloc] initWithFrame:CGRectMake(0.0f, sy, ROUND_VIEW_WIDTH, SMALL_LABEL_HEIGHT)]];
-			self.storeAvailableLabel.backgroundColor = [UIColor clearColor];
-			self.storeAvailableLabel.textColor = [UIColor blackColor];
-			self.storeAvailableLabel.textAlignment = UITextAlignmentCenter;
-			self.storeAvailableLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
-			self.storeAvailableLabel.text = @"NA";
-			[self.storeInfo addSubview:self.storeAvailableLabel];
+		if (storeAvailableLabel == nil) {
+			storeAvailableLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, sy, ROUND_VIEW_WIDTH, SMALL_LABEL_HEIGHT)];
+			storeAvailableLabel.backgroundColor = [UIColor clearColor];
+			storeAvailableLabel.textColor = [UIColor blackColor];
+			storeAvailableLabel.textAlignment = UITextAlignmentCenter;
+			storeAvailableLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
+			storeAvailableLabel.text = @"NA";
+			[storeInfo addSubview:storeAvailableLabel];
+			[storeAvailableLabel release];
 		}
 		
 		sy += SMALL_LABEL_HEIGHT;
 		
-		if (self.storeOnHandLabel == nil) {
-			[self setStoreOnHandLabel:[[UILabel alloc] initWithFrame:CGRectMake(0.0f, sy, ROUND_VIEW_WIDTH, SMALL_LABEL_HEIGHT)]];
-			self.storeOnHandLabel.backgroundColor = [UIColor clearColor];
-			self.storeOnHandLabel.textColor = [UIColor blackColor];
-			self.storeOnHandLabel.textAlignment = UITextAlignmentCenter;
-			self.storeOnHandLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
-			self.storeOnHandLabel.text = @"NA";
-			[self.storeInfo addSubview:self.storeOnHandLabel];
+		if (storeOnHandLabel == nil) {
+			storeOnHandLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, sy, ROUND_VIEW_WIDTH, SMALL_LABEL_HEIGHT)];
+			storeOnHandLabel.backgroundColor = [UIColor clearColor];
+			storeOnHandLabel.textColor = [UIColor blackColor];
+			storeOnHandLabel.textAlignment = UITextAlignmentCenter;
+			storeOnHandLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
+			storeOnHandLabel.text = @"NA";
+			[storeInfo addSubview:storeOnHandLabel];
+			[storeOnHandLabel release];
 		}
 	}
 	
 	cy += (SMALL_LABEL_HEIGHT * 4.0);
 
-	if (self.warehouseInfo == nil) {
-		[self setWarehouseInfo:[[UIView alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, (SMALL_LABEL_HEIGHT * 4.0))]];
-		self.warehouseInfo.backgroundColor = AVAILABLE_COLOR;
-		[self.warehouseInfo.layer setBorderWidth:1.0f];
-		[self.warehouseInfo.layer setBorderColor:[[UIColor blackColor] CGColor]];
-		[self.roundedView addSubview:self.warehouseInfo];
+	if (warehouseInfo == nil) {
+		warehouseInfo = [[UIView alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, (SMALL_LABEL_HEIGHT * 4.0))];
+		warehouseInfo.backgroundColor = AVAILABLE_COLOR;
+		[warehouseInfo.layer setBorderWidth:1.0f];
+		[warehouseInfo.layer setBorderColor:[[UIColor blackColor] CGColor]];
+		[roundedView addSubview:warehouseInfo];
+		[warehouseInfo release];
 		
 		CGFloat wy = (SMALL_LABEL_HEIGHT / 2.0f);
 		
-		if (self.warehouseIdLabel == nil) {
-			[self setWarehouseIdLabel:[[UILabel alloc] initWithFrame:CGRectMake(0.0f, wy, ROUND_VIEW_WIDTH, SMALL_LABEL_HEIGHT)]];
-			self.warehouseIdLabel.backgroundColor = [UIColor clearColor];
-			self.warehouseIdLabel.textColor = [UIColor blackColor];
-			self.warehouseIdLabel.textAlignment = UITextAlignmentCenter;
-			self.warehouseIdLabel.font = [UIFont boldSystemFontOfSize:SMALL_FONT_SIZE];
-			self.warehouseIdLabel.text = @"NA";
-			[self.warehouseInfo addSubview:self.warehouseIdLabel];
+		if (warehouseIdLabel == nil) {
+			warehouseIdLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, wy, ROUND_VIEW_WIDTH, SMALL_LABEL_HEIGHT)];
+			warehouseIdLabel.backgroundColor = [UIColor clearColor];
+			warehouseIdLabel.textColor = [UIColor blackColor];
+			warehouseIdLabel.textAlignment = UITextAlignmentCenter;
+			warehouseIdLabel.font = [UIFont boldSystemFontOfSize:SMALL_FONT_SIZE];
+			warehouseIdLabel.text = @"NA";
+			[warehouseInfo addSubview:warehouseIdLabel];
+			[warehouseIdLabel release];
 		}
 		
 		wy += SMALL_LABEL_HEIGHT;
 		
-		if (self.warehouseAvailableLabel == nil) {
-			[self setWarehouseAvailableLabel:[[UILabel alloc] initWithFrame:CGRectMake(0.0f, wy, ROUND_VIEW_WIDTH, SMALL_LABEL_HEIGHT)]];
-			self.warehouseAvailableLabel.backgroundColor = [UIColor clearColor];
-			self.warehouseAvailableLabel.textColor = [UIColor blackColor];
-			self.warehouseAvailableLabel.textAlignment = UITextAlignmentCenter;
-			self.warehouseAvailableLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
-			self.warehouseAvailableLabel.text = @"NA";
-			[self.warehouseInfo addSubview:self.warehouseAvailableLabel];
+		if (warehouseAvailableLabel == nil) {
+			warehouseAvailableLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, wy, ROUND_VIEW_WIDTH, SMALL_LABEL_HEIGHT)];
+			warehouseAvailableLabel.backgroundColor = [UIColor clearColor];
+			warehouseAvailableLabel.textColor = [UIColor blackColor];
+			warehouseAvailableLabel.textAlignment = UITextAlignmentCenter;
+			warehouseAvailableLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
+			warehouseAvailableLabel.text = @"NA";
+			[warehouseInfo addSubview:warehouseAvailableLabel];
+			[warehouseAvailableLabel release];
 		}
 		
 		wy += SMALL_LABEL_HEIGHT;
 		
-		if (self.warehouseOnHandLabel == nil) {
-			[self setWarehouseOnHandLabel:[[UILabel alloc] initWithFrame:CGRectMake(0.0f, wy, ROUND_VIEW_WIDTH, SMALL_LABEL_HEIGHT)]];
-			self.warehouseOnHandLabel.backgroundColor = [UIColor clearColor];
-			self.warehouseOnHandLabel.textColor = [UIColor blackColor];
-			self.warehouseOnHandLabel.textAlignment = UITextAlignmentCenter;
-			self.warehouseOnHandLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
-			self.warehouseOnHandLabel.text = @"NA";
-			[self.warehouseInfo addSubview:self.warehouseOnHandLabel];
+		if (warehouseOnHandLabel == nil) {
+			warehouseOnHandLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, wy, ROUND_VIEW_WIDTH, SMALL_LABEL_HEIGHT)];
+			warehouseOnHandLabel.backgroundColor = [UIColor clearColor];
+			warehouseOnHandLabel.textColor = [UIColor blackColor];
+			warehouseOnHandLabel.textAlignment = UITextAlignmentCenter;
+			warehouseOnHandLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
+			warehouseOnHandLabel.text = @"NA";
+			[warehouseInfo addSubview:warehouseOnHandLabel];
+			[warehouseOnHandLabel release];
 		}
 	}
 	
 	cy += (SMALL_LABEL_HEIGHT * 4.0) + 15.0f;
 	
-	if (self.addToCartButton == nil) {
-		[self setAddToCartButton:[[MOGlassButton alloc] initWithFrame:CGRectMake(26.0f, cy, 80.0f, 80.0f)]];
-		[self.addToCartButton setupAsBlackButton];
-		self.addToCartButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
-		self.addToCartButton.titleLabel.textAlignment = UITextAlignmentCenter;
-		[self.addToCartButton setTitle:@"ADD\nTO\nCART" forState:UIControlStateNormal];
-		[self.addToCartButton addTarget:self action:@selector(handleAddToCartButton:) forControlEvents:UIControlEventTouchUpInside];
-		[self.roundedView addSubview:self.addToCartButton];
+	if (addToCartButton == nil) {
+		addToCartButton = [[MOGlassButton alloc] initWithFrame:CGRectMake(26.0f, cy, 80.0f, 80.0f)];
+		[addToCartButton setupAsBlackButton];
+		addToCartButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+		addToCartButton.titleLabel.textAlignment = UITextAlignmentCenter;
+		[addToCartButton setTitle:@"ADD\nTO\nCART" forState:UIControlStateNormal];
+		[addToCartButton addTarget:self action:@selector(handleAddToCartButton:) forControlEvents:UIControlEventTouchUpInside];
+		[roundedView addSubview:addToCartButton];
+		[addToCartButton release];
 	}
 	
-	if (self.exitButton == nil) {
-		[self setExitButton:[[MOGlassButton alloc] initWithFrame:CGRectMake(134.0f, cy, 80.0f, 80.0f)]];
-		[self.exitButton setupAsBlackButton];
-		self.exitButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
-		self.exitButton.titleLabel.textAlignment = UITextAlignmentCenter;
-		[self.exitButton setTitle:@"EXIT" forState:UIControlStateNormal];
-		[self.exitButton addTarget:self action:@selector(handleExitButton:) forControlEvents:UIControlEventTouchUpInside];
-		[self.roundedView addSubview:self.exitButton];
+	if (exitButton == nil) {
+		exitButton = [[MOGlassButton alloc] initWithFrame:CGRectMake(134.0f, cy, 80.0f, 80.0f)];
+		[exitButton setupAsBlackButton];
+		exitButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+		exitButton.titleLabel.textAlignment = UITextAlignmentCenter;
+		[exitButton setTitle:@"EXIT" forState:UIControlStateNormal];
+		[exitButton addTarget:self action:@selector(handleExitButton:) forControlEvents:UIControlEventTouchUpInside];
+		[roundedView addSubview:exitButton];
+		[exitButton release];
 	}
 	
-	if (self.addQuantityView == nil) {
-		[self setAddQuantityView:[[GradientView alloc] initWithFrame:CGRectMake(26.0f, cy, 188.0f, 80.0f)]];
-		[self.addQuantityView.layer setCornerRadius:5.0f];
-		[self.addQuantityView.layer setMasksToBounds:YES];
-		[self.addQuantityView.layer setBorderWidth:1.0f];
-		[self.addQuantityView.layer setBorderColor:[[UIColor blackColor] CGColor]];
-		[self.addQuantityView setStart:[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0] andEndColor:[UIColor blackColor]];
+	if (addQuantityView == nil) {
+		addQuantityView = [[GradientView alloc] initWithFrame:CGRectMake(26.0f, cy, 188.0f, 80.0f)];
+		[addQuantityView.layer setCornerRadius:5.0f];
+		[addQuantityView.layer setMasksToBounds:YES];
+		[addQuantityView.layer setBorderWidth:1.0f];
+		[addQuantityView.layer setBorderColor:[[UIColor blackColor] CGColor]];
+		[addQuantityView setStart:[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0] andEndColor:[UIColor blackColor]];
 		
-		[self setAddQuantityField:[[ExtUITextField alloc] initWithFrame:CGRectMake(15.0f, 20.0f, 90.0f, 40.0f)]];
-		self.addQuantityField.textColor = [UIColor blackColor];
-		self.addQuantityField.borderStyle = UITextBorderStyleRoundedRect;
-		self.addQuantityField.textAlignment = UITextAlignmentCenter;
-		self.addQuantityField.clearsOnBeginEditing = YES;
-		self.addQuantityField.placeholder = @"Quantity";
-		self.addQuantityField.tagName = @"AddQuantity";
-		self.addQuantityField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-		self.addQuantityField.returnKeyType = UIReturnKeyGo;
-		self.addQuantityField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-		self.addQuantityField.delegate = self;
-		[self.addQuantityView addSubview:self.addQuantityField];
+		addQuantityField = [[ExtUITextField alloc] initWithFrame:CGRectMake(15.0f, 20.0f, 90.0f, 40.0f)];
+		addQuantityField.textColor = [UIColor blackColor];
+		addQuantityField.borderStyle = UITextBorderStyleRoundedRect;
+		addQuantityField.textAlignment = UITextAlignmentCenter;
+		addQuantityField.clearsOnBeginEditing = YES;
+		addQuantityField.placeholder = @"Quantity";
+		addQuantityField.tagName = @"AddQuantity";
+		addQuantityField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+		addQuantityField.returnKeyType = UIReturnKeyGo;
+		addQuantityField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+		addQuantityField.delegate = self;
+		[addQuantityView addSubview:addQuantityField];
+		[addQuantityField release];
 		
-		[self setAddQuantityUnitsLabel:[[UILabel alloc] initWithFrame:CGRectMake(120.0f, 20.0f, 53.0f, 40.0f)]];
-		self.addQuantityUnitsLabel.textAlignment = UITextAlignmentCenter;
-		self.addQuantityUnitsLabel.textColor = [UIColor whiteColor];
-		self.addQuantityUnitsLabel.backgroundColor = [UIColor clearColor];
-		[self.addQuantityView addSubview:self.addQuantityUnitsLabel];
+		addQuantityUnitsLabel = [[UILabel alloc] initWithFrame:CGRectMake(120.0f, 20.0f, 53.0f, 40.0f)];
+		addQuantityUnitsLabel.textAlignment = UITextAlignmentCenter;
+		addQuantityUnitsLabel.textColor = [UIColor whiteColor];
+		addQuantityUnitsLabel.backgroundColor = [UIColor clearColor];
+		[addQuantityView addSubview:addQuantityUnitsLabel];
+		[addQuantityUnitsLabel release];
 		
 	}
 	
@@ -328,22 +307,22 @@
 - (void)updateDisplayValues {
 	if (self.productItem != nil) {
 		ProductItem *pi = (ProductItem *)self.productItem;
-		self.skuLabel.text = [pi.sku stringValue];
-		self.descriptionLabel.text = pi.description;
-		self.priceLabel.text = [NSString stringWithFormat:@"%@ / %@", [self.priceFormatter stringFromNumber:pi.retailPrice], pi.primaryUnitOfMeasure];
+		skuLabel.text = [pi.sku stringValue];
+		descriptionLabel.text = pi.description;
+		priceLabel.text = [NSString stringWithFormat:@"%@ / %@", [priceFormatter stringFromNumber:pi.retailPrice], pi.primaryUnitOfMeasure];
 		
-		self.storeIdLabel.text = [pi.storeId stringValue];
-		self.storeAvailableLabel.text = [NSString stringWithFormat:@"%@ available", [self.availableFormatter stringFromNumber:pi.storeAvailability]];
-		self.storeOnHandLabel.text = [NSString stringWithFormat:@"%@ on hand", @"0.00"];
+		storeIdLabel.text = [pi.storeId stringValue];
+		storeAvailableLabel.text = [NSString stringWithFormat:@"%@ available", [availableFormatter stringFromNumber:pi.storeAvailability]];
+		storeOnHandLabel.text = [NSString stringWithFormat:@"%@ on hand", @"0.00"];
 		// If availablity is less than zero. Unfortunately that is the way you have to do it with NSDecimailNumbers
 		if ([pi.storeAvailability compare:[NSDecimalNumber zero]] == NSOrderedAscending) {
-			self.storeInfo.backgroundColor = UNAVAILABLE_COLOR;
+			storeInfo.backgroundColor = UNAVAILABLE_COLOR;
 		}
-		self.warehouseIdLabel.text = @"000";
-		self.warehouseAvailableLabel.text = [NSString stringWithFormat:@"%@ available", [self.availableFormatter stringFromNumber:pi.distributionCenterAvailability]];
-		self.warehouseOnHandLabel.text = [NSString stringWithFormat:@"%@ on hand", @"0.00"];
+		warehouseIdLabel.text = @"000";
+		warehouseAvailableLabel.text = [NSString stringWithFormat:@"%@ available", [availableFormatter stringFromNumber:pi.distributionCenterAvailability]];
+		warehouseOnHandLabel.text = [NSString stringWithFormat:@"%@ on hand", @"0.00"];
 		if ([pi.distributionCenterAvailability compare:[NSDecimalNumber zero]] == NSOrderedAscending) {
-			self.warehouseInfo.backgroundColor = UNAVAILABLE_COLOR;
+			warehouseInfo.backgroundColor = UNAVAILABLE_COLOR;
 		}
 	}
 }
@@ -357,8 +336,9 @@
 - (void)handleAddToCartButton:(id)sender {
 	[self addKeyboardListeners];
 	ProductItem *pi = (ProductItem *)self.productItem;
-	self.addQuantityUnitsLabel.text = pi.primaryUnitOfMeasure;
-	[self.roundedView addSubview:self.addQuantityView];
+	addQuantityUnitsLabel.text = pi.primaryUnitOfMeasure;
+	[roundedView addSubview:addQuantityView];
+	[addQuantityView release];
 }
 
 #pragma mark -
