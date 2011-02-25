@@ -7,137 +7,50 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D3623260D0F684500981E51 /* iPOSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* iPOSAppDelegate.m */; };
-		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
-		B40B94251304ED500024C2DC /* AlertUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B40B94241304ED500024C2DC /* AlertUtils.m */; };
-		B40B94311304EF620024C2DC /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B40B94301304EF620024C2DC /* MainMenuViewController.m */; };
-		B40FC05C1311890700D7D79D /* MOButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B40FC0591311890700D7D79D /* MOButton.m */; };
-		B40FC05D1311890700D7D79D /* MOGlassButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B40FC05B1311890700D7D79D /* MOGlassButton.m */; };
 		B40FC0F21311928600D7D79D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
-		B47AA7EF12F7DD1000AAD34C /* PlaceHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B47AA7EE12F7DD1000AAD34C /* PlaceHolderView.m */; };
-		B47AA7F612F7DD7200AAD34C /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B47AA7F512F7DD7200AAD34C /* LoginViewController.m */; };
-		B48A7E1013107EEE00F6412C /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = B48A7E0F13107EEE00F6412C /* GradientView.m */; };
-		B4B367C612F936AC00F37FE9 /* DrawUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B4B367C512F936AC00F37FE9 /* DrawUtils.m */; };
-		B4C469C0130701DF001EADE4 /* AddItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469BF130701DF001EADE4 /* AddItemViewController.m */; };
-		B4C469D513070300001EADE4 /* CustomerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469D413070300001EADE4 /* CustomerViewController.m */; };
-		B4C469E11307047F001EADE4 /* CartItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469E01307047F001EADE4 /* CartItemsViewController.m */; };
-		B4C469E913070C48001EADE4 /* TenderPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469E813070C48001EADE4 /* TenderPaymentViewController.m */; };
-		B4C469FB13070D84001EADE4 /* ReceiptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469FA13070D84001EADE4 /* ReceiptViewController.m */; };
-		B4C46A091307141B001EADE4 /* CartItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46A081307141B001EADE4 /* CartItemDetailViewController.m */; };
-		B4C46A131307199F001EADE4 /* SignatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46A121307199F001EADE4 /* SignatureViewController.m */; };
-		B4C46B0613075F5D001EADE4 /* AddItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46B0513075F5D001EADE4 /* AddItemView.m */; };
-		B4C46B981308BBE7001EADE4 /* ExtUITextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46B971308BBE7001EADE4 /* ExtUITextField.m */; };
-		D61C3C3212FCA530003C3A47 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3112FCA530003C3A47 /* Customer.m */; };
-		D61C3C3512FCA535003C3A47 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3412FCA535003C3A47 /* Order.m */; };
-		D61C3C3A12FCA55D003C3A47 /* ManagerApprovalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3912FCA55D003C3A47 /* ManagerApprovalInfo.m */; };
-		D61C3C6412FCA97F003C3A47 /* ProductItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6312FCA97F003C3A47 /* ProductItem.m */; };
-		D61C3C6712FCA99E003C3A47 /* PaymentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6612FCA99E003C3A47 /* PaymentInfo.m */; };
-		D61C3C6A12FCA9C0003C3A47 /* OrderItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6912FCA9C0003C3A47 /* OrderItem.m */; };
-		D62853C612FB9B650024228B /* LayoutUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = D62853C512FB9B650024228B /* LayoutUtils.m */; };
-		D64B7EC112F9DFF5006AB141 /* iPOSServiceIntTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */; };
-		D64BB324131308CB0027E9AC /* UnitTests.octest in Resources */ = {isa = PBXBuildFile; fileRef = D64B7E1312F9D7EA006AB141 /* UnitTests.octest */; };
 		D64E5AE8130262B0002EAD70 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 		D64E5B8813026566002EAD70 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
-		D6560296130B802A000968BA /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = D692BBA312FDFF4C007EC03A /* Address.m */; };
-		D6560298130B802A000968BA /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07DC1302583500B77769 /* ASIAuthenticationDialog.m */; };
-		D6560299130B802A000968BA /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07DF1302583500B77769 /* ASIDataCompressor.m */; };
-		D656029A130B802A000968BA /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07E11302583500B77769 /* ASIDataDecompressor.m */; };
-		D656029B130B802A000968BA /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07E31302583500B77769 /* ASIDownloadCache.m */; };
-		D656029C130B802A000968BA /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07E51302583500B77769 /* ASIFormDataRequest.m */; };
-		D656029D130B802A000968BA /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07E71302583500B77769 /* ASIHTTPRequest.m */; };
-		D656029E130B802A000968BA /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07EB1302583500B77769 /* ASIInputStream.m */; };
-		D656029F130B802A000968BA /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07ED1302583500B77769 /* ASINetworkQueue.m */; };
-		D65602A3130B802A000968BA /* CTidy.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B31302580500B77769 /* CTidy.m */; };
-		D65602A4130B802A000968BA /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3112FCA530003C3A47 /* Customer.m */; };
-		D65602A6130B802A000968BA /* CXHTMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B51302580500B77769 /* CXHTMLDocument.m */; };
-		D65602A7130B802A000968BA /* CXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07BB1302580500B77769 /* CXMLDocument.m */; };
-		D65602A8130B802A000968BA /* CXMLDocument_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B71302580500B77769 /* CXMLDocument_CreationExtensions.m */; };
-		D65602A9130B802A000968BA /* CXMLDocument_PrivateExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B91302580500B77769 /* CXMLDocument_PrivateExtensions.m */; };
-		D65602AA130B802A000968BA /* CXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C11302580500B77769 /* CXMLElement.m */; };
-		D65602AB130B802A000968BA /* CXMLElement_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07BD1302580500B77769 /* CXMLElement_CreationExtensions.m */; };
-		D65602AC130B802A000968BA /* CXMLElement_ElementTreeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07BF1302580500B77769 /* CXMLElement_ElementTreeExtensions.m */; };
-		D65602AD130B802A000968BA /* CXMLNamespaceNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C31302580500B77769 /* CXMLNamespaceNode.m */; };
-		D65602AE130B802A000968BA /* CXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07CB1302580500B77769 /* CXMLNode.m */; };
-		D65602AF130B802A000968BA /* CXMLNode_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C51302580500B77769 /* CXMLNode_CreationExtensions.m */; };
-		D65602B0130B802A000968BA /* CXMLNode_PrivateExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C71302580500B77769 /* CXMLNode_PrivateExtensions.m */; };
-		D65602B1130B802A000968BA /* CXMLNode_XPathExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C91302580500B77769 /* CXMLNode_XPathExtensions.m */; };
-		D65602B4130B802A000968BA /* InventoryServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3F712FCB3D80029F4B2 /* InventoryServiceImpl.m */; };
-		D65602B5130B802A000968BA /* InventoryServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3F912FCB3D80029F4B2 /* InventoryServiceMock.m */; };
-		D65602B7130B802A000968BA /* iPOSFacade.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FB12FCB3D80029F4B2 /* iPOSFacade.m */; };
-		D65602B8130B802A000968BA /* iPOSServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */; };
-		D65602B9130B802A000968BA /* iPOSServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD40012FCB3D80029F4B2 /* iPOSServiceMock.m */; };
-		D65602BC130B802A000968BA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
-		D65602BE130B802A000968BA /* ManagerApprovalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3912FCA55D003C3A47 /* ManagerApprovalInfo.m */; };
-		D65602BF130B802A000968BA /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3412FCA535003C3A47 /* Order.m */; };
-		D65602C0130B802A000968BA /* OrderItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6912FCA9C0003C3A47 /* OrderItem.m */; };
-		D65602C1130B802A000968BA /* PaymentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6612FCA99E003C3A47 /* PaymentInfo.m */; };
-		D65602C3130B802A000968BA /* ProductItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6312FCA97F003C3A47 /* ProductItem.m */; };
-		D65602C4130B802A000968BA /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07F01302583500B77769 /* Reachability.m */; };
-		D65602C6130B802A000968BA /* SessionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */; };
-		D65FD4BB1302303A00F4C19D /* BarcodeScannerCardReaderDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D65FD4BA1302303A00F4C19D /* BarcodeScannerCardReaderDelegate.m */; };
-		D692BBA412FDFF4C007EC03A /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = D692BBA312FDFF4C007EC03A /* Address.m */; };
+		D67943A313160884004B8254 /* iPOSServiceIntTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */; };
+		D67943B2131608C1004B8254 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FC1302586800B77769 /* CFNetwork.framework */; };
+		D67943B3131608C1004B8254 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		D67943B4131608C1004B8254 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
+		D67943B5131608C1004B8254 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		D67943B6131608C1004B8254 /* libiPOSFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */; };
+		D67943B7131608C1004B8254 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
+		D67943B8131608C1004B8254 /* libOPIFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B435B213159F72000C0AA8 /* libOPIFoundation.a */; };
+		D67943B9131608C1004B8254 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08021302586800B77769 /* libz.1.2.3.dylib */; };
+		D67943BA131608C1004B8254 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FE1302586800B77769 /* MobileCoreServices.framework */; };
+		D67943BB131608C1004B8254 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
+		D67943BC131608C1004B8254 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
+		D67943BD131608C1004B8254 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		D679459513160D05004B8254 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FC1302586800B77769 /* CFNetwork.framework */; };
+		D679459613160D05004B8254 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		D679459713160D05004B8254 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
+		D679459813160D05004B8254 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
+		D679459913160D05004B8254 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08021302586800B77769 /* libz.1.2.3.dylib */; };
+		D679459A13160D05004B8254 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FE1302586800B77769 /* MobileCoreServices.framework */; };
+		D679459B13160D05004B8254 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
+		D679459C13160D05004B8254 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
+		D684738413161514001214B3 /* CXMLNode_XPathExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C91302580500B77769 /* CXMLNode_XPathExtensions.m */; };
+		D684738613161515001214B3 /* CXMLNode_PrivateExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C71302580500B77769 /* CXMLNode_PrivateExtensions.m */; };
+		D684738813161517001214B3 /* CXMLNode_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C51302580500B77769 /* CXMLNode_CreationExtensions.m */; };
+		D684738A13161519001214B3 /* CXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07CB1302580500B77769 /* CXMLNode.m */; };
+		D684738C1316151B001214B3 /* CXMLNamespaceNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C31302580500B77769 /* CXMLNamespaceNode.m */; };
+		D684738E1316151D001214B3 /* CXMLElement_ElementTreeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07BF1302580500B77769 /* CXMLElement_ElementTreeExtensions.m */; };
+		D68473901316151F001214B3 /* CXMLElement_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07BD1302580500B77769 /* CXMLElement_CreationExtensions.m */; };
+		D684739213161521001214B3 /* CXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C11302580500B77769 /* CXMLElement.m */; };
+		D684739413161523001214B3 /* CXMLDocument_PrivateExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B91302580500B77769 /* CXMLDocument_PrivateExtensions.m */; };
+		D684739613161525001214B3 /* CXMLDocument_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B71302580500B77769 /* CXMLDocument_CreationExtensions.m */; };
+		D684739813161526001214B3 /* CXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07BB1302580500B77769 /* CXMLDocument.m */; };
+		D684739A13161528001214B3 /* CXHTMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B51302580500B77769 /* CXHTMLDocument.m */; };
+		D684739C1316152A001214B3 /* CTidy.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B31302580500B77769 /* CTidy.m */; };
 		D697D15E1312D98D002C3EF6 /* iPosFacadeWithMocksTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D656013D130B71B4000968BA /* iPosFacadeWithMocksTestCase.m */; };
 		D697D15F1312D98F002C3EF6 /* SampleUnitTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D64B7E3512F9D8FD006AB141 /* SampleUnitTestCase.m */; };
 		D697D1981312DCD0002C3EF6 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D6A96658130F0C3C004D90C4 /* Settings.bundle */; };
 		D697D19A1312DCD0002C3EF6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
-		D697D19B1312DCD0002C3EF6 /* iPOSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* iPOSAppDelegate.m */; };
-		D697D19C1312DCD0002C3EF6 /* PlaceHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B47AA7EE12F7DD1000AAD34C /* PlaceHolderView.m */; };
-		D697D19D1312DCD0002C3EF6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B47AA7F512F7DD7200AAD34C /* LoginViewController.m */; };
-		D697D19E1312DCD0002C3EF6 /* DrawUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B4B367C512F936AC00F37FE9 /* DrawUtils.m */; };
-		D697D19F1312DCD0002C3EF6 /* LayoutUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = D62853C512FB9B650024228B /* LayoutUtils.m */; };
-		D697D1A01312DCD0002C3EF6 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3112FCA530003C3A47 /* Customer.m */; };
-		D697D1A11312DCD0002C3EF6 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3412FCA535003C3A47 /* Order.m */; };
-		D697D1A21312DCD0002C3EF6 /* ManagerApprovalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3912FCA55D003C3A47 /* ManagerApprovalInfo.m */; };
-		D697D1A31312DCD0002C3EF6 /* ProductItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6312FCA97F003C3A47 /* ProductItem.m */; };
-		D697D1A41312DCD0002C3EF6 /* PaymentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6612FCA99E003C3A47 /* PaymentInfo.m */; };
-		D697D1A51312DCD0002C3EF6 /* OrderItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6912FCA9C0003C3A47 /* OrderItem.m */; };
-		D697D1A61312DCD0002C3EF6 /* InventoryServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3F712FCB3D80029F4B2 /* InventoryServiceImpl.m */; };
-		D697D1A71312DCD0002C3EF6 /* InventoryServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3F912FCB3D80029F4B2 /* InventoryServiceMock.m */; };
-		D697D1A81312DCD0002C3EF6 /* iPOSFacade.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FB12FCB3D80029F4B2 /* iPOSFacade.m */; };
-		D697D1A91312DCD0002C3EF6 /* iPOSServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */; };
-		D697D1AA1312DCD0002C3EF6 /* iPOSServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD40012FCB3D80029F4B2 /* iPOSServiceMock.m */; };
-		D697D1AB1312DCD0002C3EF6 /* SessionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */; };
-		D697D1AC1312DCD0002C3EF6 /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = D692BBA312FDFF4C007EC03A /* Address.m */; };
-		D697D1AD1312DCD0002C3EF6 /* BarcodeScannerCardReaderDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D65FD4BA1302303A00F4C19D /* BarcodeScannerCardReaderDelegate.m */; };
-		D697D1AE1312DCD0002C3EF6 /* CTidy.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B31302580500B77769 /* CTidy.m */; };
-		D697D1AF1312DCD0002C3EF6 /* CXHTMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B51302580500B77769 /* CXHTMLDocument.m */; };
-		D697D1B01312DCD0002C3EF6 /* CXMLDocument_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B71302580500B77769 /* CXMLDocument_CreationExtensions.m */; };
-		D697D1B11312DCD0002C3EF6 /* CXMLDocument_PrivateExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B91302580500B77769 /* CXMLDocument_PrivateExtensions.m */; };
-		D697D1B21312DCD0002C3EF6 /* CXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07BB1302580500B77769 /* CXMLDocument.m */; };
-		D697D1B31312DCD0002C3EF6 /* CXMLElement_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07BD1302580500B77769 /* CXMLElement_CreationExtensions.m */; };
-		D697D1B41312DCD0002C3EF6 /* CXMLElement_ElementTreeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07BF1302580500B77769 /* CXMLElement_ElementTreeExtensions.m */; };
-		D697D1B51312DCD0002C3EF6 /* CXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C11302580500B77769 /* CXMLElement.m */; };
-		D697D1B61312DCD0002C3EF6 /* CXMLNamespaceNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C31302580500B77769 /* CXMLNamespaceNode.m */; };
-		D697D1B71312DCD0002C3EF6 /* CXMLNode_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C51302580500B77769 /* CXMLNode_CreationExtensions.m */; };
-		D697D1B81312DCD0002C3EF6 /* CXMLNode_PrivateExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C71302580500B77769 /* CXMLNode_PrivateExtensions.m */; };
-		D697D1B91312DCD0002C3EF6 /* CXMLNode_XPathExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C91302580500B77769 /* CXMLNode_XPathExtensions.m */; };
-		D697D1BA1312DCD0002C3EF6 /* CXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07CB1302580500B77769 /* CXMLNode.m */; };
-		D697D1BB1312DCD0002C3EF6 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07DC1302583500B77769 /* ASIAuthenticationDialog.m */; };
-		D697D1BC1312DCD0002C3EF6 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07DF1302583500B77769 /* ASIDataCompressor.m */; };
-		D697D1BD1312DCD0002C3EF6 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07E11302583500B77769 /* ASIDataDecompressor.m */; };
-		D697D1BE1312DCD0002C3EF6 /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07E31302583500B77769 /* ASIDownloadCache.m */; };
-		D697D1BF1312DCD0002C3EF6 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07E51302583500B77769 /* ASIFormDataRequest.m */; };
-		D697D1C01312DCD0002C3EF6 /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07E71302583500B77769 /* ASIHTTPRequest.m */; };
-		D697D1C11312DCD0002C3EF6 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07EB1302583500B77769 /* ASIInputStream.m */; };
-		D697D1C21312DCD0002C3EF6 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07ED1302583500B77769 /* ASINetworkQueue.m */; };
-		D697D1C31312DCD0002C3EF6 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07F01302583500B77769 /* Reachability.m */; };
-		D697D1C41312DCD0002C3EF6 /* AlertUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B40B94241304ED500024C2DC /* AlertUtils.m */; };
-		D697D1C51312DCD0002C3EF6 /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B40B94301304EF620024C2DC /* MainMenuViewController.m */; };
-		D697D1C61312DCD0002C3EF6 /* AddItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469BF130701DF001EADE4 /* AddItemViewController.m */; };
-		D697D1C71312DCD0002C3EF6 /* CustomerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469D413070300001EADE4 /* CustomerViewController.m */; };
-		D697D1C81312DCD0002C3EF6 /* CartItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469E01307047F001EADE4 /* CartItemsViewController.m */; };
-		D697D1C91312DCD0002C3EF6 /* TenderPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469E813070C48001EADE4 /* TenderPaymentViewController.m */; };
-		D697D1CA1312DCD0002C3EF6 /* ReceiptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469FA13070D84001EADE4 /* ReceiptViewController.m */; };
-		D697D1CB1312DCD0002C3EF6 /* CartItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46A081307141B001EADE4 /* CartItemDetailViewController.m */; };
-		D697D1CC1312DCD0002C3EF6 /* SignatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46A121307199F001EADE4 /* SignatureViewController.m */; };
-		D697D1CD1312DCD0002C3EF6 /* AddItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46B0513075F5D001EADE4 /* AddItemView.m */; };
-		D697D1CE1312DCD0002C3EF6 /* ExtUITextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46B971308BBE7001EADE4 /* ExtUITextField.m */; };
-		D697D1CF1312DCD0002C3EF6 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = B48A7E0F13107EEE00F6412C /* GradientView.m */; };
-		D697D1D01312DCD0002C3EF6 /* MOButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B40FC0591311890700D7D79D /* MOButton.m */; };
-		D697D1D11312DCD0002C3EF6 /* MOGlassButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B40FC05B1311890700D7D79D /* MOGlassButton.m */; };
 		D697D1D31312DCD0002C3EF6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		D697D1D41312DCD0002C3EF6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		D697D1D51312DCD0002C3EF6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
@@ -148,66 +61,168 @@
 		D697D1DB1312DCD0002C3EF6 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
 		D697D1DC1312DCD0002C3EF6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
 		D697D1EF1312DDE1002C3EF6 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
-		D697D22F1312E4AF002C3EF6 /* IntegrationTests.octest in Resources */ = {isa = PBXBuildFile; fileRef = D64B7EB012F9DFA7006AB141 /* IntegrationTests.octest */; };
-		D697D2371312E4D2002C3EF6 /* InventoryServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3F912FCB3D80029F4B2 /* InventoryServiceMock.m */; };
-		D697D2381312E4DD002C3EF6 /* iPOSServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD40012FCB3D80029F4B2 /* iPOSServiceMock.m */; };
-		D697D23B1312E4EF002C3EF6 /* iPOSFacade.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FB12FCB3D80029F4B2 /* iPOSFacade.m */; };
-		D697D23C1312E504002C3EF6 /* ProductItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6312FCA97F003C3A47 /* ProductItem.m */; };
-		D697D23D1312E50C002C3EF6 /* SessionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */; };
-		D697D30E1312EA25002C3EF6 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FC1302586800B77769 /* CFNetwork.framework */; };
-		D697D30F1312EA25002C3EF6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FE1302586800B77769 /* MobileCoreServices.framework */; };
-		D697D3101312EA25002C3EF6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
-		D697D3131312EA4C002C3EF6 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08021302586800B77769 /* libz.1.2.3.dylib */; };
-		D697D31C1312EA6F002C3EF6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		D6A96659130F0C3C004D90C4 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D6A96658130F0C3C004D90C4 /* Settings.bundle */; };
-		D6BA07CD1302580500B77769 /* CTidy.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B31302580500B77769 /* CTidy.m */; };
-		D6BA07CE1302580500B77769 /* CXHTMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B51302580500B77769 /* CXHTMLDocument.m */; };
-		D6BA07CF1302580500B77769 /* CXMLDocument_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B71302580500B77769 /* CXMLDocument_CreationExtensions.m */; };
-		D6BA07D01302580500B77769 /* CXMLDocument_PrivateExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07B91302580500B77769 /* CXMLDocument_PrivateExtensions.m */; };
-		D6BA07D11302580500B77769 /* CXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07BB1302580500B77769 /* CXMLDocument.m */; };
-		D6BA07D21302580500B77769 /* CXMLElement_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07BD1302580500B77769 /* CXMLElement_CreationExtensions.m */; };
-		D6BA07D31302580500B77769 /* CXMLElement_ElementTreeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07BF1302580500B77769 /* CXMLElement_ElementTreeExtensions.m */; };
-		D6BA07D41302580500B77769 /* CXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C11302580500B77769 /* CXMLElement.m */; };
-		D6BA07D51302580500B77769 /* CXMLNamespaceNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C31302580500B77769 /* CXMLNamespaceNode.m */; };
-		D6BA07D61302580500B77769 /* CXMLNode_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C51302580500B77769 /* CXMLNode_CreationExtensions.m */; };
-		D6BA07D71302580500B77769 /* CXMLNode_PrivateExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C71302580500B77769 /* CXMLNode_PrivateExtensions.m */; };
-		D6BA07D81302580500B77769 /* CXMLNode_XPathExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C91302580500B77769 /* CXMLNode_XPathExtensions.m */; };
-		D6BA07D91302580500B77769 /* CXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07CB1302580500B77769 /* CXMLNode.m */; };
-		D6BA07F11302583500B77769 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07DC1302583500B77769 /* ASIAuthenticationDialog.m */; };
-		D6BA07F21302583500B77769 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07DF1302583500B77769 /* ASIDataCompressor.m */; };
-		D6BA07F31302583500B77769 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07E11302583500B77769 /* ASIDataDecompressor.m */; };
-		D6BA07F41302583500B77769 /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07E31302583500B77769 /* ASIDownloadCache.m */; };
-		D6BA07F51302583500B77769 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07E51302583500B77769 /* ASIFormDataRequest.m */; };
-		D6BA07F61302583500B77769 /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07E71302583500B77769 /* ASIHTTPRequest.m */; };
-		D6BA07F71302583500B77769 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07EB1302583500B77769 /* ASIInputStream.m */; };
-		D6BA07F81302583500B77769 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07ED1302583500B77769 /* ASINetworkQueue.m */; };
-		D6BA07F91302583500B77769 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07F01302583500B77769 /* Reachability.m */; };
+		D6B4351313159E1E000C0AA8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		D6B4354C13159E1E000C0AA8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		D6B4354D13159E1E000C0AA8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		D6B4354E13159E1E000C0AA8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		D6B4354F13159E1E000C0AA8 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FC1302586800B77769 /* CFNetwork.framework */; };
+		D6B4355013159E1E000C0AA8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FE1302586800B77769 /* MobileCoreServices.framework */; };
+		D6B4355113159E1E000C0AA8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
+		D6B4355213159E1E000C0AA8 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08021302586800B77769 /* libz.1.2.3.dylib */; };
+		D6B4355413159E1E000C0AA8 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
+		D6B4355513159E1E000C0AA8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
+		D6B4359F13159ECD000C0AA8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		D6B438121315A923000C0AA8 /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = D692BBA312FDFF4C007EC03A /* Address.m */; };
+		D6B438131315A927000C0AA8 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3112FCA530003C3A47 /* Customer.m */; };
+		D6B438151315A933000C0AA8 /* ManagerApprovalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3912FCA55D003C3A47 /* ManagerApprovalInfo.m */; };
+		D6B438161315A935000C0AA8 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3412FCA535003C3A47 /* Order.m */; };
+		D6B438171315A937000C0AA8 /* OrderItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6912FCA9C0003C3A47 /* OrderItem.m */; };
+		D6B438181315A939000C0AA8 /* PaymentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6612FCA99E003C3A47 /* PaymentInfo.m */; };
+		D6B438191315A93A000C0AA8 /* ProductItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6312FCA97F003C3A47 /* ProductItem.m */; };
+		D6B438241315A9AE000C0AA8 /* AddItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46B0513075F5D001EADE4 /* AddItemView.m */; };
+		D6B4382D1315A9D9000C0AA8 /* AddItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469BF130701DF001EADE4 /* AddItemViewController.m */; };
+		D6B4382E1315A9DA000C0AA8 /* AlertUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B40B94241304ED500024C2DC /* AlertUtils.m */; };
+		D6B4382F1315A9DD000C0AA8 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07DC1302583500B77769 /* ASIAuthenticationDialog.m */; };
+		D6B438301315A9DE000C0AA8 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07DF1302583500B77769 /* ASIDataCompressor.m */; };
+		D6B438311315A9DE000C0AA8 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07E11302583500B77769 /* ASIDataDecompressor.m */; };
+		D6B438321315A9E3000C0AA8 /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07E31302583500B77769 /* ASIDownloadCache.m */; };
+		D6B438331315A9E3000C0AA8 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07E51302583500B77769 /* ASIFormDataRequest.m */; };
+		D6B438341315A9E6000C0AA8 /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07E71302583500B77769 /* ASIHTTPRequest.m */; };
+		D6B438351315A9E8000C0AA8 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07EB1302583500B77769 /* ASIInputStream.m */; };
+		D6B438361315A9EA000C0AA8 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07ED1302583500B77769 /* ASINetworkQueue.m */; };
+		D6B438371315A9EB000C0AA8 /* BarcodeScannerCardReaderDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D65FD4BA1302303A00F4C19D /* BarcodeScannerCardReaderDelegate.m */; };
+		D6B438381315A9ED000C0AA8 /* CartItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46A081307141B001EADE4 /* CartItemDetailViewController.m */; };
+		D6B438391315A9EE000C0AA8 /* CartItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469E01307047F001EADE4 /* CartItemsViewController.m */; };
+		D6B4383B1315A9F0000C0AA8 /* CustomerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469D413070300001EADE4 /* CustomerViewController.m */; };
+		D6B438481315AA05000C0AA8 /* DrawUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B4B367C512F936AC00F37FE9 /* DrawUtils.m */; };
+		D6B4384B1315AA08000C0AA8 /* InventoryServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3F712FCB3D80029F4B2 /* InventoryServiceImpl.m */; };
+		D6B4384C1315AA09000C0AA8 /* InventoryServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3F912FCB3D80029F4B2 /* InventoryServiceMock.m */; };
+		D6B4384D1315AA09000C0AA8 /* iPOSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* iPOSAppDelegate.m */; };
+		D6B4384E1315AA0A000C0AA8 /* iPOSFacade.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FB12FCB3D80029F4B2 /* iPOSFacade.m */; };
+		D6B4384F1315AA0B000C0AA8 /* iPOSServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */; };
+		D6B438501315AA0C000C0AA8 /* iPOSServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD40012FCB3D80029F4B2 /* iPOSServiceMock.m */; };
+		D6B438511315AA0D000C0AA8 /* LayoutUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = D62853C512FB9B650024228B /* LayoutUtils.m */; };
+		D6B438521315AA0E000C0AA8 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B47AA7F512F7DD7200AAD34C /* LoginViewController.m */; };
+		D6B438531315AA0F000C0AA8 /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B40B94301304EF620024C2DC /* MainMenuViewController.m */; };
+		D6B438561315AA15000C0AA8 /* PlaceHolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B47AA7EE12F7DD1000AAD34C /* PlaceHolderView.m */; };
+		D6B438571315AA16000C0AA8 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07F01302583500B77769 /* Reachability.m */; };
+		D6B438581315AA17000C0AA8 /* ReceiptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469FA13070D84001EADE4 /* ReceiptViewController.m */; };
+		D6B438591315AA18000C0AA8 /* SessionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */; };
+		D6B4385A1315AA19000C0AA8 /* SignatureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46A121307199F001EADE4 /* SignatureViewController.m */; };
+		D6B4385B1315AA1A000C0AA8 /* TenderPaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469E813070C48001EADE4 /* TenderPaymentViewController.m */; };
+		D6B438DB1315B00B000C0AA8 /* libiPOSFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */; };
+		D6B438E91315B0BA000C0AA8 /* ExtUITextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46B971308BBE7001EADE4 /* ExtUITextField.m */; };
+		D6B438EA1315B0BB000C0AA8 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = B48A7E0F13107EEE00F6412C /* GradientView.m */; };
+		D6B438EB1315B0BC000C0AA8 /* MOButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B40FC0591311890700D7D79D /* MOButton.m */; };
+		D6B438EC1315B0BD000C0AA8 /* MOGlassButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B40FC05B1311890700D7D79D /* MOGlassButton.m */; };
+		D6B438FE1315B1C0000C0AA8 /* libOPIFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B435B213159F72000C0AA8 /* libOPIFoundation.a */; };
+		D6B43A3A1315B343000C0AA8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		D6B43A401315B343000C0AA8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		D6BA07FD1302586800B77769 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FC1302586800B77769 /* CFNetwork.framework */; };
 		D6BA07FF1302586800B77769 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FE1302586800B77769 /* MobileCoreServices.framework */; };
 		D6BA08011302586800B77769 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
 		D6BA08031302586800B77769 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08021302586800B77769 /* libz.1.2.3.dylib */; };
-		D6BCD40112FCB3D80029F4B2 /* InventoryServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3F712FCB3D80029F4B2 /* InventoryServiceImpl.m */; };
-		D6BCD40212FCB3D80029F4B2 /* InventoryServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3F912FCB3D80029F4B2 /* InventoryServiceMock.m */; };
-		D6BCD40312FCB3D80029F4B2 /* iPOSFacade.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FB12FCB3D80029F4B2 /* iPOSFacade.m */; };
-		D6BCD40412FCB3D80029F4B2 /* iPOSServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */; };
-		D6BCD40512FCB3D80029F4B2 /* iPOSServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD40012FCB3D80029F4B2 /* iPOSServiceMock.m */; };
-		D6BCD40812FCB3F70029F4B2 /* SessionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */; };
+		D6E9E9D11316037900FF1498 /* libiPOSFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */; };
+		D6E9E9D21316037900FF1498 /* libOPIFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B435B213159F72000C0AA8 /* libOPIFoundation.a */; };
+		D6E9E9D71316039600FF1498 /* libiPOSFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */; };
+		D6E9E9D81316039600FF1498 /* libOPIFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B435B213159F72000C0AA8 /* libOPIFoundation.a */; };
+		D6E9E9DD131603B900FF1498 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
+		D6E9EA601316056500FF1498 /* libiPOSFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */; };
+		D6E9EA611316056500FF1498 /* libOPIFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B435B213159F72000C0AA8 /* libOPIFoundation.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D64BB31C131308C30027E9AC /* PBXContainerItemProxy */ = {
+		D67943A71316089C004B8254 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6B4366E1315A7DD000C0AA8;
+			remoteInfo = iPOSFoundation;
+		};
+		D67943A91316089C004B8254 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6B435B113159F72000C0AA8;
+			remoteInfo = OPIFoundation;
+		};
+		D679447A13160CE0004B8254 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = D64B7E1212F9D7EA006AB141;
 			remoteInfo = UnitTests;
 		};
-		D697D26F1312E5C5002C3EF6 /* PBXContainerItemProxy */ = {
+		D679459F13160D17004B8254 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = D64B7EAF12F9DFA7006AB141;
-			remoteInfo = IntegrationTests;
+			remoteGlobalIDString = D679438B131607A8004B8254;
+			remoteInfo = AppTests;
+		};
+		D6B4386E1315ABA8000C0AA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6B4366E1315A7DD000C0AA8;
+			remoteInfo = iPOSFoundation;
+		};
+		D6B438E31315B07A000C0AA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6B435B113159F72000C0AA8;
+			remoteInfo = OPIFoundation;
+		};
+		D6B438FC1315B1BB000C0AA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6B435B113159F72000C0AA8;
+			remoteInfo = OPIFoundation;
+		};
+		D6B439101315B242000C0AA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6B4366E1315A7DD000C0AA8;
+			remoteInfo = iPOSFoundation;
+		};
+		D6B439121315B242000C0AA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6B435B113159F72000C0AA8;
+			remoteInfo = OPIFoundation;
+		};
+		D6E9E9CD1316036B00FF1498 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6B4366E1315A7DD000C0AA8;
+			remoteInfo = iPOSFoundation;
+		};
+		D6E9E9CF1316036B00FF1498 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6B435B113159F72000C0AA8;
+			remoteInfo = OPIFoundation;
+		};
+		D6E9E9D31316038C00FF1498 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6B4366E1315A7DD000C0AA8;
+			remoteInfo = iPOSFoundation;
+		};
+		D6E9E9D51316038C00FF1498 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6B435B113159F72000C0AA8;
+			remoteInfo = OPIFoundation;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -257,8 +272,6 @@
 		B4C46B0513075F5D001EADE4 /* AddItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddItemView.m; sourceTree = "<group>"; };
 		B4C46B961308BBE7001EADE4 /* ExtUITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtUITextField.h; sourceTree = "<group>"; };
 		B4C46B971308BBE7001EADE4 /* ExtUITextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtUITextField.m; sourceTree = "<group>"; };
-		B4F3EB5B12FE29AB000D96EE /* iPOS Simulator-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iPOS Simulator-Info.plist"; sourceTree = "<group>"; };
-		B4F3EBA612FE2A08000D96EE /* Info copy 3.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info copy 3.plist"; sourceTree = "<group>"; };
 		D61C3C3012FCA530003C3A47 /* Customer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Customer.h; sourceTree = "<group>"; };
 		D61C3C3112FCA530003C3A47 /* Customer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Customer.m; sourceTree = "<group>"; };
 		D61C3C3312FCA535003C3A47 /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
@@ -277,8 +290,7 @@
 		D64B7E1412F9D7EA006AB141 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
 		D64B7E3412F9D8FD006AB141 /* SampleUnitTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleUnitTestCase.h; sourceTree = "<group>"; };
 		D64B7E3512F9D8FD006AB141 /* SampleUnitTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleUnitTestCase.m; sourceTree = "<group>"; };
-		D64B7EB012F9DFA7006AB141 /* IntegrationTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntegrationTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D64B7EB112F9DFA7006AB141 /* IntegrationTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IntegrationTests-Info.plist"; sourceTree = "<group>"; };
+		D64B7EB112F9DFA7006AB141 /* AppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AppTests-Info.plist"; sourceTree = "<group>"; };
 		D64B7EBF12F9DFF5006AB141 /* iPOSServiceIntTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSServiceIntTestCase.h; sourceTree = "<group>"; };
 		D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPOSServiceIntTestCase.m; sourceTree = "<group>"; };
 		D64E5AE7130262B0002EAD70 /* libLineaSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libLineaSDK.a; sourceTree = "<group>"; };
@@ -287,12 +299,16 @@
 		D656013D130B71B4000968BA /* iPosFacadeWithMocksTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPosFacadeWithMocksTestCase.m; sourceTree = "<group>"; };
 		D65FD4B91302303A00F4C19D /* BarcodeScannerCardReaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarcodeScannerCardReaderDelegate.h; sourceTree = "<group>"; };
 		D65FD4BA1302303A00F4C19D /* BarcodeScannerCardReaderDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarcodeScannerCardReaderDelegate.m; sourceTree = "<group>"; };
+		D679438C131607A8004B8254 /* AppTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D692BBA212FDFF4C007EC03A /* Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Address.h; sourceTree = "<group>"; };
 		D692BBA312FDFF4C007EC03A /* Address.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Address.m; sourceTree = "<group>"; };
-		D697D1E01312DCD0002C3EF6 /* iPOSTesting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPOSTesting.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D697D1E21312DCD0002C3EF6 /* iPOSTesting-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iPOSTesting-Info.plist"; sourceTree = "<group>"; };
+		D697D1E01312DCD0002C3EF6 /* iPOSDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPOSDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D697D1E21312DCD0002C3EF6 /* iPOSDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iPOSDemo-Info.plist"; sourceTree = "<group>"; };
 		D6A96658130F0C3C004D90C4 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		D6B0401213024FF6004D00CA /* LineaSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineaSDK.h; sourceTree = "<group>"; };
+		D6B4355913159E1E000C0AA8 /* iPOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6B435B213159F72000C0AA8 /* libOPIFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOPIFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiPOSFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6BA07B21302580500B77769 /* CTidy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTidy.h; sourceTree = "<group>"; };
 		D6BA07B31302580500B77769 /* CTidy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTidy.m; sourceTree = "<group>"; };
 		D6BA07B41302580500B77769 /* CXHTMLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXHTMLDocument.h; sourceTree = "<group>"; };
@@ -360,9 +376,7 @@
 		D6BCD40012FCB3D80029F4B2 /* iPOSServiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPOSServiceMock.m; path = Classes/iPOSServiceMock.m; sourceTree = "<group>"; };
 		D6BCD40612FCB3F70029F4B2 /* SessionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionInfo.h; path = Classes/SessionInfo.h; sourceTree = "<group>"; };
 		D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionInfo.m; path = Classes/SessionInfo.m; sourceTree = "<group>"; };
-		D6F7965912F9FE2600B467CA /* iPOS-Device-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iPOS-Device-Info.plist"; sourceTree = "<group>"; };
-		D6F7967412F9FE4300B467CA /* Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info copy.plist"; sourceTree = "<group>"; };
-		D6F796A112F9FF4A00B467CA /* Info copy 2.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info copy 2.plist"; sourceTree = "<group>"; };
+		D6E9E9CA1316024B00FF1498 /* iPOSRelease-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "iPOSRelease-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -380,6 +394,8 @@
 				D64E5AE8130262B0002EAD70 /* libLineaSDK.a in Frameworks */,
 				D64E5B8813026566002EAD70 /* ExternalAccessory.framework in Frameworks */,
 				B40FC0F21311928600D7D79D /* QuartzCore.framework in Frameworks */,
+				D6B438DB1315B00B000C0AA8 /* libiPOSFoundation.a in Frameworks */,
+				D6B438FE1315B1C0000C0AA8 /* libOPIFoundation.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,18 +403,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D679459513160D05004B8254 /* CFNetwork.framework in Frameworks */,
+				D679459613160D05004B8254 /* CoreGraphics.framework in Frameworks */,
+				D679459713160D05004B8254 /* ExternalAccessory.framework in Frameworks */,
+				D6B43A3A1315B343000C0AA8 /* Foundation.framework in Frameworks */,
+				D6E9EA601316056500FF1498 /* libiPOSFoundation.a in Frameworks */,
+				D679459813160D05004B8254 /* libLineaSDK.a in Frameworks */,
+				D6E9EA611316056500FF1498 /* libOPIFoundation.a in Frameworks */,
+				D679459913160D05004B8254 /* libz.1.2.3.dylib in Frameworks */,
+				D679459A13160D05004B8254 /* MobileCoreServices.framework in Frameworks */,
+				D679459B13160D05004B8254 /* QuartzCore.framework in Frameworks */,
+				D679459C13160D05004B8254 /* SystemConfiguration.framework in Frameworks */,
+				D6B43A401315B343000C0AA8 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D64B7EAD12F9DFA7006AB141 /* Frameworks */ = {
+		D6794389131607A8004B8254 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D697D30E1312EA25002C3EF6 /* CFNetwork.framework in Frameworks */,
-				D697D30F1312EA25002C3EF6 /* MobileCoreServices.framework in Frameworks */,
-				D697D3101312EA25002C3EF6 /* SystemConfiguration.framework in Frameworks */,
-				D697D3131312EA4C002C3EF6 /* libz.1.2.3.dylib in Frameworks */,
-				D697D31C1312EA6F002C3EF6 /* CoreGraphics.framework in Frameworks */,
+				D67943B2131608C1004B8254 /* CFNetwork.framework in Frameworks */,
+				D67943B3131608C1004B8254 /* CoreGraphics.framework in Frameworks */,
+				D67943B4131608C1004B8254 /* ExternalAccessory.framework in Frameworks */,
+				D67943B5131608C1004B8254 /* Foundation.framework in Frameworks */,
+				D67943B6131608C1004B8254 /* libiPOSFoundation.a in Frameworks */,
+				D67943B7131608C1004B8254 /* libLineaSDK.a in Frameworks */,
+				D67943B8131608C1004B8254 /* libOPIFoundation.a in Frameworks */,
+				D67943B9131608C1004B8254 /* libz.1.2.3.dylib in Frameworks */,
+				D67943BA131608C1004B8254 /* MobileCoreServices.framework in Frameworks */,
+				D67943BB131608C1004B8254 /* QuartzCore.framework in Frameworks */,
+				D67943BC131608C1004B8254 /* SystemConfiguration.framework in Frameworks */,
+				D67943BD131608C1004B8254 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +451,41 @@
 				D697D1DB1312DCD0002C3EF6 /* ExternalAccessory.framework in Frameworks */,
 				D697D1DC1312DCD0002C3EF6 /* QuartzCore.framework in Frameworks */,
 				D697D1EF1312DDE1002C3EF6 /* libLineaSDK.a in Frameworks */,
+				D6E9E9D11316037900FF1498 /* libiPOSFoundation.a in Frameworks */,
+				D6E9E9D21316037900FF1498 /* libOPIFoundation.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6B4354B13159E1E000C0AA8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6B4354C13159E1E000C0AA8 /* Foundation.framework in Frameworks */,
+				D6B4354D13159E1E000C0AA8 /* UIKit.framework in Frameworks */,
+				D6B4354E13159E1E000C0AA8 /* CoreGraphics.framework in Frameworks */,
+				D6B4354F13159E1E000C0AA8 /* CFNetwork.framework in Frameworks */,
+				D6B4355013159E1E000C0AA8 /* MobileCoreServices.framework in Frameworks */,
+				D6B4355113159E1E000C0AA8 /* SystemConfiguration.framework in Frameworks */,
+				D6B4355213159E1E000C0AA8 /* libz.1.2.3.dylib in Frameworks */,
+				D6B4355413159E1E000C0AA8 /* ExternalAccessory.framework in Frameworks */,
+				D6B4355513159E1E000C0AA8 /* QuartzCore.framework in Frameworks */,
+				D6E9E9D71316039600FF1498 /* libiPOSFoundation.a in Frameworks */,
+				D6E9E9D81316039600FF1498 /* libOPIFoundation.a in Frameworks */,
+				D6E9E9DD131603B900FF1498 /* libLineaSDK.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6B435B013159F72000C0AA8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6B4366D1315A7DD000C0AA8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,8 +523,11 @@
 			children = (
 				1D6058910D05DD3D006BFB54 /* iPOS.app */,
 				D64B7E1312F9D7EA006AB141 /* UnitTests.octest */,
-				D64B7EB012F9DFA7006AB141 /* IntegrationTests.octest */,
-				D697D1E01312DCD0002C3EF6 /* iPOSTesting.app */,
+				D679438C131607A8004B8254 /* AppTests.octest */,
+				D697D1E01312DCD0002C3EF6 /* iPOSDemo.app */,
+				D6B4355913159E1E000C0AA8 /* iPOS.app */,
+				D6B435B213159F72000C0AA8 /* libOPIFoundation.a */,
+				D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -469,10 +542,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				D64B7E1412F9D7EA006AB141 /* UnitTests-Info.plist */,
-				D64B7EB112F9DFA7006AB141 /* IntegrationTests-Info.plist */,
-				D6F7965912F9FE2600B467CA /* iPOS-Device-Info.plist */,
-				B4F3EB5B12FE29AB000D96EE /* iPOS Simulator-Info.plist */,
 				D6A96658130F0C3C004D90C4 /* Settings.bundle */,
 			);
 			name = CustomTemplate;
@@ -490,11 +559,11 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D64B7E1412F9D7EA006AB141 /* UnitTests-Info.plist */,
+				D64B7EB112F9DFA7006AB141 /* AppTests-Info.plist */,
 				8D1107310486CEB800E47090 /* iPOS-Info.plist */,
-				D6F7967412F9FE4300B467CA /* Info copy.plist */,
-				D6F796A112F9FF4A00B467CA /* Info copy 2.plist */,
-				B4F3EBA612FE2A08000D96EE /* Info copy 3.plist */,
-				D697D1E21312DCD0002C3EF6 /* iPOSTesting-Info.plist */,
+				D697D1E21312DCD0002C3EF6 /* iPOSDemo-Info.plist */,
+				D6E9E9CA1316024B00FF1498 /* iPOSRelease-Info.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -640,7 +709,7 @@
 			name = Components;
 			sourceTree = "<group>";
 		};
-		D64B7E2612F9D869006AB141 /* Unit */ = {
+		D64B7E2612F9D869006AB141 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
 				D64B7E3412F9D8FD006AB141 /* SampleUnitTestCase.h */,
@@ -648,23 +717,23 @@
 				D656013C130B71B4000968BA /* iPosFacadeWithMocksTestCase.h */,
 				D656013D130B71B4000968BA /* iPosFacadeWithMocksTestCase.m */,
 			);
-			name = Unit;
+			name = UnitTests;
 			sourceTree = "<group>";
 		};
-		D64B7E2712F9D87C006AB141 /* Integration */ = {
+		D64B7E2712F9D87C006AB141 /* AppTests */ = {
 			isa = PBXGroup;
 			children = (
 				D64B7EBF12F9DFF5006AB141 /* iPOSServiceIntTestCase.h */,
 				D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */,
 			);
-			name = Integration;
+			name = AppTests;
 			sourceTree = "<group>";
 		};
 		D64B7E3312F9D8B4006AB141 /* TestSuites */ = {
 			isa = PBXGroup;
 			children = (
-				D64B7E2712F9D87C006AB141 /* Integration */,
-				D64B7E2612F9D869006AB141 /* Unit */,
+				D64B7E2612F9D869006AB141 /* UnitTests */,
+				D64B7E2712F9D87C006AB141 /* AppTests */,
 			);
 			name = TestSuites;
 			sourceTree = "<group>";
@@ -802,6 +871,23 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		D6B435AE13159F72000C0AA8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6B4366B1315A7DD000C0AA8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		1D6058900D05DD3D006BFB54 /* iPOS */ = {
 			isa = PBXNativeTarget;
@@ -814,6 +900,10 @@
 			buildRules = (
 			);
 			dependencies = (
+				D6B4386F1315ABA8000C0AA8 /* PBXTargetDependency */,
+				D6B438FD1315B1BB000C0AA8 /* PBXTargetDependency */,
+				D679447B13160CE0004B8254 /* PBXTargetDependency */,
+				D67945A013160D17004B8254 /* PBXTargetDependency */,
 			);
 			name = iPOS;
 			productName = iPOS;
@@ -832,33 +922,37 @@
 			buildRules = (
 			);
 			dependencies = (
+				D6B439111315B242000C0AA8 /* PBXTargetDependency */,
+				D6B439131315B242000C0AA8 /* PBXTargetDependency */,
 			);
 			name = UnitTests;
 			productName = UnitTests;
 			productReference = D64B7E1312F9D7EA006AB141 /* UnitTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
-		D64B7EAF12F9DFA7006AB141 /* IntegrationTests */ = {
+		D679438B131607A8004B8254 /* AppTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D64B7EB512F9DFA8006AB141 /* Build configuration list for PBXNativeTarget "IntegrationTests" */;
+			buildConfigurationList = D679439813160816004B8254 /* Build configuration list for PBXNativeTarget "AppTests" */;
 			buildPhases = (
-				D64B7EAB12F9DFA7006AB141 /* Resources */,
-				D64B7EAC12F9DFA7006AB141 /* Sources */,
-				D64B7EAD12F9DFA7006AB141 /* Frameworks */,
-				D64B7EAE12F9DFA7006AB141 /* ShellScript */,
+				D6794387131607A8004B8254 /* Resources */,
+				D6794388131607A8004B8254 /* Sources */,
+				D6794389131607A8004B8254 /* Frameworks */,
+				D679438A131607A8004B8254 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D67943A81316089C004B8254 /* PBXTargetDependency */,
+				D67943AA1316089C004B8254 /* PBXTargetDependency */,
 			);
-			name = IntegrationTests;
-			productName = IntegrationTests;
-			productReference = D64B7EB012F9DFA7006AB141 /* IntegrationTests.octest */;
+			name = AppTests;
+			productName = AppTests;
+			productReference = D679438C131607A8004B8254 /* AppTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
-		D697D1961312DCD0002C3EF6 /* iPOSTesting */ = {
+		D697D1961312DCD0002C3EF6 /* iPOSDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D697D1DD1312DCD0002C3EF6 /* Build configuration list for PBXNativeTarget "iPOSTesting" */;
+			buildConfigurationList = D697D1DD1312DCD0002C3EF6 /* Build configuration list for PBXNativeTarget "iPOSDemo" */;
 			buildPhases = (
 				D697D1971312DCD0002C3EF6 /* Resources */,
 				D697D1991312DCD0002C3EF6 /* Sources */,
@@ -867,13 +961,67 @@
 			buildRules = (
 			);
 			dependencies = (
-				D64BB31D131308C30027E9AC /* PBXTargetDependency */,
-				D697D2701312E5C5002C3EF6 /* PBXTargetDependency */,
+				D6E9E9CE1316036B00FF1498 /* PBXTargetDependency */,
+				D6E9E9D01316036B00FF1498 /* PBXTargetDependency */,
 			);
-			name = iPOSTesting;
+			name = iPOSDemo;
 			productName = iPOS;
-			productReference = D697D1E01312DCD0002C3EF6 /* iPOSTesting.app */;
+			productReference = D697D1E01312DCD0002C3EF6 /* iPOSDemo.app */;
 			productType = "com.apple.product-type.application";
+		};
+		D6B4350F13159E1E000C0AA8 /* iPOSRelease */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D6B4355613159E1E000C0AA8 /* Build configuration list for PBXNativeTarget "iPOSRelease" */;
+			buildPhases = (
+				D6B4351013159E1E000C0AA8 /* Resources */,
+				D6B4351213159E1E000C0AA8 /* Sources */,
+				D6B4354B13159E1E000C0AA8 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D6E9E9D41316038C00FF1498 /* PBXTargetDependency */,
+				D6E9E9D61316038C00FF1498 /* PBXTargetDependency */,
+			);
+			name = iPOSRelease;
+			productName = iPOS;
+			productReference = D6B4355913159E1E000C0AA8 /* iPOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D6B435B113159F72000C0AA8 /* OPIFoundation */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D6B435B513159F91000C0AA8 /* Build configuration list for PBXNativeTarget "OPIFoundation" */;
+			buildPhases = (
+				D6B435AE13159F72000C0AA8 /* Headers */,
+				D6B435AF13159F72000C0AA8 /* Sources */,
+				D6B435B013159F72000C0AA8 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OPIFoundation;
+			productName = OPIFoundation;
+			productReference = D6B435B213159F72000C0AA8 /* libOPIFoundation.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		D6B4366E1315A7DD000C0AA8 /* iPOSFoundation */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D6B436741315A80E000C0AA8 /* Build configuration list for PBXNativeTarget "iPOSFoundation" */;
+			buildPhases = (
+				D6B4366B1315A7DD000C0AA8 /* Headers */,
+				D6B4366C1315A7DD000C0AA8 /* Sources */,
+				D6B4366D1315A7DD000C0AA8 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D6B438E41315B07A000C0AA8 /* PBXTargetDependency */,
+			);
+			name = iPOSFoundation;
+			productName = iPOSFoundation;
+			productReference = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
@@ -895,9 +1043,12 @@
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* iPOS */,
-				D697D1961312DCD0002C3EF6 /* iPOSTesting */,
+				D697D1961312DCD0002C3EF6 /* iPOSDemo */,
+				D6B4350F13159E1E000C0AA8 /* iPOSRelease */,
 				D64B7E1212F9D7EA006AB141 /* UnitTests */,
-				D64B7EAF12F9DFA7006AB141 /* IntegrationTests */,
+				D679438B131607A8004B8254 /* AppTests */,
+				D6B4366E1315A7DD000C0AA8 /* iPOSFoundation */,
+				D6B435B113159F72000C0AA8 /* OPIFoundation */,
 			);
 		};
 /* End PBXProject section */
@@ -918,7 +1069,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D64B7EAB12F9DFA7006AB141 /* Resources */ = {
+		D6794387131607A8004B8254 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -929,9 +1080,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D64BB324131308CB0027E9AC /* UnitTests.octest in Resources */,
-				D697D22F1312E4AF002C3EF6 /* IntegrationTests.octest in Resources */,
 				D697D1981312DCD0002C3EF6 /* Settings.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6B4351013159E1E000C0AA8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -951,7 +1107,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\" 1> /tmp/RunUnitTests.out\n";
 		};
-		D64B7EAE12F9DFA7006AB141 /* ShellScript */ = {
+		D679438A131607A8004B8254 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -971,62 +1127,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
-				1D3623260D0F684500981E51 /* iPOSAppDelegate.m in Sources */,
-				B47AA7EF12F7DD1000AAD34C /* PlaceHolderView.m in Sources */,
-				B47AA7F612F7DD7200AAD34C /* LoginViewController.m in Sources */,
-				B4B367C612F936AC00F37FE9 /* DrawUtils.m in Sources */,
-				D62853C612FB9B650024228B /* LayoutUtils.m in Sources */,
-				D61C3C3212FCA530003C3A47 /* Customer.m in Sources */,
-				D61C3C3512FCA535003C3A47 /* Order.m in Sources */,
-				D61C3C3A12FCA55D003C3A47 /* ManagerApprovalInfo.m in Sources */,
-				D61C3C6412FCA97F003C3A47 /* ProductItem.m in Sources */,
-				D61C3C6712FCA99E003C3A47 /* PaymentInfo.m in Sources */,
-				D61C3C6A12FCA9C0003C3A47 /* OrderItem.m in Sources */,
-				D6BCD40112FCB3D80029F4B2 /* InventoryServiceImpl.m in Sources */,
-				D6BCD40212FCB3D80029F4B2 /* InventoryServiceMock.m in Sources */,
-				D6BCD40312FCB3D80029F4B2 /* iPOSFacade.m in Sources */,
-				D6BCD40412FCB3D80029F4B2 /* iPOSServiceImpl.m in Sources */,
-				D6BCD40512FCB3D80029F4B2 /* iPOSServiceMock.m in Sources */,
-				D6BCD40812FCB3F70029F4B2 /* SessionInfo.m in Sources */,
-				D692BBA412FDFF4C007EC03A /* Address.m in Sources */,
-				D65FD4BB1302303A00F4C19D /* BarcodeScannerCardReaderDelegate.m in Sources */,
-				D6BA07CD1302580500B77769 /* CTidy.m in Sources */,
-				D6BA07CE1302580500B77769 /* CXHTMLDocument.m in Sources */,
-				D6BA07CF1302580500B77769 /* CXMLDocument_CreationExtensions.m in Sources */,
-				D6BA07D01302580500B77769 /* CXMLDocument_PrivateExtensions.m in Sources */,
-				D6BA07D11302580500B77769 /* CXMLDocument.m in Sources */,
-				D6BA07D21302580500B77769 /* CXMLElement_CreationExtensions.m in Sources */,
-				D6BA07D31302580500B77769 /* CXMLElement_ElementTreeExtensions.m in Sources */,
-				D6BA07D41302580500B77769 /* CXMLElement.m in Sources */,
-				D6BA07D51302580500B77769 /* CXMLNamespaceNode.m in Sources */,
-				D6BA07D61302580500B77769 /* CXMLNode_CreationExtensions.m in Sources */,
-				D6BA07D71302580500B77769 /* CXMLNode_PrivateExtensions.m in Sources */,
-				D6BA07D81302580500B77769 /* CXMLNode_XPathExtensions.m in Sources */,
-				D6BA07D91302580500B77769 /* CXMLNode.m in Sources */,
-				D6BA07F11302583500B77769 /* ASIAuthenticationDialog.m in Sources */,
-				D6BA07F21302583500B77769 /* ASIDataCompressor.m in Sources */,
-				D6BA07F31302583500B77769 /* ASIDataDecompressor.m in Sources */,
-				D6BA07F41302583500B77769 /* ASIDownloadCache.m in Sources */,
-				D6BA07F51302583500B77769 /* ASIFormDataRequest.m in Sources */,
-				D6BA07F61302583500B77769 /* ASIHTTPRequest.m in Sources */,
-				D6BA07F71302583500B77769 /* ASIInputStream.m in Sources */,
-				D6BA07F81302583500B77769 /* ASINetworkQueue.m in Sources */,
-				D6BA07F91302583500B77769 /* Reachability.m in Sources */,
-				B40B94251304ED500024C2DC /* AlertUtils.m in Sources */,
-				B40B94311304EF620024C2DC /* MainMenuViewController.m in Sources */,
-				B4C469C0130701DF001EADE4 /* AddItemViewController.m in Sources */,
-				B4C469D513070300001EADE4 /* CustomerViewController.m in Sources */,
-				B4C469E11307047F001EADE4 /* CartItemsViewController.m in Sources */,
-				B4C469E913070C48001EADE4 /* TenderPaymentViewController.m in Sources */,
-				B4C469FB13070D84001EADE4 /* ReceiptViewController.m in Sources */,
-				B4C46A091307141B001EADE4 /* CartItemDetailViewController.m in Sources */,
-				B4C46A131307199F001EADE4 /* SignatureViewController.m in Sources */,
-				B4C46B0613075F5D001EADE4 /* AddItemView.m in Sources */,
-				B4C46B981308BBE7001EADE4 /* ExtUITextField.m in Sources */,
-				B48A7E1013107EEE00F6412C /* GradientView.m in Sources */,
-				B40FC05C1311890700D7D79D /* MOButton.m in Sources */,
-				B40FC05D1311890700D7D79D /* MOGlassButton.m in Sources */,
+				D6B4359F13159ECD000C0AA8 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1036,55 +1137,14 @@
 			files = (
 				D697D15E1312D98D002C3EF6 /* iPosFacadeWithMocksTestCase.m in Sources */,
 				D697D15F1312D98F002C3EF6 /* SampleUnitTestCase.m in Sources */,
-				D697D2371312E4D2002C3EF6 /* InventoryServiceMock.m in Sources */,
-				D697D2381312E4DD002C3EF6 /* iPOSServiceMock.m in Sources */,
-				D697D23B1312E4EF002C3EF6 /* iPOSFacade.m in Sources */,
-				D697D23C1312E504002C3EF6 /* ProductItem.m in Sources */,
-				D697D23D1312E50C002C3EF6 /* SessionInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D64B7EAC12F9DFA7006AB141 /* Sources */ = {
+		D6794388131607A8004B8254 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D6560296130B802A000968BA /* Address.m in Sources */,
-				D6560298130B802A000968BA /* ASIAuthenticationDialog.m in Sources */,
-				D6560299130B802A000968BA /* ASIDataCompressor.m in Sources */,
-				D656029A130B802A000968BA /* ASIDataDecompressor.m in Sources */,
-				D656029B130B802A000968BA /* ASIDownloadCache.m in Sources */,
-				D656029C130B802A000968BA /* ASIFormDataRequest.m in Sources */,
-				D656029D130B802A000968BA /* ASIHTTPRequest.m in Sources */,
-				D656029E130B802A000968BA /* ASIInputStream.m in Sources */,
-				D656029F130B802A000968BA /* ASINetworkQueue.m in Sources */,
-				D65602A3130B802A000968BA /* CTidy.m in Sources */,
-				D65602A4130B802A000968BA /* Customer.m in Sources */,
-				D65602A6130B802A000968BA /* CXHTMLDocument.m in Sources */,
-				D65602A7130B802A000968BA /* CXMLDocument.m in Sources */,
-				D65602A8130B802A000968BA /* CXMLDocument_CreationExtensions.m in Sources */,
-				D65602A9130B802A000968BA /* CXMLDocument_PrivateExtensions.m in Sources */,
-				D65602AA130B802A000968BA /* CXMLElement.m in Sources */,
-				D65602AB130B802A000968BA /* CXMLElement_CreationExtensions.m in Sources */,
-				D65602AC130B802A000968BA /* CXMLElement_ElementTreeExtensions.m in Sources */,
-				D65602AD130B802A000968BA /* CXMLNamespaceNode.m in Sources */,
-				D65602AE130B802A000968BA /* CXMLNode.m in Sources */,
-				D65602AF130B802A000968BA /* CXMLNode_CreationExtensions.m in Sources */,
-				D65602B0130B802A000968BA /* CXMLNode_PrivateExtensions.m in Sources */,
-				D65602B1130B802A000968BA /* CXMLNode_XPathExtensions.m in Sources */,
-				D65602B4130B802A000968BA /* InventoryServiceImpl.m in Sources */,
-				D65602B5130B802A000968BA /* InventoryServiceMock.m in Sources */,
-				D65602B7130B802A000968BA /* iPOSFacade.m in Sources */,
-				D65602B8130B802A000968BA /* iPOSServiceImpl.m in Sources */,
-				D65602B9130B802A000968BA /* iPOSServiceMock.m in Sources */,
-				D65602BC130B802A000968BA /* main.m in Sources */,
-				D65602BE130B802A000968BA /* ManagerApprovalInfo.m in Sources */,
-				D65602BF130B802A000968BA /* Order.m in Sources */,
-				D65602C0130B802A000968BA /* OrderItem.m in Sources */,
-				D65602C1130B802A000968BA /* PaymentInfo.m in Sources */,
-				D65602C3130B802A000968BA /* ProductItem.m in Sources */,
-				D65602C4130B802A000968BA /* Reachability.m in Sources */,
-				D65602C6130B802A000968BA /* SessionInfo.m in Sources */,
-				D64B7EC112F9DFF5006AB141 /* iPOSServiceIntTestCase.m in Sources */,
+				D67943A313160884004B8254 /* iPOSServiceIntTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1093,76 +1153,153 @@
 			buildActionMask = 2147483647;
 			files = (
 				D697D19A1312DCD0002C3EF6 /* main.m in Sources */,
-				D697D19B1312DCD0002C3EF6 /* iPOSAppDelegate.m in Sources */,
-				D697D19C1312DCD0002C3EF6 /* PlaceHolderView.m in Sources */,
-				D697D19D1312DCD0002C3EF6 /* LoginViewController.m in Sources */,
-				D697D19E1312DCD0002C3EF6 /* DrawUtils.m in Sources */,
-				D697D19F1312DCD0002C3EF6 /* LayoutUtils.m in Sources */,
-				D697D1A01312DCD0002C3EF6 /* Customer.m in Sources */,
-				D697D1A11312DCD0002C3EF6 /* Order.m in Sources */,
-				D697D1A21312DCD0002C3EF6 /* ManagerApprovalInfo.m in Sources */,
-				D697D1A31312DCD0002C3EF6 /* ProductItem.m in Sources */,
-				D697D1A41312DCD0002C3EF6 /* PaymentInfo.m in Sources */,
-				D697D1A51312DCD0002C3EF6 /* OrderItem.m in Sources */,
-				D697D1A61312DCD0002C3EF6 /* InventoryServiceImpl.m in Sources */,
-				D697D1A71312DCD0002C3EF6 /* InventoryServiceMock.m in Sources */,
-				D697D1A81312DCD0002C3EF6 /* iPOSFacade.m in Sources */,
-				D697D1A91312DCD0002C3EF6 /* iPOSServiceImpl.m in Sources */,
-				D697D1AA1312DCD0002C3EF6 /* iPOSServiceMock.m in Sources */,
-				D697D1AB1312DCD0002C3EF6 /* SessionInfo.m in Sources */,
-				D697D1AC1312DCD0002C3EF6 /* Address.m in Sources */,
-				D697D1AD1312DCD0002C3EF6 /* BarcodeScannerCardReaderDelegate.m in Sources */,
-				D697D1AE1312DCD0002C3EF6 /* CTidy.m in Sources */,
-				D697D1AF1312DCD0002C3EF6 /* CXHTMLDocument.m in Sources */,
-				D697D1B01312DCD0002C3EF6 /* CXMLDocument_CreationExtensions.m in Sources */,
-				D697D1B11312DCD0002C3EF6 /* CXMLDocument_PrivateExtensions.m in Sources */,
-				D697D1B21312DCD0002C3EF6 /* CXMLDocument.m in Sources */,
-				D697D1B31312DCD0002C3EF6 /* CXMLElement_CreationExtensions.m in Sources */,
-				D697D1B41312DCD0002C3EF6 /* CXMLElement_ElementTreeExtensions.m in Sources */,
-				D697D1B51312DCD0002C3EF6 /* CXMLElement.m in Sources */,
-				D697D1B61312DCD0002C3EF6 /* CXMLNamespaceNode.m in Sources */,
-				D697D1B71312DCD0002C3EF6 /* CXMLNode_CreationExtensions.m in Sources */,
-				D697D1B81312DCD0002C3EF6 /* CXMLNode_PrivateExtensions.m in Sources */,
-				D697D1B91312DCD0002C3EF6 /* CXMLNode_XPathExtensions.m in Sources */,
-				D697D1BA1312DCD0002C3EF6 /* CXMLNode.m in Sources */,
-				D697D1BB1312DCD0002C3EF6 /* ASIAuthenticationDialog.m in Sources */,
-				D697D1BC1312DCD0002C3EF6 /* ASIDataCompressor.m in Sources */,
-				D697D1BD1312DCD0002C3EF6 /* ASIDataDecompressor.m in Sources */,
-				D697D1BE1312DCD0002C3EF6 /* ASIDownloadCache.m in Sources */,
-				D697D1BF1312DCD0002C3EF6 /* ASIFormDataRequest.m in Sources */,
-				D697D1C01312DCD0002C3EF6 /* ASIHTTPRequest.m in Sources */,
-				D697D1C11312DCD0002C3EF6 /* ASIInputStream.m in Sources */,
-				D697D1C21312DCD0002C3EF6 /* ASINetworkQueue.m in Sources */,
-				D697D1C31312DCD0002C3EF6 /* Reachability.m in Sources */,
-				D697D1C41312DCD0002C3EF6 /* AlertUtils.m in Sources */,
-				D697D1C51312DCD0002C3EF6 /* MainMenuViewController.m in Sources */,
-				D697D1C61312DCD0002C3EF6 /* AddItemViewController.m in Sources */,
-				D697D1C71312DCD0002C3EF6 /* CustomerViewController.m in Sources */,
-				D697D1C81312DCD0002C3EF6 /* CartItemsViewController.m in Sources */,
-				D697D1C91312DCD0002C3EF6 /* TenderPaymentViewController.m in Sources */,
-				D697D1CA1312DCD0002C3EF6 /* ReceiptViewController.m in Sources */,
-				D697D1CB1312DCD0002C3EF6 /* CartItemDetailViewController.m in Sources */,
-				D697D1CC1312DCD0002C3EF6 /* SignatureViewController.m in Sources */,
-				D697D1CD1312DCD0002C3EF6 /* AddItemView.m in Sources */,
-				D697D1CE1312DCD0002C3EF6 /* ExtUITextField.m in Sources */,
-				D697D1CF1312DCD0002C3EF6 /* GradientView.m in Sources */,
-				D697D1D01312DCD0002C3EF6 /* MOButton.m in Sources */,
-				D697D1D11312DCD0002C3EF6 /* MOGlassButton.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6B4351213159E1E000C0AA8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6B4351313159E1E000C0AA8 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6B435AF13159F72000C0AA8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6B438E91315B0BA000C0AA8 /* ExtUITextField.m in Sources */,
+				D6B438EA1315B0BB000C0AA8 /* GradientView.m in Sources */,
+				D6B438EB1315B0BC000C0AA8 /* MOButton.m in Sources */,
+				D6B438EC1315B0BD000C0AA8 /* MOGlassButton.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6B4366C1315A7DD000C0AA8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6B438121315A923000C0AA8 /* Address.m in Sources */,
+				D6B438131315A927000C0AA8 /* Customer.m in Sources */,
+				D6B438151315A933000C0AA8 /* ManagerApprovalInfo.m in Sources */,
+				D6B438161315A935000C0AA8 /* Order.m in Sources */,
+				D6B438171315A937000C0AA8 /* OrderItem.m in Sources */,
+				D6B438181315A939000C0AA8 /* PaymentInfo.m in Sources */,
+				D6B438191315A93A000C0AA8 /* ProductItem.m in Sources */,
+				D6B438241315A9AE000C0AA8 /* AddItemView.m in Sources */,
+				D6B4382D1315A9D9000C0AA8 /* AddItemViewController.m in Sources */,
+				D6B4382E1315A9DA000C0AA8 /* AlertUtils.m in Sources */,
+				D6B4382F1315A9DD000C0AA8 /* ASIAuthenticationDialog.m in Sources */,
+				D6B438301315A9DE000C0AA8 /* ASIDataCompressor.m in Sources */,
+				D6B438311315A9DE000C0AA8 /* ASIDataDecompressor.m in Sources */,
+				D6B438321315A9E3000C0AA8 /* ASIDownloadCache.m in Sources */,
+				D6B438331315A9E3000C0AA8 /* ASIFormDataRequest.m in Sources */,
+				D6B438341315A9E6000C0AA8 /* ASIHTTPRequest.m in Sources */,
+				D6B438351315A9E8000C0AA8 /* ASIInputStream.m in Sources */,
+				D6B438361315A9EA000C0AA8 /* ASINetworkQueue.m in Sources */,
+				D6B438371315A9EB000C0AA8 /* BarcodeScannerCardReaderDelegate.m in Sources */,
+				D6B438381315A9ED000C0AA8 /* CartItemDetailViewController.m in Sources */,
+				D6B438391315A9EE000C0AA8 /* CartItemsViewController.m in Sources */,
+				D6B4383B1315A9F0000C0AA8 /* CustomerViewController.m in Sources */,
+				D6B438481315AA05000C0AA8 /* DrawUtils.m in Sources */,
+				D6B4384B1315AA08000C0AA8 /* InventoryServiceImpl.m in Sources */,
+				D6B4384C1315AA09000C0AA8 /* InventoryServiceMock.m in Sources */,
+				D6B4384D1315AA09000C0AA8 /* iPOSAppDelegate.m in Sources */,
+				D6B4384E1315AA0A000C0AA8 /* iPOSFacade.m in Sources */,
+				D6B4384F1315AA0B000C0AA8 /* iPOSServiceImpl.m in Sources */,
+				D6B438501315AA0C000C0AA8 /* iPOSServiceMock.m in Sources */,
+				D6B438511315AA0D000C0AA8 /* LayoutUtils.m in Sources */,
+				D6B438521315AA0E000C0AA8 /* LoginViewController.m in Sources */,
+				D6B438531315AA0F000C0AA8 /* MainMenuViewController.m in Sources */,
+				D6B438561315AA15000C0AA8 /* PlaceHolderView.m in Sources */,
+				D6B438571315AA16000C0AA8 /* Reachability.m in Sources */,
+				D6B438581315AA17000C0AA8 /* ReceiptViewController.m in Sources */,
+				D6B438591315AA18000C0AA8 /* SessionInfo.m in Sources */,
+				D6B4385A1315AA19000C0AA8 /* SignatureViewController.m in Sources */,
+				D6B4385B1315AA1A000C0AA8 /* TenderPaymentViewController.m in Sources */,
+				D684738413161514001214B3 /* CXMLNode_XPathExtensions.m in Sources */,
+				D684738613161515001214B3 /* CXMLNode_PrivateExtensions.m in Sources */,
+				D684738813161517001214B3 /* CXMLNode_CreationExtensions.m in Sources */,
+				D684738A13161519001214B3 /* CXMLNode.m in Sources */,
+				D684738C1316151B001214B3 /* CXMLNamespaceNode.m in Sources */,
+				D684738E1316151D001214B3 /* CXMLElement_ElementTreeExtensions.m in Sources */,
+				D68473901316151F001214B3 /* CXMLElement_CreationExtensions.m in Sources */,
+				D684739213161521001214B3 /* CXMLElement.m in Sources */,
+				D684739413161523001214B3 /* CXMLDocument_PrivateExtensions.m in Sources */,
+				D684739613161525001214B3 /* CXMLDocument_CreationExtensions.m in Sources */,
+				D684739813161526001214B3 /* CXMLDocument.m in Sources */,
+				D684739A13161528001214B3 /* CXHTMLDocument.m in Sources */,
+				D684739C1316152A001214B3 /* CTidy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		D64BB31D131308C30027E9AC /* PBXTargetDependency */ = {
+		D67943A81316089C004B8254 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6B4366E1315A7DD000C0AA8 /* iPOSFoundation */;
+			targetProxy = D67943A71316089C004B8254 /* PBXContainerItemProxy */;
+		};
+		D67943AA1316089C004B8254 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6B435B113159F72000C0AA8 /* OPIFoundation */;
+			targetProxy = D67943A91316089C004B8254 /* PBXContainerItemProxy */;
+		};
+		D679447B13160CE0004B8254 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D64B7E1212F9D7EA006AB141 /* UnitTests */;
-			targetProxy = D64BB31C131308C30027E9AC /* PBXContainerItemProxy */;
+			targetProxy = D679447A13160CE0004B8254 /* PBXContainerItemProxy */;
 		};
-		D697D2701312E5C5002C3EF6 /* PBXTargetDependency */ = {
+		D67945A013160D17004B8254 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D64B7EAF12F9DFA7006AB141 /* IntegrationTests */;
-			targetProxy = D697D26F1312E5C5002C3EF6 /* PBXContainerItemProxy */;
+			target = D679438B131607A8004B8254 /* AppTests */;
+			targetProxy = D679459F13160D17004B8254 /* PBXContainerItemProxy */;
+		};
+		D6B4386F1315ABA8000C0AA8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6B4366E1315A7DD000C0AA8 /* iPOSFoundation */;
+			targetProxy = D6B4386E1315ABA8000C0AA8 /* PBXContainerItemProxy */;
+		};
+		D6B438E41315B07A000C0AA8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6B435B113159F72000C0AA8 /* OPIFoundation */;
+			targetProxy = D6B438E31315B07A000C0AA8 /* PBXContainerItemProxy */;
+		};
+		D6B438FD1315B1BB000C0AA8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6B435B113159F72000C0AA8 /* OPIFoundation */;
+			targetProxy = D6B438FC1315B1BB000C0AA8 /* PBXContainerItemProxy */;
+		};
+		D6B439111315B242000C0AA8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6B4366E1315A7DD000C0AA8 /* iPOSFoundation */;
+			targetProxy = D6B439101315B242000C0AA8 /* PBXContainerItemProxy */;
+		};
+		D6B439131315B242000C0AA8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6B435B113159F72000C0AA8 /* OPIFoundation */;
+			targetProxy = D6B439121315B242000C0AA8 /* PBXContainerItemProxy */;
+		};
+		D6E9E9CE1316036B00FF1498 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6B4366E1315A7DD000C0AA8 /* iPOSFoundation */;
+			targetProxy = D6E9E9CD1316036B00FF1498 /* PBXContainerItemProxy */;
+		};
+		D6E9E9D01316036B00FF1498 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6B435B113159F72000C0AA8 /* OPIFoundation */;
+			targetProxy = D6E9E9CF1316036B00FF1498 /* PBXContainerItemProxy */;
+		};
+		D6E9E9D41316038C00FF1498 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6B4366E1315A7DD000C0AA8 /* iPOSFoundation */;
+			targetProxy = D6E9E9D31316038C00FF1498 /* PBXContainerItemProxy */;
+		};
+		D6E9E9D61316038C00FF1498 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6B435B113159F72000C0AA8 /* OPIFoundation */;
+			targetProxy = D6E9E9D51316038C00FF1498 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1171,12 +1308,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = "APP_IN_UNITTEST=0";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_USE_STANDARD_INCLUDE_SEARCHING = YES;
 				INFOPLIST_FILE = "iPOS-Info.plist";
 				INFOPLIST_PREPROCESS = NO;
@@ -1184,7 +1322,13 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
+				OTHER_LDFLAGS = (
+					"-lxml2",
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = iPOS;
+				VALID_ARCHS = armv7;
 			};
 			name = Debug;
 		};
@@ -1207,7 +1351,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "APP_IN_UNITTEST=1";
@@ -1253,7 +1397,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = "APP_IN_UNITTEST=1";
+				GCC_PREPROCESSOR_DEFINITIONS = "DEMO_MODE=1";
 				INFOPLIST_FILE = "UnitTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1261,6 +1405,8 @@
 				);
 				OTHER_LDFLAGS = (
 					"-lxml2",
+					"-ObjC",
+					"-all_load",
 					"-framework",
 					Foundation,
 					"-framework",
@@ -1310,11 +1456,10 @@
 			};
 			name = Release;
 		};
-		D64B7EB312F9DFA8006AB141 /* Debug */ = {
+		D679438D131607A9004B8254 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1325,15 +1470,16 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = "APP_IN_UNITTEST=0";
-				INFOPLIST_FILE = "IntegrationTests-Info.plist";
+				GCC_PREPROCESSOR_DEFINITIONS = "DEMO_MODE=1";
+				INFOPLIST_FILE = "AppTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-lxml2",
+					"-ObjC",
+					"-all_load",
 					"-framework",
 					Foundation,
 					"-framework",
@@ -1342,14 +1488,13 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = IntegrationTests;
+				PRODUCT_NAME = AppTests;
 				SDKROOT = iphoneos;
-				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
-		D64B7EB412F9DFA8006AB141 /* Release */ = {
+		D679438E131607A9004B8254 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1362,7 +1507,7 @@
 				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				INFOPLIST_FILE = "IntegrationTests-Info.plist";
+				INFOPLIST_FILE = "AppTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1376,7 +1521,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = IntegrationTests;
+				PRODUCT_NAME = AppTests;
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = octest;
 				ZERO_LINK = NO;
@@ -1387,20 +1532,27 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
-				GCC_PREPROCESSOR_DEFINITIONS = "APP_IN_UNITTEST=0";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_USE_STANDARD_INCLUDE_SEARCHING = YES;
-				INFOPLIST_FILE = "iPOSTesting-Info.plist";
+				INFOPLIST_FILE = "iPOSDemo-Info.plist";
 				INFOPLIST_PREPROCESS = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
-				PRODUCT_NAME = iPOSTesting;
+				OTHER_LDFLAGS = (
+					"-lxml2",
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = iPOSDemo;
+				VALID_ARCHS = armv7;
 			};
 			name = Debug;
 		};
@@ -1411,13 +1563,130 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
-				INFOPLIST_FILE = "iPOSTesting-Info.plist";
+				INFOPLIST_FILE = "iPOSDemo-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\"$(SRCROOT)\\\"",
 					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = iPOS;
+			};
+			name = Release;
+		};
+		D6B4355713159E1E000C0AA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_USE_STANDARD_INCLUDE_SEARCHING = YES;
+				INFOPLIST_FILE = "iPOSRelease-Info.plist";
+				INFOPLIST_PREPROCESS = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\\\"$(SRCROOT)\\\"",
+					"\"$(SRCROOT)\"",
+				);
+				OTHER_LDFLAGS = (
+					"-lxml2",
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = iPOS;
+			};
+			name = Debug;
+		};
+		D6B4355813159E1E000C0AA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
+				INFOPLIST_FILE = "iPOSRelease-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\\\"$(SRCROOT)\\\"",
+					"\"$(SRCROOT)\"",
+				);
+				PRODUCT_NAME = iPOS;
+			};
+			name = Release;
+		};
+		D6B435B313159F73000C0AA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				OTHER_LDFLAGS = "";
+				PREBINDING = NO;
+				PRODUCT_NAME = OPIFoundation;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		D6B435B413159F73000C0AA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PREBINDING = NO;
+				PRODUCT_NAME = OPIFoundation;
+				SDKROOT = iphoneos;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		D6B436701315A7DD000C0AA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREFIX_HEADER = IPOS_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				LINK_WITH_STANDARD_LIBRARIES = YES;
+				OTHER_LDFLAGS = "";
+				PREBINDING = NO;
+				PRODUCT_NAME = iPOSFoundation;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		D6B436711315A7DD000C0AA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = iPOSFoundation;
+				SDKROOT = iphoneos;
+				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -1451,20 +1720,47 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D64B7EB512F9DFA8006AB141 /* Build configuration list for PBXNativeTarget "IntegrationTests" */ = {
+		D679439813160816004B8254 /* Build configuration list for PBXNativeTarget "AppTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D64B7EB312F9DFA8006AB141 /* Debug */,
-				D64B7EB412F9DFA8006AB141 /* Release */,
+				D679438D131607A9004B8254 /* Debug */,
+				D679438E131607A9004B8254 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D697D1DD1312DCD0002C3EF6 /* Build configuration list for PBXNativeTarget "iPOSTesting" */ = {
+		D697D1DD1312DCD0002C3EF6 /* Build configuration list for PBXNativeTarget "iPOSDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D697D1DE1312DCD0002C3EF6 /* Debug */,
 				D697D1DF1312DCD0002C3EF6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D6B4355613159E1E000C0AA8 /* Build configuration list for PBXNativeTarget "iPOSRelease" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D6B4355713159E1E000C0AA8 /* Debug */,
+				D6B4355813159E1E000C0AA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D6B435B513159F91000C0AA8 /* Build configuration list for PBXNativeTarget "OPIFoundation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D6B435B313159F73000C0AA8 /* Debug */,
+				D6B435B413159F73000C0AA8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D6B436741315A80E000C0AA8 /* Build configuration list for PBXNativeTarget "iPOSFoundation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D6B436701315A7DD000C0AA8 /* Debug */,
+				D6B436711315A7DD000C0AA8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

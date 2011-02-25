@@ -26,9 +26,13 @@
     
     // Get user preference for demo mode
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL enabled = [defaults boolForKey:@"enableDemoMode"];
+    BOOL demoEnabled = [defaults boolForKey:@"enableDemoMode"];
     
-    if (enabled) {
+#if DEMO_MODE
+    demoEnabled = YES;
+#endif
+
+    if (demoEnabled) {
         [self setToDemoMode];
     } else {
         [self setToReleaseMode];
@@ -50,7 +54,7 @@
 }
 
 -(void) setToReleaseMode {
-    self.baseUrl = @"http://tsipos01/webservices";
+    self.baseUrl = @"https://tsipos01/webservices";
     self.posSessionMgmtUri = @"ipos/SessionService";
 }
 
@@ -60,8 +64,16 @@
     SessionInfo *sessionInfo = [[[SessionInfo alloc] init] autorelease];
     
     // Make Synchronous HTTP request
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/login/%@/%@/%@", baseUrl, posSessionMgmtUri, employeeNumber, password, sessionInfo.deviceId]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/login", baseUrl, posSessionMgmtUri]];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    
+    [request setValidatesSecureCertificate:NO];
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    
+    // We will be posting the login as an XML Request
+    NSString *loginXML = [NSString stringWithFormat:@"<Login><UserName>%@</UserName><Password>%@</Password><DeviceID>%@</DeviceID></Login>", employeeNumber, password, sessionInfo.deviceId];
+    [request appendPostData:[loginXML dataUsingEncoding:NSUTF8StringEncoding]];
+
     [request startSynchronous];
     
     NSError *error = [request error];
@@ -124,6 +136,8 @@
     // Make Synchronous HTTP request
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/logout", baseUrl, posSessionMgmtUri]];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    
+    [request setValidatesSecureCertificate:NO];
     [request startSynchronous];
     
     NSError *error = [request error];

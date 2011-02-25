@@ -26,9 +26,13 @@
     
     // Get user preference for demo mode
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL enabled = [defaults boolForKey:@"enableDemoMode"];
+    BOOL demoEnabled = [defaults boolForKey:@"enableDemoMode"];
     
-    if (enabled) {
+#if DEMO_MODE
+    demoEnabled = YES;
+#endif
+
+    if (demoEnabled) {
         [self setToDemoMode];
     } else {
         [self setToReleaseMode];
@@ -50,7 +54,7 @@
 }
 
 -(void) setToReleaseMode {
-    self.baseUrl = @"http://tsipos01/webservices";
+    self.baseUrl = @"https://tsipos01/webservices";
     self.posInventoryMgmtUri = @"ipos/ItemService";
 }
 
@@ -62,6 +66,8 @@
     // Make Synchronous HTTP request
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@", baseUrl, posInventoryMgmtUri, sessionInfo.storeId, itemSku]];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    
+    [request setValidatesSecureCertificate:NO];
     [request startSynchronous];
     
     NSError *error = [request error];
@@ -182,6 +188,8 @@
     // Make Synchronous HTTP request
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/availability/%@/%@/%@", baseUrl, posInventoryMgmtUri,sessionInfo.storeId, itemId, quantity]];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    
+    [request setValidatesSecureCertificate:NO];
     [request startSynchronous];
     
     NSError *error = [request error];

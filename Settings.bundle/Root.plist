@@ -14,7 +14,7 @@
 			<key>Key</key>
 			<string>enableDemoMode</string>
 			<key>DefaultValue</key>
-			<true/>
+			<false/>
 			<key>FalseValue</key>
 			<false/>
 			<key>TrueValue</key>

@@ -36,13 +36,8 @@ static iPOSFacade *facade = nil;
         return nil;
     }
     
-#if TARGET_IPHONE_SIMULATOR | APP_IN_UNITTEST
-    self.posService = [[[iPOSServiceMock alloc] init] retain];
-    self.inventoryService = [[[InventoryServiceMock alloc] init] retain];
-#else
     self.posService = [[[iPOSServiceImpl alloc] init] retain];
     self.inventoryService = [[[InventoryServiceImpl alloc] init] retain];    
-#endif
     
     return self;
 }

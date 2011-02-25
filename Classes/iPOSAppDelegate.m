@@ -19,7 +19,7 @@
 {   
     // Set the application setting defaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *appDefaults = [NSDictionary dictionaryWithObject:@"YES" forKey:@"enableDemoMode"];
+    NSDictionary *appDefaults = [NSDictionary dictionaryWithObject:@"NO" forKey:@"enableDemoMode"];
     
     [defaults registerDefaults:appDefaults];
     [defaults synchronize];

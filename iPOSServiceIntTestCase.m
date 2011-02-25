@@ -26,7 +26,7 @@
     // We are setting to demo mode
     [((iPOSServiceImpl *) facade.posService) setToDemoMode];
     
-    BOOL loginResult = [facade login:@"test" password:@"password"];
+    BOOL loginResult = [facade login:@"123" password:@"test"];
     
     STAssertTrue(loginResult, @"I expected the login result to be true :-(");
     
@@ -42,7 +42,7 @@
     // We are setting to demo mode
     [((iPOSServiceImpl *) facade.posService) setToDemoMode];
     
-    BOOL loginResult = [facade login:@"test" password:@"password"];
+    BOOL loginResult = [facade login:@"123" password:@"test"];
     
     STAssertTrue(loginResult, @"I expected the login result to be true :-(");
     
@@ -64,7 +64,7 @@
     
     
     // We have to login first
-    [facade login:@"test" password:@"password"];
+    [facade login:@"123" password:@"test"];
     
     ProductItem *productItem = [facade lookupProductItem:@"440915"];
     

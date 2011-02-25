@@ -9,13 +9,9 @@
 
 #import <Foundation/Foundation.h>
 
-#if TARGET_IPHONE_SIMULATOR | APP_IN_UNITTEST
-    #import "iPOSServiceMock.h"
-    #import "InventoryServiceMock.h"
-#else
-    #import "iPOSServiceImpl.h"
-    #import "InventoryServiceImpl.h"
-#endif
+#import "iPOSServiceImpl.h"
+#import "InventoryServiceImpl.h"
+
 
 @interface iPOSFacade : NSObject {
     id<iPOSService> posService;
