@@ -11,6 +11,8 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		B40FC0F21311928600D7D79D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
+		D6179DF61317DBEE00ACAFDD /* iPOSServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6179DF21317DBEE00ACAFDD /* iPOSServiceMock.m */; };
+		D6179DF71317DBEE00ACAFDD /* InventoryServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6179DF41317DBEE00ACAFDD /* InventoryServiceMock.m */; };
 		D64E5AE8130262B0002EAD70 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 		D64E5B8813026566002EAD70 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
 		D67943A313160884004B8254 /* iPOSServiceIntTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */; };
@@ -86,11 +88,9 @@
 		D6B4383B1315A9F0000C0AA8 /* CustomerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469D413070300001EADE4 /* CustomerViewController.m */; };
 		D6B438481315AA05000C0AA8 /* DrawUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B4B367C512F936AC00F37FE9 /* DrawUtils.m */; };
 		D6B4384B1315AA08000C0AA8 /* InventoryServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3F712FCB3D80029F4B2 /* InventoryServiceImpl.m */; };
-		D6B4384C1315AA09000C0AA8 /* InventoryServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3F912FCB3D80029F4B2 /* InventoryServiceMock.m */; };
 		D6B4384D1315AA09000C0AA8 /* iPOSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* iPOSAppDelegate.m */; };
 		D6B4384E1315AA0A000C0AA8 /* iPOSFacade.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FB12FCB3D80029F4B2 /* iPOSFacade.m */; };
 		D6B4384F1315AA0B000C0AA8 /* iPOSServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */; };
-		D6B438501315AA0C000C0AA8 /* iPOSServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BCD40012FCB3D80029F4B2 /* iPOSServiceMock.m */; };
 		D6B438511315AA0D000C0AA8 /* LayoutUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = D62853C512FB9B650024228B /* LayoutUtils.m */; };
 		D6B438521315AA0E000C0AA8 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B47AA7F512F7DD7200AAD34C /* LoginViewController.m */; };
 		D6B438531315AA0F000C0AA8 /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B40B94301304EF620024C2DC /* MainMenuViewController.m */; };
@@ -244,6 +244,10 @@
 		B4C46B0513075F5D001EADE4 /* AddItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddItemView.m; sourceTree = "<group>"; };
 		B4C46B961308BBE7001EADE4 /* ExtUITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtUITextField.h; sourceTree = "<group>"; };
 		B4C46B971308BBE7001EADE4 /* ExtUITextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtUITextField.m; sourceTree = "<group>"; };
+		D6179DF21317DBEE00ACAFDD /* iPOSServiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPOSServiceMock.m; sourceTree = "<group>"; };
+		D6179DF31317DBEE00ACAFDD /* iPOSServiceMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSServiceMock.h; sourceTree = "<group>"; };
+		D6179DF41317DBEE00ACAFDD /* InventoryServiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryServiceMock.m; sourceTree = "<group>"; };
+		D6179DF51317DBEE00ACAFDD /* InventoryServiceMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryServiceMock.h; sourceTree = "<group>"; };
 		D61C3C3012FCA530003C3A47 /* Customer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Customer.h; sourceTree = "<group>"; };
 		D61C3C3112FCA530003C3A47 /* Customer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Customer.m; sourceTree = "<group>"; };
 		D61C3C3312FCA535003C3A47 /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
@@ -336,14 +340,11 @@
 		D6BCD3F512FCB3D80029F4B2 /* InventoryService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryService.h; path = Classes/InventoryService.h; sourceTree = "<group>"; };
 		D6BCD3F612FCB3D80029F4B2 /* InventoryServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryServiceImpl.h; path = Classes/InventoryServiceImpl.h; sourceTree = "<group>"; };
 		D6BCD3F712FCB3D80029F4B2 /* InventoryServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InventoryServiceImpl.m; path = Classes/InventoryServiceImpl.m; sourceTree = "<group>"; };
-		D6BCD3F812FCB3D80029F4B2 /* InventoryServiceMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryServiceMock.h; path = Classes/InventoryServiceMock.h; sourceTree = "<group>"; };
-		D6BCD3F912FCB3D80029F4B2 /* InventoryServiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InventoryServiceMock.m; path = Classes/InventoryServiceMock.m; sourceTree = "<group>"; };
 		D6BCD3FA12FCB3D80029F4B2 /* iPOSFacade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPOSFacade.h; path = Classes/iPOSFacade.h; sourceTree = "<group>"; };
 		D6BCD3FB12FCB3D80029F4B2 /* iPOSFacade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPOSFacade.m; path = Classes/iPOSFacade.m; sourceTree = "<group>"; };
 		D6BCD3FC12FCB3D80029F4B2 /* iPOSService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPOSService.h; path = Classes/iPOSService.h; sourceTree = "<group>"; };
 		D6BCD3FD12FCB3D80029F4B2 /* iPOSServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPOSServiceImpl.h; path = Classes/iPOSServiceImpl.h; sourceTree = "<group>"; };
 		D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPOSServiceImpl.m; path = Classes/iPOSServiceImpl.m; sourceTree = "<group>"; };
-		D6BCD3FF12FCB3D80029F4B2 /* iPOSServiceMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPOSServiceMock.h; path = Classes/iPOSServiceMock.h; sourceTree = "<group>"; };
 		D6BCD40012FCB3D80029F4B2 /* iPOSServiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPOSServiceMock.m; path = Classes/iPOSServiceMock.m; sourceTree = "<group>"; };
 		D6BCD40612FCB3F70029F4B2 /* SessionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionInfo.h; path = Classes/SessionInfo.h; sourceTree = "<group>"; };
 		D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionInfo.m; path = Classes/SessionInfo.m; sourceTree = "<group>"; };
@@ -661,6 +662,11 @@
 		D64B7E2612F9D869006AB141 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				D6179DF21317DBEE00ACAFDD /* iPOSServiceMock.m */,
+				D6179DF31317DBEE00ACAFDD /* iPOSServiceMock.h */,
+				D6179DF41317DBEE00ACAFDD /* InventoryServiceMock.m */,
+				D6179DF51317DBEE00ACAFDD /* InventoryServiceMock.h */,
+				D6BCD40012FCB3D80029F4B2 /* iPOSServiceMock.m */,
 				D64B7E3412F9D8FD006AB141 /* SampleUnitTestCase.h */,
 				D64B7E3512F9D8FD006AB141 /* SampleUnitTestCase.m */,
 				D656013C130B71B4000968BA /* iPosFacadeWithMocksTestCase.h */,
@@ -704,15 +710,11 @@
 				D6BCD3F512FCB3D80029F4B2 /* InventoryService.h */,
 				D6BCD3F612FCB3D80029F4B2 /* InventoryServiceImpl.h */,
 				D6BCD3F712FCB3D80029F4B2 /* InventoryServiceImpl.m */,
-				D6BCD3F812FCB3D80029F4B2 /* InventoryServiceMock.h */,
-				D6BCD3F912FCB3D80029F4B2 /* InventoryServiceMock.m */,
 				D6BCD3FA12FCB3D80029F4B2 /* iPOSFacade.h */,
 				D6BCD3FB12FCB3D80029F4B2 /* iPOSFacade.m */,
 				D6BCD3FC12FCB3D80029F4B2 /* iPOSService.h */,
 				D6BCD3FD12FCB3D80029F4B2 /* iPOSServiceImpl.h */,
 				D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */,
-				D6BCD3FF12FCB3D80029F4B2 /* iPOSServiceMock.h */,
-				D6BCD40012FCB3D80029F4B2 /* iPOSServiceMock.m */,
 			);
 			name = POSInterface;
 			path = ..;
@@ -1058,6 +1060,8 @@
 			files = (
 				D697D15E1312D98D002C3EF6 /* iPosFacadeWithMocksTestCase.m in Sources */,
 				D697D15F1312D98F002C3EF6 /* SampleUnitTestCase.m in Sources */,
+				D6179DF61317DBEE00ACAFDD /* iPOSServiceMock.m in Sources */,
+				D6179DF71317DBEE00ACAFDD /* InventoryServiceMock.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1116,11 +1120,9 @@
 				D6B4383B1315A9F0000C0AA8 /* CustomerViewController.m in Sources */,
 				D6B438481315AA05000C0AA8 /* DrawUtils.m in Sources */,
 				D6B4384B1315AA08000C0AA8 /* InventoryServiceImpl.m in Sources */,
-				D6B4384C1315AA09000C0AA8 /* InventoryServiceMock.m in Sources */,
 				D6B4384D1315AA09000C0AA8 /* iPOSAppDelegate.m in Sources */,
 				D6B4384E1315AA0A000C0AA8 /* iPOSFacade.m in Sources */,
 				D6B4384F1315AA0B000C0AA8 /* iPOSServiceImpl.m in Sources */,
-				D6B438501315AA0C000C0AA8 /* iPOSServiceMock.m in Sources */,
 				D6B438511315AA0D000C0AA8 /* LayoutUtils.m in Sources */,
 				D6B438521315AA0E000C0AA8 /* LoginViewController.m in Sources */,
 				D6B438531315AA0F000C0AA8 /* MainMenuViewController.m in Sources */,
