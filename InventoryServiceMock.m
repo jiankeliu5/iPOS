@@ -13,6 +13,9 @@
 
 -(ProductItem *) lookupProductItem: (NSString *) itemSku withSession:  (SessionInfo *) sessionInfo {
     ProductItem *item = [[[ProductItem alloc] init] autorelease];
+    DistributionCenter *dc1 = [[[DistributionCenter alloc] init] autorelease];
+    DistributionCenter *dc2 = [[[DistributionCenter alloc] init] autorelease];
+
     
     item.itemId = [NSNumber numberWithInt:283186];
     item.storeId = [NSNumber numberWithInt: 1200];
@@ -25,7 +28,7 @@
     item.binLocation = @"TR0520";
     item.stockingCode = @"S";
     item.storeAvailability = [NSDecimalNumber decimalNumberWithString: @"13"];
-    item.distributionCenterAvailability = [NSDecimalNumber decimalNumberWithString:@"660"];
+    item.storeOnHand = [NSDecimalNumber decimalNumberWithString:@"10"];
     item.defaultToBox = NO;
     item.primaryUnitOfMeasure = @"EA";
     item.secondaryUnitOfMeasure = @"EA";
@@ -35,6 +38,27 @@
     item.standardCost = [NSDecimalNumber decimalNumberWithString:@"3.99"];
     item.taxRate = [NSDecimalNumber decimalNumberWithString:@"0.7"];
     item.taxExempt = NO;
+    
+    // Initialize the distribution center
+    dc1.dcId = [NSNumber numberWithInt:801];
+    dc1.availability = [NSDecimalNumber decimalNumberWithString:@"1212"];
+    dc1.onHand = [NSDecimalNumber decimalNumberWithString:@"1000"];
+    dc1.isPrimary = YES;
+    
+    dc2.dcId = [NSNumber numberWithInt:806];
+    dc2.availability = [NSDecimalNumber decimalNumberWithString:@"0"];
+    dc2.onHand = [NSDecimalNumber decimalNumberWithString:@"0"];
+    dc2.etaDateAsString = @"JAN 24 2011";
+    dc2.isPrimary = NO;
+    
+    // Add the distribution center
+    NSMutableArray *dcList = [[[NSMutableArray alloc] init] autorelease];
+    
+    [dcList addObject: dc1];
+    [dcList addObject: dc2];
+    
+    item.distributionCenterList = [dcList copy];
+    
     
     return item;
 }

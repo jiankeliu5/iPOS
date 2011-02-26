@@ -12,9 +12,10 @@
 @implementation ProductItem
 
 @synthesize itemId, storeId, sku, description, vendorName, statusCode, type, typeId;
-@synthesize binLocation, stockingCode, storeAvailability, distributionCenterAvailability;
+@synthesize binLocation, stockingCode, storeAvailability, storeOnHand;
 @synthesize defaultToBox, piecesPerBox, primaryUnitOfMeasure, secondaryUnitOfMeasure, conversion;
 @synthesize priceGroupId, retailPrice, standardCost, taxRate, taxExempt;
+@synthesize distributionCenterList;
 
 #pragma mark Constuctor/Deconstructor
 -(id) init {
@@ -36,7 +37,7 @@
     [binLocation release];
     [stockingCode release];
     [storeAvailability release];
-    [distributionCenterAvailability release];
+    [storeOnHand release];
     
     [piecesPerBox release];
     [primaryUnitOfMeasure release];

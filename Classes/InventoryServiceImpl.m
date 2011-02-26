@@ -49,13 +49,20 @@
 }
 
 -(void) setToDemoMode {
-    self.baseUrl = @"http://ipad.demo.objectpartners.com:8080/ipos-demo-services-0.1/webservices";
-    self.posInventoryMgmtUri = @"ipos/ItemService";
+    // For apps you could use [NSBundle mainBundle] to get the main plist, however this does not work with test bundles.
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+
+    
+    self.baseUrl = (NSString *) [bundle objectForInfoDictionaryKey:@"ipos.service.demo.baseurl"];
+    self.posInventoryMgmtUri = @"ItemService";
 }
 
 -(void) setToReleaseMode {
-    self.baseUrl = @"https://tsipos01/webservices";
-    self.posInventoryMgmtUri = @"ipos/ItemService";
+    // For apps you could use [NSBundle mainBundle] to get the main plist, however this does not work with test bundles.
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    
+    self.baseUrl = (NSString *) [bundle objectForInfoDictionaryKey:@"ipos.service.baseurl"];
+    self.posInventoryMgmtUri = @"ItemService";
 }
 
 #pragma mark -
@@ -83,7 +90,7 @@
     
     // Extract the itemID.  If it 0 return nil;
     NSArray *nodes = nil;
-    CXMLDocument *element = nil;
+    CXMLElement *element = nil;
     
     //TODO: May have to make this more robust to handle error conditions.  This assumes clean XML coming back.
     nodes = [root elementsForName:@"ItemID"];
@@ -103,13 +110,15 @@
         element = [nodes lastObject];
         item.conversion = [NSDecimalNumber decimalNumberWithString:[element stringValue]]; 
         
-        nodes = [root elementsForName:@"DCAvailability"];
-        element = [nodes lastObject];
-        item.distributionCenterAvailability = [NSDecimalNumber decimalNumberWithString:[element stringValue]]; 
-        
         nodes = [root elementsForName:@"DefaultToBox"];
         element = [nodes lastObject];
-        item.defaultToBox = [[element stringValue] boolValue];
+        
+        if ([[element stringValue] isEqualToString: @"true"]) {
+            item.defaultToBox = YES;
+        } else {
+            item.defaultToBox = NO;
+        }
+        
         
         nodes = [root elementsForName:@"ItemDescription"];
         element = [nodes lastObject];
@@ -163,13 +172,21 @@
         element = [nodes lastObject];
         item.storeAvailability = [NSDecimalNumber decimalNumberWithString:[element stringValue]]; 
         
+        nodes = [root elementsForName:@"StoreOnHand"];
+        element = [nodes lastObject];
+        item.storeOnHand = [NSDecimalNumber decimalNumberWithString:[element stringValue]]; 
+        
         nodes = [root elementsForName:@"StoreID"];
         element = [nodes lastObject];
         item.storeId = [NSNumber numberWithInt:[[element stringValue] intValue]];
         
         nodes = [root elementsForName:@"TaxExempt"];
         element = [nodes lastObject];
-        item.taxExempt = [[element stringValue] boolValue];
+        if ([[element stringValue] isEqualToString: @"true"]) {
+            item.taxExempt = YES;
+        } else {
+            item.taxExempt = NO;
+        }
         
         nodes = [root elementsForName:@"TaxRate"];
         element = [nodes lastObject];
@@ -178,6 +195,49 @@
         nodes = [root elementsForName:@"VendorName"];
         element = [nodes lastObject];
         item.vendorName = [element stringValue];
+        
+        // Build the Distribution Center Info
+        nodes = [root elementsForName:@"Distribution"];
+        element = [nodes lastObject];
+
+        // Loop through the nodes of the element and add to array
+        if (element) {
+            DistributionCenter *dc = nil;
+            NSMutableArray *dcList = [[[NSMutableArray alloc] init] autorelease];        
+            
+            for (CXMLElement *node in [element elementsForName:@"DC"]) {
+                dc = [[[DistributionCenter alloc] init] autorelease];
+                
+                element = [[node elementsForName:@"dcId"] lastObject];
+                dc.dcId = [NSNumber numberWithInt:[[element stringValue] intValue]];
+                
+                element = [[node elementsForName:@"availability"] lastObject];
+                dc.availability = [NSDecimalNumber decimalNumberWithString:[element stringValue]];
+                
+                element = [[node elementsForName:@"onHand"] lastObject];
+                dc.onHand = [NSDecimalNumber decimalNumberWithString:[element stringValue]];
+                
+                element = [[node elementsForName:@"primary"] lastObject];
+                if ([[element stringValue] isEqualToString: @"true"]) {
+                    dc.isPrimary = YES;
+                } else {
+                    dc.isPrimary = NO;
+                }
+                
+                element = [[node elementsForName:@"eta"] lastObject];
+                dc.etaDateAsString = [element stringValue];
+                
+                [dcList addObject: dc];
+            }
+            
+            // Copy to the item sorted with primary first
+            NSSortDescriptor *sortDescriptor;
+            sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"isPrimary"
+                                                          ascending:NO] autorelease];
+            NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+            item.distributionCenterList = [[NSArray arrayWithArray: dcList] sortedArrayUsingDescriptors:sortDescriptors];
+        }
+        
         
     } 
     

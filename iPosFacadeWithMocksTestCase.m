@@ -52,6 +52,9 @@
     STAssertEquals([productItem.itemId intValue], 283186, @"I expected this to be equal to 283186");
     STAssertEquals([productItem.storeId intValue], 1200, @"I expected this to be equal to 283186");
     STAssertEquals(productItem.description, @"Driftwood Hon. Martel", @"I expected this to be equal to 283186");
+    STAssertTrue([productItem.distributionCenterList count] == 2, @"Expected 2 Distribution Centers");
+    STAssertEquals([((DistributionCenter *) [productItem.distributionCenterList objectAtIndex:0]).dcId intValue], 801, @"Expected DC Id to be 801");
+    STAssertEquals([((DistributionCenter *) [productItem.distributionCenterList objectAtIndex:1]).dcId intValue], 806, @"Expected DC Id to be 806");
 }
 
 #endif // all code under test must be linked into the Unit Test bundle

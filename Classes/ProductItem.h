@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+#import "DistributionCenter.h"
 
 @interface ProductItem : NSObject {
     NSNumber *itemId;
@@ -25,7 +26,7 @@
     NSString *binLocation;
     NSString *stockingCode;
     NSDecimalNumber *storeAvailability;
-    NSDecimalNumber *distributionCenterAvailability;
+    NSDecimalNumber *storeOnHand;
     
     // Unit of Measure Info
     BOOL defaultToBox;
@@ -40,6 +41,9 @@
     NSDecimalNumber *standardCost;
     NSDecimalNumber *taxRate;
     BOOL taxExempt;     
+    
+    // Distribution Center Info
+    NSArray *distributionCenterList;
 }
 
 @property(nonatomic, retain) NSNumber *itemId;
@@ -53,7 +57,7 @@
 @property(nonatomic, retain) NSString *binLocation;
 @property(nonatomic, retain) NSString *stockingCode;
 @property(nonatomic, retain) NSDecimalNumber *storeAvailability;
-@property(nonatomic, retain) NSDecimalNumber *distributionCenterAvailability;
+@property(nonatomic, retain) NSDecimalNumber *storeOnHand;
 @property                    BOOL defaultToBox;
 @property(nonatomic, retain) NSNumber *piecesPerBox;
 @property(nonatomic, retain) NSString *primaryUnitOfMeasure;
@@ -64,5 +68,7 @@
 @property(nonatomic, retain) NSDecimalNumber *standardCost;
 @property(nonatomic, retain) NSDecimalNumber *taxRate;
 @property                    BOOL taxExempt;
+
+@property(nonatomic, retain) NSArray *distributionCenterList;
 
 @end

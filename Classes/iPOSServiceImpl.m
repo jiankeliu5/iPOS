@@ -49,13 +49,17 @@
 }
 
 -(void) setToDemoMode {
-    self.baseUrl = @"http://ipad.demo.objectpartners.com:8080/ipos-demo-services-0.1/webservices";
-    self.posSessionMgmtUri = @"ipos/SessionService";
+    // For apps you could use [NSBundle mainBundle] to get the main plist, however this does not work with test bundles.
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    
+    self.baseUrl = (NSString *) [bundle objectForInfoDictionaryKey:@"ipos.service.demo.baseurl"];    self.posSessionMgmtUri = @"SessionService";
 }
 
 -(void) setToReleaseMode {
-    self.baseUrl = @"https://tsipos01/webservices";
-    self.posSessionMgmtUri = @"ipos/SessionService";
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    
+    self.baseUrl = (NSString *) [bundle objectForInfoDictionaryKey:@"ipos.service.baseurl"];
+    self.posSessionMgmtUri = @"SessionService";
 }
 
 #pragma mark -
@@ -89,7 +93,7 @@
     // Extract the Success element
     CXMLElement *root = [xmlParser rootElement];
     NSArray *successNodes = [root elementsForName:@"Success"];
-    CXMLDocument *successElement = [successNodes lastObject];
+    CXMLElement *successElement = [successNodes lastObject];
     BOOL isSuccessful = NO;
     
     if (successElement != nil) {
@@ -99,7 +103,7 @@
     // if successful bind to a session info object
     if (isSuccessful) {
         NSArray *nodes = nil;
-        CXMLDocument *element = nil;
+        CXMLElement *element = nil;
         
         nodes = [root elementsForName:@"EmployeeID"];
         element = [nodes lastObject];

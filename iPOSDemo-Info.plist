@@ -29,5 +29,9 @@
 		<string>com.datecs.linea.pro.msr</string>
 		<string>com.datecs.linea.pro.bar</string>
 	</array>
+	<key>ipos.service.demo.baseurl</key>
+	<string>http://ipad.demo.objectpartners.com:8080/ipos-demo-services-0.1/webservices/ipos</string>
+	<key>ipos.service.baseurl</key>
+	<string>https://tsipos01/webservices/ipostest</string>
 </dict>
 </plist>
