@@ -29,12 +29,11 @@
     Linea *linea;
 }
 
-@property (nonatomic, retain) NSString *empId;
-@property (nonatomic, retain) NSString *password;
-@property (nonatomic, retain) NSString *storeId;
-@property (nonatomic, retain) NSString *deviceId;
+@property (nonatomic, copy) NSString *empId;
+@property (nonatomic, copy) NSString *password;
+@property (nonatomic, copy) NSString *storeId;
+@property (nonatomic, copy) NSString *deviceId;
 
-@property (nonatomic, retain) UITableView *loginTableView;
 @property (nonatomic, retain) id currentFirstResponder;
 
 @end

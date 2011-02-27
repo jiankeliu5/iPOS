@@ -32,11 +32,6 @@
 	
 }
 
-@property (nonatomic, retain) UILabel *scanItemLabel;
-@property (nonatomic, retain) ExtUITextField *lookupItemField;
-@property (nonatomic, retain) ExtUITextField *lookupOrderField;
-@property (nonatomic, retain) UIButton *customerButton;
-
 @property (nonatomic, retain) id currentFirstResponder;
 
 @property (nonatomic, copy) NSString *lookupItemSku;

@@ -36,8 +36,8 @@ static iPOSFacade *facade = nil;
         return nil;
     }
     
-    self.posService = [[[iPOSServiceImpl alloc] init] retain];
-    self.inventoryService = [[[InventoryServiceImpl alloc] init] retain];    
+    self.posService = [[[iPOSServiceImpl alloc] init] autorelease];
+    self.inventoryService = [[[InventoryServiceImpl alloc] init] autorelease];    
     
     return self;
 }
@@ -67,7 +67,10 @@ static iPOSFacade *facade = nil;
 }
 
 -(BOOL) logout {
-    return [self.posService logout:self.sessionInfo];
+	BOOL logoutStatus = [self.posService logout:self.sessionInfo];
+	[self.sessionInfo release];
+	self.sessionInfo = nil;
+    return logoutStatus;
 }
 
 #pragma mark -

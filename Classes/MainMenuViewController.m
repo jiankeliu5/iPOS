@@ -27,11 +27,6 @@
 
 @implementation MainMenuViewController
 
-@synthesize scanItemLabel;
-@synthesize lookupItemField;
-@synthesize lookupOrderField;
-@synthesize customerButton;
-
 @synthesize currentFirstResponder;
 
 @synthesize lookupItemSku;
@@ -61,11 +56,6 @@
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self]; 
 	[self setCurrentFirstResponder:nil];
-	 
-	[self setScanItemLabel:nil];
-	[self setLookupItemField:nil];
-	//[self setLookupOrderField:nil];
-	[self setCustomerButton:nil];
 	
 	[self setLookupItemSku:nil];
 	[self setScannedItemSku:nil];
@@ -118,45 +108,48 @@
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
 	
-	[self setView:[[[UIView alloc] initWithFrame:CGRectZero] autorelease]];
-	self.view.backgroundColor = [UIColor colorWithWhite:0.85f alpha:1.0f];
+	UIView *bgView = [[UIView alloc] initWithFrame:CGRectZero];
+	bgView.backgroundColor = [UIColor colorWithWhite:0.85f alpha:1.0f];
+	[self setView:bgView];
+	[bgView release];
 	
-	[self setScanItemLabel: [[[UILabel alloc] initWithFrame:CGRectZero] autorelease]];
-	self.scanItemLabel.backgroundColor = [UIColor colorWithWhite:0.85f alpha:1.0f];
-	self.scanItemLabel.textColor = [UIColor blackColor];
-	self.scanItemLabel.text = @"-- SCAN ITEM --";
-	self.scanItemLabel.textAlignment = UITextAlignmentCenter;
-	[self.view addSubview:self.scanItemLabel];
+	scanItemLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+	scanItemLabel.backgroundColor = [UIColor colorWithWhite:0.85f alpha:1.0f];
+	scanItemLabel.textColor = [UIColor blackColor];
+	scanItemLabel.text = @"-- SCAN ITEM --";
+	scanItemLabel.textAlignment = UITextAlignmentCenter;
+	[self.view addSubview:scanItemLabel];
+	[scanItemLabel release];
 	
-	[self setLookupItemField:[[[ExtUITextField alloc] initWithFrame:CGRectZero] autorelease]];
-	self.lookupItemField.textColor = [UIColor blackColor];
-	self.lookupItemField.borderStyle = UITextBorderStyleRoundedRect;
-	self.lookupItemField.textAlignment = UITextAlignmentCenter;
-	self.lookupItemField.clearsOnBeginEditing = YES;
-	self.lookupItemField.placeholder = @"Look Up Item";
-	self.lookupItemField.tagName = @"LookupItem";
-	self.lookupItemField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-	self.lookupItemField.returnKeyType = UIReturnKeyGo;
-	self.lookupItemField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-	
-	[self.view addSubview:self.lookupItemField];
+	lookupItemField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
+	lookupItemField.textColor = [UIColor blackColor];
+	lookupItemField.borderStyle = UITextBorderStyleRoundedRect;
+	lookupItemField.textAlignment = UITextAlignmentCenter;
+	lookupItemField.clearsOnBeginEditing = YES;
+	lookupItemField.placeholder = @"Look Up Item";
+	lookupItemField.tagName = @"LookupItem";
+	lookupItemField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+	lookupItemField.returnKeyType = UIReturnKeyGo;
+	lookupItemField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+	[self.view addSubview:lookupItemField];
+	[lookupItemField release];
 	
 	// Look up order will be in a later release
-	//[self setLookupOrderField:[[[ExtUITextField alloc] initWithFrame:CGRectZero] autorelease]];
-	//self.lookupOrderField.textColor = [UIColor blackColor];
-	//self.lookupOrderField.borderStyle = UITextBorderStyleRoundedRect;
-	//self.lookupOrderField.textAlignment = UITextAlignmentCenter;
-	//self.lookupOrderField.clearsOnBeginEditing = YES;
-	//self.lookupOrderField.placeholder = @"Look Up Order";
-	//self.lookupOrderField.tagName = @"LookupOrder";
-	//self.lookupOrderField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+	//lookupOrderField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
+	//lookupOrderField.textColor = [UIColor blackColor];
+	//lookupOrderField.borderStyle = UITextBorderStyleRoundedRect;
+	//lookupOrderField.textAlignment = UITextAlignmentCenter;
+	//lookupOrderField.clearsOnBeginEditing = YES;
+	//lookupOrderField.placeholder = @"Look Up Order";
+	//lookupOrderField.tagName = @"LookupOrder";
+	//lookupOrderField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+	//[self.view addSubview:lookupOrderField];
+	//[lookupOrderField release];
 	
-	//[self.view addSubview:self.lookupOrderField];
-	
-	[self setCustomerButton:[UIButton buttonWithType:UIButtonTypeRoundedRect]];
-	[self.customerButton setTitle:@"Add Customer" forState:UIControlStateNormal];
-	[self.customerButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-	[self.view addSubview:self.customerButton];
+	customerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	[customerButton setTitle:@"Add Customer" forState:UIControlStateNormal];
+	[customerButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+	[self.view addSubview:customerButton];
 	 
 }
 
@@ -169,9 +162,9 @@
 		[self.navigationController setNavigationBarHidden:NO];
 	}
 	
-	self.lookupItemField.delegate = self;
-	//self.lookupOrderField.delegate = self;
-	[self.customerButton addTarget:self action:@selector(customerPressed) forControlEvents:UIControlEventTouchUpInside];
+	lookupItemField.delegate = self;
+	//lookupOrderField.delegate = self;
+	[customerButton addTarget:self action:@selector(customerPressed) forControlEvents:UIControlEventTouchUpInside];
     
     // Add itself as a delegate
     linea = [Linea sharedDevice];
@@ -197,15 +190,15 @@
 	CGFloat labelButtonWidth = viewBounds.size.width * 0.60f;
 	CGFloat	labelButtonSpacing = viewBounds.size.height * 0.20f;
 	
-	self.scanItemLabel.frame = CGRectMake(0.0f, 0.0f, labelButtonWidth, 40.0f);
-	self.scanItemLabel.center = CGPointMake((viewBounds.size.width / 2.0f), labelButtonSpacing);
+	scanItemLabel.frame = CGRectMake(0.0f, 0.0f, labelButtonWidth, 40.0f);
+	scanItemLabel.center = CGPointMake((viewBounds.size.width / 2.0f), labelButtonSpacing);
 	
-	self.lookupItemField.frame = CGRectOffset(self.scanItemLabel.frame, 0.0f, labelButtonSpacing);
+	lookupItemField.frame = CGRectOffset(scanItemLabel.frame, 0.0f, labelButtonSpacing);
 	
-	//self.lookupOrderField.frame = CGRectOffset(self.lookupItemField.frame, 0.0f, labelButtonSpacing);
+	//lookupOrderField.frame = CGRectOffset(lookupItemField.frame, 0.0f, labelButtonSpacing);
 	
 	// Change to work from lookupOrderField position when that is implemented
-	self.customerButton.frame = CGRectOffset(self.lookupItemField.frame, 0.0f, labelButtonSpacing);
+	customerButton.frame = CGRectOffset(lookupItemField.frame, 0.0f, labelButtonSpacing);
 	
 	// Do this last
 	[super viewWillAppear:animated];
@@ -272,7 +265,8 @@
 	
 	// Set the values and do the work here
 	if ([textField.tagName isEqualToString:@"LookupItem"]) {
-		self.lookupItemSku = textField.text;
+		[self setLookupItemSku: nil];
+		[self setLookupItemSku: textField.text];
 		// Call the service and display the overlay view
 		ProductItem *item = [facade lookupProductItem:self.lookupItemSku];
 		if (item == nil) {
@@ -289,7 +283,8 @@
 		}
 		
 	} else if ([textField.tagName isEqualToString:@"LookupOrder"]) {
-		self.lookupOrderNum = textField.text;
+		[self setLookupOrderNum:nil];
+		[self setLookupOrderNum:textField.text];
 		// Call the service and set up the order review (later revision)
 	}
 }
@@ -372,7 +367,7 @@
 - (void) addItem:(AddItemView *)addItemView orderQuantity:(NSDecimalNumber *)quantity ofUnits:(NSString *)unitOfMeasure {
 	
 	// TODO: set up the order and push to the cart view
-	NSMutableString *status = [[[NSMutableString alloc] init] autorelease];
+	NSMutableString *status = [[NSMutableString alloc] init];
 	[status setString:@""];
 	[status appendFormat:@"Would Order:  %.2f\n", [quantity doubleValue]];
 	[status appendFormat:@"Units:  %@\n", unitOfMeasure];
@@ -382,6 +377,7 @@
 	[self addKeyboardListeners];
 		 
 	[AlertUtils showModalAlertMessage: status];
+	[status release];
 		 
 }
 

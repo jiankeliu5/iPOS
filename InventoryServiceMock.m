@@ -57,7 +57,7 @@
     [dcList addObject: dc1];
     [dcList addObject: dc2];
     
-    item.distributionCenterList = [dcList copy];
+    item.distributionCenterList = [[dcList copy] autorelease];
     
     
     return item;

@@ -28,7 +28,6 @@
 @synthesize storeId;
 @synthesize deviceId;
 
-@synthesize loginTableView;
 @synthesize currentFirstResponder;
 
 #pragma mark Constructors
@@ -62,8 +61,6 @@
 	[self setPassword:nil];
 	[self setStoreId:nil];
 	[self setDeviceId:nil];
-	
-	[self setLoginTableView:nil];
     
   	[super dealloc];
 }
@@ -93,15 +90,16 @@
 #pragma mark UIViewController overrides
 - (void)loadView
 {
+	UIView *bgView = [[UIView alloc] initWithFrame:CGRectZero];
+	bgView.backgroundColor = [UIColor blackColor];
+	[self setView:bgView];
+	[bgView release];
 	
-	[self setView:[[[UIView alloc] initWithFrame:CGRectZero] autorelease]];
-	self.view.backgroundColor = [UIColor blackColor];
+	loginTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+	loginTableView.backgroundColor = [UIColor clearColor];
 	
-	[self setLoginTableView:[[[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped] autorelease]];
-	self.loginTableView.backgroundColor = [UIColor clearColor];
-	
-	[self.view addSubview:self.loginTableView];
-	
+	[self.view addSubview:loginTableView];
+	[loginTableView release];
 }
 
 - (void)viewDidLoad
@@ -109,8 +107,8 @@
 	// Do this at the beginning
 	[super viewDidLoad];
 	
-	self.loginTableView.dataSource = self;
-	self.loginTableView.delegate = self;   
+	loginTableView.dataSource = self;
+	loginTableView.delegate = self;   
     
     // Get a reference to the shared Linea instance and add this controller as a delegate
     linea = [Linea sharedDevice];
@@ -131,8 +129,8 @@
 	}
 	
 	// Make sure we logout and disconnect from Linea device
-	self.empId = nil;
-	self.password = nil;
+	[self setEmpId:nil];
+	[self setPassword:nil];
     
     [facade logout]; 
     [linea disconnect];
@@ -140,29 +138,31 @@
 	
 	CGRect viewBounds = self.view.bounds;
 	
-	if (self.loginTableView) {
-		[self.loginTableView reloadData];
-		self.loginTableView.frame = viewBounds;
+	if (loginTableView) {
+		[loginTableView reloadData];
+		loginTableView.frame = viewBounds;
 	}
 	
-	if (self.loginTableView.tableHeaderView == nil) {
-		PlaceHolderView *tableHeader = [[[PlaceHolderView alloc] initWithFrame:CGRectMake(0, 0, viewBounds.size.width, floorf(viewBounds.size.height / 2.0f))] autorelease];
+	if (loginTableView.tableHeaderView == nil) {
+		PlaceHolderView *tableHeader = [[PlaceHolderView alloc] initWithFrame:CGRectMake(0, 0, viewBounds.size.width, floorf(viewBounds.size.height / 2.0f))];
 		tableHeader.placeHolderLabel.text = @"iPOS Logo";
 		tableHeader.placeHolderLabel.backgroundColor = [UIColor blackColor];
 		tableHeader.placeHolderLabel.textColor = [UIColor whiteColor];
 		tableHeader.bgColor = [UIColor blackColor];
 		//tableHeader.strokeColor = [UIColor whiteColor];
-		self.loginTableView.tableHeaderView = tableHeader;
+		[loginTableView setTableHeaderView: tableHeader];
+		[tableHeader release];
 	}
 	
-	if (self.loginTableView.tableFooterView == nil) {
-		PlaceHolderView *tableFooter = [[[PlaceHolderView alloc] initWithFrame:CGRectMake(0, 0, viewBounds.size.width, 80.0f)] autorelease];
+	if (loginTableView.tableFooterView == nil) {
+		PlaceHolderView *tableFooter = [[PlaceHolderView alloc] initWithFrame:CGRectMake(0, 0, viewBounds.size.width, 80.0f)];
 		tableFooter.placeHolderLabel.text = @"TileShop Logo";
 		tableFooter.placeHolderLabel.backgroundColor = [UIColor blackColor];
 		tableFooter.placeHolderLabel.textColor = [UIColor whiteColor];
 		tableFooter.bgColor = [UIColor blackColor];
 		//tableHeader.strokeColor = [UIColor whiteColor];
-		self.loginTableView.tableFooterView = tableFooter;
+		[loginTableView setTableFooterView: tableFooter];
+		[tableFooter release];
 	}
 	
 	// Do this at the end
@@ -241,27 +241,32 @@
 	// without dismissing the keyboard then textFieldShouldReturn
 	// is not called.
 	if (textField.tag == 0) {
-		self.empId = textField.text;
+		[self setEmpId:nil];
+		[self setEmpId:textField.text];
 	} else if (textField.tag == 1) {
-		self.password = textField.text;
+		[self setPassword:nil];
+		[self setPassword:textField.text];
 	}
 	
 	if (self.empId != nil && self.password != nil) {
 		UIAlertView *alert = [AlertUtils showProgressAlertMessage:@"Logging In"];
 		if([facade login:self.empId password:self.password]) {
 			[AlertUtils dismissAlertMessage: alert];
+			
 			MainMenuViewController *mainMenuViewController = [[MainMenuViewController alloc] init];
 			[[self navigationController] pushViewController:mainMenuViewController animated:TRUE];
+            [mainMenuViewController release];
             
-            // This is where we would connect to the linea-pro device
+			// This is where we would connect to the linea-pro device
             [linea connect];
 
 		} else {
 			[AlertUtils dismissAlertMessage:alert];
 			[AlertUtils showModalAlertMessage:@"Login failure.  Please try again."];
-			[self setEmpId:nil];
-			[self setPassword:nil];
 		}
+		
+		[self setEmpId:nil];
+		[self setPassword:nil];
 
 	}
 }

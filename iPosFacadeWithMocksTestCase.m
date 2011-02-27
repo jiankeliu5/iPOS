@@ -19,7 +19,7 @@
 
     // Ensure on the facade the mock iPOSService is set
     iPOSFacade *facade = [iPOSFacade sharedInstance];
-    facade.posService = [[[iPOSServiceMock alloc] init] retain];
+    facade.posService = [[[iPOSServiceMock alloc] init] autorelease];
     
     BOOL loginResult = [facade login:@"test" password:@"password"];
     
@@ -31,7 +31,7 @@
     
     // Ensure on the facade the mock iPOSService is set
     iPOSFacade *facade = [iPOSFacade sharedInstance];
-    facade.posService = [[[iPOSServiceMock alloc] init] retain];
+    facade.posService = [[[iPOSServiceMock alloc] init] autorelease];
     
     BOOL loginResult = [facade login:@"test" password:@"password"];
     

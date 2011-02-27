@@ -118,7 +118,7 @@
         sessionInfo.serverSessionId = [element stringValue];
         
         // Store the valid password for verification when app wakes up from the background/sleep
-        sessionInfo.passwordForVerification = [password copy];
+        sessionInfo.passwordForVerification = [[password copy] autorelease];
         
     } else {
         return nil;

@@ -11,6 +11,8 @@
 #import "GradientView.h"
 #import "MOGlassButton.h"
 #import "ExtUITextField.h"
+#import "AvailabilityView.h"
+
 @class AddItemView;
 
 @protocol AddItemViewDelegate
@@ -27,8 +29,11 @@
 #define SMALL_FONT_SIZE 11.0f
 #define BIG_LABEL_HEIGHT 16.0f
 #define SMALL_LABEL_HEIGHT 14.0f
-#define ROUND_VIEW_WIDTH 240.0f
-#define ROUND_VIEW_HEIGHT 290.0f
+#define AVAILABILITY_VIEW_HEIGHT 56.0f
+#define ROUND_VIEW_X 20.0f
+#define ROUND_VIEW_Y 7.0f
+#define ROUND_VIEW_WIDTH 280.0f
+#define ROUND_VIEW_HEIGHT 402.0f
 
 @interface AddItemView : UIView <UITextFieldDelegate>
 {
@@ -39,14 +44,15 @@
 	UILabel *skuLabel;
 	UILabel *descriptionLabel;
 	UILabel *priceLabel;
-	UIView *storeInfo;
-	UILabel *storeIdLabel;
-	UILabel *storeAvailableLabel;
-	UILabel *storeOnHandLabel;
-	UIView *warehouseInfo;
-	UILabel *warehouseIdLabel;
-	UILabel *warehouseAvailableLabel;
-	UILabel *warehouseOnHandLabel;
+	
+	AvailabilityView *storeInfoView;
+	
+	AvailabilityView *dc1InfoView;
+	
+	AvailabilityView *dc2InfoView;
+	
+	AvailabilityView *dc3InfoView;
+	
 	MOGlassButton *addToCartButton;
 	MOGlassButton *exitButton;
 	GradientView *addQuantityView;

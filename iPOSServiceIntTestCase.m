@@ -21,7 +21,7 @@
     
     // Ensure on the facade the mock iPOSService is set
     iPOSFacade *facade = [iPOSFacade sharedInstance];
-    facade.posService = [[[iPOSServiceImpl alloc] init] retain];
+    facade.posService = [[[iPOSServiceImpl alloc] init] autorelease];
     
     // We are setting to demo mode
     [((iPOSServiceImpl *) facade.posService) setToDemoMode];
@@ -36,7 +36,7 @@
     
     // Ensure on the facade the mock iPOSService is set
     iPOSFacade *facade = [iPOSFacade sharedInstance];
-    facade.posService = [[[iPOSServiceImpl alloc] init] retain];
+    facade.posService = [[[iPOSServiceImpl alloc] init] autorelease];
     
     
     // We are setting to demo mode

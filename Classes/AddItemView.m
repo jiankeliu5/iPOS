@@ -13,6 +13,7 @@
 #import "AddItemView.h"
 #import "LayoutUtils.h"
 #import "ProductItem.h"
+#import "DistributionCenter.h"
 
 #pragma mark -
 #pragma mark Private Interface
@@ -62,10 +63,13 @@
 	
 	[priceFormatter release];
 	priceFormatter = nil;
+	
 	[availableFormatter release];
 	availableFormatter = nil;
 	
-	[self setProductItem:nil];
+	[productItem release];
+	productItem = nil;
+	
     [super dealloc];
 }
 
@@ -94,7 +98,7 @@
 		
 	self.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
 	if (roundedView == nil) {
-		roundedView = [[GradientView alloc] initWithFrame:CGRectMake(40.0f, 60.0f, ROUND_VIEW_WIDTH, ROUND_VIEW_HEIGHT)];
+		roundedView = [[GradientView alloc] initWithFrame:CGRectMake(ROUND_VIEW_X, ROUND_VIEW_Y, ROUND_VIEW_WIDTH, ROUND_VIEW_HEIGHT)];
 		[roundedView.layer setCornerRadius:5.0f];
 		[roundedView.layer setMasksToBounds:YES];
 		[roundedView.layer setBorderWidth:1.0f];
@@ -146,109 +150,41 @@
 	
 	cy += BIG_LABEL_HEIGHT + 10.0f;
 	
-	if (storeInfo == nil) {
-		
-		storeInfo = [[UIView alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, (SMALL_LABEL_HEIGHT * 4.0))];
-		storeInfo.backgroundColor = AVAILABLE_COLOR;
-		[storeInfo.layer setBorderWidth:1.0f];
-		[storeInfo.layer setBorderColor:[[UIColor blackColor] CGColor]];
-		[roundedView addSubview:storeInfo];
-		[storeInfo release];
-		
-		CGFloat sy = (SMALL_LABEL_HEIGHT / 2.0f);
-		
-		if (storeIdLabel == nil) {
-			storeIdLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, sy, ROUND_VIEW_WIDTH, SMALL_LABEL_HEIGHT)];
-			storeIdLabel.backgroundColor = [UIColor clearColor];
-			storeIdLabel.textColor = [UIColor blackColor];
-			storeIdLabel.textAlignment = UITextAlignmentCenter;
-			storeIdLabel.font = [UIFont boldSystemFontOfSize:SMALL_FONT_SIZE];
-			storeIdLabel.text = @"NA";
-			[storeInfo addSubview:storeIdLabel];
-			[storeIdLabel release];
-		}
-		
-		sy += SMALL_LABEL_HEIGHT;
-		
-		if (storeAvailableLabel == nil) {
-			storeAvailableLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, sy, ROUND_VIEW_WIDTH, SMALL_LABEL_HEIGHT)];
-			storeAvailableLabel.backgroundColor = [UIColor clearColor];
-			storeAvailableLabel.textColor = [UIColor blackColor];
-			storeAvailableLabel.textAlignment = UITextAlignmentCenter;
-			storeAvailableLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
-			storeAvailableLabel.text = @"NA";
-			[storeInfo addSubview:storeAvailableLabel];
-			[storeAvailableLabel release];
-		}
-		
-		sy += SMALL_LABEL_HEIGHT;
-		
-		if (storeOnHandLabel == nil) {
-			storeOnHandLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, sy, ROUND_VIEW_WIDTH, SMALL_LABEL_HEIGHT)];
-			storeOnHandLabel.backgroundColor = [UIColor clearColor];
-			storeOnHandLabel.textColor = [UIColor blackColor];
-			storeOnHandLabel.textAlignment = UITextAlignmentCenter;
-			storeOnHandLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
-			storeOnHandLabel.text = @"NA";
-			[storeInfo addSubview:storeOnHandLabel];
-			[storeOnHandLabel release];
-		}
-	}
-	
-	cy += (SMALL_LABEL_HEIGHT * 4.0);
 
-	if (warehouseInfo == nil) {
-		warehouseInfo = [[UIView alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, (SMALL_LABEL_HEIGHT * 4.0))];
-		warehouseInfo.backgroundColor = AVAILABLE_COLOR;
-		[warehouseInfo.layer setBorderWidth:1.0f];
-		[warehouseInfo.layer setBorderColor:[[UIColor blackColor] CGColor]];
-		[roundedView addSubview:warehouseInfo];
-		[warehouseInfo release];
-		
-		CGFloat wy = (SMALL_LABEL_HEIGHT / 2.0f);
-		
-		if (warehouseIdLabel == nil) {
-			warehouseIdLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, wy, ROUND_VIEW_WIDTH, SMALL_LABEL_HEIGHT)];
-			warehouseIdLabel.backgroundColor = [UIColor clearColor];
-			warehouseIdLabel.textColor = [UIColor blackColor];
-			warehouseIdLabel.textAlignment = UITextAlignmentCenter;
-			warehouseIdLabel.font = [UIFont boldSystemFontOfSize:SMALL_FONT_SIZE];
-			warehouseIdLabel.text = @"NA";
-			[warehouseInfo addSubview:warehouseIdLabel];
-			[warehouseIdLabel release];
-		}
-		
-		wy += SMALL_LABEL_HEIGHT;
-		
-		if (warehouseAvailableLabel == nil) {
-			warehouseAvailableLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, wy, ROUND_VIEW_WIDTH, SMALL_LABEL_HEIGHT)];
-			warehouseAvailableLabel.backgroundColor = [UIColor clearColor];
-			warehouseAvailableLabel.textColor = [UIColor blackColor];
-			warehouseAvailableLabel.textAlignment = UITextAlignmentCenter;
-			warehouseAvailableLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
-			warehouseAvailableLabel.text = @"NA";
-			[warehouseInfo addSubview:warehouseAvailableLabel];
-			[warehouseAvailableLabel release];
-		}
-		
-		wy += SMALL_LABEL_HEIGHT;
-		
-		if (warehouseOnHandLabel == nil) {
-			warehouseOnHandLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, wy, ROUND_VIEW_WIDTH, SMALL_LABEL_HEIGHT)];
-			warehouseOnHandLabel.backgroundColor = [UIColor clearColor];
-			warehouseOnHandLabel.textColor = [UIColor blackColor];
-			warehouseOnHandLabel.textAlignment = UITextAlignmentCenter;
-			warehouseOnHandLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
-			warehouseOnHandLabel.text = @"NA";
-			[warehouseInfo addSubview:warehouseOnHandLabel];
-			[warehouseOnHandLabel release];
-		}
+	if (storeInfoView == nil) {
+		storeInfoView = [[AvailabilityView alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, AVAILABILITY_VIEW_HEIGHT)];
+		[roundedView addSubview:storeInfoView];
+		[storeInfoView release];
 	}
 	
-	cy += (SMALL_LABEL_HEIGHT * 4.0) + 15.0f;
+	cy += AVAILABILITY_VIEW_HEIGHT;
+
+	if (dc1InfoView == nil) {
+		dc1InfoView = [[AvailabilityView alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, AVAILABILITY_VIEW_HEIGHT)];
+		[roundedView addSubview:dc1InfoView];
+		[dc1InfoView release];
+	}
+	
+	cy += AVAILABILITY_VIEW_HEIGHT;
+
+	if (dc2InfoView == nil) {
+		dc2InfoView = [[AvailabilityView alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, AVAILABILITY_VIEW_HEIGHT)];
+		[roundedView addSubview:dc2InfoView];
+		[dc2InfoView release];
+	}
+	
+	cy += AVAILABILITY_VIEW_HEIGHT;
+	
+	if (dc3InfoView == nil) {
+		dc3InfoView = [[AvailabilityView alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, AVAILABILITY_VIEW_HEIGHT)];
+		[roundedView addSubview:dc3InfoView];
+		[dc3InfoView release];
+	}
+	
+	cy += AVAILABILITY_VIEW_HEIGHT + 15.0f;
 	
 	if (addToCartButton == nil) {
-		addToCartButton = [[MOGlassButton alloc] initWithFrame:CGRectMake(26.0f, cy, 80.0f, 80.0f)];
+		addToCartButton = [[MOGlassButton alloc] initWithFrame:CGRectMake(46.0f, cy, 80.0f, 80.0f)];
 		[addToCartButton setupAsBlackButton];
 		addToCartButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
 		addToCartButton.titleLabel.textAlignment = UITextAlignmentCenter;
@@ -259,7 +195,7 @@
 	}
 	
 	if (exitButton == nil) {
-		exitButton = [[MOGlassButton alloc] initWithFrame:CGRectMake(134.0f, cy, 80.0f, 80.0f)];
+		exitButton = [[MOGlassButton alloc] initWithFrame:CGRectMake(154.0f, cy, 80.0f, 80.0f)];
 		[exitButton setupAsBlackButton];
 		exitButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
 		exitButton.titleLabel.textAlignment = UITextAlignmentCenter;
@@ -270,7 +206,7 @@
 	}
 	
 	if (addQuantityView == nil) {
-		addQuantityView = [[GradientView alloc] initWithFrame:CGRectMake(26.0f, cy, 188.0f, 80.0f)];
+		addQuantityView = [[GradientView alloc] initWithFrame:CGRectMake(46.0f, cy, 188.0f, 80.0f)];
 		[addQuantityView.layer setCornerRadius:5.0f];
 		[addQuantityView.layer setMasksToBounds:YES];
 		[addQuantityView.layer setBorderWidth:1.0f];
@@ -311,24 +247,31 @@
 		descriptionLabel.text = pi.description;
 		priceLabel.text = [NSString stringWithFormat:@"%@ / %@", [priceFormatter stringFromNumber:pi.retailPrice], pi.primaryUnitOfMeasure];
 		
-		storeIdLabel.text = [pi.storeId stringValue];
-		storeAvailableLabel.text = [NSString stringWithFormat:@"%@ available", [availableFormatter stringFromNumber:pi.storeAvailability]];
-		storeOnHandLabel.text = [NSString stringWithFormat:@"%@ on hand", @"0.00"];
-		// If availablity is less than zero. Unfortunately that is the way you have to do it with NSDecimailNumbers
-		if ([pi.storeAvailability compare:[NSDecimalNumber zero]] == NSOrderedAscending) {
-			storeInfo.backgroundColor = UNAVAILABLE_COLOR;
+		[storeInfoView setStoreAvailabilityAtStoreId:pi.storeId withAvailable:pi.storeAvailability andOnHand:pi.storeOnHand];
+		
+		if ([pi.distributionCenterList count] > 0) {
+			DistributionCenter *dc1 = (DistributionCenter *)[pi.distributionCenterList objectAtIndex:0];
+			[dc1InfoView setDistributionCenter:dc1];
 		}
-		warehouseIdLabel.text = @"000";
-		warehouseAvailableLabel.text = [NSString stringWithFormat:@"%@ available", [availableFormatter stringFromNumber:pi.distributionCenterAvailability]];
-		warehouseOnHandLabel.text = [NSString stringWithFormat:@"%@ on hand", @"0.00"];
-		if ([pi.distributionCenterAvailability compare:[NSDecimalNumber zero]] == NSOrderedAscending) {
-			warehouseInfo.backgroundColor = UNAVAILABLE_COLOR;
+		
+		if ([pi.distributionCenterList count] > 1) {
+			DistributionCenter *dc2 = (DistributionCenter *)[pi.distributionCenterList objectAtIndex:1];
+			[dc2InfoView setDistributionCenter:dc2];
 		}
+		
+		if ([pi.distributionCenterList count] > 2) {
+			DistributionCenter *dc3 = (DistributionCenter *)[pi.distributionCenterList objectAtIndex:2];
+			[dc3InfoView setDistributionCenter:dc3];
+		}
+
 	}
 }
 
 - (void)handleExitButton:(id)sender {
 	if (viewDelegate != nil && [viewDelegate respondsToSelector:@selector(cancelAddItem:)]) {
+		// This was set up in loadView but if we don't choose add to cart it is not released
+		// when added to the main view, so need to make sure to do it here.
+		[addQuantityView release];
 		[viewDelegate cancelAddItem:self];
 	}
 }
