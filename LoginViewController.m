@@ -10,7 +10,6 @@
 #import "DrawUtils.h"
 #import "LayoutUtils.h"
 #import "AlertUtils.h"
-#import "PlaceholderView.h"
 #import "MainMenuViewController.h"
 
 #pragma mark -
@@ -90,10 +89,17 @@
 #pragma mark UIViewController overrides
 - (void)loadView
 {
-	UIView *bgView = [[UIView alloc] initWithFrame:CGRectZero];
-	bgView.backgroundColor = [UIColor blackColor];
+	UIView *bgView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
 	[self setView:bgView];
 	[bgView release];
+	
+	UIImage *img = [UIImage imageNamed:@"iPosLogin"];
+	UIImageView *iv = [[UIImageView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
+	iv.contentMode = UIViewContentModeBottomLeft;
+	iv.clipsToBounds = YES;
+	iv.image = img;
+	[self.view addSubview:iv];
+	[iv release];
 	
 	loginTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
 	loginTableView.backgroundColor = [UIColor clearColor];
@@ -144,25 +150,10 @@
 	}
 	
 	if (loginTableView.tableHeaderView == nil) {
-		PlaceHolderView *tableHeader = [[PlaceHolderView alloc] initWithFrame:CGRectMake(0, 0, viewBounds.size.width, floorf(viewBounds.size.height / 2.0f))];
-		tableHeader.placeHolderLabel.text = @"iPOS Logo";
-		tableHeader.placeHolderLabel.backgroundColor = [UIColor blackColor];
-		tableHeader.placeHolderLabel.textColor = [UIColor whiteColor];
-		tableHeader.bgColor = [UIColor blackColor];
-		//tableHeader.strokeColor = [UIColor whiteColor];
+		UIView *tableHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewBounds.size.width, floorf(viewBounds.size.height / 1.5f))];
+		tableHeader.backgroundColor = [UIColor clearColor];
 		[loginTableView setTableHeaderView: tableHeader];
 		[tableHeader release];
-	}
-	
-	if (loginTableView.tableFooterView == nil) {
-		PlaceHolderView *tableFooter = [[PlaceHolderView alloc] initWithFrame:CGRectMake(0, 0, viewBounds.size.width, 80.0f)];
-		tableFooter.placeHolderLabel.text = @"TileShop Logo";
-		tableFooter.placeHolderLabel.backgroundColor = [UIColor blackColor];
-		tableFooter.placeHolderLabel.textColor = [UIColor whiteColor];
-		tableFooter.bgColor = [UIColor blackColor];
-		//tableHeader.strokeColor = [UIColor whiteColor];
-		[loginTableView setTableFooterView: tableFooter];
-		[tableFooter release];
 	}
 	
 	// Do this at the end

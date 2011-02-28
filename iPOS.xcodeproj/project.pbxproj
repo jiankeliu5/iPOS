@@ -13,6 +13,14 @@
 		B40FC0F21311928600D7D79D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
 		B4300A77131AC317000210C7 /* AvailabilityView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4300A76131AC317000210C7 /* AvailabilityView.m */; };
 		B4300AA0131AEF8A000210C7 /* AvailabilityView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4300A76131AC317000210C7 /* AvailabilityView.m */; };
+		B4300B31131B4300000210C7 /* iPosIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B2F131B4300000210C7 /* iPosIcon.png */; };
+		B4300B32131B4300000210C7 /* iPosIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B30131B4300000210C7 /* iPosIcon@2x.png */; };
+		B4300B35131B4312000210C7 /* iPosLogin.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B33131B4312000210C7 /* iPosLogin.png */; };
+		B4300B36131B4312000210C7 /* iPosLogin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B34131B4312000210C7 /* iPosLogin@2x.png */; };
+		B4300B9D131B486C000210C7 /* iPosLogin.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B33131B4312000210C7 /* iPosLogin.png */; };
+		B4300B9E131B486C000210C7 /* iPosLogin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B34131B4312000210C7 /* iPosLogin@2x.png */; };
+		B4300B9F131B486C000210C7 /* iPosIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B2F131B4300000210C7 /* iPosIcon.png */; };
+		B4300BA0131B486C000210C7 /* iPosIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B30131B4300000210C7 /* iPosIcon@2x.png */; };
 		D6179DF61317DBEE00ACAFDD /* iPOSServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6179DF21317DBEE00ACAFDD /* iPOSServiceMock.m */; };
 		D6179DF71317DBEE00ACAFDD /* InventoryServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6179DF41317DBEE00ACAFDD /* InventoryServiceMock.m */; };
 		D618490513185C200051CEFF /* DistributionCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = D618490313185C200051CEFF /* DistributionCenter.h */; };
@@ -224,6 +232,10 @@
 		B40FC0F11311928600D7D79D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B4300A75131AC317000210C7 /* AvailabilityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvailabilityView.h; sourceTree = "<group>"; };
 		B4300A76131AC317000210C7 /* AvailabilityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvailabilityView.m; sourceTree = "<group>"; };
+		B4300B2F131B4300000210C7 /* iPosIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPosIcon.png; sourceTree = "<group>"; };
+		B4300B30131B4300000210C7 /* iPosIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPosIcon@2x.png"; sourceTree = "<group>"; };
+		B4300B33131B4312000210C7 /* iPosLogin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPosLogin.png; sourceTree = "<group>"; };
+		B4300B34131B4312000210C7 /* iPosLogin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPosLogin@2x.png"; sourceTree = "<group>"; };
 		B47AA7ED12F7DD1000AAD34C /* PlaceHolderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceHolderView.h; sourceTree = "<group>"; };
 		B47AA7EE12F7DD1000AAD34C /* PlaceHolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceHolderView.m; sourceTree = "<group>"; };
 		B47AA7F412F7DD7200AAD34C /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -517,6 +529,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B4300B33131B4312000210C7 /* iPosLogin.png */,
+				B4300B34131B4312000210C7 /* iPosLogin@2x.png */,
+				B4300B2F131B4300000210C7 /* iPosIcon.png */,
+				B4300B30131B4300000210C7 /* iPosIcon@2x.png */,
 				D64B7E1412F9D7EA006AB141 /* UnitTests-Info.plist */,
 				D64B7EB112F9DFA7006AB141 /* AppTests-Info.plist */,
 				8D1107310486CEB800E47090 /* iPOS-Info.plist */,
@@ -1000,6 +1016,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4300B31131B4300000210C7 /* iPosIcon.png in Resources */,
+				B4300B32131B4300000210C7 /* iPosIcon@2x.png in Resources */,
+				B4300B35131B4312000210C7 /* iPosLogin.png in Resources */,
+				B4300B36131B4312000210C7 /* iPosLogin@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1021,6 +1041,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4300B9D131B486C000210C7 /* iPosLogin.png in Resources */,
+				B4300B9E131B486C000210C7 /* iPosLogin@2x.png in Resources */,
+				B4300B9F131B486C000210C7 /* iPosIcon.png in Resources */,
+				B4300BA0131B486C000210C7 /* iPosIcon@2x.png in Resources */,
 				D697D1981312DCD0002C3EF6 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

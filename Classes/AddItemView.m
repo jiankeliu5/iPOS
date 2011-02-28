@@ -189,7 +189,8 @@
 		addToCartButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
 		addToCartButton.titleLabel.textAlignment = UITextAlignmentCenter;
 		[addToCartButton setTitle:@"ADD\nTO\nCART" forState:UIControlStateNormal];
-		[addToCartButton addTarget:self action:@selector(handleAddToCartButton:) forControlEvents:UIControlEventTouchUpInside];
+		// TODO Re-enable when we get the order cart functionality in
+		// [addToCartButton addTarget:self action:@selector(handleAddToCartButton:) forControlEvents:UIControlEventTouchUpInside];
 		[roundedView addSubview:addToCartButton];
 		[addToCartButton release];
 	}
