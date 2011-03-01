@@ -75,7 +75,7 @@
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     
     // We will be posting the login as an XML Request
-    NSString *loginXML = [NSString stringWithFormat:@"<Login>\n<UserName>%@</UserName>\n<Password>%@</Password>\n<DeviceID>%@</DeviceID>\n</Login>", employeeNumber, password, sessionInfo.deviceId];
+    NSString *loginXML = [NSString stringWithFormat:@"<Login><UserName>%@</UserName><Password>%@</Password><DeviceID>%@</DeviceID></Login>", employeeNumber, password, sessionInfo.deviceId];
     [request appendPostData:[loginXML dataUsingEncoding:NSUTF8StringEncoding]];
 
     [request startSynchronous];
