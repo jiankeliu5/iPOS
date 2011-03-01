@@ -68,6 +68,10 @@
 #pragma mark -
 #pragma mark Inventory Management
 -(ProductItem *) lookupProductItem: (NSString *) itemSku withSession:  (SessionInfo *) sessionInfo {
+    if (sessionInfo == nil) {
+        return nil;
+    }
+    
     ProductItem *item = nil;
     
     // Make Synchronous HTTP request
@@ -75,6 +79,8 @@
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     
     [request setValidatesSecureCertificate:NO];
+    [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
+    
     [request startSynchronous];
     
     NSError *error = [request error];
@@ -208,7 +214,7 @@
             for (CXMLElement *node in [element elementsForName:@"DC"]) {
                 dc = [[[DistributionCenter alloc] init] autorelease];
                 
-                element = [[node elementsForName:@"dcId"] lastObject];
+                element = [[node elementsForName:@"dcID"] lastObject];
                 dc.dcId = [NSNumber numberWithInt:[[element stringValue] intValue]];
                 
                 element = [[node elementsForName:@"availability"] lastObject];
@@ -245,11 +251,17 @@
 }
 
 -(BOOL) isProductItemAvailable:  (NSString *) itemId forQuantity: (NSDecimal *) quantity withSession:  (SessionInfo *) sessionInfo {
+    if (sessionInfo == nil) {
+        return false;
+    }
+    
     // Make Synchronous HTTP request
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/availability/%@/%@/%@", baseUrl, posInventoryMgmtUri,sessionInfo.storeId, itemId, quantity]];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     
     [request setValidatesSecureCertificate:NO];
+    [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
+    
     [request startSynchronous];
     
     NSError *error = [request error];

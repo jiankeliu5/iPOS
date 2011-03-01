@@ -188,7 +188,8 @@
 		NSString *onHandText = [NSString stringWithFormat:@"%@ on hand", [availableFormatter stringFromNumber:self.distributionCenter.onHand]];
 		locationOnHandLabel.text = onHandText;
 		
-		if ([self.distributionCenter.availability compare:[NSDecimalNumber zero]] == NSOrderedSame) {
+		if ([self.distributionCenter.availability compare:[NSDecimalNumber zero]] == NSOrderedSame
+                || [self.distributionCenter.availability compare:[NSDecimalNumber zero]] == NSOrderedAscending) {
 			if (self.distributionCenter.etaDateAsString != nil) {
 				NSString *etaText = [NSString stringWithFormat:@" - ETA %@", self.distributionCenter.etaDateAsString];
 				CGSize etaSize = [etaText sizeWithFont: [UIFont boldSystemFontOfSize: SMALL_FONT_SIZE]];

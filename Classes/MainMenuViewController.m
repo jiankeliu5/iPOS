@@ -164,7 +164,7 @@
 	
 	lookupItemField.delegate = self;
 	//lookupOrderField.delegate = self;
-	[customerButton addTarget:self action:@selector(customerPressed) forControlEvents:UIControlEventTouchUpInside];
+	[customerButton addTarget:self action:@selector(customerPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     // Add itself as a delegate
     linea = [Linea sharedDevice];
@@ -232,6 +232,7 @@
 #pragma mark UIButton callbacks
 
 - (void)customerPressed:(id)sender {
+    [AlertUtils showModalAlertMessage: @"Functionality Not Yet Available."];
 }
 
 - (void)addKeyboardListeners {

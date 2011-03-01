@@ -75,7 +75,7 @@
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     
     // We will be posting the login as an XML Request
-    NSString *loginXML = [NSString stringWithFormat:@"<Login><UserName>%@</UserName><Password>%@</Password><DeviceID>%@</DeviceID></Login>", employeeNumber, password, sessionInfo.deviceId];
+    NSString *loginXML = [NSString stringWithFormat:@"<Login>\n<UserName>%@</UserName>\n<Password>%@</Password>\n<DeviceID>%@</DeviceID>\n</Login>", employeeNumber, password, sessionInfo.deviceId];
     [request appendPostData:[loginXML dataUsingEncoding:NSUTF8StringEncoding]];
 
     [request startSynchronous];
@@ -129,6 +129,10 @@
 
 -(BOOL) verifySession: (SessionInfo *) sessionInfo withPassword: (NSString *) password {
 
+    if (sessionInfo == nil) {
+        return false;
+    }
+
     if (password && [password isEqualToString:sessionInfo.passwordForVerification]) {
         return YES;
     }
@@ -137,11 +141,17 @@
 }
 
 -(BOOL) logout: (SessionInfo *) sessionInfo {
+    if (sessionInfo == nil) {
+        return true;
+    }
+    
     // Make Synchronous HTTP request
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/logout", baseUrl, posSessionMgmtUri]];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     
     [request setValidatesSecureCertificate:NO];
+    [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
+    
     [request startSynchronous];
     
     NSError *error = [request error];
