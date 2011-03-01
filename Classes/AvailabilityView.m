@@ -190,7 +190,7 @@
 		
 		if ([self.distributionCenter.availability compare:[NSDecimalNumber zero]] == NSOrderedSame
                 || [self.distributionCenter.availability compare:[NSDecimalNumber zero]] == NSOrderedAscending) {
-			if (self.distributionCenter.etaDateAsString != nil) {
+			if (self.distributionCenter.etaDateAsString != nil && [self.distributionCenter.etaDateAsString length] > 0) {
 				NSString *etaText = [NSString stringWithFormat:@" - ETA %@", self.distributionCenter.etaDateAsString];
 				CGSize etaSize = [etaText sizeWithFont: [UIFont boldSystemFontOfSize: SMALL_FONT_SIZE]];
 				CGSize onHandSize = [onHandText sizeWithFont: [UIFont systemFontOfSize:SMALL_FONT_SIZE]];
