@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ "$1" = "-tag" ]
+then
+    agvtool -usesvn tag -baseurlfortag https://opi.svn.cvsdude.com/tileshop/iPOS/tags 
+fi
+
+#Always bump the Build Number
+agvtool bump -all
+
+if [ $2 ]
+then
+    agvtool new-marketing-version $2
+fi
