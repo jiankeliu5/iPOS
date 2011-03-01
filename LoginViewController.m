@@ -247,7 +247,7 @@
 			MainMenuViewController *mainMenuViewController = [[MainMenuViewController alloc] init];
 			[[self navigationController] pushViewController:mainMenuViewController animated:TRUE];
             [mainMenuViewController release];
-            
+			
 			// This is where we would connect to the linea-pro device
             [linea connect];
 
@@ -258,7 +258,8 @@
 		
 		[self setEmpId:nil];
 		[self setPassword:nil];
-
+		[loginTableView reloadData];
+		
 	}
 }
 
