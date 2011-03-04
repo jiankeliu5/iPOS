@@ -22,9 +22,19 @@
 }
 
 #if USE_APPLICATION_UNIT_TEST
+
+#pragma mark -
+#pragma mark Session Mgmt Service Tests
 - (void) testPosFacadeLogin;
 - (void) testPosFacadeLogout;
 
+#pragma mark -
+#pragma mark Customer Management Services Tests
+-(void) testLookupCustomerFound;
+-(void) testLookupCustomerNotFound;
+
+#pragma mark -
+#pragma mark Inventory Service Tests
 - (void) testPosFacadeLookupProductItem;
 #endif
 

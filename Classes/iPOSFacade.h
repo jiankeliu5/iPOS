@@ -33,13 +33,12 @@
 - (BOOL) logout;
 
 #pragma mark iPOS Customer Management
--(Customer *) lookupCustomerByEmail: (NSString *) emailAddress;
 -(Customer *) lookupCustomerByPhone: (NSString *) phoneNumber;
--(Customer *) newCustomer: (Customer *) customer;
+-(void) newCustomer: (Customer *) customer;
 -(void) updateCustomer: (Customer *) customer;
 
 #pragma mark iPOS Order Management
--(Order *) newOrder;
+-(void) newOrder;
 -(void) updateOrder: (Order *) order;
 -(BOOL) allowDiscountedPrice: (NSDecimal *) discountPrice forQuantity: (NSDecimal *) quantity;
 -(BOOL) allowDiscountedPrice: (NSDecimal *) discountPrice forQuantity: (NSDecimal *) quantity managerApproval: (ManagerApprovalInfo *) managerApproval;

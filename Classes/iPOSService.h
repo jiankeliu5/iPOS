@@ -21,14 +21,13 @@
 
 #pragma mark iPOS Customer Management
 @required
--(void) lookupCustomerByEmail: (NSString *) emailAddress withSession: (SessionInfo *) sessionInfo;
--(void) lookupCustomerByPhone: (NSString *) phoneNumber withSession: (SessionInfo *) sessionInfo;
--(Customer *) newCustomer: (Customer *) customer withSession: (SessionInfo *) sessionInfo;
+-(Customer *) lookupCustomerByPhone: (NSString *) phoneNumber withSession: (SessionInfo *) sessionInfo;
+-(void) newCustomer: (Customer *) customer withSession: (SessionInfo *) sessionInfo;
 -(void) updateCustomer: (Customer *) customer withSession: (SessionInfo *) sessionInfo;
 
 #pragma mark iPOS Order Management
 @required
--(Order *) newOrder: (Order *) order withSession: (SessionInfo *) sessionInfo;;
+-(void) newOrder: (Order *) order withSession: (SessionInfo *) sessionInfo;;
 -(BOOL) allowDiscountedPrice: (NSDecimal *) discountPrice forQuantity: (NSDecimal *) quantity withSession: (SessionInfo *) sessionInfo;
 -(BOOL) allowDiscountedPrice: (NSDecimal *) discountPrice forQuantity: (NSDecimal *) quantity managerApproval: (ManagerApprovalInfo *) managerApproval withSession: (SessionInfo *) sessionInfo; 
 

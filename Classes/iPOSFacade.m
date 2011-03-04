@@ -74,6 +74,20 @@ static iPOSFacade *facade = nil;
 }
 
 #pragma mark -
+#pragma mark Customer Management
+-(Customer *) lookupCustomerByPhone:(NSString *)phoneNumber {
+    return [self.posService lookupCustomerByPhone:phoneNumber withSession:self.sessionInfo];
+}
+
+-(void) newCustomer:(Customer *)customer {
+    [self.posService newCustomer:customer withSession:self.sessionInfo];
+}
+
+-(void) updateCustomer:(Customer *)customer {
+    [self.posService updateCustomer:customer withSession:self.sessionInfo];
+}
+
+#pragma mark -
 #pragma mark Inventory Management
 -(ProductItem *) lookupProductItem:(NSString *) itemSku {
     return [self.inventoryService lookupProductItem:itemSku withSession:self.sessionInfo];

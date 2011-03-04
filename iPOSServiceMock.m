@@ -19,6 +19,8 @@
     [super dealloc];
 }
 
+#pragma mark -
+#pragma mark Session Mgmt APIs
 -(SessionInfo *) login:(NSString *)employeeNumber withPassword:(NSString *)password {
     SessionInfo *session = [[[SessionInfo alloc] init] autorelease];
     
@@ -42,5 +44,9 @@
     
     return NO;
 }
+
+#pragma mark -
+#pragma mark Customer Mgmt APIs
+
 
 @end

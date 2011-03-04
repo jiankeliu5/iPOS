@@ -50,8 +50,8 @@
     ProductItem *productItem = [facade lookupProductItem:@"440915"];
     
     STAssertEquals([productItem.itemId intValue], 283186, @"I expected this to be equal to 283186");
-    STAssertEquals([productItem.storeId intValue], 1200, @"I expected this to be equal to 283186");
-    STAssertEquals(productItem.description, @"Driftwood Hon. Martel", @"I expected this to be equal to 283186");
+    STAssertEquals([productItem.store.storeId intValue], 1200, @"I expected this to be equal to 1200");
+    STAssertEquals(productItem.description, @"Driftwood Hon. Martel", @"I expected this to be equal");
     STAssertTrue([productItem.distributionCenterList count] == 2, @"Expected 2 Distribution Centers");
     STAssertEquals([((DistributionCenter *) [productItem.distributionCenterList objectAtIndex:0]).dcId intValue], 801, @"Expected DC Id to be 801");
     STAssertEquals([((DistributionCenter *) [productItem.distributionCenterList objectAtIndex:1]).dcId intValue], 806, @"Expected DC Id to be 806");
