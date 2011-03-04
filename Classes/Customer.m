@@ -11,7 +11,7 @@
 
 @implementation Customer
 
-@synthesize firstName, lastName, phoneNumber, emailAddress, address;
+@synthesize customerId, firstName, lastName, phoneNumber, emailAddress, address, errorList;
 
 #pragma mark Initializer and Memory Mgmt
 -(id) init {
@@ -31,6 +31,14 @@
     [phoneNumber release];
     [emailAddress release];
     [address release];
+    
+    if (errorList != nil) {
+        [errorList release];
+    }
+    
+    if (customerId != nil) {
+        [customerId release];
+    }
     [super dealloc];
 }
 

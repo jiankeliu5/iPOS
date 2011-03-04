@@ -24,9 +24,7 @@
     [available release];
     [onHand release];
     [etaDateAsString release];
-    
-    [item release];
-    
+        
     [super dealloc];
 }
 @end

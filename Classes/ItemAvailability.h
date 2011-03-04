@@ -22,6 +22,6 @@
 @property (nonatomic, retain) NSDecimalNumber *onHand;
 @property (nonatomic, retain) NSString *etaDateAsString;
 
-@property (nonatomic, retain) ProductItem *item;
+@property (nonatomic,assign) ProductItem *item;
 
 @end

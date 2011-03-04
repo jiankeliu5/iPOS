@@ -7,7 +7,7 @@
 //
 
 #import "iPOSServiceMock.h"
-
+#import "Error.h";
 
 @implementation iPOSServiceMock
 
@@ -47,6 +47,68 @@
 
 #pragma mark -
 #pragma mark Customer Mgmt APIs
+-(Customer *) lookupCustomerByPhone:(NSString *)phoneNumber withSession:(SessionInfo *)sessionInfo {
+    if ([phoneNumber isEqualToString:@"612-807-6120"]) {
+        Customer *customer = [[[Customer alloc] init] autorelease];
+        
+        customer.customerId = [NSNumber numberWithInt:1414];
+        customer.firstName = @"Torey";
+        customer.lastName = @"Lomenda";
+        customer.phoneNumber = @"612-807-6120";
+        customer.emailAddress = @"tlomenda@email.blackhole.com";
+        customer.address = [[[Address alloc] init] autorelease];
+        
+        customer.address.line1 = @"1414 Street St.";
+        customer.address.city = @"Plymouth";
+        customer.address.stateProv = @"MN";
+        customer.address.zipPostalCode = @"55555";
+        customer.address.country = @"US";
+        
+        return customer;
+    }
+    
+    return nil;
+}
 
+-(void) newCustomer:(Customer *)customer withSession:(SessionInfo *)sessionInfo {
+    // If a customer has an ID already we would add an error
+    if (customer == nil) {
+        return;
+    } 
+    
+     NSMutableArray *errors = [NSMutableArray arrayWithCapacity:1];
+    if (customer.customerId != nil) {
+        // Attach an error
+        Error *error = [[[Error alloc] init] autorelease];
+        
+        error.errorMsgString = @"Customer is already created.";
+        error.reference = customer;
+        
+        [errors addObject:error];
+        
+    } 
+    
+    if (customer.firstName == nil || customer.lastName == nil || customer.phoneNumber == nil || customer.address == nil || customer.address.zipPostalCode == nil) {
+        // Attach an error
+        Error *error = [[[Error alloc] init] autorelease];
+        
+        error.errorMsgString = @"Missing required data.";
+        error.reference = customer;
+        
+        [errors addObject:error];
+    }
+    
+    
+    
+    if ([errors count] > 0) {
+        customer.errorList = [NSArray arrayWithArray:errors];
+    } else {
+        customer.customerId = [NSNumber numberWithInt:1414];
+    }
+}
+
+-(void) updateCustomer:(Customer *)customer withSession:(SessionInfo *)sessionInfo {
+    // Do nothing
+}
 
 @end

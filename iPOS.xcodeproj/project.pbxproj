@@ -48,6 +48,7 @@
 		D679459C13160D05004B8254 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
 		D683BE0F1321437A008D923F /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = D683BE0D1321437A008D923F /* Store.m */; };
 		D683BE1313214391008D923F /* ItemAvailability.m in Sources */ = {isa = PBXBuildFile; fileRef = D683BE1113214391008D923F /* ItemAvailability.m */; };
+		D683BF4513217652008D923F /* Error.m in Sources */ = {isa = PBXBuildFile; fileRef = D683BF4313217652008D923F /* Error.m */; };
 		D684738413161514001214B3 /* CXMLNode_XPathExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C91302580500B77769 /* CXMLNode_XPathExtensions.m */; };
 		D684738613161515001214B3 /* CXMLNode_PrivateExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C71302580500B77769 /* CXMLNode_PrivateExtensions.m */; };
 		D684738813161517001214B3 /* CXMLNode_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C51302580500B77769 /* CXMLNode_CreationExtensions.m */; };
@@ -300,6 +301,8 @@
 		D683BE0D1321437A008D923F /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
 		D683BE1013214391008D923F /* ItemAvailability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemAvailability.h; sourceTree = "<group>"; };
 		D683BE1113214391008D923F /* ItemAvailability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemAvailability.m; sourceTree = "<group>"; };
+		D683BF4213217652008D923F /* Error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Error.h; sourceTree = "<group>"; };
+		D683BF4313217652008D923F /* Error.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Error.m; sourceTree = "<group>"; };
 		D692BBA212FDFF4C007EC03A /* Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Address.h; sourceTree = "<group>"; };
 		D692BBA312FDFF4C007EC03A /* Address.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Address.m; sourceTree = "<group>"; };
 		D697D1E01312DCD0002C3EF6 /* iPOSDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPOSDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -755,6 +758,8 @@
 				D692BBA312FDFF4C007EC03A /* Address.m */,
 				D61C3C3312FCA535003C3A47 /* Order.h */,
 				D61C3C3412FCA535003C3A47 /* Order.m */,
+				D61C3C6812FCA9C0003C3A47 /* OrderItem.h */,
+				D61C3C6912FCA9C0003C3A47 /* OrderItem.m */,
 				D61C3C3012FCA530003C3A47 /* Customer.h */,
 				D61C3C3112FCA530003C3A47 /* Customer.m */,
 				D61C3C3812FCA55D003C3A47 /* ManagerApprovalInfo.h */,
@@ -763,14 +768,14 @@
 				D61C3C6312FCA97F003C3A47 /* ProductItem.m */,
 				D61C3C6512FCA99E003C3A47 /* PaymentInfo.h */,
 				D61C3C6612FCA99E003C3A47 /* PaymentInfo.m */,
-				D61C3C6812FCA9C0003C3A47 /* OrderItem.h */,
-				D61C3C6912FCA9C0003C3A47 /* OrderItem.m */,
 				D618490313185C200051CEFF /* DistributionCenter.h */,
 				D618490413185C200051CEFF /* DistributionCenter.m */,
 				D683BE0C1321437A008D923F /* Store.h */,
 				D683BE0D1321437A008D923F /* Store.m */,
 				D683BE1013214391008D923F /* ItemAvailability.h */,
 				D683BE1113214391008D923F /* ItemAvailability.m */,
+				D683BF4213217652008D923F /* Error.h */,
+				D683BF4313217652008D923F /* Error.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1191,6 +1196,7 @@
 				D618490613185C200051CEFF /* DistributionCenter.m in Sources */,
 				D683BE0F1321437A008D923F /* Store.m in Sources */,
 				D683BE1313214391008D923F /* ItemAvailability.m in Sources */,
+				D683BF4513217652008D923F /* Error.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

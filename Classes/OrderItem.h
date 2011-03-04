@@ -7,10 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "ProductItem.h"
 
 @interface OrderItem : NSObject {
-
+    NSDecimalNumber *quantity;
+    ProductItem *item;
 }
+
+@property (nonatomic, retain) NSDecimalNumber *quantity;
+@property (nonatomic, retain) ProductItem *item;
+
+-(id) initWithItem: (ProductItem *) productItem AndQuantity: (NSDecimalNumber *) productQuantity;
 
 @end

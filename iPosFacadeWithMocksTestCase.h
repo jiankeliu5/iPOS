@@ -14,11 +14,12 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 #import <UIKit/UIKit.h>
-//#import "application_headers" as required
 
+//#import "application_headers" as required
+#import "iPosFacade.h"
 
 @interface iPosFacadeWithMocksTestCase : SenTestCase {
-
+    @private iPOSFacade *facade;
 }
 
 #if USE_APPLICATION_UNIT_TEST
@@ -32,6 +33,9 @@
 #pragma mark Customer Management Services Tests
 -(void) testLookupCustomerFound;
 -(void) testLookupCustomerNotFound;
+
+-(void) testNewCustomer;
+-(void) testNewCustomerWithError;
 
 #pragma mark -
 #pragma mark Inventory Service Tests

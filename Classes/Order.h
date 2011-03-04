@@ -8,10 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+#import "Customer.h"
+#import "OrderItem.h"
 
 @interface Order : NSObject {
 
-    NSMutableArray *orderItems;
+    @private NSMutableArray *orderItemList;
+    
+    Customer *customer;
+    NSArray *errorList;
 }
 
+@property (nonatomic, retain) Customer *customer;
+@property (nonatomic, retain) NSArray *errorList;
+
+-(void) addItemToOrder: (ProductItem *) item withQuantity: (NSDecimalNumber *) quantity;
+-(void) removeItemFromOrder: (ProductItem *) item;
+-(void) removeAll;
 @end
