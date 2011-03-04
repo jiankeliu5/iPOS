@@ -73,6 +73,7 @@
     }
     
     ProductItem *item = nil;
+    Store *store = nil;
     
     // Make Synchronous HTTP request
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@", baseUrl, posInventoryMgmtUri, sessionInfo.storeId, itemSku]];
@@ -104,9 +105,30 @@
 
 
     if (![[element stringValue] isEqualToString:@"0"]) {
+        ItemAvailability *storeAvailability = [[[ItemAvailability alloc] init] autorelease];
+    
         item = [[[ProductItem alloc] init] autorelease];
+        store = [[[Store alloc] init] autorelease];
         
+        // Build store
+        nodes = [root elementsForName:@"StoreID"];
+        element = [nodes lastObject];
+        store.storeId = [NSNumber numberWithInt:[[element stringValue] intValue]];
+        
+        nodes = [root elementsForName:@"StoreAvailability"];
+        element = [nodes lastObject];
+        storeAvailability.available = [NSDecimalNumber decimalNumberWithString:[element stringValue]]; 
+        
+        nodes = [root elementsForName:@"StoreOnHand"];
+        element = [nodes lastObject];
+        storeAvailability.onHand = [NSDecimalNumber decimalNumberWithString:[element stringValue]]; 
+        
+        storeAvailability.item = item;
+        store.availability = storeAvailability;
+                        
+        // Build the Item Info
         item.itemId = [NSNumber numberWithInt:[[element stringValue] intValue]];
+        item.store = store;
         
         nodes = [root elementsForName:@"BinLocation"];
         element = [nodes lastObject];
@@ -124,7 +146,6 @@
         } else {
             item.defaultToBox = NO;
         }
-        
         
         nodes = [root elementsForName:@"ItemDescription"];
         element = [nodes lastObject];
@@ -174,18 +195,6 @@
         element = [nodes lastObject];
         item.stockingCode = [element stringValue];
         
-        nodes = [root elementsForName:@"StoreAvailability"];
-        element = [nodes lastObject];
-        item.storeAvailability = [NSDecimalNumber decimalNumberWithString:[element stringValue]]; 
-        
-        nodes = [root elementsForName:@"StoreOnHand"];
-        element = [nodes lastObject];
-        item.storeOnHand = [NSDecimalNumber decimalNumberWithString:[element stringValue]]; 
-        
-        nodes = [root elementsForName:@"StoreID"];
-        element = [nodes lastObject];
-        item.storeId = [NSNumber numberWithInt:[[element stringValue] intValue]];
-        
         nodes = [root elementsForName:@"TaxExempt"];
         element = [nodes lastObject];
         if ([[element stringValue] isEqualToString: @"true"]) {
@@ -209,6 +218,7 @@
         // Loop through the nodes of the element and add to array
         if (element) {
             DistributionCenter *dc = nil;
+            ItemAvailability *availability = nil;
             NSMutableArray *dcList = [[[NSMutableArray alloc] init] autorelease];        
             
             for (CXMLElement *node in [element elementsForName:@"DC"]) {
@@ -217,12 +227,6 @@
                 element = [[node elementsForName:@"dcID"] lastObject];
                 dc.dcId = [NSNumber numberWithInt:[[element stringValue] intValue]];
                 
-                element = [[node elementsForName:@"availability"] lastObject];
-                dc.availability = [NSDecimalNumber decimalNumberWithString:[element stringValue]];
-                
-                element = [[node elementsForName:@"onHand"] lastObject];
-                dc.onHand = [NSDecimalNumber decimalNumberWithString:[element stringValue]];
-                
                 element = [[node elementsForName:@"primary"] lastObject];
                 if ([[element stringValue] isEqualToString: @"true"]) {
                     dc.isPrimary = YES;
@@ -230,10 +234,24 @@
                     dc.isPrimary = NO;
                 }
                 
-                element = [[node elementsForName:@"eta"] lastObject];
-                dc.etaDateAsString = [element stringValue];
+                // Build the availability for the DC
+                availability = [[[ItemAvailability alloc] init] autorelease];
+                element = [[node elementsForName:@"availability"] lastObject];
+                availability.available = [NSDecimalNumber decimalNumberWithString:[element stringValue]];
                 
+                element = [[node elementsForName:@"onHand"] lastObject];
+                availability.onHand = [NSDecimalNumber decimalNumberWithString:[element stringValue]];
+                
+                element = [[node elementsForName:@"eta"] lastObject];
+                availability.etaDateAsString = [element stringValue];
+                
+                availability.item = item;
+                dc.availability = availability;
+                                                
                 [dcList addObject: dc];
+                
+                dc = nil;
+                availability = nil;
             }
             
             // Copy to the item sorted with primary first

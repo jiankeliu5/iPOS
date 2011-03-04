@@ -1,17 +1,17 @@
 //
-//  DistributionCenter.m
+//  Store.m
 //  iPOS
 //
-//  Created by Torey Lomenda on 2/25/11.
+//  Created by Torey Lomenda on 3/4/11.
 //  Copyright 2011 Object Partners Inc. All rights reserved.
 //
 
-#import "DistributionCenter.h"
+#import "Store.h"
 
 
-@implementation DistributionCenter
+@implementation Store
 
-@synthesize dcId, availability, isPrimary;
+@synthesize storeId, availability;
 
 #pragma mark Constructor/Deconstructor
 -(id) init {
@@ -21,10 +21,9 @@
 }
 
 -(void) dealloc {
-    [dcId release];
+    [storeId release];
     [availability release];
     
     [super dealloc];
 }
-
 @end

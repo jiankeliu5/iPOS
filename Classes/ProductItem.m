@@ -11,11 +11,11 @@
 
 @implementation ProductItem
 
-@synthesize itemId, storeId, sku, description, vendorName, statusCode, type, typeId;
-@synthesize binLocation, stockingCode, storeAvailability, storeOnHand;
+@synthesize itemId, sku, description, vendorName, statusCode, type, typeId;
+@synthesize binLocation, stockingCode;
 @synthesize defaultToBox, piecesPerBox, primaryUnitOfMeasure, secondaryUnitOfMeasure, conversion;
 @synthesize priceGroupId, retailPrice, standardCost, taxRate, taxExempt;
-@synthesize distributionCenterList;
+@synthesize store, distributionCenterList;
 
 #pragma mark Constuctor/Deconstructor
 -(id) init {
@@ -26,7 +26,6 @@
 
 -(void) dealloc {
     [itemId release];
-    [storeId release];
     [sku release];
     [description release];
     [vendorName release];
@@ -35,10 +34,7 @@
     [typeId release];
     
     [binLocation release];
-    [stockingCode release];
-    [storeAvailability release];
-    [storeOnHand release];
-    
+    [stockingCode release];    
     [piecesPerBox release];
     [primaryUnitOfMeasure release];
     [secondaryUnitOfMeasure release];
@@ -48,6 +44,9 @@
     [retailPrice release];
     [standardCost release];
     [taxRate release];
+    
+    [store release];
+    [distributionCenterList release];
     
     [super dealloc];
 }

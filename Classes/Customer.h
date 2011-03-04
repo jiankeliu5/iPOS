@@ -16,7 +16,7 @@
     NSString *phoneNumber;
     NSString *emailAddress;
     
-     Address *address; 
+    Address *address; 
 }
 
 @property (nonatomic, retain) NSString *firstName;

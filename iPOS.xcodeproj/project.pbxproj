@@ -22,7 +22,6 @@
 		B4300BA0131B486C000210C7 /* iPosIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B30131B4300000210C7 /* iPosIcon@2x.png */; };
 		D6179DF61317DBEE00ACAFDD /* iPOSServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6179DF21317DBEE00ACAFDD /* iPOSServiceMock.m */; };
 		D6179DF71317DBEE00ACAFDD /* InventoryServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6179DF41317DBEE00ACAFDD /* InventoryServiceMock.m */; };
-		D618490513185C200051CEFF /* DistributionCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = D618490313185C200051CEFF /* DistributionCenter.h */; };
 		D618490613185C200051CEFF /* DistributionCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = D618490413185C200051CEFF /* DistributionCenter.m */; };
 		D64E5AE8130262B0002EAD70 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 		D64E5B8813026566002EAD70 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
@@ -47,6 +46,8 @@
 		D679459A13160D05004B8254 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FE1302586800B77769 /* MobileCoreServices.framework */; };
 		D679459B13160D05004B8254 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
 		D679459C13160D05004B8254 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
+		D683BE0F1321437A008D923F /* Store.m in Sources */ = {isa = PBXBuildFile; fileRef = D683BE0D1321437A008D923F /* Store.m */; };
+		D683BE1313214391008D923F /* ItemAvailability.m in Sources */ = {isa = PBXBuildFile; fileRef = D683BE1113214391008D923F /* ItemAvailability.m */; };
 		D684738413161514001214B3 /* CXMLNode_XPathExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C91302580500B77769 /* CXMLNode_XPathExtensions.m */; };
 		D684738613161515001214B3 /* CXMLNode_PrivateExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C71302580500B77769 /* CXMLNode_PrivateExtensions.m */; };
 		D684738813161517001214B3 /* CXMLNode_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07C51302580500B77769 /* CXMLNode_CreationExtensions.m */; };
@@ -295,6 +296,10 @@
 		D65FD4B91302303A00F4C19D /* BarcodeScannerCardReaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarcodeScannerCardReaderDelegate.h; sourceTree = "<group>"; };
 		D65FD4BA1302303A00F4C19D /* BarcodeScannerCardReaderDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarcodeScannerCardReaderDelegate.m; sourceTree = "<group>"; };
 		D679438C131607A8004B8254 /* AppTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D683BE0C1321437A008D923F /* Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Store.h; sourceTree = "<group>"; };
+		D683BE0D1321437A008D923F /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
+		D683BE1013214391008D923F /* ItemAvailability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemAvailability.h; sourceTree = "<group>"; };
+		D683BE1113214391008D923F /* ItemAvailability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemAvailability.m; sourceTree = "<group>"; };
 		D692BBA212FDFF4C007EC03A /* Address.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Address.h; sourceTree = "<group>"; };
 		D692BBA312FDFF4C007EC03A /* Address.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Address.m; sourceTree = "<group>"; };
 		D697D1E01312DCD0002C3EF6 /* iPOSDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPOSDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -762,6 +767,10 @@
 				D61C3C6912FCA9C0003C3A47 /* OrderItem.m */,
 				D618490313185C200051CEFF /* DistributionCenter.h */,
 				D618490413185C200051CEFF /* DistributionCenter.m */,
+				D683BE0C1321437A008D923F /* Store.h */,
+				D683BE0D1321437A008D923F /* Store.m */,
+				D683BE1013214391008D923F /* ItemAvailability.h */,
+				D683BE1113214391008D923F /* ItemAvailability.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -859,7 +868,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D618490513185C200051CEFF /* DistributionCenter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1181,6 +1189,8 @@
 				D684739A13161528001214B3 /* CXHTMLDocument.m in Sources */,
 				D684739C1316152A001214B3 /* CTidy.m in Sources */,
 				D618490613185C200051CEFF /* DistributionCenter.m in Sources */,
+				D683BE0F1321437A008D923F /* Store.m in Sources */,
+				D683BE1313214391008D923F /* ItemAvailability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

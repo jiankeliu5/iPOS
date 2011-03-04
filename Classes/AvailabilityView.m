@@ -108,10 +108,10 @@
 }
 
 // We do a setNeedsDisplay here because we set them all in one go.
-- (void) setStoreAvailabilityAtStoreId:(NSNumber *)sId withAvailable:(NSDecimalNumber *)sAvail andOnHand:(NSDecimalNumber *)sOnHand {
+- (void) setStoreAvailabilityAtStoreId:(NSNumber *)sId withAvailable:(ItemAvailability *)sAvail {
 	[self setStoreId:sId];
-	[self setStoreAvailability:sAvail];
-	[self setStoreOnHand:sOnHand];
+	[self setStoreAvailability:sAvail.available];
+	[self setStoreOnHand:sAvail.onHand];
 	[self setNeedsDisplay];
 }
 											
@@ -184,15 +184,15 @@
 			[idText appendString:@"*"];
 		}
 		locationIdLabel.text = idText;
-		locationAvailableLabel.text = [NSString stringWithFormat:@"%@ available", [availableFormatter stringFromNumber:self.distributionCenter.availability]];
-		NSString *onHandText = [NSString stringWithFormat:@"%@ on hand", [availableFormatter stringFromNumber:self.distributionCenter.onHand]];
+		locationAvailableLabel.text = [NSString stringWithFormat:@"%@ available", [availableFormatter stringFromNumber:self.distributionCenter.availability.available]];
+		NSString *onHandText = [NSString stringWithFormat:@"%@ on hand", [availableFormatter stringFromNumber:self.distributionCenter.availability.onHand]];
 		locationOnHandLabel.text = onHandText;
 		
-		if ([self.distributionCenter.availability compare:[NSDecimalNumber zero]] == NSOrderedSame
-                || [self.distributionCenter.availability compare:[NSDecimalNumber zero]] == NSOrderedAscending) {
-			if (self.distributionCenter.etaDateAsString != nil && 
-				    [[self.distributionCenter.etaDateAsString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length] > 0) {
-				NSString *etaText = [NSString stringWithFormat:@" - ETA %@", self.distributionCenter.etaDateAsString];
+		if ([self.distributionCenter.availability.available compare:[NSDecimalNumber zero]] == NSOrderedSame
+                || [self.distributionCenter.availability.available compare:[NSDecimalNumber zero]] == NSOrderedAscending) {
+			if (self.distributionCenter.availability.etaDateAsString != nil && 
+				    [[self.distributionCenter.availability.etaDateAsString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length] > 0) {
+				NSString *etaText = [NSString stringWithFormat:@" - ETA %@", self.distributionCenter.availability.etaDateAsString];
 				CGSize etaSize = [etaText sizeWithFont: [UIFont boldSystemFontOfSize: SMALL_FONT_SIZE]];
 				CGSize onHandSize = [onHandText sizeWithFont: [UIFont systemFontOfSize:SMALL_FONT_SIZE]];
 				CGFloat startX = floorf((self.frame.size.width - (etaSize.width + onHandSize.width)) / 2.0f);

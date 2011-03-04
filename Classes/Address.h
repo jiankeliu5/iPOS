@@ -15,8 +15,8 @@
     NSString *line3;
     
     NSString *city;
-    NSString *state;
-    NSString *zipCode;
+    NSString *stateProv;
+    NSString *zipPostalCode;
     NSString *country;
 }
 
@@ -24,8 +24,8 @@
 @property (nonatomic, retain) NSString *line2;
 @property (nonatomic, retain) NSString *line3;
 @property (nonatomic, retain) NSString *city;
-@property (nonatomic, retain) NSString *state;
-@property (nonatomic, retain) NSString *zipCode;
+@property (nonatomic, retain) NSString *stateProv;
+@property (nonatomic, retain) NSString *zipPostalCode;
 @property (nonatomic, retain) NSString *country;
 
 

@@ -248,7 +248,7 @@
 		descriptionLabel.text = pi.description;
 		priceLabel.text = [NSString stringWithFormat:@"%@ / %@", [priceFormatter stringFromNumber:pi.retailPrice], pi.primaryUnitOfMeasure];
 		
-		[storeInfoView setStoreAvailabilityAtStoreId:pi.storeId withAvailable:pi.storeAvailability andOnHand:pi.storeOnHand];
+		[storeInfoView setStoreAvailabilityAtStoreId:pi.store.storeId withAvailable:pi.store.availability];
 		
 		if ([pi.distributionCenterList count] > 0) {
 			DistributionCenter *dc1 = (DistributionCenter *)[pi.distributionCenterList objectAtIndex:0];

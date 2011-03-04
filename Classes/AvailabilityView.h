@@ -41,6 +41,6 @@
 @property (nonatomic, retain) NSDecimalNumber *storeAvailability;
 @property (nonatomic, retain) NSDecimalNumber *storeOnHand;
 
-- (void) setStoreAvailabilityAtStoreId:(NSNumber *)sId withAvailable:(NSDecimalNumber *)sAvail andOnHand:(NSDecimalNumber *)sOnHand;
+- (void) setStoreAvailabilityAtStoreId:(NSNumber *)sId withAvailable:(ItemAvailability *)sAvail;
 
 @end

@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 
 #import "DistributionCenter.h"
+#import "Store.h"
 
 @interface ProductItem : NSObject {
     NSNumber *itemId;
-    NSNumber *storeId;
     
     // Basic Info
     NSNumber *sku;
@@ -25,8 +25,6 @@
     // Stocking Information
     NSString *binLocation;
     NSString *stockingCode;
-    NSDecimalNumber *storeAvailability;
-    NSDecimalNumber *storeOnHand;
     
     // Unit of Measure Info
     BOOL defaultToBox;
@@ -42,12 +40,14 @@
     NSDecimalNumber *taxRate;
     BOOL taxExempt;     
     
+    // Store
+    Store *store;
+    
     // Distribution Center Info
     NSArray *distributionCenterList;
 }
 
 @property(nonatomic, retain) NSNumber *itemId;
-@property(nonatomic, retain) NSNumber *storeId;
 @property(nonatomic, retain) NSNumber *sku;
 @property(nonatomic, retain) NSString *description;
 @property(nonatomic, retain) NSString *vendorName;
@@ -56,8 +56,6 @@
 @property(nonatomic, retain) NSNumber *typeId;
 @property(nonatomic, retain) NSString *binLocation;
 @property(nonatomic, retain) NSString *stockingCode;
-@property(nonatomic, retain) NSDecimalNumber *storeAvailability;
-@property(nonatomic, retain) NSDecimalNumber *storeOnHand;
 @property                    BOOL defaultToBox;
 @property(nonatomic, retain) NSNumber *piecesPerBox;
 @property(nonatomic, retain) NSString *primaryUnitOfMeasure;
@@ -69,6 +67,7 @@
 @property(nonatomic, retain) NSDecimalNumber *taxRate;
 @property                    BOOL taxExempt;
 
+@property (nonatomic, retain) Store *store;
 @property(nonatomic, retain) NSArray *distributionCenterList;
 
 @end

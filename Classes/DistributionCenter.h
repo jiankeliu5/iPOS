@@ -7,22 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "ItemAvailability.h"
 
 @interface DistributionCenter : NSObject {
     NSNumber *dcId;
+    ItemAvailability *availability;
     
-    NSDecimalNumber *availability;
-    NSDecimalNumber *onHand;
-
-    NSString *etaDateAsString;
     BOOL isPrimary;
 }
 
 @property (nonatomic, retain) NSNumber *dcId;
-@property (nonatomic, retain) NSDecimalNumber *availability;
-@property (nonatomic, retain) NSDecimalNumber *onHand;
-@property (nonatomic, retain) NSString *etaDateAsString;
+@property (nonatomic, retain) ItemAvailability *availability;
 
 @property                     BOOL isPrimary;
 

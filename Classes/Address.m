@@ -11,7 +11,7 @@
 
 @implementation Address
 
-@synthesize line1, line2, line3, city, state, zipCode, country;
+@synthesize line1, line2, line3, city, stateProv, zipPostalCode, country;
 
 #pragma mark Initializer and Memory Mgmt
 -(id) init {
@@ -29,8 +29,8 @@
     [line2 release];
     [line3 release];
     [city release];
-    [state release];
-    [zipCode release];
+    [stateProv release];
+    [zipPostalCode release];
     [country release];
     
     [super dealloc];
