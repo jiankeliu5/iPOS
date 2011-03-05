@@ -20,11 +20,25 @@
 #pragma mark Constuctor/Deconstructor
 -(id) init {
     self = [super init];
+	
+    unitOfMeasureLookup = [[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
+															   @"EACH",
+															   @"SQ FT",
+															   @"BOX",
+															   @"SET",
+															   nil] forKeys:[NSArray arrayWithObjects:
+																			 @"EA",
+																			 @"CU",
+																			 @"BX",
+																			 @"SET",
+																			 nil]] retain];
     
-    return self;
+	return self;
 }
 
 -(void) dealloc {
+	[unitOfMeasureLookup release];
+	
     [itemId release];
     [sku release];
     [description release];
@@ -49,6 +63,10 @@
     [distributionCenterList release];
     
     [super dealloc];
+}
+
+-(NSString *) unitOfMeasureDisplay:(NSString*)uom {
+	return (NSString *)[unitOfMeasureLookup objectForKey:uom];
 }
 
 @end

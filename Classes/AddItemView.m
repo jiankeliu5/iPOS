@@ -189,8 +189,7 @@
 		addToCartButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
 		addToCartButton.titleLabel.textAlignment = UITextAlignmentCenter;
 		[addToCartButton setTitle:@"ADD\nTO\nCART" forState:UIControlStateNormal];
-		// TODO Re-enable when we get the order cart functionality in
-		// [addToCartButton addTarget:self action:@selector(handleAddToCartButton:) forControlEvents:UIControlEventTouchUpInside];
+		[addToCartButton addTarget:self action:@selector(handleAddToCartButton:) forControlEvents:UIControlEventTouchUpInside];
 		[roundedView addSubview:addToCartButton];
 		[addToCartButton release];
 	}
@@ -280,7 +279,7 @@
 - (void)handleAddToCartButton:(id)sender {
 	[self addKeyboardListeners];
 	ProductItem *pi = (ProductItem *)self.productItem;
-	addQuantityUnitsLabel.text = pi.primaryUnitOfMeasure;
+	addQuantityUnitsLabel.text = [pi unitOfMeasureDisplay:pi.primaryUnitOfMeasure];
 	[roundedView addSubview:addQuantityView];
 	[addQuantityView release];
 }

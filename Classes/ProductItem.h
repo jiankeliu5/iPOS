@@ -45,6 +45,8 @@
     
     // Distribution Center Info
     NSArray *distributionCenterList;
+	
+	NSDictionary *unitOfMeasureLookup;
 }
 
 @property(nonatomic, retain) NSNumber *itemId;
@@ -69,5 +71,7 @@
 
 @property (nonatomic, retain) Store *store;
 @property(nonatomic, retain) NSArray *distributionCenterList;
+
+-(NSString *) unitOfMeasureDisplay:(NSString*)uom;
 
 @end
