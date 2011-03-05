@@ -71,7 +71,7 @@
     
     STAssertNotNil(productItem, @"Should not be nil");
     STAssertEquals([productItem.itemId intValue], 283186, @"I expected this to be equal to 283186");
-    STAssertEquals([productItem.storeId intValue], 1200, @"I expected this to be equal to 1200");
+    STAssertEquals([productItem.store.storeId intValue], 1200, @"I expected this to be equal to 1200");
     STAssertTrue([productItem.description isEqualToString:@"Driftwood Hon. Martel"], @"I expected this to be equal to Driftwood Hon. Martel");
     
     STAssertTrue([productItem.distributionCenterList count] == 3, @"Expected count to be 3");
