@@ -23,6 +23,11 @@
 		D6179DF61317DBEE00ACAFDD /* iPOSServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6179DF21317DBEE00ACAFDD /* iPOSServiceMock.m */; };
 		D6179DF71317DBEE00ACAFDD /* InventoryServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6179DF41317DBEE00ACAFDD /* InventoryServiceMock.m */; };
 		D618490613185C200051CEFF /* DistributionCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = D618490413185C200051CEFF /* DistributionCenter.m */; };
+		D61B62F2132836D70030E87E /* StringUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = D61B62F0132836D70030E87E /* StringUtils.h */; };
+		D61B62F3132836D70030E87E /* StringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = D61B62F1132836D70030E87E /* StringUtils.m */; };
+		D61B6354132842400030E87E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D698A47E1325E50E00371985 /* OpenGLES.framework */; };
+		D61B635C1328428C0030E87E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D698A47E1325E50E00371985 /* OpenGLES.framework */; };
+		D61B635D132842970030E87E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D698A47E1325E50E00371985 /* OpenGLES.framework */; };
 		D64E5AE8130262B0002EAD70 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 		D64E5B8813026566002EAD70 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
 		D67943A313160884004B8254 /* iPOSServiceIntTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */; };
@@ -76,6 +81,10 @@
 		D697D1DB1312DCD0002C3EF6 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
 		D697D1DC1312DCD0002C3EF6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
 		D697D1EF1312DDE1002C3EF6 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
+		D698A4091325DE7800371985 /* SignaturePad.h in Headers */ = {isa = PBXBuildFile; fileRef = D698A4071325DE7800371985 /* SignaturePad.h */; };
+		D698A40A1325DE7800371985 /* SignaturePad.m in Sources */ = {isa = PBXBuildFile; fileRef = D698A4081325DE7800371985 /* SignaturePad.m */; };
+		D698A47F1325E50E00371985 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D698A47E1325E50E00371985 /* OpenGLES.framework */; };
+		D698A4C31325E9D900371985 /* Particle.png in Resources */ = {isa = PBXBuildFile; fileRef = D698A4A91325E83300371985 /* Particle.png */; };
 		D6B4359F13159ECD000C0AA8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		D6B438121315A923000C0AA8 /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = D692BBA312FDFF4C007EC03A /* Address.m */; };
 		D6B438131315A927000C0AA8 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3112FCA530003C3A47 /* Customer.m */; };
@@ -269,6 +278,8 @@
 		D6179DF51317DBEE00ACAFDD /* InventoryServiceMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryServiceMock.h; sourceTree = "<group>"; };
 		D618490313185C200051CEFF /* DistributionCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistributionCenter.h; sourceTree = "<group>"; };
 		D618490413185C200051CEFF /* DistributionCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DistributionCenter.m; sourceTree = "<group>"; };
+		D61B62F0132836D70030E87E /* StringUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringUtils.h; sourceTree = "<group>"; };
+		D61B62F1132836D70030E87E /* StringUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringUtils.m; sourceTree = "<group>"; };
 		D61C3C3012FCA530003C3A47 /* Customer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Customer.h; sourceTree = "<group>"; };
 		D61C3C3112FCA530003C3A47 /* Customer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Customer.m; sourceTree = "<group>"; };
 		D61C3C3312FCA535003C3A47 /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
@@ -307,6 +318,10 @@
 		D692BBA312FDFF4C007EC03A /* Address.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Address.m; sourceTree = "<group>"; };
 		D697D1E01312DCD0002C3EF6 /* iPOSDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPOSDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D697D1E21312DCD0002C3EF6 /* iPOSDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iPOSDemo-Info.plist"; sourceTree = "<group>"; };
+		D698A4071325DE7800371985 /* SignaturePad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignaturePad.h; sourceTree = "<group>"; };
+		D698A4081325DE7800371985 /* SignaturePad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignaturePad.m; sourceTree = "<group>"; };
+		D698A47E1325E50E00371985 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		D698A4A91325E83300371985 /* Particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Particle.png; sourceTree = "<group>"; };
 		D6A96658130F0C3C004D90C4 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		D6B0401213024FF6004D00CA /* LineaSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineaSDK.h; sourceTree = "<group>"; };
 		D6B435B213159F72000C0AA8 /* libOPIFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOPIFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -393,6 +408,7 @@
 				B40FC0F21311928600D7D79D /* QuartzCore.framework in Frameworks */,
 				D6B438DB1315B00B000C0AA8 /* libiPOSFoundation.a in Frameworks */,
 				D6B438FE1315B1C0000C0AA8 /* libOPIFoundation.a in Frameworks */,
+				D61B6354132842400030E87E /* OpenGLES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,6 +428,7 @@
 				D679459B13160D05004B8254 /* QuartzCore.framework in Frameworks */,
 				D679459C13160D05004B8254 /* SystemConfiguration.framework in Frameworks */,
 				D6B43A401315B343000C0AA8 /* UIKit.framework in Frameworks */,
+				D61B635C1328428C0030E87E /* OpenGLES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,6 +448,7 @@
 				D67943BB131608C1004B8254 /* QuartzCore.framework in Frameworks */,
 				D67943BC131608C1004B8254 /* SystemConfiguration.framework in Frameworks */,
 				D67943BD131608C1004B8254 /* UIKit.framework in Frameworks */,
+				D61B635D132842970030E87E /* OpenGLES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +468,7 @@
 				D697D1EF1312DDE1002C3EF6 /* libLineaSDK.a in Frameworks */,
 				D6E9E9D11316037900FF1498 /* libiPOSFoundation.a in Frameworks */,
 				D6E9E9D21316037900FF1498 /* libOPIFoundation.a in Frameworks */,
+				D698A47F1325E50E00371985 /* OpenGLES.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,6 +539,7 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				D6A96658130F0C3C004D90C4 /* Settings.bundle */,
+				D698A47E1325E50E00371985 /* OpenGLES.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -536,6 +556,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D698A4A91325E83300371985 /* Particle.png */,
 				B4300B33131B4312000210C7 /* iPosLogin.png */,
 				B4300B34131B4312000210C7 /* iPosLogin@2x.png */,
 				B4300B2F131B4300000210C7 /* iPosIcon.png */,
@@ -614,6 +635,8 @@
 				B4B367C512F936AC00F37FE9 /* DrawUtils.m */,
 				B40B94231304ED500024C2DC /* AlertUtils.h */,
 				B40B94241304ED500024C2DC /* AlertUtils.m */,
+				D61B62F0132836D70030E87E /* StringUtils.h */,
+				D61B62F1132836D70030E87E /* StringUtils.m */,
 			);
 			name = Util;
 			path = ..;
@@ -675,6 +698,8 @@
 			children = (
 				B4C46A111307199F001EADE4 /* SignatureViewController.h */,
 				B4C46A121307199F001EADE4 /* SignatureViewController.m */,
+				D698A4071325DE7800371985 /* SignaturePad.h */,
+				D698A4081325DE7800371985 /* SignaturePad.m */,
 			);
 			name = Signature;
 			sourceTree = "<group>";
@@ -873,6 +898,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D698A4091325DE7800371985 /* SignaturePad.h in Headers */,
+				D61B62F2132836D70030E87E /* StringUtils.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1058,6 +1085,7 @@
 				B4300B9F131B486C000210C7 /* iPosIcon.png in Resources */,
 				B4300BA0131B486C000210C7 /* iPosIcon@2x.png in Resources */,
 				D697D1981312DCD0002C3EF6 /* Settings.bundle in Resources */,
+				D698A4C31325E9D900371985 /* Particle.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1197,6 +1225,8 @@
 				D683BE0F1321437A008D923F /* Store.m in Sources */,
 				D683BE1313214391008D923F /* ItemAvailability.m in Sources */,
 				D683BF4513217652008D923F /* Error.m in Sources */,
+				D698A40A1325DE7800371985 /* SignaturePad.m in Sources */,
+				D61B62F3132836D70030E87E /* StringUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1310,17 +1340,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Steve McCoole (SARQ7KVC6F)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 3;
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_PREPROCESSOR_DEFINITIONS = "APP_IN_UNITTEST=1";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-lxml2";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4C5E0B23-80EE-4654-993B-CE498713677A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

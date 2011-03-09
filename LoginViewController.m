@@ -76,12 +76,12 @@
 -(void)connectionState:(int)state {
     switch (state) {
 		case CONN_DISCONNECTED:	
-            //[AlertUtils showModalAlertMessage: @"Linea-Pro Device is disconnected!!"];
             break;
         case CONN_CONNECTING:
             break; 
 		case CONN_CONNECTED:
-            //[AlertUtils showModalAlertMessage: @"Linea-Pro Device is connected!!"];
+            [linea msStartScan];
+            [linea setMSCardDataMode:MS_RAW_CARD_DATA];
             break;
 	}
     
@@ -139,8 +139,8 @@
 	[self setPassword:nil];
     
     [facade logout]; 
-    [linea disconnect];
     
+    [linea disconnect];
 	
 	CGRect viewBounds = self.view.bounds;
 	

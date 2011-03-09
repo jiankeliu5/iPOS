@@ -14,6 +14,7 @@
 #include "PlaceHolderView.h"
 #include "AddItemView.h"
 
+#include "SignatureViewController.h"
 
 
 @interface MainMenuViewController()
@@ -87,6 +88,34 @@
 		[overlay setProductItem:item];
 		[overlay release];
     }
+}
+
+-(void) magneticCardRawData:(NSData *)tracks {
+    // For apps you could use [NSBundle mainBundle] to get the main plist, however this does not work with test bundles.
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSString *demoCardReader = (NSString *) [bundle objectForInfoDictionaryKey:@"ipos.demo.enableSignature"];
+
+    if (demoCardReader != nil && [demoCardReader isEqualToString: @"YES"]) {
+        // [AlertUtils showModalAlertMessage: @"Card Data received!!"];
+        
+        // [linea removeDelegate:self];
+        // [self removeKeyboardListeners];
+        
+        // Add the modal view
+        SignatureViewController *modalController = [[[SignatureViewController alloc] init] autorelease];        
+        
+        modalController.delegate = self;
+        [self presentModalViewController:modalController animated:YES]; 
+       
+    }
+}
+
+#pragma mark -
+#pragma mark SignatureDelegate methods
+//TODO:This will be moved to another controller
+- (void) signatureController:(SignatureViewController *)signatureController signatureAsBase64:(NSString *)signature savePressed:(id)sender {
+    // This is where the image would be sent as a base64EncodedString to the payment services
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark -

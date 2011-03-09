@@ -8,9 +8,11 @@
 
 #import "SignatureViewController.h"
 #include "PlaceHolderView.h"
-
+#include "AlertUtils.h"
 
 @implementation SignatureViewController
+
+@synthesize delegate, signaturePad, payAmountLabel;
 
 #pragma mark Constructors
 - (id)init
@@ -32,23 +34,64 @@
 }
 
 - (void)dealloc {
+    if (delegate) {
+        [delegate release];
+    }
+    
+    // NOTE:  Do not have explicitly release subviews (signaturePad, payAmountLabel)
+    // These are implicitely released with call to removeFromSuperView from the UIView
+    // Hierarchy.
+    
     [super dealloc];
 }
 
 #pragma mark -
 #pragma mark Accessors
-- (PlaceHolderView *) contentView
-{
-	return (PlaceHolderView *)[self view];
-}
 
 #pragma mark -
 #pragma mark UIViewController overrides
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
-	[self setView:[[[PlaceHolderView alloc] initWithFrame:CGRectZero] autorelease]];
-	self.contentView.placeHolderLabel.text = @"Signature";
+	// [self setView:[[[PlaceHolderView alloc] initWithFrame:CGRectZero] autorelease]];
+    UIView *bgView = [[[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 480, 320)] autorelease];
+    
+    bgView.backgroundColor = [UIColor whiteColor];
+    bgView.autoresizesSubviews = YES;
+    bgView.clipsToBounds = YES;
+    
+    
+    // Add a toolbar to the view
+    UIBarButtonItem *saveButton = [[[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleBordered target:self action:@selector(savePressed:)] autorelease];
+    UIBarButtonItem *flex = [[[UIBarButtonItem alloc]
+                             initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                             target:nil action:nil] autorelease];
+    UIToolbar *toolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.0, 0.0, 480, 44)] autorelease];
+    
+    toolbar.barStyle = UIBarStyleDefault;
+    
+    [toolbar setItems:[NSArray arrayWithObjects:flex,saveButton,nil]];
+    
+    // Add the labels and signature pad
+    UILabel *signingLabel = [[[UILabel alloc] initWithFrame:CGRectMake(40, 54, 390, 20)] autorelease];
+    signingLabel.font = [UIFont systemFontOfSize:14.0f];
+    signingLabel.text = @"By signing below, I agree to pay a total credit card charge of";
+    
+    payAmountLabel = [[[UILabel alloc] initWithFrame:CGRectMake(240, 74, 100, 20)] autorelease];
+    payAmountLabel.font = [UIFont boldSystemFontOfSize:14.0f];
+    payAmountLabel.text = @"0.00";
+    
+    signaturePad = [[[SignaturePad alloc] initWithFrame:CGRectMake(10, 94, 460, 200)] autorelease];
+    
+    // Add the the bg view
+    [bgView addSubview:toolbar]; 
+    [bgView addSubview:signingLabel];
+    [bgView addSubview:payAmountLabel];
+    [bgView addSubview:signaturePad];
+    
+    [signaturePad initBrushColor];
+    
+    [self setView:bgView];
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -60,12 +103,19 @@
 		[self.navigationController setNavigationBarHidden:NO];
 	}
 	
+    // Rotate to landscape
+    //self.view.transform = CGAffineTransformIdentity;
+//    self.view.transform = CGAffineTransformMakeRotation((M_PI * (90) / 180.0)); 
+    // self.view.bounds = CGRectMake(0.0, 0.0, 480, 320);    
 }
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations.
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
+}
+
+- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
 }
 
 - (void)didReceiveMemoryWarning {
@@ -81,6 +131,19 @@
     // e.g. self.myOutlet = nil;
 }
 
+#pragma mark -
+#pragma mark Button Selectors
+-(void) savePressed: (id) sender {
+    // The delegate may accept the signature as an image or a base64 encoded string.  The base64 encoded signature 
+    // is invoked if the delegate has implementations for both SignatureDelegate methods
+    if (delegate && [delegate respondsToSelector:@selector(signatureController:signatureAsBase64:savePressed:)]) {
+        NSString *signature = [signaturePad getSignatureAsBase64];
+        [delegate signatureController:self signatureAsBase64:signature savePressed:sender];
+    } else if (delegate && [delegate respondsToSelector:@selector(signatureController:signatureAsImage:savePressed:)]) {
+        UIImage *signature = [signaturePad getSignatureAsImage];
+        [delegate signatureController:self signatureAsImage:signature savePressed:sender];
+    }
+}
 
 
 

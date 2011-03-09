@@ -35,5 +35,7 @@
 	<string>http://ipad.demo.objectpartners.com:8080/ipos-demo-services-0.1/webservices/ipos</string>
 	<key>ipos.service.baseurl</key>
 	<string>https://tsipos01/webservices/ipostest</string>
+	<key>ipos.demo.enableSignature</key>
+	<string>YES</string>
 </dict>
 </plist>
