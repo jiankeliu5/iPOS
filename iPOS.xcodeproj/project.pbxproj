@@ -20,6 +20,11 @@
 		B4300B9E131B486C000210C7 /* iPosLogin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B34131B4312000210C7 /* iPosLogin@2x.png */; };
 		B4300B9F131B486C000210C7 /* iPosIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B2F131B4300000210C7 /* iPosIcon.png */; };
 		B4300BA0131B486C000210C7 /* iPosIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B30131B4300000210C7 /* iPosIcon@2x.png */; };
+		B4D1984A1326BF40007CCE08 /* UIViewController+ViewControllerLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B4D198451326BE0A007CCE08 /* UIViewController+ViewControllerLayout.m */; };
+		B4D1984B1326BF49007CCE08 /* UIViewController+ViewControllerLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = B4D198441326BE0A007CCE08 /* UIViewController+ViewControllerLayout.h */; };
+		B4D199801329B9B4007CCE08 /* UIView+ViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B4D1996C1329B8D5007CCE08 /* UIView+ViewLayout.m */; };
+		B4D199811329B9C8007CCE08 /* UIView+ViewLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = B4D1996B1329B8D5007CCE08 /* UIView+ViewLayout.h */; };
+		B4D199821329B9E1007CCE08 /* CustomerView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4D199451329B5A2007CCE08 /* CustomerView.m */; };
 		D6179DF61317DBEE00ACAFDD /* iPOSServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6179DF21317DBEE00ACAFDD /* iPOSServiceMock.m */; };
 		D6179DF71317DBEE00ACAFDD /* InventoryServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6179DF41317DBEE00ACAFDD /* InventoryServiceMock.m */; };
 		D618490613185C200051CEFF /* DistributionCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = D618490413185C200051CEFF /* DistributionCenter.m */; };
@@ -272,6 +277,12 @@
 		B4C46B0513075F5D001EADE4 /* AddItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddItemView.m; sourceTree = "<group>"; };
 		B4C46B961308BBE7001EADE4 /* ExtUITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtUITextField.h; sourceTree = "<group>"; };
 		B4C46B971308BBE7001EADE4 /* ExtUITextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtUITextField.m; sourceTree = "<group>"; };
+		B4D198441326BE0A007CCE08 /* UIViewController+ViewControllerLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ViewControllerLayout.h"; sourceTree = "<group>"; };
+		B4D198451326BE0A007CCE08 /* UIViewController+ViewControllerLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ViewControllerLayout.m"; sourceTree = "<group>"; };
+		B4D199441329B5A2007CCE08 /* CustomerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerView.h; sourceTree = "<group>"; };
+		B4D199451329B5A2007CCE08 /* CustomerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerView.m; sourceTree = "<group>"; };
+		B4D1996B1329B8D5007CCE08 /* UIView+ViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ViewLayout.h"; sourceTree = "<group>"; };
+		B4D1996C1329B8D5007CCE08 /* UIView+ViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ViewLayout.m"; sourceTree = "<group>"; };
 		D6179DF21317DBEE00ACAFDD /* iPOSServiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPOSServiceMock.m; sourceTree = "<group>"; };
 		D6179DF31317DBEE00ACAFDD /* iPOSServiceMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSServiceMock.h; sourceTree = "<group>"; };
 		D6179DF41317DBEE00ACAFDD /* InventoryServiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryServiceMock.m; sourceTree = "<group>"; };
@@ -492,6 +503,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B4D1983C1326BDF0007CCE08 /* Categories */,
 				D66892E11311DE320046C68F /* ThirdParty */,
 				B4C46B951308BBCB001EADE4 /* Components */,
 				B4C46A0C1307148B001EADE4 /* Signature */,
@@ -660,6 +672,8 @@
 			children = (
 				B4C469D313070300001EADE4 /* CustomerViewController.h */,
 				B4C469D413070300001EADE4 /* CustomerViewController.m */,
+				B4D199441329B5A2007CCE08 /* CustomerView.h */,
+				B4D199451329B5A2007CCE08 /* CustomerView.m */,
 			);
 			name = Customer;
 			sourceTree = "<group>";
@@ -714,6 +728,17 @@
 				B48A7E0F13107EEE00F6412C /* GradientView.m */,
 			);
 			name = Components;
+			sourceTree = "<group>";
+		};
+		B4D1983C1326BDF0007CCE08 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				B4D198441326BE0A007CCE08 /* UIViewController+ViewControllerLayout.h */,
+				B4D198451326BE0A007CCE08 /* UIViewController+ViewControllerLayout.m */,
+				B4D1996B1329B8D5007CCE08 /* UIView+ViewLayout.h */,
+				B4D1996C1329B8D5007CCE08 /* UIView+ViewLayout.m */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 		D64B7E2612F9D869006AB141 /* UnitTests */ = {
@@ -891,6 +916,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4D199811329B9C8007CCE08 /* UIView+ViewLayout.h in Headers */,
+				B4D1984B1326BF49007CCE08 /* UIViewController+ViewControllerLayout.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1160,6 +1187,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4D199801329B9B4007CCE08 /* UIView+ViewLayout.m in Sources */,
+				B4D1984A1326BF40007CCE08 /* UIViewController+ViewControllerLayout.m in Sources */,
 				D6B438E91315B0BA000C0AA8 /* ExtUITextField.m in Sources */,
 				D6B438EA1315B0BB000C0AA8 /* GradientView.m in Sources */,
 				D6B438EB1315B0BC000C0AA8 /* MOButton.m in Sources */,
@@ -1171,6 +1200,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4D199821329B9E1007CCE08 /* CustomerView.m in Sources */,
 				B4300AA0131AEF8A000210C7 /* AvailabilityView.m in Sources */,
 				D6B438121315A923000C0AA8 /* Address.m in Sources */,
 				D6B438131315A927000C0AA8 /* Customer.m in Sources */,

@@ -7,8 +7,13 @@
 //
 
 #import "CustomerViewController.h"
-#include "PlaceHolderView.h"
+#import "UIViewController+ViewControllerLayout.h"
 
+@interface CustomerViewController()
+
+- (void) handleSearchButton:(id)sender;
+
+@end
 
 @implementation CustomerViewController
 
@@ -37,9 +42,9 @@
 
 #pragma mark -
 #pragma mark Accessors
-- (PlaceHolderView *) contentView
+- (UIView *) contentView
 {
-	return (PlaceHolderView *)[self view];
+	return (UIView *)[self view];
 }
 
 #pragma mark -
@@ -47,8 +52,11 @@
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
-	[self setView:[[[PlaceHolderView alloc] initWithFrame:CGRectZero] autorelease]];
-	self.contentView.placeHolderLabel.text = @"Customer";
+
+	custView = [[CustomerView alloc] initWithFrame:[self rectForNav]];
+	[self setView:custView];
+	[custView release];
+	
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -59,6 +67,8 @@
 	{
 		[self.navigationController setNavigationBarHidden:NO];
 	}
+	
+	[[custView custSearchButton] addTarget:self action:@selector(handleSearchButton:) forControlEvents:UIControlEventTouchUpInside];
 	
 }
 
@@ -81,8 +91,10 @@
     // e.g. self.myOutlet = nil;
 }
 
-
-
-
+#pragma mark -
+#pragma mark UIButton callbacks
+- (void)handleSearchButton:(id)sender {
+	NSLog(@"Got search button press");
+}
 
 @end

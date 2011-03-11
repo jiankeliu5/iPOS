@@ -11,8 +11,8 @@
 #import "ProductItem.h"
 #import "LayoutUtils.h"
 
-#include "PlaceHolderView.h"
 #include "AddItemView.h"
+#include "CustomerViewController.h"
 
 #include "SignatureViewController.h"
 
@@ -176,7 +176,7 @@
 	//[lookupOrderField release];
 	
 	customerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-	[customerButton setTitle:@"Add Customer" forState:UIControlStateNormal];
+	[customerButton setTitle:@"Customer" forState:UIControlStateNormal];
 	[customerButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	[self.view addSubview:customerButton];
 	 
@@ -213,6 +213,7 @@
 
 	if (self.navigationController != nil) {
 		[self.navigationController setNavigationBarHidden:NO];
+		self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Main" style:UIBarButtonItemStyleBordered target:nil action:nil];
 	}
 	
 	CGRect viewBounds = self.view.bounds;
@@ -261,7 +262,11 @@
 #pragma mark UIButton callbacks
 
 - (void)customerPressed:(id)sender {
-    [AlertUtils showModalAlertMessage: @"Functionality Not Yet Available."];
+	[linea removeDelegate:self];
+	[self removeKeyboardListeners];
+    CustomerViewController *customerViewController = [[CustomerViewController alloc] init];
+	[[self navigationController] pushViewController:customerViewController animated:TRUE];
+	[customerViewController release];
 }
 
 - (void)addKeyboardListeners {
