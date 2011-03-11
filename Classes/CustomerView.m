@@ -85,20 +85,28 @@
 	detailView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, DETAIL_VIEW_WIDTH, DETAIL_VIEW_HEIGHT)];
 	firstLabel = [self createNormalLabel:@"First Name" withRect:CGRectMake(0.0f, 0.0f, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:firstLabel];
+	[firstLabel release];
 	firstName = [self createBoldLabel:@"Megan" withRect:CGRectMake(0.0f, 0.0f, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:firstName];
+	[firstName release];
 	lastLabel = [self createNormalLabel:@"Last Name" withRect:CGRectMake(0.0f, 0.0f, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:lastLabel];
+	[lastLabel release];
 	lastName = [self createBoldLabel:@"Hoy" withRect:CGRectMake(0.0f, 0.0f, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:lastName];
+	[lastName release];
 	emailLabel = [self createNormalLabel:@"Email Address" withRect:CGRectMake(0.0f, 0.0f, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:emailLabel];
+	[emailLabel release];
 	email = [self createBoldLabel:@"Mhoy@tileshop.com" withRect:CGRectMake(0.0f, 0.0f, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:email];
+	[email release];
 	zipLabel = [self createNormalLabel:@"Zip Code" withRect:CGRectMake(0.0f, 0.0f, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:zipLabel];
+	[zipLabel release];
 	zip = [self createBoldLabel:@"55441" withRect:CGRectMake(0.0f, 0.0f, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:zip];
+	[zip release];
 }
 
 - (UILabel *) createNormalLabel:(NSString *)text withRect:(CGRect)rect {
