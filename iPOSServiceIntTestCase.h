@@ -26,6 +26,16 @@
 - (void) testPosFacadeLogout;
 
 - (void) testPosFacadeLookupProductItem;
+
+- (void) testPosFacadeLookupCustomer;
+- (void) testPosFacadeLookupCustomerNotFound;
+
+- (void) testPosFacadeNewCustomer;
+- (void) testPosFacadeNewCustomerWithInvalidPhone;
+
+- (void) testPosFacadeUpdateCustomer;
+- (void) testPosFacadeUpdateCustomerNoCustomerID;
+ 
 #endif
 
 @end

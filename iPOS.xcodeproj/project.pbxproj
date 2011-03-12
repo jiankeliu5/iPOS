@@ -28,13 +28,13 @@
 		D6179DF61317DBEE00ACAFDD /* iPOSServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6179DF21317DBEE00ACAFDD /* iPOSServiceMock.m */; };
 		D6179DF71317DBEE00ACAFDD /* InventoryServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6179DF41317DBEE00ACAFDD /* InventoryServiceMock.m */; };
 		D618490613185C200051CEFF /* DistributionCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = D618490413185C200051CEFF /* DistributionCenter.m */; };
-		D61B62F2132836D70030E87E /* StringUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = D61B62F0132836D70030E87E /* StringUtils.h */; };
-		D61B62F3132836D70030E87E /* StringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = D61B62F1132836D70030E87E /* StringUtils.m */; };
 		D61B6354132842400030E87E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D698A47E1325E50E00371985 /* OpenGLES.framework */; };
 		D61B635C1328428C0030E87E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D698A47E1325E50E00371985 /* OpenGLES.framework */; };
 		D61B635D132842970030E87E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D698A47E1325E50E00371985 /* OpenGLES.framework */; };
 		D64E5AE8130262B0002EAD70 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 		D64E5B8813026566002EAD70 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
+		D65EB2BF132AE30C0066E1FA /* NSString+Base64Encode.m in Sources */ = {isa = PBXBuildFile; fileRef = D65EB2A1132AE1C10066E1FA /* NSString+Base64Encode.m */; };
+		D65EB2C0132AE30E0066E1FA /* NSString+Base64Encode.h in Headers */ = {isa = PBXBuildFile; fileRef = D65EB2A0132AE1C10066E1FA /* NSString+Base64Encode.h */; };
 		D67943A313160884004B8254 /* iPOSServiceIntTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */; };
 		D67943B2131608C1004B8254 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FC1302586800B77769 /* CFNetwork.framework */; };
 		D67943B3131608C1004B8254 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
@@ -289,8 +289,6 @@
 		D6179DF51317DBEE00ACAFDD /* InventoryServiceMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryServiceMock.h; sourceTree = "<group>"; };
 		D618490313185C200051CEFF /* DistributionCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistributionCenter.h; sourceTree = "<group>"; };
 		D618490413185C200051CEFF /* DistributionCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DistributionCenter.m; sourceTree = "<group>"; };
-		D61B62F0132836D70030E87E /* StringUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringUtils.h; sourceTree = "<group>"; };
-		D61B62F1132836D70030E87E /* StringUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringUtils.m; sourceTree = "<group>"; };
 		D61C3C3012FCA530003C3A47 /* Customer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Customer.h; sourceTree = "<group>"; };
 		D61C3C3112FCA530003C3A47 /* Customer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Customer.m; sourceTree = "<group>"; };
 		D61C3C3312FCA535003C3A47 /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
@@ -316,6 +314,8 @@
 		D64E5B8713026566002EAD70 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		D656013C130B71B4000968BA /* iPosFacadeWithMocksTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPosFacadeWithMocksTestCase.h; sourceTree = "<group>"; };
 		D656013D130B71B4000968BA /* iPosFacadeWithMocksTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPosFacadeWithMocksTestCase.m; sourceTree = "<group>"; };
+		D65EB2A0132AE1C10066E1FA /* NSString+Base64Encode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64Encode.h"; sourceTree = "<group>"; };
+		D65EB2A1132AE1C10066E1FA /* NSString+Base64Encode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64Encode.m"; sourceTree = "<group>"; };
 		D65FD4B91302303A00F4C19D /* BarcodeScannerCardReaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarcodeScannerCardReaderDelegate.h; sourceTree = "<group>"; };
 		D65FD4BA1302303A00F4C19D /* BarcodeScannerCardReaderDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarcodeScannerCardReaderDelegate.m; sourceTree = "<group>"; };
 		D679438C131607A8004B8254 /* AppTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -647,8 +647,6 @@
 				B4B367C512F936AC00F37FE9 /* DrawUtils.m */,
 				B40B94231304ED500024C2DC /* AlertUtils.h */,
 				B40B94241304ED500024C2DC /* AlertUtils.m */,
-				D61B62F0132836D70030E87E /* StringUtils.h */,
-				D61B62F1132836D70030E87E /* StringUtils.m */,
 			);
 			name = Util;
 			path = ..;
@@ -737,6 +735,8 @@
 				B4D198451326BE0A007CCE08 /* UIViewController+ViewControllerLayout.m */,
 				B4D1996B1329B8D5007CCE08 /* UIView+ViewLayout.h */,
 				B4D1996C1329B8D5007CCE08 /* UIView+ViewLayout.m */,
+				D65EB2A0132AE1C10066E1FA /* NSString+Base64Encode.h */,
+				D65EB2A1132AE1C10066E1FA /* NSString+Base64Encode.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -806,6 +806,8 @@
 			children = (
 				D692BBA212FDFF4C007EC03A /* Address.h */,
 				D692BBA312FDFF4C007EC03A /* Address.m */,
+				D683BF4213217652008D923F /* Error.h */,
+				D683BF4313217652008D923F /* Error.m */,
 				D61C3C3312FCA535003C3A47 /* Order.h */,
 				D61C3C3412FCA535003C3A47 /* Order.m */,
 				D61C3C6812FCA9C0003C3A47 /* OrderItem.h */,
@@ -824,8 +826,6 @@
 				D683BE0D1321437A008D923F /* Store.m */,
 				D683BE1013214391008D923F /* ItemAvailability.h */,
 				D683BE1113214391008D923F /* ItemAvailability.m */,
-				D683BF4213217652008D923F /* Error.h */,
-				D683BF4313217652008D923F /* Error.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -918,6 +918,7 @@
 			files = (
 				B4D199811329B9C8007CCE08 /* UIView+ViewLayout.h in Headers */,
 				B4D1984B1326BF49007CCE08 /* UIViewController+ViewControllerLayout.h in Headers */,
+				D65EB2C0132AE30E0066E1FA /* NSString+Base64Encode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -926,7 +927,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D698A4091325DE7800371985 /* SignaturePad.h in Headers */,
-				D61B62F2132836D70030E87E /* StringUtils.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1193,6 +1193,7 @@
 				D6B438EA1315B0BB000C0AA8 /* GradientView.m in Sources */,
 				D6B438EB1315B0BC000C0AA8 /* MOButton.m in Sources */,
 				D6B438EC1315B0BD000C0AA8 /* MOGlassButton.m in Sources */,
+				D65EB2BF132AE30C0066E1FA /* NSString+Base64Encode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1256,7 +1257,6 @@
 				D683BE1313214391008D923F /* ItemAvailability.m in Sources */,
 				D683BF4513217652008D923F /* Error.m in Sources */,
 				D698A40A1325DE7800371985 /* SignaturePad.m in Sources */,
-				D61B62F3132836D70030E87E /* StringUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

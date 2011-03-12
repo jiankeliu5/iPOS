@@ -10,12 +10,17 @@
 
 
 @interface Error : NSObject {
-    NSString *errorMsgString;
+    
+    NSNumber *errorId;
+    NSString *message;
     
     id reference;
 }
 
-@property (nonatomic, retain) NSString *errorMsgString;
+// TODO: Place to put ERROR Constants.  None defined yet.
+
+@property (nonatomic, retain) NSNumber *errorId;
+@property (nonatomic, retain) NSString *message;
 @property (nonatomic, assign) id reference;
 
 @end

@@ -9,27 +9,39 @@
 #import <Foundation/Foundation.h>
 
 #import "Address.h"
+#import "Store.h"
+#import "Error.h"
 
 @interface Customer : NSObject {
     NSNumber *customerId;
+    NSString *customerType;
+    
     NSString *firstName;
     NSString *lastName;
     NSString *phoneNumber;
     NSString *emailAddress;
     
+    Store   *store;
     Address *address; 
     
     NSArray *errorList;
+    
+    BOOL taxExempt;
 }
 
 @property (nonatomic, retain) NSNumber *customerId;
+@property (nonatomic, retain) NSString *customerType;
+
 @property (nonatomic, retain) NSString *firstName;
 @property (nonatomic, retain) NSString *lastName;
 @property (nonatomic, retain) NSString *phoneNumber;
 @property (nonatomic, retain) NSString *emailAddress;
 
+@property (nonatomic, retain) Store *store;
 @property (nonatomic, retain) Address *address;
 
 @property (nonatomic, retain) NSArray *errorList;
+
+@property                     BOOL taxExempt;
 
 @end

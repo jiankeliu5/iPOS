@@ -110,6 +110,9 @@
         item = [[[ProductItem alloc] init] autorelease];
         store = [[[Store alloc] init] autorelease];
         
+        // Good to set the item id
+        item.itemId = [NSNumber numberWithInt:[[element stringValue] intValue]];
+        
         // Build store
         nodes = [root elementsForName:@"StoreID"];
         element = [nodes lastObject];
@@ -127,7 +130,6 @@
         store.availability = storeAvailability;
                         
         // Build the Item Info
-        item.itemId = [NSNumber numberWithInt:[[element stringValue] intValue]];
         item.store = store;
         
         nodes = [root elementsForName:@"BinLocation"];
@@ -261,8 +263,6 @@
             NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
             item.distributionCenterList = [[NSArray arrayWithArray: dcList] sortedArrayUsingDescriptors:sortDescriptors];
         }
-        
-        
     } 
     
     return item;
@@ -290,7 +290,7 @@
     
     // Create an XML document parser
     NSString *response = [request responseString];
-    CXMLDocument *xmlParser = [[[CXMLDocument alloc] initWithXMLString:response options:0] autorelease];
+    CXMLDocument *xmlParser = [[[CXMLDocument alloc] initWithXMLString:response options:0 error:nil] autorelease];
     CXMLElement *root = [xmlParser rootElement];
     
     BOOL isAvailable = NO;

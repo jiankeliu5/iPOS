@@ -10,7 +10,7 @@
 
 #import "SignaturePad.h"
 
-#import "StringUtils.h"
+#import "NSString+Base64Encode.h"
 
 // A class extension to declare private methods
 @interface SignaturePad (private)
@@ -247,7 +247,7 @@ NSString * const SIGNATURE_AS_JPG =@"jpg";
     }
     
     // The format is not supported
-    return [StringUtils encodeBase64WithData:imageData];
+    return [NSString encodeBase64WithData:imageData];
 }
 
 #pragma mark -

@@ -17,6 +17,8 @@
 
 @property(nonatomic,retain) NSString *baseUrl;
 @property(nonatomic, retain) NSString *posSessionMgmtUri;
+@property(nonatomic, retain) NSString *posCustomerMgmtUri;
+@property(nonatomic, retain) NSString *posOrderMgmtUri;
 
 -(void) setToDemoMode;
 -(void) setToReleaseMode;

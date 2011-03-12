@@ -52,6 +52,7 @@
         Customer *customer = [[[Customer alloc] init] autorelease];
         
         customer.customerId = [NSNumber numberWithInt:1414];
+        customer.customerType = @"Retail";
         customer.firstName = @"Torey";
         customer.lastName = @"Lomenda";
         customer.phoneNumber = @"612-807-6120";
@@ -81,7 +82,7 @@
         // Attach an error
         Error *error = [[[Error alloc] init] autorelease];
         
-        error.errorMsgString = @"Customer is already created.";
+        error.message = @"Customer is already created.";
         error.reference = customer;
         
         [errors addObject:error];
@@ -92,7 +93,7 @@
         // Attach an error
         Error *error = [[[Error alloc] init] autorelease];
         
-        error.errorMsgString = @"Missing required data.";
+        error.message = @"Missing required data.";
         error.reference = customer;
         
         [errors addObject:error];

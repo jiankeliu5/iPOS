@@ -11,7 +11,7 @@
 
 @implementation Error
 
-@synthesize errorMsgString, reference;
+@synthesize errorId, message, reference;
 
 -(id) init {
     self = [super init];
@@ -19,7 +19,8 @@
 }
 
 -(void) dealloc {
-    [errorMsgString release];
+    [errorId release];
+    [message release];
     
     [super dealloc];
 }
