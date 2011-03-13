@@ -95,6 +95,11 @@
 #pragma mark UIButton callbacks
 - (void)handleSearchButton:(id)sender {
 	NSLog(@"Got search button press");
+	if (custView.custDetailsOpen == NO) {
+		custView.custDetailsOpen = YES;
+	} else {
+		custView.custDetailsOpen = NO;
+	}
 }
 
 @end
