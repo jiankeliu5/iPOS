@@ -86,10 +86,13 @@
 		D697D1DB1312DCD0002C3EF6 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
 		D697D1DC1312DCD0002C3EF6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
 		D697D1EF1312DDE1002C3EF6 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
-		D698A4091325DE7800371985 /* SignaturePad.h in Headers */ = {isa = PBXBuildFile; fileRef = D698A4071325DE7800371985 /* SignaturePad.h */; };
 		D698A40A1325DE7800371985 /* SignaturePad.m in Sources */ = {isa = PBXBuildFile; fileRef = D698A4081325DE7800371985 /* SignaturePad.m */; };
 		D698A47F1325E50E00371985 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D698A47E1325E50E00371985 /* OpenGLES.framework */; };
 		D698A4C31325E9D900371985 /* Particle.png in Resources */ = {isa = PBXBuildFile; fileRef = D698A4A91325E83300371985 /* Particle.png */; };
+		D6A58CFF1330735E00E6DD9F /* CustomerMarshalling.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A58CFD1330735E00E6DD9F /* CustomerMarshalling.m */; };
+		D6A58D1D13307DA800E6DD9F /* SessionMgmtMarshalling.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A58D1B13307DA800E6DD9F /* SessionMgmtMarshalling.m */; };
+		D6A58D751330841000E6DD9F /* ProductItemMarshalling.h in Headers */ = {isa = PBXBuildFile; fileRef = D6A58D731330841000E6DD9F /* ProductItemMarshalling.h */; };
+		D6A58D761330841000E6DD9F /* ProductItemMarshalling.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A58D741330841000E6DD9F /* ProductItemMarshalling.m */; };
 		D6B4359F13159ECD000C0AA8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		D6B438121315A923000C0AA8 /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = D692BBA312FDFF4C007EC03A /* Address.m */; };
 		D6B438131315A927000C0AA8 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3112FCA530003C3A47 /* Customer.m */; };
@@ -333,6 +336,12 @@
 		D698A4081325DE7800371985 /* SignaturePad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignaturePad.m; sourceTree = "<group>"; };
 		D698A47E1325E50E00371985 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		D698A4A91325E83300371985 /* Particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Particle.png; sourceTree = "<group>"; };
+		D6A58CFC1330735E00E6DD9F /* CustomerMarshalling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerMarshalling.h; sourceTree = "<group>"; };
+		D6A58CFD1330735E00E6DD9F /* CustomerMarshalling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerMarshalling.m; sourceTree = "<group>"; };
+		D6A58D1A13307DA800E6DD9F /* SessionMgmtMarshalling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionMgmtMarshalling.h; sourceTree = "<group>"; };
+		D6A58D1B13307DA800E6DD9F /* SessionMgmtMarshalling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionMgmtMarshalling.m; sourceTree = "<group>"; };
+		D6A58D731330841000E6DD9F /* ProductItemMarshalling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductItemMarshalling.h; sourceTree = "<group>"; };
+		D6A58D741330841000E6DD9F /* ProductItemMarshalling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductItemMarshalling.m; sourceTree = "<group>"; };
 		D6A96658130F0C3C004D90C4 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		D6B0401213024FF6004D00CA /* LineaSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineaSDK.h; sourceTree = "<group>"; };
 		D6B435B213159F72000C0AA8 /* libOPIFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOPIFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -786,6 +795,7 @@
 		D69BEFD412F9C66A0035D358 /* POSInterface */ = {
 			isa = PBXGroup;
 			children = (
+				D6A58CFB1330730B00E6DD9F /* XmlBinding */,
 				D6BCD40612FCB3F70029F4B2 /* SessionInfo.h */,
 				D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */,
 				D6BCD3F512FCB3D80029F4B2 /* InventoryService.h */,
@@ -835,6 +845,19 @@
 			children = (
 			);
 			name = Helper;
+			sourceTree = "<group>";
+		};
+		D6A58CFB1330730B00E6DD9F /* XmlBinding */ = {
+			isa = PBXGroup;
+			children = (
+				D6A58CFC1330735E00E6DD9F /* CustomerMarshalling.h */,
+				D6A58CFD1330735E00E6DD9F /* CustomerMarshalling.m */,
+				D6A58D1A13307DA800E6DD9F /* SessionMgmtMarshalling.h */,
+				D6A58D1B13307DA800E6DD9F /* SessionMgmtMarshalling.m */,
+				D6A58D731330841000E6DD9F /* ProductItemMarshalling.h */,
+				D6A58D741330841000E6DD9F /* ProductItemMarshalling.m */,
+			);
+			name = XmlBinding;
 			sourceTree = "<group>";
 		};
 		D6BA07B1130257C200B77769 /* TouchXML */ = {
@@ -926,7 +949,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D698A4091325DE7800371985 /* SignaturePad.h in Headers */,
+				D6A58D751330841000E6DD9F /* ProductItemMarshalling.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1257,6 +1280,9 @@
 				D683BE1313214391008D923F /* ItemAvailability.m in Sources */,
 				D683BF4513217652008D923F /* Error.m in Sources */,
 				D698A40A1325DE7800371985 /* SignaturePad.m in Sources */,
+				D6A58CFF1330735E00E6DD9F /* CustomerMarshalling.m in Sources */,
+				D6A58D1D13307DA800E6DD9F /* SessionMgmtMarshalling.m in Sources */,
+				D6A58D761330841000E6DD9F /* ProductItemMarshalling.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
