@@ -30,8 +30,27 @@
 		D61B6354132842400030E87E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D698A47E1325E50E00371985 /* OpenGLES.framework */; };
 		D61B635C1328428C0030E87E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D698A47E1325E50E00371985 /* OpenGLES.framework */; };
 		D61B635D132842970030E87E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D698A47E1325E50E00371985 /* OpenGLES.framework */; };
+		D6334A361331CA25000DEDBB /* BasicAppTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D6334A351331CA25000DEDBB /* BasicAppTestCase.m */; };
+		D6334A571331CADB000DEDBB /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 		D64E5AE8130262B0002EAD70 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 		D64E5B8813026566002EAD70 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
+		D65B25C71331C8B60052AEE2 /* iPosIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B2F131B4300000210C7 /* iPosIcon.png */; };
+		D65B25C81331C8B60052AEE2 /* iPosIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B30131B4300000210C7 /* iPosIcon@2x.png */; };
+		D65B25C91331C8B60052AEE2 /* iPosLogin.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B33131B4312000210C7 /* iPosLogin.png */; };
+		D65B25CA1331C8B60052AEE2 /* iPosLogin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B34131B4312000210C7 /* iPosLogin@2x.png */; };
+		D65B25CC1331C8B60052AEE2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		D65B25CE1331C8B60052AEE2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		D65B25CF1331C8B60052AEE2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		D65B25D01331C8B60052AEE2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		D65B25D11331C8B60052AEE2 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FC1302586800B77769 /* CFNetwork.framework */; };
+		D65B25D21331C8B60052AEE2 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FE1302586800B77769 /* MobileCoreServices.framework */; };
+		D65B25D31331C8B60052AEE2 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
+		D65B25D41331C8B60052AEE2 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08021302586800B77769 /* libz.1.2.3.dylib */; };
+		D65B25D61331C8B60052AEE2 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
+		D65B25D71331C8B60052AEE2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
+		D65B25D81331C8B60052AEE2 /* libiPOSFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */; };
+		D65B25D91331C8B60052AEE2 /* libOPIFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B435B213159F72000C0AA8 /* libOPIFoundation.a */; };
+		D65B25DA1331C8B60052AEE2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D698A47E1325E50E00371985 /* OpenGLES.framework */; };
 		D65EB2BF132AE30C0066E1FA /* NSString+Base64Encode.m in Sources */ = {isa = PBXBuildFile; fileRef = D65EB2A1132AE1C10066E1FA /* NSString+Base64Encode.m */; };
 		D65EB2C0132AE30E0066E1FA /* NSString+Base64Encode.h in Headers */ = {isa = PBXBuildFile; fileRef = D65EB2A0132AE1C10066E1FA /* NSString+Base64Encode.h */; };
 		D67943A313160884004B8254 /* iPOSServiceIntTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */; };
@@ -140,6 +159,20 @@
 		D6BA07FF1302586800B77769 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FE1302586800B77769 /* MobileCoreServices.framework */; };
 		D6BA08011302586800B77769 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
 		D6BA08031302586800B77769 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08021302586800B77769 /* libz.1.2.3.dylib */; };
+		D6CC18DB1331D1690042745E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FC1302586800B77769 /* CFNetwork.framework */; };
+		D6CC18DC1331D1690042745E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		D6CC18DD1331D1690042745E /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
+		D6CC18DE1331D1690042745E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		D6CC18DF1331D1690042745E /* libiPOSFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */; };
+		D6CC18E01331D1690042745E /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
+		D6CC18E11331D1690042745E /* libOPIFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B435B213159F72000C0AA8 /* libOPIFoundation.a */; };
+		D6CC18E21331D1690042745E /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08021302586800B77769 /* libz.1.2.3.dylib */; };
+		D6CC18E31331D1690042745E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FE1302586800B77769 /* MobileCoreServices.framework */; };
+		D6CC18E41331D1690042745E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D698A47E1325E50E00371985 /* OpenGLES.framework */; };
+		D6CC18E51331D1690042745E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
+		D6CC18E61331D1690042745E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
+		D6CC18E71331D1690042745E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		D6E24DCE1331CCC900931787 /* AppTests.octest in Resources */ = {isa = PBXBuildFile; fileRef = D6334A2D1331C9CE000DEDBB /* AppTests.octest */; };
 		D6E9E9D11316037900FF1498 /* libiPOSFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */; };
 		D6E9E9D21316037900FF1498 /* libOPIFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B435B213159F72000C0AA8 /* libOPIFoundation.a */; };
 		D6E9EA601316056500FF1498 /* libiPOSFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */; };
@@ -147,6 +180,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		D6334A321331C9DD000DEDBB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6334A2C1331C9CE000DEDBB;
+			remoteInfo = AppTests;
+		};
+		D65B25BF1331C8B60052AEE2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6B4366E1315A7DD000C0AA8;
+			remoteInfo = iPOSFoundation;
+		};
+		D65B25C11331C8B60052AEE2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6B435B113159F72000C0AA8;
+			remoteInfo = OPIFoundation;
+		};
 		D67943A71316089C004B8254 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -204,6 +258,20 @@
 			remoteInfo = iPOSFoundation;
 		};
 		D6B439121315B242000C0AA8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6B435B113159F72000C0AA8;
+			remoteInfo = OPIFoundation;
+		};
+		D6CC18BC1331D1150042745E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6B4366E1315A7DD000C0AA8;
+			remoteInfo = iPOSFoundation;
+		};
+		D6CC18BE1331D1150042745E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
@@ -300,22 +368,28 @@
 		D61C3C6912FCA9C0003C3A47 /* OrderItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderItem.m; sourceTree = "<group>"; };
 		D62853C412FB9B650024228B /* LayoutUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutUtils.h; sourceTree = "<group>"; };
 		D62853C512FB9B650024228B /* LayoutUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutUtils.m; sourceTree = "<group>"; };
+		D6334A2D1331C9CE000DEDBB /* AppTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6334A2E1331C9CE000DEDBB /* AppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AppTests-Info.plist"; sourceTree = "<group>"; };
+		D6334A341331CA25000DEDBB /* BasicAppTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicAppTestCase.h; sourceTree = "<group>"; };
+		D6334A351331CA25000DEDBB /* BasicAppTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicAppTestCase.m; sourceTree = "<group>"; };
 		D64B7E1312F9D7EA006AB141 /* UnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D64B7E1412F9D7EA006AB141 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
 		D64B7E3412F9D8FD006AB141 /* SampleUnitTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleUnitTestCase.h; sourceTree = "<group>"; };
 		D64B7E3512F9D8FD006AB141 /* SampleUnitTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleUnitTestCase.m; sourceTree = "<group>"; };
-		D64B7EB112F9DFA7006AB141 /* AppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AppTests-Info.plist"; sourceTree = "<group>"; };
+		D64B7EB112F9DFA7006AB141 /* IntTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IntTests-Info.plist"; sourceTree = "<group>"; };
 		D64B7EBF12F9DFF5006AB141 /* iPOSServiceIntTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSServiceIntTestCase.h; sourceTree = "<group>"; };
 		D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPOSServiceIntTestCase.m; sourceTree = "<group>"; };
 		D64E5AE7130262B0002EAD70 /* libLineaSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libLineaSDK.a; sourceTree = "<group>"; };
 		D64E5B8713026566002EAD70 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		D656013C130B71B4000968BA /* iPosFacadeWithMocksTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPosFacadeWithMocksTestCase.h; sourceTree = "<group>"; };
 		D656013D130B71B4000968BA /* iPosFacadeWithMocksTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPosFacadeWithMocksTestCase.m; sourceTree = "<group>"; };
+		D65B25DE1331C8B60052AEE2 /* iPOSTesting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPOSTesting.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D65B25E31331C8B60052AEE2 /* iPOSTesting-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iPOSTesting-Info.plist"; sourceTree = "<group>"; };
 		D65EB2A0132AE1C10066E1FA /* NSString+Base64Encode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64Encode.h"; sourceTree = "<group>"; };
 		D65EB2A1132AE1C10066E1FA /* NSString+Base64Encode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64Encode.m"; sourceTree = "<group>"; };
 		D65FD4B91302303A00F4C19D /* BarcodeScannerCardReaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarcodeScannerCardReaderDelegate.h; sourceTree = "<group>"; };
 		D65FD4BA1302303A00F4C19D /* BarcodeScannerCardReaderDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarcodeScannerCardReaderDelegate.m; sourceTree = "<group>"; };
-		D679438C131607A8004B8254 /* AppTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D679438C131607A8004B8254 /* IntTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D683BE0C1321437A008D923F /* Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Store.h; sourceTree = "<group>"; };
 		D683BE0D1321437A008D923F /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
 		D683BE1013214391008D923F /* ItemAvailability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemAvailability.h; sourceTree = "<group>"; };
@@ -426,6 +500,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D6334A2A1331C9CE000DEDBB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6CC18DB1331D1690042745E /* CFNetwork.framework in Frameworks */,
+				D6CC18DC1331D1690042745E /* CoreGraphics.framework in Frameworks */,
+				D6CC18DD1331D1690042745E /* ExternalAccessory.framework in Frameworks */,
+				D6CC18DE1331D1690042745E /* Foundation.framework in Frameworks */,
+				D6CC18DF1331D1690042745E /* libiPOSFoundation.a in Frameworks */,
+				D6CC18E01331D1690042745E /* libLineaSDK.a in Frameworks */,
+				D6CC18E11331D1690042745E /* libOPIFoundation.a in Frameworks */,
+				D6CC18E21331D1690042745E /* libz.1.2.3.dylib in Frameworks */,
+				D6CC18E31331D1690042745E /* MobileCoreServices.framework in Frameworks */,
+				D6CC18E41331D1690042745E /* OpenGLES.framework in Frameworks */,
+				D6CC18E51331D1690042745E /* QuartzCore.framework in Frameworks */,
+				D6CC18E61331D1690042745E /* SystemConfiguration.framework in Frameworks */,
+				D6CC18E71331D1690042745E /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D64B7E1012F9D7EA006AB141 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -443,6 +537,26 @@
 				D679459C13160D05004B8254 /* SystemConfiguration.framework in Frameworks */,
 				D6B43A401315B343000C0AA8 /* UIKit.framework in Frameworks */,
 				D61B635C1328428C0030E87E /* OpenGLES.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D65B25CD1331C8B60052AEE2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D65B25CE1331C8B60052AEE2 /* Foundation.framework in Frameworks */,
+				D65B25CF1331C8B60052AEE2 /* UIKit.framework in Frameworks */,
+				D65B25D01331C8B60052AEE2 /* CoreGraphics.framework in Frameworks */,
+				D65B25D11331C8B60052AEE2 /* CFNetwork.framework in Frameworks */,
+				D65B25D21331C8B60052AEE2 /* MobileCoreServices.framework in Frameworks */,
+				D65B25D31331C8B60052AEE2 /* SystemConfiguration.framework in Frameworks */,
+				D65B25D41331C8B60052AEE2 /* libz.1.2.3.dylib in Frameworks */,
+				D65B25D61331C8B60052AEE2 /* ExternalAccessory.framework in Frameworks */,
+				D65B25D71331C8B60052AEE2 /* QuartzCore.framework in Frameworks */,
+				D65B25D81331C8B60052AEE2 /* libiPOSFoundation.a in Frameworks */,
+				D65B25D91331C8B60052AEE2 /* libOPIFoundation.a in Frameworks */,
+				D65B25DA1331C8B60052AEE2 /* OpenGLES.framework in Frameworks */,
+				D6334A571331CADB000DEDBB /* libLineaSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,9 +650,11 @@
 				1D6058910D05DD3D006BFB54 /* iPOS.app */,
 				D697D1E01312DCD0002C3EF6 /* iPOSDemo.app */,
 				D64B7E1312F9D7EA006AB141 /* UnitTests.octest */,
-				D679438C131607A8004B8254 /* AppTests.octest */,
+				D679438C131607A8004B8254 /* IntTests.octest */,
 				D6B435B213159F72000C0AA8 /* libOPIFoundation.a */,
 				D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */,
+				D65B25DE1331C8B60052AEE2 /* iPOSTesting.app */,
+				D6334A2D1331C9CE000DEDBB /* AppTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -555,6 +671,7 @@
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				D6A96658130F0C3C004D90C4 /* Settings.bundle */,
 				D698A47E1325E50E00371985 /* OpenGLES.framework */,
+				D6334A2E1331C9CE000DEDBB /* AppTests-Info.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -577,9 +694,10 @@
 				B4300B2F131B4300000210C7 /* iPosIcon.png */,
 				B4300B30131B4300000210C7 /* iPosIcon@2x.png */,
 				D64B7E1412F9D7EA006AB141 /* UnitTests-Info.plist */,
-				D64B7EB112F9DFA7006AB141 /* AppTests-Info.plist */,
+				D64B7EB112F9DFA7006AB141 /* IntTests-Info.plist */,
 				8D1107310486CEB800E47090 /* iPOS-Info.plist */,
 				D697D1E21312DCD0002C3EF6 /* iPOSDemo-Info.plist */,
+				D65B25E31331C8B60052AEE2 /* iPOSTesting-Info.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -755,22 +873,32 @@
 			name = UnitTests;
 			sourceTree = "<group>";
 		};
-		D64B7E2712F9D87C006AB141 /* AppTests */ = {
+		D64B7E2712F9D87C006AB141 /* IntTests */ = {
 			isa = PBXGroup;
 			children = (
 				D64B7EBF12F9DFF5006AB141 /* iPOSServiceIntTestCase.h */,
 				D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */,
 			);
-			name = AppTests;
+			name = IntTests;
 			sourceTree = "<group>";
 		};
 		D64B7E3312F9D8B4006AB141 /* TestSuites */ = {
 			isa = PBXGroup;
 			children = (
+				D65B25B61331C8A40052AEE2 /* AppTests */,
 				D64B7E2612F9D869006AB141 /* UnitTests */,
-				D64B7E2712F9D87C006AB141 /* AppTests */,
+				D64B7E2712F9D87C006AB141 /* IntTests */,
 			);
 			name = TestSuites;
+			sourceTree = "<group>";
+		};
+		D65B25B61331C8A40052AEE2 /* AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				D6334A341331CA25000DEDBB /* BasicAppTestCase.h */,
+				D6334A351331CA25000DEDBB /* BasicAppTestCase.m */,
+			);
+			name = AppTests;
 			sourceTree = "<group>";
 		};
 		D66892E11311DE320046C68F /* ThirdParty */ = {
@@ -967,6 +1095,26 @@
 			productReference = 1D6058910D05DD3D006BFB54 /* iPOS.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D6334A2C1331C9CE000DEDBB /* AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D6334A311331C9CF000DEDBB /* Build configuration list for PBXNativeTarget "AppTests" */;
+			buildPhases = (
+				D6334A281331C9CE000DEDBB /* Resources */,
+				D6334A291331C9CE000DEDBB /* Sources */,
+				D6334A2A1331C9CE000DEDBB /* Frameworks */,
+				D6334A2B1331C9CE000DEDBB /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D6CC18BD1331D1150042745E /* PBXTargetDependency */,
+				D6CC18BF1331D1150042745E /* PBXTargetDependency */,
+			);
+			name = AppTests;
+			productName = AppTests;
+			productReference = D6334A2D1331C9CE000DEDBB /* AppTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
 		D64B7E1212F9D7EA006AB141 /* UnitTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D64B7E1712F9D7EA006AB141 /* Build configuration list for PBXNativeTarget "UnitTests" */;
@@ -987,9 +1135,29 @@
 			productReference = D64B7E1312F9D7EA006AB141 /* UnitTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
-		D679438B131607A8004B8254 /* AppTests */ = {
+		D65B25BD1331C8B60052AEE2 /* iPOSTesting */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D679439813160816004B8254 /* Build configuration list for PBXNativeTarget "AppTests" */;
+			buildConfigurationList = D65B25DB1331C8B60052AEE2 /* Build configuration list for PBXNativeTarget "iPOSTesting" */;
+			buildPhases = (
+				D65B25C61331C8B60052AEE2 /* Resources */,
+				D65B25CB1331C8B60052AEE2 /* Sources */,
+				D65B25CD1331C8B60052AEE2 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D65B25BE1331C8B60052AEE2 /* PBXTargetDependency */,
+				D65B25C01331C8B60052AEE2 /* PBXTargetDependency */,
+				D6334A331331C9DD000DEDBB /* PBXTargetDependency */,
+			);
+			name = iPOSTesting;
+			productName = iPOS;
+			productReference = D65B25DE1331C8B60052AEE2 /* iPOSTesting.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D679438B131607A8004B8254 /* IntTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D679439813160816004B8254 /* Build configuration list for PBXNativeTarget "IntTests" */;
 			buildPhases = (
 				D6794387131607A8004B8254 /* Resources */,
 				D6794388131607A8004B8254 /* Sources */,
@@ -1002,9 +1170,9 @@
 				D67943A81316089C004B8254 /* PBXTargetDependency */,
 				D67943AA1316089C004B8254 /* PBXTargetDependency */,
 			);
-			name = AppTests;
+			name = IntTests;
 			productName = AppTests;
-			productReference = D679438C131607A8004B8254 /* AppTests.octest */;
+			productReference = D679438C131607A8004B8254 /* IntTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 		D697D1961312DCD0002C3EF6 /* iPOSDemo */ = {
@@ -1081,9 +1249,11 @@
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* iPOS */,
+				D65B25BD1331C8B60052AEE2 /* iPOSTesting */,
 				D697D1961312DCD0002C3EF6 /* iPOSDemo */,
 				D64B7E1212F9D7EA006AB141 /* UnitTests */,
-				D679438B131607A8004B8254 /* AppTests */,
+				D679438B131607A8004B8254 /* IntTests */,
+				D6334A2C1331C9CE000DEDBB /* AppTests */,
 				D6B4366E1315A7DD000C0AA8 /* iPOSFoundation */,
 				D6B435B113159F72000C0AA8 /* OPIFoundation */,
 			);
@@ -1102,10 +1272,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D6334A281331C9CE000DEDBB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D64B7E0E12F9D7EA006AB141 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D65B25C61331C8B60052AEE2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6E24DCE1331CCC900931787 /* AppTests.octest in Resources */,
+				D65B25C71331C8B60052AEE2 /* iPosIcon.png in Resources */,
+				D65B25C81331C8B60052AEE2 /* iPosIcon@2x.png in Resources */,
+				D65B25C91331C8B60052AEE2 /* iPosLogin.png in Resources */,
+				D65B25CA1331C8B60052AEE2 /* iPosLogin@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1132,6 +1321,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		D6334A2B1331C9CE000DEDBB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"  1> /tmp/RunUnitTests.out\n";
+		};
 		D64B7E1112F9D7EA006AB141 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1169,6 +1371,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D6334A291331C9CE000DEDBB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6334A361331CA25000DEDBB /* BasicAppTestCase.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D64B7E0F12F9D7EA006AB141 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1177,6 +1387,14 @@
 				D697D15F1312D98F002C3EF6 /* SampleUnitTestCase.m in Sources */,
 				D6179DF61317DBEE00ACAFDD /* iPOSServiceMock.m in Sources */,
 				D6179DF71317DBEE00ACAFDD /* InventoryServiceMock.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D65B25CB1331C8B60052AEE2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D65B25CC1331C8B60052AEE2 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1277,6 +1495,21 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		D6334A331331C9DD000DEDBB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6334A2C1331C9CE000DEDBB /* AppTests */;
+			targetProxy = D6334A321331C9DD000DEDBB /* PBXContainerItemProxy */;
+		};
+		D65B25BE1331C8B60052AEE2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6B4366E1315A7DD000C0AA8 /* iPOSFoundation */;
+			targetProxy = D65B25BF1331C8B60052AEE2 /* PBXContainerItemProxy */;
+		};
+		D65B25C01331C8B60052AEE2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6B435B113159F72000C0AA8 /* OPIFoundation */;
+			targetProxy = D65B25C11331C8B60052AEE2 /* PBXContainerItemProxy */;
+		};
 		D67943A81316089C004B8254 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D6B4366E1315A7DD000C0AA8 /* iPOSFoundation */;
@@ -1294,7 +1527,7 @@
 		};
 		D67945A013160D17004B8254 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D679438B131607A8004B8254 /* AppTests */;
+			target = D679438B131607A8004B8254 /* IntTests */;
 			targetProxy = D679459F13160D17004B8254 /* PBXContainerItemProxy */;
 		};
 		D6B4386F1315ABA8000C0AA8 /* PBXTargetDependency */ = {
@@ -1321,6 +1554,16 @@
 			isa = PBXTargetDependency;
 			target = D6B435B113159F72000C0AA8 /* OPIFoundation */;
 			targetProxy = D6B439121315B242000C0AA8 /* PBXContainerItemProxy */;
+		};
+		D6CC18BD1331D1150042745E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6B4366E1315A7DD000C0AA8 /* iPOSFoundation */;
+			targetProxy = D6CC18BC1331D1150042745E /* PBXContainerItemProxy */;
+		};
+		D6CC18BF1331D1150042745E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6B435B113159F72000C0AA8 /* OPIFoundation */;
+			targetProxy = D6CC18BE1331D1150042745E /* PBXContainerItemProxy */;
 		};
 		D6E9E9CE1316036B00FF1498 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1418,6 +1661,77 @@
 			};
 			name = Release;
 		};
+		D6334A2F1331C9CF000DEDBB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "AppTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				OTHER_LDFLAGS = (
+					"-lxml2",
+					"-ObjC",
+					"-all_load",
+					"-framework",
+					Foundation,
+					"-framework",
+					SenTestingKit,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = AppTests;
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		D6334A301331C9CF000DEDBB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				INFOPLIST_FILE = "AppTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					SenTestingKit,
+					"-framework",
+					UIKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = AppTests;
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = octest;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		D64B7E1512F9D7EA006AB141 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1435,6 +1749,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEMO_MODE=1";
+				GCC_VERSION = 4.2;
 				INFOPLIST_FILE = "UnitTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1493,6 +1808,53 @@
 			};
 			name = Release;
 		};
+		D65B25DC1331C8B60052AEE2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_USE_STANDARD_INCLUDE_SEARCHING = YES;
+				INFOPLIST_FILE = "iPOSTesting-Info.plist";
+				INFOPLIST_PREPROCESS = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\\\"$(SRCROOT)\\\"",
+					"\"$(SRCROOT)\"",
+				);
+				OTHER_LDFLAGS = (
+					"-lxml2",
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = iPOSTesting;
+				VALID_ARCHS = "armv6 armv7";
+			};
+			name = Debug;
+		};
+		D65B25DD1331C8B60052AEE2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
+				INFOPLIST_FILE = "iPOS-Info copy.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\\\"$(SRCROOT)\\\"",
+					"\"$(SRCROOT)\"",
+				);
+				PRODUCT_NAME = iPOS;
+			};
+			name = Release;
+		};
 		D679438D131607A9004B8254 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1508,7 +1870,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEMO_MODE=1";
-				INFOPLIST_FILE = "AppTests-Info.plist";
+				INFOPLIST_FILE = "IntTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1525,7 +1887,7 @@
 					UIKit,
 				);
 				PREBINDING = NO;
-				PRODUCT_NAME = AppTests;
+				PRODUCT_NAME = IntTests;
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = octest;
 			};
@@ -1544,7 +1906,7 @@
 				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				INFOPLIST_FILE = "AppTests-Info.plist";
+				INFOPLIST_FILE = "IntTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -1703,6 +2065,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		D6334A311331C9CF000DEDBB /* Build configuration list for PBXNativeTarget "AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D6334A2F1331C9CF000DEDBB /* Debug */,
+				D6334A301331C9CF000DEDBB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D64B7E1712F9D7EA006AB141 /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1712,7 +2083,16 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D679439813160816004B8254 /* Build configuration list for PBXNativeTarget "AppTests" */ = {
+		D65B25DB1331C8B60052AEE2 /* Build configuration list for PBXNativeTarget "iPOSTesting" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D65B25DC1331C8B60052AEE2 /* Debug */,
+				D65B25DD1331C8B60052AEE2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D679439813160816004B8254 /* Build configuration list for PBXNativeTarget "IntTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D679438D131607A9004B8254 /* Debug */,
