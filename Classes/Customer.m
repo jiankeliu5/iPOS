@@ -11,7 +11,7 @@
 
 @implementation Customer
 
-@synthesize customerId, customerType, firstName, lastName, phoneNumber, emailAddress, store, address, errorList, taxExempt;
+@synthesize customerId, customerType, customerTypeId, firstName, lastName, phoneNumber, emailAddress, store, address, errorList, taxExempt;
 
 #pragma mark Initializer and Memory Mgmt
 -(id) init {
@@ -27,6 +27,7 @@
 
 -(void) dealloc {
     [customerType release];
+    [customerTypeId release];
     [firstName release];
     [lastName release];
     [phoneNumber release];

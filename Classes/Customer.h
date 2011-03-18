@@ -15,6 +15,7 @@
 @interface Customer : NSObject {
     NSNumber *customerId;
     NSString *customerType;
+    NSNumber *customerTypeId;
     
     NSString *firstName;
     NSString *lastName;
@@ -31,6 +32,7 @@
 
 @property (nonatomic, retain) NSNumber *customerId;
 @property (nonatomic, retain) NSString *customerType;
+@property (nonatomic, retain) NSNumber *customerTypeId;
 
 @property (nonatomic, retain) NSString *firstName;
 @property (nonatomic, retain) NSString *lastName;

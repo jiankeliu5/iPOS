@@ -88,6 +88,10 @@
     STAssertNotNil(customer.address, @"Address should not be nil");
     STAssertNil(customer.errorList, @"There should be no errors returned.");
     
+    STAssertTrue([customer.customerId isEqualToNumber: [NSNumber numberWithInt:1234]], @"Expected Customer ID to be 1234");
+    STAssertTrue([customer.customerType isEqualToString:@"Retail"], @"Expected Customer Type to be Retail");
+    STAssertTrue([customer.customerTypeId isEqualToNumber: [NSNumber numberWithInt:1]], @"Expected Customer Type ID to be 1");
+    
     STAssertTrue([customer.firstName isEqualToString:@"Jimmy"], @"Expected first name to be Jimmy");
     STAssertTrue([customer.lastName isEqualToString:@"Testing"], @"Expected last name to be Testing");
     STAssertTrue([customer.emailAddress isEqualToString:@"test@test.blackhole.com"], @"Expected email to be test@test.blackhole.com");

@@ -131,6 +131,13 @@
             customer.customerType = [element stringValue];
         }
         
+        nodes = [root elementsForName:@"CustomerTypeID"];
+        element = [nodes lastObject];
+        
+        if (element) {
+            customer.customerTypeId = [NSNumber numberWithInt:[[element stringValue] intValue]];
+        }
+        
         nodes = [root elementsForName:@"CustomerName"];
         element = [nodes lastObject];
         
