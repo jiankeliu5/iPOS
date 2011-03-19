@@ -25,20 +25,24 @@
 #define DETAIL_VIEW_WIDTH 300.0f
 #define DETAIL_VIEW_HEIGHT 77.0f
 #define DETAIL_LABEL_X 0.0f
-#define DETAIL_LABEL_WIDTH 80.0f
-#define DETAIL_DATA_X 90.0f
-#define DETAIL_DATA_WIDTH 210.0f
+#define DETAIL_LABEL_WIDTH 40.0f
+#define DETAIL_DATA_X 40.0f
+#define DETAIL_DATA_WIDTH 260.0f
 #define CONFIRM_BUTTON_X 180.0f
 
-@interface CustomerViewController : UIViewController {
+@interface CustomerViewController : UIViewController <UITextFieldDelegate> {
 	
 	iPOSFacade *facade;
 
 	ExtUITextField *custPhoneField;
+	NSString *phoneMask;
 	MOGlassButton *custSearchButton;
 	MOGlassButton *custNewButton;
 	MOGlassButton *custEditButton;
 	MOGlassButton *confirmButton;
+	UIImage *numberPadDoneImageNormal;
+    UIImage *numberPadDoneImageHighlighted;
+    UIButton *numberPadDoneButton;
 	
 	UIView *detailView;
 	UILabel *firstLabel;
@@ -51,7 +55,16 @@
 	UILabel *zip;
 	
 	BOOL custDetailsOpen;
+	id currentFirstResponder;
 	
 }
+
+@property (nonatomic, retain) NSString *phoneMask;
+@property (nonatomic, retain) UIImage *numberPadDoneImageNormal;
+@property (nonatomic, retain) UIImage *numberPadDoneImageHighlighted;
+@property (nonatomic, retain) UIButton *numberPadDoneButton;
+@property (nonatomic, retain) id currentFirstResponder;
+
+- (void)numberPadDoneButton:(id)sender;
 
 @end

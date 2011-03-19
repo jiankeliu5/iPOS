@@ -20,6 +20,8 @@
 		B4300B9E131B486C000210C7 /* iPosLogin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B34131B4312000210C7 /* iPosLogin@2x.png */; };
 		B4300B9F131B486C000210C7 /* iPosIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B2F131B4300000210C7 /* iPosIcon.png */; };
 		B4300BA0131B486C000210C7 /* iPosIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B30131B4300000210C7 /* iPosIcon@2x.png */; };
+		B4A7397D133457EA002DFA97 /* DoneDown3.png in Resources */ = {isa = PBXBuildFile; fileRef = B4A7397B133457EA002DFA97 /* DoneDown3.png */; };
+		B4A7397E133457EA002DFA97 /* DoneUp3.png in Resources */ = {isa = PBXBuildFile; fileRef = B4A7397C133457EA002DFA97 /* DoneUp3.png */; };
 		B4D1984A1326BF40007CCE08 /* UIViewController+ViewControllerLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B4D198451326BE0A007CCE08 /* UIViewController+ViewControllerLayout.m */; };
 		B4D1984B1326BF49007CCE08 /* UIViewController+ViewControllerLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = B4D198441326BE0A007CCE08 /* UIViewController+ViewControllerLayout.h */; };
 		B4D199801329B9B4007CCE08 /* UIView+ViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B4D1996C1329B8D5007CCE08 /* UIView+ViewLayout.m */; };
@@ -326,6 +328,8 @@
 		B47AA7F512F7DD7200AAD34C /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		B48A7E0E13107EEE00F6412C /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
 		B48A7E0F13107EEE00F6412C /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
+		B4A7397B133457EA002DFA97 /* DoneDown3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DoneDown3.png; sourceTree = "<group>"; };
+		B4A7397C133457EA002DFA97 /* DoneUp3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DoneUp3.png; sourceTree = "<group>"; };
 		B4B367C412F936AC00F37FE9 /* DrawUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawUtils.h; sourceTree = "<group>"; };
 		B4B367C512F936AC00F37FE9 /* DrawUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawUtils.m; sourceTree = "<group>"; };
 		B4C469D313070300001EADE4 /* CustomerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerViewController.h; sourceTree = "<group>"; };
@@ -688,6 +692,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B4A7397B133457EA002DFA97 /* DoneDown3.png */,
+				B4A7397C133457EA002DFA97 /* DoneUp3.png */,
 				D698A4A91325E83300371985 /* Particle.png */,
 				B4300B33131B4312000210C7 /* iPosLogin.png */,
 				B4300B34131B4312000210C7 /* iPosLogin@2x.png */,
@@ -1315,6 +1321,8 @@
 				B4300BA0131B486C000210C7 /* iPosIcon@2x.png in Resources */,
 				D697D1981312DCD0002C3EF6 /* Settings.bundle in Resources */,
 				D698A4C31325E9D900371985 /* Particle.png in Resources */,
+				B4A7397D133457EA002DFA97 /* DoneDown3.png in Resources */,
+				B4A7397E133457EA002DFA97 /* DoneUp3.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

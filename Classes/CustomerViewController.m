@@ -15,9 +15,17 @@
 - (UILabel *) createNormalLabel:(NSString *)text withRect:(CGRect)rect;
 - (UILabel *) createBoldLabel:(NSString *)text withRect:(CGRect)rect;
 - (void) updateViewLayout;
+- (void)updateKeyboardButtonFor:(ExtUITextField *)textField;
+- (void)keyboardDidShow:(NSNotification *)note;
+- (void)numberPadDoneButton:(id)sender;
+- (void)formatInput:(ExtUITextField*)aTextField string:(NSString*)aString range:(NSRange)aRange;
+
 @end
 
 @implementation CustomerViewController
+
+@synthesize phoneMask, currentFirstResponder; 
+@synthesize numberPadDoneImageNormal, numberPadDoneImageHighlighted, numberPadDoneButton;
 
 #pragma mark Constructors
 - (id)init
@@ -34,11 +42,20 @@
 	//[[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
 	
 	facade = [iPOSFacade sharedInstance];
-	
+	[self setPhoneMask:@"999-999-9999"];
+	self.numberPadDoneImageNormal = [UIImage imageNamed:@"DoneUp3.png"];
+	self.numberPadDoneImageHighlighted = [UIImage imageNamed:@"DoneDown3.png"];
+
     return self;
 }
 
 - (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self]; 
+	[self setPhoneMask:nil];
+	[self setCurrentFirstResponder:nil];
+	[self setNumberPadDoneImageNormal:nil];
+    [self setNumberPadDoneImageHighlighted:nil];
+    [self setNumberPadDoneButton:nil];
     [super dealloc];
 }
 
@@ -70,6 +87,7 @@
 	custPhoneField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	custPhoneField.returnKeyType = UIReturnKeyGo;
 	custPhoneField.keyboardType = UIKeyboardTypeNumberPad;
+	
 	[self.view addSubview:custPhoneField];
 	[custPhoneField release];
 	
@@ -84,7 +102,7 @@
 	detailView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, DETAIL_VIEW_WIDTH, DETAIL_VIEW_HEIGHT)];
 	
 	CGFloat dy = LABEL_SPACING;
-	firstLabel = [self createNormalLabel:@"First Name" withRect:CGRectMake(DETAIL_LABEL_X, dy, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
+	firstLabel = [self createNormalLabel:@"First" withRect:CGRectMake(DETAIL_LABEL_X, dy, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:firstLabel];
 	[firstLabel release];
 	firstName = [self createBoldLabel:@"Megan" withRect:CGRectMake(DETAIL_DATA_X, dy, DETAIL_DATA_WIDTH, LABEL_HEIGHT)];
@@ -92,7 +110,7 @@
 	[firstName release];
 	
 	dy += LABEL_HEIGHT + LABEL_SPACING;
-	lastLabel = [self createNormalLabel:@"Last Name" withRect:CGRectMake(DETAIL_LABEL_X, dy, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
+	lastLabel = [self createNormalLabel:@"Last" withRect:CGRectMake(DETAIL_LABEL_X, dy, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:lastLabel];
 	[lastLabel release];
 	lastName = [self createBoldLabel:@"Hoy" withRect:CGRectMake(DETAIL_DATA_X, dy, DETAIL_DATA_WIDTH, LABEL_HEIGHT)];
@@ -100,7 +118,7 @@
 	[lastName release];
 	
 	dy += LABEL_HEIGHT + LABEL_SPACING;
-	emailLabel = [self createNormalLabel:@"Email Address" withRect:CGRectMake(DETAIL_LABEL_X, dy, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
+	emailLabel = [self createNormalLabel:@"Email" withRect:CGRectMake(DETAIL_LABEL_X, dy, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:emailLabel];
 	[emailLabel release];
 	email = [self createBoldLabel:@"Mhoy@tileshop.com" withRect:CGRectMake(DETAIL_DATA_X, dy, DETAIL_DATA_WIDTH, LABEL_HEIGHT)];
@@ -108,7 +126,7 @@
 	[email release];
 	
 	dy += LABEL_HEIGHT + LABEL_SPACING;
-	zipLabel = [self createNormalLabel:@"Zip Code" withRect:CGRectMake(DETAIL_LABEL_X, dy, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
+	zipLabel = [self createNormalLabel:@"Zip" withRect:CGRectMake(DETAIL_LABEL_X, dy, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:zipLabel];
 	[zipLabel release];
 	zip = [self createBoldLabel:@"55441" withRect:CGRectMake(DETAIL_DATA_X, dy, DETAIL_DATA_WIDTH, LABEL_HEIGHT)];
@@ -146,6 +164,7 @@
 		[self.navigationController setNavigationBarHidden:NO];
 	}
 	
+	custPhoneField.delegate = self;
 	[custSearchButton addTarget:self action:@selector(handleSearchButton:) forControlEvents:UIControlEventTouchUpInside];
 	
 }
@@ -163,6 +182,10 @@
 	
 	[self updateViewLayout];
 	
+	[[NSNotificationCenter defaultCenter] addObserver:self 
+											 selector:@selector(keyboardDidShow:) 
+												 name:UIKeyboardDidShowNotification 
+											   object:nil];
 	// Do this last
 	[super viewWillAppear:animated];
 	
@@ -174,6 +197,9 @@
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
+	[[NSNotificationCenter defaultCenter] removeObserver:self 
+													name:UIKeyboardDidShowNotification 
+												  object:nil]; 
 	// Do this at the end
 	[super viewWillDisappear:animated];
 }
@@ -197,15 +223,146 @@
 }
 
 #pragma mark -
+#pragma mark Keyboard Managment
+- (void)updateKeyboardButtonFor:(ExtUITextField *)textField {
+	
+    // Remove any previous button
+    [self.numberPadDoneButton removeFromSuperview];
+    self.numberPadDoneButton = nil;
+	
+    // Does the text field use a number pad?
+    if (textField.keyboardType != UIKeyboardTypeNumberPad)
+        return;
+	
+    // If there's no keyboard yet, don't do anything
+    if ([[[UIApplication sharedApplication] windows] count] < 2)
+        return;
+    UIWindow *keyboardWindow = [[[UIApplication sharedApplication] windows] objectAtIndex:1];
+	
+    // Create new custom button
+    self.numberPadDoneButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.numberPadDoneButton.frame = CGRectMake(0, 163, 106, 53);
+    self.numberPadDoneButton.adjustsImageWhenHighlighted = FALSE;
+    [self.numberPadDoneButton setImage:self.numberPadDoneImageNormal forState:UIControlStateNormal];
+    [self.numberPadDoneButton setImage:self.numberPadDoneImageHighlighted forState:UIControlStateHighlighted];
+    [self.numberPadDoneButton addTarget:self action:@selector(numberPadDoneButton:) forControlEvents:UIControlEventTouchUpInside];
+	
+    // Locate keyboard view and add button
+    for (UIView *subView in keyboardWindow.subviews) {
+        if ([[subView description] hasPrefix:@"<UIPeripheralHost"]) {
+            [subView addSubview:self.numberPadDoneButton];
+            [self.numberPadDoneButton addTarget:self action:@selector(numberPadDoneButton:) forControlEvents:UIControlEventTouchUpInside];
+            break;
+        }
+    }
+}
+
+- (void)keyboardDidShow:(NSNotification *)note {
+    [self updateKeyboardButtonFor:self.currentFirstResponder];
+}
+
+#pragma mark -
+#pragma mark ExtUITextField delegates
+- (BOOL)textFieldShouldBeginEditing:(ExtUITextField *)textField {
+	self.currentFirstResponder = textField;
+	return YES;
+}
+
+- (void)textFieldDidBeginEditing:(ExtUITextField *)textField {
+	self.currentFirstResponder = textField;
+	[self updateKeyboardButtonFor:textField];
+}
+
+- (void)textFieldDidEndEditing:(ExtUITextField *)textField {
+	self.currentFirstResponder = nil;
+	
+}
+
+- (BOOL)textFieldShouldReturn:(ExtUITextField *)textField {
+	[textField resignFirstResponder];
+	return YES;
+}
+
+- (void)formatInput:(ExtUITextField*)aTextField string:(NSString*)aString range:(NSRange)aRange {
+    //Copying the contents of UITextField to an variable to add new chars later
+    NSString* value = aTextField.text;
+	
+    NSString* formattedValue = value;
+	
+    //Make sure to retrieve the newly entered char on UITextField
+    aRange.length = 1;
+	
+    NSString* _mask = [self.phoneMask substringWithRange:aRange];
+	
+    //Checking if there's a char mask at current position of cursor
+    if (_mask != nil) {
+        NSString *regex = @"[0-9]*";
+		
+        NSPredicate *regextest = [NSPredicate
+                                  predicateWithFormat:@"SELF MATCHES %@", regex];
+        //Checking if the character at this position isn't a digit
+        if (! [regextest evaluateWithObject:_mask]) {
+            //If the character at current position is a special char this char must be appended to the user entered text
+            formattedValue = [formattedValue stringByAppendingString:_mask];
+        }
+		
+        if (aRange.location + 1 < [self.phoneMask length]) {
+			_mask =  [self.phoneMask substringWithRange:NSMakeRange(aRange.location + 1, 1)];
+			if([_mask isEqualToString:@" "])
+                formattedValue = [formattedValue stringByAppendingString:_mask];
+        }
+    }
+    //Adding the user entered character
+    formattedValue = [formattedValue stringByAppendingString:aString];
+	
+    //Refreshing UITextField value      
+    aTextField.text = formattedValue;
+}
+
+// Watch the phone field as typed and insert extra characters according to the mask.
+- (BOOL)textField:(ExtUITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    //If the length of used entered text is equals to mask length the user input must be cancelled
+    if ([textField.text length] == [self.phoneMask length]) {
+        if(! [string isEqualToString:@""])
+            return NO;
+        else
+            return YES;
+    }
+    //If the user has started typing text on UITextField the formatting method must be called
+    else if ([textField.text length] || range.location == 0) {
+        if (string) {
+            if(! [string isEqualToString:@""]) {
+                [self formatInput:textField string:string range:range];
+                return NO;
+            }
+            return YES;
+        }
+        return YES;
+    }
+	
+    return YES;
+}
+
+#pragma mark -
 #pragma mark UIButton callbacks
 - (void)handleSearchButton:(id)sender {
 	NSLog(@"Got search button press");
+	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
+		[self.currentFirstResponder resignFirstResponder];
+	}
 	if (custDetailsOpen == NO) {
 		custDetailsOpen = YES;
 	} else {
 		custDetailsOpen = NO;
 	}
 	[self updateViewLayout];
+}
+
+- (void)numberPadDoneButton:(id)sender {
+	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
+		[self.currentFirstResponder resignFirstResponder];
+	}
 }
 
 #pragma mark -

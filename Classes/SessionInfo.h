@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "Customer.h"
 
 @interface SessionInfo : NSObject {
     NSNumber *employeeId;
@@ -16,6 +16,8 @@
     NSString *serverSessionId;
     
     NSString *passwordForVerification;
+	
+	Customer *currentCustomer;
 }
 
 @property (nonatomic, retain) NSNumber *employeeId;
@@ -24,5 +26,7 @@
 @property (nonatomic, retain) NSString *serverSessionId;
 
 @property (nonatomic, retain) NSString *passwordForVerification;
+
+@property (nonatomic, retain) Customer *currentCustomer;
 
 @end
