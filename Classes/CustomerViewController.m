@@ -9,9 +9,11 @@
 #import "CustomerViewController.h"
 #import "UIViewController+ViewControllerLayout.h"
 #import "UIView+ViewLayout.h"
+#import "AlertUtils.h"
 
 @interface CustomerViewController()
 - (void) handleSearchButton:(id)sender;
+- (void) handleConfirmButton:(id)sender;
 - (UILabel *) createNormalLabel:(NSString *)text withRect:(CGRect)rect;
 - (UILabel *) createBoldLabel:(NSString *)text withRect:(CGRect)rect;
 - (void) updateViewLayout;
@@ -85,6 +87,7 @@
 	custPhoneField.placeholder = @"Phone Number";
 	custPhoneField.tagName = @"CustPhone";
 	custPhoneField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+	custPhoneField.clearButtonMode = UITextFieldViewModeWhileEditing;
 	custPhoneField.returnKeyType = UIReturnKeyGo;
 	custPhoneField.keyboardType = UIKeyboardTypeNumberPad;
 	
@@ -105,7 +108,7 @@
 	firstLabel = [self createNormalLabel:@"First" withRect:CGRectMake(DETAIL_LABEL_X, dy, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:firstLabel];
 	[firstLabel release];
-	firstName = [self createBoldLabel:@"Megan" withRect:CGRectMake(DETAIL_DATA_X, dy, DETAIL_DATA_WIDTH, LABEL_HEIGHT)];
+	firstName = [self createBoldLabel:nil withRect:CGRectMake(DETAIL_DATA_X, dy, DETAIL_DATA_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:firstName];
 	[firstName release];
 	
@@ -113,7 +116,7 @@
 	lastLabel = [self createNormalLabel:@"Last" withRect:CGRectMake(DETAIL_LABEL_X, dy, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:lastLabel];
 	[lastLabel release];
-	lastName = [self createBoldLabel:@"Hoy" withRect:CGRectMake(DETAIL_DATA_X, dy, DETAIL_DATA_WIDTH, LABEL_HEIGHT)];
+	lastName = [self createBoldLabel:nil withRect:CGRectMake(DETAIL_DATA_X, dy, DETAIL_DATA_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:lastName];
 	[lastName release];
 	
@@ -121,7 +124,7 @@
 	emailLabel = [self createNormalLabel:@"Email" withRect:CGRectMake(DETAIL_LABEL_X, dy, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:emailLabel];
 	[emailLabel release];
-	email = [self createBoldLabel:@"Mhoy@tileshop.com" withRect:CGRectMake(DETAIL_DATA_X, dy, DETAIL_DATA_WIDTH, LABEL_HEIGHT)];
+	email = [self createBoldLabel:nil withRect:CGRectMake(DETAIL_DATA_X, dy, DETAIL_DATA_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:email];
 	[email release];
 	
@@ -129,7 +132,7 @@
 	zipLabel = [self createNormalLabel:@"Zip" withRect:CGRectMake(DETAIL_LABEL_X, dy, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:zipLabel];
 	[zipLabel release];
-	zip = [self createBoldLabel:@"55441" withRect:CGRectMake(DETAIL_DATA_X, dy, DETAIL_DATA_WIDTH, LABEL_HEIGHT)];
+	zip = [self createBoldLabel:nil withRect:CGRectMake(DETAIL_DATA_X, dy, DETAIL_DATA_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:zip];
 	[zip release];
 	
@@ -137,21 +140,13 @@
 	[self.view addSubview:detailView];
 	[detailView release];
 	
-	custNewButton = [[MOGlassButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, BUTTON_WIDTH, BUTTON_HEIGHT)];
-	[custNewButton setupAsSmallBlackButton];
-	custNewButton.titleLabel.textAlignment = UITextAlignmentCenter;
-	[custNewButton setTitle:@"Enter New" forState:UIControlStateNormal];
-	custNewButton.hidden = YES;
-	[self.view addSubview:custNewButton];
-	[custNewButton release];
-	
-	custEditButton = [[MOGlassButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, BUTTON_WIDTH, BUTTON_HEIGHT)];
-	[custEditButton setupAsSmallBlackButton];
-	custEditButton.titleLabel.textAlignment = UITextAlignmentCenter;
-	[custEditButton setTitle:@"Edit" forState:UIControlStateNormal];
-	custEditButton.hidden = YES;
-	[self.view addSubview:custEditButton];
-	[custEditButton release];
+	confirmButton = [[MOGlassButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, BUTTON_WIDTH, BUTTON_HEIGHT)];
+	[confirmButton setupAsSmallBlackButton];
+	confirmButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	[confirmButton setTitle:@"Confirm" forState:UIControlStateNormal];
+	confirmButton.hidden = YES;
+	[self.view addSubview:confirmButton];
+	[confirmButton release];
 	
 }
 
@@ -166,6 +161,7 @@
 	
 	custPhoneField.delegate = self;
 	[custSearchButton addTarget:self action:@selector(handleSearchButton:) forControlEvents:UIControlEventTouchUpInside];
+	[confirmButton addTarget:self action:@selector(handleConfirmButton:) forControlEvents:UIControlEventTouchUpInside];
 	
 }
 
@@ -351,12 +347,31 @@
 	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
 		[self.currentFirstResponder resignFirstResponder];
 	}
-	if (custDetailsOpen == NO) {
-		custDetailsOpen = YES;
+	
+	NSString *searchString = [custPhoneField.text stringByReplacingOccurrencesOfString:@"-" withString:@""];
+	NSString *regex = @"[0-9]{10}";
+	NSPredicate *regextest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+	if ([regextest evaluateWithObject:searchString] == YES) {
+		customer = [facade lookupCustomerByPhone:searchString];
+		
+		if (customer == nil) {
+			[AlertUtils showModalAlertMessage: @"Customer Not Found"];
+		} else {
+			if (custDetailsOpen == NO) {
+				custDetailsOpen = YES;
+			} 
+			[self updateViewLayout];
+		}
 	} else {
-		custDetailsOpen = NO;
+		[AlertUtils showModalAlertMessage:@"Please enter a 10 digit phone number"];
 	}
-	[self updateViewLayout];
+
+	
+}
+
+- (void) handleConfirmButton:(id)sender {
+	NSLog(@"Got confirm button press");
+	[AlertUtils showModalAlertMessage:@"Would move to order"];
 }
 
 - (void)numberPadDoneButton:(id)sender {
@@ -387,6 +402,14 @@
 #pragma mark -
 #pragma mark UIView update
 - (void) updateViewLayout {
+	
+	if (customer != nil) {
+		firstName.text = customer.firstName;
+		lastName.text = customer.lastName;
+		email.text = customer.emailAddress;
+		zip.text = customer.address.zipPostalCode;
+	}
+
 	CGFloat width = self.view.bounds.size.width;
 	
 	CGFloat cy = START_Y;
@@ -395,20 +418,17 @@
 	if (custDetailsOpen == NO) {
 		cy += TEXT_FIELD_HEIGHT + SPACING;
 		detailView.hidden = YES;
-		custNewButton.hidden = YES;
-		custEditButton.hidden = YES;
+		confirmButton.hidden = YES;
 		custSearchButton.center = [self.view centerAt:cy];
 	} else {
 		cy += TEXT_FIELD_HEIGHT;
 		detailView.frame = CGRectMake(DETAIL_VIEW_X, cy, DETAIL_VIEW_WIDTH, DETAIL_VIEW_HEIGHT);
 		detailView.hidden = NO;
 		cy += DETAIL_VIEW_HEIGHT + SPACING;
-		CGFloat buttonSpace = floorf((width - BUTTON_WIDTH * 3.0f) / 4.0f);
-		custEditButton.frame = CGRectMake(buttonSpace, cy, BUTTON_WIDTH, BUTTON_HEIGHT);
-		custEditButton.hidden = NO;
-		custSearchButton.frame = CGRectMake(((buttonSpace * 2.0f) + BUTTON_WIDTH), cy, BUTTON_WIDTH, BUTTON_HEIGHT);
-		custNewButton.frame = CGRectMake((buttonSpace * 3.0f) + (BUTTON_WIDTH * 2.0f), cy, BUTTON_WIDTH, BUTTON_HEIGHT);
-		custNewButton.hidden = NO;
+		CGFloat buttonSpace = floorf((width - BUTTON_WIDTH * 2.0f) / 3.0f);
+		custSearchButton.frame = CGRectMake(buttonSpace, cy, BUTTON_WIDTH, BUTTON_HEIGHT);
+		confirmButton.frame = CGRectMake(((buttonSpace * 2.0f) + BUTTON_WIDTH), cy, BUTTON_WIDTH, BUTTON_HEIGHT);
+		confirmButton.hidden = NO;
 	}
 }
 

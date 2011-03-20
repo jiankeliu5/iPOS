@@ -12,6 +12,8 @@
 #import "ExtUITextField.h"
 #import "MOGlassButton.h"
 
+#import "Customer.h"
+
 #define START_Y 40.0f
 #define SPACING 20.0f
 #define TEXT_FIELD_HEIGHT 30.0f
@@ -37,8 +39,6 @@
 	ExtUITextField *custPhoneField;
 	NSString *phoneMask;
 	MOGlassButton *custSearchButton;
-	MOGlassButton *custNewButton;
-	MOGlassButton *custEditButton;
 	MOGlassButton *confirmButton;
 	UIImage *numberPadDoneImageNormal;
     UIImage *numberPadDoneImageHighlighted;
@@ -56,6 +56,8 @@
 	
 	BOOL custDetailsOpen;
 	id currentFirstResponder;
+	
+	Customer *customer;
 	
 }
 
