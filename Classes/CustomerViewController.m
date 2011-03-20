@@ -10,6 +10,8 @@
 #import "UIViewController+ViewControllerLayout.h"
 #import "UIView+ViewLayout.h"
 #import "AlertUtils.h"
+#import "CustomerFormDataSource.h"
+#import "CustomerEditViewController.h"
 
 @interface CustomerViewController()
 - (void) handleSearchButton:(id)sender;
@@ -355,7 +357,11 @@
 		customer = [facade lookupCustomerByPhone:searchString];
 		
 		if (customer == nil) {
-			[AlertUtils showModalAlertMessage: @"Customer Not Found"];
+			NSMutableDictionary *customerFormModel = [[[NSMutableDictionary alloc] init] autorelease];
+			[customerFormModel setValue:[NSString stringWithString:custPhoneField.text] forKey:@"phone"];
+			CustomerFormDataSource *customerFormDataSource = [[[CustomerFormDataSource alloc] initWithModel:customerFormModel] autorelease];
+			CustomerEditViewController *customerEditViewController = [[[CustomerEditViewController alloc] initWithNibName:nil bundle:nil formDataSource:customerFormDataSource] autorelease];
+			[[self navigationController] pushViewController:customerEditViewController animated:TRUE];
 		} else {
 			if (custDetailsOpen == NO) {
 				custDetailsOpen = YES;

@@ -28,5 +28,6 @@
 @property (nonatomic, retain) NSString *zipPostalCode;
 @property (nonatomic, retain) NSString *country;
 
++ (NSArray *)usStateCodes;
 
 @end
