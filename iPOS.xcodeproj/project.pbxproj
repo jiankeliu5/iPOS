@@ -76,6 +76,8 @@
 		B401FC041335B1D50082C7D4 /* CustomerEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B401FC021335B1D50082C7D4 /* CustomerEditViewController.m */; };
 		B401FC071335B56C0082C7D4 /* CustomerFormDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = B401FC051335B56C0082C7D4 /* CustomerFormDataSource.h */; };
 		B401FC081335B56C0082C7D4 /* CustomerFormDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = B401FC061335B56C0082C7D4 /* CustomerFormDataSource.m */; };
+		B401FE791336D8F20082C7D4 /* NSString+StringFormatters.h in Headers */ = {isa = PBXBuildFile; fileRef = B401FE771336D8F20082C7D4 /* NSString+StringFormatters.h */; };
+		B401FEB31336DCB80082C7D4 /* NSString+StringFormatters.m in Sources */ = {isa = PBXBuildFile; fileRef = B401FE781336D8F20082C7D4 /* NSString+StringFormatters.m */; };
 		B40FC0F21311928600D7D79D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
 		B4300AA0131AEF8A000210C7 /* AvailabilityView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4300A76131AC317000210C7 /* AvailabilityView.m */; };
 		B4300B31131B4300000210C7 /* iPosIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B2F131B4300000210C7 /* iPosIcon.png */; };
@@ -438,6 +440,8 @@
 		B401FC021335B1D50082C7D4 /* CustomerEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerEditViewController.m; sourceTree = "<group>"; };
 		B401FC051335B56C0082C7D4 /* CustomerFormDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerFormDataSource.h; sourceTree = "<group>"; };
 		B401FC061335B56C0082C7D4 /* CustomerFormDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerFormDataSource.m; sourceTree = "<group>"; };
+		B401FE771336D8F20082C7D4 /* NSString+StringFormatters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+StringFormatters.h"; sourceTree = "<group>"; };
+		B401FE781336D8F20082C7D4 /* NSString+StringFormatters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+StringFormatters.m"; sourceTree = "<group>"; };
 		B40B94231304ED500024C2DC /* AlertUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertUtils.h; sourceTree = "<group>"; };
 		B40B94241304ED500024C2DC /* AlertUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertUtils.m; sourceTree = "<group>"; };
 		B40B942F1304EF620024C2DC /* MainMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuViewController.h; sourceTree = "<group>"; };
@@ -1122,6 +1126,8 @@
 				B4D1996C1329B8D5007CCE08 /* UIView+ViewLayout.m */,
 				D65EB2A0132AE1C10066E1FA /* NSString+Base64Encode.h */,
 				D65EB2A1132AE1C10066E1FA /* NSString+Base64Encode.m */,
+				B401FE771336D8F20082C7D4 /* NSString+StringFormatters.h */,
+				B401FE781336D8F20082C7D4 /* NSString+StringFormatters.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -1365,6 +1371,7 @@
 				B401FBEF1335B0490082C7D4 /* IBAInputManagerView.h in Headers */,
 				B401FBF11335B0490082C7D4 /* IBAInputNavigationToolbar.h in Headers */,
 				B401FBF31335B0490082C7D4 /* SynthesizeSingleton.h in Headers */,
+				B401FE791336D8F20082C7D4 /* NSString+StringFormatters.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1760,6 +1767,7 @@
 				B401FBED1335B0490082C7D4 /* IBATextInputProvider.m in Sources */,
 				B401FBF01335B0490082C7D4 /* IBAInputManagerView.m in Sources */,
 				B401FBF21335B0490082C7D4 /* IBAInputNavigationToolbar.m in Sources */,
+				B401FEB31336DCB80082C7D4 /* NSString+StringFormatters.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

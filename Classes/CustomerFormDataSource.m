@@ -7,6 +7,7 @@
 //
 
 #import "CustomerFormDataSource.h"
+#import "NSString+StringFormatters.h"
 #import "IBATextFormField.h"
 #import "IBAPickListFormField.h"
 #import "Address.h"
@@ -23,11 +24,13 @@
 - (id) initWithModel:(id)aModel {
 	self = [super initWithModel:aModel];
 	if (self != nil) {
-		IBAFormSection *customerFormSection = [self addSectionWithHeaderTitle:[aModel valueForKey:@"phone"] footerTitle:nil];
+		NSString *title = [NSString stringWithFormat:@"Phone: %@", [NSString formatAsUSPhone:[aModel valueForKey:@"phoneNumber"]]];
+		IBAFormSection *customerFormSection = [self addSectionWithHeaderTitle:title footerTitle:nil];
 		
 		IBAFormFieldStyle *style = [[[IBAFormFieldStyle alloc] init] autorelease];
 		style.labelTextColor = [UIColor blackColor];
 		style.labelFont = [UIFont systemFontOfSize:14.0f];
+		style.valueFont = [UIFont systemFontOfSize:14.0f];
 		style.labelTextAlignment = UITextAlignmentLeft;
 		style.valueTextAlignment = UITextAlignmentRight;
 		style.valueTextColor = [UIColor darkGrayColor];
@@ -35,23 +38,26 @@
 		
 		customerFormSection.formFieldStyle = style;
 		
-		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"first" title:@"First"] autorelease]];
-		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"last" title:@"Last"] autorelease]];
-		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"email" title:@"Email"] autorelease]];
-		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"address1" title:@"Address 1"] autorelease]];
-		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"address2" title:@"Address 2"] autorelease]];
+		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"firstName" title:@"First"] autorelease]];
+		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"lastName" title:@"Last"] autorelease]];
+		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"emailAddress" title:@"Email"] autorelease]];
+		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"addressLine1" title:@"Address 1"] autorelease]];
+		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"addressLine2" title:@"Address 2"] autorelease]];
+		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"addressLine3" title:@"Address 3"] autorelease]];
 		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"city" title:@"City"] autorelease]];
 		
 		NSArray *pickListOptions = [IBAPickListFormOption pickListOptionsForStrings:[Address usStateCodes]];
-		[customerFormSection addFormField:[[[IBAPickListFormField alloc] initWithKeyPath:@"state"
+		IBAPickListFormOptionsStringTransformer *transformer = [[[IBAPickListFormOptionsStringTransformer alloc] initWithPickListOptions:pickListOptions] autorelease];
+		[customerFormSection addFormField:[[[IBAPickListFormField alloc] initWithKeyPath:@"stateProv"
 																			   title:@"State"
-																	valueTransformer:nil
+																	valueTransformer:transformer
 																	   selectionMode:IBAPickListSelectionModeSingle
 																			 options:pickListOptions] autorelease]];
 		
-		IBATextFormField *zipFormField = [[IBATextFormField alloc] initWithKeyPath:@"zip" title:@"Zip"];
+		IBATextFormField *zipFormField = [[IBATextFormField alloc] initWithKeyPath:@"zipPostalCode" title:@"Zip"];
 		zipFormField.textFormFieldCell.textField.keyboardType = UIKeyboardTypeNumberPad;
 		[customerFormSection addFormField:[zipFormField autorelease]];
+		
 	}
 	
 	return self;

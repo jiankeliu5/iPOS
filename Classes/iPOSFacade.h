@@ -31,6 +31,8 @@
 - (BOOL) login: (NSString *) username password: (NSString *) password;
 - (BOOL) verifySession: (NSString *) passwordToVerify;
 - (BOOL) logout;
+- (void) setCurrentCustomer:(Customer *)customer;
+- (Customer *)currentCustomer;
 
 #pragma mark iPOS Customer Management
 -(Customer *) lookupCustomerByPhone: (NSString *) phoneNumber;

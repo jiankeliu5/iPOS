@@ -9,9 +9,11 @@
 #import "CustomerViewController.h"
 #import "UIViewController+ViewControllerLayout.h"
 #import "UIView+ViewLayout.h"
+#import "NSString+StringFormatters.h"
 #import "AlertUtils.h"
 #import "CustomerFormDataSource.h"
 #import "CustomerEditViewController.h"
+#import "CartItemsViewController.h"
 
 @interface CustomerViewController()
 - (void) handleSearchButton:(id)sender;
@@ -23,13 +25,14 @@
 - (void)keyboardDidShow:(NSNotification *)note;
 - (void)numberPadDoneButton:(id)sender;
 - (void)formatInput:(ExtUITextField*)aTextField string:(NSString*)aString range:(NSRange)aRange;
-
+- (void) editExistingCustomer:(id)sender;
 @end
 
 @implementation CustomerViewController
 
 @synthesize phoneMask, currentFirstResponder; 
 @synthesize numberPadDoneImageNormal, numberPadDoneImageHighlighted, numberPadDoneButton;
+@synthesize customer;
 
 #pragma mark Constructors
 - (id)init
@@ -60,6 +63,8 @@
 	[self setNumberPadDoneImageNormal:nil];
     [self setNumberPadDoneImageHighlighted:nil];
     [self setNumberPadDoneButton:nil];
+	[self setCustomer:nil];
+	
     [super dealloc];
 }
 
@@ -176,6 +181,7 @@
 - (void) viewWillAppear:(BOOL)animated {
 	if (self.navigationController != nil) {
 		[self.navigationController setNavigationBarHidden:NO];
+		self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cust" style:UIBarButtonItemStyleBordered target:nil action:nil];
 	}
 	
 	[self updateViewLayout];
@@ -184,6 +190,19 @@
 											 selector:@selector(keyboardDidShow:) 
 												 name:UIKeyboardDidShowNotification 
 											   object:nil];
+	
+	if (self.customer == nil) {
+		custPhoneField.text = nil;
+		custDetailsOpen = NO;
+		if (self.navigationItem.rightBarButtonItem != nil) {
+			[self.navigationItem setRightBarButtonItem:nil];
+		}
+	} else {
+		custPhoneField.text = [NSString formatAsUSPhone:[self.customer phoneNumber]];
+	}
+
+	[self updateViewLayout];
+	
 	// Do this last
 	[super viewWillAppear:animated];
 	
@@ -345,7 +364,10 @@
 #pragma mark -
 #pragma mark UIButton callbacks
 - (void)handleSearchButton:(id)sender {
-	NSLog(@"Got search button press");
+	
+	[self.navigationItem setRightBarButtonItem:nil];
+	[self setCustomer:nil];
+	
 	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
 		[self.currentFirstResponder resignFirstResponder];
 	}
@@ -354,30 +376,59 @@
 	NSString *regex = @"[0-9]{10}";
 	NSPredicate *regextest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
 	if ([regextest evaluateWithObject:searchString] == YES) {
-		customer = [facade lookupCustomerByPhone:searchString];
+		[self setCustomer:[facade lookupCustomerByPhone:searchString]];
 		
 		if (customer == nil) {
 			NSMutableDictionary *customerFormModel = [[[NSMutableDictionary alloc] init] autorelease];
-			[customerFormModel setValue:[NSString stringWithString:custPhoneField.text] forKey:@"phone"];
+			[customerFormModel setValue:[NSString stringWithString:searchString] forKey:@"phoneNumber"];
 			CustomerFormDataSource *customerFormDataSource = [[[CustomerFormDataSource alloc] initWithModel:customerFormModel] autorelease];
 			CustomerEditViewController *customerEditViewController = [[[CustomerEditViewController alloc] initWithNibName:nil bundle:nil formDataSource:customerFormDataSource] autorelease];
+			[customerEditViewController setTitle:@"Customer Edit"];
 			[[self navigationController] pushViewController:customerEditViewController animated:TRUE];
 		} else {
 			if (custDetailsOpen == NO) {
 				custDetailsOpen = YES;
 			} 
+			
+			UIBarButtonItem *editButton = [[UIBarButtonItem alloc] init];
+			editButton.title = @"Edit";
+			editButton.target = self;
+			[editButton setAction:@selector(editExistingCustomer:)];
+			self.navigationItem.rightBarButtonItem = editButton;
+			[editButton release];
+			
 			[self updateViewLayout];
 		}
 	} else {
 		[AlertUtils showModalAlertMessage:@"Please enter a 10 digit phone number"];
 	}
-
-	
 }
+
+- (void) editExistingCustomer:(id)sender {
+	if (self.customer != nil) {
+		NSMutableDictionary *customerFormModel = [self.customer modelFromCustomer];
+		CustomerFormDataSource *customerFormDataSource = [[[CustomerFormDataSource alloc] initWithModel:customerFormModel] autorelease];
+		CustomerEditViewController *customerEditViewController = [[[CustomerEditViewController alloc] initWithNibName:nil bundle:nil formDataSource:customerFormDataSource] autorelease];
+		[customerEditViewController setTitle:@"Customer Edit"];
+		[[self navigationController] pushViewController:customerEditViewController animated:TRUE];
+	} else {
+		NSLog(@"Should not be trying to edit if customer is nil");
+	}
+
+}
+
 
 - (void) handleConfirmButton:(id)sender {
 	NSLog(@"Got confirm button press");
-	[AlertUtils showModalAlertMessage:@"Would move to order"];
+	if (self.customer != nil) {
+		NSMutableDictionary *cpy = [self.customer modelFromCustomer];
+		Customer *custCpy = [[[Customer alloc] initWithModel:cpy] autorelease];
+		[facade setCurrentCustomer:custCpy];
+		[self setCustomer:nil];
+		CartItemsViewController *cart = [[CartItemsViewController alloc] init];
+		[[self navigationController] pushViewController:cart animated:TRUE];
+		[cart release];
+	}
 }
 
 - (void)numberPadDoneButton:(id)sender {

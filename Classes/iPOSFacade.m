@@ -73,6 +73,19 @@ static iPOSFacade *facade = nil;
     return logoutStatus;
 }
 
+- (void) setCurrentCustomer:(Customer *)customer {
+	if (self.sessionInfo != nil) {
+		[self.sessionInfo setCurrentCustomer:customer];
+	}
+}
+
+- (Customer *)currentCustomer {
+	if (self.sessionInfo == nil) {
+		return nil;
+	}
+	return [self.sessionInfo currentCustomer];
+}
+
 #pragma mark -
 #pragma mark Customer Management
 -(Customer *) lookupCustomerByPhone:(NSString *)phoneNumber {

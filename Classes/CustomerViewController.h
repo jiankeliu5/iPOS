@@ -66,6 +66,7 @@
 @property (nonatomic, retain) UIImage *numberPadDoneImageHighlighted;
 @property (nonatomic, retain) UIButton *numberPadDoneButton;
 @property (nonatomic, retain) id currentFirstResponder;
+@property (nonatomic, retain) Customer *customer;
 
 - (void)numberPadDoneButton:(id)sender;
 

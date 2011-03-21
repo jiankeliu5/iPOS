@@ -12,6 +12,7 @@
 #pragma mark -
 #pragma mark Private Interface
 @interface CustomerEditViewController ()
+- (void) saveCustomer:(id)sender;
 @end
 
 #pragma mark -
@@ -26,6 +27,8 @@
     
 	facade = [iPOSFacade sharedInstance];
 	
+	[[self navigationItem] setTitle:@"Edit Customer"];
+	
     return self;
 }
 
@@ -38,7 +41,7 @@
 #pragma mark Accessors
 
 #pragma mark -
-#pragma mark Methods
+#pragma mark UIViewController overrides
 
 - (void) loadView {
 	[super loadView];
@@ -49,6 +52,35 @@
 	
 	[self setTableView:formTableView];
 	[self setView:formTableView];
+}
+
+- (void) viewDidLoad {
+    [super viewDidLoad];
+	
+	if (self.navigationController != nil) 
+	{
+		[self.navigationController setNavigationBarHidden:NO];
+	}
+}	
+
+- (void) viewWillAppear:(BOOL)animated {
+	if (self.navigationController != nil) {
+		[self.navigationController setNavigationBarHidden:NO];
+		self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cust Edit" style:UIBarButtonItemStyleBordered target:nil action:nil];
+		UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] init];
+		saveButton.title = @"Save";
+		saveButton.target = self;
+		[saveButton setAction:@selector(saveCustomer:)];
+		[self.navigationItem setRightBarButtonItem:saveButton];
+		[saveButton release];
+	}
+}
+
+- (void) saveCustomer:(id)sender {
+	NSLog(@"Got save customer button press");
+	NSMutableDictionary *custModel = [[self formDataSource] model];
+	NSLog(@"Current customer model:");
+	NSLog(@"%@", [custModel description]);
 }
 
 @end

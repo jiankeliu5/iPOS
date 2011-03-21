@@ -46,4 +46,7 @@
 
 @property                     BOOL taxExempt;
 
+- (id) initWithModel:(id)aModel;
+- (id) modelFromCustomer;
+
 @end
