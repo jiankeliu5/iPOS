@@ -355,7 +355,7 @@
 		if (sourceCustomer.customerType && ![sourceCustomer.customerType isEqualToString:targetCustomer.customerType]) {
 			targetCustomer.customerType = sourceCustomer.customerType;
 		}
-		if (sourceCustomer.customerTypeId) {
+		if (sourceCustomer.customerTypeId && ![sourceCustomer.customerTypeId isEqualToNumber:[NSNumber numberWithInt:0]]) {
 			targetCustomer.customerTypeId = sourceCustomer.customerTypeId;
 		}
 		targetCustomer.taxExempt = sourceCustomer.taxExempt;
