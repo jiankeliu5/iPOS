@@ -8,6 +8,7 @@
 
 #import "CustomerEditViewController.h"
 #import "UIViewController+ViewControllerLayout.h"
+#import "Customer.h"
 
 #pragma mark -
 #pragma mark Private Interface
@@ -19,23 +20,6 @@
 @implementation CustomerEditViewController
 
 #pragma mark Constructors
-- (id) init
-{
-    self = [super init];
-    if (self == nil)
-        return nil;
-    
-	facade = [iPOSFacade sharedInstance];
-	
-	[[self navigationItem] setTitle:@"Edit Customer"];
-	
-    return self;
-}
-
-- (void) dealloc
-{
-    [super dealloc];
-}
 
 #pragma mark -
 #pragma mark Accessors
@@ -45,6 +29,8 @@
 
 - (void) loadView {
 	[super loadView];
+	
+	facade = [iPOSFacade sharedInstance];
 	
 	UITableView *formTableView = [[[UITableView alloc] initWithFrame:[self rectForNav] style:UITableViewStyleGrouped] autorelease];
 	[formTableView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
@@ -60,6 +46,7 @@
 	if (self.navigationController != nil) 
 	{
 		[self.navigationController setNavigationBarHidden:NO];
+		[[self navigationItem] setTitle:@"Edit Customer"];
 	}
 }	
 
@@ -74,6 +61,7 @@
 		[self.navigationItem setRightBarButtonItem:saveButton];
 		[saveButton release];
 	}
+	[super viewWillAppear:animated];
 }
 
 - (void) saveCustomer:(id)sender {
@@ -81,6 +69,31 @@
 	NSMutableDictionary *custModel = [[self formDataSource] model];
 	NSLog(@"Current customer model:");
 	NSLog(@"%@", [custModel description]);
+	Customer *editedCust = [[[Customer alloc] initWithModel:custModel] autorelease];
+	if ([editedCust customerId] == nil) {
+		// new customer
+		[facade newCustomer:editedCust];
+	} else {
+		[facade updateCustomer:editedCust];
+	}
+
+	if ( ([editedCust errorList] != nil) && ([[editedCust errorList] count] > 0) ) {
+		for (Error *e in [editedCust errorList]) {
+			NSLog(@"Error Id: %d %@", [e errorId], [e message]);
+		}
+	} else {
+		NSLog(@"No errors from new or update customer call");
+		NSMutableDictionary *updatedModel = [editedCust modelFromCustomer];
+		NSLog(@"updated model:");
+		NSLog(@"%@", [updatedModel description]);
+		[updatedModel enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+			NSLog(@"Enumerating Key %@ and Value %@",key,obj);
+			[[self formDataSource] setModelValue:obj forKeyPath:key];
+		}];
+		[[self tableView] reloadData];
+	}
+
+	
 }
 
 @end

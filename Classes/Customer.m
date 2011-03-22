@@ -47,8 +47,10 @@
 	Address *addr = [[[Address alloc] init] autorelease];
 	[addr setLine1:[aModel valueForKey:@"addressLine1"]];
 	[addr setLine2:[aModel valueForKey:@"addressLine2"]];
-	[addr setLine3:[aModel valueForKey:@"addressLine3"]];
 	[addr setCity:[aModel valueForKey:@"city"]];
+	[addr setStateProv:[aModel valueForKey:@"stateProv"]];
+	// Use the code below if the state is a pick list
+	/*
 	if ([aModel valueForKey:@"stateProv"] != nil) {
 		NSMutableSet *st = (NSMutableSet *)[aModel valueForKey:@"stateProv"];
 		if ([st count] > 0) {
@@ -56,7 +58,7 @@
 			[addr setStateProv:[a objectAtIndex:0]];
 		}
 	}
-	[addr setStateProv:[aModel valueForKey:@"stateProv"]];
+	 */
 	[addr setZipPostalCode:[aModel valueForKey:@"zipPostalCode"]];
 	[addr setCountry:[aModel valueForKey:@"country"]];
 	[self setAddress:addr];
@@ -88,13 +90,16 @@
 	if ([self address] != nil) {
 		[aModel setValue:[self.address line1] forKey:@"addressLine1"];
 		[aModel setValue:[self.address line2] forKey:@"addressLine2"];
-		[aModel setValue:[self.address line3] forKey:@"addressLine3"];
 		[aModel setValue:[self.address city] forKey:@"city"];
+		[aModel setValue:[self.address stateProv] forKey:@"stateProv"];
+		// Use the code below for state if it is a pick list
+		/*
 		if ([self.address stateProv] != nil) {
 			NSMutableSet *st = [[[NSMutableSet alloc] initWithCapacity:1] autorelease];
 			[st addObject:[self.address stateProv]];
 			[aModel setValue:st forKey:@"stateProv"];
 		}
+		*/
 		[aModel setValue:[self.address zipPostalCode] forKey:@"zipPostalCode"];
 		[aModel setValue:[self.address country] forKey:@"country"];
 	}

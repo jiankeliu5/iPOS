@@ -352,6 +352,13 @@
         if (sourceCustomer.phoneNumber && ![sourceCustomer.phoneNumber isEqualToString:targetCustomer.phoneNumber]) {
             targetCustomer.phoneNumber = sourceCustomer.phoneNumber;
         }
+		if (sourceCustomer.customerType && ![sourceCustomer.customerType isEqualToString:targetCustomer.customerType]) {
+			targetCustomer.customerType = sourceCustomer.customerType;
+		}
+		if (sourceCustomer.customerTypeId) {
+			targetCustomer.customerTypeId = sourceCustomer.customerTypeId;
+		}
+		targetCustomer.taxExempt = sourceCustomer.taxExempt;
         
         // Merge Address information
         if (sourceCustomer.address) {
@@ -359,19 +366,19 @@
                 targetCustomer.address = [[[Address alloc] init] autorelease];
             }
             
-            if (sourceCustomer.address.line1 && ![sourceCustomer.address.line1 isEqualToString:sourceCustomer.address.line1]) {
+            if (sourceCustomer.address.line1 && ![sourceCustomer.address.line1 isEqualToString:targetCustomer.address.line1]) {
                 targetCustomer.address.line1 = sourceCustomer.address.line1;
             }
-            if (sourceCustomer.address.line2 && ![sourceCustomer.address.line2 isEqualToString:sourceCustomer.address.line2]) {
+            if (sourceCustomer.address.line2 && ![sourceCustomer.address.line2 isEqualToString:targetCustomer.address.line2]) {
                 targetCustomer.address.line2 = sourceCustomer.address.line2;            
             }
-            if (sourceCustomer.address.city && ![sourceCustomer.address.city isEqualToString:sourceCustomer.address.city]) {
+            if (sourceCustomer.address.city && ![sourceCustomer.address.city isEqualToString:targetCustomer.address.city]) {
                 targetCustomer.address.city = sourceCustomer.address.city;            
             }
-            if (sourceCustomer.address.stateProv && ![sourceCustomer.address.stateProv isEqualToString:sourceCustomer.address.stateProv]) {
+            if (sourceCustomer.address.stateProv && ![sourceCustomer.address.stateProv isEqualToString:targetCustomer.address.stateProv]) {
                 targetCustomer.address.stateProv = sourceCustomer.address.stateProv;
             }
-            if (sourceCustomer.address.zipPostalCode && ![sourceCustomer.address.zipPostalCode isEqualToString:sourceCustomer.address.zipPostalCode]) {
+            if (sourceCustomer.address.zipPostalCode && ![sourceCustomer.address.zipPostalCode isEqualToString:targetCustomer.address.zipPostalCode]) {
                 targetCustomer.address.zipPostalCode = sourceCustomer.address.zipPostalCode;
             }
         }

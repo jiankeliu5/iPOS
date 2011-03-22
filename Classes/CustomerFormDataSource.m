@@ -40,12 +40,20 @@
 		
 		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"firstName" title:@"First"] autorelease]];
 		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"lastName" title:@"Last"] autorelease]];
-		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"emailAddress" title:@"Email"] autorelease]];
+		
+		IBATextFormField *emailFormField = [[IBATextFormField alloc] initWithKeyPath:@"emailAddress" title:@"Email"];
+		emailFormField.textFormFieldCell.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+		[customerFormSection addFormField:[emailFormField autorelease]];
+		
 		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"addressLine1" title:@"Address 1"] autorelease]];
 		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"addressLine2" title:@"Address 2"] autorelease]];
-		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"addressLine3" title:@"Address 3"] autorelease]];
 		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"city" title:@"City"] autorelease]];
 		
+		IBATextFormField *stateFormField = [[IBATextFormField alloc] initWithKeyPath:@"stateProv" title:@"State"];
+		stateFormField.textFormFieldCell.textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+		[customerFormSection addFormField:[stateFormField autorelease]];
+		
+		/*
 		NSArray *pickListOptions = [IBAPickListFormOption pickListOptionsForStrings:[Address usStateCodes]];
 		IBAPickListFormOptionsStringTransformer *transformer = [[[IBAPickListFormOptionsStringTransformer alloc] initWithPickListOptions:pickListOptions] autorelease];
 		[customerFormSection addFormField:[[[IBAPickListFormField alloc] initWithKeyPath:@"stateProv"
@@ -53,7 +61,7 @@
 																	valueTransformer:transformer
 																	   selectionMode:IBAPickListSelectionModeSingle
 																			 options:pickListOptions] autorelease]];
-		
+		*/
 		IBATextFormField *zipFormField = [[IBATextFormField alloc] initWithKeyPath:@"zipPostalCode" title:@"Zip"];
 		zipFormField.textFormFieldCell.textField.keyboardType = UIKeyboardTypeNumberPad;
 		[customerFormSection addFormField:[zipFormField autorelease]];
