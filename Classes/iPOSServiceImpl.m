@@ -12,16 +12,20 @@
 
 #import "SessionMgmtMarshalling.h"
 #import "CustomerMarshalling.h"
+#import "OrderMarshalling.h"
 #import "Customer.h"
 #import "Order.h"
 #import "Error.h"
 
 // Private interface
 @interface iPOSServiceImpl()
-- (ASIHTTPRequest *) initRequestForSession:(SessionInfo *) sessionInfo serviceDomainUri: (NSString *) serviceDomainUri serviceUri: (NSString *) serviceUri;
+    - (ASIHTTPRequest *) initRequestForSession:(SessionInfo *) sessionInfo serviceDomainUri: (NSString *) serviceDomainUri serviceUri: (NSString *) serviceUri;
 
-- (BOOL) isNewCustomerValid: (Customer *) customer;
-- (void) mergeCustomer: (Customer *) targetCustomer withCustomer: (Customer *) sourceCustomer;
+    - (BOOL) isNewCustomerValid: (Customer *) customer;
+    - (void) mergeCustomer: (Customer *) targetCustomer withCustomer: (Customer *) sourceCustomer;
+    
+    - (BOOL) isNewOrderValid: (Order *) order; 
+    - (void) mergeOrder: (Order *) targetOrder withOrder: (Order *) sourceOrder;
 @end
 
 @implementation iPOSServiceImpl
@@ -244,6 +248,40 @@
 }
 
 #pragma mark -
+#pragma mark Order Mgmt APIs
+-(void) newOrder:(Order *)order withSession:(SessionInfo *)sessionInfo {
+    // If a customer has an ID already we would add an error
+    if (sessionInfo == nil || order == nil || ![self isNewOrderValid:order]) {
+        return;
+    } 
+    
+    // Make sure the store Id is set on the customer
+    if (order.store == nil) {
+        order.store = [[[Store alloc] init] autorelease];
+    }
+    order.store.storeId = sessionInfo.storeId;
+    
+    // Send the lookup request
+    ASIHTTPRequest *request = [self initRequestForSession:sessionInfo serviceDomainUri:posOrderMgmtUri serviceUri:@"new"];
+    
+    // Post data for customer
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    
+    NSString *orderXml = [OrderMarshalling toXml:order];    
+    [request appendPostData:[orderXml dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [request startSynchronous];
+    
+    if ([request error]) {
+        return;
+    }
+    
+    // Parse the XML response for the customer details
+    Order *orderReturned = [OrderMarshalling toObjectFromOrderReturn:[request responseString]];
+    [self mergeOrder:order withOrder:orderReturned];
+}
+
+#pragma mark -
 #pragma mark Private interface
 -(ASIHTTPRequest *) initRequestForSession:(SessionInfo *)sessionInfo serviceDomainUri:(NSString *)serviceDomainUri serviceUri:(NSString *)serviceUri {
     // Make Synchronous HTTP request to verify the login session
@@ -348,6 +386,40 @@
                 targetCustomer.store.storeId = sourceCustomer.store.storeId;
             }
         }
+    }
+}
+
+-(BOOL) isNewOrderValid: (Order *) order {
+    NSMutableArray *errors = [NSMutableArray arrayWithCapacity:1];
+    if (order.orderId != nil) {
+        // Attach an error
+        Error *error = [[[Error alloc] init] autorelease];
+        
+        error.message = @"Order is already created.";
+        error.reference = order;
+        
+        [errors addObject:error];
+        
+    } 
+    
+    
+    if ([errors count] > 0) {
+        order.errorList = [NSArray arrayWithArray:errors];
+        return NO;
+    }
+    
+    return YES;        
+}
+
+-(void) mergeOrder:(Order *)targetOrder withOrder:(Order *)sourceOrder {
+    // If there are errors just merge the errors, otherwise merge everything else
+    if (sourceOrder.errorList && [sourceOrder.errorList count] > 0) {
+        targetOrder.errorList = [NSArray arrayWithArray: sourceOrder.errorList];
+        return;
+    }
+    
+    if (sourceOrder.orderId && ![sourceOrder.orderId isEqualToNumber:[NSNumber numberWithInt:0]]) {
+        targetOrder.orderId = sourceOrder.orderId;
     }
 }
 

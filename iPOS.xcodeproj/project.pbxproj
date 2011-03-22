@@ -242,6 +242,8 @@
 		D6CC18E51331D1690042745E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
 		D6CC18E61331D1690042745E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
 		D6CC18E71331D1690042745E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		D6D2EC591338353F00DBA6B4 /* OrderMarshalling.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D2EC4513382E1F00DBA6B4 /* OrderMarshalling.m */; };
+		D6D2ECB71338433E00DBA6B4 /* OxmMarshallingTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D2ECB61338433E00DBA6B4 /* OxmMarshallingTestCase.m */; };
 		D6E24DCE1331CCC900931787 /* AppTests.octest in Resources */ = {isa = PBXBuildFile; fileRef = D6334A2D1331C9CE000DEDBB /* AppTests.octest */; };
 		D6E9E9D11316037900FF1498 /* libiPOSFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */; };
 		D6E9E9D21316037900FF1498 /* libOPIFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B435B213159F72000C0AA8 /* libOPIFoundation.a */; };
@@ -617,6 +619,10 @@
 		D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPOSServiceImpl.m; path = Classes/iPOSServiceImpl.m; sourceTree = "<group>"; };
 		D6BCD40612FCB3F70029F4B2 /* SessionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionInfo.h; path = Classes/SessionInfo.h; sourceTree = "<group>"; };
 		D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionInfo.m; path = Classes/SessionInfo.m; sourceTree = "<group>"; };
+		D6D2EC4413382E1F00DBA6B4 /* OrderMarshalling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderMarshalling.h; sourceTree = "<group>"; };
+		D6D2EC4513382E1F00DBA6B4 /* OrderMarshalling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderMarshalling.m; sourceTree = "<group>"; };
+		D6D2ECB51338433E00DBA6B4 /* OxmMarshallingTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OxmMarshallingTestCase.h; sourceTree = "<group>"; };
+		D6D2ECB61338433E00DBA6B4 /* OxmMarshallingTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OxmMarshallingTestCase.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1135,6 +1141,7 @@
 		D64B7E2612F9D869006AB141 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				D6D2ECB41338430F00DBA6B4 /* XMLBinding */,
 				D6179DF21317DBEE00ACAFDD /* iPOSServiceMock.m */,
 				D6179DF31317DBEE00ACAFDD /* iPOSServiceMock.h */,
 				D6179DF41317DBEE00ACAFDD /* InventoryServiceMock.m */,
@@ -1249,6 +1256,8 @@
 				D6A58D1B13307DA800E6DD9F /* SessionMgmtMarshalling.m */,
 				D6A58D731330841000E6DD9F /* ProductItemMarshalling.h */,
 				D6A58D741330841000E6DD9F /* ProductItemMarshalling.m */,
+				D6D2EC4413382E1F00DBA6B4 /* OrderMarshalling.h */,
+				D6D2EC4513382E1F00DBA6B4 /* OrderMarshalling.m */,
 			);
 			name = XmlBinding;
 			sourceTree = "<group>";
@@ -1314,6 +1323,15 @@
 				D6BA07F01302583500B77769 /* Reachability.m */,
 			);
 			name = ASIHTTPRequest;
+			sourceTree = "<group>";
+		};
+		D6D2ECB41338430F00DBA6B4 /* XMLBinding */ = {
+			isa = PBXGroup;
+			children = (
+				D6D2ECB51338433E00DBA6B4 /* OxmMarshallingTestCase.h */,
+				D6D2ECB61338433E00DBA6B4 /* OxmMarshallingTestCase.m */,
+			);
+			name = XMLBinding;
 			sourceTree = "<group>";
 		};
 		D6F7963212F9FD6B00B467CA /* LineaSDK */ = {
@@ -1703,6 +1721,7 @@
 				D697D15F1312D98F002C3EF6 /* SampleUnitTestCase.m in Sources */,
 				D6179DF61317DBEE00ACAFDD /* iPOSServiceMock.m in Sources */,
 				D6179DF71317DBEE00ACAFDD /* InventoryServiceMock.m in Sources */,
+				D6D2ECB71338433E00DBA6B4 /* OxmMarshallingTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1834,6 +1853,7 @@
 				D6A58D761330841000E6DD9F /* ProductItemMarshalling.m in Sources */,
 				B401FC041335B1D50082C7D4 /* CustomerEditViewController.m in Sources */,
 				B401FC081335B56C0082C7D4 /* CustomerFormDataSource.m in Sources */,
+				D6D2EC591338353F00DBA6B4 /* OrderMarshalling.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

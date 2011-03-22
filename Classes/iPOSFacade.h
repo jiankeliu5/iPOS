@@ -40,7 +40,7 @@
 -(void) updateCustomer: (Customer *) customer;
 
 #pragma mark iPOS Order Management
--(void) newOrder;
+-(void) newOrder: (Order *) order;
 -(void) updateOrder: (Order *) order;
 -(BOOL) allowDiscountedPrice: (NSDecimal *) discountPrice forQuantity: (NSDecimal *) quantity;
 -(BOOL) allowDiscountedPrice: (NSDecimal *) discountPrice forQuantity: (NSDecimal *) quantity managerApproval: (ManagerApprovalInfo *) managerApproval;

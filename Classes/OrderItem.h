@@ -10,11 +10,20 @@
 #import "ProductItem.h"
 
 @interface OrderItem : NSObject {
+    NSNumber *lineNumber;
+    NSNumber *statusId;
+    
+    NSDecimalNumber *sellingPrice;
     NSDecimalNumber *quantity;
+    
     ProductItem *item;
 }
+@property (nonatomic, retain) NSNumber *lineNumber;
+@property (nonatomic, retain) NSNumber *statusId;
 
+@property (nonatomic, retain) NSDecimalNumber *sellingPrice;
 @property (nonatomic, retain) NSDecimalNumber *quantity;
+
 @property (nonatomic, retain) ProductItem *item;
 
 -(id) initWithItem: (ProductItem *) productItem AndQuantity: (NSDecimalNumber *) productQuantity;

@@ -11,7 +11,13 @@
 #import "iPOSFacade.h"
 #import "iPosServiceImpl.h"
 #import "InventoryServiceImpl.h"
+#import "Order.h"
 #import "ProductItem.h"
+
+@interface iPOSServiceIntTestCase()
+    -(Order *) orderForTest;
+@end
+
 
 @implementation iPOSServiceIntTestCase
 
@@ -223,6 +229,94 @@
     STAssertTrue([error.message isEqualToString:@"Invalid Customer ID"], @"Expected an error");
 }
 
+#pragma mark -
+#pragma mark Order Mgmt Tests
+- (void) testPosFacadeNewOrder {
+    iPOSFacade *facade = [iPOSFacade sharedInstance];
+    Order *newOrder = [self orderForTest];
+    
+    // We are setting to demo mode
+    [((iPOSServiceImpl *) facade.posService) setToDemoMode];
+    
+    [facade login:@"123" password:@"test"];
+    
+     STAssertNil(newOrder.orderId, @"Expected the order id to be nil");
+     
+    [facade newOrder:newOrder];
+    
+    // Verify that it now has a customer ID
+    STAssertNil(newOrder.errorList, @"Expected no errors");
+    STAssertEquals([newOrder.orderId intValue], 1234, @"Expected value of 1234");
+    
+}
+
+- (void) testPosFacadeNewOrderWithInvalidType {
+    iPOSFacade *facade = [iPOSFacade sharedInstance];
+    Order *newOrder = [self orderForTest];
+    
+    // We are setting to demo mode
+    [((iPOSServiceImpl *) facade.posService) setToDemoMode];
+    
+    [facade login:@"123" password:@"test"];
+    
+    // Set the order type to an invalid order type (for testing)
+    newOrder.orderTypeId = [NSNumber numberWithInt:2];
+    
+    STAssertNil(newOrder.orderId, @"Expected the order id to be nil");
+    
+    [facade newOrder:newOrder];
+    
+    // Verify that it now has a customer ID
+    STAssertTrue([newOrder.errorList count] > 0, @"Expected an error");
+    Error *error = (Error *) [newOrder.errorList lastObject];
+    STAssertTrue([error.errorId isEqualToString:@"INVALID_ORDER_TYPE"], @"Expected an error");
+    STAssertTrue([error.message isEqualToString:@"Invalid order type"], error.message);
+}
+
+-(Order *) orderForTest {
+    Order *order = [[[Order alloc] init] autorelease];
+    Customer *customer = [[[Customer alloc] init] autorelease];
+    Store *store = [[[Store alloc] init] autorelease];
+    ProductItem *item= [[[ProductItem alloc] init] autorelease];
+    
+    // Build the store
+    store.storeId = [NSNumber numberWithInt:1234];
+    
+    // Build the item
+    item.store = store;
+    item.itemId = [NSNumber numberWithInt:1414];
+    item.sku = [NSNumber numberWithInt:232323];
+    item.description = @"Some product";
+    item.defaultToBox = YES;
+    item.conversion = [NSDecimalNumber decimalNumberWithString:@"1.0"];
+    item.statusCode = @"S";
+    item.typeId = [NSNumber numberWithInt:1];
+    item.piecesPerBox = [NSNumber numberWithInt: 12];
+    item.primaryUnitOfMeasure = @"EA";
+    item.secondaryUnitOfMeasure = @"EA";
+    item.retailPrice = [NSDecimalNumber decimalNumberWithString:@"3.75"];
+    item.standardCost = [NSDecimalNumber decimalNumberWithString:@"2.70"]; 
+    item.stockingCode = @"S";
+    item.taxRate = [NSDecimalNumber decimalNumberWithString:@"0.7"];
+    item.taxExempt = NO;
+    
+    
+    // Build the customer
+    customer.customerId = [NSNumber numberWithInt:1414];
+    customer.taxExempt = NO;
+    customer.customerTypeId = [NSNumber numberWithInt:1];
+    customer.address = [[[Address alloc] init] autorelease];
+    customer.address.zipPostalCode = @"55044";
+    
+    // Build the order
+    order.salesPersonEmployeeId = [NSNumber numberWithInt:1111];
+    order.store = store;
+    order.customer = customer;
+    order.orderTypeId = [NSNumber numberWithInt:1];
+    [order addItemToOrder:item withQuantity:[NSDecimalNumber decimalNumberWithString:@"24.5"]];
+    
+    return order;
+}
 
 #endif // all code under test must be linked into the Integration Test bundle
 

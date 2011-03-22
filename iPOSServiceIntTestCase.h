@@ -14,11 +14,8 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 #import <UIKit/UIKit.h>
-//#import "application_headers" as required
-
 
 @interface iPOSServiceIntTestCase : SenTestCase {
-
 }
 
 #if USE_APPLICATION_UNIT_TEST
@@ -35,6 +32,9 @@
 
 - (void) testPosFacadeUpdateCustomer;
 - (void) testPosFacadeUpdateCustomerNoCustomerID;
+
+- (void) testPosFacadeNewOrder;
+- (void) testPosFacadeNewOrderWithInvalidType;
  
 #endif
 

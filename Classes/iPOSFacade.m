@@ -53,9 +53,9 @@ static iPOSFacade *facade = nil;
 #pragma mark -
 #pragma mark iPOS Session Mgmt
 - (BOOL) login: (NSString *) username password: (NSString *) password {
-    self.sessionInfo = [[self.posService login:username withPassword:password] retain];
+    sessionInfo = [[posService login:username withPassword:password] retain];
     
-    if (self.sessionInfo != nil) {
+    if (sessionInfo != nil) {
         return TRUE;
     }
     
@@ -63,47 +63,53 @@ static iPOSFacade *facade = nil;
 }
 
 -(BOOL) verifySession:(NSString *)passwordToVerify {
-    return [self.posService verifySession:self.sessionInfo withPassword:passwordToVerify];
+    return [posService verifySession:sessionInfo withPassword:passwordToVerify];
 }
 
 -(BOOL) logout {
-	BOOL logoutStatus = [self.posService logout:self.sessionInfo];
+	BOOL logoutStatus = [posService logout:sessionInfo];
 	[self.sessionInfo release];
 	self.sessionInfo = nil;
     return logoutStatus;
 }
 
 - (void) setCurrentCustomer:(Customer *)customer {
-	if (self.sessionInfo != nil) {
-		[self.sessionInfo setCurrentCustomer:customer];
+	if (sessionInfo != nil) {
+		[sessionInfo setCurrentCustomer:customer];
 	}
 }
 
 - (Customer *)currentCustomer {
-	if (self.sessionInfo == nil) {
+	if (sessionInfo == nil) {
 		return nil;
 	}
-	return [self.sessionInfo currentCustomer];
+	return [sessionInfo currentCustomer];
 }
 
 #pragma mark -
 #pragma mark Customer Management
 -(Customer *) lookupCustomerByPhone:(NSString *)phoneNumber {
-    return [self.posService lookupCustomerByPhone:phoneNumber withSession:self.sessionInfo];
+    return [posService lookupCustomerByPhone:phoneNumber withSession:sessionInfo];
 }
 
 -(void) newCustomer:(Customer *)customer {
-    [self.posService newCustomer:customer withSession:self.sessionInfo];
+    [posService newCustomer:customer withSession:self.sessionInfo];
 }
 
 -(void) updateCustomer:(Customer *)customer {
-    [self.posService updateCustomer:customer withSession:self.sessionInfo];
+    [posService updateCustomer:customer withSession:self.sessionInfo];
+}
+
+#pragma mark -
+#pragma mark Order Management
+-(void) newOrder:(Order *)order {
+    [posService newOrder:order withSession:sessionInfo];
 }
 
 #pragma mark -
 #pragma mark Inventory Management
 -(ProductItem *) lookupProductItem:(NSString *) itemSku {
-    return [self.inventoryService lookupProductItem:itemSku withSession:self.sessionInfo];
+    return [inventoryService lookupProductItem:itemSku withSession:sessionInfo];
 }
 
 -(BOOL) isProductItemAvailable: (NSString *) itemId forQuantity: (NSDecimal *) quantity {

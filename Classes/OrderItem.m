@@ -11,7 +11,7 @@
 
 @implementation OrderItem
 
-@synthesize quantity, item;
+@synthesize lineNumber, statusId, sellingPrice, quantity, item;
 
 #pragma mark Constructor/Deconstructor
 -(id) init {
@@ -27,13 +27,16 @@
         return nil;
     }
     
-    item = productItem;
-    quantity = productQuantity;
+    [self setItem:productItem];
+    [self setQuantity:productQuantity];
     
     return self;
 }
 
 -(void) dealloc {
+    [lineNumber release];
+    [statusId release];
+    [sellingPrice release];
     [item release];
     [quantity release];
     

@@ -11,7 +11,7 @@
 
 @implementation Order
 
-@synthesize customer, errorList;
+@synthesize orderId, orderTypeId, salesPersonEmployeeId, store, customer, errorList;
 
 #pragma mark Constructor/Deconstructor
 -(id) init {
@@ -26,8 +26,13 @@
 }
 
 -(void) dealloc {
-
+    [orderId release];
+    [orderTypeId release];
+    [salesPersonEmployeeId release];
+    
+    [store release];
     [customer release];
+    
     [orderItemList release];
     
     if (errorList != nil) {
@@ -37,6 +42,10 @@
 }
 
 #pragma mark -
+-(NSArray *) getOrderItems {
+    return orderItemList;
+}
+
 -(void) addItemToOrder:(ProductItem *)item withQuantity: (NSDecimalNumber *) quantity {
     
     if (orderItemList != nil) {
@@ -50,7 +59,18 @@
         }
         
         if (!itemAlreadyInOrder) {
-            [orderItemList addObject:[[[OrderItem alloc] initWithItem:item AndQuantity:quantity] autorelease]];
+            OrderItem *orderItem = [[[OrderItem alloc] initWithItem:item AndQuantity:quantity] autorelease];
+            [orderItemList addObject:orderItem];
+            
+            // Set the line number based on the index the item was added in
+            orderItem.lineNumber = [NSNumber numberWithInt: [orderItemList count]];
+            
+            // Set the selling price to the retail price
+            // Default the status to 1
+            // TODO: This method will change to add to order with quantity and price.  
+            // TODO: Do we still default the status
+            orderItem.statusId = [NSNumber numberWithInt:1];
+            orderItem.sellingPrice = [item.retailPrice copy];
         }
     }
 }
@@ -63,7 +83,13 @@
                 [orderItemList removeObject:orderItem];
                 break;
             }
-        }    
+        }   
+        
+        // Adjust the line number for the remaining order items (Start at 1)
+        int index = 1;
+        for (OrderItem *orderItem in orderItemList) {
+            orderItem.lineNumber = [NSNumber numberWithInt:index++];
+        }
     }
     
 }
