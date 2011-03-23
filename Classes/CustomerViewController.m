@@ -181,7 +181,7 @@
 - (void) viewWillAppear:(BOOL)animated {
 	if (self.navigationController != nil) {
 		[self.navigationController setNavigationBarHidden:NO];
-		self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cust" style:UIBarButtonItemStyleBordered target:nil action:nil];
+		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Cust" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
 	}
 	
 	[self updateViewLayout];

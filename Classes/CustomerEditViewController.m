@@ -53,14 +53,13 @@
 - (void) viewWillAppear:(BOOL)animated {
 	if (self.navigationController != nil) {
 		[self.navigationController setNavigationBarHidden:NO];
-		self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cust Edit" style:UIBarButtonItemStyleBordered target:nil action:nil];
-		UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] init];
+		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Cust Edit" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
+		UIBarButtonItem *saveButton = [[[UIBarButtonItem alloc] init] autorelease];
 		saveButton.title = @"Save";
 		saveButton.target = self;
 		[saveButton setAction:@selector(saveCustomer:)];
 		[self.navigationItem setRightBarButtonItem:saveButton];
-		[saveButton release];
-	}
+    }
 	[super viewWillAppear:animated];
 }
 

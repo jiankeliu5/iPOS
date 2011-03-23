@@ -213,7 +213,7 @@
 
 	if (self.navigationController != nil) {
 		[self.navigationController setNavigationBarHidden:NO];
-		self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Main" style:UIBarButtonItemStyleBordered target:nil action:nil];
+		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Main" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
 	}
 	
 	CGRect viewBounds = self.view.bounds;
