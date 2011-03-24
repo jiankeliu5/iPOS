@@ -8,7 +8,7 @@
 
 #import "CartItemsViewController.h"
 #include "PlaceHolderView.h"
-
+#include "AlertUtils.h"
 
 @implementation CartItemsViewController
 
@@ -60,7 +60,27 @@
 	{
 		[self.navigationController setNavigationBarHidden:NO];
 	}
+    
+    // Add itself as a delegate
+    linea = [Linea sharedDevice];
 	
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    // Add this controller as a Linea Device Delegate
+    [linea addDelegate:self];
+   
+	
+	// Do this last
+	[super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    // Remove this controller as a linea delegate
+    [linea removeDelegate: self];
+    
+    // Do this at the end
+	[super viewWillDisappear:animated];
 }
 
 // Override to allow orientations other than the default portrait orientation.
@@ -82,7 +102,45 @@
     // e.g. self.myOutlet = nil;
 }
 
+#pragma mark -
+#pragma mark Linea Delegate
+-(void)barcodeData:(NSString *)barcode type:(int)type {
+    ProductItem *item = [facade lookupProductItem:barcode];
+    
+    if (item == nil) {
+        [AlertUtils showModalAlertMessage: @"Item not found"];
+    } else {
+		[linea removeDelegate:self];
+		AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
+		[overlay setViewDelegate:self];
+		[self.view addSubview:overlay];
+		[overlay setProductItem:item];
+		[overlay release];
+    }
+}
 
+#pragma mark -
+#pragma mark AddItemViewDelegate
+- (void) addItem:(AddItemView *)addItemView orderQuantity:(NSDecimalNumber *)quantity ofUnits:(NSString *)unitOfMeasure {
+	
+	// TODO: set up the order and push to the cart view
+	NSMutableString *status = [[NSMutableString alloc] init];
+	[status setString:@""];
+	[status appendFormat:@"Would Order:  %.2f\n", [quantity doubleValue]];
+	[status appendFormat:@"Units:  %@\n", unitOfMeasure];
+	
+	[addItemView removeFromSuperview];
+	[linea addDelegate:self];
+    
+	[AlertUtils showModalAlertMessage: status];
+	[status release];
+    
+}
+
+- (void) cancelAddItem:(AddItemView *)addItemView {
+	[addItemView removeFromSuperview];
+	[linea addDelegate:self];
+}
 
 
 

@@ -212,6 +212,7 @@
     
     [request startSynchronous];
     
+    // TODO: Better error handling for response (if it is HTML (bad error), or add error with request error
     if ([request error]) {
         return;
     }
@@ -236,7 +237,8 @@
     NSString *customerXml = [CustomerMarshalling toXml:customer];
     [request appendPostData:[customerXml dataUsingEncoding:NSUTF8StringEncoding]];
     [request startSynchronous];
-    
+
+    // TODO: Better error handling for response (if it is HTML (bad error), or add error with request error
     if ([request error]) {
         return;
     }
@@ -271,6 +273,7 @@
     
     [request startSynchronous];
     
+    // TODO: Better error handling for response (if it is HTML (bad error), or add error with request error
     if ([request error]) {
         return;
     }

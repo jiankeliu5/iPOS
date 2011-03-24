@@ -70,7 +70,7 @@
                         "<CustomerID>%@</CustomerID>"
                         "<CustomerTypeID>%@</CustomerTypeID>"
                         "<TaxExempt>%@</TaxExempt>"
-                        "<ZipCode>%@</ZipCode>"
+                        "<Zip>%@</Zip>"
                         "</Customer>"
                         "<OrderTypeID>%@</OrderTypeID>"
                         "<SalesPersonID>%@</SalesPersonID>"
@@ -151,7 +151,9 @@
                 error.message = [element stringValue];
             }
             
-            [errorList addObject:error];
+            if (error.errorId && ![error.errorId isEqualToString:@""] && error.message && ![error.message isEqualToString:@""]) {
+                [errorList addObject:error];
+            }
         }
         
         order.errorList = [NSArray arrayWithArray:errorList];

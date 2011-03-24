@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LineaSDK.h"
 #import "iPOSFacade.h"
+#import "AddItemView.h"
 
-@interface CartItemsViewController : UIViewController {
+@interface CartItemsViewController : UIViewController <LineaDelegate, AddItemViewDelegate> {
 	iPOSFacade *facade;
+    
+    Linea *linea;
 }
 
 @end

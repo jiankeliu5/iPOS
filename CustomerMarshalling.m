@@ -67,7 +67,7 @@
         // Is this a new or existing customer
         if ([customerId isEqualToString:@"0"]) {
             customerXml = [NSString stringWithFormat:@"<CustomerClass>"
-                 "<Address><CustomerAddress><Address1>%@</Address1><Address2>%@</Address2><City>%@</City><State>%@</State><ZipCode>%@</ZipCode></CustomerAddress></Address>"
+                 "<Address><CustomerAddress><Address1>%@</Address1><Address2>%@</Address2><City>%@</City><State>%@</State><Zip>%@</Zip></CustomerAddress></Address>"
                  "<CustomerName>%@</CustomerName>"
                  "<Email>%@</Email>"
                  "<Phone1>%@</Phone1>"
@@ -75,7 +75,7 @@
                  "</CustomerClass>", addrLine1, addrLine2, addrCity, addrState, addrZip, name, email, phone, storeId];
         } else {
             customerXml = [NSString stringWithFormat:@"<CustomerClass>"
-                "<Address><CustomerAddress><Address1>%@</Address1><Address2>%@</Address2><City>%@</City><State>%@</State><ZipCode>%@</ZipCode></CustomerAddress></Address>"
+                "<Address><CustomerAddress><Address1>%@</Address1><Address2>%@</Address2><City>%@</City><State>%@</State><Zip>%@</Zip></CustomerAddress></Address>"
                 "<CustomerID>%@</CustomerID>"
                 "<CustomerName>%@</CustomerName>"
                 "<Email>%@</Email>"
@@ -103,19 +103,40 @@
     CXMLElement *customerAddressElement = nil;
     
     // Parse any error
-    errorNodes = [root elementsForName:@"Error"];
-    errorElement = [errorNodes lastObject];
-    
-    // If error return customer with error
-    if (![[errorElement stringValue] isEqualToString:@""]) {
-        NSMutableArray *errorList = [[[NSMutableArray alloc] init] autorelease];
-        error = [[[Error alloc] init] autorelease];
+    nodes = [root elementsForName:@"ErrorList"];
+    element = [nodes lastObject];
+    if (element) {
+        nodes = [element elementsForName:@"Error"];
         
-        error.message = [errorElement stringValue];
+    }
+    if ([nodes count] > 0) {
+        NSMutableArray *errorList = [NSMutableArray arrayWithCapacity:[nodes count]];
         
-        [errorList addObject:error];
+        for (CXMLElement *node in nodes) {
+            error = [[[Error alloc] init] autorelease];
+            
+            errorNodes = [node elementsForName:@"ErrorID"];
+            element = [errorNodes lastObject];
+            if (element) {
+                error.errorId = [element stringValue];
+            }
+            
+            errorNodes = [node elementsForName:@"ErrorMessage"];
+            element = [errorNodes lastObject];
+            if (element) {
+                error.message = [element stringValue];
+            }
+            
+            if (error.errorId && ![error.errorId isEqualToString:@""] && error.message && ![error.message isEqualToString:@""]) {
+                [errorList addObject:error];
+            }
+        }
+        
         customer.errorList = [NSArray arrayWithArray:errorList];
-    } else {
+    }
+    
+    // Map the customer if no errors are present
+    if (customer.errorList == nil || [customer.errorList count] == 0) {
         // Return fully "mapped" customer If no error
         nodes = [root elementsForName:@"CustomerID"];
         element = [nodes lastObject];
@@ -212,7 +233,7 @@
                     address.stateProv = [element stringValue];
                 }
                 
-                nodes = [customerAddressElement elementsForName:@"ZipCode"];
+                nodes = [customerAddressElement elementsForName:@"Zip"];
                 element = [nodes lastObject];
                 
                 if (element) {
