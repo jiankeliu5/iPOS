@@ -38,18 +38,34 @@
 		
 		customerFormSection.formFieldStyle = style;
 		
-		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"firstName" title:@"First"] autorelease]];
-		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"lastName" title:@"Last"] autorelease]];
+		IBATextFormField *firstFormField = [[IBATextFormField alloc] initWithKeyPath:@"firstName" title:@"First"];
+		[firstFormField setMaxLength:[NSNumber numberWithInt:40]];
+		[customerFormSection addFormField:[firstFormField autorelease]];
+		
+		IBATextFormField *lastFormField = [[IBATextFormField alloc] initWithKeyPath:@"lastName" title:@"Last"];
+		[lastFormField setMaxLength:[NSNumber numberWithInt:40]];
+		[customerFormSection addFormField:[lastFormField autorelease]];
 		
 		IBATextFormField *emailFormField = [[IBATextFormField alloc] initWithKeyPath:@"emailAddress" title:@"Email"];
+		[emailFormField setMaxLength:[NSNumber numberWithInt:100]];
 		emailFormField.textFormFieldCell.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+		emailFormField.textFormFieldCell.textField.keyboardType = UIKeyboardTypeEmailAddress;
 		[customerFormSection addFormField:[emailFormField autorelease]];
 		
-		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"addressLine1" title:@"Address 1"] autorelease]];
-		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"addressLine2" title:@"Address 2"] autorelease]];
-		[customerFormSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"city" title:@"City"] autorelease]];
+		IBATextFormField *addrLine1Field = [[IBATextFormField alloc] initWithKeyPath:@"addressLine1" title:@"Address 1"];
+		[addrLine1Field setMaxLength:[NSNumber numberWithInt:40]];
+		[customerFormSection addFormField:[addrLine1Field autorelease]];
+		
+		IBATextFormField *addrLine2Field = [[IBATextFormField alloc] initWithKeyPath:@"addressLine2" title:@"Address 2"];
+		[addrLine2Field setMaxLength:[NSNumber numberWithInt:40]];
+		[customerFormSection addFormField:[addrLine2Field autorelease]];
+		
+		IBATextFormField *cityField = [[IBATextFormField alloc] initWithKeyPath:@"city" title:@"City"];
+		[cityField setMaxLength:[NSNumber numberWithInt:25]];
+		[customerFormSection addFormField:[cityField autorelease]];
 		
 		IBATextFormField *stateFormField = [[IBATextFormField alloc] initWithKeyPath:@"stateProv" title:@"State"];
+		[stateFormField setMaxLength:[NSNumber numberWithInt:2]];
 		stateFormField.textFormFieldCell.textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
 		[customerFormSection addFormField:[stateFormField autorelease]];
 		
@@ -63,6 +79,7 @@
 																			 options:pickListOptions] autorelease]];
 		*/
 		IBATextFormField *zipFormField = [[IBATextFormField alloc] initWithKeyPath:@"zipPostalCode" title:@"Zip"];
+		[zipFormField setMaxLength:[NSNumber numberWithInt:5]];
 		zipFormField.textFormFieldCell.textField.keyboardType = UIKeyboardTypeNumberPad;
 		[customerFormSection addFormField:[zipFormField autorelease]];
 		

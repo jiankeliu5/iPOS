@@ -12,7 +12,10 @@
 @interface CustomerEditViewController : IBAFormViewController {
 
 	iPOSFacade *facade;
+	NSMutableDictionary *lastSavedCustomer;
 	
 }
+
+@property (nonatomic, retain) NSMutableDictionary *lastSavedCustomer;
 
 @end

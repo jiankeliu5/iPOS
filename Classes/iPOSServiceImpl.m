@@ -21,7 +21,6 @@
 @interface iPOSServiceImpl()
     - (ASIHTTPRequest *) initRequestForSession:(SessionInfo *) sessionInfo serviceDomainUri: (NSString *) serviceDomainUri serviceUri: (NSString *) serviceUri;
 
-    - (BOOL) isNewCustomerValid: (Customer *) customer;
     - (void) mergeCustomer: (Customer *) targetCustomer withCustomer: (Customer *) sourceCustomer;
     
     - (BOOL) isNewOrderValid: (Order *) order; 
@@ -192,7 +191,7 @@
 -(void) newCustomer:(Customer *)customer withSession:(SessionInfo *)sessionInfo {
     
     // If a customer has an ID already we would add an error
-    if (sessionInfo == nil || customer == nil || ![self isNewCustomerValid:customer]) {
+    if (sessionInfo == nil || customer == nil || ![customer isValidCustomer:YES]) {
         return;
     } 
     
@@ -223,8 +222,8 @@
 }
 
 -(void) updateCustomer:(Customer *)customer withSession:(SessionInfo *)sessionInfo {
-    // If a customer has an ID already we would add an error
-    if (customer == nil) {
+
+    if (sessionInfo == nil || customer == nil || ![customer isValidCustomer:NO]) {
         return;
     } 
     
@@ -294,39 +293,6 @@
         [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
     }
     return request;
-}
-
--(BOOL) isNewCustomerValid: (Customer *) customer {
-    NSMutableArray *errors = [NSMutableArray arrayWithCapacity:1];
-    if (customer.customerId != nil) {
-        // Attach an error
-        Error *error = [[[Error alloc] init] autorelease];
-        
-        error.message = @"Customer is already created.";
-        error.reference = customer;
-        
-        [errors addObject:error];
-        
-    } 
-    
-    if ((customer.firstName == nil && customer.lastName == nil) || customer.phoneNumber == nil || customer.address == nil || customer.address.zipPostalCode == nil) {
-        // Attach an error
-        Error *error = [[[Error alloc] init] autorelease];
-        
-        error.message = @"Missing required data.";
-        error.reference = customer;
-        
-        [errors addObject:error];
-    }
-    
-    
-    
-    if ([errors count] > 0) {
-        customer.errorList = [NSArray arrayWithArray:errors];
-        return NO;
-    }
-    
-    return YES;
 }
 
 - (void) mergeCustomer: (Customer *) targetCustomer withCustomer: (Customer *) sourceCustomer {

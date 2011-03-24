@@ -17,8 +17,10 @@
 
 @interface IBATextFormField : IBAInputRequestorFormField <UITextFieldDelegate> {
 	IBATextFormFieldCell *textFormFieldCell_;
+	NSNumber *maxLength_;
 }
 
 @property (nonatomic, retain) IBATextFormFieldCell *textFormFieldCell;
+@property (nonatomic, retain) NSNumber *maxLength;
 
 @end

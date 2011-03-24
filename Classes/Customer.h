@@ -48,5 +48,6 @@
 
 - (id) initWithModel:(id)aModel;
 - (id) modelFromCustomer;
+- (BOOL) isValidCustomer:(BOOL)newCustomer;
 
 @end

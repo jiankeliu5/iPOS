@@ -20,9 +20,11 @@
 @implementation IBATextFormField
 
 @synthesize textFormFieldCell = textFormFieldCell_;
+@synthesize maxLength = maxLength_;
 
 - (void)dealloc {
 	IBA_RELEASE_SAFELY(textFormFieldCell_);
+	IBA_RELEASE_SAFELY(maxLength_);
 	
 	[super dealloc];
 }
@@ -61,6 +63,16 @@
 	return YES;
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+	if ([self maxLength] != nil) {
+		NSUInteger maxLen = [[self maxLength] unsignedIntValue];
+		NSUInteger newLength = [textField.text length] + [string length] - range.length;
+		return (newLength > maxLen) ? NO : YES;
+	} else {
+		return YES;
+	}
+
+}
 
 #pragma mark -
 #pragma mark IBAInputRequestor

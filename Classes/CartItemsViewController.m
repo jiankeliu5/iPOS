@@ -22,6 +22,7 @@
 	// Set up the items that will appear in a navigation controller bar if
 	// this view controller is added to a UINavigationController.
 	[[self navigationItem] setTitle:@"Items"];
+	[self setTitle:@"Items"];
 
 	// Set up the right side button if desired, edit button for example.
 	//[[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
