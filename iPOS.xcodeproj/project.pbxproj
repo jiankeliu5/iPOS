@@ -88,6 +88,12 @@
 		B4300B9E131B486C000210C7 /* iPosLogin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B34131B4312000210C7 /* iPosLogin@2x.png */; };
 		B4300B9F131B486C000210C7 /* iPosIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B2F131B4300000210C7 /* iPosIcon.png */; };
 		B4300BA0131B486C000210C7 /* iPosIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B30131B4300000210C7 /* iPosIcon@2x.png */; };
+		B44D1ECB133EA3BA004E7EDE /* icon-magnify2.png in Resources */ = {isa = PBXBuildFile; fileRef = B44D1E5B133E985E004E7EDE /* icon-magnify2.png */; };
+		B44D1ECC133EA3BA004E7EDE /* icon-magnify2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B44D1E5C133E985E004E7EDE /* icon-magnify2@2x.png */; };
+		B44D1ED0133EA3C7004E7EDE /* icon-magnify2.png in Resources */ = {isa = PBXBuildFile; fileRef = B44D1E5B133E985E004E7EDE /* icon-magnify2.png */; };
+		B44D1ED1133EA3C7004E7EDE /* icon-magnify2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B44D1E5C133E985E004E7EDE /* icon-magnify2@2x.png */; };
+		B44D1ED2133EA3D8004E7EDE /* icon-magnify2.png in Resources */ = {isa = PBXBuildFile; fileRef = B44D1E5B133E985E004E7EDE /* icon-magnify2.png */; };
+		B44D1ED3133EA3D8004E7EDE /* icon-magnify2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B44D1E5C133E985E004E7EDE /* icon-magnify2@2x.png */; };
 		B4A7397D133457EA002DFA97 /* DoneDown3.png in Resources */ = {isa = PBXBuildFile; fileRef = B4A7397B133457EA002DFA97 /* DoneDown3.png */; };
 		B4A7397E133457EA002DFA97 /* DoneUp3.png in Resources */ = {isa = PBXBuildFile; fileRef = B4A7397C133457EA002DFA97 /* DoneUp3.png */; };
 		B4D1984A1326BF40007CCE08 /* UIViewController+ViewControllerLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B4D198451326BE0A007CCE08 /* UIViewController+ViewControllerLayout.m */; };
@@ -475,6 +481,8 @@
 		B4300B30131B4300000210C7 /* iPosIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPosIcon@2x.png"; sourceTree = "<group>"; };
 		B4300B33131B4312000210C7 /* iPosLogin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPosLogin.png; sourceTree = "<group>"; };
 		B4300B34131B4312000210C7 /* iPosLogin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPosLogin@2x.png"; sourceTree = "<group>"; };
+		B44D1E5B133E985E004E7EDE /* icon-magnify2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-magnify2.png"; sourceTree = "<group>"; };
+		B44D1E5C133E985E004E7EDE /* icon-magnify2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-magnify2@2x.png"; sourceTree = "<group>"; };
 		B47AA7ED12F7DD1000AAD34C /* PlaceHolderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceHolderView.h; sourceTree = "<group>"; };
 		B47AA7EE12F7DD1000AAD34C /* PlaceHolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceHolderView.m; sourceTree = "<group>"; };
 		B47AA7F412F7DD7200AAD34C /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -860,6 +868,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B44D1E5B133E985E004E7EDE /* icon-magnify2.png */,
+				B44D1E5C133E985E004E7EDE /* icon-magnify2@2x.png */,
 				B4A7397B133457EA002DFA97 /* DoneDown3.png */,
 				B4A7397C133457EA002DFA97 /* DoneUp3.png */,
 				D698A4A91325E83300371985 /* Particle.png */,
@@ -1642,6 +1652,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B44D1ECB133EA3BA004E7EDE /* icon-magnify2.png in Resources */,
+				B44D1ECC133EA3BA004E7EDE /* icon-magnify2@2x.png in Resources */,
 				B4300B31131B4300000210C7 /* iPosIcon.png in Resources */,
 				B4300B32131B4300000210C7 /* iPosIcon@2x.png in Resources */,
 				B4300B35131B4312000210C7 /* iPosLogin.png in Resources */,
@@ -1667,6 +1679,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B44D1ED0133EA3C7004E7EDE /* icon-magnify2.png in Resources */,
+				B44D1ED1133EA3C7004E7EDE /* icon-magnify2@2x.png in Resources */,
 				D6E24DCE1331CCC900931787 /* AppTests.octest in Resources */,
 				D65B25C71331C8B60052AEE2 /* iPosIcon.png in Resources */,
 				D65B25C81331C8B60052AEE2 /* iPosIcon@2x.png in Resources */,
@@ -1686,6 +1700,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B44D1ED2133EA3D8004E7EDE /* icon-magnify2.png in Resources */,
+				B44D1ED3133EA3D8004E7EDE /* icon-magnify2@2x.png in Resources */,
 				B4300B9D131B486C000210C7 /* iPosLogin.png in Resources */,
 				B4300B9E131B486C000210C7 /* iPosLogin@2x.png in Resources */,
 				B4300B9F131B486C000210C7 /* iPosIcon.png in Resources */,

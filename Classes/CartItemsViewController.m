@@ -7,8 +7,12 @@
 //
 
 #import "CartItemsViewController.h"
-#include "PlaceHolderView.h"
+#include "UIViewController+ViewControllerLayout.h"
 #include "AlertUtils.h"
+
+@interface CartItemsViewController()
+- (UILabel *) createOrderLabel:(NSString *)text withRect:(CGRect)rect andAlignment:(int)alignment;
+@end
 
 @implementation CartItemsViewController
 
@@ -38,9 +42,9 @@
 
 #pragma mark -
 #pragma mark Accessors
-- (PlaceHolderView *) contentView
+- (UIView *) contentView
 {
-	return (PlaceHolderView *)[self view];
+	return (UIView *)[self view];
 }
 
 #pragma mark -
@@ -48,8 +52,82 @@
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
-	[self setView:[[[PlaceHolderView alloc] initWithFrame:CGRectZero] autorelease]];
-	self.contentView.placeHolderLabel.text = @"Cart Items";
+	UIView *cartView = [[UIView alloc] initWithFrame:[self rectForNav]];
+	cartView.backgroundColor = [UIColor whiteColor];
+	[self setView:cartView];
+	[cartView release];
+	
+	// Where we are in the layout.
+	CGFloat cy = 0.0f;
+	custLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, cy, self.view.frame.size.width, CUST_LABEL_HEIGHT)];
+	custLabel.font = [UIFont systemFontOfSize:CUST_LABEL_FONT_SIZE];
+	[self.view addSubview:custLabel];
+	[custLabel release];
+	
+	cy += CUST_LABEL_HEIGHT;
+	
+	orderTable = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, cy, self.view.frame.size.width, ORDER_TABLE_HEIGHT) style:UITableViewStylePlain];
+	orderTable.backgroundColor = [UIColor clearColor];
+	orderTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+	[self.view addSubview:orderTable];
+	[orderTable release];
+	
+	cy += ORDER_TABLE_HEIGHT;
+	
+	subTotalLabel = [self createOrderLabel:@"Subtotal:" withRect:CGRectMake(0.0f, cy, ORDER_LABEL_WIDTH, ORDER_LABEL_HEIGHT) andAlignment:UITextAlignmentRight];
+	[self.view addSubview:subTotalLabel];
+	[subTotalLabel release];
+	
+	subTotalValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_LABEL_WIDTH, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:UITextAlignmentLeft];
+	[self.view addSubview:subTotalValue];
+	[subTotalValue release];
+	
+	cy += ORDER_LABEL_HEIGHT;
+	
+	taxLabel = [self createOrderLabel:@"Tax:" withRect:CGRectMake(0.0f, cy, ORDER_LABEL_WIDTH, ORDER_LABEL_HEIGHT) andAlignment:UITextAlignmentRight];
+	[self.view addSubview:taxLabel];
+	[taxLabel release];
+	
+	taxValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_LABEL_WIDTH, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:UITextAlignmentLeft];
+	[self.view addSubview:taxValue];
+	[taxValue release];
+	
+	cy += ORDER_LABEL_HEIGHT;
+	
+	totalLabel = [self createOrderLabel:@"Total:" withRect:CGRectMake(0.0f, cy, ORDER_LABEL_WIDTH, ORDER_LABEL_HEIGHT) andAlignment:UITextAlignmentRight];
+	[self.view addSubview:totalLabel];
+	[totalLabel release];
+	
+	totalValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_LABEL_WIDTH, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:UITextAlignmentLeft];
+	[self.view addSubview:totalValue];
+	[totalValue release];
+	
+	cy += ORDER_LABEL_HEIGHT;
+	
+	orderToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, cy, self.view.frame.size.width, ORDER_TOOLBAR_HEIGHT)];
+	orderToolBar.barStyle = UIBarStyleBlack;
+	UIImageView *spyGlassView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-magnify2.png"]];
+	lookupSkuField = [[ExtUITextField alloc] initWithFrame:CGRectMake(LOOKUP_SKU_X, LOOKUP_SKU_Y, LOOKUP_SKU_WIDTH, LOOKUP_SKU_HEIGHT)];
+	lookupSkuField.textColor = [UIColor blackColor];
+	lookupSkuField.borderStyle = UITextBorderStyleRoundedRect;
+	lookupSkuField.textAlignment = UITextAlignmentCenter;
+	lookupSkuField.clearsOnBeginEditing = YES;
+	lookupSkuField.placeholder = @"Look Up Item";
+	lookupSkuField.tagName = @"LookupItem";
+	lookupSkuField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+	lookupSkuField.returnKeyType = UIReturnKeyGo;
+	lookupSkuField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+	[lookupSkuField setLeftView:spyGlassView];
+	[lookupSkuField setLeftViewMode:UITextFieldViewModeAlways];
+	[spyGlassView release];
+	UIBarButtonItem *fieldItem = [[[UIBarButtonItem alloc] initWithCustomView:lookupSkuField] autorelease];
+	[lookupSkuField release];
+	UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+    NSArray *items = [[[NSArray alloc] initWithObjects:fieldItem, flex, nil] autorelease];
+	[orderToolBar setItems:items];
+	[self.view addSubview:orderToolBar];
+	[orderToolBar release];
+	
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -142,6 +220,17 @@
 	[linea addDelegate:self];
 }
 
-
+#pragma mark -
+#pragma mark UILabel creation
+- (UILabel *) createOrderLabel:(NSString *)text withRect:(CGRect)rect andAlignment:(int)alignment {
+	UILabel *label;
+	label = [[UILabel alloc] initWithFrame:rect];
+	label.text = text;
+	label.backgroundColor = [UIColor clearColor];
+	label.textColor = [UIColor blackColor];
+	label.textAlignment = alignment;
+	label.font = [UIFont boldSystemFontOfSize:ORDER_LABEL_FONT_SIZE];
+	return label;
+}
 
 @end
