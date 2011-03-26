@@ -21,6 +21,7 @@
 - (void) addKeyboardListeners;
 - (void) removeKeyboardListeners;
 - (void) customerPressed:(id)sender;
+- (void) dismissKeyboard:(id)sender;
 - (void) keyboardWillShow:(NSNotification *)notification;
 - (void) keyboardWillHide:(NSNotification *)notification;
 @end
@@ -33,6 +34,7 @@
 @synthesize lookupItemSku;
 @synthesize scannedItemSku;
 @synthesize lookupOrderNum;
+@synthesize cancelSkuLookup;
 
 #pragma mark Constructors
 - (id)init
@@ -161,6 +163,14 @@
 	lookupItemField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	lookupItemField.returnKeyType = UIReturnKeyGo;
 	lookupItemField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+	UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectZero] autorelease];
+	keyboardToolbar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
+	keyboardToolbar.barStyle = UIBarStyleBlackTranslucent;
+	UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissKeyboard:)] autorelease];
+	UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+    NSArray *items = [[[NSArray alloc] initWithObjects:doneButton, flex, nil] autorelease];
+	[keyboardToolbar setItems:items];
+	[lookupItemField setInputAccessoryView:keyboardToolbar];
 	[self.view addSubview:lookupItemField];
 	[lookupItemField release];
 	
@@ -225,11 +235,14 @@
 	scanItemLabel.center = CGPointMake((viewBounds.size.width / 2.0f), labelButtonSpacing);
 	
 	lookupItemField.frame = CGRectOffset(scanItemLabel.frame, 0.0f, labelButtonSpacing);
+	lookupItemField.inputAccessoryView.frame = CGRectMake(0.0f, 0.0f, viewBounds.size.width, KEYBOARD_TOOLBAR_HEIGHT);
 	
 	//lookupOrderField.frame = CGRectOffset(lookupItemField.frame, 0.0f, labelButtonSpacing);
 	
 	// Change to work from lookupOrderField position when that is implemented
 	customerButton.frame = CGRectOffset(lookupItemField.frame, 0.0f, labelButtonSpacing);
+	
+	self.cancelSkuLookup = NO;
 	
 	// Do this last
 	[super viewWillAppear:animated];
@@ -270,6 +283,13 @@
 	[customerViewController release];
 }
 
+- (void) dismissKeyboard:(id)sender {
+	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
+		self.cancelSkuLookup = YES;
+		[self.currentFirstResponder resignFirstResponder];
+	}
+}
+
 - (void)addKeyboardListeners {
 	NSNotificationCenter *noteCenter = [NSNotificationCenter defaultCenter];
 	[noteCenter addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -296,33 +316,36 @@
 }
 
 - (void)textFieldDidEndEditing:(ExtUITextField *)textField {
-	
 	self.currentFirstResponder = nil;
-	
-	// Set the values and do the work here
-	if ([textField.tagName isEqualToString:@"LookupItem"]) {
-		[self setLookupItemSku: nil];
-		[self setLookupItemSku: textField.text];
-		// Call the service and display the overlay view
-		ProductItem *item = [facade lookupProductItem:self.lookupItemSku];
-		if (item == nil) {
-			[AlertUtils showModalAlertMessage: @"Item not found"];
-		} else {
-			[linea removeDelegate:self];
-			[self removeKeyboardListeners];
-			AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
-			[overlay setViewDelegate:self];
-			[self.view addSubview:overlay];
-			[overlay setProductItem:item];
-			[overlay release];
-			textField.text = nil;
+	if (self.cancelSkuLookup == NO) {
+		// Set the values and do the work here
+		if ([textField.tagName isEqualToString:@"LookupItem"] && [textField.text length] > 0) {
+			[self setLookupItemSku: nil];
+			[self setLookupItemSku: textField.text];
+			// Call the service and display the overlay view
+			ProductItem *item = [facade lookupProductItem:self.lookupItemSku];
+			if (item == nil) {
+				[AlertUtils showModalAlertMessage: @"Item not found"];
+			} else {
+				[linea removeDelegate:self];
+				[self removeKeyboardListeners];
+				AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
+				[overlay setViewDelegate:self];
+				[self.view addSubview:overlay];
+				[overlay setProductItem:item];
+				[overlay release];
+				textField.text = nil;
+			}
+			
+		} else if ([textField.tagName isEqualToString:@"LookupOrder"] && [textField.text length] > 0) {
+			[self setLookupOrderNum:nil];
+			[self setLookupOrderNum:textField.text];
+			// Call the service and set up the order review (later revision)
 		}
-		
-	} else if ([textField.tagName isEqualToString:@"LookupOrder"]) {
-		[self setLookupOrderNum:nil];
-		[self setLookupOrderNum:textField.text];
-		// Call the service and set up the order review (later revision)
+	} else {
+		self.cancelSkuLookup = NO;
 	}
+
 }
 
 - (BOOL)textFieldShouldReturn:(ExtUITextField *)textField {

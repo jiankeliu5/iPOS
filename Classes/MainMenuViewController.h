@@ -14,6 +14,8 @@
 #import "iPOSFacade.h"
 #import "LineaSDK.h"
 
+#define KEYBOARD_TOOLBAR_HEIGHT 44.0f
+
 @interface MainMenuViewController : UIViewController <LineaDelegate, UITextFieldDelegate, AddItemViewDelegate, SignatureDelegate> {
 	iPOSFacade *facade;
 	
@@ -31,6 +33,8 @@
     
     Linea *linea;
 	
+	BOOL cancelSkuLookup;
+	
 }
 
 @property (nonatomic, retain) id currentFirstResponder;
@@ -38,5 +42,7 @@
 @property (nonatomic, copy) NSString *lookupItemSku;
 @property (nonatomic, copy) NSString *scannedItemSku;
 @property (nonatomic, copy) NSString *lookupOrderNum;
+
+@property                   BOOL cancelSkuLookup;
 
 @end
