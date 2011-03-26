@@ -15,6 +15,7 @@
     NSString *deviceId;
     NSString *serverSessionId;
     
+    NSString *loginUserName;
     NSString *passwordForVerification;
 	
 	Customer *currentCustomer;
@@ -25,8 +26,13 @@
 @property (nonatomic, retain) NSString *deviceId;
 @property (nonatomic, retain) NSString *serverSessionId;
 
+@property (nonatomic, retain) NSString *loginUserName;
 @property (nonatomic, retain) NSString *passwordForVerification;
 
 @property (nonatomic, retain) Customer *currentCustomer;
+
+
++ (SessionInfo *) fromXml: (NSString *) xmlString;
+- (NSString *) toLoginRequestXml;
 
 @end

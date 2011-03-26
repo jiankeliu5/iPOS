@@ -21,10 +21,6 @@
 
 @implementation iPOSServiceIntTestCase
 
-#if USE_APPLICATION_UNIT_TEST     // all code under test is in the iPhone Application
-
-#pragma mark -
-#pragma mark Session Mgmt Tests
 - (void) testPosFacadeLogin {
     iPOSFacade *facade = [iPOSFacade sharedInstance];
     
@@ -148,6 +144,7 @@
     [facade newCustomer:newCustomer];
     
     // Verify that it now has a customer ID
+    STAssertTrue([newCustomer.errorList count] == 0, @"Expected no error");
     STAssertNotNil(newCustomer.customerId, @"Expected a customerId");
     STAssertEquals([newCustomer.customerId intValue], 4444, @"Expected the Customer ID to be 4444");
     
@@ -190,9 +187,13 @@
     // Create a new customer (first, last, email, phone, zip)
     Customer *updateCustomer = [[[Customer alloc] init] autorelease];
     updateCustomer.customerId = [NSNumber numberWithInt:4444];
+    updateCustomer.firstName = @"Joe";
+    updateCustomer.lastName = @"Lomenda";
+    updateCustomer.phoneNumber = @"6127461580";
     updateCustomer.emailAddress = @"testThis@email.com";
     updateCustomer.address = [[[Address alloc] init] autorelease];
     updateCustomer.address.city = @"Lakeville";
+    updateCustomer.address.zipPostalCode = @"55044";
     
     // We have to login first
     [facade login:@"123" password:@"test"];
@@ -200,7 +201,8 @@
     [facade updateCustomer:updateCustomer];
     
     // Verify that it now has a customer ID
-    STAssertTrue([updateCustomer.errorList count] == 0, @"Expected no error");
+     Error *error = (Error *) [updateCustomer.errorList lastObject];
+    STAssertTrue([updateCustomer.errorList count] == 0, error.message);
     STAssertTrue([updateCustomer.firstName isEqualToString:@"Joe"], @"Wrong first name");
     STAssertTrue([updateCustomer.lastName isEqualToString:@"Lomenda"], @"Wrong last name");
     STAssertTrue([updateCustomer.phoneNumber isEqualToString:@"6127461580"], @"Wrong phone");
@@ -223,10 +225,10 @@
     
     [facade updateCustomer:updateCustomer];
     
-    // Verify that it now has a customer ID
-    STAssertTrue([updateCustomer.errorList count] > 0, @"Expected an error");
-    Error *error = (Error *) [updateCustomer.errorList lastObject];
-    STAssertTrue([error.message isEqualToString:@"Invalid Customer ID"], @"Expected an error");
+    // Verify an error for no customer id
+    STAssertTrue([updateCustomer.errorList count] == 4, @"Expected an error");
+    Error *error = (Error *) [updateCustomer.errorList objectAtIndex:0];
+    STAssertTrue([error.message isEqualToString:@"Invalid Customer id."], @"Expected an error");
 }
 
 #pragma mark -
@@ -317,7 +319,5 @@
     
     return order;
 }
-
-#endif // all code under test must be linked into the Integration Test bundle
 
 @end

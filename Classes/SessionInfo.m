@@ -7,11 +7,11 @@
 //
 
 #import "SessionInfo.h"
-
+#import "LoginXmlMarshaller.h"
 
 @implementation SessionInfo
 
-@synthesize employeeId, storeId, deviceId, serverSessionId, passwordForVerification;
+@synthesize employeeId, storeId, deviceId, serverSessionId, loginUserName, passwordForVerification;
 @synthesize currentCustomer;
 
 #pragma mark -
@@ -37,7 +37,22 @@
     [deviceId release];
     [serverSessionId release];
     
+    [loginUserName release];
+    [passwordForVerification release];
+    
     [super dealloc];
+}
+
+#pragma mark -
+#pragma mark XML Marshalling
++ (SessionInfo *) fromXml:(NSString *)xmlString {
+    LoginXmlMarshaller *marshaller = [[[LoginXmlMarshaller alloc] init] autorelease];
+    return (SessionInfo *) [marshaller toObject:xmlString];    
+}
+
+- (NSString *) toLoginRequestXml {
+    LoginXmlMarshaller *marshaller = [[[LoginXmlMarshaller alloc] init] autorelease];
+    return [marshaller toXml:self];
 }
 
 @end

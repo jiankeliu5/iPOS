@@ -177,10 +177,27 @@
 		D698A40A1325DE7800371985 /* SignaturePad.m in Sources */ = {isa = PBXBuildFile; fileRef = D698A4081325DE7800371985 /* SignaturePad.m */; };
 		D698A47F1325E50E00371985 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D698A47E1325E50E00371985 /* OpenGLES.framework */; };
 		D698A4C31325E9D900371985 /* Particle.png in Resources */ = {isa = PBXBuildFile; fileRef = D698A4A91325E83300371985 /* Particle.png */; };
-		D6A58CFF1330735E00E6DD9F /* CustomerMarshalling.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A58CFD1330735E00E6DD9F /* CustomerMarshalling.m */; };
-		D6A58D1D13307DA800E6DD9F /* SessionMgmtMarshalling.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A58D1B13307DA800E6DD9F /* SessionMgmtMarshalling.m */; };
-		D6A58D751330841000E6DD9F /* ProductItemMarshalling.h in Headers */ = {isa = PBXBuildFile; fileRef = D6A58D731330841000E6DD9F /* ProductItemMarshalling.h */; };
-		D6A58D761330841000E6DD9F /* ProductItemMarshalling.m in Sources */ = {isa = PBXBuildFile; fileRef = D6A58D741330841000E6DD9F /* ProductItemMarshalling.m */; };
+		D6B1935C133BEF22004C4FD1 /* XmlMarshaller.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B1935B133BEF22004C4FD1 /* XmlMarshaller.h */; };
+		D6B19363133C02B7004C4FD1 /* CustomerXmlMarshaller.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B19361133C02B7004C4FD1 /* CustomerXmlMarshaller.h */; };
+		D6B19364133C02B7004C4FD1 /* CustomerXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B19362133C02B7004C4FD1 /* CustomerXmlMarshaller.m */; };
+		D6B1936F133C02E7004C4FD1 /* LoginXmlMarshaller.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B1936D133C02E7004C4FD1 /* LoginXmlMarshaller.h */; };
+		D6B19370133C02E7004C4FD1 /* LoginXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B1936E133C02E7004C4FD1 /* LoginXmlMarshaller.m */; };
+		D6B19373133C02F7004C4FD1 /* OrderXmlMarshaller.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B19371133C02F7004C4FD1 /* OrderXmlMarshaller.h */; };
+		D6B19374133C02F7004C4FD1 /* OrderXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B19372133C02F7004C4FD1 /* OrderXmlMarshaller.m */; };
+		D6B19379133C0314004C4FD1 /* ProductItemXmlMarshaller.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B19377133C0314004C4FD1 /* ProductItemXmlMarshaller.h */; };
+		D6B1937A133C0314004C4FD1 /* ProductItemXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B19378133C0314004C4FD1 /* ProductItemXmlMarshaller.m */; };
+		D6B19385133C2450004C4FD1 /* AbstractModel.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B19383133C2450004C4FD1 /* AbstractModel.h */; };
+		D6B19386133C2450004C4FD1 /* AbstractModel.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B19384133C2450004C4FD1 /* AbstractModel.m */; };
+		D6B193AA133C2AA0004C4FD1 /* OrderOxmTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B193A9133C2AA0004C4FD1 /* OrderOxmTestCase.m */; };
+		D6B194BE133CD049004C4FD1 /* CXMLElement+CustomExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B194BC133CD049004C4FD1 /* CXMLElement+CustomExtensions.h */; };
+		D6B194BF133CD049004C4FD1 /* CXMLElement+CustomExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B194BD133CD049004C4FD1 /* CXMLElement+CustomExtensions.m */; };
+		D6B194C2133CD0D1004C4FD1 /* POSOxmUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B194C0133CD0D1004C4FD1 /* POSOxmUtils.h */; };
+		D6B194C3133CD0D1004C4FD1 /* POSOxmUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B194C1133CD0D1004C4FD1 /* POSOxmUtils.m */; };
+		D6B195B8133CEEEA004C4FD1 /* CustomerOxmTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B195B7133CEEEA004C4FD1 /* CustomerOxmTestCase.m */; };
+		D6B195BA133CEF05004C4FD1 /* ProductItemOxmTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B195B9133CEF05004C4FD1 /* ProductItemOxmTestCase.m */; };
+		D6B195BC133CEF1C004C4FD1 /* LoginOxmTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B195BB133CEF1C004C4FD1 /* LoginOxmTestCase.m */; };
+		D6B19793133D3832004C4FD1 /* ASIHTTPRequest+Validate.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B19791133D3832004C4FD1 /* ASIHTTPRequest+Validate.h */; };
+		D6B19794133D3832004C4FD1 /* ASIHTTPRequest+Validate.m in Sources */ = {isa = PBXBuildFile; fileRef = D6B19792133D3832004C4FD1 /* ASIHTTPRequest+Validate.m */; };
 		D6B4359F13159ECD000C0AA8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		D6B438121315A923000C0AA8 /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = D692BBA312FDFF4C007EC03A /* Address.m */; };
 		D6B438131315A927000C0AA8 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3112FCA530003C3A47 /* Customer.m */; };
@@ -242,8 +259,6 @@
 		D6CC18E51331D1690042745E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
 		D6CC18E61331D1690042745E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
 		D6CC18E71331D1690042745E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
-		D6D2EC591338353F00DBA6B4 /* OrderMarshalling.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D2EC4513382E1F00DBA6B4 /* OrderMarshalling.m */; };
-		D6D2ECB71338433E00DBA6B4 /* OxmMarshallingTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D2ECB61338433E00DBA6B4 /* OxmMarshallingTestCase.m */; };
 		D6E24DCE1331CCC900931787 /* AppTests.octest in Resources */ = {isa = PBXBuildFile; fileRef = D6334A2D1331C9CE000DEDBB /* AppTests.octest */; };
 		D6E9E9D11316037900FF1498 /* libiPOSFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */; };
 		D6E9E9D21316037900FF1498 /* libOPIFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B435B213159F72000C0AA8 /* libOPIFoundation.a */; };
@@ -546,14 +561,29 @@
 		D698A4081325DE7800371985 /* SignaturePad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignaturePad.m; sourceTree = "<group>"; };
 		D698A47E1325E50E00371985 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		D698A4A91325E83300371985 /* Particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Particle.png; sourceTree = "<group>"; };
-		D6A58CFC1330735E00E6DD9F /* CustomerMarshalling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerMarshalling.h; sourceTree = "<group>"; };
-		D6A58CFD1330735E00E6DD9F /* CustomerMarshalling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerMarshalling.m; sourceTree = "<group>"; };
-		D6A58D1A13307DA800E6DD9F /* SessionMgmtMarshalling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionMgmtMarshalling.h; sourceTree = "<group>"; };
-		D6A58D1B13307DA800E6DD9F /* SessionMgmtMarshalling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionMgmtMarshalling.m; sourceTree = "<group>"; };
-		D6A58D731330841000E6DD9F /* ProductItemMarshalling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductItemMarshalling.h; sourceTree = "<group>"; };
-		D6A58D741330841000E6DD9F /* ProductItemMarshalling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductItemMarshalling.m; sourceTree = "<group>"; };
 		D6A96658130F0C3C004D90C4 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		D6B0401213024FF6004D00CA /* LineaSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineaSDK.h; sourceTree = "<group>"; };
+		D6B1935B133BEF22004C4FD1 /* XmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XmlMarshaller.h; sourceTree = "<group>"; };
+		D6B19361133C02B7004C4FD1 /* CustomerXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerXmlMarshaller.h; sourceTree = "<group>"; };
+		D6B19362133C02B7004C4FD1 /* CustomerXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerXmlMarshaller.m; sourceTree = "<group>"; };
+		D6B1936D133C02E7004C4FD1 /* LoginXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginXmlMarshaller.h; sourceTree = "<group>"; };
+		D6B1936E133C02E7004C4FD1 /* LoginXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginXmlMarshaller.m; sourceTree = "<group>"; };
+		D6B19371133C02F7004C4FD1 /* OrderXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderXmlMarshaller.h; sourceTree = "<group>"; };
+		D6B19372133C02F7004C4FD1 /* OrderXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderXmlMarshaller.m; sourceTree = "<group>"; };
+		D6B19377133C0314004C4FD1 /* ProductItemXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductItemXmlMarshaller.h; sourceTree = "<group>"; };
+		D6B19378133C0314004C4FD1 /* ProductItemXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductItemXmlMarshaller.m; sourceTree = "<group>"; };
+		D6B19383133C2450004C4FD1 /* AbstractModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractModel.h; sourceTree = "<group>"; };
+		D6B19384133C2450004C4FD1 /* AbstractModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractModel.m; sourceTree = "<group>"; };
+		D6B193A9133C2AA0004C4FD1 /* OrderOxmTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderOxmTestCase.m; sourceTree = "<group>"; };
+		D6B194BC133CD049004C4FD1 /* CXMLElement+CustomExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CXMLElement+CustomExtensions.h"; sourceTree = "<group>"; };
+		D6B194BD133CD049004C4FD1 /* CXMLElement+CustomExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CXMLElement+CustomExtensions.m"; sourceTree = "<group>"; };
+		D6B194C0133CD0D1004C4FD1 /* POSOxmUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSOxmUtils.h; sourceTree = "<group>"; };
+		D6B194C1133CD0D1004C4FD1 /* POSOxmUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSOxmUtils.m; sourceTree = "<group>"; };
+		D6B195B7133CEEEA004C4FD1 /* CustomerOxmTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerOxmTestCase.m; sourceTree = "<group>"; };
+		D6B195B9133CEF05004C4FD1 /* ProductItemOxmTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductItemOxmTestCase.m; sourceTree = "<group>"; };
+		D6B195BB133CEF1C004C4FD1 /* LoginOxmTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginOxmTestCase.m; sourceTree = "<group>"; };
+		D6B19791133D3832004C4FD1 /* ASIHTTPRequest+Validate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ASIHTTPRequest+Validate.h"; path = "../ASIHTTPRequest+Validate.h"; sourceTree = "<group>"; };
+		D6B19792133D3832004C4FD1 /* ASIHTTPRequest+Validate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ASIHTTPRequest+Validate.m"; path = "../ASIHTTPRequest+Validate.m"; sourceTree = "<group>"; };
 		D6B435B213159F72000C0AA8 /* libOPIFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOPIFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiPOSFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6BA07B21302580500B77769 /* CTidy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTidy.h; sourceTree = "<group>"; };
@@ -617,12 +647,8 @@
 		D6BCD3FC12FCB3D80029F4B2 /* iPOSService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPOSService.h; path = Classes/iPOSService.h; sourceTree = "<group>"; };
 		D6BCD3FD12FCB3D80029F4B2 /* iPOSServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPOSServiceImpl.h; path = Classes/iPOSServiceImpl.h; sourceTree = "<group>"; };
 		D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPOSServiceImpl.m; path = Classes/iPOSServiceImpl.m; sourceTree = "<group>"; };
-		D6BCD40612FCB3F70029F4B2 /* SessionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionInfo.h; path = Classes/SessionInfo.h; sourceTree = "<group>"; };
-		D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionInfo.m; path = Classes/SessionInfo.m; sourceTree = "<group>"; };
-		D6D2EC4413382E1F00DBA6B4 /* OrderMarshalling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderMarshalling.h; sourceTree = "<group>"; };
-		D6D2EC4513382E1F00DBA6B4 /* OrderMarshalling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderMarshalling.m; sourceTree = "<group>"; };
-		D6D2ECB51338433E00DBA6B4 /* OxmMarshallingTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OxmMarshallingTestCase.h; sourceTree = "<group>"; };
-		D6D2ECB61338433E00DBA6B4 /* OxmMarshallingTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OxmMarshallingTestCase.m; sourceTree = "<group>"; };
+		D6BCD40612FCB3F70029F4B2 /* SessionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionInfo.h; sourceTree = "<group>"; };
+		D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionInfo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1126,6 +1152,10 @@
 		B4D1983C1326BDF0007CCE08 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				D6B19791133D3832004C4FD1 /* ASIHTTPRequest+Validate.h */,
+				D6B19792133D3832004C4FD1 /* ASIHTTPRequest+Validate.m */,
+				D6B194BC133CD049004C4FD1 /* CXMLElement+CustomExtensions.h */,
+				D6B194BD133CD049004C4FD1 /* CXMLElement+CustomExtensions.m */,
 				B4D198441326BE0A007CCE08 /* UIViewController+ViewControllerLayout.h */,
 				B4D198451326BE0A007CCE08 /* UIViewController+ViewControllerLayout.m */,
 				B4D1996B1329B8D5007CCE08 /* UIView+ViewLayout.h */,
@@ -1141,7 +1171,7 @@
 		D64B7E2612F9D869006AB141 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				D6D2ECB41338430F00DBA6B4 /* XMLBinding */,
+				D6B193A7133C2A61004C4FD1 /* OXM */,
 				D6179DF21317DBEE00ACAFDD /* iPOSServiceMock.m */,
 				D6179DF31317DBEE00ACAFDD /* iPOSServiceMock.h */,
 				D6179DF41317DBEE00ACAFDD /* InventoryServiceMock.m */,
@@ -1195,9 +1225,6 @@
 		D69BEFD412F9C66A0035D358 /* POSInterface */ = {
 			isa = PBXGroup;
 			children = (
-				D6A58CFB1330730B00E6DD9F /* XmlBinding */,
-				D6BCD40612FCB3F70029F4B2 /* SessionInfo.h */,
-				D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */,
 				D6BCD3F512FCB3D80029F4B2 /* InventoryService.h */,
 				D6BCD3F612FCB3D80029F4B2 /* InventoryServiceImpl.h */,
 				D6BCD3F712FCB3D80029F4B2 /* InventoryServiceImpl.m */,
@@ -1214,28 +1241,33 @@
 		D69BEFD712F9C6890035D358 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D692BBA212FDFF4C007EC03A /* Address.h */,
-				D692BBA312FDFF4C007EC03A /* Address.m */,
-				D683BF4213217652008D923F /* Error.h */,
-				D683BF4313217652008D923F /* Error.m */,
+				D6B1935A133BEEC9004C4FD1 /* Oxm */,
+				D6B19383133C2450004C4FD1 /* AbstractModel.h */,
+				D6B19384133C2450004C4FD1 /* AbstractModel.m */,
+				D61C3C3012FCA530003C3A47 /* Customer.h */,
+				D61C3C3112FCA530003C3A47 /* Customer.m */,
 				D61C3C3312FCA535003C3A47 /* Order.h */,
 				D61C3C3412FCA535003C3A47 /* Order.m */,
 				D61C3C6812FCA9C0003C3A47 /* OrderItem.h */,
 				D61C3C6912FCA9C0003C3A47 /* OrderItem.m */,
-				D61C3C3012FCA530003C3A47 /* Customer.h */,
-				D61C3C3112FCA530003C3A47 /* Customer.m */,
-				D61C3C3812FCA55D003C3A47 /* ManagerApprovalInfo.h */,
-				D61C3C3912FCA55D003C3A47 /* ManagerApprovalInfo.m */,
 				D61C3C6212FCA97F003C3A47 /* ProductItem.h */,
 				D61C3C6312FCA97F003C3A47 /* ProductItem.m */,
-				D61C3C6512FCA99E003C3A47 /* PaymentInfo.h */,
-				D61C3C6612FCA99E003C3A47 /* PaymentInfo.m */,
 				D618490313185C200051CEFF /* DistributionCenter.h */,
 				D618490413185C200051CEFF /* DistributionCenter.m */,
 				D683BE0C1321437A008D923F /* Store.h */,
 				D683BE0D1321437A008D923F /* Store.m */,
 				D683BE1013214391008D923F /* ItemAvailability.h */,
 				D683BE1113214391008D923F /* ItemAvailability.m */,
+				D692BBA212FDFF4C007EC03A /* Address.h */,
+				D692BBA312FDFF4C007EC03A /* Address.m */,
+				D683BF4213217652008D923F /* Error.h */,
+				D683BF4313217652008D923F /* Error.m */,
+				D61C3C3812FCA55D003C3A47 /* ManagerApprovalInfo.h */,
+				D61C3C3912FCA55D003C3A47 /* ManagerApprovalInfo.m */,
+				D61C3C6512FCA99E003C3A47 /* PaymentInfo.h */,
+				D61C3C6612FCA99E003C3A47 /* PaymentInfo.m */,
+				D6BCD40612FCB3F70029F4B2 /* SessionInfo.h */,
+				D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1247,19 +1279,33 @@
 			name = Helper;
 			sourceTree = "<group>";
 		};
-		D6A58CFB1330730B00E6DD9F /* XmlBinding */ = {
+		D6B1935A133BEEC9004C4FD1 /* Oxm */ = {
 			isa = PBXGroup;
 			children = (
-				D6A58CFC1330735E00E6DD9F /* CustomerMarshalling.h */,
-				D6A58CFD1330735E00E6DD9F /* CustomerMarshalling.m */,
-				D6A58D1A13307DA800E6DD9F /* SessionMgmtMarshalling.h */,
-				D6A58D1B13307DA800E6DD9F /* SessionMgmtMarshalling.m */,
-				D6A58D731330841000E6DD9F /* ProductItemMarshalling.h */,
-				D6A58D741330841000E6DD9F /* ProductItemMarshalling.m */,
-				D6D2EC4413382E1F00DBA6B4 /* OrderMarshalling.h */,
-				D6D2EC4513382E1F00DBA6B4 /* OrderMarshalling.m */,
+				D6B194C0133CD0D1004C4FD1 /* POSOxmUtils.h */,
+				D6B194C1133CD0D1004C4FD1 /* POSOxmUtils.m */,
+				D6B1935B133BEF22004C4FD1 /* XmlMarshaller.h */,
+				D6B19361133C02B7004C4FD1 /* CustomerXmlMarshaller.h */,
+				D6B19362133C02B7004C4FD1 /* CustomerXmlMarshaller.m */,
+				D6B1936D133C02E7004C4FD1 /* LoginXmlMarshaller.h */,
+				D6B1936E133C02E7004C4FD1 /* LoginXmlMarshaller.m */,
+				D6B19371133C02F7004C4FD1 /* OrderXmlMarshaller.h */,
+				D6B19372133C02F7004C4FD1 /* OrderXmlMarshaller.m */,
+				D6B19377133C0314004C4FD1 /* ProductItemXmlMarshaller.h */,
+				D6B19378133C0314004C4FD1 /* ProductItemXmlMarshaller.m */,
 			);
-			name = XmlBinding;
+			name = Oxm;
+			sourceTree = "<group>";
+		};
+		D6B193A7133C2A61004C4FD1 /* OXM */ = {
+			isa = PBXGroup;
+			children = (
+				D6B193A9133C2AA0004C4FD1 /* OrderOxmTestCase.m */,
+				D6B195B7133CEEEA004C4FD1 /* CustomerOxmTestCase.m */,
+				D6B195B9133CEF05004C4FD1 /* ProductItemOxmTestCase.m */,
+				D6B195BB133CEF1C004C4FD1 /* LoginOxmTestCase.m */,
+			);
+			name = OXM;
 			sourceTree = "<group>";
 		};
 		D6BA07B1130257C200B77769 /* TouchXML */ = {
@@ -1325,15 +1371,6 @@
 			name = ASIHTTPRequest;
 			sourceTree = "<group>";
 		};
-		D6D2ECB41338430F00DBA6B4 /* XMLBinding */ = {
-			isa = PBXGroup;
-			children = (
-				D6D2ECB51338433E00DBA6B4 /* OxmMarshallingTestCase.h */,
-				D6D2ECB61338433E00DBA6B4 /* OxmMarshallingTestCase.m */,
-			);
-			name = XMLBinding;
-			sourceTree = "<group>";
-		};
 		D6F7963212F9FD6B00B467CA /* LineaSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -1397,9 +1434,17 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D6A58D751330841000E6DD9F /* ProductItemMarshalling.h in Headers */,
 				B401FC031335B1D50082C7D4 /* CustomerEditViewController.h in Headers */,
 				B401FC071335B56C0082C7D4 /* CustomerFormDataSource.h in Headers */,
+				D6B1935C133BEF22004C4FD1 /* XmlMarshaller.h in Headers */,
+				D6B19363133C02B7004C4FD1 /* CustomerXmlMarshaller.h in Headers */,
+				D6B1936F133C02E7004C4FD1 /* LoginXmlMarshaller.h in Headers */,
+				D6B19373133C02F7004C4FD1 /* OrderXmlMarshaller.h in Headers */,
+				D6B19379133C0314004C4FD1 /* ProductItemXmlMarshaller.h in Headers */,
+				D6B19385133C2450004C4FD1 /* AbstractModel.h in Headers */,
+				D6B194BE133CD049004C4FD1 /* CXMLElement+CustomExtensions.h in Headers */,
+				D6B194C2133CD0D1004C4FD1 /* POSOxmUtils.h in Headers */,
+				D6B19793133D3832004C4FD1 /* ASIHTTPRequest+Validate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1721,7 +1766,10 @@
 				D697D15F1312D98F002C3EF6 /* SampleUnitTestCase.m in Sources */,
 				D6179DF61317DBEE00ACAFDD /* iPOSServiceMock.m in Sources */,
 				D6179DF71317DBEE00ACAFDD /* InventoryServiceMock.m in Sources */,
-				D6D2ECB71338433E00DBA6B4 /* OxmMarshallingTestCase.m in Sources */,
+				D6B193AA133C2AA0004C4FD1 /* OrderOxmTestCase.m in Sources */,
+				D6B195B8133CEEEA004C4FD1 /* CustomerOxmTestCase.m in Sources */,
+				D6B195BA133CEF05004C4FD1 /* ProductItemOxmTestCase.m in Sources */,
+				D6B195BC133CEF1C004C4FD1 /* LoginOxmTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1848,12 +1896,16 @@
 				D683BE1313214391008D923F /* ItemAvailability.m in Sources */,
 				D683BF4513217652008D923F /* Error.m in Sources */,
 				D698A40A1325DE7800371985 /* SignaturePad.m in Sources */,
-				D6A58CFF1330735E00E6DD9F /* CustomerMarshalling.m in Sources */,
-				D6A58D1D13307DA800E6DD9F /* SessionMgmtMarshalling.m in Sources */,
-				D6A58D761330841000E6DD9F /* ProductItemMarshalling.m in Sources */,
 				B401FC041335B1D50082C7D4 /* CustomerEditViewController.m in Sources */,
 				B401FC081335B56C0082C7D4 /* CustomerFormDataSource.m in Sources */,
-				D6D2EC591338353F00DBA6B4 /* OrderMarshalling.m in Sources */,
+				D6B19364133C02B7004C4FD1 /* CustomerXmlMarshaller.m in Sources */,
+				D6B19370133C02E7004C4FD1 /* LoginXmlMarshaller.m in Sources */,
+				D6B19374133C02F7004C4FD1 /* OrderXmlMarshaller.m in Sources */,
+				D6B1937A133C0314004C4FD1 /* ProductItemXmlMarshaller.m in Sources */,
+				D6B19386133C2450004C4FD1 /* AbstractModel.m in Sources */,
+				D6B194BF133CD049004C4FD1 /* CXMLElement+CustomExtensions.m in Sources */,
+				D6B194C3133CD0D1004C4FD1 /* POSOxmUtils.m in Sources */,
+				D6B19794133D3832004C4FD1 /* ASIHTTPRequest+Validate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

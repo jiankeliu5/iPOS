@@ -1,22 +1,32 @@
 //
-//  OxmMarshallingTestCase.m
+//  OrderOxmTestCase.m
 //  iPOS
 //
-//  Created by Torey Lomenda on 3/21/11.
+//  Created by Torey Lomenda on 3/24/11.
 //  Copyright 2011 Object Partners Inc. All rights reserved.
 //
 
-#import "OxmMarshallingTestCase.h"
-#import "OrderMarshalling.h"
+#import <SenTestingKit/SenTestingKit.h>
+#import "Order.h"
 
-@implementation OxmMarshallingTestCase
+@interface OrderOxmTestCase : SenTestCase
 
--(void) testOrderFromOrderReturnXml {
-    Order *order = [OrderMarshalling toObjectFromOrderReturn: @"<OrderReturn>"
-                    "<ErrorList><Error><ErrorID>1</ErrorID><Message>Error1</Message></Error>"
-                    "<Error><ErrorID>2</ErrorID><Message>Error2</Message></Error></ErrorList>"
-                    "<OrderID>1234</OrderID></OrderReturn>"];
- 
+-(void) testOrderFromOrderStatusXml;
+-(void) testXmlFromOrder;
+
+@end
+
+@implementation OrderOxmTestCase
+
+-(void) testOrderFromOrderStatusXml {
+   NSString *xmlString = @"<OrderStatus>"
+    "<ErrorList><Error><ErrorID>1</ErrorID><Message>Error1</Message></Error>"
+    "<Error><ErrorID>2</ErrorID><Message>Error2</Message></Error></ErrorList>"
+    "<OrderID>1234</OrderID></OrderStatus>";
+
+    Order *order = [Order fromXml:xmlString];
+    
+                        
     STAssertNotNil(order, @"Expected Order to not be nil");                                   
     STAssertEquals([order.orderId intValue], 1234, @"I expected this to be equal to 1234");
     STAssertNotNil(order.errorList, @"Expected Order Error List to not be nil");  
@@ -66,11 +76,11 @@
     [order addItemToOrder:item withQuantity:[NSDecimalNumber decimalNumberWithString:@"24.5"]];
     
     // Render the xml
-    NSString *xml = [OrderMarshalling toXml:order];
+    NSString *xml = [order toXml];
     
     STAssertNotNil(xml, @"Expected an XML String");
     STAssertTrue([xml isEqualToString:@"<OrderClass>"
-                  "<OrderHeader><Customer><CustomerID>1414</CustomerID><CustomerTypeID>1</CustomerTypeID><TaxExempt>false</TaxExempt><ZipCode>55044</ZipCode></Customer>"
+                  "<OrderHeader><Customer><CustomerID>1414</CustomerID><CustomerTypeID>1</CustomerTypeID><TaxExempt>false</TaxExempt><Zip>55044</Zip></Customer>"
                   "<OrderTypeID>1</OrderTypeID><SalesPersonID>1111</SalesPersonID><StoreID>1234</StoreID></OrderHeader>"
                   "<OrderDetail><Line><Conversion>1</Conversion><DefaultToBox>true</DefaultToBox><ItemID>1414</ItemID><ItemNumber>232323</ItemNumber>"
                   "<ItemDescription>Some product</ItemDescription><ItemStatusCode>S</ItemStatusCode><ItemTypeID>1</ItemTypeID>"

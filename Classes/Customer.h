@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+#import "AbstractModel.h"
 #import "Address.h"
 #import "Store.h"
 #import "Error.h"
 
-@interface Customer : NSObject {
+@interface Customer : AbstractModel {
     NSNumber *customerId;
     NSString *customerType;
     NSNumber *customerTypeId;
@@ -24,8 +25,6 @@
     
     Store   *store;
     Address *address; 
-    
-    NSArray *errorList;
     
     BOOL taxExempt;
 }
@@ -42,12 +41,15 @@
 @property (nonatomic, retain) Store *store;
 @property (nonatomic, retain) Address *address;
 
-@property (nonatomic, retain) NSArray *errorList;
-
 @property                     BOOL taxExempt;
 
 - (id) initWithModel:(id)aModel;
 - (id) modelFromCustomer;
 - (BOOL) isValidCustomer:(BOOL)newCustomer;
+
+#pragma mark -
+#pragma mark Marshalling methods
++ (Customer *) fromXml: (NSString *) xmlString;
+- (NSString *) toXml;
 
 @end

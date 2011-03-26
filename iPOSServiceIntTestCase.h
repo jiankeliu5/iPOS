@@ -18,7 +18,6 @@
 @interface iPOSServiceIntTestCase : SenTestCase {
 }
 
-#if USE_APPLICATION_UNIT_TEST
 - (void) testPosFacadeLogin;
 - (void) testPosFacadeLogout;
 
@@ -35,7 +34,5 @@
 
 - (void) testPosFacadeNewOrder;
 - (void) testPosFacadeNewOrderWithInvalidType;
- 
-#endif
 
 @end

@@ -1,8 +1,8 @@
 //
-//  OxmMarshallingTestCase.h
+//  OrderOxmTestCase.h
 //  iPOS
 //
-//  Created by Torey Lomenda on 3/21/11.
+//  Created by Torey Lomenda on 3/24/11.
 //  Copyright 2011 Object Partners Inc. All rights reserved.
 //
 //  See Also: http://developer.apple.com/iphone/library/documentation/Xcode/Conceptual/iphone_development/135-Unit_Testing_Applications/unit_testing_applications.html
@@ -17,11 +17,11 @@
 //#import "application_headers" as required
 
 
-@interface OxmMarshallingTestCase : SenTestCase {
+@interface OrderOxmTestCase : SenTestCase {
 
 }
 
--(void) testOrderFromOrderReturnXml;
+-(void) testOrderFromOrderStatusXml;
 -(void) testXmlFromOrder;
 
 @end

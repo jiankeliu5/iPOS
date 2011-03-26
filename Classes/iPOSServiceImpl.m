@@ -7,12 +7,11 @@
 //
 
 #import "iPOSServiceImpl.h"
-#import "SessionInfo.h"
 #import "ASIHTTPRequest.h"
+#import "ASIHTTPRequest+Validate.h"
+#import "POSOxmUtils.h"
 
-#import "SessionMgmtMarshalling.h"
-#import "CustomerMarshalling.h"
-#import "OrderMarshalling.h"
+#import "SessionInfo.h"
 #import "Customer.h"
 #import "Order.h"
 #import "Error.h"
@@ -93,7 +92,10 @@
     // We will be posting the login as an XML Request
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     
-    NSString *loginXML = [SessionMgmtMarshalling toLoginRequestXmlWith:employeeNumber password:password deviceId:sessionInfo.deviceId];
+    sessionInfo.loginUserName = employeeNumber;
+    sessionInfo.passwordForVerification = password;
+    
+    NSString *loginXML = [sessionInfo toLoginRequestXml];
     [request appendPostData:[loginXML dataUsingEncoding:NSUTF8StringEncoding]];
 
     [request startSynchronous];
@@ -104,12 +106,13 @@
     
     // Create an XML document parser
     NSString *response = [request responseString];
-    [SessionMgmtMarshalling bindSessionInfo:sessionInfo fromXml:response];
+    SessionInfo *responseSessionInfo = [SessionInfo fromXml:response];
     
-    // If an employee Id is populated we have a valid session info
-    if (sessionInfo.employeeId && ![sessionInfo.employeeId isEqualToNumber:[NSNumber numberWithInt:0]]) {
-        // Store the valid password for verification when app wakes up from the background/sleep
-        sessionInfo.passwordForVerification = [[password copy] autorelease];
+    if (responseSessionInfo.employeeId && ![responseSessionInfo.employeeId isEqualToNumber:[NSNumber numberWithInt:0]]) {
+        sessionInfo.employeeId = responseSessionInfo.employeeId;
+        sessionInfo.serverSessionId = responseSessionInfo.serverSessionId;
+        sessionInfo.storeId = responseSessionInfo.storeId;
+        
         return sessionInfo;
     }
     
@@ -130,7 +133,7 @@
             return NO;
         }
         
-        BOOL isSuccessful = [SessionMgmtMarshalling isSuccessful:[request responseString]];
+        BOOL isSuccessful = [POSOxmUtils isXmlResultTrue:[request responseString]];
         
         // Return result
         return isSuccessful;
@@ -154,7 +157,7 @@
         return NO;
     }
     
-    BOOL isSuccessful = [SessionMgmtMarshalling isSuccessful:[request responseString]];
+    BOOL isSuccessful = [POSOxmUtils isXmlResultTrue:[request responseString]];
 
         
     // Return result
@@ -179,7 +182,7 @@
     }
     
     // Parse the XML response for the customer details
-    Customer *customer = [CustomerMarshalling toObject:[request responseString]];
+    Customer *customer =  [Customer fromXml:[request responseString]];
             
     if (customer == nil || (customer.errorList != nil && [customer.errorList count] > 0)) {
         return nil;
@@ -207,18 +210,21 @@
     // Post data for customer
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     
-    NSString *customerXml = [CustomerMarshalling toXml:customer];    
+    NSString *customerXml = [customer toXml];    
     [request appendPostData:[customerXml dataUsingEncoding:NSUTF8StringEncoding]];
     
     [request startSynchronous];
     
-    // TODO: Better error handling for response (if it is HTML (bad error), or add error with request error
-    if ([request error]) {
-        return;
+    NSArray *requestErrors = [request validateAsXmlContent];
+    if ([requestErrors count] > 0) {
+        for (Error *error in requestErrors) {
+            [customer addError:error];
+        }
+        return;   
     }
     
     // Parse the XML response for the customer details
-    Customer *resultCustomer = [CustomerMarshalling toObject:[request responseString]];
+    Customer *resultCustomer = [Customer fromXml:[request responseString]];
     [self mergeCustomer: customer withCustomer:resultCustomer];
 }
 
@@ -234,17 +240,21 @@
     // Post data for customer
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     
-    NSString *customerXml = [CustomerMarshalling toXml:customer];
+    NSString *customerXml = [customer toXml];
     [request appendPostData:[customerXml dataUsingEncoding:NSUTF8StringEncoding]];
     [request startSynchronous];
 
-    // TODO: Better error handling for response (if it is HTML (bad error), or add error with request error
-    if ([request error]) {
-        return;
+    NSArray *requestErrors = [request validateAsXmlContent];
+    if ([requestErrors count] > 0) {
+        for (Error *error in requestErrors) {
+            [customer addError:error];
+        }
+        return;   
     }
     
+    
     // Parse the XML response for the customer details
-    Customer *resultCustomer = [CustomerMarshalling toObject:[request responseString]];
+    Customer *resultCustomer = [Customer fromXml:[request responseString]];
     [self mergeCustomer: customer withCustomer:resultCustomer];
 }
 
@@ -268,18 +278,22 @@
     // Post data for customer
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     
-    NSString *orderXml = [OrderMarshalling toXml:order];    
+    NSString *orderXml = [order toXml];    
     [request appendPostData:[orderXml dataUsingEncoding:NSUTF8StringEncoding]];
     
     [request startSynchronous];
     
-    // TODO: Better error handling for response (if it is HTML (bad error), or add error with request error
-    if ([request error]) {
-        return;
+    NSArray *requestErrors = [request validateAsXmlContent];
+    if ([requestErrors count] > 0) {
+        for (Error *error in requestErrors) {
+            [order addError:error];
+        }
+        return;   
     }
     
+    
     // Parse the XML response for the customer details
-    Order *orderReturned = [OrderMarshalling toObjectFromOrderReturn:[request responseString]];
+    Order *orderReturned =  [Order fromXml:[request responseString]];
     [self mergeOrder:order withOrder:orderReturned];
 }
 
@@ -291,6 +305,7 @@
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     
     [request setValidatesSecureCertificate:NO];
+    [request setTimeOutSeconds:30];
     
     if (sessionInfo && sessionInfo.deviceId) {
         [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];

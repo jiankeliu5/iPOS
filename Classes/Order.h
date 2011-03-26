@@ -8,20 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+#import "AbstractModel.h"
 #import "Store.h"
 #import "Customer.h"
 #import "OrderItem.h"
 
-@interface Order : NSObject {
+@interface Order : AbstractModel {
     NSNumber *orderId;
     NSNumber *orderTypeId;
     NSNumber *salesPersonEmployeeId;
     
     Store *store;
     Customer *customer;
-    
-    NSArray *errorList;
-    
+        
     @private NSMutableArray *orderItemList;
 }
 
@@ -30,10 +29,15 @@
 @property (nonatomic, retain) NSNumber *salesPersonEmployeeId;
 @property (nonatomic, retain) Store *store;
 @property (nonatomic, retain) Customer *customer;
-@property (nonatomic, retain) NSArray *errorList;
 
 - (NSArray *) getOrderItems;
--(void) addItemToOrder: (ProductItem *) item withQuantity: (NSDecimalNumber *) quantity;
--(void) removeItemFromOrder: (ProductItem *) item;
--(void) removeAll;
+- (void) addItemToOrder: (ProductItem *) item withQuantity: (NSDecimalNumber *) quantity;
+- (void) removeItemFromOrder: (ProductItem *) item;
+- (void) removeAll;
+
+#pragma mark -
+#pragma mark Marshalling methods
++ (Order *) fromXml: (NSString *) xmlString;
+- (NSString *) toXml;
+
 @end

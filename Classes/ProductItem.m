@@ -7,7 +7,7 @@
 //
 
 #import "ProductItem.h"
-
+#import "ProductItemXmlMarshaller.h"
 
 @implementation ProductItem
 
@@ -67,6 +67,18 @@
 
 -(NSString *) unitOfMeasureDisplay:(NSString*)uom {
 	return (NSString *)[unitOfMeasureLookup objectForKey:uom];
+}
+
+#pragma mark -
+#pragma mark XML marshalling
++(ProductItem *) fromXml:(NSString *)xmlString {
+    ProductItemXmlMarshaller *marshaller = [[[ProductItemXmlMarshaller alloc] init] autorelease];
+    return (ProductItem *) [marshaller toObject:xmlString];    
+}
+
+- (NSString *) toXml {
+    ProductItemXmlMarshaller *marshaller = [[[ProductItemXmlMarshaller alloc] init] autorelease];
+    return [marshaller toXml:self];
 }
 
 @end

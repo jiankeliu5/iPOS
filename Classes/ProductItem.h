@@ -74,4 +74,9 @@
 
 -(NSString *) unitOfMeasureDisplay:(NSString*)uom;
 
+#pragma mark -
+#pragma mark Marshalling methods
++ (ProductItem *) fromXml: (NSString *) xmlString;
+- (NSString *) toXml;
+
 @end

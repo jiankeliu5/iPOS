@@ -7,11 +7,12 @@
 //
 
 #import "Customer.h"
+#import "CustomerXmlMarshaller.h"
 
 
 @implementation Customer
 
-@synthesize customerId, customerType, customerTypeId, firstName, lastName, phoneNumber, emailAddress, store, address, errorList, taxExempt;
+@synthesize customerId, customerType, customerTypeId, firstName, lastName, phoneNumber, emailAddress, store, address, taxExempt;
 
 #pragma mark Initializer and Memory Mgmt
 -(id) init {
@@ -120,10 +121,6 @@
     [store release];
     [address release];
     
-    if (errorList != nil) {
-        [errorList release];
-    }
-    
     if (customerId != nil) {
         [customerId release];
     }
@@ -131,7 +128,6 @@
 }
 
 - (BOOL) isValidCustomer:(BOOL)newCustomer {
-	NSMutableArray *errors = [NSMutableArray arrayWithCapacity:1];
 	
 	if (newCustomer == YES && self.customerId != nil) {
 		// Attach an error
@@ -140,18 +136,27 @@
 		error.message = @"Customer is already created.";
 		error.reference = self;
 		
-		[errors addObject:error];
+		[self addError:error];
 		
-	} 
+	}  else if (newCustomer == NO && (self.customerId == nil || [self.customerId isEqualToNumber:[NSNumber numberWithInt:0]])) {
+        // Attach an error
+		Error *error = [[[Error alloc] init] autorelease];
+		
+		error.message = @"Invalid Customer id.";
+		error.reference = self;
+		
+		[self addError:error];
+        
+    }
 	
-	if (self.firstName == nil && self.lastName == nil) {
-		// Attach an error
+   if (self.firstName == nil && self.lastName == nil) {
+ 		// Attach an error
 		Error *error = [[[Error alloc] init] autorelease];
 		
 		error.message = @"First or Last name must be set.";
 		error.reference = self;
 		
-		[errors addObject:error];
+		[self addError:error];
 	} else {
 		NSInteger firstLen = (self.firstName == nil) ? 0 : [self.firstName length];
 		NSInteger lastLen = (self.lastName == nil) ? 0 : [self.lastName length];
@@ -161,7 +166,7 @@
 			error.message = @"First and Last name must total under 40 chars.";
 			error.reference = self;
 			
-			[errors addObject:error];
+			[self addError:error];
 		}
 	}
 	
@@ -171,7 +176,7 @@
 		error.message = @"Phone number must be set.";
 		error.reference = self;
 		
-		[errors addObject:error];
+		[self addError:error];
 	} else {
 		NSString *regex = @"[0-9]{10}";
 		NSPredicate *regextest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
@@ -181,7 +186,7 @@
 			error.message = @"Phone number must 10 digits.";
 			error.reference = self;
 			
-			[errors addObject:error];
+			[self addError:error];
 		}
 	}
 	
@@ -194,7 +199,7 @@
 			error.message = @"Zip code must be 5 digits.";
 			error.reference = self;
 			
-			[errors addObject:error];
+			[self addError:error];
 		}
 	} else {
 		Error *error = [[[Error alloc] init] autorelease];
@@ -202,7 +207,7 @@
 		error.message = @"Zip code must be set.";
 		error.reference = self;
 		
-		[errors addObject:error];
+		[self addError:error];
 	}
 	
 	if(self.emailAddress != nil && [self.emailAddress length ] > 100) {
@@ -211,7 +216,7 @@
 		error.message = @"Email address must be less than 100 chars.";
 		error.reference = self;
 		
-		[errors addObject:error];
+		[self addError:error];
 	}
 	
 	if (self.address != nil && self.address.line1 != nil && [self.address.line1 length] > 40) {
@@ -220,7 +225,7 @@
 		error.message = @"Address line 1 must be less than 40 chars.";
 		error.reference = self;
 		
-		[errors addObject:error];
+		[self addError:error];
 	}
 	
 	if (self.address != nil && self.address.line2 != nil && [self.address.line2 length] > 40) {
@@ -229,7 +234,7 @@
 		error.message = @"Address line 2 must be less than 40 chars.";
 		error.reference = self;
 		
-		[errors addObject:error];
+		[self addError:error];
 	}
 	
 	if (self.address != nil && self.address.city != nil && [self.address.city length] > 25) {
@@ -238,7 +243,7 @@
 		error.message = @"City must be less than 25 chars.";
 		error.reference = self;
 		
-		[errors addObject:error];
+		[self addError:error];
 	}
 	
 	if (self.address != nil && self.address.stateProv != nil && [self.address.stateProv length] > 2) {
@@ -247,15 +252,26 @@
 		error.message = @"State must be less than 2 chars.";
 		error.reference = self;
 		
-		[errors addObject:error];
-	}
+		[self addError:error];
+    }
 	
-	if ([errors count] > 0) {
-		self.errorList = [NSArray arrayWithArray:errors];
+	if (self.errorList && [self.errorList count] > 0) {
 		return NO;
 	}
 	
 	return YES;
+}
+
+#pragma mark -
+#pragma mark Customer XML Marshalling
++ (Customer *) fromXml:(NSString *)xmlString {
+    CustomerXmlMarshaller *marshaller = [[[CustomerXmlMarshaller alloc] init] autorelease];
+    return (Customer *) [marshaller toObject:xmlString]; 
+}
+
+- (NSString *) toXml {
+    CustomerXmlMarshaller *marshaller = [[[CustomerXmlMarshaller alloc] init] autorelease];
+    return [marshaller toXml:self];
 }
 
 @end

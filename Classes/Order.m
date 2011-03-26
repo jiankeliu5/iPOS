@@ -7,11 +7,11 @@
 //
 
 #import "Order.h"
-
+#import "OrderXmlMarshaller.h"
 
 @implementation Order
 
-@synthesize orderId, orderTypeId, salesPersonEmployeeId, store, customer, errorList;
+@synthesize orderId, orderTypeId, salesPersonEmployeeId, store, customer;
 
 #pragma mark Constructor/Deconstructor
 -(id) init {
@@ -35,10 +35,19 @@
     
     [orderItemList release];
     
-    if (errorList != nil) {
-        [errorList release];
-    }
     [super dealloc];
+}
+
+#pragma mark -
+#pragma mark Marshalling
++ (Order *) fromXml:(NSString *)xmlString {
+    OrderXmlMarshaller *marshaller = [[[OrderXmlMarshaller alloc] init] autorelease];
+    return (Order *) [marshaller toObject:xmlString];
+}
+
+- (NSString *) toXml {
+    OrderXmlMarshaller *marshaller = [[[OrderXmlMarshaller alloc] init] autorelease];
+    return [marshaller toXml:self];
 }
 
 #pragma mark -

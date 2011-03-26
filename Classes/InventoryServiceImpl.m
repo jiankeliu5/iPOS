@@ -10,7 +10,8 @@
 #import "SessionInfo.h"
 #import "ASIHTTPRequest.h"
 
-#import "ProductItemMarshalling.h"
+#import "POSOxmUtils.h"
+#import "ProductItemXmlMarshaller.h"
 
 @implementation InventoryServiceImpl
 
@@ -77,6 +78,7 @@
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     
     [request setValidatesSecureCertificate:NO];
+    [request setTimeOutSeconds:30];
     [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
     
     [request startSynchronous];
@@ -90,7 +92,7 @@
     // Create an XML document parser
     NSString *response = [request responseString];
         
-    ProductItem *item = [ProductItemMarshalling toObject:response];
+    ProductItem *item = [ProductItem fromXml:response];
     return item;
 }
 
@@ -116,7 +118,7 @@
     
     // Create an XML document parser
     NSString *response = [request responseString];
-    BOOL isAvailable = [ProductItemMarshalling isProductAvailable:response];
+    BOOL isAvailable =  [POSOxmUtils isXmlResultTrue:response];
         
     // Return resul
     return isAvailable;
