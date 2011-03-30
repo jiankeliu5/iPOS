@@ -33,6 +33,8 @@
 - (BOOL) logout;
 - (void) setCurrentCustomer:(Customer *)customer;
 - (Customer *)currentCustomer;
+- (void) setCurrentOrder:(Order	*)order;
+- (Order *)currentOrder;
 
 #pragma mark iPOS Customer Management
 -(Customer *) lookupCustomerByPhone: (NSString *) phoneNumber;

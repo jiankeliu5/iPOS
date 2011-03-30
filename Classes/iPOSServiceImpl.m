@@ -261,21 +261,21 @@
 #pragma mark -
 #pragma mark Order Mgmt APIs
 -(void) newOrder:(Order *)order withSession:(SessionInfo *)sessionInfo {
-    // If a customer has an ID already we would add an error
+	// Make sure that we have a valid session and order
     if (sessionInfo == nil || order == nil || ![self isNewOrderValid:order]) {
         return;
     } 
     
-    // Make sure the store Id is set on the customer
+    // Make sure the store Id is set on the order
     if (order.store == nil) {
         order.store = [[[Store alloc] init] autorelease];
     }
     order.store.storeId = sessionInfo.storeId;
     
-    // Send the lookup request
+    // Send the new order request
     ASIHTTPRequest *request = [self initRequestForSession:sessionInfo serviceDomainUri:posOrderMgmtUri serviceUri:@"new"];
     
-    // Post data for customer
+    // Post data for order
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     
     NSString *orderXml = [order toXml];    
@@ -292,7 +292,7 @@
     }
     
     
-    // Parse the XML response for the customer details
+    // Parse the XML response for the order details
     Order *orderReturned =  [Order fromXml:[request responseString]];
     [self mergeOrder:order withOrder:orderReturned];
 }

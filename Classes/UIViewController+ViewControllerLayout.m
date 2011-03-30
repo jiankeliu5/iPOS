@@ -6,6 +6,10 @@
 //  Copyright 2011 NA. All rights reserved.
 //
 
+// NOTE: [[UIScreen mainScreen] applicationFrame] ALWAYS returns portrait orientation!
+// This would have to be updated if the application needs to support landscape as well.
+// May need to use self.navigationController.view.frame but I am not sure.
+
 #import "UIViewController+ViewControllerLayout.h"
 
 

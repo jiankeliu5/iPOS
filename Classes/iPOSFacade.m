@@ -86,6 +86,19 @@ static iPOSFacade *facade = nil;
 	return [sessionInfo currentCustomer];
 }
 
+- (void) setCurrentOrder:(Order *)order {
+	if (sessionInfo != nil) {
+		[sessionInfo setCurrentOrder:order];
+	}
+}
+
+- (Order *)currentOrder {
+	if (sessionInfo == nil) {
+		return nil;
+	}
+	return [sessionInfo currentOrder];
+}
+
 #pragma mark -
 #pragma mark Customer Management
 -(Customer *) lookupCustomerByPhone:(NSString *)phoneNumber {

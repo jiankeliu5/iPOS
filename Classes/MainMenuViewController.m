@@ -13,6 +13,9 @@
 
 #include "AddItemView.h"
 #include "CustomerViewController.h"
+#include "CartItemsViewController.h"
+
+#include "Order.h"
 
 #include "SignatureViewController.h"
 
@@ -425,19 +428,40 @@
 
 - (void) addItem:(AddItemView *)addItemView orderQuantity:(NSDecimalNumber *)quantity ofUnits:(NSString *)unitOfMeasure {
 	
-	// TODO: set up the order and push to the cart view
+	Order *order = [facade currentOrder];
+	if (order == nil) {
+		order = [[[Order alloc] init] autorelease];
+		[facade setCurrentOrder:order];
+	}
+	if ([facade currentCustomer] != nil) {
+		[order setCustomer:[facade currentCustomer]];
+	}
+	ProductItem *item = [addItemView productItem];
+	[order addItemToOrder:item withQuantity:quantity];
+	
+	[addItemView removeFromSuperview];
+
+    CartItemsViewController *cartViewController = [[CartItemsViewController alloc] init];
+	[[self navigationController] pushViewController:cartViewController animated:TRUE];
+	[cartViewController release];
+	
+	/*
 	NSMutableString *status = [[NSMutableString alloc] init];
 	[status setString:@""];
 	[status appendFormat:@"Would Order:  %.2f\n", [quantity doubleValue]];
 	[status appendFormat:@"Units:  %@\n", unitOfMeasure];
 	
-	[addItemView removeFromSuperview];
 	[linea addDelegate:self];
 	[self addKeyboardListeners];
 		 
 	[AlertUtils showModalAlertMessage: status];
 	[status release];
+	 */
 		 
+}
+
+-(void) signatureController: (SignatureViewController *) signatureController signatureAsImage: (UIImage *) signature savePressed: (id) sender {
+	// TODO: Dummy to remove incomplete implementation warning.  Remove when we don't need it anymore.
 }
 
 @end

@@ -7,14 +7,30 @@
 //
 
 #import "CartItemsViewController.h"
-#include "UIViewController+ViewControllerLayout.h"
-#include "AlertUtils.h"
+#import "UIViewController+ViewControllerLayout.h"
+#import "NSString+StringFormatters.h"
+#import "AlertUtils.h"
+#import "LayoutUtils.h"
+#import "Customer.h"
+#import	"Order.h"
+#import "OrderItem.h"
+#import "ProductItem.h"
+#import "CartItemTableCell.h"
 
 @interface CartItemsViewController()
 - (UILabel *) createOrderLabel:(NSString *)text withRect:(CGRect)rect andAlignment:(int)alignment;
+- (void) addKeyboardListeners;
+- (void) removeKeyboardListeners;
+- (void) dismissKeyboard:(id)sender;
+- (void) keyboardWillShow:(NSNotification *)notification;
+- (void) keyboardWillHide:(NSNotification *)notification;
+- (void) calculateOrder;
 @end
 
 @implementation CartItemsViewController
+
+@synthesize currentFirstResponder;
+@synthesize cancelSkuLookup;
 
 #pragma mark Constructors
 - (id)init
@@ -37,6 +53,9 @@
 }
 
 - (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self]; 
+	[self setCurrentFirstResponder:nil];
+	
     [super dealloc];
 }
 
@@ -59,16 +78,32 @@
 	
 	// Where we are in the layout.
 	CGFloat cy = 0.0f;
-	custLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, cy, self.view.frame.size.width, CUST_LABEL_HEIGHT)];
-	custLabel.font = [UIFont systemFontOfSize:CUST_LABEL_FONT_SIZE];
-	[self.view addSubview:custLabel];
-	[custLabel release];
+	
+	custPhoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, cy, CUST_LABEL_END_WIDTH, CUST_LABEL_HEIGHT)];
+	custPhoneLabel.font = [UIFont systemFontOfSize:CUST_LABEL_FONT_SIZE];
+	custPhoneLabel.textAlignment = UITextAlignmentCenter;
+	[self.view addSubview:custPhoneLabel];
+	[custPhoneLabel release];
+	
+	custNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CUST_LABEL_END_WIDTH, cy, CUST_LABEL_MIDDLE_WIDTH, CUST_LABEL_HEIGHT)];
+	custNameLabel.font = [UIFont systemFontOfSize:CUST_LABEL_FONT_SIZE];
+	custNameLabel.textAlignment = UITextAlignmentCenter;
+	[self.view addSubview:custNameLabel];
+	[custNameLabel release];
+
+	custZipLabel = [[UILabel alloc] initWithFrame:CGRectMake(CUST_LABEL_END_WIDTH +  CUST_LABEL_MIDDLE_WIDTH, cy, CUST_LABEL_END_WIDTH, CUST_LABEL_HEIGHT)];
+	custZipLabel.font = [UIFont systemFontOfSize:CUST_LABEL_FONT_SIZE];
+	custZipLabel.textAlignment = UITextAlignmentCenter;
+	[self.view addSubview:custZipLabel];
+	[custZipLabel release];
 	
 	cy += CUST_LABEL_HEIGHT;
 	
 	orderTable = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, cy, self.view.frame.size.width, ORDER_TABLE_HEIGHT) style:UITableViewStylePlain];
 	orderTable.backgroundColor = [UIColor clearColor];
 	orderTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+	orderTable.delegate = self;
+	orderTable.dataSource = self;
 	[self.view addSubview:orderTable];
 	[orderTable release];
 	
@@ -78,7 +113,7 @@
 	[self.view addSubview:subTotalLabel];
 	[subTotalLabel release];
 	
-	subTotalValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_LABEL_WIDTH, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:UITextAlignmentLeft];
+	subTotalValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_VALUE_X, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:UITextAlignmentLeft];
 	[self.view addSubview:subTotalValue];
 	[subTotalValue release];
 	
@@ -88,7 +123,7 @@
 	[self.view addSubview:taxLabel];
 	[taxLabel release];
 	
-	taxValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_LABEL_WIDTH, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:UITextAlignmentLeft];
+	taxValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_VALUE_X, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:UITextAlignmentLeft];
 	[self.view addSubview:taxValue];
 	[taxValue release];
 	
@@ -98,33 +133,51 @@
 	[self.view addSubview:totalLabel];
 	[totalLabel release];
 	
-	totalValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_LABEL_WIDTH, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:UITextAlignmentLeft];
+	totalValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_VALUE_X, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:UITextAlignmentLeft];
 	[self.view addSubview:totalValue];
 	[totalValue release];
 	
 	cy += ORDER_LABEL_HEIGHT;
 	
+	// Create a toolbar for the bottom of the screen
 	orderToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, cy, self.view.frame.size.width, ORDER_TOOLBAR_HEIGHT)];
 	orderToolBar.barStyle = UIBarStyleBlack;
-	UIImageView *spyGlassView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-magnify2.png"]];
+
+	// Create a textfile to put in the bottom toolbar to do manual sku lookup.
 	lookupSkuField = [[ExtUITextField alloc] initWithFrame:CGRectMake(LOOKUP_SKU_X, LOOKUP_SKU_Y, LOOKUP_SKU_WIDTH, LOOKUP_SKU_HEIGHT)];
 	lookupSkuField.textColor = [UIColor blackColor];
 	lookupSkuField.borderStyle = UITextBorderStyleRoundedRect;
-	lookupSkuField.textAlignment = UITextAlignmentCenter;
+	lookupSkuField.textAlignment = UITextAlignmentLeft;
+	lookupSkuField.font = [UIFont systemFontOfSize:LOOKUP_SKU_FONT_SIZE];
 	lookupSkuField.clearsOnBeginEditing = YES;
 	lookupSkuField.placeholder = @"Look Up Item";
 	lookupSkuField.tagName = @"LookupItem";
 	lookupSkuField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	lookupSkuField.returnKeyType = UIReturnKeyGo;
 	lookupSkuField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+	
+	// Load and set the spyglass icon at the left side of the text field.
+	UIImageView *spyGlassView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-magnify2.png"]];
 	[lookupSkuField setLeftView:spyGlassView];
 	[lookupSkuField setLeftViewMode:UITextFieldViewModeAlways];
 	[spyGlassView release];
+	
+	// Set auxiliary view for keyboard when it is displayed for this text field.
+	UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, KEYBOARD_TOOLBAR_HEIGHT)] autorelease];
+	keyboardToolbar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
+	keyboardToolbar.barStyle = UIBarStyleBlackTranslucent;
+	UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissKeyboard:)] autorelease];
+	UIBarButtonItem *kbToolbarFlex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+    NSArray *kbToolbarItems = [[[NSArray alloc] initWithObjects:doneButton, kbToolbarFlex, nil] autorelease];
+	[keyboardToolbar setItems:kbToolbarItems];
+	[lookupSkuField setInputAccessoryView:keyboardToolbar];
+	
+	// Add the textfield to the bottom toolbar as a custom view
 	UIBarButtonItem *fieldItem = [[[UIBarButtonItem alloc] initWithCustomView:lookupSkuField] autorelease];
 	[lookupSkuField release];
-	UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
-    NSArray *items = [[[NSArray alloc] initWithObjects:fieldItem, flex, nil] autorelease];
-	[orderToolBar setItems:items];
+	UIBarButtonItem *tbFlex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+    NSArray *tbItems = [[[NSArray alloc] initWithObjects:fieldItem, tbFlex, nil] autorelease];
+	[orderToolBar setItems:tbItems];
 	[self.view addSubview:orderToolBar];
 	[orderToolBar release];
 	
@@ -139,24 +192,61 @@
 		[self.navigationController setNavigationBarHidden:NO];
 	}
     
+	lookupSkuField.delegate = self;
+	
     // Add itself as a delegate
     linea = [Linea sharedDevice];
 	
+}
+
+- (void)viewDidUnload {
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     // Add this controller as a Linea Device Delegate
     [linea addDelegate:self];
    
+	if (self.navigationController != nil) {
+		[self.navigationController setNavigationBarHidden:NO];
+		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Items" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
+	}
+	
+	self.cancelSkuLookup = NO;
+	
+	Customer *cust = [facade currentCustomer];
+	if (cust == nil) {
+		custPhoneLabel.backgroundColor = NO_CUST_SELECTED_COLOR;
+		custNameLabel.backgroundColor = NO_CUST_SELECTED_COLOR;
+		custNameLabel.text = @"No Customer";
+		custZipLabel.backgroundColor = NO_CUST_SELECTED_COLOR;
+	} else {
+		custPhoneLabel.backgroundColor = CUST_SELECTED_COLOR;
+		custPhoneLabel.text = [NSString formatAsUSPhone:cust.phoneNumber];
+		custNameLabel.backgroundColor = CUST_SELECTED_COLOR;
+		custNameLabel.text = (cust.lastName == nil) ? cust.firstName : cust.lastName;
+		custZipLabel.backgroundColor = CUST_SELECTED_COLOR;
+		custZipLabel.text = cust.address.zipPostalCode;
+	}
 	
 	// Do this last
 	[super viewWillAppear:animated];
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	[self addKeyboardListeners];
+	[self calculateOrder];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     // Remove this controller as a linea delegate
     [linea removeDelegate: self];
     
+	[self removeKeyboardListeners];
+	
     // Do this at the end
 	[super viewWillDisappear:animated];
 }
@@ -174,10 +264,206 @@
     // Release any cached data, images, etc. that aren't in use.
 }
 
-- (void)viewDidUnload {
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+#pragma mark -
+#pragma mark Order Methods
+- (void) calculateOrder {
+	BOOL custTaxExempt = NO;
+	// If the customer is not set yet, we will assume that they are not tax exempt
+	if ([facade currentCustomer] != nil && [[facade currentCustomer] taxExempt] == YES) {
+		custTaxExempt = YES;
+	}
+	
+	Order *order = [facade currentOrder];
+	if (order != nil) {
+		NSArray *orderItems = [order getOrderItems];
+		
+		NSDecimalNumber *subTotal = [NSDecimalNumber zero];
+		NSDecimalNumber *taxTotal = [NSDecimalNumber zero];
+		for (OrderItem *item in orderItems) {
+			NSDecimalNumber *lineTotal = [item.sellingPrice decimalNumberByMultiplyingBy:item.quantity];
+			subTotal = [lineTotal decimalNumberByAdding:subTotal];
+			// If the customer is tax exempt we won't bother with checking further or calculating the tax amount for the line item
+			// If the customer is not tax exempt we also need to see if the line item itself is tax exempt or not.
+			// Possible concern:  We are allocating a lot of autoreleased NSDecimalNumber objects here.  Performance issue?
+			if (custTaxExempt == NO && item.item.taxExempt == NO) {
+				NSDecimalNumber *lineTax = [[item.item.taxRate decimalNumberByMultiplyingBy:item.sellingPrice] decimalNumberByMultiplyingBy:item.quantity];
+				taxTotal = [lineTax decimalNumberByAdding:taxTotal];
+			}
+		}
+		
+		subTotalValue.text = [NSString formatDecimalNumberAsMoney:subTotal];
+		taxValue.text = [NSString formatDecimalNumberAsMoney:taxTotal];
+		totalValue.text = [NSString formatDecimalNumberAsMoney:[subTotal decimalNumberByAdding:taxTotal]];
+    }
+}
+
+#pragma mark -
+#pragma mark UITableView delegate
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
+	return 1;
+}
+
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	return ([facade currentOrder] == nil) ? 0 : [[[facade currentOrder] getOrderItems] count];
+}
+
+- (NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+	return nil;
+}
+
+- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	OrderItem *orderItem = [[[facade currentOrder] getOrderItems] objectAtIndex:indexPath.row];
+	NSString *orderCellIdentifier = [orderItem.item.sku stringValue];
+	
+	CartItemTableCell *cell = (CartItemTableCell *)[tableView dequeueReusableCellWithIdentifier:orderCellIdentifier];
+	
+	if (cell == nil) {
+		cell = [[[CartItemTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:orderCellIdentifier] autorelease];
+		cell.orderItem = orderItem;
+	}
+	return cell;
+}
+
+- (void)tableView:(UITableView *)theTableView commitEditingStyle: (UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath { 
+	
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Remove the item from the order
+		ProductItem *pi = [[[[facade currentOrder] getOrderItems] objectAtIndex:indexPath.row] item];
+        [[facade currentOrder] removeItemFromOrder:pi];
+        
+        [theTableView deleteRowsAtIndexPaths: [NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        [self calculateOrder];
+    }
+}
+
+#pragma mark -
+#pragma mark UIKeyboard Management
+- (void) dismissKeyboard:(id)sender {
+	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
+		self.cancelSkuLookup = YES;
+		[self.currentFirstResponder resignFirstResponder];
+	}
+}
+
+- (void)addKeyboardListeners {
+	NSNotificationCenter *noteCenter = [NSNotificationCenter defaultCenter];
+	[noteCenter addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+	[noteCenter addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void) removeKeyboardListeners {
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
+		[self.currentFirstResponder resignFirstResponder];
+	}
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+	if (self.navigationController.topViewController == self) {
+		NSDictionary* userInfo = [notification userInfo];
+		
+		// we don't use SDK constants here to be universally compatible with all SDKs ≥ 3.0
+		NSValue* keyboardFrameValue = [userInfo objectForKey:@"UIKeyboardBoundsUserInfoKey"];
+		if (!keyboardFrameValue) {
+			keyboardFrameValue = [userInfo objectForKey:@"UIKeyboardFrameEndUserInfoKey"];
+		}
+		
+		// Find out how much of the keyboard overlaps the textfield and move the view up out of the way
+		CGRect windowRect = [[UIApplication sharedApplication] keyWindow].bounds;
+		if (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation ||UIInterfaceOrientationLandscapeRight == self.interfaceOrientation ) {
+			windowRect = [LayoutUtils swapRect:windowRect];
+		}
+		
+		UITextField *tf = (UITextField *)self.currentFirstResponder;
+		
+		CGRect viewRectAbsolute = [tf convertRect:tf.bounds toView:[[UIApplication sharedApplication] keyWindow]];
+		if (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation ||UIInterfaceOrientationLandscapeRight == self.interfaceOrientation ) {
+			viewRectAbsolute = [LayoutUtils swapRect:viewRectAbsolute];
+		}
+		
+		CGRect frame = self.view.frame;
+		CGRect keyboardRect = [keyboardFrameValue CGRectValue];
+		
+		previousViewOriginY = frame.origin.y;
+		CGFloat adjustUpBy = (windowRect.size.height - keyboardRect.size.height) - (CGRectGetMaxY(viewRectAbsolute) + 10.0f);
+		
+		if (adjustUpBy < 0) {
+			frame.origin.y = adjustUpBy;
+			[UIView beginAnimations:nil context:NULL];
+			[UIView setAnimationDuration:[[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
+			[UIView setAnimationCurve:[[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
+			self.view.frame = frame;
+			[UIView commitAnimations];
+		}
+		// iOS 3 sends hide and show notifications right after each other
+		// when switching between textFields, so cancel -scrollToOldPosition requests
+		[NSObject cancelPreviousPerformRequestsWithTarget:self];
+		
+	}
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+	if (self.navigationController.topViewController == self) {
+		NSDictionary* userInfo = [notification userInfo];
+		
+		
+		CGRect frame = self.view.frame;
+		if (frame.origin.y != previousViewOriginY) {
+			[UIView beginAnimations:nil context:NULL];
+			[UIView setAnimationDuration:[[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
+			[UIView setAnimationCurve:[[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
+			frame.origin.y = previousViewOriginY;
+			self.view.frame = frame;
+			[UIView commitAnimations];
+			previousViewOriginY = 0.0f;
+		}
+	}
+}
+
+#pragma mark -
+#pragma mark ExtUITextFieldDelegate
+- (BOOL)textFieldShouldBeginEditing:(ExtUITextField *)textField {
+	self.currentFirstResponder = textField;
+	return YES;
+}
+
+- (void)textFieldDidBeginEditing:(ExtUITextField *)textField {
+	self.currentFirstResponder = textField;
+}
+
+- (void)textFieldDidEndEditing:(ExtUITextField *)textField {
+	self.currentFirstResponder = nil;
+	if (self.cancelSkuLookup == NO) {
+		// Set the values and do the work here
+		if ([textField.tagName isEqualToString:@"LookupItem"] && [textField.text length] > 0) {
+			// Call the service and display the overlay view
+			ProductItem *item = [facade lookupProductItem:textField.text];
+			if (item == nil) {
+				[AlertUtils showModalAlertMessage: @"Item not found"];
+			} else {
+				[linea removeDelegate:self];
+				[self removeKeyboardListeners];
+				AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
+				[overlay setViewDelegate:self];
+				[self.view addSubview:overlay];
+				[overlay setProductItem:item];
+				[overlay release];
+				textField.text = nil;
+			}
+			
+		}
+	} else {
+		self.cancelSkuLookup = NO;
+	}
+	
+}
+
+- (BOOL)textFieldShouldReturn:(ExtUITextField *)textField {
+	[textField resignFirstResponder];
+	return YES;
 }
 
 #pragma mark -
@@ -189,6 +475,7 @@
         [AlertUtils showModalAlertMessage: @"Item not found"];
     } else {
 		[linea removeDelegate:self];
+		[self removeKeyboardListeners];
 		AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
 		[overlay setViewDelegate:self];
 		[self.view addSubview:overlay];
@@ -201,22 +488,31 @@
 #pragma mark AddItemViewDelegate
 - (void) addItem:(AddItemView *)addItemView orderQuantity:(NSDecimalNumber *)quantity ofUnits:(NSString *)unitOfMeasure {
 	
-	// TODO: set up the order and push to the cart view
-	NSMutableString *status = [[NSMutableString alloc] init];
-	[status setString:@""];
-	[status appendFormat:@"Would Order:  %.2f\n", [quantity doubleValue]];
-	[status appendFormat:@"Units:  %@\n", unitOfMeasure];
+	Order *order = [facade currentOrder];
+	if (order == nil) {
+		order = [[[Order alloc] init] autorelease];
+		[facade setCurrentOrder:order];
+	}
+	if ([facade currentCustomer] != nil) {
+		[order setCustomer:[facade currentCustomer]];
+	}
+	ProductItem *item = [addItemView productItem];
+	[order addItemToOrder:item withQuantity:quantity];
 	
 	[addItemView removeFromSuperview];
+	
+	[self addKeyboardListeners];
 	[linea addDelegate:self];
-    
-	[AlertUtils showModalAlertMessage: status];
-	[status release];
+	
+	[orderTable reloadData];
+	
+	[self calculateOrder];
     
 }
 
 - (void) cancelAddItem:(AddItemView *)addItemView {
 	[addItemView removeFromSuperview];
+	[self addKeyboardListeners];
 	[linea addDelegate:self];
 }
 

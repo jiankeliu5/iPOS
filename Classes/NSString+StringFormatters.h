@@ -11,5 +11,7 @@
 @interface NSString (StringFormatters)
 
 + (NSString *) formatAsUSPhone:(NSString *)phone;
++ (NSString *) formatNumberAsMoney:(NSNumber *)value;
++ (NSString *) formatDecimalNumberAsMoney:(NSDecimalNumber *)value;
 
 @end
