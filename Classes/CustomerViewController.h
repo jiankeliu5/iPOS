@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "iPOSFacade.h"
+#import "ExtUIViewController.h"
 #import "ExtUITextField.h"
 #import "MOGlassButton.h"
 
@@ -32,17 +33,13 @@
 #define DETAIL_DATA_WIDTH 260.0f
 #define CONFIRM_BUTTON_X 180.0f
 
-@interface CustomerViewController : UIViewController <UITextFieldDelegate> {
+@interface CustomerViewController : ExtUIViewController <ExtUIViewControllerDelegate> {
 	
 	iPOSFacade *facade;
 
 	ExtUITextField *custPhoneField;
-	NSString *phoneMask;
 	MOGlassButton *custSearchButton;
 	MOGlassButton *confirmButton;
-	UIImage *numberPadDoneImageNormal;
-    UIImage *numberPadDoneImageHighlighted;
-    UIButton *numberPadDoneButton;
 	
 	UIView *detailView;
 	UILabel *firstLabel;
@@ -55,19 +52,11 @@
 	UILabel *zip;
 	
 	BOOL custDetailsOpen;
-	id currentFirstResponder;
 	
 	Customer *customer;
 	
 }
 
-@property (nonatomic, retain) NSString *phoneMask;
-@property (nonatomic, retain) UIImage *numberPadDoneImageNormal;
-@property (nonatomic, retain) UIImage *numberPadDoneImageHighlighted;
-@property (nonatomic, retain) UIButton *numberPadDoneButton;
-@property (nonatomic, retain) id currentFirstResponder;
 @property (nonatomic, retain) Customer *customer;
-
-- (void)numberPadDoneButton:(id)sender;
 
 @end

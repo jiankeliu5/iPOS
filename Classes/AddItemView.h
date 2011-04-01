@@ -22,17 +22,6 @@
 
 @end
 
-
-#define AVAILABLE_COLOR [UIColor colorWithRed:170.0f/255.0f green:204.0f/255.0f blue:0.0f alpha:1.0f]
-#define UNAVAILABLE_COLOR [UIColor colorWithRed:255.0f/255.0f green:70.0f/255.0f blue:0.0f alpha:1.0f]
-#define LARGE_FONT_SIZE 16.0f
-#define BIG_LABEL_HEIGHT 16.0f
-#define AVAILABILITY_VIEW_HEIGHT 56.0f
-#define ROUND_VIEW_X 20.0f
-#define ROUND_VIEW_Y 7.0f
-#define ROUND_VIEW_WIDTH 280.0f
-#define ROUND_VIEW_HEIGHT 402.0f
-
 @interface AddItemView : UIView <UITextFieldDelegate>
 {
 	id productItem;
@@ -62,11 +51,13 @@
 	
 	id currentFirstResponder;
 	CGFloat previousViewOriginY;
+	BOOL keyboardCancelled;
 
 }
 
 @property (nonatomic, retain) id productItem;
 @property (nonatomic, assign) NSObject<AddItemViewDelegate>* viewDelegate;
 @property (nonatomic, retain) id currentFirstResponder;
+@property                     BOOL keyboardCancelled;
 
 @end

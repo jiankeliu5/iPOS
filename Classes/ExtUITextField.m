@@ -16,13 +16,15 @@
 #pragma mark -
 @implementation ExtUITextField
 
-@synthesize tagName;
+@synthesize tagName, mask, maxLength;
 
 #pragma mark Constructors
 
 - (void) dealloc
 {
 	[tagName release];
+	[mask release];
+	[maxLength release];
     [super dealloc];
 }
 

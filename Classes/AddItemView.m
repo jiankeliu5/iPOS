@@ -15,6 +15,18 @@
 #import "ProductItem.h"
 #import "DistributionCenter.h"
 
+#define AVAILABLE_COLOR [UIColor colorWithRed:170.0f/255.0f green:204.0f/255.0f blue:0.0f alpha:1.0f]
+#define UNAVAILABLE_COLOR [UIColor colorWithRed:255.0f/255.0f green:70.0f/255.0f blue:0.0f alpha:1.0f]
+#define LARGE_FONT_SIZE 16.0f
+#define BIG_LABEL_HEIGHT 16.0f
+#define AVAILABILITY_VIEW_HEIGHT 56.0f
+#define ROUND_VIEW_X 20.0f
+#define ROUND_VIEW_Y 7.0f
+#define ROUND_VIEW_WIDTH 280.0f
+#define ROUND_VIEW_HEIGHT 402.0f
+#define KEYBOARD_TOOLBAR_HEIGHT 44.0f
+#define KEYBOARD_TOOLBAR_WIDTH 320.0f
+
 #pragma mark -
 #pragma mark Private Interface
 @interface AddItemView ()
@@ -23,6 +35,7 @@
 - (void) handleAddToCartButton:(id)sender;
 - (void) addKeyboardListeners;
 - (void) removeKeyboardListeners;
+- (void) dismissKeyboard:(id)sender;
 @end
 
 #pragma mark -
@@ -36,6 +49,8 @@
 
 // Hook for who is responding, used to slide textfields up when keyboard shows
 @synthesize currentFirstResponder;
+
+@synthesize keyboardCancelled;
 
 #pragma mark Constructors
 - (id) initWithFrame:(CGRect) frame {
@@ -212,6 +227,7 @@
 		[addQuantityView.layer setBorderWidth:1.0f];
 		[addQuantityView.layer setBorderColor:[[UIColor blackColor] CGColor]];
 		[addQuantityView setStart:[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0] andEndColor:[UIColor blackColor]];
+		addQuantityView.hidden = YES;
 		
 		addQuantityField = [[ExtUITextField alloc] initWithFrame:CGRectMake(15.0f, 20.0f, 90.0f, 40.0f)];
 		addQuantityField.textColor = [UIColor blackColor];
@@ -224,6 +240,14 @@
 		addQuantityField.returnKeyType = UIReturnKeyGo;
 		addQuantityField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
 		addQuantityField.delegate = self;
+		UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, KEYBOARD_TOOLBAR_WIDTH, KEYBOARD_TOOLBAR_HEIGHT)] autorelease];
+		keyboardToolbar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
+		keyboardToolbar.barStyle = UIBarStyleBlackTranslucent;
+		UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissKeyboard:)] autorelease];
+		UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+		NSArray *items = [[[NSArray alloc] initWithObjects:doneButton, flex, nil] autorelease];
+		[keyboardToolbar setItems:items];
+		[addQuantityField setInputAccessoryView:keyboardToolbar];
 		[addQuantityView addSubview:addQuantityField];
 		[addQuantityField release];
 		
@@ -233,8 +257,12 @@
 		addQuantityUnitsLabel.backgroundColor = [UIColor clearColor];
 		[addQuantityView addSubview:addQuantityUnitsLabel];
 		[addQuantityUnitsLabel release];
+		[roundedView addSubview:addQuantityView];
+		[addQuantityView release];
 		
 	}
+	
+	self.keyboardCancelled = NO;
 	
 	[self updateDisplayValues];
 
@@ -280,8 +308,7 @@
 	[self addKeyboardListeners];
 	ProductItem *pi = (ProductItem *)self.productItem;
 	addQuantityUnitsLabel.text = [pi unitOfMeasureDisplay:pi.primaryUnitOfMeasure];
-	[roundedView addSubview:addQuantityView];
-	[addQuantityView release];
+	addQuantityView.hidden = NO;
 }
 
 #pragma mark -
@@ -303,12 +330,17 @@
 - (void)textFieldDidEndEditing:(ExtUITextField *)textField {
 	[self removeKeyboardListeners];
 	self.currentFirstResponder = nil;
-	ProductItem *pi = (ProductItem *)self.productItem;
-	NSDecimalNumber *quantity = [NSDecimalNumber decimalNumberWithString:textField.text];
-	if (viewDelegate != nil && [viewDelegate respondsToSelector:@selector(addItem:orderQuantity:ofUnits:)]) {
-		[viewDelegate addItem:self orderQuantity:quantity ofUnits:pi.primaryUnitOfMeasure];
+	if (self.keyboardCancelled == NO) {
+		ProductItem *pi = (ProductItem *)self.productItem;
+		NSDecimalNumber *quantity = [NSDecimalNumber decimalNumberWithString:textField.text];
+		if (viewDelegate != nil && [viewDelegate respondsToSelector:@selector(addItem:orderQuantity:ofUnits:)]) {
+			[viewDelegate addItem:self orderQuantity:quantity ofUnits:pi.primaryUnitOfMeasure];
+		}
+	} else {
+		addQuantityView.hidden = YES;
+		self.keyboardCancelled = NO;
 	}
-	
+
 }
 
 - (void)addKeyboardListeners {
@@ -321,6 +353,14 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
+		[self.currentFirstResponder resignFirstResponder];
+	}
+}
+
+- (void) dismissKeyboard:(id)sender {
+	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
+		// Have to let the text field delegate know we cancelled.
+		self.keyboardCancelled = YES;
 		[self.currentFirstResponder resignFirstResponder];
 	}
 }

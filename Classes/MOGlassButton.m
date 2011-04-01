@@ -129,6 +129,13 @@
 	[self setupForStandardButtons];
 }
 
+- (void)setupAsBlueButton {
+	[self setBackgroundColor:MO_RGBCOLOR(20, 1, 160) forState:UIControlStateNormal];
+	[self setBackgroundColor:MO_RGBCOLOR(0, 0, 120) forState:UIControlStateHighlighted];
+	[self setBackgroundColor:MO_RGBCOLOR(20, 1, 160) forState:UIControlStateDisabled];
+	[self setupForStandardButtons];
+}
+
 - (void)setupAsBlackButton {
 	[self setBackgroundColor:MO_RGBCOLOR(0, 0, 0) forState:UIControlStateNormal];
 	[self setBackgroundColor:MO_RGBCOLOR(22, 22, 22) forState:UIControlStateHighlighted];
@@ -151,6 +158,12 @@
 
 - (void)setupAsSmallRedButton {
 	[self setupAsRedButton];
+	self.titleLabel.font = [UIFont boldSystemFontOfSize:15];
+	self.layer.cornerRadius = 4.0f;
+}
+
+- (void)setupAsSmallBlueButton {
+	[self setupAsBlueButton];
 	self.titleLabel.font = [UIFont boldSystemFontOfSize:15];
 	self.layer.cornerRadius = 4.0f;
 }

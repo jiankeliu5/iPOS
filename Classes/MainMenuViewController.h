@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ExtUIViewController.h"
 #import "ExtUITextField.h"
 #import "AddItemView.h"
 #import "SignatureViewController.h"
@@ -14,9 +15,7 @@
 #import "iPOSFacade.h"
 #import "LineaSDK.h"
 
-#define KEYBOARD_TOOLBAR_HEIGHT 44.0f
-
-@interface MainMenuViewController : UIViewController <LineaDelegate, UITextFieldDelegate, AddItemViewDelegate, SignatureDelegate> {
+@interface MainMenuViewController : ExtUIViewController <LineaDelegate, ExtUIViewControllerDelegate, AddItemViewDelegate, SignatureDelegate> {
 	iPOSFacade *facade;
 	
 	UILabel *scanItemLabel;
@@ -24,25 +23,16 @@
 	ExtUITextField *lookupOrderField;
 	UIButton *customerButton;
 	
-	id currentFirstResponder;
-	CGFloat previousViewOriginY;
-	
 	NSString *lookupItemSku;
 	NSString *scannedItemSku;
 	NSString *lookupOrderNum;
     
     Linea *linea;
 	
-	BOOL cancelSkuLookup;
-	
 }
-
-@property (nonatomic, retain) id currentFirstResponder;
 
 @property (nonatomic, copy) NSString *lookupItemSku;
 @property (nonatomic, copy) NSString *scannedItemSku;
 @property (nonatomic, copy) NSString *lookupOrderNum;
-
-@property                   BOOL cancelSkuLookup;
 
 @end

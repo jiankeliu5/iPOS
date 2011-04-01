@@ -16,21 +16,38 @@
 #import "OrderItem.h"
 #import "ProductItem.h"
 #import "CartItemTableCell.h"
+#import "CartItemDetailViewController.h"
+
+#define CUST_SELECTED_COLOR [UIColor colorWithRed:170.0f/255.0f green:204.0f/255.0f blue:0.0f alpha:1.0f]
+#define NO_CUST_SELECTED_COLOR [UIColor colorWithRed:255.0f/255.0f green:70.0f/255.0f blue:0.0f alpha:1.0f]
+
+#define CUST_LABEL_HEIGHT 14.0f
+#define CUST_LABEL_FONT_SIZE 12.0f
+#define CUST_LABEL_END_WIDTH 106.0f
+#define CUST_LABEL_MIDDLE_WIDTH 108.0f
+
+#define ORDER_TABLE_HEIGHT 310.0f
+
+#define ORDER_LABEL_FONT_SIZE 14.0f
+#define ORDER_LABEL_WIDTH 220.0f
+#define ORDER_LABEL_HEIGHT 16.0f
+#define ORDER_VALUE_X 240.0f
+#define ORDER_VALUE_WIDTH 80.0f
+#define ORDER_VALUE_HEIGHT 16.0f
+#define ORDER_TOOLBAR_HEIGHT 44.0f
+
+#define LOOKUP_SKU_X 2.0f
+#define LOOKUP_SKU_Y 7.0f
+#define LOOKUP_SKU_WIDTH 140.0f
+#define LOOKUP_SKU_HEIGHT 30.0f
+#define LOOKUP_SKU_FONT_SIZE 15.0f
 
 @interface CartItemsViewController()
 - (UILabel *) createOrderLabel:(NSString *)text withRect:(CGRect)rect andAlignment:(int)alignment;
-- (void) addKeyboardListeners;
-- (void) removeKeyboardListeners;
-- (void) dismissKeyboard:(id)sender;
-- (void) keyboardWillShow:(NSNotification *)notification;
-- (void) keyboardWillHide:(NSNotification *)notification;
 - (void) calculateOrder;
 @end
 
 @implementation CartItemsViewController
-
-@synthesize currentFirstResponder;
-@synthesize cancelSkuLookup;
 
 #pragma mark Constructors
 - (id)init
@@ -53,9 +70,6 @@
 }
 
 - (void)dealloc {
-	[[NSNotificationCenter defaultCenter] removeObserver:self]; 
-	[self setCurrentFirstResponder:nil];
-	
     [super dealloc];
 }
 
@@ -155,22 +169,13 @@
 	lookupSkuField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	lookupSkuField.returnKeyType = UIReturnKeyGo;
 	lookupSkuField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+	[self addDoneToolbarForTextField:lookupSkuField];
 	
 	// Load and set the spyglass icon at the left side of the text field.
 	UIImageView *spyGlassView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-magnify2.png"]];
 	[lookupSkuField setLeftView:spyGlassView];
 	[lookupSkuField setLeftViewMode:UITextFieldViewModeAlways];
 	[spyGlassView release];
-	
-	// Set auxiliary view for keyboard when it is displayed for this text field.
-	UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, KEYBOARD_TOOLBAR_HEIGHT)] autorelease];
-	keyboardToolbar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
-	keyboardToolbar.barStyle = UIBarStyleBlackTranslucent;
-	UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissKeyboard:)] autorelease];
-	UIBarButtonItem *kbToolbarFlex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
-    NSArray *kbToolbarItems = [[[NSArray alloc] initWithObjects:doneButton, kbToolbarFlex, nil] autorelease];
-	[keyboardToolbar setItems:kbToolbarItems];
-	[lookupSkuField setInputAccessoryView:keyboardToolbar];
 	
 	// Add the textfield to the bottom toolbar as a custom view
 	UIBarButtonItem *fieldItem = [[[UIBarButtonItem alloc] initWithCustomView:lookupSkuField] autorelease];
@@ -192,6 +197,7 @@
 		[self.navigationController setNavigationBarHidden:NO];
 	}
     
+	self.delegate = self;
 	lookupSkuField.delegate = self;
 	
     // Add itself as a delegate
@@ -214,8 +220,6 @@
 		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Items" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
 	}
 	
-	self.cancelSkuLookup = NO;
-	
 	Customer *cust = [facade currentCustomer];
 	if (cust == nil) {
 		custPhoneLabel.backgroundColor = NO_CUST_SELECTED_COLOR;
@@ -236,17 +240,19 @@
 }
 
 - (void) viewDidAppear:(BOOL)animated {
+	// Call super at the beginning
 	[super viewDidAppear:animated];
-	[self addKeyboardListeners];
+	NSIndexPath* selection = [orderTable indexPathForSelectedRow];
+	if (selection) {
+		[orderTable deselectRowAtIndexPath:selection animated:YES];
+	}
 	[self calculateOrder];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     // Remove this controller as a linea delegate
     [linea removeDelegate: self];
-    
-	[self removeKeyboardListeners];
-	
+
     // Do this at the end
 	[super viewWillDisappear:animated];
 }
@@ -338,132 +344,37 @@
     }
 }
 
-#pragma mark -
-#pragma mark UIKeyboard Management
-- (void) dismissKeyboard:(id)sender {
-	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
-		self.cancelSkuLookup = YES;
-		[self.currentFirstResponder resignFirstResponder];
-	}
-}
-
-- (void)addKeyboardListeners {
-	NSNotificationCenter *noteCenter = [NSNotificationCenter defaultCenter];
-	[noteCenter addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-	[noteCenter addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-}
-
-- (void) removeKeyboardListeners {
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
-		[self.currentFirstResponder resignFirstResponder];
-	}
-}
-
-- (void)keyboardWillShow:(NSNotification *)notification {
-	if (self.navigationController.topViewController == self) {
-		NSDictionary* userInfo = [notification userInfo];
-		
-		// we don't use SDK constants here to be universally compatible with all SDKs ≥ 3.0
-		NSValue* keyboardFrameValue = [userInfo objectForKey:@"UIKeyboardBoundsUserInfoKey"];
-		if (!keyboardFrameValue) {
-			keyboardFrameValue = [userInfo objectForKey:@"UIKeyboardFrameEndUserInfoKey"];
-		}
-		
-		// Find out how much of the keyboard overlaps the textfield and move the view up out of the way
-		CGRect windowRect = [[UIApplication sharedApplication] keyWindow].bounds;
-		if (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation ||UIInterfaceOrientationLandscapeRight == self.interfaceOrientation ) {
-			windowRect = [LayoutUtils swapRect:windowRect];
-		}
-		
-		UITextField *tf = (UITextField *)self.currentFirstResponder;
-		
-		CGRect viewRectAbsolute = [tf convertRect:tf.bounds toView:[[UIApplication sharedApplication] keyWindow]];
-		if (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation ||UIInterfaceOrientationLandscapeRight == self.interfaceOrientation ) {
-			viewRectAbsolute = [LayoutUtils swapRect:viewRectAbsolute];
-		}
-		
-		CGRect frame = self.view.frame;
-		CGRect keyboardRect = [keyboardFrameValue CGRectValue];
-		
-		previousViewOriginY = frame.origin.y;
-		CGFloat adjustUpBy = (windowRect.size.height - keyboardRect.size.height) - (CGRectGetMaxY(viewRectAbsolute) + 10.0f);
-		
-		if (adjustUpBy < 0) {
-			frame.origin.y = adjustUpBy;
-			[UIView beginAnimations:nil context:NULL];
-			[UIView setAnimationDuration:[[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
-			[UIView setAnimationCurve:[[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
-			self.view.frame = frame;
-			[UIView commitAnimations];
-		}
-		// iOS 3 sends hide and show notifications right after each other
-		// when switching between textFields, so cancel -scrollToOldPosition requests
-		[NSObject cancelPreviousPerformRequestsWithTarget:self];
-		
-	}
-}
-
-- (void)keyboardWillHide:(NSNotification *)notification {
-	if (self.navigationController.topViewController == self) {
-		NSDictionary* userInfo = [notification userInfo];
-		
-		
-		CGRect frame = self.view.frame;
-		if (frame.origin.y != previousViewOriginY) {
-			[UIView beginAnimations:nil context:NULL];
-			[UIView setAnimationDuration:[[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
-			[UIView setAnimationCurve:[[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
-			frame.origin.y = previousViewOriginY;
-			self.view.frame = frame;
-			[UIView commitAnimations];
-			previousViewOriginY = 0.0f;
-		}
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	OrderItem *orderItem = [[[facade currentOrder] getOrderItems] objectAtIndex:indexPath.row];
+	if (orderItem != nil) {
+		CartItemDetailViewController *cartDetail = [[CartItemDetailViewController alloc] init];
+		[cartDetail setOrderItem:orderItem];
+		[[self navigationController] pushViewController:cartDetail animated:YES];
+		[cartDetail release];
 	}
 }
 
 #pragma mark -
-#pragma mark ExtUITextFieldDelegate
-- (BOOL)textFieldShouldBeginEditing:(ExtUITextField *)textField {
-	self.currentFirstResponder = textField;
-	return YES;
-}
+#pragma mark ExtUIViewController delegate
 
-- (void)textFieldDidBeginEditing:(ExtUITextField *)textField {
-	self.currentFirstResponder = textField;
-}
-
-- (void)textFieldDidEndEditing:(ExtUITextField *)textField {
-	self.currentFirstResponder = nil;
-	if (self.cancelSkuLookup == NO) {
-		// Set the values and do the work here
-		if ([textField.tagName isEqualToString:@"LookupItem"] && [textField.text length] > 0) {
-			// Call the service and display the overlay view
-			ProductItem *item = [facade lookupProductItem:textField.text];
-			if (item == nil) {
-				[AlertUtils showModalAlertMessage: @"Item not found"];
-			} else {
-				[linea removeDelegate:self];
-				[self removeKeyboardListeners];
-				AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
-				[overlay setViewDelegate:self];
-				[self.view addSubview:overlay];
-				[overlay setProductItem:item];
-				[overlay release];
-				textField.text = nil;
-			}
-			
+- (void)extTextFieldFinishedEditing:(ExtUITextField *)textField {
+	// Set the values and do the work here
+	if ([textField.tagName isEqualToString:@"LookupItem"] && [textField.text length] > 0) {
+		// Call the service and display the overlay view
+		ProductItem *item = [facade lookupProductItem:textField.text];
+		if (item == nil) {
+			[AlertUtils showModalAlertMessage: @"Item not found"];
+		} else {
+			[linea removeDelegate:self];
+			[self removeKeyboardListeners];
+			AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
+			[overlay setViewDelegate:self];
+			[self.view addSubview:overlay];
+			[overlay setProductItem:item];
+			[overlay release];
+			textField.text = nil;
 		}
-	} else {
-		self.cancelSkuLookup = NO;
 	}
-	
-}
-
-- (BOOL)textFieldShouldReturn:(ExtUITextField *)textField {
-	[textField resignFirstResponder];
-	return YES;
 }
 
 #pragma mark -

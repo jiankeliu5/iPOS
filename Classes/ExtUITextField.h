@@ -11,8 +11,12 @@
 @interface ExtUITextField : UITextField 
 {
 	NSString *tagName;
+	NSString *mask;
+	NSNumber *maxLength;
 }
 
 @property (nonatomic, retain) NSString *tagName;
+@property (nonatomic, retain) NSString *mask;
+@property (nonatomic, retain) NSNumber *maxLength;
 
 @end

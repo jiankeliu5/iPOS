@@ -78,6 +78,8 @@
 		B401FC081335B56C0082C7D4 /* CustomerFormDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = B401FC061335B56C0082C7D4 /* CustomerFormDataSource.m */; };
 		B401FE791336D8F20082C7D4 /* NSString+StringFormatters.h in Headers */ = {isa = PBXBuildFile; fileRef = B401FE771336D8F20082C7D4 /* NSString+StringFormatters.h */; };
 		B401FEB31336DCB80082C7D4 /* NSString+StringFormatters.m in Sources */ = {isa = PBXBuildFile; fileRef = B401FE781336D8F20082C7D4 /* NSString+StringFormatters.m */; };
+		B404DD531345617500D85E1E /* ExtUIViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B404DD511345617500D85E1E /* ExtUIViewController.h */; };
+		B404DD541345617500D85E1E /* ExtUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B404DD521345617500D85E1E /* ExtUIViewController.m */; };
 		B40FC0F21311928600D7D79D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
 		B4300AA0131AEF8A000210C7 /* AvailabilityView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4300A76131AC317000210C7 /* AvailabilityView.m */; };
 		B4300B31131B4300000210C7 /* iPosIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B2F131B4300000210C7 /* iPosIcon.png */; };
@@ -467,6 +469,8 @@
 		B401FC061335B56C0082C7D4 /* CustomerFormDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerFormDataSource.m; sourceTree = "<group>"; };
 		B401FE771336D8F20082C7D4 /* NSString+StringFormatters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+StringFormatters.h"; sourceTree = "<group>"; };
 		B401FE781336D8F20082C7D4 /* NSString+StringFormatters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+StringFormatters.m"; sourceTree = "<group>"; };
+		B404DD511345617500D85E1E /* ExtUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtUIViewController.h; sourceTree = "<group>"; };
+		B404DD521345617500D85E1E /* ExtUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtUIViewController.m; sourceTree = "<group>"; };
 		B40B94231304ED500024C2DC /* AlertUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertUtils.h; sourceTree = "<group>"; };
 		B40B94241304ED500024C2DC /* AlertUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertUtils.m; sourceTree = "<group>"; };
 		B40B942F1304EF620024C2DC /* MainMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuViewController.h; sourceTree = "<group>"; };
@@ -1161,6 +1165,8 @@
 				B4C46B971308BBE7001EADE4 /* ExtUITextField.m */,
 				B48A7E0E13107EEE00F6412C /* GradientView.h */,
 				B48A7E0F13107EEE00F6412C /* GradientView.m */,
+				B404DD511345617500D85E1E /* ExtUIViewController.h */,
+				B404DD521345617500D85E1E /* ExtUIViewController.m */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -1443,6 +1449,7 @@
 				B401FBF11335B0490082C7D4 /* IBAInputNavigationToolbar.h in Headers */,
 				B401FBF31335B0490082C7D4 /* SynthesizeSingleton.h in Headers */,
 				B401FE791336D8F20082C7D4 /* NSString+StringFormatters.h in Headers */,
+				B404DD531345617500D85E1E /* ExtUIViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1858,6 +1865,7 @@
 				B401FBF01335B0490082C7D4 /* IBAInputManagerView.m in Sources */,
 				B401FBF21335B0490082C7D4 /* IBAInputNavigationToolbar.m in Sources */,
 				B401FEB31336DCB80082C7D4 /* NSString+StringFormatters.m in Sources */,
+				B404DD541345617500D85E1E /* ExtUIViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
