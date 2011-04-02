@@ -236,14 +236,26 @@
 #pragma mark ExtUIViewController delegates
 
 - (void) extTextFieldFinishedEditing:(ExtUITextField *) textField {
+	if (textField.text != nil) {
+		NSDecimalNumber *newQuantity = [NSDecimalNumber decimalNumberWithString:textField.text];
+		if (newQuantity != nil) {
+			self.orderItem.quantity = newQuantity;
+			[self updateViewLayout];
+		}
+	}
 }
 
 #pragma mark -
 #pragma mark UIButton handlers
 - (void) handleCloseButton:(id)sender {
+
 }
 
 - (void) handleDeleteButton:(id)sender {
+	ProductItem *pi = self.orderItem.item;
+	Order *order = [facade currentOrder];
+	[order removeItemFromOrder:pi];
+	[self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) handlePriceButton:(id)sender {

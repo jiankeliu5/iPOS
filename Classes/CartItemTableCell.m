@@ -67,19 +67,19 @@
 	if (orderItem != ordItem) {
 		[orderItem autorelease];
 		orderItem = [ordItem retain];
-		
-		NSString *descText = [NSString stringWithFormat:@"%@  %@  %@ / %@",
-								[orderItem.item.sku stringValue],
-								orderItem.item.description,
-								[NSString formatDecimalNumberAsMoney: orderItem.sellingPrice],
-								orderItem.item.primaryUnitOfMeasure];
-		descriptionLabel.text = descText;
-		
-		NSString *quantityText = [NSString stringWithFormat:@"%@ %@", orderItem.quantity, orderItem.item.primaryUnitOfMeasure];
-		quantityLabel.text = quantityText;
-		
-		lineCostLabel.text = [NSString formatDecimalNumberAsMoney: [orderItem.sellingPrice decimalNumberByMultiplyingBy:orderItem.quantity]];
 	}
+	
+	NSString *descText = [NSString stringWithFormat:@"%@  %@  %@ / %@",
+						  [orderItem.item.sku stringValue],
+						  orderItem.item.description,
+						  [NSString formatDecimalNumberAsMoney: orderItem.sellingPrice],
+						  orderItem.item.primaryUnitOfMeasure];
+	descriptionLabel.text = descText;
+	
+	NSString *quantityText = [NSString stringWithFormat:@"%@ %@", orderItem.quantity, orderItem.item.primaryUnitOfMeasure];
+	quantityLabel.text = quantityText;
+	
+	lineCostLabel.text = [NSString formatDecimalNumberAsMoney: [orderItem.sellingPrice decimalNumberByMultiplyingBy:orderItem.quantity]];
 }
 
 #pragma mark -

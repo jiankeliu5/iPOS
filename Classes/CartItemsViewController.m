@@ -235,6 +235,8 @@
 		custZipLabel.text = cust.address.zipPostalCode;
 	}
 	
+	[orderTable reloadData];
+	
 	// Do this last
 	[super viewWillAppear:animated];
 }
@@ -326,8 +328,8 @@
 	
 	if (cell == nil) {
 		cell = [[[CartItemTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:orderCellIdentifier] autorelease];
-		cell.orderItem = orderItem;
 	}
+	cell.orderItem = orderItem;
 	return cell;
 }
 
