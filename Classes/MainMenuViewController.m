@@ -71,9 +71,7 @@
 -(void)barcodeData:(NSString *)barcode type:(int)type {
     ProductItem *item = [facade lookupProductItem:barcode];
     
-    if (item == nil) {
-        [AlertUtils showModalAlertMessage: @"Item not found"];
-    } else {
+    if(item != nil && [item.sku isEqualToNumber:[NSNumber numberWithInt:0]] == NO) {
 		[linea removeDelegate:self];
 		[self removeKeyboardListeners];
 		AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
@@ -81,7 +79,10 @@
 		[self.view addSubview:overlay];
 		[overlay setProductItem:item];
 		[overlay release];
-    }
+    } else {
+		[AlertUtils showModalAlertMessage: @"Item not found"];
+	}
+
 }
 
 -(void) magneticCardRawData:(NSData *)tracks {
@@ -270,9 +271,8 @@
 		[self setLookupItemSku: textField.text];
 		// Call the service and display the overlay view
 		ProductItem *item = [facade lookupProductItem:self.lookupItemSku];
-		if (item == nil) {
-			[AlertUtils showModalAlertMessage: @"Item not found"];
-		} else {
+		// TODO: do we have to do the additional check on sku because of the OPI test service?
+		if(item != nil && [item.sku isEqualToNumber:[NSNumber numberWithInt:0]] == NO) {
 			[linea removeDelegate:self];
 			[self removeKeyboardListeners];
 			AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
@@ -281,7 +281,10 @@
 			[overlay setProductItem:item];
 			[overlay release];
 			textField.text = nil;
+		} else {
+			[AlertUtils showModalAlertMessage: @"Item not found"];
 		}
+
 		
 	} else if ([textField.tagName isEqualToString:@"LookupOrder"] && [textField.text length] > 0) {
 		[self setLookupOrderNum:nil];

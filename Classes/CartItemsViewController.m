@@ -45,9 +45,13 @@
 @interface CartItemsViewController()
 - (UILabel *) createOrderLabel:(NSString *)text withRect:(CGRect)rect andAlignment:(int)alignment;
 - (void) calculateOrder;
+- (void) sendOrderAsQuote:(id)sender;
 @end
 
 @implementation CartItemsViewController
+
+@synthesize toolbarSearchOnly;
+@synthesize toolbarSearchAndQuote;
 
 #pragma mark Constructors
 - (id)init
@@ -70,6 +74,8 @@
 }
 
 - (void)dealloc {
+	[self setToolbarSearchOnly:nil];
+	[self setToolbarSearchAndQuote:nil];
     [super dealloc];
 }
 
@@ -181,8 +187,16 @@
 	UIBarButtonItem *fieldItem = [[[UIBarButtonItem alloc] initWithCustomView:lookupSkuField] autorelease];
 	[lookupSkuField release];
 	UIBarButtonItem *tbFlex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
-    NSArray *tbItems = [[[NSArray alloc] initWithObjects:fieldItem, tbFlex, nil] autorelease];
-	[orderToolBar setItems:tbItems];
+
+	// Toolbar with the sku search only
+    self.toolbarSearchOnly = [[[NSArray alloc] initWithObjects:fieldItem, tbFlex, nil] autorelease];
+	
+	// The quote button is displayed when we have a customer and an order with at least one item.
+	UIBarButtonItem *quoteButton = [[[UIBarButtonItem alloc] initWithTitle:@"Quote" style:UIBarButtonItemStyleBordered target:self action:@selector(sendOrderAsQuote:)] autorelease];
+	self.toolbarSearchAndQuote = [[[NSArray alloc] initWithObjects:fieldItem, tbFlex, quoteButton, nil] autorelease];
+	
+	// Start with the toolbar that only has the sku search.
+	[orderToolBar setItems:self.toolbarSearchOnly];
 	[self.view addSubview:orderToolBar];
 	[orderToolBar release];
 	
@@ -276,8 +290,9 @@
 #pragma mark Order Methods
 - (void) calculateOrder {
 	BOOL custTaxExempt = NO;
+	Customer *customer = [facade currentCustomer];
 	// If the customer is not set yet, we will assume that they are not tax exempt
-	if ([facade currentCustomer] != nil && [[facade currentCustomer] taxExempt] == YES) {
+	if (customer != nil && [[facade currentCustomer] taxExempt] == YES) {
 		custTaxExempt = YES;
 	}
 	
@@ -302,8 +317,57 @@
 		subTotalValue.text = [NSString formatDecimalNumberAsMoney:subTotal];
 		taxValue.text = [NSString formatDecimalNumberAsMoney:taxTotal];
 		totalValue.text = [NSString formatDecimalNumberAsMoney:[subTotal decimalNumberByAdding:taxTotal]];
+		
+		// Put up the Tender or Quote button if we have a customer and an order with at least one item.
+		if (customer != nil && [[order getOrderItems] count] > 0) {
+			[orderToolBar setItems:self.toolbarSearchAndQuote];
+		} else {
+			[orderToolBar setItems:self.toolbarSearchOnly];
+		}
+
+		
     }
 }
+
+- (void) sendOrderAsQuote:(id)sender {
+	UIAlertView *quoteAlert = [[UIAlertView alloc] init];
+	quoteAlert.title = @"Send Quote?";
+	quoteAlert.message = @"This will send the order as a quote and return to the login screen.  Are you sure you wish to do this?";
+	quoteAlert.delegate = self;
+	[quoteAlert addButtonWithTitle:@"Cancel"];
+	[quoteAlert addButtonWithTitle:@"Send Quote"];
+	[quoteAlert show];
+	[quoteAlert release];
+}
+
+#pragma mark -
+#pragma mark UIAlertView delegate
+- (void)alertView:(UIAlertView *)anAlertView clickedButtonAtIndex:(NSInteger)aButtonIndex {
+	if ([anAlertView.title isEqualToString:@"Send Quote?"]) {
+		// Check by titles rather than index since documentation suggests that different 
+		// devices can set the indexes differently.
+		NSString *clickedButtonTitle = [anAlertView buttonTitleAtIndex:aButtonIndex];
+		if ([clickedButtonTitle isEqualToString:@"Send Quote"]) {
+			Order *order = [facade currentOrder];
+			// Send off the order as a quote.
+			[facade newOrder:order];
+			if ( ([order errorList] != nil) && ([[order errorList] count] > 0) ) {
+				NSMutableString *errMsg = [[[NSMutableString alloc] init] autorelease];
+				[errMsg appendString:@"Error in new order quote!"];
+				for (Error *e in [order errorList]) {
+					NSLog(@"Error Id: %d %@", [e errorId], [e message]);
+					[errMsg appendFormat:@"\nError (%d): %@", [e errorId], [e message]];
+				}
+				[AlertUtils showModalAlertMessage:errMsg];
+			} else {
+				// Go clear back to the login screen.
+				[self.navigationController popToRootViewControllerAnimated:YES];
+			}
+		}
+	}
+	// Other generic alerts will just fall through and dismiss with no other actions.
+}
+
 
 #pragma mark -
 #pragma mark UITableView delegate
@@ -364,9 +428,8 @@
 	if ([textField.tagName isEqualToString:@"LookupItem"] && [textField.text length] > 0) {
 		// Call the service and display the overlay view
 		ProductItem *item = [facade lookupProductItem:textField.text];
-		if (item == nil) {
-			[AlertUtils showModalAlertMessage: @"Item not found"];
-		} else {
+		// TODO: Do we have to check inside ProductItem because of the test service at OPI?
+		if(item != nil && [item.sku isEqualToNumber:[NSNumber numberWithInt:0]] == NO) {
 			[linea removeDelegate:self];
 			[self removeKeyboardListeners];
 			AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
@@ -375,7 +438,10 @@
 			[overlay setProductItem:item];
 			[overlay release];
 			textField.text = nil;
+		} else {
+			[AlertUtils showModalAlertMessage: @"Item not found"];
 		}
+
 	}
 }
 
@@ -384,9 +450,7 @@
 -(void)barcodeData:(NSString *)barcode type:(int)type {
     ProductItem *item = [facade lookupProductItem:barcode];
     
-    if (item == nil) {
-        [AlertUtils showModalAlertMessage: @"Item not found"];
-    } else {
+    if(item != nil && [item.sku isEqualToNumber:[NSNumber numberWithInt:0]] == NO) {
 		[linea removeDelegate:self];
 		[self removeKeyboardListeners];
 		AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
@@ -394,7 +458,10 @@
 		[self.view addSubview:overlay];
 		[overlay setProductItem:item];
 		[overlay release];
-    }
+    } else {
+		[AlertUtils showModalAlertMessage: @"Item not found"];
+	}
+
 }
 
 #pragma mark -

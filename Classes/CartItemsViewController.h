@@ -13,7 +13,7 @@
 #import "ExtUIViewController.h"
 #import "ExtUITextField.h"
 
-@interface CartItemsViewController : ExtUIViewController <LineaDelegate, AddItemViewDelegate, ExtUIViewControllerDelegate, UITableViewDataSource, UITableViewDelegate> {
+@interface CartItemsViewController : ExtUIViewController <LineaDelegate, AddItemViewDelegate, ExtUIViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate> {
 	iPOSFacade *facade;
     
     Linea *linea;
@@ -34,6 +34,12 @@
 	UIToolbar *orderToolBar;
 	ExtUITextField *lookupSkuField;
 	
+	NSArray *toolbarSearchOnly;
+	NSArray *toolbarSearchAndQuote;
+	
 }
+
+@property (nonatomic, retain) NSArray *toolbarSearchOnly;
+@property (nonatomic, retain) NSArray *toolbarSearchAndQuote;
 
 @end
