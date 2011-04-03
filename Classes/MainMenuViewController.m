@@ -175,6 +175,11 @@
 	[customerButton setTitle:@"Customer" forState:UIControlStateNormal];
 	[customerButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	[self.view addSubview:customerButton];
+	
+	cartButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	[cartButton setTitle:@"Cart" forState:UIControlStateNormal];
+	[cartButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+	[self.view addSubview:cartButton];
 	 
 }
 
@@ -191,7 +196,8 @@
 	lookupItemField.delegate = self;
 	//lookupOrderField.delegate = self;
 	[customerButton addTarget:self action:@selector(customerPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
+    [cartButton addTarget:self action:@selector(cartPressed:) forControlEvents:UIControlEventTouchUpInside];
+	
     // Add itself as a delegate
     linea = [Linea sharedDevice];
 }
@@ -227,6 +233,8 @@
 	// Change to work from lookupOrderField position when that is implemented
 	customerButton.frame = CGRectOffset(lookupItemField.frame, 0.0f, labelButtonSpacing);
 	
+	cartButton.frame = CGRectOffset(customerButton.frame, 0.0f, labelButtonSpacing);
+	
 	// Do this last
 	[super viewWillAppear:animated];
 }
@@ -260,6 +268,14 @@
     CustomerViewController *customerViewController = [[CustomerViewController alloc] init];
 	[[self navigationController] pushViewController:customerViewController animated:TRUE];
 	[customerViewController release];
+}
+
+- (void)cartPressed:(id)sender {
+	[linea removeDelegate:self];
+	[self removeKeyboardListeners];
+    CartItemsViewController *cartViewController = [[CartItemsViewController alloc] init];
+	[[self navigationController] pushViewController:cartViewController animated:TRUE];
+	[cartViewController release];
 }
 
 #pragma mark -

@@ -48,10 +48,13 @@
 - (void) calculateOrder;
 - (void) sendOrderAsQuote:(id)sender;
 - (void) enterEditMode:(id)sender;
+- (void) cancelEditMode:(id)sender;
 - (void) commitEdits:(id)sender;
 - (void) addOrEditCustomer:(id)sender;
 - (CustomerViewController *)findCustomerViewController;
 - (void) searchforSku:(id)sender;
+- (void) restoreDefaultToolbar;
+- (void) updateSelectionCount;
 @end
 
 @implementation CartItemsViewController
@@ -59,6 +62,10 @@
 @synthesize toolbarBasic;
 @synthesize toolbarWithQuote;
 @synthesize toolbarEditMode;
+
+@synthesize editBarButton;
+@synthesize cancelBarButton;
+@synthesize commitEditsButton;
 
 #pragma mark Constructors
 - (id)init
@@ -84,6 +91,11 @@
 	[self setToolbarBasic:nil];
 	[self setToolbarWithQuote:nil];
 	[self setToolbarEditMode:nil];
+	
+	[self setEditBarButton:nil];
+	[self setCancelBarButton:nil];
+	[self setCommitEditsButton:nil];
+	
     [super dealloc];
 }
 
@@ -195,13 +207,19 @@
 	self.toolbarWithQuote = [[[NSArray alloc] initWithObjects:searchButton, tbFixed, custButton, tbFlex, quoteButton, nil] autorelease];
 	
 	// Edit mode toolbar
-	UIBarButtonItem *commitEditsButton = [[[UIBarButtonItem alloc] initWithTitle:@"Delete (0)" style:UIBarButtonItemStyleBordered target:self action:@selector(commitEdits:)] autorelease];
-	self.toolbarEditMode = [[[NSArray alloc] initWithObjects:tbFlex, commitEditsButton, tbFlex, nil] autorelease];
+	self.commitEditsButton = [[[UIBarButtonItem alloc] initWithTitle:@"Delete (0)" style:UIBarButtonItemStyleBordered target:self action:@selector(commitEdits:)] autorelease];
+	self.toolbarEditMode = [[[NSArray alloc] initWithObjects:tbFlex, self.commitEditsButton, tbFlex, nil] autorelease];
 	
 	// Start with the basic toolbar.
 	[orderToolBar setItems:self.toolbarBasic];
 	[self.view addSubview:orderToolBar];
 	[orderToolBar release];
+	
+	// Keep reference to these buttons as we have to switch them in and out when we enter or exit edit mode.
+	// Button to put us into edit mode.
+	self.editBarButton = [[[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(enterEditMode:)] autorelease];
+	// Button to cancel edit mode.
+	self.cancelBarButton = [[[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelEditMode:)] autorelease];
 	
 }
 
@@ -234,7 +252,7 @@
 		// This is what shows up on the back button in the *next* controller.
 		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Items" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
 		// We're going to put up an edit button on the left.
-		self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(enterEditMode:)] autorelease];
+		self.navigationItem.leftBarButtonItem = self.editBarButton;
 	}
 	
 	Customer *cust = [facade currentCustomer];
@@ -321,15 +339,18 @@
 		taxValue.text = [NSString formatDecimalNumberAsMoney:taxTotal];
 		totalValue.text = [NSString formatDecimalNumberAsMoney:[subTotal decimalNumberByAdding:taxTotal]];
 		
-		// Put up the Tender or Quote button if we have a customer and an order with at least one item.
-		if (customer != nil && [[order getOrderItems] count] > 0) {
-			[orderToolBar setItems:self.toolbarWithQuote];
-		} else {
-			[orderToolBar setItems:self.toolbarBasic];
-		}
-
+		[self restoreDefaultToolbar];
 		
     }
+}
+
+- (void) restoreDefaultToolbar {
+	// Put up the Tender or Quote button if we have a customer and an order with at least one item.
+	if ([facade currentCustomer] != nil && [[[facade currentOrder] getOrderItems] count] > 0) {
+		[orderToolBar setItems:self.toolbarWithQuote];
+	} else {
+		[orderToolBar setItems:self.toolbarBasic];
+	}
 }
 
 - (void) addOrEditCustomer:(id)sender {
@@ -381,11 +402,27 @@
 }
 
 - (void) enterEditMode:(id)sender {
+	[AlertUtils showModalAlertMessage:@"Edit functionality is not implemented yet.  Please use swipe to delete rows."];
 	// Fire up the edit mode on the table.
+	/*
+	[orderToolBar setItems:self.toolbarEditMode];
+	[self.navigationItem setLeftBarButtonItem:self.cancelBarButton animated:NO];
+	[self updateSelectionCount];
+	[orderTable setEditing:YES animated:YES];
+	 */
+}
+
+- (void) cancelEditMode:(id)sender {
+	//[self restoreDefaultToolbar];
+	//[self.navigationItem setLeftBarButtonItem:self.cancelBarButton animated:NO];
+	
 }
 
 - (void) commitEdits:(id)sender {
 	// Handle the toolbar press where we delete and close multiple line items at once.
+}
+
+- (void) updateSelectionCount {
 }
 
 #pragma mark -
@@ -472,7 +509,6 @@
 #pragma mark SearchItemView delegate
 - (void) searchforSku:(id)sender {
 	[linea removeDelegate:self];
-	[self removeKeyboardListeners];
 	SearchItemView *searchOverlay = [[SearchItemView alloc] initWithFrame:self.view.bounds];
 	[searchOverlay setDelegate:self];
 	[self.view addSubview:searchOverlay];
@@ -485,7 +521,6 @@
 	[aSearchItemView removeFromSuperview];
 	
 	[linea addDelegate:self];
-	[self addKeyboardListeners];
 	
 	// Set the values and do the work here
 	if ([s length] > 0) {
@@ -494,7 +529,6 @@
 		// TODO: Do we have to check inside ProductItem because of the test service at OPI?
 		if(item != nil && [item.sku isEqualToNumber:[NSNumber numberWithInt:0]] == NO) {
 			[linea removeDelegate:self];
-			[self removeKeyboardListeners];
 			AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
 			[overlay setViewDelegate:self];
 			[self.view addSubview:overlay];
@@ -510,7 +544,6 @@
 - (void) cancelSearchItem:(SearchItemView *)aSearchItemView {
 	[aSearchItemView removeFromSuperview];
 	[linea addDelegate:self];
-	[self addKeyboardListeners];
 }
 
 #pragma mark -
@@ -520,7 +553,6 @@
     
     if(item != nil && [item.sku isEqualToNumber:[NSNumber numberWithInt:0]] == NO) {
 		[linea removeDelegate:self];
-		[self removeKeyboardListeners];
 		AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
 		[overlay setViewDelegate:self];
 		[self.view addSubview:overlay];
@@ -549,7 +581,6 @@
 	
 	[addItemView removeFromSuperview];
 	
-	[self addKeyboardListeners];
 	[linea addDelegate:self];
 	
 	[orderTable reloadData];
@@ -560,7 +591,6 @@
 
 - (void) cancelAddItem:(AddItemView *)addItemView {
 	[addItemView removeFromSuperview];
-	[self addKeyboardListeners];
 	[linea addDelegate:self];
 }
 

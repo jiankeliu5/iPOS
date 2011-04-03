@@ -22,6 +22,7 @@
 	ExtUITextField *lookupItemField;
 	ExtUITextField *lookupOrderField;
 	UIButton *customerButton;
+	UIButton *cartButton;
 	
 	NSString *lookupItemSku;
 	NSString *scannedItemSku;

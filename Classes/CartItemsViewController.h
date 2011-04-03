@@ -10,11 +10,10 @@
 #import "LineaSDK.h"
 #import "iPOSFacade.h"
 #import "AddItemView.h"
-#import "ExtUIViewController.h"
 #import "ExtUITextField.h"
 #import "SearchItemView.h"
 
-@interface CartItemsViewController : ExtUIViewController <LineaDelegate, AddItemViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, SearchItemViewDelegate> {
+@interface CartItemsViewController : UIViewController <LineaDelegate, AddItemViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, SearchItemViewDelegate> {
 	iPOSFacade *facade;
     
     Linea *linea;
@@ -38,10 +37,18 @@
 	NSArray *toolbarWithQuote;
 	NSArray *toolbarEditMode;
 	
+	UIBarButtonItem *editBarButton;
+	UIBarButtonItem *cancelBarButton;
+	UIBarButtonItem *commitEditsButton;
+	
 }
 
 @property (nonatomic, retain) NSArray *toolbarBasic;
 @property (nonatomic, retain) NSArray *toolbarWithQuote;
 @property (nonatomic, retain) NSArray *toolbarEditMode;
+
+@property (nonatomic, retain) UIBarButtonItem *editBarButton;
+@property (nonatomic, retain) UIBarButtonItem *cancelBarButton;
+@property (nonatomic, retain) UIBarButtonItem *commitEditsButton;
 
 @end
