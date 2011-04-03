@@ -17,6 +17,7 @@
 #import "ProductItem.h"
 #import "CartItemTableCell.h"
 #import "CartItemDetailViewController.h"
+#import "CustomerViewController.h"
 
 #define CUST_SELECTED_COLOR [UIColor colorWithRed:170.0f/255.0f green:204.0f/255.0f blue:0.0f alpha:1.0f]
 #define NO_CUST_SELECTED_COLOR [UIColor colorWithRed:255.0f/255.0f green:70.0f/255.0f blue:0.0f alpha:1.0f]
@@ -46,12 +47,18 @@
 - (UILabel *) createOrderLabel:(NSString *)text withRect:(CGRect)rect andAlignment:(int)alignment;
 - (void) calculateOrder;
 - (void) sendOrderAsQuote:(id)sender;
+- (void) enterEditMode:(id)sender;
+- (void) commitEdits:(id)sender;
+- (void) addOrEditCustomer:(id)sender;
+- (CustomerViewController *)findCustomerViewController;
+- (void) searchforSku:(id)sender;
 @end
 
 @implementation CartItemsViewController
 
-@synthesize toolbarSearchOnly;
-@synthesize toolbarSearchAndQuote;
+@synthesize toolbarBasic;
+@synthesize toolbarWithQuote;
+@synthesize toolbarEditMode;
 
 #pragma mark Constructors
 - (id)init
@@ -74,8 +81,9 @@
 }
 
 - (void)dealloc {
-	[self setToolbarSearchOnly:nil];
-	[self setToolbarSearchAndQuote:nil];
+	[self setToolbarBasic:nil];
+	[self setToolbarWithQuote:nil];
+	[self setToolbarEditMode:nil];
     [super dealloc];
 }
 
@@ -162,41 +170,36 @@
 	// Create a toolbar for the bottom of the screen
 	orderToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, cy, self.view.frame.size.width, ORDER_TOOLBAR_HEIGHT)];
 	orderToolBar.barStyle = UIBarStyleBlack;
-
-	// Create a textfile to put in the bottom toolbar to do manual sku lookup.
-	lookupSkuField = [[ExtUITextField alloc] initWithFrame:CGRectMake(LOOKUP_SKU_X, LOOKUP_SKU_Y, LOOKUP_SKU_WIDTH, LOOKUP_SKU_HEIGHT)];
-	lookupSkuField.textColor = [UIColor blackColor];
-	lookupSkuField.borderStyle = UITextBorderStyleRoundedRect;
-	lookupSkuField.textAlignment = UITextAlignmentLeft;
-	lookupSkuField.font = [UIFont systemFontOfSize:LOOKUP_SKU_FONT_SIZE];
-	lookupSkuField.clearsOnBeginEditing = YES;
-	lookupSkuField.placeholder = @"Look Up Item";
-	lookupSkuField.tagName = @"LookupItem";
-	lookupSkuField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-	lookupSkuField.returnKeyType = UIReturnKeyGo;
-	lookupSkuField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-	[self addDoneToolbarForTextField:lookupSkuField];
+	UIBarButtonItem *searchButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search.png"] 
+																	style:UIBarButtonItemStylePlain 
+																   target:self 
+																   action:@selector(searchforSku:)] autorelease];
 	
-	// Load and set the spyglass icon at the left side of the text field.
-	UIImageView *spyGlassView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-magnify2.png"]];
-	[lookupSkuField setLeftView:spyGlassView];
-	[lookupSkuField setLeftViewMode:UITextFieldViewModeAlways];
-	[spyGlassView release];
-	
-	// Add the textfield to the bottom toolbar as a custom view
-	UIBarButtonItem *fieldItem = [[[UIBarButtonItem alloc] initWithCustomView:lookupSkuField] autorelease];
-	[lookupSkuField release];
 	UIBarButtonItem *tbFlex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
-
-	// Toolbar with the sku search only
-    self.toolbarSearchOnly = [[[NSArray alloc] initWithObjects:fieldItem, tbFlex, nil] autorelease];
+	
+	UIBarButtonItem *tbFixed = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil] autorelease];
+	tbFixed.width = 10.0f;
+	
+	UIBarButtonItem *custButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"customer.png"] 
+																	 style:UIBarButtonItemStylePlain 
+																	target:self 
+																	action:@selector(addOrEditCustomer:)] autorelease];
+	// Basic toolbar
+    self.toolbarBasic = [[[NSArray alloc] initWithObjects:searchButton, tbFixed, custButton, tbFlex, nil] autorelease];
 	
 	// The quote button is displayed when we have a customer and an order with at least one item.
-	UIBarButtonItem *quoteButton = [[[UIBarButtonItem alloc] initWithTitle:@"Quote" style:UIBarButtonItemStyleBordered target:self action:@selector(sendOrderAsQuote:)] autorelease];
-	self.toolbarSearchAndQuote = [[[NSArray alloc] initWithObjects:fieldItem, tbFlex, quoteButton, nil] autorelease];
+	UIBarButtonItem *quoteButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"quotes-black.png"] 
+																	 style:UIBarButtonItemStylePlain 
+																	target:self 
+																	action:@selector(sendOrderAsQuote:)] autorelease];
+	self.toolbarWithQuote = [[[NSArray alloc] initWithObjects:searchButton, tbFixed, custButton, tbFlex, quoteButton, nil] autorelease];
 	
-	// Start with the toolbar that only has the sku search.
-	[orderToolBar setItems:self.toolbarSearchOnly];
+	// Edit mode toolbar
+	UIBarButtonItem *commitEditsButton = [[[UIBarButtonItem alloc] initWithTitle:@"Delete (0)" style:UIBarButtonItemStyleBordered target:self action:@selector(commitEdits:)] autorelease];
+	self.toolbarEditMode = [[[NSArray alloc] initWithObjects:tbFlex, commitEditsButton, tbFlex, nil] autorelease];
+	
+	// Start with the basic toolbar.
+	[orderToolBar setItems:self.toolbarBasic];
 	[self.view addSubview:orderToolBar];
 	[orderToolBar release];
 	
@@ -210,9 +213,6 @@
 	{
 		[self.navigationController setNavigationBarHidden:NO];
 	}
-    
-	self.delegate = self;
-	lookupSkuField.delegate = self;
 	
     // Add itself as a delegate
     linea = [Linea sharedDevice];
@@ -231,7 +231,10 @@
    
 	if (self.navigationController != nil) {
 		[self.navigationController setNavigationBarHidden:NO];
+		// This is what shows up on the back button in the *next* controller.
 		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Items" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
+		// We're going to put up an edit button on the left.
+		self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(enterEditMode:)] autorelease];
 	}
 	
 	Customer *cust = [facade currentCustomer];
@@ -320,13 +323,50 @@
 		
 		// Put up the Tender or Quote button if we have a customer and an order with at least one item.
 		if (customer != nil && [[order getOrderItems] count] > 0) {
-			[orderToolBar setItems:self.toolbarSearchAndQuote];
+			[orderToolBar setItems:self.toolbarWithQuote];
 		} else {
-			[orderToolBar setItems:self.toolbarSearchOnly];
+			[orderToolBar setItems:self.toolbarBasic];
 		}
 
 		
     }
+}
+
+- (void) addOrEditCustomer:(id)sender {
+	CustomerViewController *custViewController = [self findCustomerViewController];
+	if (custViewController == nil) {
+		// Pop ourselves and push to the customer view controller.
+		// When the customer is confirmed we get pushed back here.
+		
+		// Locally store the navigation controller since
+		// self.navigationController will be nil once we are popped
+		UINavigationController *navController = self.navigationController;
+		
+		// retain ourselves so that the controller will still exist once it's popped off
+		[[self retain] autorelease];
+		
+		custViewController = [[[CustomerViewController alloc] init] autorelease];
+		
+		// Pop this controller and replace with another
+		[navController popViewControllerAnimated:NO];
+		[navController pushViewController:custViewController animated:YES];
+	} else {
+		// Go back to the customer controller, when we confirm we end up back at the cart.
+		[self.navigationController popToViewController:custViewController animated:YES];
+	}
+
+}
+
+- (CustomerViewController *)findCustomerViewController {
+	if ([self navigationController] != nil) {
+		NSArray *controllers = [[self navigationController] viewControllers];
+		for (UIViewController *vc in controllers) {
+			if ([vc title] != nil && [[vc title] isEqualToString:@"Customer"] && [vc isKindOfClass:[CustomerViewController class]]) {
+				return (CustomerViewController*)vc;
+			}
+		}
+	}
+	return nil;
 }
 
 - (void) sendOrderAsQuote:(id)sender {
@@ -338,6 +378,14 @@
 	[quoteAlert addButtonWithTitle:@"Send Quote"];
 	[quoteAlert show];
 	[quoteAlert release];
+}
+
+- (void) enterEditMode:(id)sender {
+	// Fire up the edit mode on the table.
+}
+
+- (void) commitEdits:(id)sender {
+	// Handle the toolbar press where we delete and close multiple line items at once.
 }
 
 #pragma mark -
@@ -421,13 +469,28 @@
 }
 
 #pragma mark -
-#pragma mark ExtUIViewController delegate
+#pragma mark SearchItemView delegate
+- (void) searchforSku:(id)sender {
+	[linea removeDelegate:self];
+	[self removeKeyboardListeners];
+	SearchItemView *searchOverlay = [[SearchItemView alloc] initWithFrame:self.view.bounds];
+	[searchOverlay setDelegate:self];
+	[self.view addSubview:searchOverlay];
+	[searchOverlay release];
+}
 
-- (void)extTextFieldFinishedEditing:(ExtUITextField *)textField {
+- (void) searchItem:(SearchItemView *)aSearchItemView withSku:(NSString *)aSku {
+	
+	NSString *s = [NSString stringWithString:aSku];
+	[aSearchItemView removeFromSuperview];
+	
+	[linea addDelegate:self];
+	[self addKeyboardListeners];
+	
 	// Set the values and do the work here
-	if ([textField.tagName isEqualToString:@"LookupItem"] && [textField.text length] > 0) {
+	if ([s length] > 0) {
 		// Call the service and display the overlay view
-		ProductItem *item = [facade lookupProductItem:textField.text];
+		ProductItem *item = [facade lookupProductItem:s];
 		// TODO: Do we have to check inside ProductItem because of the test service at OPI?
 		if(item != nil && [item.sku isEqualToNumber:[NSNumber numberWithInt:0]] == NO) {
 			[linea removeDelegate:self];
@@ -437,12 +500,17 @@
 			[self.view addSubview:overlay];
 			[overlay setProductItem:item];
 			[overlay release];
-			textField.text = nil;
 		} else {
 			[AlertUtils showModalAlertMessage: @"Item not found"];
 		}
 
 	}
+}
+
+- (void) cancelSearchItem:(SearchItemView *)aSearchItemView {
+	[aSearchItemView removeFromSuperview];
+	[linea addDelegate:self];
+	[self addKeyboardListeners];
 }
 
 #pragma mark -
