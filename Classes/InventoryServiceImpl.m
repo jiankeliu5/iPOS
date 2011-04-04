@@ -10,6 +10,8 @@
 #import "SessionInfo.h"
 #import "ASIHTTPRequest.h"
 
+#import "ASIHTTPRequest+Validate.h"
+
 #import "POSOxmUtils.h"
 #import "ProductItemXmlMarshaller.h"
 
@@ -83,10 +85,9 @@
     
     [request startSynchronous];
     
-    NSError *error = [request error];
-    
-    if (error) {
-        return nil;
+    NSArray *requestErrors = [request validateAsXmlContent];
+    if ([requestErrors count] > 0) {
+        return nil;   
     }
     
     // Create an XML document parser

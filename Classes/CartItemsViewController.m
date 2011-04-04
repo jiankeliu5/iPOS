@@ -434,6 +434,12 @@
 		NSString *clickedButtonTitle = [anAlertView buttonTitleAtIndex:aButtonIndex];
 		if ([clickedButtonTitle isEqualToString:@"Send Quote"]) {
 			Order *order = [facade currentOrder];
+            
+            // Ensure the order has the current customer set before sending
+            if ([facade currentCustomer] != nil) {
+                [order setCustomer:[facade currentCustomer]];
+            }
+            
 			// Send off the order as a quote.
 			[facade newOrder:order];
 			if ( ([order errorList] != nil) && ([[order errorList] count] > 0) ) {
@@ -446,6 +452,7 @@
 				[AlertUtils showModalAlertMessage:errMsg];
 			} else {
 				// Go clear back to the login screen.
+                [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Quote %@ was successfully created.", order.orderId]];
 				[self.navigationController popToRootViewControllerAnimated:YES];
 			}
 		}
@@ -573,9 +580,7 @@
 		order = [[[Order alloc] init] autorelease];
 		[facade setCurrentOrder:order];
 	}
-	if ([facade currentCustomer] != nil) {
-		[order setCustomer:[facade currentCustomer]];
-	}
+	
 	ProductItem *item = [addItemView productItem];
 	[order addItemToOrder:item withQuantity:quantity];
 	

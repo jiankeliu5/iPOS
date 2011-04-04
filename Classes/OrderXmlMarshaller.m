@@ -13,7 +13,7 @@
 #import "Order.h"
 
 // Define constants
-static NSString * const ORDER_STATUS_ROOT = @"<OrderStatus>";
+static NSString * const ORDER_STATUS_ROOT = @"<OrderStatus";
 
 static NSString * const ORDER_XML = @""
     "<OrderClass>"

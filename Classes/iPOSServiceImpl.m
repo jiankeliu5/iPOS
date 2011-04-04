@@ -177,8 +177,9 @@
     
     [request startSynchronous];
     
-    if ([request error]) {
-        return nil;
+    NSArray *requestErrors = [request validateAsXmlContent];
+    if ([requestErrors count] > 0) {
+        return nil;   
     }
     
     // Parse the XML response for the customer details
@@ -272,6 +273,10 @@
     }
     order.store.storeId = sessionInfo.storeId;
     
+    // Make sure the sales person id is set
+    if (order.salesPersonEmployeeId == nil) {
+        order.salesPersonEmployeeId = sessionInfo.employeeId;
+    }
     // Send the new order request
     ASIHTTPRequest *request = [self initRequestForSession:sessionInfo serviceDomainUri:posOrderMgmtUri serviceUri:@"new"];
     

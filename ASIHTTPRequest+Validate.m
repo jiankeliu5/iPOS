@@ -25,7 +25,7 @@
         // I am expecting xml to be returned        
         NSString *contentType = (NSString *) [[self responseHeaders] objectForKey:@"Content-Type"];
         NSString *responseStr = [self responseString];
-        NSRange contentTypeText = [[contentType lowercaseString] rangeOfString:@"text/xml" ];
+        NSRange contentTypeText = [[contentType lowercaseString] rangeOfString:@"xml" ];
         NSRange htmlText = [[responseStr lowercaseString] rangeOfString:@"<html>" ];
 
         if (contentTypeText.location == NSNotFound || htmlText.location != NSNotFound) {

@@ -116,6 +116,11 @@ static iPOSFacade *facade = nil;
 #pragma mark -
 #pragma mark Order Management
 -(void) newOrder:(Order *)order {
+    // Ensure to use the current customer
+    if (order) {
+        order.customer = [self currentCustomer];
+    }
+    
     [posService newOrder:order withSession:sessionInfo];
 }
 

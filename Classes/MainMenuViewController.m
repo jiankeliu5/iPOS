@@ -177,7 +177,7 @@
 	[self.view addSubview:customerButton];
 	
 	cartButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-	[cartButton setTitle:@"Cart" forState:UIControlStateNormal];
+	[cartButton setTitle:@"Order" forState:UIControlStateNormal];
 	[cartButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 	[self.view addSubview:cartButton];
 	 

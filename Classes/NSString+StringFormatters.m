@@ -27,6 +27,9 @@
 }
 
 + (NSString *) formatDecimalNumberAsMoney:(NSDecimalNumber *)value {
+    // Ensure we use banker's rounding algorithm
+  //  NSDecimalNumberHandler *bankersRoundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:2 raiseOnExactness:NO raiseOnOverflow:NO raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+  //  NSDecimalNumber *bankersRoundedNumber = [value decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
     NSLocale *usLocale = [[[NSLocale alloc] initWithLocaleIdentifier: @"en_US"] autorelease];
     NSNumberFormatter *numberFormatter = [[[NSNumberFormatter alloc] init] autorelease];
     [numberFormatter setLocale:usLocale];
