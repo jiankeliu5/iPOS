@@ -628,13 +628,13 @@
 		D64E5B8713026566002EAD70 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		D656013C130B71B4000968BA /* iPosFacadeWithMocksTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPosFacadeWithMocksTestCase.h; sourceTree = "<group>"; };
 		D656013D130B71B4000968BA /* iPosFacadeWithMocksTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPosFacadeWithMocksTestCase.m; sourceTree = "<group>"; };
-		D65B25DE1331C8B60052AEE2 /* iPOSTesting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPOSTesting.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D65B25DE1331C8B60052AEE2 /* iPOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D65B25E31331C8B60052AEE2 /* iPOSTesting-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iPOSTesting-Info.plist"; sourceTree = "<group>"; };
 		D65EB2A0132AE1C10066E1FA /* NSString+Base64Encode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64Encode.h"; sourceTree = "<group>"; };
 		D65EB2A1132AE1C10066E1FA /* NSString+Base64Encode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64Encode.m"; sourceTree = "<group>"; };
 		D65FD4B91302303A00F4C19D /* BarcodeScannerCardReaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarcodeScannerCardReaderDelegate.h; sourceTree = "<group>"; };
 		D65FD4BA1302303A00F4C19D /* BarcodeScannerCardReaderDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarcodeScannerCardReaderDelegate.m; sourceTree = "<group>"; };
-		D679438C131607A8004B8254 /* IntTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D679438C131607A8004B8254 /* AppTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D683BE0C1321437A008D923F /* Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Store.h; sourceTree = "<group>"; };
 		D683BE0D1321437A008D923F /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
 		D683BE1013214391008D923F /* ItemAvailability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemAvailability.h; sourceTree = "<group>"; };
@@ -911,10 +911,10 @@
 				1D6058910D05DD3D006BFB54 /* iPOS.app */,
 				D697D1E01312DCD0002C3EF6 /* iPOSDemo.app */,
 				D64B7E1312F9D7EA006AB141 /* UnitTests.octest */,
-				D679438C131607A8004B8254 /* IntTests.octest */,
+				D679438C131607A8004B8254 /* AppTests.octest */,
 				D6B435B213159F72000C0AA8 /* libOPIFoundation.a */,
 				D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */,
-				D65B25DE1331C8B60052AEE2 /* iPOSTesting.app */,
+				D65B25DE1331C8B60052AEE2 /* iPOS.app */,
 				D6334A2D1331C9CE000DEDBB /* AppTests.octest */,
 			);
 			name = Products;
@@ -1663,7 +1663,7 @@
 			);
 			name = iPOSTesting;
 			productName = iPOS;
-			productReference = D65B25DE1331C8B60052AEE2 /* iPOSTesting.app */;
+			productReference = D65B25DE1331C8B60052AEE2 /* iPOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 		D679438B131607A8004B8254 /* IntTests */ = {
@@ -1683,7 +1683,7 @@
 			);
 			name = IntTests;
 			productName = AppTests;
-			productReference = D679438C131607A8004B8254 /* IntTests.octest */;
+			productReference = D679438C131607A8004B8254 /* AppTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 		D697D1961312DCD0002C3EF6 /* iPOSDemo */ = {
@@ -2242,7 +2242,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2262,7 +2262,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
