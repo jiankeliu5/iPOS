@@ -45,7 +45,7 @@
 
 - (void) setStartColor:(UIColor *)color {
 	if (startColor != color) {
-		[startColor autorelease];
+		[startColor release];
 		startColor = [color	retain];
 		[self setNeedsDisplay];
 	}
@@ -57,7 +57,7 @@
 
 - (void) setEndColor:(UIColor *)color {
 	if (endColor != color) {
-		[endColor autorelease];
+		[endColor release];
 		endColor = [color retain];
 		[self setNeedsDisplay];
 	}

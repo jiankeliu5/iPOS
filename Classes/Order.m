@@ -61,8 +61,11 @@
         BOOL itemAlreadyInOrder = NO;
         
         for (OrderItem *orderItem in orderItemList) {
-            if (orderItem.item == item) {
+            if ([orderItem.item.sku isEqualToNumber:item.sku]) {
                 itemAlreadyInOrder = YES;
+                
+                // Update the quantity of the item
+                orderItem.quantity = quantity;
                 break;
             }
         }
@@ -88,7 +91,7 @@
     if (orderItemList != nil) {
         
         for (OrderItem *orderItem in orderItemList) {
-            if (orderItem.item == item) {
+            if ([orderItem.item.sku isEqualToNumber:item.sku]) {
                 [orderItemList removeObject:orderItem];
                 break;
             }

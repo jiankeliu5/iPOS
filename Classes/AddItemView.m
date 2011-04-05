@@ -249,16 +249,17 @@
 		[keyboardToolbar setItems:items];
 		[addQuantityField setInputAccessoryView:keyboardToolbar];
 		[addQuantityView addSubview:addQuantityField];
-		[addQuantityField release];
+  	    [addQuantityField release];
 		
 		addQuantityUnitsLabel = [[UILabel alloc] initWithFrame:CGRectMake(120.0f, 20.0f, 53.0f, 40.0f)];
 		addQuantityUnitsLabel.textAlignment = UITextAlignmentCenter;
 		addQuantityUnitsLabel.textColor = [UIColor whiteColor];
 		addQuantityUnitsLabel.backgroundColor = [UIColor clearColor];
 		[addQuantityView addSubview:addQuantityUnitsLabel];
-		[addQuantityUnitsLabel release];
+    	[addQuantityUnitsLabel release];
 		[roundedView addSubview:addQuantityView];
-		[addQuantityView release];
+        
+        [addQuantityView release];
 		
 	}
 	
@@ -297,9 +298,8 @@
 
 - (void)handleExitButton:(id)sender {
 	if (viewDelegate != nil && [viewDelegate respondsToSelector:@selector(cancelAddItem:)]) {
-		// This was set up in loadView but if we don't choose add to cart it is not released
-		// when added to the main view, so need to make sure to do it here.
-		[addQuantityView release];
+		// This used to have a release of addQuantityView.  This is not necessary since removing
+        // this view from the parent view will release all subviews of this object.
 		[viewDelegate cancelAddItem:self];
 	}
 }
