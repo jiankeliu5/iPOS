@@ -65,7 +65,7 @@
 
 - (void) setOrderItem:(OrderItem *)ordItem {
 	if (orderItem != ordItem) {
-		[orderItem autorelease];
+		[orderItem release];
 		orderItem = [ordItem retain];
 	}
 	

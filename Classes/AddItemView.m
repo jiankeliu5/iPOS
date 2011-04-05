@@ -100,7 +100,7 @@
 	// make ourselves redisplay when we get a new productItem 
 	// set.
 	if (productItem != product) {
-		[productItem autorelease];
+		[productItem release];
 		productItem = [product retain];
 		[self setNeedsDisplay];
 	}

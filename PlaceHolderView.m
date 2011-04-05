@@ -73,7 +73,7 @@
 - (void) setPlaceHolderItem:(id)placeHolderItem
 {
 	if (_placeHolderItem != placeHolderItem) {
-		[_placeHolderItem autorelease];
+		[_placeHolderItem release];
 		_placeHolderItem = [placeHolderItem retain];
 		
 		// Get the description of the item into the label for the view.

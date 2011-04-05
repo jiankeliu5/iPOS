@@ -64,7 +64,7 @@
 
 - (void) setDistributionCenter:(DistributionCenter *)distCenter {
 	if (distributionCenter != distCenter) {
-		[distributionCenter autorelease];
+		[distributionCenter release];
 		distributionCenter = [distCenter retain];
 		[self setNeedsDisplay];
 	}
@@ -80,7 +80,7 @@
 
 - (void) setStoreId:(NSNumber *)sId {
 	if (storeId != sId) {
-		[storeId autorelease];
+		[storeId release];
 		storeId = [sId retain];
 	}
 }
@@ -91,7 +91,7 @@
 
 - (void) setStoreAvailability:(NSDecimalNumber *)sAvail {
 	if (storeAvailability != sAvail) {
-		[storeAvailability autorelease];
+		[storeAvailability release];
 		storeAvailability = [sAvail retain];
 	}
 }
@@ -102,7 +102,7 @@
 
 - (void) setStoreOnHand:(NSDecimalNumber *)sOnHand {
 	if (storeOnHand != sOnHand) {
-		[storeOnHand autorelease];
+		[storeOnHand release];
 		storeOnHand = [sOnHand retain];
 	}
 }
