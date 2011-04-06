@@ -30,7 +30,7 @@
 }
 
 @property (nonatomic, retain) id currentFirstResponder;
-@property (nonatomic, retain) NSObject <ExtUIViewControllerDelegate>* delegate;
+@property (nonatomic, assign) NSObject <ExtUIViewControllerDelegate>* delegate;
 @property                     BOOL keyboardCancelled;
 @property                     CGFloat previousViewOriginY;
 

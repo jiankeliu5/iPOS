@@ -48,7 +48,6 @@
 
 - (void) dealloc
 {
-	[self setDelegate:nil];
 	[self setCurrentFirstResponder:nil];
     [super dealloc];
 }

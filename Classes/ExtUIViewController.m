@@ -35,7 +35,6 @@
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[self setCurrentFirstResponder:nil];
-	[self setDelegate:nil];
     [super dealloc];
 }
 

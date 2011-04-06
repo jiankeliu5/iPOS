@@ -74,8 +74,6 @@
 	
 	[self setCurrentFirstResponder:nil];
 	
-	[self setViewDelegate:nil];
-	
 	[priceFormatter release];
 	priceFormatter = nil;
 	
