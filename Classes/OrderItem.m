@@ -11,7 +11,7 @@
 
 @implementation OrderItem
 
-@synthesize lineNumber, statusId, sellingPrice, quantity, item;
+@synthesize lineNumber, statusId, sellingPrice, quantity, item, shouldDelete, shouldClose;
 
 #pragma mark Constructor/Deconstructor
 -(id) init {
