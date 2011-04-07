@@ -24,11 +24,13 @@
     unitOfMeasureLookup = [[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
 															   @"EACH",
 															   @"SQ FT",
+                                                               @"CV",
 															   @"BOX",
 															   @"SET",
 															   nil] forKeys:[NSArray arrayWithObjects:
 																			 @"EA",
 																			 @"CU",
+                                                                             @"CV",
 																			 @"BX",
 																			 @"SET",
 																			 nil]] retain];
