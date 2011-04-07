@@ -26,6 +26,8 @@
 	UILabel *lineCostLabel;
 }
 
-@property (nonatomic, retain) OrderItem *orderItem;
+// Use assign instead of retain because the order items are kept
+// in a singleton.
+@property (nonatomic, assign) OrderItem *orderItem;
 
 @end

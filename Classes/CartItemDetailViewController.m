@@ -67,7 +67,7 @@
 }
 
 - (void)dealloc {
-	[self setOrderItem:nil];
+	//[self setOrderItem:nil];
     [super dealloc];
 }
 

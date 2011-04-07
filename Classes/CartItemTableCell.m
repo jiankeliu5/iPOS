@@ -53,7 +53,7 @@
 
 - (void) dealloc
 {
-	[self setOrderItem:nil];
+	//[self setOrderItem:nil];
     [super dealloc];
 }
 
@@ -64,10 +64,14 @@
 }
 
 - (void) setOrderItem:(OrderItem *)ordItem {
+	/*
 	if (orderItem != ordItem) {
 		[orderItem release];
 		orderItem = [ordItem retain];
 	}
+	*/
+	
+	orderItem = ordItem;
 	
 	NSString *descText = [NSString stringWithFormat:@"%@  %@  %@ / %@",
 						  [orderItem.item.sku stringValue],
