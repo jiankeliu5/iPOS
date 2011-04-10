@@ -15,7 +15,6 @@
 #import	"Order.h"
 #import "OrderItem.h"
 #import "ProductItem.h"
-#import "CartItemTableCell.h"
 #import "CartItemDetailViewController.h"
 #import "CustomerViewController.h"
 
@@ -66,6 +65,10 @@
 @synthesize editBarButton;
 @synthesize cancelBarButton;
 @synthesize commitEditsButton;
+
+@synthesize multiEditMode;
+@synthesize countMarkDelete;
+@synthesize countMarkClose;
 
 #pragma mark Constructors
 - (id)init
@@ -247,6 +250,11 @@
     // Add this controller as a Linea Device Delegate
     [linea addDelegate:self];
    
+	// Reset multi edit mode
+	self.multiEditMode = NO;
+	self.countMarkDelete = 0;
+	self.countMarkClose = 0;
+	
 	if (self.navigationController != nil) {
 		[self.navigationController setNavigationBarHidden:NO];
 		// This is what shows up on the back button in the *next* controller.
@@ -402,27 +410,71 @@
 }
 
 - (void) enterEditMode:(id)sender {
-	[AlertUtils showModalAlertMessage:@"Edit functionality is not implemented yet.  Please use swipe to delete rows."];
+	//[AlertUtils showModalAlertMessage:@"Edit functionality is not implemented yet.  Please use swipe to delete rows."];
 	// Fire up the edit mode on the table.
-	/*
+	
 	[orderToolBar setItems:self.toolbarEditMode];
 	[self.navigationItem setLeftBarButtonItem:self.cancelBarButton animated:NO];
 	[self updateSelectionCount];
-	[orderTable setEditing:YES animated:YES];
-	 */
+	[self setMultiEditMode:YES];
+	[orderTable reloadData];
+	 
 }
 
 - (void) cancelEditMode:(id)sender {
-	//[self restoreDefaultToolbar];
-	//[self.navigationItem setLeftBarButtonItem:self.cancelBarButton animated:NO];
+	// Clear the flags on the order items.
+	// TODO: this should go into the Order or a Cart class
+	for (OrderItem *orderItem in [[facade currentOrder] getOrderItems]) {
+		orderItem.shouldClose = NO;
+		orderItem.shouldDelete = NO;
+	}
+	[self setMultiEditMode:NO];
+	self.countMarkDelete = 0;
+	self.countMarkClose = 0;
+	[orderTable reloadData];
+	[self restoreDefaultToolbar];
+	[self.navigationItem setLeftBarButtonItem:self.editBarButton animated:NO];
 	
 }
 
 - (void) commitEdits:(id)sender {
-	// Handle the toolbar press where we delete and close multiple line items at once.
+	NSMutableArray *productItemsToDelete = [NSMutableArray arrayWithCapacity:5];
+	// Iterate over the items in the order first to see which ones need to be deleted and closed.
+	// Must do this for delete because we cannot change the array while iterating over it.
+	// TODO: what do we need to close the line?  OrderItem?
+	for (OrderItem *orderItem in [[facade currentOrder] getOrderItems]) {
+		if (orderItem.shouldDelete) {
+			[productItemsToDelete addObject:orderItem.item];
+		}
+	}
+	
+	// TODO: need a bulk way to delete multiple order items from the order at one time??
+	Order *order = [facade currentOrder];
+	for (ProductItem *pi in productItemsToDelete) {
+		[order removeItemFromOrder:pi];
+	}
+	[self setMultiEditMode:NO];
+	self.countMarkDelete = 0;
+	self.countMarkClose = 0;
+	[orderTable reloadData];
 }
 
 - (void) updateSelectionCount {
+	self.commitEditsButton.title = [NSString stringWithFormat:@"Delete (%d)    Close (%d)", self.countMarkDelete, self.countMarkClose];
+}
+
+#pragma mark -
+#pragma mark CartItemCellDelegate
+- (void) cartItemCell:(CartItemTableCell *)aCartItemCell markForDelete:(BOOL)shouldDelete {
+	NSInteger oldDeleteCount = self.countMarkDelete;
+	self.countMarkDelete = (shouldDelete) ? ++oldDeleteCount : --oldDeleteCount;
+	[self updateSelectionCount];
+}
+
+- (void) cartItemCell:(CartItemTableCell *)aCartItemCell markForClose:(BOOL)shouldClose {
+	NSInteger oldCloseCount = self.countMarkClose;
+	self.countMarkClose = (shouldClose) ? ++oldCloseCount : --oldCloseCount;
+	[self updateSelectionCount];
 }
 
 #pragma mark -
@@ -486,8 +538,18 @@
 		cell = [[[CartItemTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:orderCellIdentifier] autorelease];
 	}
 	cell.orderItem = orderItem;
+	cell.multiEditing = self.multiEditMode;
+	cell.deleteChecked = orderItem.shouldDelete;
+	cell.closeChecked = orderItem.shouldClose;
+	cell.cellDelegate = self;
 	return cell;
 }
+
+/*
+- (UITableViewCellEditingStyle) tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+	return UITableViewCellEditingStyleNone;
+}
+*/
 
 - (void)tableView:(UITableView *)theTableView commitEditingStyle: (UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath { 
 	
@@ -500,6 +562,7 @@
         
         [self calculateOrder];
     }
+	
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

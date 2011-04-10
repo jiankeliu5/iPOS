@@ -11,23 +11,41 @@
 #import "OrderItem.h"
 #import "ProductItem.h"
 
-#define LABEL_FONT_SIZE 14.0f
-#define LABEL_HEIGHT 16.0f
-#define START_X 10.0f
-#define START_Y 4.0f
-#define QUANTITY_LABEL_PERCENT_WIDTH 66.0f
-#define LINE_COST_LABEL_PERCENT_WIDTH 34.0f
+@class CartItemTableCell;
+
+@protocol CartItemCellDelegate
+
+- (void) cartItemCell:(CartItemTableCell *)aCartItemCell markForDelete:(BOOL)shouldDelete;
+- (void) cartItemCell:(CartItemTableCell *)aCartItemCell markForClose:(BOOL)shouldClose;
+
+@end
 
 @interface CartItemTableCell : UITableViewCell 
 {
 	OrderItem *orderItem;
+	NSObject <CartItemCellDelegate>* cellDelegate;
+	
 	UILabel *descriptionLabel;
 	UILabel *quantityLabel;
 	UILabel *lineCostLabel;
+	BOOL deleteChecked;
+	BOOL closeChecked;
+	BOOL multiEditing;
+	
+	UIButton *deleteCheckButton;
+	UIButton *closeCheckButton;
 }
 
 // Use assign instead of retain because the order items are kept
 // in a singleton.
 @property (nonatomic, assign) OrderItem *orderItem;
+@property (nonatomic, assign) NSObject<CartItemCellDelegate>* cellDelegate;
+
+@property (nonatomic, assign) BOOL deleteChecked;
+@property (nonatomic, assign) BOOL closeChecked;
+@property (nonatomic, assign) BOOL multiEditing;
+
+- (void) checkDeleteAction:(id)sender;
+- (void) checkCloseAction:(id)sender;
 
 @end

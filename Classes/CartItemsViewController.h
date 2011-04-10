@@ -12,8 +12,9 @@
 #import "AddItemView.h"
 #import "ExtUITextField.h"
 #import "SearchItemView.h"
+#import "CartItemTableCell.h"
 
-@interface CartItemsViewController : UIViewController <LineaDelegate, AddItemViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, SearchItemViewDelegate> {
+@interface CartItemsViewController : UIViewController <LineaDelegate, AddItemViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, SearchItemViewDelegate, CartItemCellDelegate> {
 	iPOSFacade *facade;
     
     Linea *linea;
@@ -41,6 +42,10 @@
 	UIBarButtonItem *cancelBarButton;
 	UIBarButtonItem *commitEditsButton;
 	
+	BOOL multiEditMode;
+	NSInteger countMarkedDelete;
+	NSInteger countMarkedClose;
+	
 }
 
 @property (nonatomic, retain) NSArray *toolbarBasic;
@@ -50,5 +55,9 @@
 @property (nonatomic, retain) UIBarButtonItem *editBarButton;
 @property (nonatomic, retain) UIBarButtonItem *cancelBarButton;
 @property (nonatomic, retain) UIBarButtonItem *commitEditsButton;
+
+@property (nonatomic, assign) BOOL multiEditMode;
+@property (nonatomic, assign) NSInteger countMarkDelete;
+@property (nonatomic, assign) NSInteger countMarkClose;
 
 @end
