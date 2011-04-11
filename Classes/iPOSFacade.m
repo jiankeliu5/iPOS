@@ -17,8 +17,8 @@ static iPOSFacade *facade = nil;
 
 #pragma mark Singleton Initializer
 + (iPOSFacade *) sharedInstance {
-    if (facade == NULL) {
-        facade = [[super allocWithZone:NULL] init];
+    if (facade == nil) {
+        facade = [[super allocWithZone:nil] init];
     } 
     
     return facade;
@@ -26,7 +26,8 @@ static iPOSFacade *facade = nil;
 }
 
 +(id) allocWithZone:(NSZone *)zone {
-    return [[self sharedInstance] retain];}
+    return [[self sharedInstance] retain];
+}
 
 #pragma mark Constructor/Destructor
 -(id) init {
@@ -73,31 +74,6 @@ static iPOSFacade *facade = nil;
     return logoutStatus;
 }
 
-- (void) setCurrentCustomer:(Customer *)customer {
-	if (sessionInfo != nil) {
-		[sessionInfo setCurrentCustomer:customer];
-	}
-}
-
-- (Customer *)currentCustomer {
-	if (sessionInfo == nil) {
-		return nil;
-	}
-	return [sessionInfo currentCustomer];
-}
-
-- (void) setCurrentOrder:(Order *)order {
-	if (sessionInfo != nil) {
-		[sessionInfo setCurrentOrder:order];
-	}
-}
-
-- (Order *)currentOrder {
-	if (sessionInfo == nil) {
-		return nil;
-	}
-	return [sessionInfo currentOrder];
-}
 
 #pragma mark -
 #pragma mark Customer Management
@@ -115,12 +91,11 @@ static iPOSFacade *facade = nil;
 
 #pragma mark -
 #pragma mark Order Management
+-(void) newQuote:(Order *)order {
+    [posService newQuote:order withSession:sessionInfo];
+}
+
 -(void) newOrder:(Order *)order {
-    // Ensure to use the current customer
-    if (order) {
-        order.customer = [self currentCustomer];
-    }
-    
     [posService newOrder:order withSession:sessionInfo];
 }
 
@@ -130,7 +105,7 @@ static iPOSFacade *facade = nil;
     return [inventoryService lookupProductItem:itemSku withSession:sessionInfo];
 }
 
--(BOOL) isProductItemAvailable: (NSString *) itemId forQuantity: (NSDecimal *) quantity {
+-(BOOL) isProductItemAvailable: (NSNumber *) itemId forQuantity: (NSDecimalNumber *) quantity {
     return YES;
 }
 

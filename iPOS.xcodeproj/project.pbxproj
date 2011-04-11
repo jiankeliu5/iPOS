@@ -281,7 +281,7 @@
 		D6B4359F13159ECD000C0AA8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		D6B438121315A923000C0AA8 /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = D692BBA312FDFF4C007EC03A /* Address.m */; };
 		D6B438131315A927000C0AA8 /* Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3112FCA530003C3A47 /* Customer.m */; };
-		D6B438151315A933000C0AA8 /* ManagerApprovalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3912FCA55D003C3A47 /* ManagerApprovalInfo.m */; };
+		D6B438151315A933000C0AA8 /* ManagerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3912FCA55D003C3A47 /* ManagerInfo.m */; };
 		D6B438161315A935000C0AA8 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3412FCA535003C3A47 /* Order.m */; };
 		D6B438171315A937000C0AA8 /* OrderItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6912FCA9C0003C3A47 /* OrderItem.m */; };
 		D6B438181315A939000C0AA8 /* PaymentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6612FCA99E003C3A47 /* PaymentInfo.m */; };
@@ -339,6 +339,8 @@
 		D6CC18E51331D1690042745E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
 		D6CC18E61331D1690042745E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
 		D6CC18E71331D1690042745E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		D6DCA825134DFA8E00ACBDD9 /* OrderCart.h in Headers */ = {isa = PBXBuildFile; fileRef = D6DCA823134DFA8E00ACBDD9 /* OrderCart.h */; };
+		D6DCA826134DFA8E00ACBDD9 /* OrderCart.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DCA824134DFA8E00ACBDD9 /* OrderCart.m */; };
 		D6E24DCE1331CCC900931787 /* AppTests.octest in Resources */ = {isa = PBXBuildFile; fileRef = D6334A2D1331C9CE000DEDBB /* AppTests.octest */; };
 		D6E9E9D11316037900FF1498 /* libiPOSFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */; };
 		D6E9E9D21316037900FF1498 /* libOPIFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B435B213159F72000C0AA8 /* libOPIFoundation.a */; };
@@ -627,8 +629,8 @@
 		D61C3C3112FCA530003C3A47 /* Customer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Customer.m; sourceTree = "<group>"; };
 		D61C3C3312FCA535003C3A47 /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
 		D61C3C3412FCA535003C3A47 /* Order.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Order.m; sourceTree = "<group>"; };
-		D61C3C3812FCA55D003C3A47 /* ManagerApprovalInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagerApprovalInfo.h; sourceTree = "<group>"; };
-		D61C3C3912FCA55D003C3A47 /* ManagerApprovalInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagerApprovalInfo.m; sourceTree = "<group>"; };
+		D61C3C3812FCA55D003C3A47 /* ManagerInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagerInfo.h; sourceTree = "<group>"; };
+		D61C3C3912FCA55D003C3A47 /* ManagerInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagerInfo.m; sourceTree = "<group>"; };
 		D61C3C6212FCA97F003C3A47 /* ProductItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductItem.h; sourceTree = "<group>"; };
 		D61C3C6312FCA97F003C3A47 /* ProductItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductItem.m; sourceTree = "<group>"; };
 		D61C3C6512FCA99E003C3A47 /* PaymentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentInfo.h; sourceTree = "<group>"; };
@@ -761,6 +763,8 @@
 		D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPOSServiceImpl.m; path = Classes/iPOSServiceImpl.m; sourceTree = "<group>"; };
 		D6BCD40612FCB3F70029F4B2 /* SessionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionInfo.h; sourceTree = "<group>"; };
 		D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionInfo.m; sourceTree = "<group>"; };
+		D6DCA823134DFA8E00ACBDD9 /* OrderCart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderCart.h; sourceTree = "<group>"; };
+		D6DCA824134DFA8E00ACBDD9 /* OrderCart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderCart.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1406,6 +1410,8 @@
 				D6B19384133C2450004C4FD1 /* AbstractModel.m */,
 				D61C3C3012FCA530003C3A47 /* Customer.h */,
 				D61C3C3112FCA530003C3A47 /* Customer.m */,
+				D6DCA823134DFA8E00ACBDD9 /* OrderCart.h */,
+				D6DCA824134DFA8E00ACBDD9 /* OrderCart.m */,
 				D61C3C3312FCA535003C3A47 /* Order.h */,
 				D61C3C3412FCA535003C3A47 /* Order.m */,
 				D61C3C6812FCA9C0003C3A47 /* OrderItem.h */,
@@ -1422,8 +1428,8 @@
 				D692BBA312FDFF4C007EC03A /* Address.m */,
 				D683BF4213217652008D923F /* Error.h */,
 				D683BF4313217652008D923F /* Error.m */,
-				D61C3C3812FCA55D003C3A47 /* ManagerApprovalInfo.h */,
-				D61C3C3912FCA55D003C3A47 /* ManagerApprovalInfo.m */,
+				D61C3C3812FCA55D003C3A47 /* ManagerInfo.h */,
+				D61C3C3912FCA55D003C3A47 /* ManagerInfo.m */,
 				D61C3C6512FCA99E003C3A47 /* PaymentInfo.h */,
 				D61C3C6612FCA99E003C3A47 /* PaymentInfo.m */,
 				D6BCD40612FCB3F70029F4B2 /* SessionInfo.h */,
@@ -1609,6 +1615,7 @@
 				D6B19793133D3832004C4FD1 /* ASIHTTPRequest+Validate.h in Headers */,
 				B45D260D13403CCD00AFC9D2 /* CartItemTableCell.h in Headers */,
 				B418577F1347D675009461D4 /* SearchItemView.h in Headers */,
+				D6DCA825134DFA8E00ACBDD9 /* OrderCart.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2083,7 +2090,7 @@
 				B4300AA0131AEF8A000210C7 /* AvailabilityView.m in Sources */,
 				D6B438121315A923000C0AA8 /* Address.m in Sources */,
 				D6B438131315A927000C0AA8 /* Customer.m in Sources */,
-				D6B438151315A933000C0AA8 /* ManagerApprovalInfo.m in Sources */,
+				D6B438151315A933000C0AA8 /* ManagerInfo.m in Sources */,
 				D6B438161315A935000C0AA8 /* Order.m in Sources */,
 				D6B438171315A937000C0AA8 /* OrderItem.m in Sources */,
 				D6B438181315A939000C0AA8 /* PaymentInfo.m in Sources */,
@@ -2146,6 +2153,7 @@
 				D6B19794133D3832004C4FD1 /* ASIHTTPRequest+Validate.m in Sources */,
 				B45D260E13403CCD00AFC9D2 /* CartItemTableCell.m in Sources */,
 				B41857801347D675009461D4 /* SearchItemView.m in Sources */,
+				D6DCA826134DFA8E00ACBDD9 /* OrderCart.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,8 +12,8 @@
 @implementation SessionInfo
 
 @synthesize employeeId, storeId, deviceId, serverSessionId, loginUserName, passwordForVerification;
-@synthesize currentCustomer;
-@synthesize currentOrder;
+//@synthesize currentCustomer;
+//@synthesize currentOrder;
 
 #pragma mark -
 #pragma mark Initializing and Memory Mgmt
@@ -31,8 +31,8 @@
 }
 
 -(void) dealloc {
-	[currentCustomer release];
-	[currentOrder release];
+//	[currentCustomer release];
+//	[currentOrder release];
 	
     [storeId release];
     [employeeId release];

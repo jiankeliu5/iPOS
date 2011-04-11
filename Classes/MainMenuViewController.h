@@ -12,12 +12,14 @@
 #import "AddItemView.h"
 #import "SignatureViewController.h"
 
-#import "iPOSFacade.h"
+#import "OrderCart.h"
 #import "LineaSDK.h"
 
 @interface MainMenuViewController : ExtUIViewController <LineaDelegate, ExtUIViewControllerDelegate, AddItemViewDelegate, SignatureDelegate> {
 	iPOSFacade *facade;
 	
+    OrderCart *orderCart;
+    
 	UILabel *scanItemLabel;
 	ExtUITextField *lookupItemField;
 	ExtUITextField *lookupOrderField;

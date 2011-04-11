@@ -9,6 +9,10 @@
 #import "Order.h"
 #import "OrderXmlMarshaller.h"
 
+static int const ORDER_TYPE_QUOTE = 1;
+static int const ORDER_TYPE_OPEN = 2;
+static int const ORDER_TYPE_CLOSED = 3;
+
 @implementation Order
 
 @synthesize orderId, orderTypeId, salesPersonEmployeeId, store, customer;
@@ -39,6 +43,36 @@
 }
 
 #pragma mark -
+#pragma Accessor Methods
+- (void) setAsQuote {
+    orderTypeId = [NSNumber numberWithInt:ORDER_TYPE_QUOTE];
+}
+
+- (NSNumber *) getOrderTypeId {
+    if (orderTypeId != nil) {
+        return orderTypeId;
+    }
+    
+    // Determine if all items are closed or some are open
+    if ([self isClosed]) {
+       return [NSNumber numberWithInt:ORDER_TYPE_CLOSED]; 
+    }
+    
+    return [NSNumber numberWithInt:ORDER_TYPE_OPEN];
+}
+
+- (BOOL) isClosed {
+    // Determine if all items are closed or some are open
+    for (OrderItem *orderItem in orderItemList) {
+        if (![orderItem isClosed]) {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
+#pragma mark -
 #pragma mark Marshalling
 + (Order *) fromXml:(NSString *)xmlString {
     OrderXmlMarshaller *marshaller = [[[OrderXmlMarshaller alloc] init] autorelease];
@@ -58,40 +92,27 @@
 -(void) addItemToOrder:(ProductItem *)item withQuantity: (NSDecimalNumber *) quantity {
     
     if (orderItemList != nil) {
-        BOOL itemAlreadyInOrder = NO;
+        // We can add multiple items of the same type to an order
+        OrderItem *orderItem = [[[OrderItem alloc] initWithItem:item AndQuantity:quantity] autorelease];
+        [orderItemList addObject:orderItem];
         
-        for (OrderItem *orderItem in orderItemList) {
-            if ([orderItem.item.sku isEqualToNumber:item.sku]) {
-                itemAlreadyInOrder = YES;
-                
-                // Update the quantity of the item
-                orderItem.quantity = quantity;
-                break;
-            }
-        }
+        // Set the line number based on the index the item was added in
+        orderItem.lineNumber = [NSNumber numberWithInt: [orderItemList count]];
         
-        if (!itemAlreadyInOrder) {
-            OrderItem *orderItem = [[[OrderItem alloc] initWithItem:item AndQuantity:quantity] autorelease];
-            [orderItemList addObject:orderItem];
-            
-            // Set the line number based on the index the item was added in
-            orderItem.lineNumber = [NSNumber numberWithInt: [orderItemList count]];
-            
-            // Set the selling price to the retail price
-            // Default the status to 1
-            // TODO: This method will change to add to order with quantity and price.  
-            // TODO: Do we still default the status
-            orderItem.statusId = [NSNumber numberWithInt:1];
-            orderItem.sellingPrice = [item.retailPrice copy];
-        }
-    }
+        // Set the selling price to the retail price
+        // Default the status to 1
+        // TODO: This method will change to add to order with quantity and price.  
+        // TODO: Do we still default the status
+        orderItem.statusId = [NSNumber numberWithInt:1];
+        orderItem.sellingPrice = [item.retailPrice copy];    }
 }
 
--(void) removeItemFromOrder:(ProductItem *)item {
+-(void) removeItemFromOrder:(OrderItem *)item {
     if (orderItemList != nil) {
         
+        // Remove the instance of order item
         for (OrderItem *orderItem in orderItemList) {
-            if ([orderItem.item.sku isEqualToNumber:item.sku]) {
+            if (orderItem == item) {
                 [orderItemList removeObject:orderItem];
                 break;
             }

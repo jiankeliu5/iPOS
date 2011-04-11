@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "iPOSFacade.h"
+
+#import "OrderCart.h"
 #import "ExtUIViewController.h"
 #import "ExtUITextField.h"
 #import "MOGlassButton.h"
@@ -17,8 +18,9 @@
 
 @interface CustomerViewController : ExtUIViewController <ExtUIViewControllerDelegate> {
 	
-	iPOSFacade *facade;
-
+	OrderCart *orderCart;
+    iPOSFacade *facade;
+    
 	ExtUITextField *custPhoneField;
 	MOGlassButton *custSearchButton;
 	MOGlassButton *confirmButton;

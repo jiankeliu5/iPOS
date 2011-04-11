@@ -16,5 +16,6 @@
 @property (nonatomic, retain) NSMutableArray *errorList;
 
 -(void) addError: (Error *) error;
+- (void) removeAllErrors;
 
 @end

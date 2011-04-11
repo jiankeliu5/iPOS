@@ -22,17 +22,23 @@
     self = [super init];
 	
     unitOfMeasureLookup = [[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
-															   @"EACH",
-															   @"SQ FT",
-                                                               @"CV",
-															   @"BOX",
-															   @"SET",
+                                                                @"BOX",
+                                                                @"CARTON",
+                                                                @"SQ FT",
+                                                                @"EACH",
+                                                                @"FT",
+                                                                @"QYARD",
+                                                                @"SET",
+                                                                @"SQ FT",
 															   nil] forKeys:[NSArray arrayWithObjects:
-																			 @"EA",
-																			 @"CU",
-                                                                             @"CV",
 																			 @"BX",
-																			 @"SET",
+                                                                             @"CA",
+                                                                             @"CV",
+																			 @"EA",
+                                                                             @"LF",
+                                                                             @"QY",
+																			 @"SE",
+                                                                             @"SF",
 																			 nil]] retain];
     
 	return self;

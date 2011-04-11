@@ -20,8 +20,7 @@
 
 @end
 
-@interface CartItemTableCell : UITableViewCell 
-{
+@interface CartItemTableCell : UITableViewCell {
 	OrderItem *orderItem;
 	NSObject <CartItemCellDelegate>* cellDelegate;
 	

@@ -47,7 +47,7 @@
 	// Set up the right side button if desired, edit button for example.
 	//[[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
 	
-	facade = [iPOSFacade sharedInstance];
+	orderCart = [OrderCart sharedInstance];
 
     return self;
 }
@@ -58,7 +58,7 @@
 		return nil;
 	}
 	
-	facade = [iPOSFacade sharedInstance];
+	orderCart = [OrderCart sharedInstance];
 	[self setOrderItem:editOrderItem];
 	
 	[[self navigationItem] setTitle:[editOrderItem.item.sku stringValue]];
@@ -252,9 +252,8 @@
 }
 
 - (void) handleDeleteButton:(id)sender {
-	ProductItem *pi = self.orderItem.item;
-	Order *order = [facade currentOrder];
-	[order removeItemFromOrder:pi];
+	[orderCart removeItem:self.orderItem];
+    
 	[self.navigationController popViewControllerAnimated:YES];
 }
 

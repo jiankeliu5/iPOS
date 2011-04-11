@@ -85,8 +85,9 @@
 
 	// Set up the right side button if desired, edit button for example.
 	//[[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
-	
+    
 	facade = [iPOSFacade sharedInstance];
+	orderCart = [OrderCart sharedInstance];
 	
     return self;
 }
@@ -287,7 +288,7 @@
 		self.navigationItem.leftBarButtonItem = self.editBarButton;
 	}
 	
-	Customer *cust = [facade currentCustomer];
+	Customer *cust = [orderCart getCustomerForOrder];
 	if (cust == nil) {
 		custPhoneLabel.backgroundColor = NO_CUST_SELECTED_COLOR;
 		custNameLabel.backgroundColor = NO_CUST_SELECTED_COLOR;
@@ -343,13 +344,14 @@
 #pragma mark Order Methods
 - (void) calculateOrder {
 	BOOL custTaxExempt = NO;
-	Customer *customer = [facade currentCustomer];
+	Customer *customer = [orderCart getCustomerForOrder];
+    
 	// If the customer is not set yet, we will assume that they are not tax exempt
-	if (customer != nil && [[facade currentCustomer] taxExempt] == YES) {
+	if (customer != nil && [customer taxExempt] == YES) {
 		custTaxExempt = YES;
 	}
 	
-	Order *order = [facade currentOrder];
+	Order *order = [orderCart getOrder];
 	if (order != nil) {
 		NSArray *orderItems = [order getOrderItems];
 		
@@ -378,7 +380,7 @@
 
 - (void) restoreDefaultToolbar {
 	// Put up the Tender or Quote button if we have a customer and an order with at least one item.
-	if ([facade currentCustomer] != nil && [[[facade currentOrder] getOrderItems] count] > 0) {
+	if ([orderCart getCustomerForOrder] != nil && [[[orderCart getOrder] getOrderItems] count] > 0) {
 		[orderToolBar setItems:self.toolbarWithQuote];
 	} else {
 		[orderToolBar setItems:self.toolbarBasic];
@@ -448,7 +450,7 @@
 - (void) cancelEditMode:(id)sender {
 	// Clear the flags on the order items.
 	// TODO: this should go into the Order or a Cart class
-	for (OrderItem *orderItem in [[facade currentOrder] getOrderItems]) {
+	for (OrderItem *orderItem in [[orderCart getOrder] getOrderItems]) {
 		orderItem.shouldClose = NO;
 		orderItem.shouldDelete = NO;
 	}
@@ -462,20 +464,19 @@
 }
 
 - (void) commitEdits:(id)sender {
-	NSMutableArray *productItemsToDelete = [NSMutableArray arrayWithCapacity:5];
+	NSMutableArray *orderItemsToDelete = [NSMutableArray arrayWithCapacity:5];
 	// Iterate over the items in the order first to see which ones need to be deleted and closed.
 	// Must do this for delete because we cannot change the array while iterating over it.
 	// TODO: what do we need to close the line?  OrderItem?
-	for (OrderItem *orderItem in [[facade currentOrder] getOrderItems]) {
+	for (OrderItem *orderItem in [[orderCart getOrder] getOrderItems]) {
 		if (orderItem.shouldDelete) {
-			[productItemsToDelete addObject:orderItem.item];
+			[orderItemsToDelete addObject:orderItem];
 		}
 	}
 	
 	// TODO: need a bulk way to delete multiple order items from the order at one time??
-	Order *order = [facade currentOrder];
-	for (ProductItem *pi in productItemsToDelete) {
-		[order removeItemFromOrder:pi];
+	for (OrderItem *item in orderItemsToDelete) {
+		[orderCart removeItem:item];
 	}
 	[self setMultiEditMode:NO];
 	self.countMarkDelete = 0;
@@ -510,15 +511,10 @@
 		// devices can set the indexes differently.
 		NSString *clickedButtonTitle = [anAlertView buttonTitleAtIndex:aButtonIndex];
 		if ([clickedButtonTitle isEqualToString:@"Send Quote"]) {
-			Order *order = [facade currentOrder];
-            
-            // Ensure the order has the current customer set before sending
-            if ([facade currentCustomer] != nil) {
-                [order setCustomer:[facade currentCustomer]];
-            }
+			Order *order = [orderCart getOrder];
             
 			// Send off the order as a quote.
-			[facade newOrder:order];
+			[facade newQuote:order];
 			if ( ([order errorList] != nil) && ([[order errorList] count] > 0) ) {
 				NSMutableString *errMsg = [[[NSMutableString alloc] init] autorelease];
 				[errMsg appendString:@"Error in new order quote!"];
@@ -545,7 +541,7 @@
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return ([facade currentOrder] == nil) ? 0 : [[[facade currentOrder] getOrderItems] count];
+	return ([orderCart getOrder] == nil) ? 0 : [[[orderCart getOrder] getOrderItems] count];
 }
 
 - (NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -554,7 +550,7 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-	OrderItem *orderItem = [[[facade currentOrder] getOrderItems] objectAtIndex:indexPath.row];
+	OrderItem *orderItem = [[[orderCart getOrder] getOrderItems] objectAtIndex:indexPath.row];
 	NSString *orderCellIdentifier = [orderItem.item.sku stringValue];
 	
 	CartItemTableCell *cell = (CartItemTableCell *)[tableView dequeueReusableCellWithIdentifier:orderCellIdentifier];
@@ -580,8 +576,8 @@
 	
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Remove the item from the order
-		ProductItem *pi = [[[[facade currentOrder] getOrderItems] objectAtIndex:indexPath.row] item];
-        [[facade currentOrder] removeItemFromOrder:pi];
+		OrderItem *item = [[[orderCart getOrder] getOrderItems] objectAtIndex:indexPath.row];
+        [orderCart removeItem:item];
         
         [theTableView deleteRowsAtIndexPaths: [NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         
@@ -591,7 +587,7 @@
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	OrderItem *orderItem = [[[facade currentOrder] getOrderItems] objectAtIndex:indexPath.row];
+	OrderItem *orderItem = [[[orderCart getOrder] getOrderItems] objectAtIndex:indexPath.row];
 	if (orderItem != nil) {
 		CartItemDetailViewController *cartDetail = [[CartItemDetailViewController alloc] init];
 		[cartDetail setOrderItem:orderItem];
@@ -663,21 +659,16 @@
 #pragma mark AddItemViewDelegate
 - (void) addItem:(AddItemView *)addItemView orderQuantity:(NSDecimalNumber *)quantity ofUnits:(NSString *)unitOfMeasure {
 	
-	Order *order = [facade currentOrder];
-	if (order == nil) {
-		order = [[[Order alloc] init] autorelease];
-		[facade setCurrentOrder:order];
-	}
-	
 	ProductItem *item = [addItemView productItem];
-	[order addItemToOrder:item withQuantity:quantity];
+	
+    [orderCart addItem:item withQuantity:quantity];
 	
 	[addItemView removeFromSuperview];
 	
 	[linea addDelegate:self];
 	
 	[orderTable reloadData];
-	
+    
 	[self calculateOrder];
     
 }

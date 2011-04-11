@@ -19,8 +19,8 @@
     NSString *loginUserName;
     NSString *passwordForVerification;
 	
-	Customer *currentCustomer;
-	Order *currentOrder;
+//	Customer *currentCustomer;
+//	Order *currentOrder;
 }
 
 @property (nonatomic, retain) NSNumber *employeeId;
@@ -31,8 +31,8 @@
 @property (nonatomic, retain) NSString *loginUserName;
 @property (nonatomic, retain) NSString *passwordForVerification;
 
-@property (nonatomic, retain) Customer *currentCustomer;
-@property (nonatomic, retain) Order *currentOrder;
+// @property (nonatomic, retain) Customer *currentCustomer;
+// @property (nonatomic, retain) Order *currentOrder;
 
 
 + (SessionInfo *) fromXml: (NSString *) xmlString;

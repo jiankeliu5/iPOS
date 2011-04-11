@@ -7,14 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "iPOSFacade.h"
+
+#import "OrderCart.h"
 #import "OrderItem.h"
 #import "MOGlassButton.h"
 #import "ExtUIViewController.h"
 #import "ExtUITextField.h"
 
 @interface CartItemDetailViewController : ExtUIViewController <ExtUIViewControllerDelegate> {
-	iPOSFacade *facade;
+	OrderCart *orderCart;
 	OrderItem *orderItem;
 	
 	UIView *productItemView;

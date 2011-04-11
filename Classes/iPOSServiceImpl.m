@@ -261,6 +261,15 @@
 
 #pragma mark -
 #pragma mark Order Mgmt APIs
+-(void) newQuote:(Order *)order withSession:(SessionInfo *)sessionInfo {
+
+    if (order) {
+        [order setAsQuote];
+    }
+    
+    [self newOrder:order withSession:sessionInfo];
+}
+
 -(void) newOrder:(Order *)order withSession:(SessionInfo *)sessionInfo {
 	// Make sure that we have a valid session and order
     if (sessionInfo == nil || order == nil || ![self isNewOrderValid:order]) {
@@ -290,9 +299,14 @@
     
     NSArray *requestErrors = [request validateAsXmlContent];
     if ([requestErrors count] > 0) {
+        // Clear out the order type if it was set and any errors
+        order.orderTypeId = nil;
+        [order removeAllErrors];
+        
         for (Error *error in requestErrors) {
             [order addError:error];
         }
+        
         return;   
     }
     

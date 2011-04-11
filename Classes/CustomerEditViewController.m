@@ -44,7 +44,8 @@
 - (void) loadView {
 	[super loadView];
 	
-	facade = [iPOSFacade sharedInstance];
+	orderCart = [OrderCart sharedInstance];
+    facade = [iPOSFacade sharedInstance];
 	
 	UITableView *formTableView = [[[UITableView alloc] initWithFrame:[self rectForNav] style:UITableViewStyleGrouped] autorelease];
 	[formTableView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
@@ -106,6 +107,7 @@
 	NSLog(@"Current customer model:");
 	NSLog(@"%@", [custModel description]);
 	Customer *editedCust = [[[Customer alloc] initWithModel:custModel] autorelease];
+    
 	[facade newCustomer:editedCust];
 
 	if ( ([editedCust errorList] != nil) && ([[editedCust errorList] count] > 0) ) {
@@ -178,7 +180,9 @@
 		NSLog(@"No errors in customer");
 		NSMutableDictionary *updatedModel = [editedCust modelFromCustomer];
 		Customer *custCopy = [[[Customer alloc] initWithModel:updatedModel] autorelease];
-		[facade setCurrentCustomer:custCopy];
+        
+        // Bind the customer to the order cart
+		[orderCart bindCustomerToOrder:custCopy];
 		
 		// Clear the saved customer entry in the search customer view controller to keep it
 		// from showing if we navigate back.

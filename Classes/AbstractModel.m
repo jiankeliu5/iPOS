@@ -38,4 +38,10 @@
     
     [errorList addObject:error];
 }
+
+-(void) removeAllErrors {
+    if (errorList != nil) {
+        [errorList removeAllObjects];
+    }
+}
 @end

@@ -7,11 +7,12 @@
 //
 
 #import "IBAFormViewController.h"
-#import "iPOSFacade.h"
+#import "OrderCart.h"
 
 @interface CustomerEditViewController : IBAFormViewController {
-
-	iPOSFacade *facade;
+	OrderCart *orderCart;
+    iPOSFacade *facade;
+    
 	NSMutableDictionary *lastSavedCustomer;
 	
 }

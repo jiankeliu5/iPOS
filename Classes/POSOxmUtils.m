@@ -87,7 +87,7 @@
     
     for (CXMLElement *node in [parentXmlElement elementsForName:@"DC"]) {
         dc = [[[DistributionCenter alloc] init] autorelease];
-        ItemAvailability *availability = [[[ItemAvailability alloc] init] autorelease];
+        availability = [[[ItemAvailability alloc] init] autorelease];
         
         dc.dcId = [node elementNumberValue:@"dcID"];
         dc.isPrimary = [node elementBoolValue:@"primary"];

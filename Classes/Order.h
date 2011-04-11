@@ -32,8 +32,15 @@
 
 - (NSArray *) getOrderItems;
 - (void) addItemToOrder: (ProductItem *) item withQuantity: (NSDecimalNumber *) quantity;
-- (void) removeItemFromOrder: (ProductItem *) item;
+- (void) removeItemFromOrder: (OrderItem *) item;
 - (void) removeAll;
+
+#pragma mark -
+#pragma mark Order Type methods
+- (void) setAsQuote;
+
+- (NSNumber *) getOrderTypeId;
+- (BOOL) isClosed;
 
 #pragma mark -
 #pragma mark Marshalling methods

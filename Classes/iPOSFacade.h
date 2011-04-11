@@ -31,10 +31,6 @@
 - (BOOL) login: (NSString *) username password: (NSString *) password;
 - (BOOL) verifySession: (NSString *) passwordToVerify;
 - (BOOL) logout;
-- (void) setCurrentCustomer:(Customer *)customer;
-- (Customer *)currentCustomer;
-- (void) setCurrentOrder:(Order	*)order;
-- (Order *)currentOrder;
 
 #pragma mark iPOS Customer Management
 -(Customer *) lookupCustomerByPhone: (NSString *) phoneNumber;
@@ -42,14 +38,14 @@
 -(void) updateCustomer: (Customer *) customer;
 
 #pragma mark iPOS Order Management
--(void) newOrder: (Order *) order;
+-(void) newQuote: (Order *) order;
+// -(void) newOrder: (Order *) order;
 -(void) updateOrder: (Order *) order;
--(BOOL) allowDiscountedPrice: (NSDecimal *) discountPrice forQuantity: (NSDecimal *) quantity;
--(BOOL) allowDiscountedPrice: (NSDecimal *) discountPrice forQuantity: (NSDecimal *) quantity managerApproval: (ManagerApprovalInfo *) managerApproval;
-
+-(BOOL) allowDiscountedPrice: (NSDecimal *) discountPrice forQuantity: (NSDecimal *) quantity managerApproval: (ManagerInfo *) managerApprover;
 
 #pragma mark Inventory Management
 -(ProductItem *) lookupProductItem:(NSString *) itemSku;
--(BOOL) isProductItemAvailable: (NSString *) itemId forQuantity: (NSDecimal *) quantity;
+
+-(BOOL) isProductItemAvailable: (NSNumber *) itemId forQuantity: (NSDecimalNumber *) quantity;
 
 @end

@@ -45,7 +45,8 @@
 	// Set up the right side button if desired, edit button for example.
 	//[[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
 	
-	facade = [iPOSFacade sharedInstance];
+    facade = [iPOSFacade sharedInstance];
+	orderCart = [OrderCart sharedInstance];
 	
     return self;
 }
@@ -85,6 +86,7 @@
 
 }
 
+// TODO:  This will be removed
 -(void) magneticCardRawData:(NSData *)tracks {
     // For apps you could use [NSBundle mainBundle] to get the main plist, however this does not work with test bundles.
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
@@ -317,18 +319,11 @@
 
 - (void) addItem:(AddItemView *)addItemView orderQuantity:(NSDecimalNumber *)quantity ofUnits:(NSString *)unitOfMeasure {
 	
-	Order *order = [facade currentOrder];
-	if (order == nil) {
-		order = [[[Order alloc] init] autorelease];
-		[facade setCurrentOrder:order];
-	}
-	if ([facade currentCustomer] != nil) {
-		[order setCustomer:[facade currentCustomer]];
-	}
 	ProductItem *item = [addItemView productItem];
-	[order addItemToOrder:item withQuantity:quantity];
-	
-	[addItemView removeFromSuperview];
+    
+    [orderCart addItem:item withQuantity:quantity];
+    
+    [addItemView removeFromSuperview];
 
     CartItemsViewController *cartViewController = [[CartItemsViewController alloc] init];
 	[[self navigationController] pushViewController:cartViewController animated:TRUE];

@@ -60,9 +60,9 @@
 
 	// Set up the right side button if desired, edit button for example.
 	//[[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
-	
-	facade = [iPOSFacade sharedInstance];
-
+    
+	orderCart = [OrderCart sharedInstance];
+    facade = [iPOSFacade sharedInstance];
     return self;
 }
 
@@ -302,9 +302,13 @@
 	if (self.customer != nil) {
 		NSMutableDictionary *cpy = [self.customer modelFromCustomer];
 		Customer *custCpy = [[[Customer alloc] initWithModel:cpy] autorelease];
-		[facade setCurrentCustomer:custCpy];
+        
+        
+        [orderCart bindCustomerToOrder:custCpy];
+        
 		[self setCustomer:nil];
-		CartItemsViewController *cart = [[CartItemsViewController alloc] init];
+		
+        CartItemsViewController *cart = [[CartItemsViewController alloc] init];
 		[[self navigationController] pushViewController:cart animated:TRUE];
 		[cart release];
 	}
