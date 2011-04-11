@@ -40,7 +40,8 @@
 	
 	UIBarButtonItem *editBarButton;
 	UIBarButtonItem *cancelBarButton;
-	UIBarButtonItem *commitEditsButton;
+	UIButton *commitEditsDeleteButton;
+	UIButton *commitEditsCloseButton;
 	
 	BOOL multiEditMode;
 	NSInteger countMarkedDelete;
@@ -54,7 +55,8 @@
 
 @property (nonatomic, retain) UIBarButtonItem *editBarButton;
 @property (nonatomic, retain) UIBarButtonItem *cancelBarButton;
-@property (nonatomic, retain) UIBarButtonItem *commitEditsButton;
+@property (nonatomic, retain) UIButton *commitEditsDeleteButton;
+@property (nonatomic, retain) UIButton *commitEditsCloseButton;
 
 @property (nonatomic, assign) BOOL multiEditMode;
 @property (nonatomic, assign) NSInteger countMarkDelete;

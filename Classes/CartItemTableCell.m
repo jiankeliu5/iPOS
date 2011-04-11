@@ -143,13 +143,13 @@
 	// Set up the hidden buttons, they will overlap initially but the rest of the cell
 	// will be re-arranged when we enter edit mode.
 	
-	UIImage *deleteCheckedImage = [UIImage imageNamed:@"IsSelectedRed.png"];
+	UIImage *deleteCheckedImage = [UIImage imageNamed:@"DeleteSelected.png"];
 	frame = CGRectMake(START_X, cy, deleteCheckedImage.size.width, deleteCheckedImage.size.height);
 	deleteCheckButton.frame = frame;
 	UIImage *imageForDelete = (self.deleteChecked) ? deleteCheckedImage : [UIImage imageNamed:@"NotSelected.png"];
 	[deleteCheckButton setImage:imageForDelete forState:UIControlStateNormal];
 	
-	UIImage *closeCheckedImage = [UIImage imageNamed:@"IsSelectedRed.png"];
+	UIImage *closeCheckedImage = [UIImage imageNamed:@"CloseSelected.png"];
 	frame = CGRectMake((START_X * 2.0f) + deleteCheckedImage.size.width, cy, closeCheckedImage.size.width, closeCheckedImage.size.height);
 	closeCheckButton.frame = frame;
 	UIImage *imageForClose = (self.closeChecked) ? closeCheckedImage : [UIImage imageNamed:@"NotSelected.png"];
@@ -222,7 +222,7 @@
 
 - (void) updateDeleteButtonState {
 	orderItem.shouldDelete = self.deleteChecked;
-	UIImage *checkImage = (self.deleteChecked) ? [UIImage imageNamed:@"IsSelectedRed.png"] : [UIImage imageNamed:@"NotSelected.png"];
+	UIImage *checkImage = (self.deleteChecked) ? [UIImage imageNamed:@"DeleteSelected.png"] : [UIImage imageNamed:@"NotSelected.png"];
 	[deleteCheckButton setImage:checkImage forState:UIControlStateNormal];
 	if (self.cellDelegate != nil && [self.cellDelegate respondsToSelector:@selector(cartItemCell:markForDelete:)]) {
 		[self.cellDelegate cartItemCell:self markForDelete:self.deleteChecked];
@@ -242,7 +242,7 @@
 
 - (void) updateCloseButtonState {
 	orderItem.shouldClose = self.closeChecked;
-	UIImage *checkImage = (self.closeChecked) ? [UIImage imageNamed:@"IsSelectedRed.png"] : [UIImage imageNamed:@"NotSelected.png"];
+	UIImage *checkImage = (self.closeChecked) ? [UIImage imageNamed:@"CloseSelected.png"] : [UIImage imageNamed:@"NotSelected.png"];
 	[closeCheckButton setImage:checkImage forState:UIControlStateNormal];
 	if (self.cellDelegate != nil && [self.cellDelegate respondsToSelector:@selector(cartItemCell:markForClose:)]) {
 		[self.cellDelegate cartItemCell:self markForClose:self.closeChecked];

@@ -64,7 +64,8 @@
 
 @synthesize editBarButton;
 @synthesize cancelBarButton;
-@synthesize commitEditsButton;
+@synthesize commitEditsDeleteButton;
+@synthesize commitEditsCloseButton;
 
 @synthesize multiEditMode;
 @synthesize countMarkDelete;
@@ -97,7 +98,8 @@
 	
 	[self setEditBarButton:nil];
 	[self setCancelBarButton:nil];
-	[self setCommitEditsButton:nil];
+	[self setCommitEditsDeleteButton:nil];
+	[self setCommitEditsCloseButton:nil];
 	
     [super dealloc];
 }
@@ -210,8 +212,30 @@
 	self.toolbarWithQuote = [[[NSArray alloc] initWithObjects:searchButton, tbFixed, custButton, tbFlex, quoteButton, nil] autorelease];
 	
 	// Edit mode toolbar
-	self.commitEditsButton = [[[UIBarButtonItem alloc] initWithTitle:@"Delete (0)" style:UIBarButtonItemStyleBordered target:self action:@selector(commitEdits:)] autorelease];
-	self.toolbarEditMode = [[[NSArray alloc] initWithObjects:tbFlex, self.commitEditsButton, tbFlex, nil] autorelease];
+	self.commitEditsDeleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	self.commitEditsDeleteButton.frame = CGRectMake(0.0f, 0.0f, 100.0f, 22.0f);
+	self.commitEditsDeleteButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+	self.commitEditsDeleteButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+	[self.commitEditsDeleteButton addTarget:self action:@selector(commitEdits:) forControlEvents:UIControlEventTouchUpInside];
+	UIImage *deleteBackground = [[UIImage imageNamed:@"EditConfirmDelete.png"] stretchableImageWithLeftCapWidth:12.0f topCapHeight:0.0f];
+	[self.commitEditsDeleteButton setBackgroundImage:deleteBackground forState:UIControlStateNormal];
+	self.commitEditsDeleteButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	self.commitEditsDeleteButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	self.commitEditsDeleteButton.titleLabel.text = @"Delete (0)";
+	UIBarButtonItem *deleteImageButton = [[[UIBarButtonItem alloc] initWithCustomView:self.commitEditsDeleteButton] autorelease];
+	
+	self.commitEditsCloseButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	self.commitEditsCloseButton.frame = CGRectMake(0.0f, 0.0f, 100.0f, 22.0f);
+	self.commitEditsCloseButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+	self.commitEditsCloseButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+	[self.commitEditsCloseButton addTarget:self action:@selector(commitEdits:) forControlEvents:UIControlEventTouchUpInside];
+	UIImage *closeBackground = [[UIImage imageNamed:@"EditConfirmClose.png"] stretchableImageWithLeftCapWidth:12.0f topCapHeight:0.0f];
+	[self.commitEditsCloseButton setBackgroundImage:closeBackground forState:UIControlStateNormal];
+	self.commitEditsCloseButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	self.commitEditsCloseButton.titleLabel.text = @"Close (0)";
+	UIBarButtonItem *closeImageButton = [[[UIBarButtonItem alloc] initWithCustomView:self.commitEditsCloseButton] autorelease];
+	
+	self.toolbarEditMode = [[[NSArray alloc] initWithObjects:tbFlex, deleteImageButton, closeImageButton, tbFlex, nil] autorelease];
 	
 	// Start with the basic toolbar.
 	[orderToolBar setItems:self.toolbarBasic];
@@ -460,7 +484,8 @@
 }
 
 - (void) updateSelectionCount {
-	self.commitEditsButton.title = [NSString stringWithFormat:@"Delete (%d)    Close (%d)", self.countMarkDelete, self.countMarkClose];
+	self.commitEditsDeleteButton.titleLabel.text = [NSString stringWithFormat:@"Delete (%d)", self.countMarkDelete];
+	self.commitEditsCloseButton.titleLabel.text = [NSString stringWithFormat:@"Close (%d)", self.countMarkClose];
 }
 
 #pragma mark -
