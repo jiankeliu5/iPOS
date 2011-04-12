@@ -42,6 +42,16 @@
 #define LOOKUP_SKU_HEIGHT 30.0f
 #define LOOKUP_SKU_FONT_SIZE 15.0f
 
+#define COMMIT_EDIT_BUTTON_WIDTH 240.0f
+#define COMMIT_EDIT_HEIGHT 22.0f
+#define COMMIT_BUTTON_FONT_SIZE 14.0f
+
+#define EDIT_HEADER_HEIGHT 22.0f
+#define EDIT_HEADER_CLOSE_LABEL_WIDTH 30.0f
+#define EDIT_HEADER_DELETE_LABEL_WIDTH 35.0f
+#define EDIT_HEADER_LABEL_X 5.0f
+#define EDIT_HEADER_FONT_SIZE 11.0f
+
 @interface CartItemsViewController()
 - (UILabel *) createOrderLabel:(NSString *)text withRect:(CGRect)rect andAlignment:(int)alignment;
 - (void) calculateOrder;
@@ -64,8 +74,10 @@
 
 @synthesize editBarButton;
 @synthesize cancelBarButton;
-@synthesize commitEditsDeleteButton;
-@synthesize commitEditsCloseButton;
+@synthesize commitEditsButton;
+@synthesize markDeleteLabel;
+@synthesize markCloseLabel;
+@synthesize editHeaderView;
 
 @synthesize multiEditMode;
 @synthesize countMarkDelete;
@@ -99,8 +111,10 @@
 	
 	[self setEditBarButton:nil];
 	[self setCancelBarButton:nil];
-	[self setCommitEditsDeleteButton:nil];
-	[self setCommitEditsCloseButton:nil];
+	[self setCommitEditsButton:nil];
+	[self setMarkCloseLabel:nil];
+	[self setMarkDeleteLabel:nil];
+	[self setEditHeaderView:nil];
 	
     [super dealloc];
 }
@@ -213,30 +227,31 @@
 	self.toolbarWithQuote = [[[NSArray alloc] initWithObjects:searchButton, tbFixed, custButton, tbFlex, quoteButton, nil] autorelease];
 	
 	// Edit mode toolbar
-	self.commitEditsDeleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	self.commitEditsDeleteButton.frame = CGRectMake(0.0f, 0.0f, 100.0f, 22.0f);
-	self.commitEditsDeleteButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-	self.commitEditsDeleteButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-	[self.commitEditsDeleteButton addTarget:self action:@selector(commitEdits:) forControlEvents:UIControlEventTouchUpInside];
-	UIImage *deleteBackground = [[UIImage imageNamed:@"EditConfirmDelete.png"] stretchableImageWithLeftCapWidth:12.0f topCapHeight:0.0f];
-	[self.commitEditsDeleteButton setBackgroundImage:deleteBackground forState:UIControlStateNormal];
-	self.commitEditsDeleteButton.titleLabel.textAlignment = UITextAlignmentCenter;
-	self.commitEditsDeleteButton.titleLabel.textAlignment = UITextAlignmentCenter;
-	self.commitEditsDeleteButton.titleLabel.text = @"Delete (0)";
-	UIBarButtonItem *deleteImageButton = [[[UIBarButtonItem alloc] initWithCustomView:self.commitEditsDeleteButton] autorelease];
+	UIView *customToolbarView = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, COMMIT_EDIT_BUTTON_WIDTH, COMMIT_EDIT_HEIGHT)] autorelease];
+	self.markDeleteLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, COMMIT_EDIT_BUTTON_WIDTH / 2.0f, COMMIT_EDIT_HEIGHT)] autorelease];
+	self.markDeleteLabel.textAlignment = UITextAlignmentCenter;
+	self.markDeleteLabel.textColor = [UIColor whiteColor];
+	self.markDeleteLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"EditConfirmDelete.png"]];
+	self.markDeleteLabel.font = [UIFont systemFontOfSize:COMMIT_BUTTON_FONT_SIZE];
+	self.markDeleteLabel.text = @"Delete (0)";
+	[customToolbarView addSubview:self.markDeleteLabel];
+
+	self.markCloseLabel = [[[UILabel alloc] initWithFrame:CGRectMake(COMMIT_EDIT_BUTTON_WIDTH / 2.0f, 0.0f, COMMIT_EDIT_BUTTON_WIDTH / 2.0f, COMMIT_EDIT_HEIGHT)] autorelease];
+	self.markCloseLabel.textAlignment = UITextAlignmentCenter;
+	self.markCloseLabel.textColor = [UIColor whiteColor];
+	self.markCloseLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"EditConfirmClose.png"]];
+	self.markCloseLabel.font = [UIFont systemFontOfSize:COMMIT_BUTTON_FONT_SIZE];
+	self.markCloseLabel.text = @"Close (0)";
+	[customToolbarView addSubview:self.markCloseLabel];
 	
-	self.commitEditsCloseButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	self.commitEditsCloseButton.frame = CGRectMake(0.0f, 0.0f, 100.0f, 22.0f);
-	self.commitEditsCloseButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-	self.commitEditsCloseButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-	[self.commitEditsCloseButton addTarget:self action:@selector(commitEdits:) forControlEvents:UIControlEventTouchUpInside];
-	UIImage *closeBackground = [[UIImage imageNamed:@"EditConfirmClose.png"] stretchableImageWithLeftCapWidth:12.0f topCapHeight:0.0f];
-	[self.commitEditsCloseButton setBackgroundImage:closeBackground forState:UIControlStateNormal];
-	self.commitEditsCloseButton.titleLabel.textAlignment = UITextAlignmentCenter;
-	self.commitEditsCloseButton.titleLabel.text = @"Close (0)";
-	UIBarButtonItem *closeImageButton = [[[UIBarButtonItem alloc] initWithCustomView:self.commitEditsCloseButton] autorelease];
+	self.commitEditsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	self.commitEditsButton.frame = CGRectMake(0.0f, 0.0f, COMMIT_EDIT_BUTTON_WIDTH, COMMIT_EDIT_HEIGHT);
+	[self.commitEditsButton addTarget:self action:@selector(commitEdits:) forControlEvents:UIControlEventTouchUpInside];
+	[customToolbarView addSubview:self.commitEditsButton];
 	
-	self.toolbarEditMode = [[[NSArray alloc] initWithObjects:tbFlex, deleteImageButton, closeImageButton, tbFlex, nil] autorelease];
+	UIBarButtonItem *customBarButton = [[[UIBarButtonItem alloc] initWithCustomView:customToolbarView] autorelease];
+	
+	self.toolbarEditMode = [[[NSArray alloc] initWithObjects:tbFlex, customBarButton, tbFlex, nil] autorelease];
 	
 	// Start with the basic toolbar.
 	[orderToolBar setItems:self.toolbarBasic];
@@ -249,6 +264,23 @@
 	// Button to cancel edit mode.
 	self.cancelBarButton = [[[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelEditMode:)] autorelease];
 	
+	self.editHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, EDIT_HEADER_HEIGHT)] autorelease];
+	UILabel *deleteLabel = [[[UILabel alloc] initWithFrame:CGRectMake(EDIT_HEADER_LABEL_X, 0.0f, EDIT_HEADER_DELETE_LABEL_WIDTH, EDIT_HEADER_HEIGHT)] autorelease];
+	deleteLabel.backgroundColor = [UIColor whiteColor];
+	deleteLabel.textColor = [UIColor blackColor];
+	deleteLabel.textAlignment = UITextAlignmentCenter;
+	deleteLabel.font = [UIFont boldSystemFontOfSize:EDIT_HEADER_FONT_SIZE];
+	deleteLabel.text = @"Delete";
+	[self.editHeaderView addSubview:deleteLabel];
+	
+	UILabel *closeLabel = [[[UILabel alloc] initWithFrame:CGRectMake((EDIT_HEADER_LABEL_X * 3.0f) + EDIT_HEADER_DELETE_LABEL_WIDTH, 0.0f, EDIT_HEADER_CLOSE_LABEL_WIDTH, EDIT_HEADER_HEIGHT)] autorelease];
+	closeLabel.backgroundColor = [UIColor whiteColor];
+	closeLabel.textColor = [UIColor blackColor];
+	closeLabel.textAlignment = UITextAlignmentCenter;
+	closeLabel.font = [UIFont boldSystemFontOfSize:EDIT_HEADER_FONT_SIZE];
+	closeLabel.text = @"Close";
+	[self.editHeaderView addSubview:closeLabel];
+
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -482,11 +514,14 @@
 	self.countMarkDelete = 0;
 	self.countMarkClose = 0;
 	[orderTable reloadData];
+	[self restoreDefaultToolbar];
+	[self updateSelectionCount];
+	[self.navigationItem setLeftBarButtonItem:self.editBarButton animated:NO];
 }
 
 - (void) updateSelectionCount {
-	self.commitEditsDeleteButton.titleLabel.text = [NSString stringWithFormat:@"Delete (%d)", self.countMarkDelete];
-	self.commitEditsCloseButton.titleLabel.text = [NSString stringWithFormat:@"Close (%d)", self.countMarkClose];
+	self.markDeleteLabel.text = [NSString stringWithFormat:@"Delete (%d)", self.countMarkDelete];
+	self.markCloseLabel.text = [NSString stringWithFormat:@"Close (%d)", self.countMarkClose];
 }
 
 #pragma mark -
@@ -544,8 +579,19 @@
 	return ([orderCart getOrder] == nil) ? 0 : [[[orderCart getOrder] getOrderItems] count];
 }
 
-- (NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+	if (self.multiEditMode && section == 0) {
+		return self.editHeaderView;
+	}
 	return nil;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+	if (self.multiEditMode && section == 0) {
+		return EDIT_HEADER_HEIGHT;
+	}
+	return 0.0f;
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
