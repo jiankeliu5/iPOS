@@ -40,9 +40,13 @@
 
 -(id) initWithItem: (ProductItem *) productItem AndQuantity: (NSDecimalNumber *) productQuantity;
 
+- (NSNumber *) getQuantityInBoxes;
+- (NSNumber *) getPiecesPerBox;
+
 - (void) setStatusToClosed;
 - (void) setStatusToOpen;
 
 - (BOOL) isClosed;
+- (BOOL) allowClose;
 
 @end

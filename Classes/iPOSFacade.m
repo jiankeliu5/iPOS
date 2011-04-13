@@ -106,7 +106,7 @@ static iPOSFacade *facade = nil;
 }
 
 -(BOOL) isProductItemAvailable: (NSNumber *) itemId forQuantity: (NSDecimalNumber *) quantity {
-    return YES;
+    return [inventoryService isProductItemAvailable:itemId forQuantity:quantity withSession:sessionInfo];;
 }
 
 @end

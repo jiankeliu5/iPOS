@@ -182,6 +182,7 @@
 		D61B635D132842970030E87E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D698A47E1325E50E00371985 /* OpenGLES.framework */; };
 		D6334A361331CA25000DEDBB /* BasicAppTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D6334A351331CA25000DEDBB /* BasicAppTestCase.m */; };
 		D6334A571331CADB000DEDBB /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
+		D64783731354AE240017178D /* OrderItemCalculationTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D64783721354AE240017178D /* OrderItemCalculationTestCase.m */; };
 		D64E5AE8130262B0002EAD70 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 		D64E5B8813026566002EAD70 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
 		D65B25C71331C8B60052AEE2 /* iPosIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B2F131B4300000210C7 /* iPosIcon.png */; };
@@ -643,6 +644,7 @@
 		D6334A2E1331C9CE000DEDBB /* AppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AppTests-Info.plist"; sourceTree = "<group>"; };
 		D6334A341331CA25000DEDBB /* BasicAppTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicAppTestCase.h; sourceTree = "<group>"; };
 		D6334A351331CA25000DEDBB /* BasicAppTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicAppTestCase.m; sourceTree = "<group>"; };
+		D64783721354AE240017178D /* OrderItemCalculationTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderItemCalculationTestCase.m; sourceTree = "<group>"; };
 		D64B7E1312F9D7EA006AB141 /* UnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D64B7E1412F9D7EA006AB141 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
 		D64B7E3412F9D8FD006AB141 /* SampleUnitTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleUnitTestCase.h; sourceTree = "<group>"; };
@@ -1344,6 +1346,7 @@
 				D64B7E3512F9D8FD006AB141 /* SampleUnitTestCase.m */,
 				D656013C130B71B4000968BA /* iPosFacadeWithMocksTestCase.h */,
 				D656013D130B71B4000968BA /* iPosFacadeWithMocksTestCase.m */,
+				D64783721354AE240017178D /* OrderItemCalculationTestCase.m */,
 			);
 			name = UnitTests;
 			sourceTree = "<group>";
@@ -2013,6 +2016,7 @@
 				D6B195B8133CEEEA004C4FD1 /* CustomerOxmTestCase.m in Sources */,
 				D6B195BA133CEF05004C4FD1 /* ProductItemOxmTestCase.m in Sources */,
 				D6B195BC133CEF1C004C4FD1 /* LoginOxmTestCase.m in Sources */,
+				D64783731354AE240017178D /* OrderItemCalculationTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

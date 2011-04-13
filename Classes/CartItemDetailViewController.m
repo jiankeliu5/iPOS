@@ -6,6 +6,8 @@
 //  Copyright 2011 NA. All rights reserved.
 //
 
+#import "AlertUtils.h"
+
 #import "CartItemDetailViewController.h"
 #import "UIViewController+ViewControllerLayout.h"
 #import "NSString+StringFormatters.h"
@@ -21,9 +23,11 @@
 #define ITEM_TOTAL_WIDTH 160.0f
 #define BUTTON_HEIGHT 40.0f
 #define BUTTON_WIDTH 212.0f
+#define BUTTON_SPACE 10.0f
 
 @interface CartItemDetailViewController()
 - (void) handleDeleteButton:(id)sender;
+- (void) handleOpenButton:(id)sender;
 - (void) handleCloseButton:(id)sender;
 - (void) handlePriceButton:(id)sender;
 - (void) updateViewLayout;
@@ -134,21 +138,30 @@
 	quantityField.textColor = [UIColor blackColor];
 	quantityField.borderStyle = UITextBorderStyleRoundedRect;
 	quantityField.textAlignment = UITextAlignmentCenter;
-	quantityField.clearsOnBeginEditing = NO;
-	quantityField.tagName = @"ItemQuantity";
-	quantityField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-	quantityField.returnKeyType = UIReturnKeyGo;
-	quantityField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-	[self addDoneToolbarForTextField:quantityField];
-	// Set auxiliary view for keyboard when it is displayed for this text field.
-	UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)] autorelease];
-	keyboardToolbar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
-	keyboardToolbar.barStyle = UIBarStyleBlackTranslucent;
-	UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissKeyboard:)] autorelease];
-	UIBarButtonItem *kbToolbarFlex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
-    NSArray *kbToolbarItems = [[[NSArray alloc] initWithObjects:doneButton, kbToolbarFlex, nil] autorelease];
-	[keyboardToolbar setItems:kbToolbarItems];
-	[quantityField setInputAccessoryView:keyboardToolbar];
+    quantityField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    
+    if (orderItem && [orderItem isClosed]) {
+        quantityField.enabled = NO;
+    } else {
+        // Enable editing
+        quantityField.clearsOnBeginEditing = NO;
+        quantityField.tagName = @"ItemQuantity";
+        
+        quantityField.returnKeyType = UIReturnKeyGo;
+        quantityField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+        [self addDoneToolbarForTextField:quantityField];
+        // Set auxiliary view for keyboard when it is displayed for this text field.
+        UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)] autorelease];
+        keyboardToolbar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
+        keyboardToolbar.barStyle = UIBarStyleBlackTranslucent;
+        UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissKeyboard:)] autorelease];
+        UIBarButtonItem *kbToolbarFlex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+        NSArray *kbToolbarItems = [[[NSArray alloc] initWithObjects:doneButton, kbToolbarFlex, nil] autorelease];
+        [keyboardToolbar setItems:kbToolbarItems];
+        [quantityField setInputAccessoryView:keyboardToolbar];
+    }
+    
+    // Is it editable
 	[orderItemView addSubview:quantityField];
 	[quantityField release];
 	
@@ -180,7 +193,39 @@
 	[self.view addSubview:deleteButton];
 	[deleteButton release];
 	
-	// TODO: add close line and price button when we support them
+    // Request to re-open item or close and adjust price
+    if (orderItem && [orderItem isClosed]) {
+        CGFloat openBtnY = deleteButton.center.y + BUTTON_HEIGHT/2 + BUTTON_SPACE;
+        openButton = [[MOGlassButton alloc] initWithFrame:CGRectMake(floorf((self.view.bounds.size.width - BUTTON_WIDTH) / 2.0f), openBtnY, BUTTON_WIDTH, BUTTON_HEIGHT)];
+        [openButton setupAsBlackButton];
+        openButton.titleLabel.textAlignment = UITextAlignmentCenter;
+        [openButton setTitle:@"Open" forState:UIControlStateNormal];
+        [self.view addSubview:openButton];
+        [openButton release];
+    } else {
+        CGFloat closeBtnY = deleteButton.center.y + BUTTON_HEIGHT/2 + BUTTON_SPACE;
+        closeLineButton = [[MOGlassButton alloc] initWithFrame:CGRectMake(floorf((self.view.bounds.size.width - BUTTON_WIDTH) / 2.0f), closeBtnY, BUTTON_WIDTH, BUTTON_HEIGHT)];
+        [closeLineButton setupAsGreenButton];
+        closeLineButton.titleLabel.textAlignment = UITextAlignmentCenter;
+        [closeLineButton setTitle:@"Close Line" forState:UIControlStateNormal];
+        
+        // Is the close line allowed with current quantity or not ?
+        if (orderItem && ![orderItem allowClose]) {
+            closeLineButton.enabled = NO;
+        }
+        
+        [self.view addSubview:closeLineButton];
+        [closeLineButton release];
+        
+        CGFloat priceBtnY = closeLineButton.center.y + BUTTON_HEIGHT/2 + BUTTON_SPACE;
+        priceButton = [[MOGlassButton alloc] initWithFrame:CGRectMake(floorf((self.view.bounds.size.width - BUTTON_WIDTH) / 2.0f), priceBtnY, BUTTON_WIDTH, BUTTON_HEIGHT)];
+        [priceButton setupAsBlueButton];
+        priceButton.titleLabel.textAlignment = UITextAlignmentCenter;
+        [priceButton setTitle:@"Price" forState:UIControlStateNormal];
+        
+        [self.view addSubview:priceButton];
+        [priceButton release];
+    }
 	
 	
 }
@@ -196,8 +241,15 @@
 	
 	self.delegate = self;
 	quantityField.delegate = self;
+    
 	[deleteButton addTarget:self action:@selector(handleDeleteButton:) forControlEvents:UIControlEventTouchUpInside];
-	
+    
+    if (orderItem && [orderItem isClosed]) {
+        [openButton addTarget:self action:@selector(handleOpenButton:) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [closeLineButton addTarget:self action:@selector(handleCloseButton:) forControlEvents:UIControlEventTouchUpInside];
+        [priceButton addTarget:self action:@selector(handlePriceButton:) forControlEvents:UIControlEventTouchUpInside];
+	}
 }
 
 - (void)viewDidUnload {
@@ -240,6 +292,15 @@
 		NSDecimalNumber *newQuantity = [NSDecimalNumber decimalNumberWithString:textField.text];
 		if (newQuantity != nil) {
 			self.orderItem.quantity = newQuantity;
+            
+            // Can I still attempt a close of item based on current item availability when the item was retrieved
+            // for the order 
+            if ([orderItem allowClose] && closeLineButton) {
+                closeLineButton.enabled = YES;
+            } else {
+                closeLineButton.enabled = NO;
+            }
+            
 			[self updateViewLayout];
 		}
 	}
@@ -247,17 +308,27 @@
 
 #pragma mark -
 #pragma mark UIButton handlers
-- (void) handleCloseButton:(id)sender {
+- (void) handleOpenButton:(id)sender {
+    [orderItem setStatusToOpen];
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
+- (void) handleCloseButton:(id)sender {
+    if (![orderCart closeItem:orderItem]) {
+        [AlertUtils showModalAlertMessage:@"Cannot close line.  Stock not available."];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void) handleDeleteButton:(id)sender {
 	[orderCart removeItem:self.orderItem];
-    
 	[self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) handlePriceButton:(id)sender {
+    [AlertUtils showModalAlertMessage:@"Need modal controller"];
+    // [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark -

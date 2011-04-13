@@ -30,6 +30,7 @@
 	
 	MOGlassButton *deleteButton;
 	MOGlassButton *closeLineButton;
+    MOGlassButton *openButton;
 	MOGlassButton *priceButton;
 	
 }

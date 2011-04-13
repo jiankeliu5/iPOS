@@ -80,7 +80,7 @@
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     
     [request setValidatesSecureCertificate:NO];
-    [request setTimeOutSeconds:30];
+    [request setTimeOutSeconds:10];
     [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
     
     [request startSynchronous];
@@ -97,7 +97,7 @@
     return item;
 }
 
--(BOOL) isProductItemAvailable:  (NSString *) itemId forQuantity: (NSDecimal *) quantity withSession:  (SessionInfo *) sessionInfo {
+-(BOOL) isProductItemAvailable:  (NSNumber *) itemId forQuantity: (NSDecimalNumber *) quantity withSession:  (SessionInfo *) sessionInfo {
     if (sessionInfo == nil) {
         return false;
     }
@@ -107,21 +107,21 @@
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     
     [request setValidatesSecureCertificate:NO];
+    [request setTimeOutSeconds:10];
     [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
     
     [request startSynchronous];
     
-    NSError *error = [request error];
-    
-    if (error) {
-        return NO;
-    }
+    NSArray *requestErrors = [request validateAsXmlContent];
+    if ([requestErrors count] > 0) {
+        return NO;   
+    }    
     
     // Create an XML document parser
     NSString *response = [request responseString];
     BOOL isAvailable =  [POSOxmUtils isXmlResultTrue:response];
         
-    // Return resul
+    // Return result
     return isAvailable;
 }
 

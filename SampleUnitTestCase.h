@@ -24,6 +24,7 @@
 #if USE_APPLICATION_UNIT_TEST
 - (void) testMath;              // simple standalone test
 - (void) testBankersRounding;
+- (void) testDecimalCompare;
 #else
 #endif
 

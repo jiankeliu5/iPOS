@@ -31,6 +31,14 @@
 
 }
 
+- (void) testDecimalCompare {
+    NSDecimalNumber *value = [NSDecimalNumber decimalNumberWithString:@"1.00000"];
+    
+    NSComparisonResult result = [value compare: [NSDecimalNumber decimalNumberWithString:@"1.0"]];
+    
+    STAssertEquals(result, NSOrderedSame, @"The values should be equal");
+
+}
 
 
 

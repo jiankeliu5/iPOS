@@ -53,9 +53,11 @@
 
 - (void)setupAsGreenButton;
 - (void)setupAsRedButton;
+- (void)setupAsBlueButton;
 - (void)setupAsBlackButton;
 - (void)setupAsSmallGreenButton;
 - (void)setupAsSmallRedButton;
+- (void)setupAsSmallBlueButton;
 - (void)setupAsSmallBlackButton;
 
 @end
