@@ -45,7 +45,7 @@
 	//[[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
 	
 	facade = [iPOSFacade sharedInstance];
-	
+	orderCart = [OrderCart sharedInstance];
     return self;
 }
 
@@ -141,6 +141,9 @@
     [facade logout]; 
     
     [linea disconnect];
+    
+    // Clear out the order cart
+    [orderCart clearCart];
 	
 	CGRect viewBounds = self.view.bounds;
 	

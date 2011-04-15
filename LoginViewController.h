@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "iPOSFacade.h"
+#import "OrderCart.h"
 #import "LineaSDK.h"
 
 @interface LoginViewController : UIViewController <LineaDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
@@ -25,6 +26,7 @@
 	NSIndexPath *topRowBeforeKeyboardShown;
 	
    	iPOSFacade *facade;
+    OrderCart *orderCart;
     
     Linea *linea;
 }

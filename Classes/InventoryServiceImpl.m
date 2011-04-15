@@ -15,6 +15,12 @@
 #import "POSOxmUtils.h"
 #import "ProductItemXmlMarshaller.h"
 
+@interface InventoryServiceImpl()
+
+- (ASIHTTPRequest *) startGetRequest: (NSString *) urlString withSession: (SessionInfo *) sessionInfo;
+
+@end
+
 @implementation InventoryServiceImpl
 
 @synthesize baseUrl, posInventoryMgmtUri;
@@ -74,21 +80,12 @@
     if (sessionInfo == nil) {
         return nil;
     }
-        
-    // Make Synchronous HTTP request
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@", baseUrl, posInventoryMgmtUri, sessionInfo.storeId, itemSku]];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     
-    [request setValidatesSecureCertificate:NO];
-    [request setTimeOutSeconds:10];
-    [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
-    
-    [request startSynchronous];
-    
+    ASIHTTPRequest *request =  [self startGetRequest:[NSString stringWithFormat:@"%@/%@/%@/%@", baseUrl, posInventoryMgmtUri, sessionInfo.storeId, itemSku] withSession:sessionInfo];
     NSArray *requestErrors = [request validateAsXmlContent];
     if ([requestErrors count] > 0) {
-        return nil;   
-    }
+        return NO;   
+    } 
     
     // Create an XML document parser
     NSString *response = [request responseString];
@@ -99,24 +96,15 @@
 
 -(BOOL) isProductItemAvailable:  (NSNumber *) itemId forQuantity: (NSDecimalNumber *) quantity withSession:  (SessionInfo *) sessionInfo {
     if (sessionInfo == nil) {
-        return false;
+        return NO;
     }
     
-    // Make Synchronous HTTP request
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/availability/%@/%@/%@", baseUrl, posInventoryMgmtUri,sessionInfo.storeId, itemId, quantity]];
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    
-    [request setValidatesSecureCertificate:NO];
-    [request setTimeOutSeconds:10];
-    [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
-    
-    [request startSynchronous];
-    
+    ASIHTTPRequest *request =  [self startGetRequest:[NSString stringWithFormat:@"%@/%@/availability/%@/%@/%@", baseUrl, posInventoryMgmtUri,sessionInfo.storeId, itemId, quantity] withSession:sessionInfo];
     NSArray *requestErrors = [request validateAsXmlContent];
     if ([requestErrors count] > 0) {
         return NO;   
-    }    
-    
+    } 
+        
     // Create an XML document parser
     NSString *response = [request responseString];
     BOOL isAvailable =  [POSOxmUtils isXmlResultTrue:response];
@@ -125,13 +113,53 @@
     return isAvailable;
 }
 
-- (void) adjustSellingPriceFor:(OrderItem *)orderItem withCustomer:(Customer *)customer {
-    //TODO:  Implement this method
+- (BOOL) adjustSellingPriceFor:(OrderItem *)orderItem withCustomer:(Customer *)customer withSession: (SessionInfo *) sessionInfo {
+    if (sessionInfo == nil || orderItem == nil || customer == nil) {
+        return NO;
+    }
+    
+    // If the customer is a retail customer, selling price is retail price
+    if ([customer isRetailCustomer]) {
+        orderItem.sellingPrice = [orderItem.item.retailPrice copy];
+        } else {
+        ASIHTTPRequest *request =  [self startGetRequest:[NSString stringWithFormat:@"%@/%@/customerSellingPrice/%@/%@/%@", 
+                                                                baseUrl, posInventoryMgmtUri, customer.priceLevelId, orderItem.item.priceGroupId, orderItem.item.retailPrice] withSession:sessionInfo];
+        NSArray *requestErrors = [request validateAsXmlContent];
+        if ([requestErrors count] > 0) {
+            return NO;   
+        } 
+            
+        // Parse the result
+        NSDecimalNumber *sellingPrice = [POSOxmUtils parseAsDecimal:[request responseString]];
+        
+        if (sellingPrice) {
+            orderItem.sellingPrice = sellingPrice;
+        }
+    }
+    return YES;
 }
 
 - (BOOL) adjustSellingPriceFor: (OrderItem *) orderItem withDiscountAmount: (NSDecimalNumber *) discountAmount managerApproval: (ManagerInfo *) managerApprover withSession: (SessionInfo *) sessionInfo {
     
     // TODO: Implement this method.  Calculate selling price from discount amt
-    return true;
+    return YES;
 }
+
+#pragma mark -
+#pragma mark Private Methods
+- (ASIHTTPRequest *) startGetRequest: (NSString *) urlString withSession: (SessionInfo *) sessionInfo {
+    // Make Synchronous HTTP request
+    NSURL *url = [NSURL URLWithString:urlString];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    
+    [request setValidatesSecureCertificate:NO];
+    [request setTimeOutSeconds:10];
+    [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
+    
+    [request startSynchronous];
+    
+    return request;
+}
+
+
 @end

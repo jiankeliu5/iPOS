@@ -25,5 +25,6 @@
 + (NSString *) replaceInXmlTemplate: (NSString *) template parameter: (NSString *) parameter withValue: (NSString *) value; 
 
 + (BOOL) isXmlResultTrue: (NSString *) xmlString;
++ (NSDecimalNumber *) parseAsDecimal: (NSString *) xmlString;
 
 @end

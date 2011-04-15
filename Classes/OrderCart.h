@@ -20,6 +20,7 @@
 
 #pragma mark -
 #pragma mark Accessors
+- (void) clearCart;
 - (Order *) getOrder;
 - (Customer *) getCustomerForOrder;
 

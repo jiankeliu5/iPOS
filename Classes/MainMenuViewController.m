@@ -322,6 +322,10 @@
 	ProductItem *item = [addItemView productItem];
     
     [orderCart addItem:item withQuantity:quantity];
+    if ([orderCart getOrder].errorList && [[orderCart getOrder].errorList count] > 0) {
+        [AlertUtils showModalAlertForErrors:[orderCart getOrder].errorList];
+        return;
+    }
     
     [addItemView removeFromSuperview];
 

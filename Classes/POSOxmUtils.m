@@ -149,4 +149,13 @@
     return isTrue;    
 }
 
++ (NSDecimalNumber *) parseAsDecimal:(NSString *)xmlString {
+    // Create an XML document parser
+    CXMLDocument *xmlParser = [[[CXMLDocument alloc] initWithXMLString:xmlString options:0 error:nil] autorelease];
+    CXMLElement *root = [xmlParser rootElement];
+    
+    NSDecimalNumber *decimalNum = [NSDecimalNumber decimalNumberWithString:[root stringValue]];
+    return decimalNum;
+}
+
 @end

@@ -53,7 +53,7 @@
 
 -(BOOL) isProductItemAvailable: (NSNumber *) itemId forQuantity: (NSDecimalNumber *) quantity;
 
-- (void) adjustSellingPriceFor: (OrderItem *) orderItem withCustomer: (Customer *) customer;
+- (BOOL) adjustSellingPriceFor: (OrderItem *) orderItem withCustomer: (Customer *) customer;
 - (BOOL) adjustSellingPriceFor: (OrderItem *) orderItem withDiscountAmount: (NSDecimalNumber *) discountAmount managerApproval: (ManagerInfo *) managerApprover;
 
 #pragma mark -

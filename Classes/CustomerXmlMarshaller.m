@@ -123,6 +123,7 @@ static NSString * const CUSTOMER_XML = @""
         customer.customerId = [root elementNumberValue:@"CustomerID"];
         customer.customerType = [root elementStringValue:@"CustomerType"];
         customer.customerTypeId = [root elementNumberValue:@"CustomerTypeID"];
+        customer.priceLevelId = [root elementNumberValue:@"PriceLevelID"];
         customer.phoneNumber = [root elementStringValue:@"Phone1"];
         customer.emailAddress = [root elementStringValue:@"Email"];
         customer.taxExempt = [root elementBoolValue:@"TaxExempt"];

@@ -115,8 +115,8 @@ static iPOSFacade *facade = nil;
     return [self.inventoryService isProductItemAvailable:itemId forQuantity:quantity withSession:sessionInfo];;
 }
 
-- (void) adjustSellingPriceFor:(OrderItem *)orderItem withCustomer:(Customer *)customer {
-    [self.inventoryService adjustSellingPriceFor:orderItem withCustomer:customer];
+- (BOOL) adjustSellingPriceFor:(OrderItem *)orderItem withCustomer:(Customer *)customer {
+    return [self.inventoryService adjustSellingPriceFor:orderItem withCustomer:customer withSession:sessionInfo];
 }
 
 - (BOOL) adjustSellingPriceFor: (OrderItem *) orderItem withDiscountAmount: (NSDecimalNumber *) discountAmount managerApproval: (ManagerInfo *) managerApprover {

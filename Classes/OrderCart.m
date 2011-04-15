@@ -46,15 +46,20 @@ static OrderCart *cart = nil;
 }
 
 -(void) dealloc {
-    if (orderInCart != nil) {
-        [orderInCart release];
-    }
-    
+    [orderInCart release];
     [super dealloc];
 }
 
 #pragma mark -
 #pragma mark Accessor Methods
+-(void) clearCart {
+    if (orderInCart != nil) {
+        [orderInCart release];
+    }
+    
+    // Create a new blank order
+    orderInCart = [[Order alloc] init];
+}
 -(Order *) getOrder {
     if (orderInCart == nil) {
         orderInCart = [[Order alloc] init];
@@ -73,12 +78,45 @@ static OrderCart *cart = nil;
     Order *order = [self getOrder];
     
     order.customer = customer;
+    
+    // We will need to do a selling price adjustment for current items in the order when binding a customer to the order
+    NSArray *orderItemList = [order getOrderItems];
+    
+    for (OrderItem *orderItem in orderItemList) {
+        if (![facade adjustSellingPriceFor:orderItem withCustomer:order.customer]) {
+            // Attach error to customer
+            Error *error = [[[Error alloc] init] autorelease];
+            error.errorId = @"SRV_ERR_ADJ_PRICE";
+            error.message = [NSString stringWithFormat: @"Could not set selling price for item in cart with sku '%@'.  Possible server error.", orderItem.item.sku];
+            
+            [customer addError:error];
+            break;
+        };
+    }
+    
 }
 
 - (void) addItem:  (ProductItem *) item withQuantity: (NSDecimalNumber *) quantity {
     Order *order = [self getOrder];
     
     [order addItemToOrder:item withQuantity:quantity];
+    
+    // We may need to adjust the selling price of the item based on the customer
+    if (order.customer) {
+        OrderItem *orderItem = [[order getOrderItems] lastObject];
+        if (![facade adjustSellingPriceFor:orderItem withCustomer:order.customer]) {
+            //attach error to order
+            Error *error = [[[Error alloc] init] autorelease];
+            error.errorId = @"SRV_ERR_ADJ_PRICE";
+            error.message = [NSString stringWithFormat: @"Could not set selling price for item with sku '%@'.  Possible server error.", orderItem.item.sku];
+            
+            [order addError:error];
+            
+            // Remove the order item since we could not set its selling price
+            [order removeItemFromOrder:orderItem];
+            return;
+        };
+    }
 }
 
 - (void) removeItem:(OrderItem *)orderItem {

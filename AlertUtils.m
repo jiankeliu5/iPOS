@@ -7,6 +7,7 @@
 //
 
 #import "AlertUtils.h"
+#import "Error.h"
 
 #pragma mark -
 #pragma mark Private Interface
@@ -20,6 +21,17 @@
 	UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"iPOS" message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];	
 	[alert show];
 	[alert release];
+}
+
++ (void) showModalAlertForErrors:(NSArray *)errorList {
+    NSMutableString *errMsg = [[[NSMutableString alloc] init] autorelease];
+    [errMsg appendString:@"Error in new order quote!"];
+    for (Error *e in errorList) {
+        NSLog(@"Error Id: %d %@", [e errorId], [e message]);
+        [errMsg appendFormat:@"\nError (%d): %@", [e errorId], [e message]];
+    }
+    
+    [AlertUtils showModalAlertMessage:errMsg];
 }
 
 + (UIAlertView *) showProgressAlertMessage:(NSString*)message {

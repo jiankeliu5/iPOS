@@ -136,10 +136,8 @@ static int const ORDER_TYPE_CLOSED = 3;
         orderItem.lineNumber = [NSNumber numberWithInt: [orderItemList count]];
         
         // Set the selling price to the retail price
-        // Default the status to 1
-        // TODO: This method will change to add to order with quantity and price.  
-        // TODO: Do we still default the status
-        orderItem.statusId = [NSNumber numberWithInt:1];
+        // Default the status to 1 (Open)
+        [orderItem setStatusToOpen];
         orderItem.sellingPrice = [item.retailPrice copy];    
         
     }

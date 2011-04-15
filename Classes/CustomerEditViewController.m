@@ -183,13 +183,17 @@
         
         // Bind the customer to the order cart
 		[orderCart bindCustomerToOrder:custCopy];
-		
-		// Clear the saved customer entry in the search customer view controller to keep it
+        // Clear the saved customer entry in the search customer view controller to keep it
 		// from showing if we navigate back.
 		CustomerViewController *custViewController = [self findCustomerViewController];
 		if (custViewController != nil) {
 			[custViewController setCustomer:nil];
 		}
+        
+        if (custCopy.errorList && [custCopy.errorList count] > 0) {
+            [AlertUtils showModalAlertForErrors:custCopy.errorList];
+            return;
+        }
 		
 		// Going to pop this controller while pushing to the cart view.
 		// This should allow us to go back to the initial customer search

@@ -550,14 +550,8 @@
             
 			// Send off the order as a quote.
 			[facade newQuote:order];
-			if ( ([order errorList] != nil) && ([[order errorList] count] > 0) ) {
-				NSMutableString *errMsg = [[[NSMutableString alloc] init] autorelease];
-				[errMsg appendString:@"Error in new order quote!"];
-				for (Error *e in [order errorList]) {
-					NSLog(@"Error Id: %d %@", [e errorId], [e message]);
-					[errMsg appendFormat:@"\nError (%d): %@", [e errorId], [e message]];
-				}
-				[AlertUtils showModalAlertMessage:errMsg];
+			if (order.errorList != nil && [order.errorList count] > 0) {
+                [AlertUtils showModalAlertForErrors:order.errorList];
 			} else {
 				// Go clear back to the login screen.
                 [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Quote %@ was successfully created.", order.orderId]];
@@ -708,6 +702,10 @@
 	ProductItem *item = [addItemView productItem];
 	
     [orderCart addItem:item withQuantity:quantity];
+    if ([orderCart getOrder].errorList && [[orderCart getOrder].errorList count] > 0) {
+        [AlertUtils showModalAlertForErrors:[orderCart getOrder].errorList];
+        return;
+    }
 	
 	[addItemView removeFromSuperview];
 	

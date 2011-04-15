@@ -12,7 +12,7 @@
 
 @implementation Customer
 
-@synthesize customerId, customerType, customerTypeId, firstName, lastName, phoneNumber, emailAddress, store, address, taxExempt;
+@synthesize customerId, customerType, customerTypeId, priceLevelId, firstName, lastName, phoneNumber, emailAddress, store, address, taxExempt;
 
 #pragma mark Initializer and Memory Mgmt
 -(id) init {
@@ -36,6 +36,7 @@
 	[self setCustomerId:[aModel valueForKey:@"customerId"]];
 	[self setCustomerType:[aModel valueForKey:@"customerType"]];
 	[self setCustomerTypeId:[aModel valueForKey:@"customerTypeId"]];
+    [self setPriceLevelId:[aModel valueForKey:@"priceLevelId"]];
 	[self setFirstName:[aModel valueForKey:@"firstName"]];
 	[self setLastName:[aModel valueForKey:@"lastName"]];
 	[self setPhoneNumber:[aModel valueForKey:@"phoneNumber"]];
@@ -79,6 +80,7 @@
 	[aModel setValue:[self customerId] forKey:@"customerId"];
 	[aModel setValue:[self customerType] forKey:@"customerType"];
 	[aModel setValue:[self customerTypeId] forKey:@"customerTypeId"];
+    [aModel setValue:[self priceLevelId] forKey:@"priceLevelId"];
 	[aModel setValue:[self firstName] forKey:@"firstName"];
 	[aModel setValue:[self lastName] forKey:@"lastName"];
 	[aModel setValue:[self phoneNumber] forKey:@"phoneNumber"];
@@ -113,6 +115,7 @@
 - (void) dealloc {
     [customerType release];
     [customerTypeId release];
+    [priceLevelId release];
     [firstName release];
     [lastName release];
     [phoneNumber release];
@@ -127,6 +130,8 @@
     [super dealloc];
 }
 
+#pragma mark -
+#pragma mark Methods
 - (BOOL) isValidCustomer:(BOOL)newCustomer {
 	
 	if (newCustomer == YES && self.customerId != nil) {
@@ -291,6 +296,10 @@
 		if (mergeCustomer.customerTypeId && ![mergeCustomer.customerTypeId isEqualToNumber:[NSNumber numberWithInt:0]]) {
 			self.customerTypeId = mergeCustomer.customerTypeId;
 		}
+        if (mergeCustomer.priceLevelId && ![mergeCustomer.priceLevelId isEqualToNumber:[NSNumber numberWithInt:0]]) {
+			self.priceLevelId = mergeCustomer.priceLevelId;
+		}
+        
 		self.taxExempt = mergeCustomer.taxExempt;
         
         // Merge Address information
@@ -328,6 +337,13 @@
         }
     }    
 }
+
+#pragma mark -
+#pragma mark Accessors
+- (BOOL) isRetailCustomer {
+    return [customerTypeId isEqualToNumber:[NSNumber numberWithInt:1]];
+}
+
 #pragma mark -
 #pragma mark Customer XML Marshalling
 + (Customer *) fromXml:(NSString *)xmlString {

@@ -14,6 +14,7 @@
 }
 
 + (void) showModalAlertMessage:(NSString*)message;
++ (void) showModalAlertForErrors: (NSArray *) errorList;
 
 + (UIAlertView *) showProgressAlertMessage:(NSString*)message;
 

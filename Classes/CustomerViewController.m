@@ -305,9 +305,14 @@
         
         
         [orderCart bindCustomerToOrder:custCpy];
+        [self setCustomer:nil];
         
-		[self setCustomer:nil];
-		
+        // There may have been issues binding the customer
+        if (custCpy.errorList && [custCpy.errorList count] > 0) {
+            [AlertUtils showModalAlertForErrors:custCpy.errorList];
+            return;
+        }
+        
         CartItemsViewController *cart = [[CartItemsViewController alloc] init];
 		[[self navigationController] pushViewController:cart animated:TRUE];
 		[cart release];

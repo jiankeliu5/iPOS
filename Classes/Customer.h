@@ -17,6 +17,7 @@
     NSNumber *customerId;
     NSString *customerType;
     NSNumber *customerTypeId;
+    NSNumber *priceLevelId;
     
     NSString *firstName;
     NSString *lastName;
@@ -32,6 +33,7 @@
 @property (nonatomic, retain) NSNumber *customerId;
 @property (nonatomic, retain) NSString *customerType;
 @property (nonatomic, retain) NSNumber *customerTypeId;
+@property (nonatomic, retain) NSNumber *priceLevelId;
 
 @property (nonatomic, retain) NSString *firstName;
 @property (nonatomic, retain) NSString *lastName;
@@ -48,6 +50,10 @@
 - (BOOL) isValidCustomer:(BOOL)newCustomer;
 
 - (void) mergeWith: (Customer *) mergeCustomer;
+
+#pragma mark -
+#pragma mark Accessors
+- (BOOL) isRetailCustomer;
 
 #pragma mark -
 #pragma mark Marshalling methods

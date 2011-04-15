@@ -78,8 +78,8 @@
     return YES;
 }
 
-- (void) adjustSellingPriceFor:(OrderItem *)orderItem withCustomer:(Customer *)customer {
-    
+- (BOOL) adjustSellingPriceFor:(OrderItem *)orderItem withCustomer:(Customer *)customer withSession: (SessionInfo *) sessionInfo {
+    return YES;
 }
 
 - (BOOL) adjustSellingPriceFor: (OrderItem *) orderItem withDiscountAmount: (NSDecimalNumber *) discountAmount managerApproval: (ManagerInfo *) managerApprover withSession: (SessionInfo *) sessionInfo {
