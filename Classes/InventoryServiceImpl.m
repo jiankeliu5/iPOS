@@ -125,4 +125,13 @@
     return isAvailable;
 }
 
+- (void) adjustSellingPriceFor:(OrderItem *)orderItem withCustomer:(Customer *)customer {
+    //TODO:  Implement this method
+}
+
+- (BOOL) adjustSellingPriceFor: (OrderItem *) orderItem withDiscountAmount: (NSDecimalNumber *) discountAmount managerApproval: (ManagerInfo *) managerApprover withSession: (SessionInfo *) sessionInfo {
+    
+    // TODO: Implement this method.  Calculate selling price from discount amt
+    return true;
+}
 @end

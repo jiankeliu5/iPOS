@@ -24,7 +24,8 @@
     [available release];
     [onHand release];
     [etaDateAsString release];
-        
+    
+    // no need to release item as it is not retained it is just assigned.
     [super dealloc];
 }
 @end

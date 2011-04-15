@@ -32,16 +32,16 @@
 
 #pragma mark -
 -(void) addError:(Error *)error {
-    if (errorList == nil) {
-       [self setErrorList:[NSMutableArray arrayWithCapacity:1]];
+    if (self.errorList == nil) {
+       self.errorList = [NSMutableArray arrayWithCapacity:1];
     }
     
-    [errorList addObject:error];
+    [self.errorList addObject:error];
 }
 
 -(void) removeAllErrors {
-    if (errorList != nil) {
-        [errorList removeAllObjects];
+    if (self.errorList != nil) {
+        [self.errorList removeAllObjects];
     }
 }
 @end

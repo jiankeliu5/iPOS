@@ -146,8 +146,6 @@ static NSString * const CUSTOMER_XML = @""
     }
     
     return customer;
-    
-    
 }
 
 

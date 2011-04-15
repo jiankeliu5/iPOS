@@ -35,11 +35,10 @@ static int const STATUS_CLOSE = 2;
     }
     
     // Default the status to open
-    self.statusId = [NSNumber numberWithInt:STATUS_OPEN];
+    statusId = [[NSNumber numberWithInt:STATUS_OPEN] retain];
     
-    [self setItem:productItem];
-    [self setQuantity:productQuantity];
-    
+    item = [productItem retain];
+    quantity = [[self convertQuantity:productQuantity] retain];
     return self;
 }
 
@@ -51,6 +50,7 @@ static int const STATUS_CLOSE = 2;
     if (managerApprover != nil) {
         [managerApprover release];
     }
+    
     [item release];
     [quantity release];
     
@@ -75,19 +75,48 @@ static int const STATUS_CLOSE = 2;
 
 #pragma mark -
 #pragma mark Method implementations
+- (NSNumber *) getQuantityInBoxes {    
+    if (self.item && 
+        self.item.conversion && 
+        self.item.piecesPerBox && 
+        [self.item.conversion compare: [NSDecimalNumber decimalNumberWithString:@"1.0"]] != NSOrderedSame) {
+        
+        // Get the number of pieces needed
+        NSDecimalNumberHandler *roundUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:0 
+                                                                                      raiseOnExactness:NO raiseOnOverflow:NO 
+                                                                                      raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+        
+        NSDecimalNumber *piecesPerBox = [NSDecimalNumber decimalNumberWithDecimal:[item.piecesPerBox decimalValue]];                                                                                                                                                                  
+        NSDecimalNumber *piecesNeeded = [[quantity decimalNumberByDividingBy:item.conversion] decimalNumberByRoundingAccordingToBehavior:roundUp];
+        NSDecimalNumber *boxesNeeded = [[piecesNeeded decimalNumberByDividingBy:piecesPerBox] decimalNumberByRoundingAccordingToBehavior:roundUp];
+        
+        return boxesNeeded;
+    } 
+    
+    return nil;
+}
+
+- (NSNumber *) getPiecesPerBox {
+    if (self.item == nil) {
+        return nil;
+    }
+    
+    return self.item.piecesPerBox;
+}
+
 - (void) setStatusToOpen {
-    statusId = [NSNumber numberWithInt:STATUS_OPEN];
+    self.statusId = [NSNumber numberWithInt:STATUS_OPEN];
 }
 
 - (void) setStatusToClosed {
-    statusId = [NSNumber numberWithInt:STATUS_CLOSE];
+    self.statusId = [NSNumber numberWithInt:STATUS_CLOSE];
 }
 
 - (BOOL) allowClose {
     NSDecimalNumber *numberAvailableInStore = item.store.availability.available;
     
     // If quantity is greater do not allow a close
-    if ([quantity compare:numberAvailableInStore] == NSOrderedDescending){
+    if ([self.quantity compare:numberAvailableInStore] == NSOrderedDescending){
         return NO;
     }
     
@@ -95,7 +124,7 @@ static int const STATUS_CLOSE = 2;
 }
 
 - (BOOL) isClosed {
-    return [statusId isEqualToNumber: [NSNumber numberWithInt:STATUS_CLOSE]];
+    return [self.statusId isEqualToNumber: [NSNumber numberWithInt:STATUS_CLOSE]];
 }
 
 #pragma mark -
@@ -103,7 +132,10 @@ static int const STATUS_CLOSE = 2;
 -(NSDecimalNumber *) convertQuantity: (NSDecimalNumber *) quantityToConvert {
     BOOL isConversionNeeded = NO;
     
-    if (item && item.conversion && item.piecesPerBox && [item.conversion compare: [NSDecimalNumber decimalNumberWithString:@"1.0"]] != NSOrderedSame) {
+    if (self.item && 
+        self.item.conversion && 
+        self.item.piecesPerBox && 
+        [self.item.conversion compare: [NSDecimalNumber decimalNumberWithString:@"1.0"]] != NSOrderedSame) {
         isConversionNeeded = YES;
     }
     
@@ -120,11 +152,11 @@ static int const STATUS_CLOSE = 2;
                                                                                   raiseOnUnderflow:NO raiseOnDivideByZero:NO];
     
         
-    NSDecimalNumber *piecesPerBox = [NSDecimalNumber decimalNumberWithDecimal:[item.piecesPerBox decimalValue]];                                                                                                                                                                  
-    NSDecimalNumber *piecesNeeded = [[quantityToConvert decimalNumberByDividingBy:item.conversion] decimalNumberByRoundingAccordingToBehavior:roundUp];
+    NSDecimalNumber *piecesPerBox = [NSDecimalNumber decimalNumberWithDecimal:[self.item.piecesPerBox decimalValue]];                                                                                                                                                                  
+    NSDecimalNumber *piecesNeeded = [[quantityToConvert decimalNumberByDividingBy:self.item.conversion] decimalNumberByRoundingAccordingToBehavior:roundUp];
     NSDecimalNumber *boxesNeeded = [[piecesNeeded decimalNumberByDividingBy:piecesPerBox] decimalNumberByRoundingAccordingToBehavior:roundUp];
     
-    return [[[boxesNeeded decimalNumberByMultiplyingBy:piecesPerBox] decimalNumberByMultiplyingBy:item.conversion] decimalNumberByRoundingAccordingToBehavior:roundPlainTo2Places];
+    return [[[boxesNeeded decimalNumberByMultiplyingBy:piecesPerBox] decimalNumberByMultiplyingBy:self.item.conversion] decimalNumberByRoundingAccordingToBehavior:roundPlainTo2Places];
 }
 
 @end

@@ -20,10 +20,7 @@
 @interface iPOSServiceImpl()
     - (ASIHTTPRequest *) initRequestForSession:(SessionInfo *) sessionInfo serviceDomainUri: (NSString *) serviceDomainUri serviceUri: (NSString *) serviceUri;
 
-    - (void) mergeCustomer: (Customer *) targetCustomer withCustomer: (Customer *) sourceCustomer;
-    
-    - (BOOL) isNewOrderValid: (Order *) order; 
-    - (void) mergeOrder: (Order *) targetOrder withOrder: (Order *) sourceOrder;
+    - (void) createOrder: (Order *) order withSession: (SessionInfo *) sessionInfo;
 @end
 
 @implementation iPOSServiceImpl
@@ -58,6 +55,8 @@
 -(void) dealloc {
     [baseUrl release];
     [posSessionMgmtUri release];
+    [posCustomerMgmtUri release];
+    [posOrderMgmtUri release];
     
     [super dealloc];
 }
@@ -175,6 +174,7 @@
     NSString *customerlookupUri = [NSString stringWithFormat:@"%@", phoneNumber];
     ASIHTTPRequest *request = [self initRequestForSession:sessionInfo serviceDomainUri:posCustomerMgmtUri serviceUri:customerlookupUri];
     
+    [request setTimeOutSeconds:10];
     [request startSynchronous];
     
     NSArray *requestErrors = [request validateAsXmlContent];
@@ -226,7 +226,7 @@
     
     // Parse the XML response for the customer details
     Customer *resultCustomer = [Customer fromXml:[request responseString]];
-    [self mergeCustomer: customer withCustomer:resultCustomer];
+    [customer mergeWith:resultCustomer];
 }
 
 -(void) updateCustomer:(Customer *)customer withSession:(SessionInfo *)sessionInfo {
@@ -256,23 +256,32 @@
     
     // Parse the XML response for the customer details
     Customer *resultCustomer = [Customer fromXml:[request responseString]];
-    [self mergeCustomer: customer withCustomer:resultCustomer];
+    [customer mergeWith:resultCustomer];
 }
 
 #pragma mark -
 #pragma mark Order Mgmt APIs
 -(void) newQuote:(Order *)order withSession:(SessionInfo *)sessionInfo {
-
-    if (order) {
-        [order setAsQuote];
+    if (order == nil || ![order validateAsNewQuote]) {
+        return;
     }
     
-    [self newOrder:order withSession:sessionInfo];
+    [order setAsQuote];
+    [self createOrder:order withSession:sessionInfo];
 }
 
 -(void) newOrder:(Order *)order withSession:(SessionInfo *)sessionInfo {
+    if (order == nil || ![order validateAsNewOrder]) {
+        return;
+    }
+    
+    [order getOrderTypeId];
+    [self createOrder:order withSession:sessionInfo];
+}
+
+-(void) createOrder:(Order *)order withSession:(SessionInfo *)sessionInfo {
 	// Make sure that we have a valid session and order
-    if (sessionInfo == nil || order == nil || ![self isNewOrderValid:order]) {
+    if (sessionInfo == nil || order == nil) {
         return;
     } 
     
@@ -313,7 +322,11 @@
     
     // Parse the XML response for the order details
     Order *orderReturned =  [Order fromXml:[request responseString]];
-    [self mergeOrder:order withOrder:orderReturned];
+    [order mergeWith:orderReturned];
+}
+
+- (void) emailReceipt:(Order *)order withSession:(SessionInfo *)sessionInfo {
+    // TODO: Implement this method
 }
 
 #pragma mark -
@@ -330,73 +343,6 @@
         [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
     }
     return request;
-}
-
-- (void) mergeCustomer: (Customer *) targetCustomer withCustomer: (Customer *) sourceCustomer {
-    // If there are errors just merge the errors, otherwise merge everything else
-    if (sourceCustomer.errorList && [sourceCustomer.errorList count] > 0) {
-        targetCustomer.errorList = [NSArray arrayWithArray: sourceCustomer.errorList];
-        return;
-    }
-    
-    // Merge other fields if customer ID is not 0.  This implies an "empty not found customer from the service.
-    if (sourceCustomer.customerId && ![sourceCustomer.customerId isEqualToNumber:[NSNumber numberWithInt:0]]) {
-        targetCustomer.customerId = sourceCustomer.customerId;
-        
-        if (sourceCustomer.firstName && ![sourceCustomer.firstName isEqualToString:targetCustomer.firstName]) {
-            targetCustomer.firstName = sourceCustomer.firstName;
-        }
-        if (sourceCustomer.lastName && ![sourceCustomer.lastName isEqualToString:targetCustomer.lastName]) {
-            targetCustomer.lastName = sourceCustomer.lastName;
-        }
-        if (sourceCustomer.emailAddress && ![sourceCustomer.emailAddress isEqualToString:targetCustomer.emailAddress]) {
-            targetCustomer.emailAddress = sourceCustomer.emailAddress;
-        }
-        if (sourceCustomer.phoneNumber && ![sourceCustomer.phoneNumber isEqualToString:targetCustomer.phoneNumber]) {
-            targetCustomer.phoneNumber = sourceCustomer.phoneNumber;
-        }
-		if (sourceCustomer.customerType && ![sourceCustomer.customerType isEqualToString:targetCustomer.customerType]) {
-			targetCustomer.customerType = sourceCustomer.customerType;
-		}
-		if (sourceCustomer.customerTypeId && ![sourceCustomer.customerTypeId isEqualToNumber:[NSNumber numberWithInt:0]]) {
-			targetCustomer.customerTypeId = sourceCustomer.customerTypeId;
-		}
-		targetCustomer.taxExempt = sourceCustomer.taxExempt;
-        
-        // Merge Address information
-        if (sourceCustomer.address) {
-            if (targetCustomer.address == nil) {
-                targetCustomer.address = [[[Address alloc] init] autorelease];
-            }
-            
-            if (sourceCustomer.address.line1 && ![sourceCustomer.address.line1 isEqualToString:targetCustomer.address.line1]) {
-                targetCustomer.address.line1 = sourceCustomer.address.line1;
-            }
-            if (sourceCustomer.address.line2 && ![sourceCustomer.address.line2 isEqualToString:targetCustomer.address.line2]) {
-                targetCustomer.address.line2 = sourceCustomer.address.line2;            
-            }
-            if (sourceCustomer.address.city && ![sourceCustomer.address.city isEqualToString:targetCustomer.address.city]) {
-                targetCustomer.address.city = sourceCustomer.address.city;            
-            }
-            if (sourceCustomer.address.stateProv && ![sourceCustomer.address.stateProv isEqualToString:targetCustomer.address.stateProv]) {
-                targetCustomer.address.stateProv = sourceCustomer.address.stateProv;
-            }
-            if (sourceCustomer.address.zipPostalCode && ![sourceCustomer.address.zipPostalCode isEqualToString:targetCustomer.address.zipPostalCode]) {
-                targetCustomer.address.zipPostalCode = sourceCustomer.address.zipPostalCode;
-            }
-        }
-        
-        // Merge Store information
-        if (sourceCustomer.store) {
-            if (targetCustomer.store == nil) {
-                targetCustomer.store = [[[Store alloc] init] autorelease];
-            }
-            
-            if (sourceCustomer.store.storeId && ![sourceCustomer.store.storeId isEqualToNumber: [NSNumber numberWithInt:0]]) {
-                targetCustomer.store.storeId = sourceCustomer.store.storeId;
-            }
-        }
-    }
 }
 
 -(BOOL) isNewOrderValid: (Order *) order {
@@ -419,18 +365,6 @@
     }
     
     return YES;        
-}
-
--(void) mergeOrder:(Order *)targetOrder withOrder:(Order *)sourceOrder {
-    // If there are errors just merge the errors, otherwise merge everything else
-    if (sourceOrder.errorList && [sourceOrder.errorList count] > 0) {
-        targetOrder.errorList = [NSArray arrayWithArray: sourceOrder.errorList];
-        return;
-    }
-    
-    if (sourceOrder.orderId && ![sourceOrder.orderId isEqualToNumber:[NSNumber numberWithInt:0]]) {
-        targetOrder.orderId = sourceOrder.orderId;
-    }
 }
 
 @end

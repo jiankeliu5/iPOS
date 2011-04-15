@@ -31,7 +31,7 @@
         if (contentTypeText.location == NSNotFound || htmlText.location != NSNotFound) {
             Error *appError = [[[Error alloc] init] autorelease];
             appError.errorId = @"ERR_CONTENT_TYPE";
-            appError.message = [NSString stringWithFormat:@"Service error.  Expected XML content.", [self responseStatusCode]];
+            appError.message = [NSString stringWithFormat:@"Service error '%d'.  Expected XML content.", [self responseStatusCode]];
             [errorList addObject:appError];
         }
     }

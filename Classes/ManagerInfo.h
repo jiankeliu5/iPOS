@@ -10,7 +10,11 @@
 
 
 @interface ManagerInfo : NSObject {
-
+    NSString *managerUserName;
+    NSString *managerPassword;
 }
+
+@property (nonatomic, retain) NSString *managerUserName;
+@property (nonatomic, retain) NSString *managerPassword;
 
 @end

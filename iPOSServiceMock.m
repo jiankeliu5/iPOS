@@ -112,4 +112,16 @@
     // Do nothing
 }
 
+#pragma mark -
+#pragma mark Order Mgmt
+- (void) newQuote:(Order *)order withSession:(SessionInfo *)sessionInfo {
+    // Do Nothing
+}
+- (void) newOrder:(Order *)order withSession:(SessionInfo *)sessionInfo {
+    // Do Nothing
+}
+- (void) emailReceipt:(Order *)order withSession:(SessionInfo *)sessionInfo {
+    // Do Nothing
+}
+
 @end

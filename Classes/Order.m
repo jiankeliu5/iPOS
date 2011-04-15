@@ -49,16 +49,14 @@ static int const ORDER_TYPE_CLOSED = 3;
 }
 
 - (NSNumber *) getOrderTypeId {
-    if (orderTypeId != nil) {
-        return orderTypeId;
-    }
-    
-    // Determine if all items are closed or some are open
+    // Determine if all items are closed or some are open.  Do this check for safety.
     if ([self isClosed]) {
-       return [NSNumber numberWithInt:ORDER_TYPE_CLOSED]; 
+        self.orderTypeId = [NSNumber numberWithInt:ORDER_TYPE_CLOSED]; 
+    } else {
+        self.orderTypeId = [NSNumber numberWithInt:ORDER_TYPE_OPEN];
     }
     
-    return [NSNumber numberWithInt:ORDER_TYPE_OPEN];
+    return self.orderTypeId;
 }
 
 - (BOOL) isClosed {
@@ -85,6 +83,43 @@ static int const ORDER_TYPE_CLOSED = 3;
 }
 
 #pragma mark -
+#pragma mark Validation methods
+- (BOOL) validateAsNew {
+    if (self.orderId != nil) {
+        // Attach an error
+        Error *error = [[[Error alloc] init] autorelease];
+        
+        error.message = [NSString stringWithFormat:@"Order is seems to have been alread created with id '%@'.", self.orderId];
+        error.reference = self;
+        
+        [self addError:error];
+        return NO;
+    } 
+    
+    return YES;        
+}
+
+- (BOOL) validateAsNewQuote {
+    [self validateAsNew];
+    
+    if ([self.errorList count] > 0) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (BOOL) validateAsNewOrder {
+    [self validateAsNew];
+    
+    if ([self.errorList count] > 0) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+#pragma mark -
 -(NSArray *) getOrderItems {
     return orderItemList;
 }
@@ -94,8 +129,9 @@ static int const ORDER_TYPE_CLOSED = 3;
     if (orderItemList != nil) {
         // We can add multiple items of the same type to an order
         OrderItem *orderItem = [[[OrderItem alloc] initWithItem:item AndQuantity:quantity] autorelease];
-        [orderItemList addObject:orderItem];
         
+        [orderItemList addObject:orderItem];
+
         // Set the line number based on the index the item was added in
         orderItem.lineNumber = [NSNumber numberWithInt: [orderItemList count]];
         
@@ -104,7 +140,9 @@ static int const ORDER_TYPE_CLOSED = 3;
         // TODO: This method will change to add to order with quantity and price.  
         // TODO: Do we still default the status
         orderItem.statusId = [NSNumber numberWithInt:1];
-        orderItem.sellingPrice = [item.retailPrice copy];    }
+        orderItem.sellingPrice = [item.retailPrice copy];    
+        
+    }
 }
 
 -(void) removeItemFromOrder:(OrderItem *)item {
@@ -130,6 +168,18 @@ static int const ORDER_TYPE_CLOSED = 3;
 -(void) removeAll {
     if (orderItemList != nil) {
         [orderItemList removeAllObjects];
+    }
+}
+
+- (void) mergeWith:(Order *) mergeOrder {
+    // If there are errors just merge the errors, otherwise merge everything else
+    if (mergeOrder.errorList && [mergeOrder.errorList count] > 0) {
+        self.errorList = [NSArray arrayWithArray: mergeOrder.errorList];
+        return;
+    }
+
+    if (mergeOrder.orderId && ![mergeOrder.orderId isEqualToNumber:[NSNumber numberWithInt:0]]) {
+        self.orderId = mergeOrder.orderId;
     }
 }
 

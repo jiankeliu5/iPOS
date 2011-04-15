@@ -233,7 +233,7 @@
 
 #pragma mark -
 #pragma mark Order Mgmt Tests
-- (void) testPosFacadeNewOrder {
+- (void) testPosFacadeNewQuote {
     iPOSFacade *facade = [iPOSFacade sharedInstance];
     Order *newOrder = [self orderForTest];
     
@@ -244,7 +244,7 @@
     
      STAssertNil(newOrder.orderId, @"Expected the order id to be nil");
      
-    [facade newOrder:newOrder];
+    [facade newQuote:newOrder];
     
     // Verify that it now has a customer ID
     STAssertNil(newOrder.errorList, @"Expected no errors");
@@ -262,7 +262,7 @@
     [facade login:@"123" password:@"test"];
     
     // Set the order type to an invalid order type (for testing)
-    newOrder.orderTypeId = [NSNumber numberWithInt:2];
+    newOrder.orderTypeId = [NSNumber numberWithInt:10];
     
     STAssertNil(newOrder.orderId, @"Expected the order id to be nil");
     

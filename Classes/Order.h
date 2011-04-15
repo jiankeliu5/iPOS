@@ -42,6 +42,14 @@
 - (NSNumber *) getOrderTypeId;
 - (BOOL) isClosed;
 
+- (void) mergeWith: (Order *) mergeOrder;
+
+#pragma mark -
+#pragma mark Validation methods
+- (BOOL) validateAsNew;
+- (BOOL) validateAsNewQuote;
+- (BOOL) validateAsNewOrder;
+ 
 #pragma mark -
 #pragma mark Marshalling methods
 + (Order *) fromXml: (NSString *) xmlString;

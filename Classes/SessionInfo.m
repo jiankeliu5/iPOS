@@ -31,9 +31,6 @@
 }
 
 -(void) dealloc {
-//	[currentCustomer release];
-//	[currentOrder release];
-	
     [storeId release];
     [employeeId release];
     [deviceId release];

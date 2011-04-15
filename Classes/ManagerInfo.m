@@ -11,4 +11,20 @@
 
 @implementation ManagerInfo
 
+@synthesize managerUserName, managerPassword;
+
+#pragma mark -
+#pragma mark Constructor/Deconstructor
+-(id) init {
+    self = [super init];
+    
+    return self;
+}
+
+- (void) dealloc {
+    [managerUserName release];
+    [managerPassword release];
+    
+    [super dealloc];
+}
 @end

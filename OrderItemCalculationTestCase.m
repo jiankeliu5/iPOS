@@ -9,7 +9,7 @@
 #import <SenTestingKit/SenTestingKit.h>
 #import "OrderItem.h"
 
-@interface OrderItemCalculationTestCase : SenTestCase
+@interface OrderItemCalculationTestCase : SenTestCase 
 
 -(void) testQuantityNeedsConversion;
 -(void) testQuantityNoConversion;

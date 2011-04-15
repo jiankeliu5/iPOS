@@ -262,6 +262,72 @@
 	return YES;
 }
 
+- (void) mergeWith:(Customer *) mergeCustomer {
+    // If there are errors just merge the errors, otherwise merge everything else
+    if (mergeCustomer.errorList && [mergeCustomer.errorList count] > 0) {
+        self.errorList = [NSArray arrayWithArray: mergeCustomer.errorList];
+        return;
+    }
+    
+    // Merge other fields if customer ID is not 0.  This implies an "empty not found customer from the service.
+    if (mergeCustomer.customerId && ![mergeCustomer.customerId isEqualToNumber:[NSNumber numberWithInt:0]]) {
+        self.customerId = mergeCustomer.customerId;
+        
+        if (mergeCustomer.firstName && ![mergeCustomer.firstName isEqualToString:self.firstName]) {
+            self.firstName = mergeCustomer.firstName;
+        }
+        if (mergeCustomer.lastName && ![mergeCustomer.lastName isEqualToString:self.lastName]) {
+            self.lastName = mergeCustomer.lastName;
+        }
+        if (mergeCustomer.emailAddress && ![mergeCustomer.emailAddress isEqualToString:self.emailAddress]) {
+            self.emailAddress = mergeCustomer.emailAddress;
+        }
+        if (mergeCustomer.phoneNumber && ![mergeCustomer.phoneNumber isEqualToString:self.phoneNumber]) {
+            self.phoneNumber = mergeCustomer.phoneNumber;
+        }
+		if (mergeCustomer.customerType && ![mergeCustomer.customerType isEqualToString:self.customerType]) {
+			self.customerType = mergeCustomer.customerType;
+		}
+		if (mergeCustomer.customerTypeId && ![mergeCustomer.customerTypeId isEqualToNumber:[NSNumber numberWithInt:0]]) {
+			self.customerTypeId = mergeCustomer.customerTypeId;
+		}
+		self.taxExempt = mergeCustomer.taxExempt;
+        
+        // Merge Address information
+        if (mergeCustomer.address) {
+            if (self.address == nil) {
+                self.address = [[[Address alloc] init] autorelease];
+            }
+            
+            if (mergeCustomer.address.line1 && ![mergeCustomer.address.line1 isEqualToString:self.address.line1]) {
+                self.address.line1 = mergeCustomer.address.line1;
+            }
+            if (mergeCustomer.address.line2 && ![mergeCustomer.address.line2 isEqualToString:self.address.line2]) {
+                self.address.line2 = mergeCustomer.address.line2;            
+            }
+            if (mergeCustomer.address.city && ![mergeCustomer.address.city isEqualToString:self.address.city]) {
+                self.address.city = mergeCustomer.address.city;            
+            }
+            if (mergeCustomer.address.stateProv && ![mergeCustomer.address.stateProv isEqualToString:self.address.stateProv]) {
+                self.address.stateProv = mergeCustomer.address.stateProv;
+            }
+            if (mergeCustomer.address.zipPostalCode && ![mergeCustomer.address.zipPostalCode isEqualToString:self.address.zipPostalCode]) {
+                self.address.zipPostalCode = mergeCustomer.address.zipPostalCode;
+            }
+        }
+        
+        // Merge Store information
+        if (mergeCustomer.store) {
+            if (self.store == nil) {
+                self.store = [[[Store alloc] init] autorelease];
+            }
+            
+            if (mergeCustomer.store.storeId && ![mergeCustomer.store.storeId isEqualToNumber: [NSNumber numberWithInt:0]]) {
+                self.store.storeId = mergeCustomer.store.storeId;
+            }
+        }
+    }    
+}
 #pragma mark -
 #pragma mark Customer XML Marshalling
 + (Customer *) fromXml:(NSString *)xmlString {

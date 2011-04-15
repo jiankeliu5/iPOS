@@ -32,7 +32,7 @@
 - (void) testPosFacadeUpdateCustomer;
 - (void) testPosFacadeUpdateCustomerNoCustomerID;
 
-- (void) testPosFacadeNewOrder;
+- (void) testPosFacadeNewQuote;
 - (void) testPosFacadeNewOrderWithInvalidType;
 
 @end

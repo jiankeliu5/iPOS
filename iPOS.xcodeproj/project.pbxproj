@@ -182,7 +182,20 @@
 		D61B635D132842970030E87E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D698A47E1325E50E00371985 /* OpenGLES.framework */; };
 		D6334A361331CA25000DEDBB /* BasicAppTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D6334A351331CA25000DEDBB /* BasicAppTestCase.m */; };
 		D6334A571331CADB000DEDBB /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
+		D6412B911356310E002AC1AC /* CCPaymentXmlMarshaller.h in Headers */ = {isa = PBXBuildFile; fileRef = D6412B8F1356310E002AC1AC /* CCPaymentXmlMarshaller.h */; };
+		D6412B921356310E002AC1AC /* CCPaymentXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = D6412B901356310E002AC1AC /* CCPaymentXmlMarshaller.m */; };
+		D6412B9513563216002AC1AC /* PaymentSignature.h in Headers */ = {isa = PBXBuildFile; fileRef = D6412B9313563216002AC1AC /* PaymentSignature.h */; };
+		D6412B9613563216002AC1AC /* PaymentSignature.m in Sources */ = {isa = PBXBuildFile; fileRef = D6412B9413563216002AC1AC /* PaymentSignature.m */; };
+		D6412B9913563229002AC1AC /* PaymentSignatureXmlMarshaller.h in Headers */ = {isa = PBXBuildFile; fileRef = D6412B9713563229002AC1AC /* PaymentSignatureXmlMarshaller.h */; };
+		D6412B9A13563229002AC1AC /* PaymentSignatureXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = D6412B9813563229002AC1AC /* PaymentSignatureXmlMarshaller.m */; };
 		D64783731354AE240017178D /* OrderItemCalculationTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D64783721354AE240017178D /* OrderItemCalculationTestCase.m */; };
+		D647843F1355FA440017178D /* PaymentService.h in Headers */ = {isa = PBXBuildFile; fileRef = D647843E1355FA440017178D /* PaymentService.h */; };
+		D64784421355FB9A0017178D /* PaymentServiceImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = D64784401355FB9A0017178D /* PaymentServiceImpl.h */; };
+		D64784431355FB9A0017178D /* PaymentServiceImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = D64784411355FB9A0017178D /* PaymentServiceImpl.m */; };
+		D64784481355FBD90017178D /* Payment.h in Headers */ = {isa = PBXBuildFile; fileRef = D64784461355FBD90017178D /* Payment.h */; };
+		D64784491355FBD90017178D /* Payment.m in Sources */ = {isa = PBXBuildFile; fileRef = D64784471355FBD90017178D /* Payment.m */; };
+		D647844C1355FC050017178D /* CreditCardPayment.h in Headers */ = {isa = PBXBuildFile; fileRef = D647844A1355FC050017178D /* CreditCardPayment.h */; };
+		D647844D1355FC050017178D /* CreditCardPayment.m in Sources */ = {isa = PBXBuildFile; fileRef = D647844B1355FC050017178D /* CreditCardPayment.m */; };
 		D64E5AE8130262B0002EAD70 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 		D64E5B8813026566002EAD70 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
 		D65B25C71331C8B60052AEE2 /* iPosIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B2F131B4300000210C7 /* iPosIcon.png */; };
@@ -285,7 +298,6 @@
 		D6B438151315A933000C0AA8 /* ManagerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3912FCA55D003C3A47 /* ManagerInfo.m */; };
 		D6B438161315A935000C0AA8 /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C3412FCA535003C3A47 /* Order.m */; };
 		D6B438171315A937000C0AA8 /* OrderItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6912FCA9C0003C3A47 /* OrderItem.m */; };
-		D6B438181315A939000C0AA8 /* PaymentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6612FCA99E003C3A47 /* PaymentInfo.m */; };
 		D6B438191315A93A000C0AA8 /* ProductItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D61C3C6312FCA97F003C3A47 /* ProductItem.m */; };
 		D6B438241315A9AE000C0AA8 /* AddItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46B0513075F5D001EADE4 /* AddItemView.m */; };
 		D6B4382E1315A9DA000C0AA8 /* AlertUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B40B94241304ED500024C2DC /* AlertUtils.m */; };
@@ -327,6 +339,7 @@
 		D6BA07FF1302586800B77769 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FE1302586800B77769 /* MobileCoreServices.framework */; };
 		D6BA08011302586800B77769 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
 		D6BA08031302586800B77769 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08021302586800B77769 /* libz.1.2.3.dylib */; };
+		D6C7770613574A7900D41AD9 /* PaymentServiceTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C7770513574A7900D41AD9 /* PaymentServiceTestCase.m */; };
 		D6CC18DB1331D1690042745E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FC1302586800B77769 /* CFNetwork.framework */; };
 		D6CC18DC1331D1690042745E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		D6CC18DD1331D1690042745E /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
@@ -635,8 +648,6 @@
 		D61C3C3912FCA55D003C3A47 /* ManagerInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagerInfo.m; sourceTree = "<group>"; };
 		D61C3C6212FCA97F003C3A47 /* ProductItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductItem.h; sourceTree = "<group>"; };
 		D61C3C6312FCA97F003C3A47 /* ProductItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductItem.m; sourceTree = "<group>"; };
-		D61C3C6512FCA99E003C3A47 /* PaymentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentInfo.h; sourceTree = "<group>"; };
-		D61C3C6612FCA99E003C3A47 /* PaymentInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentInfo.m; sourceTree = "<group>"; };
 		D61C3C6812FCA9C0003C3A47 /* OrderItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderItem.h; sourceTree = "<group>"; };
 		D61C3C6912FCA9C0003C3A47 /* OrderItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderItem.m; sourceTree = "<group>"; };
 		D62853C412FB9B650024228B /* LayoutUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutUtils.h; sourceTree = "<group>"; };
@@ -645,7 +656,20 @@
 		D6334A2E1331C9CE000DEDBB /* AppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AppTests-Info.plist"; sourceTree = "<group>"; };
 		D6334A341331CA25000DEDBB /* BasicAppTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicAppTestCase.h; sourceTree = "<group>"; };
 		D6334A351331CA25000DEDBB /* BasicAppTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicAppTestCase.m; sourceTree = "<group>"; };
+		D6412B8F1356310E002AC1AC /* CCPaymentXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPaymentXmlMarshaller.h; sourceTree = "<group>"; };
+		D6412B901356310E002AC1AC /* CCPaymentXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPaymentXmlMarshaller.m; sourceTree = "<group>"; };
+		D6412B9313563216002AC1AC /* PaymentSignature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentSignature.h; sourceTree = "<group>"; };
+		D6412B9413563216002AC1AC /* PaymentSignature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentSignature.m; sourceTree = "<group>"; };
+		D6412B9713563229002AC1AC /* PaymentSignatureXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentSignatureXmlMarshaller.h; sourceTree = "<group>"; };
+		D6412B9813563229002AC1AC /* PaymentSignatureXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentSignatureXmlMarshaller.m; sourceTree = "<group>"; };
 		D64783721354AE240017178D /* OrderItemCalculationTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderItemCalculationTestCase.m; sourceTree = "<group>"; };
+		D647843E1355FA440017178D /* PaymentService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentService.h; sourceTree = "<group>"; };
+		D64784401355FB9A0017178D /* PaymentServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentServiceImpl.h; sourceTree = "<group>"; };
+		D64784411355FB9A0017178D /* PaymentServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentServiceImpl.m; sourceTree = "<group>"; };
+		D64784461355FBD90017178D /* Payment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Payment.h; sourceTree = "<group>"; };
+		D64784471355FBD90017178D /* Payment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Payment.m; sourceTree = "<group>"; };
+		D647844A1355FC050017178D /* CreditCardPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditCardPayment.h; sourceTree = "<group>"; };
+		D647844B1355FC050017178D /* CreditCardPayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreditCardPayment.m; sourceTree = "<group>"; };
 		D64B7E1312F9D7EA006AB141 /* UnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D64B7E1412F9D7EA006AB141 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
 		D64B7E3412F9D8FD006AB141 /* SampleUnitTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleUnitTestCase.h; sourceTree = "<group>"; };
@@ -766,6 +790,7 @@
 		D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPOSServiceImpl.m; path = Classes/iPOSServiceImpl.m; sourceTree = "<group>"; };
 		D6BCD40612FCB3F70029F4B2 /* SessionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionInfo.h; sourceTree = "<group>"; };
 		D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionInfo.m; sourceTree = "<group>"; };
+		D6C7770513574A7900D41AD9 /* PaymentServiceTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentServiceTestCase.m; sourceTree = "<group>"; };
 		D6DCA823134DFA8E00ACBDD9 /* OrderCart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderCart.h; sourceTree = "<group>"; };
 		D6DCA824134DFA8E00ACBDD9 /* OrderCart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderCart.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1358,6 +1383,7 @@
 			children = (
 				D64B7EBF12F9DFF5006AB141 /* iPOSServiceIntTestCase.h */,
 				D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */,
+				D6C7770513574A7900D41AD9 /* PaymentServiceTestCase.m */,
 			);
 			name = IntTests;
 			sourceTree = "<group>";
@@ -1402,6 +1428,9 @@
 				D6BCD3FC12FCB3D80029F4B2 /* iPOSService.h */,
 				D6BCD3FD12FCB3D80029F4B2 /* iPOSServiceImpl.h */,
 				D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */,
+				D647843E1355FA440017178D /* PaymentService.h */,
+				D64784401355FB9A0017178D /* PaymentServiceImpl.h */,
+				D64784411355FB9A0017178D /* PaymentServiceImpl.m */,
 			);
 			name = POSInterface;
 			path = ..;
@@ -1435,10 +1464,14 @@
 				D683BF4313217652008D923F /* Error.m */,
 				D61C3C3812FCA55D003C3A47 /* ManagerInfo.h */,
 				D61C3C3912FCA55D003C3A47 /* ManagerInfo.m */,
-				D61C3C6512FCA99E003C3A47 /* PaymentInfo.h */,
-				D61C3C6612FCA99E003C3A47 /* PaymentInfo.m */,
 				D6BCD40612FCB3F70029F4B2 /* SessionInfo.h */,
 				D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */,
+				D64784461355FBD90017178D /* Payment.h */,
+				D64784471355FBD90017178D /* Payment.m */,
+				D647844A1355FC050017178D /* CreditCardPayment.h */,
+				D647844B1355FC050017178D /* CreditCardPayment.m */,
+				D6412B9313563216002AC1AC /* PaymentSignature.h */,
+				D6412B9413563216002AC1AC /* PaymentSignature.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1464,6 +1497,10 @@
 				D6B19372133C02F7004C4FD1 /* OrderXmlMarshaller.m */,
 				D6B19377133C0314004C4FD1 /* ProductItemXmlMarshaller.h */,
 				D6B19378133C0314004C4FD1 /* ProductItemXmlMarshaller.m */,
+				D6412B8F1356310E002AC1AC /* CCPaymentXmlMarshaller.h */,
+				D6412B901356310E002AC1AC /* CCPaymentXmlMarshaller.m */,
+				D6412B9713563229002AC1AC /* PaymentSignatureXmlMarshaller.h */,
+				D6412B9813563229002AC1AC /* PaymentSignatureXmlMarshaller.m */,
 			);
 			name = Oxm;
 			sourceTree = "<group>";
@@ -1621,6 +1658,13 @@
 				B45D260D13403CCD00AFC9D2 /* CartItemTableCell.h in Headers */,
 				B418577F1347D675009461D4 /* SearchItemView.h in Headers */,
 				D6DCA825134DFA8E00ACBDD9 /* OrderCart.h in Headers */,
+				D647843F1355FA440017178D /* PaymentService.h in Headers */,
+				D64784421355FB9A0017178D /* PaymentServiceImpl.h in Headers */,
+				D64784481355FBD90017178D /* Payment.h in Headers */,
+				D647844C1355FC050017178D /* CreditCardPayment.h in Headers */,
+				D6412B911356310E002AC1AC /* CCPaymentXmlMarshaller.h in Headers */,
+				D6412B9513563216002AC1AC /* PaymentSignature.h in Headers */,
+				D6412B9913563229002AC1AC /* PaymentSignatureXmlMarshaller.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2035,6 +2079,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D67943A313160884004B8254 /* iPOSServiceIntTestCase.m in Sources */,
+				D6C7770613574A7900D41AD9 /* PaymentServiceTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2099,7 +2144,6 @@
 				D6B438151315A933000C0AA8 /* ManagerInfo.m in Sources */,
 				D6B438161315A935000C0AA8 /* Order.m in Sources */,
 				D6B438171315A937000C0AA8 /* OrderItem.m in Sources */,
-				D6B438181315A939000C0AA8 /* PaymentInfo.m in Sources */,
 				D6B438191315A93A000C0AA8 /* ProductItem.m in Sources */,
 				D6B438241315A9AE000C0AA8 /* AddItemView.m in Sources */,
 				D6B4382E1315A9DA000C0AA8 /* AlertUtils.m in Sources */,
@@ -2160,6 +2204,12 @@
 				B45D260E13403CCD00AFC9D2 /* CartItemTableCell.m in Sources */,
 				B41857801347D675009461D4 /* SearchItemView.m in Sources */,
 				D6DCA826134DFA8E00ACBDD9 /* OrderCart.m in Sources */,
+				D64784431355FB9A0017178D /* PaymentServiceImpl.m in Sources */,
+				D64784491355FBD90017178D /* Payment.m in Sources */,
+				D647844D1355FC050017178D /* CreditCardPayment.m in Sources */,
+				D6412B921356310E002AC1AC /* CCPaymentXmlMarshaller.m in Sources */,
+				D6412B9613563216002AC1AC /* PaymentSignature.m in Sources */,
+				D6412B9A13563229002AC1AC /* PaymentSignatureXmlMarshaller.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

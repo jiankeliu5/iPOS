@@ -11,17 +11,20 @@
 
 #import "iPOSServiceImpl.h"
 #import "InventoryServiceImpl.h"
-
+#import "PaymentServiceImpl.h"
 
 @interface iPOSFacade : NSObject {
     id<iPOSService> posService;
     id<InventoryService> inventoryService;
+    id<PaymentService> paymentService;
     
     SessionInfo * sessionInfo;
 }
 
 @property (nonatomic, retain) id<iPOSService> posService;
 @property (nonatomic, retain) id<InventoryService> inventoryService;
+@property (nonatomic, retain) id<PaymentService> paymentService;
+
 @property (assign) SessionInfo *sessionInfo;
 
 #pragma mark Shared Instance
@@ -39,13 +42,23 @@
 
 #pragma mark iPOS Order Management
 -(void) newQuote: (Order *) order;
-// -(void) newOrder: (Order *) order;
--(void) updateOrder: (Order *) order;
--(BOOL) allowDiscountedPrice: (NSDecimal *) discountPrice forQuantity: (NSDecimal *) quantity managerApproval: (ManagerInfo *) managerApprover;
+-(void) newOrder: (Order *) order;
+// -(void) updateOrder: (Order *) order;
+
+- (void) emailReceipt: (Order *) order;
+
 
 #pragma mark Inventory Management
 -(ProductItem *) lookupProductItem:(NSString *) itemSku;
 
 -(BOOL) isProductItemAvailable: (NSNumber *) itemId forQuantity: (NSDecimalNumber *) quantity;
+
+- (void) adjustSellingPriceFor: (OrderItem *) orderItem withCustomer: (Customer *) customer;
+- (BOOL) adjustSellingPriceFor: (OrderItem *) orderItem withDiscountAmount: (NSDecimalNumber *) discountAmount managerApproval: (ManagerInfo *) managerApprover;
+
+#pragma mark -
+#pragma mark Payment Management
+-(void) tenderPaymentWithCC: (CreditCardPayment *) ccPayment;
+-(BOOL) acceptSignatureFor: (CreditCardPayment *) ccPayment;
 
 @end

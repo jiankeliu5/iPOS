@@ -29,9 +29,9 @@
 @required
 -(void) newQuote: (Order *) order withSession: (SessionInfo *) sessionInfo;
 -(void) newOrder: (Order *) order withSession: (SessionInfo *) sessionInfo;
--(void) updateOrder: (Order *) order withSession: (SessionInfo *) sessionInfo;
+// -(void) updateOrder: (Order *) order withSession: (SessionInfo *) sessionInfo;
 
--(BOOL) allowDiscountedPrice: (NSDecimal *) discountPrice forQuantity: (NSDecimal *) quantity withSession: (SessionInfo *) sessionInfo managerApproval: (ManagerInfo *) managerApprover;
+- (void) emailReceipt: (Order *) order withSession: (SessionInfo *) sessionInfo;
 
 #pragma mark -
 #pragma mark Payment Processing

@@ -13,7 +13,6 @@
 
 static OrderCart *cart = nil;
 
-
 #pragma mark Singleton Initializer
 + (OrderCart *) sharedInstance {
     if (cart == nil) {

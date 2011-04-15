@@ -22,24 +22,24 @@
     self = [super init];
 	
     unitOfMeasureLookup = [[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
-                                                                @"BOX",
-                                                                @"CARTON",
-                                                                @"SQ FT",
-                                                                @"EACH",
-                                                                @"FT",
-                                                                @"QYARD",
-                                                                @"SET",
-                                                                @"SQ FT",
-															   nil] forKeys:[NSArray arrayWithObjects:
-																			 @"BX",
-                                                                             @"CA",
-                                                                             @"CV",
-																			 @"EA",
-                                                                             @"LF",
-                                                                             @"QY",
-																			 @"SE",
-                                                                             @"SF",
-																			 nil]] retain];
+                                @"BOX",
+                                @"CARTON",
+                                @"SQ FT",
+                                @"EACH",
+                                @"FT",
+                                @"QYARD",
+                                @"SET",
+                                @"SQ FT",
+                               nil] forKeys:[NSArray arrayWithObjects:
+                                             @"BX",
+                                             @"CA",
+                                             @"CV",
+                                             @"EA",
+                                             @"LF",
+                                             @"QY",
+                                             @"SE",
+                                             @"SF",
+                                             nil]] retain];
     
 	return self;
 }

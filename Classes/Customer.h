@@ -47,6 +47,8 @@
 - (id) modelFromCustomer;
 - (BOOL) isValidCustomer:(BOOL)newCustomer;
 
+- (void) mergeWith: (Customer *) mergeCustomer;
+
 #pragma mark -
 #pragma mark Marshalling methods
 + (Customer *) fromXml: (NSString *) xmlString;

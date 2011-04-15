@@ -13,7 +13,7 @@
 
 static iPOSFacade *facade = nil;
 
-@synthesize posService, inventoryService, sessionInfo;
+@synthesize posService, inventoryService, paymentService, sessionInfo;
 
 #pragma mark Singleton Initializer
 + (iPOSFacade *) sharedInstance {
@@ -37,8 +37,9 @@ static iPOSFacade *facade = nil;
         return nil;
     }
     
-    self.posService = [[[iPOSServiceImpl alloc] init] autorelease];
-    self.inventoryService = [[[InventoryServiceImpl alloc] init] autorelease];    
+    posService = [[[iPOSServiceImpl alloc] init] retain];
+    inventoryService = [[[InventoryServiceImpl alloc] init] retain];    
+    paymentService = [[[PaymentServiceImpl alloc] init] retain];
     
     return self;
 }
@@ -46,6 +47,7 @@ static iPOSFacade *facade = nil;
 -(void) dealloc {
     [posService release];
     [inventoryService release];
+    [paymentService release];
     [sessionInfo release];
     
     [super dealloc];
@@ -54,7 +56,7 @@ static iPOSFacade *facade = nil;
 #pragma mark -
 #pragma mark iPOS Session Mgmt
 - (BOOL) login: (NSString *) username password: (NSString *) password {
-    sessionInfo = [[posService login:username withPassword:password] retain];
+    sessionInfo = [[self.posService login:username withPassword:password] retain];
     
     if (sessionInfo != nil) {
         return TRUE;
@@ -64,7 +66,7 @@ static iPOSFacade *facade = nil;
 }
 
 -(BOOL) verifySession:(NSString *)passwordToVerify {
-    return [posService verifySession:sessionInfo withPassword:passwordToVerify];
+    return [self.posService verifySession:sessionInfo withPassword:passwordToVerify];
 }
 
 -(BOOL) logout {
@@ -78,35 +80,57 @@ static iPOSFacade *facade = nil;
 #pragma mark -
 #pragma mark Customer Management
 -(Customer *) lookupCustomerByPhone:(NSString *)phoneNumber {
-    return [posService lookupCustomerByPhone:phoneNumber withSession:sessionInfo];
+    return [self.posService lookupCustomerByPhone:phoneNumber withSession:sessionInfo];
 }
 
 -(void) newCustomer:(Customer *)customer {
-    [posService newCustomer:customer withSession:self.sessionInfo];
+    [self.posService newCustomer:customer withSession:self.sessionInfo];
 }
 
 -(void) updateCustomer:(Customer *)customer {
-    [posService updateCustomer:customer withSession:self.sessionInfo];
+    [self.posService updateCustomer:customer withSession:self.sessionInfo];
 }
 
 #pragma mark -
 #pragma mark Order Management
 -(void) newQuote:(Order *)order {
-    [posService newQuote:order withSession:sessionInfo];
+    [self.posService newQuote:order withSession:sessionInfo];
 }
 
 -(void) newOrder:(Order *)order {
-    [posService newOrder:order withSession:sessionInfo];
+    [self.posService newOrder:order withSession:sessionInfo];
+}
+
+- (void) emailReceipt:(Order *)order {
+    [self.posService emailReceipt:order withSession:sessionInfo];
 }
 
 #pragma mark -
 #pragma mark Inventory Management
 -(ProductItem *) lookupProductItem:(NSString *) itemSku {
-    return [inventoryService lookupProductItem:itemSku withSession:sessionInfo];
+    return [self.inventoryService lookupProductItem:itemSku withSession:sessionInfo];
 }
 
 -(BOOL) isProductItemAvailable: (NSNumber *) itemId forQuantity: (NSDecimalNumber *) quantity {
-    return [inventoryService isProductItemAvailable:itemId forQuantity:quantity withSession:sessionInfo];;
+    return [self.inventoryService isProductItemAvailable:itemId forQuantity:quantity withSession:sessionInfo];;
+}
+
+- (void) adjustSellingPriceFor:(OrderItem *)orderItem withCustomer:(Customer *)customer {
+    [self.inventoryService adjustSellingPriceFor:orderItem withCustomer:customer];
+}
+
+- (BOOL) adjustSellingPriceFor: (OrderItem *) orderItem withDiscountAmount: (NSDecimalNumber *) discountAmount managerApproval: (ManagerInfo *) managerApprover {
+    return [self.inventoryService adjustSellingPriceFor:orderItem withDiscountAmount:discountAmount managerApproval:managerApprover withSession: sessionInfo];
+}
+
+#pragma mark -
+#pragma mark Payment Management
+- (void) tenderPaymentWithCC:(CreditCardPayment *)ccPayment {
+    [self.paymentService tenderPaymentWithCC:ccPayment withSession:sessionInfo];
+}
+
+- (BOOL) acceptSignatureFor:(CreditCardPayment *)ccPayment {
+    return [self.paymentService acceptSignatureFor:ccPayment withSession:sessionInfo];
 }
 
 @end

@@ -13,6 +13,8 @@
 @interface iPOSServiceImpl : NSObject <iPOSService> {
     NSString *baseUrl;
     NSString *posSessionMgmtUri;
+    NSString *posCustomerMgmtUri;
+    NSString *posOrderMgmtUri;
 }
 
 @property(nonatomic,retain) NSString *baseUrl;
