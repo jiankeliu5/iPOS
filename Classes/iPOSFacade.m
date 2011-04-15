@@ -37,9 +37,9 @@ static iPOSFacade *facade = nil;
         return nil;
     }
     
-    posService = [[[iPOSServiceImpl alloc] init] retain];
-    inventoryService = [[[InventoryServiceImpl alloc] init] retain];    
-    paymentService = [[[PaymentServiceImpl alloc] init] retain];
+    posService = [[iPOSServiceImpl alloc] init];
+    inventoryService = [[InventoryServiceImpl alloc] init];    
+    paymentService = [[PaymentServiceImpl alloc] init];
     
     return self;
 }
