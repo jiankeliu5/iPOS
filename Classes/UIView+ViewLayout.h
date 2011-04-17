@@ -7,10 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface UIView (ViewLayout)
 
 - (CGPoint) centerAt:(CGFloat) y;
+- (void) setAllAutoresizingMask;
+- (void) applyDefaultRoundedStyle;
+- (void) applyShineGradientToBackgroundWithColor:(UIColor *)color;
+- (void) applyGradientToBackgroundWithStartColor:(UIColor *)startColor endColor:(UIColor *)endColor;
 
 @end

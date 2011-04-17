@@ -109,6 +109,8 @@
 		B41857801347D675009461D4 /* SearchItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = B418577E1347D675009461D4 /* SearchItemView.m */; };
 		B418597F13495255009461D4 /* MICheckBox.h in Headers */ = {isa = PBXBuildFile; fileRef = B418597D13495255009461D4 /* MICheckBox.h */; };
 		B418598013495255009461D4 /* MICheckBox.m in Sources */ = {isa = PBXBuildFile; fileRef = B418597E13495255009461D4 /* MICheckBox.m */; };
+		B42609A81357F2D2001E5BA2 /* PriceAdjustViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B42609A61357F2D2001E5BA2 /* PriceAdjustViewController.h */; };
+		B42609A91357F2D2001E5BA2 /* PriceAdjustViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B42609A71357F2D2001E5BA2 /* PriceAdjustViewController.m */; };
 		B4300AA0131AEF8A000210C7 /* AvailabilityView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4300A76131AC317000210C7 /* AvailabilityView.m */; };
 		B4300B31131B4300000210C7 /* iPosIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B2F131B4300000210C7 /* iPosIcon.png */; };
 		B4300B32131B4300000210C7 /* iPosIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B30131B4300000210C7 /* iPosIcon@2x.png */; };
@@ -126,6 +128,8 @@
 		B44D1ED3133EA3D8004E7EDE /* icon-magnify2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B44D1E5C133E985E004E7EDE /* icon-magnify2@2x.png */; };
 		B45D260D13403CCD00AFC9D2 /* CartItemTableCell.h in Headers */ = {isa = PBXBuildFile; fileRef = B45D260B13403CCD00AFC9D2 /* CartItemTableCell.h */; };
 		B45D260E13403CCD00AFC9D2 /* CartItemTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B45D260C13403CCD00AFC9D2 /* CartItemTableCell.m */; };
+		B48263CA135A1B8700E29B68 /* SSLineView.h in Headers */ = {isa = PBXBuildFile; fileRef = B48263C8135A1B8700E29B68 /* SSLineView.h */; };
+		B48263CB135A1B8700E29B68 /* SSLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = B48263C9135A1B8700E29B68 /* SSLineView.m */; };
 		B4A7397D133457EA002DFA97 /* DoneDown3.png in Resources */ = {isa = PBXBuildFile; fileRef = B4A7397B133457EA002DFA97 /* DoneDown3.png */; };
 		B4A7397E133457EA002DFA97 /* DoneUp3.png in Resources */ = {isa = PBXBuildFile; fileRef = B4A7397C133457EA002DFA97 /* DoneUp3.png */; };
 		B4CEE02213527CE80067DEBC /* Cash.png in Resources */ = {isa = PBXBuildFile; fileRef = B4CEE01E13527CE80067DEBC /* Cash.png */; };
@@ -579,6 +583,8 @@
 		B418577E1347D675009461D4 /* SearchItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchItemView.m; sourceTree = "<group>"; };
 		B418597D13495255009461D4 /* MICheckBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MICheckBox.h; sourceTree = "<group>"; };
 		B418597E13495255009461D4 /* MICheckBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MICheckBox.m; sourceTree = "<group>"; };
+		B42609A61357F2D2001E5BA2 /* PriceAdjustViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PriceAdjustViewController.h; sourceTree = "<group>"; };
+		B42609A71357F2D2001E5BA2 /* PriceAdjustViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PriceAdjustViewController.m; sourceTree = "<group>"; };
 		B4300A75131AC317000210C7 /* AvailabilityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvailabilityView.h; sourceTree = "<group>"; };
 		B4300A76131AC317000210C7 /* AvailabilityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvailabilityView.m; sourceTree = "<group>"; };
 		B4300B2F131B4300000210C7 /* iPosIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPosIcon.png; sourceTree = "<group>"; };
@@ -594,6 +600,8 @@
 		B47AA7EE12F7DD1000AAD34C /* PlaceHolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceHolderView.m; sourceTree = "<group>"; };
 		B47AA7F412F7DD7200AAD34C /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		B47AA7F512F7DD7200AAD34C /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		B48263C8135A1B8700E29B68 /* SSLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSLineView.h; sourceTree = "<group>"; };
+		B48263C9135A1B8700E29B68 /* SSLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSLineView.m; sourceTree = "<group>"; };
 		B48A7E0E13107EEE00F6412C /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
 		B48A7E0F13107EEE00F6412C /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
 		B4A7397B133457EA002DFA97 /* DoneDown3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DoneDown3.png; sourceTree = "<group>"; };
@@ -936,6 +944,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B42609A51357F287001E5BA2 /* PriceAdjust */,
 				B418577C1347D650009461D4 /* SearchItem */,
 				B4D1983C1326BDF0007CCE08 /* Categories */,
 				D66892E11311DE320046C68F /* ThirdParty */,
@@ -1227,6 +1236,15 @@
 			name = MICheckBox;
 			sourceTree = "<group>";
 		};
+		B42609A51357F287001E5BA2 /* PriceAdjust */ = {
+			isa = PBXGroup;
+			children = (
+				B42609A61357F2D2001E5BA2 /* PriceAdjustViewController.h */,
+				B42609A71357F2D2001E5BA2 /* PriceAdjustViewController.m */,
+			);
+			name = PriceAdjust;
+			sourceTree = "<group>";
+		};
 		B47AA7EA12F7DCD900AAD34C /* PlaceHolder */ = {
 			isa = PBXGroup;
 			children = (
@@ -1245,6 +1263,15 @@
 			);
 			name = Login;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		B48263B4135A1B6A00E29B68 /* SSToolKit */ = {
+			isa = PBXGroup;
+			children = (
+				B48263C8135A1B8700E29B68 /* SSLineView.h */,
+				B48263C9135A1B8700E29B68 /* SSLineView.m */,
+			);
+			name = SSToolKit;
 			sourceTree = "<group>";
 		};
 		B4B367C312F9368D00F37FE9 /* Util */ = {
@@ -1410,6 +1437,7 @@
 		D66892E11311DE320046C68F /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				B48263B4135A1B6A00E29B68 /* SSToolKit */,
 				B401FB701335B0490082C7D4 /* IBAForms */,
 				D6BA07B1130257C200B77769 /* TouchXML */,
 				D6BA07DA1302580A00B77769 /* ASIHTTPRequest */,
@@ -1637,6 +1665,7 @@
 				B401FE791336D8F20082C7D4 /* NSString+StringFormatters.h in Headers */,
 				B404DD531345617500D85E1E /* ExtUIViewController.h in Headers */,
 				B418597F13495255009461D4 /* MICheckBox.h in Headers */,
+				B48263CA135A1B8700E29B68 /* SSLineView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1658,6 +1687,7 @@
 				B45D260D13403CCD00AFC9D2 /* CartItemTableCell.h in Headers */,
 				B418577F1347D675009461D4 /* SearchItemView.h in Headers */,
 				D6DCA825134DFA8E00ACBDD9 /* OrderCart.h in Headers */,
+				B42609A81357F2D2001E5BA2 /* PriceAdjustViewController.h in Headers */,
 				D647843F1355FA440017178D /* PaymentService.h in Headers */,
 				D64784421355FB9A0017178D /* PaymentServiceImpl.h in Headers */,
 				D64784481355FBD90017178D /* Payment.h in Headers */,
@@ -2131,6 +2161,7 @@
 				B401FEB31336DCB80082C7D4 /* NSString+StringFormatters.m in Sources */,
 				B404DD541345617500D85E1E /* ExtUIViewController.m in Sources */,
 				B418598013495255009461D4 /* MICheckBox.m in Sources */,
+				B48263CB135A1B8700E29B68 /* SSLineView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2204,6 +2235,7 @@
 				B45D260E13403CCD00AFC9D2 /* CartItemTableCell.m in Sources */,
 				B41857801347D675009461D4 /* SearchItemView.m in Sources */,
 				D6DCA826134DFA8E00ACBDD9 /* OrderCart.m in Sources */,
+				B42609A91357F2D2001E5BA2 /* PriceAdjustViewController.m in Sources */,
 				D64784431355FB9A0017178D /* PaymentServiceImpl.m in Sources */,
 				D64784491355FBD90017178D /* Payment.m in Sources */,
 				D647844D1355FC050017178D /* CreditCardPayment.m in Sources */,
@@ -2324,6 +2356,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = iPOS;
+				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Debug;
@@ -2348,6 +2381,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = iPOS;
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};
@@ -2391,6 +2425,7 @@
 				);
 				PRODUCT_NAME = iPOS;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C4EBD5F7-4031-4666-98FA-7288F49636E7";
+				SDKROOT = iphoneos;
 			};
 			name = Distribution;
 		};
@@ -2440,6 +2475,7 @@
 				PRIVATE_HEADERS_FOLDER_PATH = iPOSDemo.app/PrivateHeaders;
 				PRODUCT_NAME = iPOSDemo;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C4EBD5F7-4031-4666-98FA-7288F49636E7";
+				SDKROOT = iphoneos;
 			};
 			name = Distribution;
 		};
@@ -2938,6 +2974,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = iPOSDemo;
+				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv6";
 			};
 			name = Debug;
@@ -2962,6 +2999,7 @@
 				);
 				PRIVATE_HEADERS_FOLDER_PATH = iPOSDemo.app/PrivateHeaders;
 				PRODUCT_NAME = iPOSDemo;
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};

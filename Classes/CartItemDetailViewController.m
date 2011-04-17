@@ -6,11 +6,11 @@
 //  Copyright 2011 NA. All rights reserved.
 //
 
-#import "AlertUtils.h"
-
 #import "CartItemDetailViewController.h"
 #import "UIViewController+ViewControllerLayout.h"
 #import "NSString+StringFormatters.h"
+#import "AlertUtils.h"
+#import "PriceAdjustViewController.h"
 
 #define LABEL_FONT_SIZE 16.0f
 #define LABEL_HEIGHT 18.0f
@@ -149,16 +149,7 @@
         
         quantityField.returnKeyType = UIReturnKeyGo;
         quantityField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-        [self addDoneToolbarForTextField:quantityField];
-        // Set auxiliary view for keyboard when it is displayed for this text field.
-        UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)] autorelease];
-        keyboardToolbar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
-        keyboardToolbar.barStyle = UIBarStyleBlackTranslucent;
-        UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissKeyboard:)] autorelease];
-        UIBarButtonItem *kbToolbarFlex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
-        NSArray *kbToolbarItems = [[[NSArray alloc] initWithObjects:doneButton, kbToolbarFlex, nil] autorelease];
-        [keyboardToolbar setItems:kbToolbarItems];
-        [quantityField setInputAccessoryView:keyboardToolbar];
+        [self addCancelToolbarForTextField:quantityField];
     }
     
     // Is it editable
@@ -327,8 +318,8 @@
 }
 
 - (void) handlePriceButton:(id)sender {
-    [AlertUtils showModalAlertMessage:@"Need modal controller"];
-    // [self.navigationController popViewControllerAnimated:YES];
+    PriceAdjustViewController *priceAdjust = [[[PriceAdjustViewController alloc] initWithOrderItem:self.orderItem] autorelease];
+	[self.navigationController pushViewController:priceAdjust animated:YES];
 }
 
 #pragma mark -

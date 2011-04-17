@@ -16,5 +16,5 @@
 - (CGRect) rectForNav;
 - (CGRect) rectForTab;
 - (CGRect) rectForNavAndTab;
-
+- (CGRect) swapRect:(CGRect)rect;
 @end

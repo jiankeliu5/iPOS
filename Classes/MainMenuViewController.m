@@ -155,9 +155,9 @@
 	lookupItemField.placeholder = @"Look Up Item";
 	lookupItemField.tagName = @"LookupItem";
 	lookupItemField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-	lookupItemField.returnKeyType = UIReturnKeyGo;
+	lookupItemField.returnKeyType = UIReturnKeySearch;
 	lookupItemField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-	[super addDoneToolbarForTextField:lookupItemField];
+	[super addCancelToolbarForTextField:lookupItemField];
 	[self.view addSubview:lookupItemField];
 	[lookupItemField release];
 	

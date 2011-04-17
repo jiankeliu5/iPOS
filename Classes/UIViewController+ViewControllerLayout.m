@@ -32,25 +32,32 @@
 }
 
 - (CGRect)rectForNav {
-	CGRect rect = [[UIScreen mainScreen] applicationFrame];
+	//CGRect rect = [[UIScreen mainScreen] applicationFrame];
+	CGRect rect = self.navigationController.view.bounds;
 	rect.size.height -= [self navBarHeight];
 	return rect;
 }
 
 - (CGRect)rectForTab {
-	CGRect rect = [[UIScreen mainScreen] applicationFrame];
+	//CGRect rect = [[UIScreen mainScreen] applicationFrame];
+	CGRect rect = self.navigationController.view.bounds;
 	rect.size.height -= [self tabBarHeight];
 	return rect;
 }
 
 - (CGRect)rectForNavAndTab {
-	CGRect rect = [[UIScreen mainScreen] applicationFrame];
+	//CGRect rect = [[UIScreen mainScreen] applicationFrame];
+	CGRect rect = self.navigationController.view.bounds;
 	rect.size.height -= ([self navBarHeight] + [self tabBarHeight]);
 	return rect;
 }
 
 - (CGPoint)centerAt:(CGFloat) y {
 	return CGPointMake(self.view.bounds.size.width / 2.0f, y);
+}
+
+- (CGRect) swapRect:(CGRect)rect {
+    return CGRectMake(rect.origin.y, rect.origin.x, rect.size.height, rect.size.width);
 }
 
 @end

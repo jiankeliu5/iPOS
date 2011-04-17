@@ -91,7 +91,7 @@
 	lookupSkuField.placeholder = @"Look Up Item";
 	lookupSkuField.tagName = @"LookupItem";
 	lookupSkuField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-	lookupSkuField.returnKeyType = UIReturnKeyGo;
+	lookupSkuField.returnKeyType = UIReturnKeySearch;
 	lookupSkuField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
 	lookupSkuField.delegate = self;
 	UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, KEYBOARD_TOOLBAR_WIDTH, KEYBOARD_TOOLBAR_HEIGHT)] autorelease];

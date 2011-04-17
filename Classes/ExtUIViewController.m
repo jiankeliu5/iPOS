@@ -86,7 +86,38 @@
 	[textField setInputAccessoryView:keyboardToolbar];
 }
 
+- (void) addCancelToolbarForTextField:(ExtUITextField *)textField {
+	UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, KEYBOARD_TOOLBAR_WIDTH, KEYBOARD_TOOLBAR_HEIGHT)] autorelease];
+	keyboardToolbar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
+	keyboardToolbar.barStyle = UIBarStyleBlackTranslucent;
+	UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAndDismissKeyboard:)] autorelease];
+	UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+    NSArray *items = [[[NSArray alloc] initWithObjects:flex, cancelButton, nil] autorelease];
+	[keyboardToolbar setItems:items];
+	[textField setInputAccessoryView:keyboardToolbar];
+}
+
+- (void) addDoneAndCancelToolbarForTextField:(ExtUITextField *)textField {
+	UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, KEYBOARD_TOOLBAR_WIDTH, KEYBOARD_TOOLBAR_HEIGHT)] autorelease];
+	keyboardToolbar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
+	keyboardToolbar.barStyle = UIBarStyleBlackTranslucent;
+	UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissKeyboard:)] autorelease];
+	UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAndDismissKeyboard:)] autorelease];
+	UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+    NSArray *items = [[[NSArray alloc] initWithObjects:doneButton, flex, cancelButton, nil] autorelease];
+	[keyboardToolbar setItems:items];
+	[textField setInputAccessoryView:keyboardToolbar];
+}
+
 - (void) dismissKeyboard:(id)sender {
+	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
+		// The toolbar done button calls this.  Allows the delegate to be called.
+		self.keyboardCancelled = NO;
+		[self.currentFirstResponder resignFirstResponder];
+	}
+}
+
+- (void) cancelAndDismissKeyboard:(id)sender {
 	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
 		// Have to let the text field delegate know we cancelled.
 		self.keyboardCancelled = YES;

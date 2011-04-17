@@ -224,7 +224,7 @@
 		[addQuantityView.layer setMasksToBounds:YES];
 		[addQuantityView.layer setBorderWidth:1.0f];
 		[addQuantityView.layer setBorderColor:[[UIColor blackColor] CGColor]];
-		[addQuantityView setStart:[UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:240.0/255.0 alpha:1.0] andEndColor:[UIColor blackColor]];
+		[addQuantityView setStart:[UIColor colorWithRed:96.0/255.0 green:96.0/255.0 blue:96.0/255.0 alpha:1.0] andEndColor:[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f]];
 		addQuantityView.hidden = YES;
 		
 		addQuantityField = [[ExtUITextField alloc] initWithFrame:CGRectMake(15.0f, 20.0f, 90.0f, 40.0f)];
@@ -241,9 +241,9 @@
 		UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, KEYBOARD_TOOLBAR_WIDTH, KEYBOARD_TOOLBAR_HEIGHT)] autorelease];
 		keyboardToolbar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
 		keyboardToolbar.barStyle = UIBarStyleBlackTranslucent;
-		UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissKeyboard:)] autorelease];
+		UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissKeyboard:)] autorelease];
 		UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
-		NSArray *items = [[[NSArray alloc] initWithObjects:doneButton, flex, nil] autorelease];
+		NSArray *items = [[[NSArray alloc] initWithObjects:flex, cancelButton, nil] autorelease];
 		[keyboardToolbar setItems:items];
 		[addQuantityField setInputAccessoryView:keyboardToolbar];
 		[addQuantityView addSubview:addQuantityField];

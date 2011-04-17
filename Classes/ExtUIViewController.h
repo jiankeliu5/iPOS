@@ -35,10 +35,13 @@
 @property                     CGFloat previousViewOriginY;
 
 - (void) dismissKeyboard:(id)sender;
+- (void) cancelAndDismissKeyboard:(id)sender;
 - (void) addKeyboardListeners;
 - (void) removeKeyboardListeners;
 - (void) keyboardWillShow:(NSNotification *)notification;
 - (void) keyboardWillHide:(NSNotification *)notification;
 - (void) addDoneToolbarForTextField:(ExtUITextField *)textField;
+- (void) addCancelToolbarForTextField:(ExtUITextField *)textField;
+- (void) addDoneAndCancelToolbarForTextField:(ExtUITextField *)textField;
 - (void) resignFirstResponderIfPossible;
 @end

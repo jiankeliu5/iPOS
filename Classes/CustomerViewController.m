@@ -98,10 +98,10 @@
 	custPhoneField.tagName = @"CustPhone";
 	custPhoneField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	custPhoneField.clearButtonMode = UITextFieldViewModeWhileEditing;
-	custPhoneField.returnKeyType = UIReturnKeyGo;
+	custPhoneField.returnKeyType = UIReturnKeySearch;
 	custPhoneField.keyboardType = UIKeyboardTypeNumberPad;
 	custPhoneField.mask = @"999-999-9999";
-	[self addDoneToolbarForTextField:custPhoneField];
+	[self addCancelToolbarForTextField:custPhoneField];
 	
 	[self.view addSubview:custPhoneField];
 	[custPhoneField release];
