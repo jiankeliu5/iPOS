@@ -30,7 +30,7 @@
     orderItem = [[[OrderItem alloc] initWithItem:item AndQuantity:[NSDecimalNumber decimalNumberWithString:@"200"]] autorelease];
     
     NSString *quantityAsStr = [NSString stringWithFormat:@"Expected to be equal to:  %@", orderItem.quantity];
-    STAssertTrue ([orderItem.quantity compare:[NSDecimalNumber decimalNumberWithString:@"203.21"]] == NSOrderedSame, quantityAsStr);
+    STAssertTrue ([orderItem.quantity compare:[NSDecimalNumber decimalNumberWithString:@"203.211855"]] == NSOrderedSame, quantityAsStr);
 }
 
 - (void) testQuantityNoConversion {
