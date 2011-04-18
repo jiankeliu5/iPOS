@@ -181,4 +181,97 @@ static int const ORDER_TYPE_CLOSED = 3;
     }
 }
 
+#pragma mark -
+#pragma mark Order Calculations
+- (NSDecimalNumber *) calcOrderRetailSubTotal {
+    NSDecimalNumber *retailTotal = [NSDecimalNumber zero];
+    
+    for (OrderItem *item in orderItemList) {
+        retailTotal = [[item calcLineRetailSubTotal] decimalNumberByAdding:retailTotal];
+    }
+    
+    return retailTotal;
+}
+
+- (NSDecimalNumber *) calcOrderSubTotal {
+    NSDecimalNumber *subTotal = [NSDecimalNumber zero];
+    
+    for (OrderItem *item in orderItemList) {
+        subTotal = [[item calcLineSubTotal] decimalNumberByAdding:subTotal];
+    }
+    
+    return subTotal;
+}
+
+- (NSDecimalNumber *) calcOrderTax {
+    BOOL custTaxExempt = NO;
+	
+	// If the customer is not set yet, we will assume that they are not tax exempt
+	if (customer != nil && [customer taxExempt] == YES) {
+		custTaxExempt = YES;
+	}
+	
+	NSDecimalNumber *taxTotal = [NSDecimalNumber zero];
+    for (OrderItem *item in orderItemList) {
+        // If the customer is tax exempt we won't bother with checking further or calculating the tax amount for the line item
+        // If the customer is not tax exempt we also need to see if the line item itself is tax exempt or not.
+        // Possible concern:  We are allocating a lot of autoreleased NSDecimalNumber objects here.  Performance issue?
+        if (custTaxExempt == NO && ![item isTaxExempt]) {
+            taxTotal = [[item calcLineTax] decimalNumberByAdding:taxTotal];
+        }
+    }
+    
+    return taxTotal;        
+}
+
+- (NSDecimalNumber *) calcOrderDiscountTotal {
+    NSDecimalNumber *discountTotal = [NSDecimalNumber zero];
+    
+    for (OrderItem *item in orderItemList) {
+        discountTotal = [[item calcLineDiscount] decimalNumberByAdding:discountTotal];
+    }
+    
+    return discountTotal;
+}
+
+- (NSDecimalNumber *) calcBalanceDue {
+    
+    NSDecimalNumber *balanceDue = [NSDecimalNumber zero];
+    if (customer) {
+        NSDecimalNumber *balanceClosedItems = [self calcClosedItemsBalance];
+        
+        if ([customer isRetailCustomer]) {
+            // Retail customers pay 50% of total balance or total of all closed items (whichever is greater)
+            NSDecimalNumber *balance50Percent = [[[self calcOrderSubTotal] 
+                                                  decimalNumberByAdding:[self calcOrderTax]] 
+                                                  decimalNumberByMultiplyingBy:[NSDecimalNumber decimalNumberWithString: @"0.5"]];
+            if ([balanceClosedItems compare:balance50Percent] == NSOrderedDescending) {
+                balanceDue = [balanceDue decimalNumberByAdding:balanceClosedItems];
+            } else {
+                balanceDue = [balanceDue decimalNumberByAdding:balance50Percent];
+            }
+
+                                                  
+        } else {
+            // Assume the customer is a Contractor and only pays for closed items
+            balanceDue = [balanceDue decimalNumberByAdding:balanceClosedItems];
+        }
+    }
+    
+    return balanceDue;
+}
+
+- (NSDecimalNumber *) calcClosedItemsBalance {
+    NSDecimalNumber *balance = [NSDecimalNumber zero];
+    
+    for (OrderItem *item in orderItemList) {
+        if ([item isClosed]) {
+            balance = [[item calcLineSubTotal] decimalNumberByAdding: [item calcLineTax]];
+        }
+    }
+    
+    return balance;
+        
+}
+
 @end

@@ -46,7 +46,16 @@
 - (void) setStatusToClosed;
 - (void) setStatusToOpen;
 
+- (BOOL) isTaxExempt;
 - (BOOL) isClosed;
 - (BOOL) allowClose;
+
+#pragma mark -
+#pragma mark Order Item Calculations
+- (NSDecimalNumber *) calcSellingPriceFrom: (NSDecimalNumber *) discount;
+- (NSDecimalNumber *) calcLineRetailSubTotal;
+- (NSDecimalNumber *) calcLineSubTotal;
+- (NSDecimalNumber *) calcLineTax;
+- (NSDecimalNumber *) calcLineDiscount;
 
 @end

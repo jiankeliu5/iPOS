@@ -304,10 +304,10 @@
 									BUTTON_WIDTH, 
 									BUTTON_HEIGHT);
 	
-	NSDecimalNumber *retailTotal = [self.orderItem.item.retailPrice decimalNumberByMultiplyingBy:self.orderItem.quantity];
+	NSDecimalNumber *retailTotal = [self.orderItem calcLineRetailSubTotal];
 	retailTotalValueLabel.text = [NSString formatDecimalNumberAsMoney:retailTotal];
 	
-	NSDecimalNumber *sellingTotal = [self.orderItem.sellingPrice decimalNumberByMultiplyingBy:self.orderItem.quantity];
+	NSDecimalNumber *sellingTotal = [self.orderItem calcLineSubTotal];
 	sellingTotalValueLabel.text = [NSString formatDecimalNumberAsMoney:sellingTotal];
 	
 }

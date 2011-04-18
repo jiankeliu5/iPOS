@@ -12,6 +12,7 @@
 
 #import "UIViewController+ViewControllerLayout.h"
 
+#define STATUSBAR_HEIGHT 20.0f
 
 @implementation UIViewController (ViewControllerLayout)
 
@@ -29,6 +30,12 @@
 		barHeight = self.tabBarController.tabBar.frame.size.height;
 	}
 	return barHeight;
+}
+
+- (CGRect)rectForNavAndStatus {
+	CGRect rect = self.navigationController.view.bounds;
+	rect.size.height -= ([self navBarHeight] + STATUSBAR_HEIGHT);
+	return rect;
 }
 
 - (CGRect)rectForNav {

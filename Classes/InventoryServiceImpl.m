@@ -121,7 +121,7 @@
     // If the customer is a retail customer, selling price is retail price
     if ([customer isRetailCustomer]) {
         orderItem.sellingPrice = [orderItem.item.retailPrice copy];
-        } else {
+    } else {
         ASIHTTPRequest *request =  [self startGetRequest:[NSString stringWithFormat:@"%@/%@/customerSellingPrice/%@/%@/%@", 
                                                                 baseUrl, posInventoryMgmtUri, customer.priceLevelId, orderItem.item.priceGroupId, orderItem.item.retailPrice] withSession:sessionInfo];
         NSArray *requestErrors = [request validateAsXmlContent];
@@ -140,9 +140,15 @@
 }
 
 - (BOOL) adjustSellingPriceFor: (OrderItem *) orderItem withDiscountAmount: (NSDecimalNumber *) discountAmount managerApproval: (ManagerInfo *) managerApprover withSession: (SessionInfo *) sessionInfo {
+    BOOL allowAdjustment = YES;
     
-    // TODO: Implement this method.  Calculate selling price from discount amt
-    return YES;
+    // TODO: Service integration
+    
+    if (allowAdjustment) {
+        orderItem.sellingPrice = [orderItem calcSellingPriceFrom:discountAmount];
+    }
+    
+    return allowAdjustment;
 }
 
 #pragma mark -

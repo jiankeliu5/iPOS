@@ -55,4 +55,13 @@
 + (Order *) fromXml: (NSString *) xmlString;
 - (NSString *) toXml;
 
+#pragma mark -
+#pragma mark Order Calculations
+- (NSDecimalNumber *) calcOrderRetailSubTotal;
+- (NSDecimalNumber *) calcOrderSubTotal;
+- (NSDecimalNumber *) calcOrderTax;
+- (NSDecimalNumber *) calcOrderDiscountTotal;
+- (NSDecimalNumber *) calcBalanceDue;
+- (NSDecimalNumber *) calcClosedItemsBalance;
+
 @end

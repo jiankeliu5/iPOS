@@ -17,6 +17,7 @@
 #import "ProductItem.h"
 #import "CartItemDetailViewController.h"
 #import "CustomerViewController.h"
+#import "TenderPaymentViewController.h"
 
 #define CUST_SELECTED_COLOR [UIColor colorWithRed:170.0f/255.0f green:204.0f/255.0f blue:0.0f alpha:1.0f]
 #define NO_CUST_SELECTED_COLOR [UIColor colorWithRed:255.0f/255.0f green:70.0f/255.0f blue:0.0f alpha:1.0f]
@@ -60,7 +61,12 @@
 - (void) cancelEditMode:(id)sender;
 - (void) commitEdits:(id)sender;
 - (void) addOrEditCustomer:(id)sender;
+- (void) tenderOrder:(id)sender;
+
+- (void) handleLogout:(id) sender;
+
 - (CustomerViewController *)findCustomerViewController;
+
 - (void) searchforSku:(id)sender;
 - (void) restoreDefaultToolbar;
 - (void) updateSelectionCount;
@@ -69,10 +75,11 @@
 @implementation CartItemsViewController
 
 @synthesize toolbarBasic;
-@synthesize toolbarWithQuote;
+@synthesize toolbarWithQuoteAndOrder;
 @synthesize toolbarEditMode;
 
 @synthesize editBarButton;
+@synthesize logoutBarButton;
 @synthesize cancelBarButton;
 @synthesize commitEditsButton;
 @synthesize markDeleteLabel;
@@ -106,10 +113,11 @@
 
 - (void)dealloc {
 	[self setToolbarBasic:nil];
-	[self setToolbarWithQuote:nil];
+	[self setToolbarWithQuoteAndOrder:nil];
 	[self setToolbarEditMode:nil];
 	
 	[self setEditBarButton:nil];
+    [self setLogoutBarButton:nil];
 	[self setCancelBarButton:nil];
 	[self setCommitEditsButton:nil];
 	[self setMarkCloseLabel:nil];
@@ -216,15 +224,21 @@
 																	 style:UIBarButtonItemStylePlain 
 																	target:self 
 																	action:@selector(addOrEditCustomer:)] autorelease];
-	// Basic toolbar
-    self.toolbarBasic = [[[NSArray alloc] initWithObjects:searchButton, tbFixed, custButton, tbFlex, nil] autorelease];
-	
-	// The quote button is displayed when we have a customer and an order with at least one item.
+    // The quote button is displayed when we have a customer and an order with at least one item.
 	UIBarButtonItem *quoteButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"quotes-black.png"] 
 																	 style:UIBarButtonItemStylePlain 
 																	target:self 
 																	action:@selector(sendOrderAsQuote:)] autorelease];
-	self.toolbarWithQuote = [[[NSArray alloc] initWithObjects:searchButton, tbFixed, custButton, tbFlex, quoteButton, nil] autorelease];
+    
+    // The quote button is displayed when we have a customer and an order with at least one item.
+	UIBarButtonItem *orderButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Cash.png"] 
+																	 style:UIBarButtonItemStylePlain 
+																	target:self 
+																	action:@selector(tenderOrder:)] autorelease];
+                                                                    
+	// Basic toolbar
+    self.toolbarBasic = [[[NSArray alloc] initWithObjects:searchButton, tbFixed, custButton, tbFlex, nil] autorelease];
+	self.toolbarWithQuoteAndOrder = [[[NSArray alloc] initWithObjects:searchButton, tbFixed, custButton, tbFixed, quoteButton, tbFlex, orderButton, nil] autorelease];
 	
 	// Edit mode toolbar
 	UIView *customToolbarView = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, COMMIT_EDIT_BUTTON_WIDTH, COMMIT_EDIT_HEIGHT)] autorelease];
@@ -261,6 +275,7 @@
 	// Keep reference to these buttons as we have to switch them in and out when we enter or exit edit mode.
 	// Button to put us into edit mode.
 	self.editBarButton = [[[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(enterEditMode:)] autorelease];
+    self.logoutBarButton = [[[UIBarButtonItem alloc] initWithTitle:@"Suspend" style:UIBarButtonItemStyleBordered target:self action:@selector(handleLogout:)] autorelease];
 	// Button to cancel edit mode.
 	self.cancelBarButton = [[[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelEditMode:)] autorelease];
 	
@@ -316,8 +331,9 @@
 		[self.navigationController setNavigationBarHidden:NO];
 		// This is what shows up on the back button in the *next* controller.
 		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Items" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
-		// We're going to put up an edit button on the left.
+		// We're going to put up an edit button on the left and a logout button on the right.
 		self.navigationItem.leftBarButtonItem = self.editBarButton;
+        self.navigationItem.rightBarButtonItem = self.logoutBarButton;
 	}
 	
 	Customer *cust = [orderCart getCustomerForOrder];
@@ -384,36 +400,23 @@
 	}
 	
 	Order *order = [orderCart getOrder];
-	if (order != nil) {
-		NSArray *orderItems = [order getOrderItems];
+    
+    if (order != nil) {
+        NSDecimalNumber *subTotal = [order calcOrderSubTotal];
+        NSDecimalNumber *taxTotal = [order calcOrderTax];
+        
+        subTotalValue.text = [NSString formatDecimalNumberAsMoney:subTotal];
+        taxValue.text = [NSString formatDecimalNumberAsMoney:taxTotal];
+        totalValue.text = [NSString formatDecimalNumberAsMoney:[subTotal decimalNumberByAdding:taxTotal]];
 		
-		NSDecimalNumber *subTotal = [NSDecimalNumber zero];
-		NSDecimalNumber *taxTotal = [NSDecimalNumber zero];
-		for (OrderItem *item in orderItems) {
-			NSDecimalNumber *lineTotal = [item.sellingPrice decimalNumberByMultiplyingBy:item.quantity];
-			subTotal = [lineTotal decimalNumberByAdding:subTotal];
-			// If the customer is tax exempt we won't bother with checking further or calculating the tax amount for the line item
-			// If the customer is not tax exempt we also need to see if the line item itself is tax exempt or not.
-			// Possible concern:  We are allocating a lot of autoreleased NSDecimalNumber objects here.  Performance issue?
-			if (custTaxExempt == NO && item.item.taxExempt == NO) {
-				NSDecimalNumber *lineTax = [[item.item.taxRate decimalNumberByMultiplyingBy:item.sellingPrice] decimalNumberByMultiplyingBy:item.quantity];
-				taxTotal = [lineTax decimalNumberByAdding:taxTotal];
-			}
-		}
-		
-		subTotalValue.text = [NSString formatDecimalNumberAsMoney:subTotal];
-		taxValue.text = [NSString formatDecimalNumberAsMoney:taxTotal];
-		totalValue.text = [NSString formatDecimalNumberAsMoney:[subTotal decimalNumberByAdding:taxTotal]];
-		
-		[self restoreDefaultToolbar];
-		
+        [self restoreDefaultToolbar];        
     }
 }
 
 - (void) restoreDefaultToolbar {
 	// Put up the Tender or Quote button if we have a customer and an order with at least one item.
 	if ([orderCart getCustomerForOrder] != nil && [[[orderCart getOrder] getOrderItems] count] > 0) {
-		[orderToolBar setItems:self.toolbarWithQuote];
+		[orderToolBar setItems:self.toolbarWithQuoteAndOrder];
 	} else {
 		[orderToolBar setItems:self.toolbarBasic];
 	}
@@ -444,6 +447,13 @@
 
 }
 
+- (void) tenderOrder:(id)sender {
+	TenderPaymentViewController *tenderViewController = [[[TenderPaymentViewController alloc] init] autorelease];
+    UINavigationController *navController = self.navigationController;
+		
+    [navController pushViewController:tenderViewController animated:YES];
+}
+
 - (CustomerViewController *)findCustomerViewController {
 	if ([self navigationController] != nil) {
 		NSArray *controllers = [[self navigationController] viewControllers];
@@ -465,6 +475,11 @@
 	[quoteAlert addButtonWithTitle:@"Send Quote"];
 	[quoteAlert show];
 	[quoteAlert release];
+}
+
+- (void) handleLogout: (id) sender {
+    // Cancel the order and completely Logoff
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void) enterEditMode:(id)sender {

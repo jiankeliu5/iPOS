@@ -37,6 +37,9 @@ static int const STATUS_CLOSE = 2;
     // Default the status to open
     statusId = [[NSNumber numberWithInt:STATUS_OPEN] retain];
     
+    // Default selling price to retail price
+    sellingPrice = [productItem.retailPrice copy];
+    
     item = [productItem retain];
     quantity = [[self convertQuantity:productQuantity] retain];
     return self;
@@ -123,8 +126,52 @@ static int const STATUS_CLOSE = 2;
     return YES;
 }
 
+- (BOOL) isTaxExempt {
+    if (item == nil) {
+        return NO;
+    }
+    
+    return self.item.taxExempt;
+}
+
 - (BOOL) isClosed {
     return [self.statusId isEqualToNumber: [NSNumber numberWithInt:STATUS_CLOSE]];
+}
+
+#pragma mark -
+#pragma mark Order Item Calculations
+- (NSDecimalNumber *) calcLineRetailSubTotal {
+    NSDecimalNumber *retailTotal = [item.retailPrice decimalNumberByMultiplyingBy:quantity];
+    
+    return retailTotal;
+}
+
+- (NSDecimalNumber *) calcLineSubTotal {
+    NSDecimalNumber *lineTotal = [sellingPrice decimalNumberByMultiplyingBy:quantity];
+    
+    return lineTotal;
+}
+
+- (NSDecimalNumber *) calcLineTax {
+    NSDecimalNumber *lineTax = [[item.taxRate decimalNumberByMultiplyingBy:sellingPrice] decimalNumberByMultiplyingBy:quantity];
+    return lineTax;
+}
+
+-(NSDecimalNumber *) calcSellingPriceFrom:(NSDecimalNumber *)discount {
+    if (quantity == nil || 
+        [quantity compare:[NSDecimalNumber zero]] == NSOrderedSame ||
+        [quantity compare:[NSDecimalNumber zero]] == NSOrderedAscending) {
+        return sellingPrice;
+    }
+    
+    // Calculate a new selling price
+    NSDecimalNumber *newSellingPrice = [sellingPrice  decimalNumberBySubtracting:[discount decimalNumberByDividingBy:quantity]];
+    return newSellingPrice;
+}
+
+- (NSDecimalNumber *) calcLineDiscount {
+    NSDecimalNumber *discount = [[self calcLineRetailSubTotal] decimalNumberBySubtracting:[self calcLineSubTotal]];
+    return discount;
 }
 
 #pragma mark -
@@ -147,16 +194,12 @@ static int const STATUS_CLOSE = 2;
     NSDecimalNumberHandler *roundUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:0 
                                                                                        raiseOnExactness:NO raiseOnOverflow:NO 
                                                                                        raiseOnUnderflow:NO raiseOnDivideByZero:NO];
-    NSDecimalNumberHandler *roundPlainTo2Places = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundPlain scale:2 
-                                                                                  raiseOnExactness:NO raiseOnOverflow:NO 
-                                                                                  raiseOnUnderflow:NO raiseOnDivideByZero:NO];
-    
         
     NSDecimalNumber *piecesPerBox = [NSDecimalNumber decimalNumberWithDecimal:[item.piecesPerBox decimalValue]];                                                                                                                                                                  
     NSDecimalNumber *piecesNeeded = [[quantityToConvert decimalNumberByDividingBy:item.conversion] decimalNumberByRoundingAccordingToBehavior:roundUp];
     NSDecimalNumber *boxesNeeded = [[piecesNeeded decimalNumberByDividingBy:piecesPerBox] decimalNumberByRoundingAccordingToBehavior:roundUp];
     
-    return [[[boxesNeeded decimalNumberByMultiplyingBy:piecesPerBox] decimalNumberByMultiplyingBy:item.conversion] decimalNumberByRoundingAccordingToBehavior:roundPlainTo2Places];
+    return [[boxesNeeded decimalNumberByMultiplyingBy:piecesPerBox] decimalNumberByMultiplyingBy:item.conversion];
 }
 
 @end

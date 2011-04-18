@@ -37,10 +37,11 @@
 	UIToolbar *orderToolBar;
 	
 	NSArray *toolbarBasic;
-	NSArray *toolbarWithQuote;
+	NSArray *toolbarWithQuoteAndOrder;
 	NSArray *toolbarEditMode;
 	
 	UIBarButtonItem *editBarButton;
+    UIBarButtonItem *logoutBarButton;
 	UIBarButtonItem *cancelBarButton;
 	UIButton *commitEditsButton;
 	UILabel *markDeleteLabel;
@@ -54,10 +55,11 @@
 }
 
 @property (nonatomic, retain) NSArray *toolbarBasic;
-@property (nonatomic, retain) NSArray *toolbarWithQuote;
+@property (nonatomic, retain) NSArray *toolbarWithQuoteAndOrder;
 @property (nonatomic, retain) NSArray *toolbarEditMode;
 
 @property (nonatomic, retain) UIBarButtonItem *editBarButton;
+@property (nonatomic, retain) UIBarButtonItem *logoutBarButton;
 @property (nonatomic, retain) UIBarButtonItem *cancelBarButton;
 @property (nonatomic, retain) UIButton *commitEditsButton;
 @property (nonatomic, retain) UILabel *markDeleteLabel;

@@ -7,10 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "iPOSFacade.h"
+#import "OrderCart.h"
 
 @interface TenderPaymentViewController : UIViewController {
 	iPOSFacade *facade;
+    OrderCart *orderCart;
+    
+    UIToolbar *paymentToolbar;
+    
+    UILabel *retailTotalLabel;
+    UILabel *discountTotalLabel;
+    UILabel *subTotalLabel;
+    UILabel *taxTotalLabel;
+    UILabel *totalLabel;
+    
+    UILabel *balanceDueLabel;
 }
 
 @end
