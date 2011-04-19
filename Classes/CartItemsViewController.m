@@ -519,6 +519,13 @@
 		if (orderItem.shouldDelete) {
 			[orderItemsToDelete addObject:orderItem];
 		}
+		if (orderItem.shouldClose && [orderItem isClosed] == NO) {
+			if (![orderCart closeItem:orderItem]) {
+				[AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Cannot close line for sku %@.  Stock not available.", orderItem.item.sku]];
+			}
+		} else if ([orderItem isClosed] && orderItem.shouldClose == NO) {
+			[orderItem setStatusToOpen];
+		}
 	}
 	
 	// TODO: need a bulk way to delete multiple order items from the order at one time??
@@ -616,8 +623,14 @@
 	cell.orderItem = orderItem;
 	cell.multiEditing = self.multiEditMode;
 	cell.deleteChecked = orderItem.shouldDelete;
-	cell.closeChecked = orderItem.shouldClose;
+	cell.closeChecked = orderItem.shouldClose = [orderItem isClosed];
 	cell.cellDelegate = self;
+	if (self.multiEditMode == NO) {
+		cell.accessoryType = ([orderItem isClosed]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+	} else {
+		cell.accessoryType = UITableViewCellAccessoryNone;
+	}
+
 	return cell;
 }
 

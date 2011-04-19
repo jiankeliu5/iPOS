@@ -8,6 +8,7 @@
 
 #import "CartItemTableCell.h"
 #import "NSString+StringFormatters.h"
+#import "AlertUtils.h"
 
 #define LABEL_FONT_SIZE 14.0f
 #define LABEL_HEIGHT 16.0f
@@ -118,7 +119,7 @@
 	lineCostLabel.text = [NSString formatDecimalNumberAsMoney: [orderItem.sellingPrice decimalNumberByMultiplyingBy:orderItem.quantity]];
 	
 	self.deleteChecked = orderItem.shouldDelete;
-	self.closeChecked = orderItem.shouldClose;
+	self.closeChecked = orderItem.shouldClose || [orderItem isClosed];
 	
 }
 
@@ -232,11 +233,15 @@
 - (void)checkCloseAction:(id)sender
 {
 	// note: we don't use 'sender' because this action method can be called separate from the button (i.e. from table selection)
-	self.closeChecked = !self.closeChecked;
-	[self updateCloseButtonState];
-	if (self.closeChecked && self.deleteChecked) {
-		self.deleteChecked = !self.deleteChecked;
-		[self updateDeleteButtonState];
+	if (self.closeChecked == NO && [self.orderItem allowClose] == NO) {
+		[AlertUtils showModalAlertMessage:@"Cannot close line.  Stock not available."];
+	} else {
+		self.closeChecked = !self.closeChecked;
+		[self updateCloseButtonState];
+		if (self.closeChecked && self.deleteChecked) {
+			self.deleteChecked = !self.deleteChecked;
+			[self updateDeleteButtonState];
+		}
 	}
 }
 
