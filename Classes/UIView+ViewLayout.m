@@ -42,27 +42,39 @@
 }
 
 - (void) applyShineGradientToBackgroundWithColor:(UIColor *)color {
-    CAGradientLayer *layer = [CAGradientLayer layer];
+    CAGradientLayer *gradient = [CAGradientLayer layer];
     // Get the RGB components for the color passed in.
     const CGFloat *cs = CGColorGetComponents(color.CGColor);
     
     // Create the colors for the gradient
-    layer.colors = [NSArray arrayWithObjects:
+    gradient.colors = [NSArray arrayWithObjects:
                     (id)[color CGColor],
                     (id)[[UIColor colorWithRed:0.98f*cs[0] green:0.98*cs[1] blue:0.98*cs[2] alpha:1.0f] CGColor],
                     (id)[[UIColor colorWithRed:0.95f*cs[0] green:0.95*cs[1] blue:0.95*cs[2] alpha:1.0f] CGColor],
                     (id)[[UIColor colorWithRed:0.93f*cs[0] green:0.93*cs[1] blue:0.93*cs[2] alpha:1.0f] CGColor],
                     nil];
     
-    layer.locations = [NSArray arrayWithObjects:
+    gradient.locations = [NSArray arrayWithObjects:
                        [NSNumber numberWithFloat:0.0f],
                        [NSNumber numberWithFloat:0.49f],
                        [NSNumber numberWithFloat:0.51f],
                        [NSNumber numberWithFloat:1.0f],
                        nil];
     
-    layer.frame = self.bounds;
-    [self.layer insertSublayer:layer atIndex:0];
+    gradient.frame = self.bounds;
+	
+    CALayer *roundLayer = nil;
+	for (CALayer *l in self.layer.sublayers) {
+		if ([l.name isEqualToString:@"rounded"]) {
+			roundLayer = l;
+			break;
+		}
+	}
+	if (roundLayer != nil) {
+		[roundLayer addSublayer:gradient];
+	} else {
+		[self.layer insertSublayer:gradient atIndex:0];
+	}
 }
 
 - (void) applyGradientToBackgroundWithStartColor:(UIColor *)startColor endColor:(UIColor *)endColor {
