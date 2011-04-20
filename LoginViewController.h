@@ -23,6 +23,7 @@
 
 	UITableView *loginTableView;
 	id currentFirstResponder;
+	BOOL keyboardCancelled;
 	NSIndexPath *topRowBeforeKeyboardShown;
 	
    	iPOSFacade *facade;
@@ -37,5 +38,6 @@
 @property (nonatomic, copy) NSString *deviceId;
 
 @property (nonatomic, retain) id currentFirstResponder;
+@property (nonatomic, assign) BOOL keyboardCancelled;
 
 @end

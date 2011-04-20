@@ -149,8 +149,8 @@
 	mgrIdField.clearsOnBeginEditing = YES;
 	mgrIdField.tagName = @"ManagerId";
 	mgrIdField.returnKeyType = UIReturnKeyDone;
-	mgrIdField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-	[self addCancelToolbarForTextField:mgrIdField];
+	mgrIdField.keyboardType = UIKeyboardTypeNumberPad;
+	[self addDoneAndCancelToolbarForTextField:mgrIdField];
 	[roundView addSubview:mgrIdField];
 	
 	mgrPasswordLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
@@ -168,8 +168,9 @@
 	mgrPasswordField.clearsOnBeginEditing = YES;
 	mgrPasswordField.tagName = @"ManagerPassword";
 	mgrPasswordField.returnKeyType = UIReturnKeyDone;
+	mgrPasswordField.keyboardType - UIKeyboardTypeNumberPad;
 	mgrPasswordField.secureTextEntry = YES;
-	[self addCancelToolbarForTextField:mgrPasswordField];
+	[self addDoneAndCancelToolbarForTextField:mgrPasswordField];
 	[roundView addSubview:mgrPasswordField];
 	
 	submitButton = [[[MOGlassButton alloc] initWithFrame:CGRectZero] autorelease];

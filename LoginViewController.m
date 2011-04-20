@@ -17,6 +17,9 @@
 @interface LoginViewController () 
 - (void) keyboardWillShow:(NSNotification *)notification;
 - (void) keyboardWillHide:(NSNotification *)notification;
+- (void) dismissKeyboard:(id)sender;
+- (void) cancelAndDismissKeyboard:(id)sender;
+- (void) addDoneAndCancelToolbarForTextField:(UITextField *)textField;
 @end
 
 #pragma mark -
@@ -28,6 +31,7 @@
 @synthesize deviceId;
 
 @synthesize currentFirstResponder;
+@synthesize keyboardCancelled;
 
 #pragma mark Constructors
 - (id)init
@@ -159,6 +163,8 @@
 		[tableHeader release];
 	}
 	
+	self.keyboardCancelled = NO;
+	
 	// Do this at the end
 	[super viewWillAppear:animated];
 }
@@ -231,39 +237,45 @@
 {
 	self.currentFirstResponder = nil;
 
-	// Want to set these here since if the user shifts fields
-	// without dismissing the keyboard then textFieldShouldReturn
-	// is not called.
-	if (textField.tag == 0) {
-		[self setEmpId:nil];
-		[self setEmpId:textField.text];
-	} else if (textField.tag == 1) {
-		[self setPassword:nil];
-		[self setPassword:textField.text];
-	}
-	
-	if (self.empId != nil && self.password != nil) {
-		UIAlertView *alert = [AlertUtils showProgressAlertMessage:@"Logging In"];
-		if([facade login:self.empId password:self.password]) {
-			[AlertUtils dismissAlertMessage: alert];
-			
-			MainMenuViewController *mainMenuViewController = [[MainMenuViewController alloc] init];
-			[[self navigationController] pushViewController:mainMenuViewController animated:TRUE];
-            [mainMenuViewController release];
-			
-			// This is where we would connect to the linea-pro device
-            [linea connect];
-
-		} else {
-			[AlertUtils dismissAlertMessage:alert];
-			[AlertUtils showModalAlertMessage:@"Login failure.  Please try again."];
+	if (self.keyboardCancelled == NO) {
+		// Want to set these here since if the user shifts fields
+		// without dismissing the keyboard then textFieldShouldReturn
+		// is not called.
+		if (textField.tag == 0) {
+			[self setEmpId:nil];
+			[self setEmpId:textField.text];
+		} else if (textField.tag == 1) {
+			[self setPassword:nil];
+			[self setPassword:textField.text];
 		}
 		
-		[self setEmpId:nil];
-		[self setPassword:nil];
-		[loginTableView reloadData];
-		
+		if (self.empId != nil && self.password != nil) {
+			UIAlertView *alert = [AlertUtils showProgressAlertMessage:@"Logging In"];
+			if([facade login:self.empId password:self.password]) {
+				[AlertUtils dismissAlertMessage: alert];
+				
+				MainMenuViewController *mainMenuViewController = [[MainMenuViewController alloc] init];
+				[[self navigationController] pushViewController:mainMenuViewController animated:TRUE];
+				[mainMenuViewController release];
+				
+				// This is where we would connect to the linea-pro device
+				[linea connect];
+				
+			} else {
+				[AlertUtils dismissAlertMessage:alert];
+				[AlertUtils showModalAlertMessage:@"Login failure.  Please try again."];
+			}
+			
+			[self setEmpId:nil];
+			[self setPassword:nil];
+			[loginTableView reloadData];
+			
+		}
+	} else {
+		// User cancelled out
+		self.keyboardCancelled = NO;
 	}
+
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -379,17 +391,19 @@
 		loginTextField.tag = row;
 		loginTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		loginTextField.delegate = self;
+		[self addDoneAndCancelToolbarForTextField:loginTextField];
 		
 		switch (row) {
 			case 0:
 				cell.textLabel.text = @"Employee Id";
 				loginTextField.returnKeyType = UIReturnKeyDone;
-				loginTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+				loginTextField.keyboardType = UIKeyboardTypeNumberPad;
 				loginTextField.text = self.empId;
 				break;
 			case 1:
 				cell.textLabel.text = @"Password";
 				loginTextField.returnKeyType = UIReturnKeyDone;
+				loginTextField.keyboardType = UIKeyboardTypeNumberPad;
 				loginTextField.secureTextEntry = YES;
 				loginTextField.text = self.password;
 				break;
@@ -415,5 +429,32 @@
 
 }
 
+- (void) addDoneAndCancelToolbarForTextField:(UITextField *)textField {
+	UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, KEYBOARD_TOOLBAR_WIDTH, KEYBOARD_TOOLBAR_HEIGHT)] autorelease];
+	keyboardToolbar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
+	keyboardToolbar.barStyle = UIBarStyleBlackTranslucent;
+	UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissKeyboard:)] autorelease];
+	UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAndDismissKeyboard:)] autorelease];
+	UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+    NSArray *items = [[[NSArray alloc] initWithObjects:doneButton, flex, cancelButton, nil] autorelease];
+	[keyboardToolbar setItems:items];
+	[textField setInputAccessoryView:keyboardToolbar];
+}
+
+- (void) dismissKeyboard:(id)sender {
+	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
+		// The toolbar done button calls this.  Allows the delegate to be called.
+		self.keyboardCancelled = NO;
+		[self.currentFirstResponder resignFirstResponder];
+	}
+}
+
+- (void) cancelAndDismissKeyboard:(id)sender {
+	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
+		// Have to let the text field delegate know we cancelled.
+		self.keyboardCancelled = YES;
+		[self.currentFirstResponder resignFirstResponder];
+	}
+}
 
 @end
