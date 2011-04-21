@@ -179,31 +179,25 @@
 	
 	subTotalLabel = [self createOrderLabel:@"Subtotal:" withRect:CGRectMake(0.0f, cy, ORDER_LABEL_WIDTH, ORDER_LABEL_HEIGHT) andAlignment:UITextAlignmentRight];
 	[self.view addSubview:subTotalLabel];
-	[subTotalLabel release];
 	
 	subTotalValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_VALUE_X, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:UITextAlignmentLeft];
 	[self.view addSubview:subTotalValue];
-	[subTotalValue release];
 	
 	cy += ORDER_LABEL_HEIGHT;
 	
 	taxLabel = [self createOrderLabel:@"Tax:" withRect:CGRectMake(0.0f, cy, ORDER_LABEL_WIDTH, ORDER_LABEL_HEIGHT) andAlignment:UITextAlignmentRight];
 	[self.view addSubview:taxLabel];
-	[taxLabel release];
 	
 	taxValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_VALUE_X, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:UITextAlignmentLeft];
 	[self.view addSubview:taxValue];
-	[taxValue release];
 	
 	cy += ORDER_LABEL_HEIGHT;
 	
 	totalLabel = [self createOrderLabel:@"Total:" withRect:CGRectMake(0.0f, cy, ORDER_LABEL_WIDTH, ORDER_LABEL_HEIGHT) andAlignment:UITextAlignmentRight];
 	[self.view addSubview:totalLabel];
-	[totalLabel release];
 	
 	totalValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_VALUE_X, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:UITextAlignmentLeft];
 	[self.view addSubview:totalValue];
-	[totalValue release];
 	
 	cy += ORDER_LABEL_HEIGHT;
 	
@@ -391,14 +385,6 @@
 #pragma mark -
 #pragma mark Order Methods
 - (void) calculateOrder {
-	BOOL custTaxExempt = NO;
-	Customer *customer = [orderCart getCustomerForOrder];
-    
-	// If the customer is not set yet, we will assume that they are not tax exempt
-	if (customer != nil && [customer taxExempt] == YES) {
-		custTaxExempt = YES;
-	}
-	
 	Order *order = [orderCart getOrder];
     
     if (order != nil) {
@@ -760,7 +746,7 @@
 	label.textColor = [UIColor blackColor];
 	label.textAlignment = alignment;
 	label.font = [UIFont boldSystemFontOfSize:ORDER_LABEL_FONT_SIZE];
-	return label;
+	return [label autorelease];
 }
 
 @end

@@ -11,6 +11,7 @@
 #import "ExtUITextField.h"
 #import "AddItemView.h"
 #import "SignatureViewController.h"
+#import "MOGlassButton.h"
 
 #import "OrderCart.h"
 #import "LineaSDK.h"
@@ -23,8 +24,8 @@
 	UILabel *scanItemLabel;
 	ExtUITextField *lookupItemField;
 	ExtUITextField *lookupOrderField;
-	UIButton *customerButton;
-	UIButton *cartButton;
+	MOGlassButton *customerButton;
+	MOGlassButton *cartButton;
 	
 	NSString *lookupItemSku;
 	NSString *scannedItemSku;

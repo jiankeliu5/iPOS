@@ -52,6 +52,8 @@
 	id currentFirstResponder;
 	CGFloat previousViewOriginY;
 	BOOL keyboardCancelled;
+	
+	NSNumberFormatter *quantityFormatter;
 
 }
 

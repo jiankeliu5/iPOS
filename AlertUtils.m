@@ -40,8 +40,9 @@
 	[indicator startAnimating];
 	[indicator setFrame:CGRectMake(125, 60, 37, 37)];
 	[alert addSubview:indicator];
+	[indicator release];
 	[alert show];
-	return alert;
+	return [alert autorelease];
 }
 
 
@@ -49,7 +50,7 @@
 	
 	if (nil != alert) {
 		[alert dismissWithClickedButtonIndex:0 animated:YES];
-		[alert release]; 
+		//[alert release]; 
 		alert=nil;
 	}
 }

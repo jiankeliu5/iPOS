@@ -271,6 +271,8 @@
 	} else {
 		[self.navigationController popViewControllerAnimated:YES];
 	}
+	[mgr release];
+	mgr = nil;
 }
 
 - (void) updateViewLayout {

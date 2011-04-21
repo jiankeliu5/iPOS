@@ -138,7 +138,7 @@ static int const ORDER_TYPE_CLOSED = 3;
         // Set the selling price to the retail price
         // Default the status to 1 (Open)
         [orderItem setStatusToOpen];
-        orderItem.sellingPrice = [item.retailPrice copy];    
+        orderItem.sellingPrice = [[item.retailPrice copy] autorelease];    
         
     }
 }

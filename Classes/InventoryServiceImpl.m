@@ -120,7 +120,7 @@
     
     // If the customer is a retail customer, selling price is retail price
     if ([customer isRetailCustomer]) {
-        orderItem.sellingPrice = [orderItem.item.retailPrice copy];
+        orderItem.sellingPrice = [[orderItem.item.retailPrice copy] autorelease];
     } else {
         ASIHTTPRequest *request =  [self startGetRequest:[NSString stringWithFormat:@"%@/%@/customerSellingPrice/%@/%@/%@", 
                                                                 baseUrl, posInventoryMgmtUri, customer.priceLevelId, orderItem.item.priceGroupId, orderItem.item.retailPrice] withSession:sessionInfo];

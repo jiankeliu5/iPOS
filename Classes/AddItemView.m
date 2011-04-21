@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <math.h>
 
+#import "AlertUtils.h"
 #import "AddItemView.h"
 #import "LayoutUtils.h"
 #import "ProductItem.h"
@@ -36,6 +37,7 @@
 - (void) addKeyboardListeners;
 - (void) removeKeyboardListeners;
 - (void) dismissKeyboard:(id)sender;
+- (void) dismissKeyboardWithCancel:(id)sender;
 @end
 
 #pragma mark -
@@ -60,10 +62,15 @@
     
 	priceFormatter = [[NSNumberFormatter alloc] init];
 	[priceFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+	
 	availableFormatter = [[NSNumberFormatter alloc] init];
 	[availableFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
 	[availableFormatter setMaximumFractionDigits:2];
 	[availableFormatter setMinimumFractionDigits:2];
+	
+	quantityFormatter = [[NSNumberFormatter alloc] init];
+	[quantityFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+	[quantityFormatter setGeneratesDecimalNumbers:YES];
 	
     return self;
 }
@@ -79,6 +86,9 @@
 	
 	[availableFormatter release];
 	availableFormatter = nil;
+	
+	[quantityFormatter release];
+	quantityFormatter = nil;
 	
 	[productItem release];
 	productItem = nil;
@@ -236,14 +246,15 @@
 		addQuantityField.tagName = @"AddQuantity";
 		addQuantityField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 		addQuantityField.returnKeyType = UIReturnKeyGo;
-		addQuantityField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+		addQuantityField.keyboardType = UIKeyboardTypeDecimalPad;
 		addQuantityField.delegate = self;
 		UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, KEYBOARD_TOOLBAR_WIDTH, KEYBOARD_TOOLBAR_HEIGHT)] autorelease];
 		keyboardToolbar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
 		keyboardToolbar.barStyle = UIBarStyleBlackTranslucent;
-		UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissKeyboard:)] autorelease];
+		UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissKeyboardWithCancel:)] autorelease];
+		UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissKeyboard:)] autorelease];
 		UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
-		NSArray *items = [[[NSArray alloc] initWithObjects:flex, cancelButton, nil] autorelease];
+		NSArray *items = [[[NSArray alloc] initWithObjects:doneButton, flex, cancelButton, nil] autorelease];
 		[keyboardToolbar setItems:items];
 		[addQuantityField setInputAccessoryView:keyboardToolbar];
 		[addQuantityView addSubview:addQuantityField];
@@ -328,9 +339,10 @@
 - (void)textFieldDidEndEditing:(ExtUITextField *)textField {
 	[self removeKeyboardListeners];
 	self.currentFirstResponder = nil;
-	if (self.keyboardCancelled == NO) {
+	
+	NSDecimalNumber *quantity = ([textField.text length] > 0) ? (NSDecimalNumber *)[quantityFormatter numberFromString:textField.text] : nil;
+	if (self.keyboardCancelled == NO && quantity != nil) {
 		ProductItem *pi = (ProductItem *)self.productItem;
-		NSDecimalNumber *quantity = [NSDecimalNumber decimalNumberWithString:textField.text];
 		if (viewDelegate != nil && [viewDelegate respondsToSelector:@selector(addItem:orderQuantity:ofUnits:)]) {
 			[viewDelegate addItem:self orderQuantity:quantity ofUnits:pi.primaryUnitOfMeasure];
 		}
@@ -356,6 +368,12 @@
 }
 
 - (void) dismissKeyboard:(id)sender {
+	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
+		[self.currentFirstResponder resignFirstResponder];
+	}
+}
+
+- (void) dismissKeyboardWithCancel:(id)sender {
 	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
 		// Have to let the text field delegate know we cancelled.
 		self.keyboardCancelled = YES;

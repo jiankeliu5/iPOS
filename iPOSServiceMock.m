@@ -27,7 +27,7 @@
     session.employeeId = [NSNumber numberWithInt:123];
     session.storeId = [NSNumber numberWithInt: 1200];
     session.serverSessionId = @"1234-test-34";
-    session.passwordForVerification = [password copy];
+    session.passwordForVerification = [[password copy] autorelease];
     
     return session;
 }

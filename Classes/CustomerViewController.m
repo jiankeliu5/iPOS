@@ -119,34 +119,30 @@
 	CGFloat dy = LABEL_SPACING;
 	firstLabel = [self createNormalLabel:@"First" withRect:CGRectMake(DETAIL_LABEL_X, dy, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:firstLabel];
-	[firstLabel release];
+
 	firstName = [self createBoldLabel:nil withRect:CGRectMake(DETAIL_DATA_X, dy, DETAIL_DATA_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:firstName];
-	[firstName release];
 	
 	dy += LABEL_HEIGHT + LABEL_SPACING;
 	lastLabel = [self createNormalLabel:@"Last" withRect:CGRectMake(DETAIL_LABEL_X, dy, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:lastLabel];
-	[lastLabel release];
+
 	lastName = [self createBoldLabel:nil withRect:CGRectMake(DETAIL_DATA_X, dy, DETAIL_DATA_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:lastName];
-	[lastName release];
 	
 	dy += LABEL_HEIGHT + LABEL_SPACING;
 	emailLabel = [self createNormalLabel:@"Email" withRect:CGRectMake(DETAIL_LABEL_X, dy, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:emailLabel];
-	[emailLabel release];
+
 	email = [self createBoldLabel:nil withRect:CGRectMake(DETAIL_DATA_X, dy, DETAIL_DATA_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:email];
-	[email release];
 	
 	dy += LABEL_HEIGHT + LABEL_SPACING;
 	zipLabel = [self createNormalLabel:@"Zip" withRect:CGRectMake(DETAIL_LABEL_X, dy, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:zipLabel];
-	[zipLabel release];
+
 	zip = [self createBoldLabel:nil withRect:CGRectMake(DETAIL_DATA_X, dy, DETAIL_DATA_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:zip];
-	[zip release];
 	
 	detailView.hidden = YES;
 	[self.view addSubview:detailView];
@@ -329,7 +325,7 @@
 	label.textColor = [UIColor blackColor];
 	label.textAlignment = UITextAlignmentLeft;
 	label.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
-	return label;
+	return [label autorelease];
 }
 
 - (UILabel *) createBoldLabel:(NSString *)text withRect:(CGRect)rect {

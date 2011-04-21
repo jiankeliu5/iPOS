@@ -33,6 +33,8 @@
     MOGlassButton *openButton;
 	MOGlassButton *priceButton;
 	
+	NSNumberFormatter *quantityFormatter;
+	
 }
 
 // Use assign instead of retain because the order items are kept in a singleton.

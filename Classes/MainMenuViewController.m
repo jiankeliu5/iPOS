@@ -156,8 +156,8 @@
 	lookupItemField.tagName = @"LookupItem";
 	lookupItemField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	lookupItemField.returnKeyType = UIReturnKeySearch;
-	lookupItemField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-	[super addCancelToolbarForTextField:lookupItemField];
+	lookupItemField.keyboardType = UIKeyboardTypeNumberPad;
+	[super addDoneAndCancelToolbarForTextField:lookupItemField];
 	[self.view addSubview:lookupItemField];
 	[lookupItemField release];
 	
@@ -173,14 +173,14 @@
 	//[self.view addSubview:lookupOrderField];
 	//[lookupOrderField release];
 	
-	customerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	customerButton = [[[MOGlassButton alloc] initWithFrame:CGRectZero] autorelease];
 	[customerButton setTitle:@"Customer" forState:UIControlStateNormal];
-	[customerButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+	[customerButton setupAsBlackButton];
 	[self.view addSubview:customerButton];
 	
-	cartButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	cartButton = [[[MOGlassButton alloc] initWithFrame:CGRectZero] autorelease];
 	[cartButton setTitle:@"Order" forState:UIControlStateNormal];
-	[cartButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+	[cartButton setupAsBlackButton];
 	[self.view addSubview:cartButton];
 	 
 }

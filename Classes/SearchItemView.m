@@ -24,6 +24,7 @@
 @interface SearchItemView ()
 - (void) loadView;
 - (void) dismissKeyboard:(id)sender;
+- (void) dismissKeyboardWithCancel:(id)sender;
 @end
 
 #pragma mark -
@@ -92,14 +93,15 @@
 	lookupSkuField.tagName = @"LookupItem";
 	lookupSkuField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	lookupSkuField.returnKeyType = UIReturnKeySearch;
-	lookupSkuField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+	lookupSkuField.keyboardType = UIKeyboardTypeDecimalPad;
 	lookupSkuField.delegate = self;
 	UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, KEYBOARD_TOOLBAR_WIDTH, KEYBOARD_TOOLBAR_HEIGHT)] autorelease];
 	keyboardToolbar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
 	keyboardToolbar.barStyle = UIBarStyleBlackTranslucent;
 	UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissKeyboard:)] autorelease];
+	UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissKeyboardWithCancel:)] autorelease];
 	UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
-    NSArray *items = [[[NSArray alloc] initWithObjects:doneButton, flex, nil] autorelease];
+    NSArray *items = [[[NSArray alloc] initWithObjects:doneButton, flex, cancelButton, nil] autorelease];
 	[keyboardToolbar setItems:items];
 	[lookupSkuField setInputAccessoryView:keyboardToolbar];
 	[roundedView addSubview:lookupSkuField];
@@ -140,6 +142,12 @@
 }
 
 - (void) dismissKeyboard:(id)sender {
+	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
+		[self.currentFirstResponder resignFirstResponder];
+	}
+}
+
+- (void) dismissKeyboardWithCancel:(id)sender {
 	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
 		// Have to let the text field delegate know we cancelled.
 		self.keyboardCancelled = YES;

@@ -228,6 +228,9 @@ NSString * const SIGNATURE_AS_JPG =@"jpg";
     CGImageRef imageRef = CGImageCreate(width, height, bitsPerComponent, bitsPerPixel, bytesPerRow, colorSpaceRef, bitmapInfo, provider, NULL, YES, renderingIntent);
     // then make the uiimage from that
     UIImage *myImage = [UIImage imageWithCGImage:imageRef];
+	CGImageRelease(imageRef);
+	CGColorSpaceRelease(colorSpaceRef);
+	CGDataProviderRelease(provider);
     return myImage;
 }
 

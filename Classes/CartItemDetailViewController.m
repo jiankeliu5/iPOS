@@ -51,7 +51,9 @@
 	// Set up the right side button if desired, edit button for example.
 	//[[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
 	
-	orderCart = [OrderCart sharedInstance];
+	quantityFormatter = [[NSNumberFormatter alloc] init];
+	[quantityFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+	[quantityFormatter setGeneratesDecimalNumbers:YES];
 
     return self;
 }
@@ -71,7 +73,8 @@
 }
 
 - (void)dealloc {
-	//[self setOrderItem:nil];
+	[quantityFormatter release];
+	quantityFormatter = nil;
     [super dealloc];
 }
 
@@ -148,8 +151,8 @@
         quantityField.tagName = @"ItemQuantity";
         
         quantityField.returnKeyType = UIReturnKeyGo;
-        quantityField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
-        [self addCancelToolbarForTextField:quantityField];
+        quantityField.keyboardType = UIKeyboardTypeDecimalPad;
+        [self addDoneAndCancelToolbarForTextField:quantityField];
     }
     
     // Is it editable
@@ -280,7 +283,7 @@
 
 - (void) extTextFieldFinishedEditing:(ExtUITextField *) textField {
 	if (textField.text != nil) {
-		NSDecimalNumber *newQuantity = [NSDecimalNumber decimalNumberWithString:textField.text];
+		NSDecimalNumber *newQuantity = (NSDecimalNumber *)[quantityFormatter numberFromString:textField.text];
 		if (newQuantity != nil) {
 			self.orderItem.quantity = newQuantity;
             
