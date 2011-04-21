@@ -20,7 +20,10 @@
 }
 
 - (void) applyDefaultRoundedStyle {
-    
+    [self applyRoundedStyle: [UIColor lightGrayColor] withShadow:YES];
+}
+
+- (void) applyRoundedStyle: (UIColor *)borderColor withShadow: (BOOL) doApplyShadow {
     self.clipsToBounds = NO;
     
     CALayer *round = [CALayer layer];
@@ -31,15 +34,18 @@
     round.cornerRadius = 5.0f;
     // Set the borders
     round.borderWidth = 1.0f;
-    round.borderColor = [[UIColor lightGrayColor] CGColor];
+    round.borderColor = [borderColor CGColor];
     [self.layer insertSublayer:round atIndex:0];
     
     // Add the drop shadow
-    self.layer.shadowColor = [[UIColor blackColor] CGColor];
-    self.layer.shadowOffset = CGSizeMake(0.0f, 3.0f);
-    self.layer.shadowOpacity = 0.80f;
-    self.layer.shadowRadius = 5.0f;
+    if (doApplyShadow) {
+        self.layer.shadowColor = [[UIColor blackColor] CGColor];
+        self.layer.shadowOffset = CGSizeMake(0.0f, 3.0f);
+        self.layer.shadowOpacity = 0.80f;
+        self.layer.shadowRadius = 5.0f;
+    }
 }
+
 
 - (void) applyShineGradientToBackgroundWithColor:(UIColor *)color {
     CAGradientLayer *gradient = [CAGradientLayer layer];

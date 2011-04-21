@@ -14,6 +14,8 @@
 
 #import "POSOxmUtils.h"
 #import "ProductItemXmlMarshaller.h"
+#import "ItemSellingPriceApprovalRequest.h"
+#import "ItemSellingPriceApprovalResponse.h"
 
 @interface InventoryServiceImpl()
 
@@ -140,10 +142,42 @@
 }
 
 - (BOOL) adjustSellingPriceFor: (OrderItem *) orderItem withDiscountAmount: (NSDecimalNumber *) discountAmount managerApproval: (ManagerInfo *) managerApprover withSession: (SessionInfo *) sessionInfo {
-    BOOL allowAdjustment = YES;
+    BOOL allowAdjustment = NO;
+    ItemSellingPriceApprovalRequest *sellingApprovalReq = [[[ItemSellingPriceApprovalRequest alloc] initWithOrderItem:orderItem managerInfo:managerApprover] autorelease];
     
-    // TODO: Service integration
-    
+    if (orderItem) {
+         sellingApprovalReq.sellingPrice = [orderItem calcSellingPriceFrom:discountAmount];
+         
+        // Is it allowed?
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/changePriceApproval", baseUrl, posInventoryMgmtUri]];
+        ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+        
+        [request setValidatesSecureCertificate:NO];
+        [request setTimeOutSeconds:30];
+        [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
+        [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+        
+        NSString *requestXml = [sellingApprovalReq toXml];    
+        [request appendPostData:[requestXml dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        [request startSynchronous];
+        
+        NSArray *requestErrors = [request validateAsXmlContent];
+        if ([requestErrors count] > 0) {
+            return NO;   
+        } 
+        
+        // Parse the response and set the authorizer ID
+        ItemSellingPriceApprovalResponse *approvalResponse = [ItemSellingPriceApprovalResponse fromXml:[request responseString]];
+        
+        // Set the authorization ID (if available)
+        if (approvalResponse.isApproved && [approvalResponse.authorizationId compare: [NSDecimalNumber zero]] != NSOrderedSame) {
+            orderItem.priceAuthorizationId = approvalResponse.authorizationId;
+        }
+        
+        allowAdjustment = approvalResponse.isApproved;
+    }
+
     if (allowAdjustment) {
         orderItem.sellingPrice = [orderItem calcSellingPriceFrom:discountAmount];
     }

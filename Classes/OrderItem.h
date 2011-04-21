@@ -15,6 +15,8 @@
     NSNumber *lineNumber;
     NSNumber *statusId;
     
+    NSNumber *priceAuthorizationId;
+    
     NSDecimalNumber *sellingPrice;
     NSDecimalNumber *quantity;
     
@@ -28,6 +30,7 @@
 
 @property (nonatomic, retain) NSNumber *lineNumber;
 @property (nonatomic, retain) NSNumber *statusId;
+@property (nonatomic, retain) NSNumber *priceAuthorizationId;
 
 @property (nonatomic, retain) NSDecimalNumber *sellingPrice;
 @property (nonatomic, retain) NSDecimalNumber *quantity;

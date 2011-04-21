@@ -232,7 +232,7 @@
                                                                     
 	// Basic toolbar
     self.toolbarBasic = [[[NSArray alloc] initWithObjects:searchButton, tbFixed, custButton, tbFlex, nil] autorelease];
-	self.toolbarWithQuoteAndOrder = [[[NSArray alloc] initWithObjects:searchButton, tbFixed, custButton, tbFixed, quoteButton, tbFlex, orderButton, nil] autorelease];
+	self.toolbarWithQuoteAndOrder = [[[NSArray alloc] initWithObjects:searchButton, tbFixed, custButton, tbFlex, quoteButton, tbFixed, tbFixed, orderButton, nil] autorelease];
 	
 	// Edit mode toolbar
 	UIView *customToolbarView = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, COMMIT_EDIT_BUTTON_WIDTH, COMMIT_EDIT_HEIGHT)] autorelease];

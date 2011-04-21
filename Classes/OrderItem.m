@@ -10,6 +10,8 @@
 
 static int const STATUS_OPEN = 1;
 static int const STATUS_CLOSE = 2;
+static int const STATUS_RETURN = 3;
+static int const STATUS_CANCEL = 4;
 
 // Private interface
 @interface OrderItem()
@@ -18,7 +20,7 @@ static int const STATUS_CLOSE = 2;
 
 @implementation OrderItem
 
-@synthesize lineNumber, statusId, sellingPrice, quantity, managerApprover, item, shouldDelete, shouldClose;
+@synthesize lineNumber, statusId, priceAuthorizationId, sellingPrice, quantity, managerApprover, item, shouldDelete, shouldClose;
 
 #pragma mark Constructor/Deconstructor
 -(id) init {
@@ -48,6 +50,7 @@ static int const STATUS_CLOSE = 2;
 -(void) dealloc {
     [lineNumber release];
     [statusId release];
+    [priceAuthorizationId release];
     [sellingPrice release];
     
     if (managerApprover != nil) {

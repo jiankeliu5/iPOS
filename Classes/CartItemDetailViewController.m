@@ -54,6 +54,8 @@
 	quantityFormatter = [[NSNumberFormatter alloc] init];
 	[quantityFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
 	[quantityFormatter setGeneratesDecimalNumbers:YES];
+    
+    orderCart = [OrderCart sharedInstance];
 
     return self;
 }

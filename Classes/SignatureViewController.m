@@ -63,14 +63,14 @@
     
     // Add a toolbar to the view
     UIBarButtonItem *saveButton = [[[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleBordered target:self action:@selector(savePressed:)] autorelease];
+    UIBarButtonItem *clearButton = [[[UIBarButtonItem alloc] initWithTitle:@"Clear" style:UIBarButtonItemStyleBordered target:self action:@selector(clearPressed:)] autorelease];
     UIBarButtonItem *flex = [[[UIBarButtonItem alloc]
                              initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                              target:nil action:nil] autorelease];
     UIToolbar *toolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.0, 0.0, 480, 44)] autorelease];
     
-    toolbar.barStyle = UIBarStyleDefault;
-    
-    [toolbar setItems:[NSArray arrayWithObjects:flex,saveButton,nil]];
+    toolbar.barStyle = UIBarStyleBlack;
+    [toolbar setItems:[NSArray arrayWithObjects:flex,saveButton,clearButton,nil]];
     
     // Add the labels and signature pad
     UILabel *signingLabel = [[[UILabel alloc] initWithFrame:CGRectMake(40, 54, 390, 20)] autorelease];
@@ -81,7 +81,7 @@
     payAmountLabel.font = [UIFont boldSystemFontOfSize:14.0f];
     payAmountLabel.text = @"0.00";
     
-    signaturePad = [[[SignaturePad alloc] initWithFrame:CGRectMake(10, 94, 460, 200)] autorelease];
+    signaturePad = [[[SignaturePad alloc] initWithFrame:CGRectMake(10, 94, 460, 170)] autorelease];
     
     // Add the the bg view
     [bgView addSubview:toolbar]; 
@@ -133,6 +133,10 @@
 
 #pragma mark -
 #pragma mark Button Selectors
+-(void) clearPressed: (id) sender {
+    [signaturePad erase];
+}
+
 -(void) savePressed: (id) sender {
     // The delegate may accept the signature as an image or a base64 encoded string.  The base64 encoded signature 
     // is invoked if the delegate has implementations for both SignatureDelegate methods

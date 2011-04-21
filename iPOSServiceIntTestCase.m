@@ -27,7 +27,7 @@
     // We are setting to demo mode
     [((iPOSServiceImpl *) facade.posService) setToDemoMode];
     
-    BOOL loginResult = [facade login:@"123" password:@"test"];
+    BOOL loginResult = [facade login:@"123" password:@"456"];
     
     STAssertTrue(loginResult, @"I expected the login result to be true :-(");
     
@@ -40,7 +40,7 @@
     [((iPOSServiceImpl *) facade.posService) setToDemoMode];
 
     
-    BOOL loginResult = [facade login:@"123" password:@"test"];
+    BOOL loginResult = [facade login:@"123" password:@"456"];
     
     STAssertTrue(loginResult, @"I expected the login result to be true :-(");
     
@@ -60,7 +60,7 @@
     
     
     // We have to login first
-    [facade login:@"123" password:@"test"];
+    [facade login:@"123" password:@"456"];
     
     ProductItem *productItem = [facade lookupProductItem:@"440915"];
     
@@ -81,7 +81,7 @@
     [((iPOSServiceImpl *) facade.posService) setToDemoMode];
     
     // We have to login first
-    [facade login:@"123" password:@"test"];
+    [facade login:@"123" password:@"456"];
     
     // We know that phone number 6127461580 - The OPI Office will be found
     Customer *customer = [facade lookupCustomerByPhone:@"6127461580"];
@@ -114,7 +114,7 @@
     [((iPOSServiceImpl *) facade.posService) setToDemoMode];
     
     // We have to login first
-    [facade login:@"123" password:@"test"];
+    [facade login:@"123" password:@"456"];
     
     // We know that phone number 1111111111 will not be found
     Customer *customer = [facade lookupCustomerByPhone:@"1111111111"];
@@ -139,7 +139,7 @@
     newCustomer.address.zipPostalCode = @"55044";
     
     // We have to login first
-    [facade login:@"123" password:@"test"];
+    [facade login:@"123" password:@"456"];
     
     [facade newCustomer:newCustomer];
     
@@ -168,7 +168,7 @@
     newCustomer.address.zipPostalCode = @"55044";
     
     // We have to login first
-    [facade login:@"123" password:@"test"];
+    [facade login:@"123" password:@"456"];
     
     [facade newCustomer:newCustomer];
     
@@ -196,7 +196,7 @@
     updateCustomer.address.zipPostalCode = @"55044";
     
     // We have to login first
-    [facade login:@"123" password:@"test"];
+    [facade login:@"123" password:@"456"];
     
     [facade updateCustomer:updateCustomer];
     
@@ -221,7 +221,7 @@
     updateCustomer.emailAddress = @"testThis@email.com";
     
     // We have to login first
-    [facade login:@"123" password:@"test"];
+    [facade login:@"123" password:@"456"];
     
     [facade updateCustomer:updateCustomer];
     
@@ -240,7 +240,7 @@
     // We are setting to demo mode
     [((iPOSServiceImpl *) facade.posService) setToDemoMode];
     
-    [facade login:@"123" password:@"test"];
+    [facade login:@"123" password:@"456"];
     
      STAssertNil(newOrder.orderId, @"Expected the order id to be nil");
      
@@ -252,27 +252,25 @@
     
 }
 
-- (void) testPosFacadeNewOrderWithInvalidType {
+- (void) testPosFacadeNewOrder {
     iPOSFacade *facade = [iPOSFacade sharedInstance];
     Order *newOrder = [self orderForTest];
     
     // We are setting to demo mode
     [((iPOSServiceImpl *) facade.posService) setToDemoMode];
     
-    [facade login:@"123" password:@"test"];
+    [facade login:@"123" password:@"456"];
     
     // Set the order type to an invalid order type (for testing)
     newOrder.orderTypeId = [NSNumber numberWithInt:10];
     
     STAssertNil(newOrder.orderId, @"Expected the order id to be nil");
     
+    newOrder.orderTypeId = [NSNumber numberWithInt:5];
     [facade newOrder:newOrder];
     
     // Verify that it now has a customer ID
-    STAssertTrue([newOrder.errorList count] > 0, @"Expected an error");
-    Error *error = (Error *) [newOrder.errorList lastObject];
-    STAssertTrue([error.errorId isEqualToString:@"INVALID_ORDER_TYPE"], @"Expected an error");
-    STAssertTrue([error.message isEqualToString:@"Invalid order type"], error.message);
+    STAssertTrue([newOrder.errorList count] == 0, @"Expected an error");
 }
 
 -(Order *) orderForTest {

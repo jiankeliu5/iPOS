@@ -29,7 +29,7 @@
     [((iPOSServiceImpl *) facade.posService) setToDemoMode];
     [((iPOSServiceImpl *) facade.paymentService) setToDemoMode];
     
-    BOOL loginResult = [facade login:@"123" password:@"test"];
+    BOOL loginResult = [facade login:@"123" password:@"456"];
     STAssertTrue(loginResult, @"I expected the login result to be true :-(");
     
     // Test the cc payment

@@ -11,7 +11,8 @@
 
 static int const ORDER_TYPE_QUOTE = 1;
 static int const ORDER_TYPE_OPEN = 2;
-static int const ORDER_TYPE_CLOSED = 3;
+static int const ORDER_TYPE_CANCELLED = 3;
+static int const ORDER_TYPE_CLOSED = 4;
 
 @implementation Order
 

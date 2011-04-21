@@ -75,25 +75,54 @@ static OrderCart *cart = nil;
 #pragma mark -
 #pragma mark Order Cart Functionality
 - (void) bindCustomerToOrder:(Customer *)customer {
-    Order *order = [self getOrder];
-    
-    order.customer = customer;
-    
-    // We will need to do a selling price adjustment for current items in the order when binding a customer to the order
-    NSArray *orderItemList = [order getOrderItems];
-    
-    for (OrderItem *orderItem in orderItemList) {
-        if (![facade adjustSellingPriceFor:orderItem withCustomer:order.customer]) {
-            // Attach error to customer
-            Error *error = [[[Error alloc] init] autorelease];
-            error.errorId = @"SRV_ERR_ADJ_PRICE";
-            error.message = [NSString stringWithFormat: @"Could not set selling price for item in cart with sku '%@'.  Possible server error.", orderItem.item.sku];
+    if (customer) {
+        Customer *previousCustomer = nil;
+        Order *order = [self getOrder];
+
+        if (order.customer) {
+            previousCustomer = [order.customer retain];
+        }
+        
+        // Set new customer for the order
+        order.customer = customer;
+        
+        // Do we need to do selling price adjustment based on customer?
+        // 1.  If previous customer and customer type is different and:
+        //      a.  previous customer was not a Retail customer OR
+        //      b.  new customer is a contractor type
+        // OR
+        //
+        // 2.  No Previous Customer and Customer is not a Retail Customer
+        BOOL doAdjustSellingPrice = NO;
+        
+        if ((previousCustomer 
+            && ![previousCustomer.customerTypeId isEqualToNumber:customer.customerTypeId]
+            && (![previousCustomer isRetailCustomer] || ![customer isRetailCustomer]))
+            || (previousCustomer == nil && ![customer isRetailCustomer])) {
+            doAdjustSellingPrice = YES;
+        }
+        
+        if (doAdjustSellingPrice) {
+            NSArray *orderItemList = [order getOrderItems];
             
-            [customer addError:error];
-            break;
-        };
+            for (OrderItem *orderItem in orderItemList) {
+                if (![facade adjustSellingPriceFor:orderItem withCustomer:order.customer]) {
+                    // Attach error to customer
+                    Error *error = [[[Error alloc] init] autorelease];
+                    error.errorId = @"SRV_ERR_ADJ_PRICE";
+                    error.message = [NSString stringWithFormat: @"Could not set selling price for item in cart with sku '%@'.  Possible server error.", orderItem.item.sku];
+                    
+                    [customer addError:error];
+                    break;
+                };
+            }
+        }
+        
+        // Release the previous customer
+        if (previousCustomer) {
+            [previousCustomer release];
+        }
     }
-    
 }
 
 - (void) addItem:  (ProductItem *) item withQuantity: (NSDecimalNumber *) quantity {

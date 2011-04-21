@@ -168,7 +168,7 @@
 	mgrPasswordField.clearsOnBeginEditing = YES;
 	mgrPasswordField.tagName = @"ManagerPassword";
 	mgrPasswordField.returnKeyType = UIReturnKeyDone;
-	mgrPasswordField.keyboardType - UIKeyboardTypeNumberPad;
+	mgrPasswordField.keyboardType = UIKeyboardTypeNumberPad;
 	mgrPasswordField.secureTextEntry = YES;
 	[self addDoneAndCancelToolbarForTextField:mgrPasswordField];
 	[roundView addSubview:mgrPasswordField];

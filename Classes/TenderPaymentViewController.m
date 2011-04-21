@@ -7,16 +7,23 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import "AlertUtils.h"
+
 #import "TenderPaymentViewController.h"
 #import "UIViewController+ViewControllerLayout.h"
 #import "GradientView.h"
 #import "SSLineView.h"
 
+#import "ChargeCreditCardView.h"
+#import "SignatureViewController.h"
+
 #import "NSString+StringFormatters.h"
+
+#import "CreditCardPayment.h"
 
 
 #define TOOLBAR_HEIGHT 44.0f
-#define SEPARATOR_HEIGHT 5.0f;
+#define SEPARATOR_HEIGHT 5.0f
 
 #define LABEL_STARTY 30.0f
 #define LABEL_STARTX 60.0f
@@ -41,9 +48,14 @@
 - (void) handleSuspendOrder: (id) sender;
 
 - (void) updateViewLayout;
+
+- (BOOL) createOrder;
+- (BOOL) tenderPaymentFromCardData: (NSString *)track1 track2:(NSString *)track2 track3:(NSString *)track3;
 @end
 
 @implementation TenderPaymentViewController
+
+@synthesize paymentAmount, ccPayment;
 
 #pragma mark Constructors
 - (id)init
@@ -66,6 +78,9 @@
 }
 
 - (void)dealloc {
+    [paymentAmount release];
+    [ccPayment release];
+    
     [super dealloc];
 }
 
@@ -136,6 +151,11 @@
 	if (self.navigationController != nil) {
 		[self.navigationController setNavigationBarHidden:NO];
 	}
+    
+    self.delegate = self;
+    
+    // Get a handle to the shared Linea Device
+    linea = [Linea sharedDevice];
 	
 }
 
@@ -155,6 +175,9 @@
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
+    // Remove this controller as a linea delegate
+    [linea removeDelegate: self];
+    
 	// Do this at the end
 	[super viewWillDisappear:animated];
 }
@@ -176,6 +199,166 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
+
+#pragma mark -
+#pragma mark ChargeCreditCardViewDelegate
+- (void) setupKeyboardSupport:(ChargeCreditCardView *)theChargeCCView {
+    ExtUITextField *chargeAmtField = [theChargeCCView getChargeAmountTextField];
+    
+    chargeAmtField.returnKeyType = UIReturnKeyDone;
+	chargeAmtField.keyboardType = UIKeyboardTypeDecimalPad;
+	[self addDoneAndCancelToolbarForTextField:chargeAmtField];
+    
+    chargeAmtField.delegate = self;
+}
+
+- (void) cancelCardSwipe: (ChargeCreditCardView *) theChargeCCView {
+
+    // Remove as a Linea Delegate
+    [linea removeDelegate:self];
+    
+//    [UIView beginAnimations:nil context:nil];
+//    [UIView setAnimationDuration:0.25];
+//    [UIView setAnimationDelegate:self];
+//    [UIView setAnimationDidStopSelector:@selector(dismissChargeCCAnimationHasFinished:finished:context:)];
+
+    CGRect frame = theChargeCCView.frame;
+    frame.origin.y = 480;
+    theChargeCCView.frame = frame;
+    
+//    [UIView commitAnimations];
+    
+    self.navigationItem.hidesBackButton = NO;
+    [self.navigationItem.leftBarButtonItem setEnabled:YES];
+    [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    
+    // NOTE:  If we enable animations this would be done in dismissChargeCCAnimationHasFinished
+    if (chargeCCView) {
+        [chargeCCView removeFromSuperview];
+    } 
+}
+
+- (void) readyForCardSwipe:(NSDecimalNumber *)chargeAmount fromView:(ChargeCreditCardView *)chargeCCView {
+    // Set the payment amount
+    self.paymentAmount = chargeAmount;
+    
+    // Add this controller as a Linea Device Delegate
+    [linea addDelegate:self];
+}
+
+#pragma mark -
+#pragma mark Linea Delegate Methods
+- (void) magneticCardData:(NSString *)track1 track2:(NSString *)track2 track3:(NSString *)track3 {
+    BOOL isOrderCreated = NO;
+    BOOL isPaymentTendered = NO;
+    
+    int sound[]={2730,150,0,30,2730,150};
+	[linea playSound:100 beepData:sound length:sizeof(sound)];
+    
+    // When the Credit Card is scanned we are going to:
+    // 1.  Create the order in POS
+    // 2.  Process the payment with indicated amount
+    // 3.  Prompt for signature
+    isOrderCreated = [self createOrder];
+    
+    if (isOrderCreated) {
+        isPaymentTendered = [self tenderPaymentFromCardData:track1 track2:track2 track3:track3];
+    }
+
+    if (isPaymentTendered) {
+        SignatureViewController *ccSignatureViewController = [[[SignatureViewController alloc] init] autorelease];
+   
+        ccSignatureViewController.delegate = self;
+        ccSignatureViewController.payAmountLabel.text = [NSString formatDecimalNumberAsMoney:self.paymentAmount];
+        
+        
+        [self presentModalViewController:ccSignatureViewController animated:YES];
+        
+        // Remove the credit card view
+        if (chargeCCView) {
+            [chargeCCView removeFromSuperview];
+        } 
+    }
+}
+
+#pragma mark -
+#pragma mark ExtUIViewController delegates
+- (void) extTextFieldFinishedEditing:(ExtUITextField *) textField {
+    // Verify that the amount entered is between balance due and order total
+    Order *order = [orderCart getOrder];
+    
+    NSDecimalNumberHandler *bankersRoundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:2 
+                                                                                                  raiseOnExactness:NO raiseOnOverflow:NO 
+                                                                                                  raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+    NSDecimalNumber *amount = [[NSDecimalNumber decimalNumberWithString:textField.text] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
+    NSDecimalNumber *balanceDue = [[order calcBalanceDue] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
+    NSDecimalNumber *orderAmount = [[[order calcOrderSubTotal] decimalNumberByAdding:[order calcOrderTax]] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];  
+      
+    if ([amount compare:balanceDue] == NSOrderedAscending) {
+        [AlertUtils showModalAlertMessage:@"Cannot charge less than the balance due."];
+        return;
+    } else if ([amount compare:orderAmount] == NSOrderedDescending) {
+        [AlertUtils showModalAlertMessage:@"Cannot charge more than the order total balance."];
+        return;
+    }
+    
+    // If the amount was $0.00 at this point, it is a fully open order.  Create the open order and we are done.
+    if ([amount compare:[NSDecimalNumber zero]] == NSOrderedSame) {
+        BOOL isOrderCreated = [self createOrder];
+        
+        if (isOrderCreated) {
+            [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Order %@ was successfully processed.", [orderCart getOrder].orderId]];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+    } else {
+        // We are good at this point so show the message to have user swipe credit card
+        if (chargeCCView) {
+            [chargeCCView switchCardSwipeToReady];
+        }
+    }
+}
+
+#pragma mark -
+#pragma mark SignatureDelegate methods
+- (void) signatureController:(SignatureViewController *)signatureController signatureAsBase64:(NSString *)signature savePressed:(id)sender {
+    BOOL isSignatureAccepted = YES;
+    if (self.ccPayment && signature) { 
+        [self.ccPayment attachSignature:signature];
+        
+        if (![facade acceptSignatureFor:self.ccPayment]) {
+            [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Problem accepting signature for payment with ref #%@.", ccPayment.paymentRefId]];
+            isSignatureAccepted = NO;
+        };
+    } else {
+        [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"A Signature was not provided for payment with ref #%@.", ccPayment.paymentRefId]];
+        isSignatureAccepted = NO;
+    }
+
+    if (isSignatureAccepted) {
+        // Make sure we clear out the payment at this point
+        self.ccPayment = nil;
+        
+        // TODO bring up the receipt as a modal view
+        
+        // For now dismiss and logout
+        [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Order %@ was successfully processed.", [orderCart getOrder].orderId]];
+        [self dismissModalViewControllerAnimated:YES];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+}
+-(void) signatureController: (SignatureViewController *) signatureController signatureAsImage: (UIImage *) signature savePressed: (id) sender {
+	// We are not capturing the signature as an image, but as base64encoded string.
+}
+
+
+#pragma mark -
+#pragma mark Animation Delegates
+- (void)dismissChargeCCAnimationHasFinished:(NSString *)animationID finished:(BOOL)finished context:(void *)context {
+    if (chargeCCView) {
+        [chargeCCView removeFromSuperview];
+    }    
+}
+
 
 #pragma mark -
 #pragma mark Private Interface
@@ -248,7 +431,7 @@
     
     // line
     SSLineView *totalLine = [[[SSLineView alloc] initWithFrame:CGRectMake(LABEL_STARTX+LABEL_TITLE_WIDTH+LABEL_WIDTH-LINE_WIDTH, currentY+LABEL_HEIGHT+LINE_HEIGHT, LINE_WIDTH, LINE_HEIGHT)] autorelease];
-   
+    
     currentY += LABEL_HEIGHT + 2*LABEL_SPACING;
     UILabel *totalTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(LABEL_STARTX, currentY, LABEL_TITLE_WIDTH, LABEL_HEIGHT)];
     totalTitleLabel.backgroundColor = [UIColor clearColor];
@@ -261,7 +444,7 @@
 	totalLabel.textAlignment = UITextAlignmentRight; 
     totalLabel.text = @"$0.00";
     
-   
+    
     // Add the the view
     [tenderTotalView addSubview:itemsTitleLabel];
     [tenderTotalView addSubview:discountTitleLabel];
@@ -275,8 +458,8 @@
     [tenderTotalView addSubview:taxTotalLabel]; 
     [tenderTotalView addSubview:totalLine];
     [tenderTotalView addSubview:totalLabel];
-
-   
+    
+    
     // Release objects
     [itemsTitleLabel release];
     [discountTitleLabel release];
@@ -329,7 +512,26 @@
 }
 
 - (void) handleCreditCardPayment:(id)sender {
+    self.navigationItem.hidesBackButton = YES;
+    [self.navigationItem.leftBarButtonItem setEnabled:NO];
+    [self.navigationItem.rightBarButtonItem setEnabled:NO];
     
+    CGRect overlayRect = self.view.bounds;
+    overlayRect.origin.y = 480;
+    chargeCCView = [[ChargeCreditCardView alloc] initWithFrame:overlayRect];
+    
+    chargeCCView.viewDelegate = self;
+    chargeCCView.balanceDue = balanceDueLabel.text;
+    chargeCCView.totalBalance = totalLabel.text;
+    
+//    [UIView beginAnimations:nil context:nil];
+//    [UIView setAnimationDuration:0.25];
+    
+    [self.view addSubview:chargeCCView];
+    CGRect frame = chargeCCView.frame;
+    frame.origin.y = 0;
+    chargeCCView.frame = frame;
+//    [UIView commitAnimations];
 }
 
 - (void) handleSuspendOrder:(id) sender {
@@ -337,5 +539,44 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
+- (BOOL) createOrder {
+    Order *cartOrder = [orderCart getOrder];
+    
+    [facade newOrder:cartOrder];
+    
+    if ([cartOrder.errorList count] == 0 && cartOrder.orderId != nil) {
+        return YES;
+    }
+    
+    [AlertUtils showModalAlertForErrors:cartOrder.errorList];
+    return NO;    
+}
 
+- (BOOL) tenderPaymentFromCardData:(NSString *)track1 track2:(NSString *)track2 track3:(NSString *)track3 {
+    BOOL isPaymentTendered = NO;
+    financialCard card;
+	
+    if([linea msProcessFinancialCard:&card track1:track1 track2:track2]) {
+        NSDecimalNumberHandler *bankersRoundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:2 
+                                                                                                      raiseOnExactness:NO raiseOnOverflow:NO 
+                                                                                                      raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+		self.ccPayment = [[[CreditCardPayment alloc] initWithOrder:[orderCart getOrder]] autorelease];
+        
+        ccPayment.nameOnCard = [[card.cardholderName copy] autorelease];
+        ccPayment.cardNumber = [[card.accountNumber copy] autorelease];
+        [ccPayment setExpireDateMonthYear:[NSString stringWithFormat:@"%d",card.exirationMonth] 
+                                     year:[NSString stringWithFormat:@"%d",card.exirationYear]] ;
+        ccPayment.paymentAmount = [[self paymentAmount] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
+        
+        [facade tenderPaymentWithCC:ccPayment];
+        
+        if ([ccPayment.errorList count] == 0) {
+            isPaymentTendered = YES;
+        } else {
+            [AlertUtils showModalAlertForErrors:ccPayment.errorList];
+        }
+    }
+    
+    return isPaymentTendered;
+}
 @end

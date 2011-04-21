@@ -45,7 +45,7 @@ NSString * const SIGNATURE_AS_JPG =@"jpg";
     self = [super initWithFrame:frame];
     if (self) {
         self.layer.borderColor = [UIColor blackColor].CGColor;
-        self.layer.borderWidth = 1.0f;
+        self.layer.borderWidth = 3.0f;
         
         // Set the default image format for the signature
         signatureImageFormat = SIGNATURE_AS_PNG;

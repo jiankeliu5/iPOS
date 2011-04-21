@@ -16,7 +16,7 @@
 #import "OrderCart.h"
 #import "LineaSDK.h"
 
-@interface MainMenuViewController : ExtUIViewController <LineaDelegate, ExtUIViewControllerDelegate, AddItemViewDelegate, SignatureDelegate> {
+@interface MainMenuViewController : ExtUIViewController <LineaDelegate, ExtUIViewControllerDelegate, AddItemViewDelegate> {
 	iPOSFacade *facade;
 	
     OrderCart *orderCart;

@@ -85,7 +85,7 @@
             break; 
 		case CONN_CONNECTED:
             [linea msStartScan];
-            [linea setMSCardDataMode:MS_RAW_CARD_DATA];
+            [linea setMSCardDataMode:MS_PROCESSED_CARD_DATA];
             break;
 	}
     

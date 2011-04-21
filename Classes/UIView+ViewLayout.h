@@ -15,6 +15,8 @@
 - (CGPoint) centerAt:(CGFloat) y;
 - (void) setAllAutoresizingMask;
 - (void) applyDefaultRoundedStyle;
+- (void) applyRoundedStyle: (UIColor *)borderColor withShadow: (BOOL) doApplyShadow;
+
 - (void) applyShineGradientToBackgroundWithColor:(UIColor *)color;
 - (void) applyGradientToBackgroundWithStartColor:(UIColor *)startColor endColor:(UIColor *)endColor;
 

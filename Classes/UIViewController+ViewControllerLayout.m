@@ -32,6 +32,12 @@
 	return barHeight;
 }
 
+- (CGRect)rectForStatus {
+	CGRect rect = self.navigationController.view.bounds;
+	rect.size.height -= STATUSBAR_HEIGHT;
+	return rect;
+}
+
 - (CGRect)rectForNavAndStatus {
 	CGRect rect = self.navigationController.view.bounds;
 	rect.size.height -= ([self navBarHeight] + STATUSBAR_HEIGHT);

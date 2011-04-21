@@ -47,6 +47,7 @@ static NSString * const ORDER_LINEITEM_XML = @""
             @"<LineID>%@</LineID>"
             @"<OrderDetailsStatusID>%@</OrderDetailsStatusID>"
             @"<PiecesPerBox>%@</PiecesPerBox>"
+            @"${priceAuthorizationXml}"
             @"<PrimaryUOM>%@</PrimaryUOM>"
             @"<QuantityOrderedPrimary>%@</QuantityOrderedPrimary>"
             @"<RetailPricePrimary>%@</RetailPricePrimary>"
@@ -284,6 +285,15 @@ static NSString * const ORDER_LINEITEM_XML = @""
                 lineItemXml = [lineItemXml stringByAppendingFormat:ORDER_LINEITEM_XML, conversion, defaultToBox, itemId, itemNumber, itemDescription, itemStatusCode, itemTypeId, 
                                lineNumber, orderDetailsStatus, piecesPerBox, primaryUom, quantity, retailPrice, salepersonEmpId,
                                secondaryUom, sellingPrice, stdCost, stockingCode, storeId, taxExempt, taxRate];
+                               
+                // Is there an authorization ID for selling price?
+                if (orderItem.priceAuthorizationId) {
+                    lineItemXml = [POSOxmUtils replaceInXmlTemplate:lineItemXml parameter:@"priceAuthorizationXml" 
+                                                          withValue:[NSString stringWithFormat:@"<PriceAuthorizationID>%@</PriceAuthorizationID>", orderItem.priceAuthorizationId]];
+                } else {
+                    lineItemXml = [POSOxmUtils replaceInXmlTemplate:lineItemXml parameter:@"priceAuthorizationXml" withValue:@""];
+                }
+
             }
         }
     }
