@@ -265,10 +265,9 @@
         SignatureViewController *ccSignatureViewController = [[[SignatureViewController alloc] init] autorelease];
    
         ccSignatureViewController.delegate = self;
-        ccSignatureViewController.payAmountLabel.text = [NSString formatDecimalNumberAsMoney:self.paymentAmount];
-        
         
         [self presentModalViewController:ccSignatureViewController animated:YES];
+        ccSignatureViewController.payAmountLabel.text = [NSString formatDecimalNumberAsMoney:self.paymentAmount];
         
         // Remove the credit card view
         if (chargeCCView) {

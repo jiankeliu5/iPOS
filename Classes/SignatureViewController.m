@@ -73,11 +73,13 @@
     [toolbar setItems:[NSArray arrayWithObjects:flex,saveButton,clearButton,nil]];
     
     // Add the labels and signature pad
-    UILabel *signingLabel = [[[UILabel alloc] initWithFrame:CGRectMake(40, 54, 390, 20)] autorelease];
+    UILabel *signingLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 54, 480, 20)] autorelease];
     signingLabel.font = [UIFont systemFontOfSize:14.0f];
+    signingLabel.textAlignment = UITextAlignmentCenter;
     signingLabel.text = @"By signing below, I agree to pay a total credit card charge of";
     
-    payAmountLabel = [[[UILabel alloc] initWithFrame:CGRectMake(240, 74, 100, 20)] autorelease];
+    payAmountLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 74, 480, 20)] autorelease];
+    payAmountLabel.textAlignment = UITextAlignmentCenter;
     payAmountLabel.font = [UIFont boldSystemFontOfSize:14.0f];
     payAmountLabel.text = @"0.00";
     
