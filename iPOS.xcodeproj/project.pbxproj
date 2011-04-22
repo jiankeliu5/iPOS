@@ -622,7 +622,7 @@
 		B4C469E01307047F001EADE4 /* CartItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartItemsViewController.m; sourceTree = "<group>"; };
 		B4C469E713070C48001EADE4 /* TenderPaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TenderPaymentViewController.h; sourceTree = "<group>"; };
 		B4C469E813070C48001EADE4 /* TenderPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TenderPaymentViewController.m; sourceTree = "<group>"; };
-		B4C469F913070D84001EADE4 /* ReceiptOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptOptionsViewController.h; sourceTree = "<group>"; };
+		B4C469F913070D84001EADE4 /* ReceiptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiptViewController.h; sourceTree = "<group>"; };
 		B4C469FA13070D84001EADE4 /* ReceiptViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiptViewController.m; sourceTree = "<group>"; };
 		B4C46A071307141B001EADE4 /* CartItemDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartItemDetailViewController.h; sourceTree = "<group>"; };
 		B4C46A081307141B001EADE4 /* CartItemDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartItemDetailViewController.m; sourceTree = "<group>"; };
@@ -1354,7 +1354,7 @@
 		B4C469F013070D0D001EADE4 /* ReceiptOptions */ = {
 			isa = PBXGroup;
 			children = (
-				B4C469F913070D84001EADE4 /* ReceiptOptionsViewController.h */,
+				B4C469F913070D84001EADE4 /* ReceiptViewController.h */,
 				B4C469FA13070D84001EADE4 /* ReceiptViewController.m */,
 			);
 			name = ReceiptOptions;

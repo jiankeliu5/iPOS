@@ -45,7 +45,7 @@
 -(void) newOrder: (Order *) order;
 // -(void) updateOrder: (Order *) order;
 
-- (void) emailReceipt: (Order *) order;
+- (BOOL) emailReceipt: (Order *) order;
 
 
 #pragma mark Inventory Management

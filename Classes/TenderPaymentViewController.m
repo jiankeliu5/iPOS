@@ -15,6 +15,7 @@
 #import "SSLineView.h"
 
 #import "ChargeCreditCardView.h"
+#import "ReceiptViewController.h"
 #import "SignatureViewController.h"
 
 #import "NSString+StringFormatters.h"
@@ -51,6 +52,8 @@
 
 - (BOOL) createOrder;
 - (BOOL) tenderPaymentFromCardData: (NSString *)track1 track2:(NSString *)track2 track3:(NSString *)track3;
+
+- (void) navToReceipt;
 @end
 
 @implementation TenderPaymentViewController
@@ -216,17 +219,10 @@
 
     // Remove as a Linea Delegate
     [linea removeDelegate:self];
-    
-//    [UIView beginAnimations:nil context:nil];
-//    [UIView setAnimationDuration:0.25];
-//    [UIView setAnimationDelegate:self];
-//    [UIView setAnimationDidStopSelector:@selector(dismissChargeCCAnimationHasFinished:finished:context:)];
 
     CGRect frame = theChargeCCView.frame;
     frame.origin.y = 480;
     theChargeCCView.frame = frame;
-    
-//    [UIView commitAnimations];
     
     self.navigationItem.hidesBackButton = NO;
     [self.navigationItem.leftBarButtonItem setEnabled:YES];
@@ -307,8 +303,7 @@
         BOOL isOrderCreated = [self createOrder];
         
         if (isOrderCreated) {
-            [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Order %@ was successfully processed.", [orderCart getOrder].orderId]];
-            [self.navigationController popToRootViewControllerAnimated:YES];
+            [self navToReceipt];
         }
     } else {
         // We are good at this point so show the message to have user swipe credit card
@@ -335,28 +330,11 @@
     }
 
     if (isSignatureAccepted) {
-        // Make sure we clear out the payment at this point
-        self.ccPayment = nil;
-        
-        // TODO bring up the receipt as a modal view
-        
-        // For now dismiss and logout
-        [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Order %@ was successfully processed.", [orderCart getOrder].orderId]];
-        [self dismissModalViewControllerAnimated:YES];
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        [self navToReceipt];
     }
 }
 -(void) signatureController: (SignatureViewController *) signatureController signatureAsImage: (UIImage *) signature savePressed: (id) sender {
 	// We are not capturing the signature as an image, but as base64encoded string.
-}
-
-
-#pragma mark -
-#pragma mark Animation Delegates
-- (void)dismissChargeCCAnimationHasFinished:(NSString *)animationID finished:(BOOL)finished context:(void *)context {
-    if (chargeCCView) {
-        [chargeCCView removeFromSuperview];
-    }    
 }
 
 
@@ -517,21 +495,13 @@
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
     
     CGRect overlayRect = self.view.bounds;
-    overlayRect.origin.y = 480;
     chargeCCView = [[ChargeCreditCardView alloc] initWithFrame:overlayRect];
     
     chargeCCView.viewDelegate = self;
     chargeCCView.balanceDue = balanceDueLabel.text;
     chargeCCView.totalBalance = totalLabel.text;
     
-//    [UIView beginAnimations:nil context:nil];
-//    [UIView setAnimationDuration:0.25];
-    
     [self.view addSubview:chargeCCView];
-    CGRect frame = chargeCCView.frame;
-    frame.origin.y = 0;
-    chargeCCView.frame = frame;
-//    [UIView commitAnimations];
 }
 
 - (void) handleSuspendOrder:(id) sender {
@@ -579,4 +549,17 @@
     
     return isPaymentTendered;
 }
+
+-(void) navToReceipt {
+    // Make sure we clear out the payment at this point
+    self.ccPayment = nil;
+    
+    // For now dismiss and logout
+    [self dismissModalViewControllerAnimated:YES];
+    [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Order %@ was successfully processed.", [orderCart getOrder].orderId]];
+    
+    // Navigate to the Send Receipt View Controller
+    [[self navigationController] pushViewController:[[[ReceiptViewController alloc]init]autorelease] animated:YES];
+}
+
 @end

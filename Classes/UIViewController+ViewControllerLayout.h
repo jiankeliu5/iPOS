@@ -13,6 +13,7 @@
 
 - (CGFloat) navBarHeight;
 - (CGFloat) tabBarHeight;
+- (CGRect) rectDefault;
 - (CGRect) rectForStatus;
 - (CGRect) rectForNavAndStatus;
 - (CGRect) rectForNav;

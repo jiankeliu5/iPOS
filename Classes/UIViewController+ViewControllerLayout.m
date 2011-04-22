@@ -32,36 +32,52 @@
 	return barHeight;
 }
 
+- (CGRect) rectDefault {
+    CGRect rect;
+    
+    // The context of the view controller is either a navigation controller or is modal (ie:  has a parent controller) or take the screens bounds
+    if (self.navigationController) {
+        rect = self.navigationController.view.bounds;
+    } else if (self.parentViewController) {
+        rect = self.parentViewController.view.bounds;
+    } else {
+        rect = [[UIScreen mainScreen] applicationFrame];
+    }
+
+    return rect;
+}
+
 - (CGRect)rectForStatus {
-	CGRect rect = self.navigationController.view.bounds;
+	CGRect rect = [self rectDefault];
 	rect.size.height -= STATUSBAR_HEIGHT;
 	return rect;
 }
 
 - (CGRect)rectForNavAndStatus {
-	CGRect rect = self.navigationController.view.bounds;
-	rect.size.height -= ([self navBarHeight] + STATUSBAR_HEIGHT);
+    CGRect rect = [self rectDefault];
+    
+    rect.size.height -= ([self navBarHeight] + STATUSBAR_HEIGHT);
 	return rect;
 }
 
 - (CGRect)rectForNav {
-	//CGRect rect = [[UIScreen mainScreen] applicationFrame];
-	CGRect rect = self.navigationController.view.bounds;
+	CGRect rect = [self rectDefault];
+    
 	rect.size.height -= [self navBarHeight];
 	return rect;
 }
 
 - (CGRect)rectForTab {
-	//CGRect rect = [[UIScreen mainScreen] applicationFrame];
-	CGRect rect = self.navigationController.view.bounds;
+	CGRect rect = [self rectDefault];
+    
 	rect.size.height -= [self tabBarHeight];
 	return rect;
 }
 
 - (CGRect)rectForNavAndTab {
-	//CGRect rect = [[UIScreen mainScreen] applicationFrame];
-	CGRect rect = self.navigationController.view.bounds;
-	rect.size.height -= ([self navBarHeight] + [self tabBarHeight]);
+	CGRect rect = [self rectDefault];
+    
+    rect.size.height -= ([self navBarHeight] + [self tabBarHeight]);
 	return rect;
 }
 

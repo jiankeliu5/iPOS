@@ -120,8 +120,8 @@
 - (void) newOrder:(Order *)order withSession:(SessionInfo *)sessionInfo {
     // Do Nothing
 }
-- (void) emailReceipt:(Order *)order withSession:(SessionInfo *)sessionInfo {
-    // Do Nothing
+- (BOOL) emailReceipt:(Order *)order withSession:(SessionInfo *)sessionInfo {
+    return YES;
 }
 
 @end

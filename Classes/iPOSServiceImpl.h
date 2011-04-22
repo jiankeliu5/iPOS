@@ -15,12 +15,14 @@
     NSString *posSessionMgmtUri;
     NSString *posCustomerMgmtUri;
     NSString *posOrderMgmtUri;
+    NSString *posReportMgmtUri;
 }
 
 @property(nonatomic,retain) NSString *baseUrl;
 @property(nonatomic, retain) NSString *posSessionMgmtUri;
 @property(nonatomic, retain) NSString *posCustomerMgmtUri;
 @property(nonatomic, retain) NSString *posOrderMgmtUri;
+@property(nonatomic, retain) NSString *posReportMgmtUri;
 
 -(void) setToDemoMode;
 -(void) setToReleaseMode;

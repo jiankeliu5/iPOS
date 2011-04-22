@@ -19,13 +19,14 @@
 // Private interface
 @interface iPOSServiceImpl()
     - (ASIHTTPRequest *) initRequestForSession:(SessionInfo *) sessionInfo serviceDomainUri: (NSString *) serviceDomainUri serviceUri: (NSString *) serviceUri;
+    - (ASIHTTPRequest *) initRequestForSession:(SessionInfo *) sessionInfo url: (NSString *) urlString;
 
     - (void) createOrder: (Order *) order withSession: (SessionInfo *) sessionInfo;
 @end
 
 @implementation iPOSServiceImpl
 
-@synthesize baseUrl, posSessionMgmtUri, posCustomerMgmtUri, posOrderMgmtUri;
+@synthesize baseUrl, posSessionMgmtUri, posCustomerMgmtUri, posOrderMgmtUri, posReportMgmtUri;
 
 #pragma mark Constructor/Deconstructor
 -(id) init {
@@ -57,6 +58,7 @@
     [posSessionMgmtUri release];
     [posCustomerMgmtUri release];
     [posOrderMgmtUri release];
+    [posReportMgmtUri release];
     
     [super dealloc];
 }
@@ -69,6 +71,7 @@
     self.posSessionMgmtUri = @"SessionService";
     self.posCustomerMgmtUri = @"CustomerService";
     self.posOrderMgmtUri = @"OrderService";
+    self.posReportMgmtUri = @"ReportService";
 }
 
 -(void) setToReleaseMode {
@@ -78,6 +81,7 @@
     self.posSessionMgmtUri = @"SessionService";
     self.posCustomerMgmtUri = @"CustomerService";
     self.posOrderMgmtUri = @"OrderService";
+    self.posReportMgmtUri = @"ReportService";
 }
 
 #pragma mark -
@@ -120,7 +124,7 @@
 
 -(BOOL) verifySession: (SessionInfo *) sessionInfo withPassword: (NSString *) password {
     if (sessionInfo == nil) {
-        return false;
+        return NO;
     }
 
     if (password && [password isEqualToString:sessionInfo.passwordForVerification]) {
@@ -144,7 +148,7 @@
 
 -(BOOL) logout: (SessionInfo *) sessionInfo {
     if (sessionInfo == nil) {
-        return true;
+        return NO;
     }
     
     // Make Synchronous HTTP request
@@ -325,15 +329,42 @@
     [order mergeWith:orderReturned];
 }
 
-- (void) emailReceipt:(Order *)order withSession:(SessionInfo *)sessionInfo {
-    // TODO: Implement this method
+#pragma mark -
+#pragma mark Report Management APIs
+- (BOOL) emailReceipt:(Order *)order withSession:(SessionInfo *)sessionInfo {
+    if (sessionInfo == nil || order == nil || order.customer == nil) {
+        return NO;
+    }
+    
+    // Make Synchronous HTTP request
+    NSString *orderId = [NSString stringWithFormat:@"%@", order.orderId];
+    NSString *email = order.customer.emailAddress;
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@/%@/%@", baseUrl, posReportMgmtUri, @"receipt", orderId, email];
+    ASIHTTPRequest *request = [self initRequestForSession:sessionInfo url:urlString];
+    
+    [request startSynchronous];
+    
+    if ([request error]) {
+        return NO;
+    }
+    
+    BOOL isSuccessful = [POSOxmUtils isXmlResultTrue:[request responseString]];
+    
+    
+    // Return result
+    return isSuccessful;
 }
 
 #pragma mark -
 #pragma mark Private interface
 -(ASIHTTPRequest *) initRequestForSession:(SessionInfo *)sessionInfo serviceDomainUri:(NSString *)serviceDomainUri serviceUri:(NSString *)serviceUri {
     // Make Synchronous HTTP request to verify the login session
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@", baseUrl, serviceDomainUri, serviceUri]];
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@", baseUrl, serviceDomainUri, serviceUri];
+    return [self initRequestForSession:sessionInfo url:urlString];
+}
+-(ASIHTTPRequest *) initRequestForSession:(SessionInfo *)sessionInfo url:(NSString *) urlString {
+    // Make Synchronous HTTP request to verify the login session
+    NSURL *url = [NSURL URLWithString:urlString];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     
     [request setValidatesSecureCertificate:NO];

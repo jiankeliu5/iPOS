@@ -101,8 +101,8 @@ static iPOSFacade *facade = nil;
     [self.posService newOrder:order withSession:sessionInfo];
 }
 
-- (void) emailReceipt:(Order *)order {
-    [self.posService emailReceipt:order withSession:sessionInfo];
+- (BOOL) emailReceipt:(Order *)order {
+    return [self.posService emailReceipt:order withSession:sessionInfo];
 }
 
 #pragma mark -
