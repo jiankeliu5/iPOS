@@ -310,7 +310,6 @@
 		D6B438341315A9E6000C0AA8 /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07E71302583500B77769 /* ASIHTTPRequest.m */; };
 		D6B438351315A9E8000C0AA8 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07EB1302583500B77769 /* ASIInputStream.m */; };
 		D6B438361315A9EA000C0AA8 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BA07ED1302583500B77769 /* ASINetworkQueue.m */; };
-		D6B438371315A9EB000C0AA8 /* BarcodeScannerCardReaderDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D65FD4BA1302303A00F4C19D /* BarcodeScannerCardReaderDelegate.m */; };
 		D6B438381315A9ED000C0AA8 /* CartItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46A081307141B001EADE4 /* CartItemDetailViewController.m */; };
 		D6B438391315A9EE000C0AA8 /* CartItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469E01307047F001EADE4 /* CartItemsViewController.m */; };
 		D6B4383B1315A9F0000C0AA8 /* CustomerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C469D413070300001EADE4 /* CustomerViewController.m */; };
@@ -701,8 +700,6 @@
 		D65B25E31331C8B60052AEE2 /* iPOSTesting-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iPOSTesting-Info.plist"; sourceTree = "<group>"; };
 		D65EB2A0132AE1C10066E1FA /* NSString+Base64Encode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64Encode.h"; sourceTree = "<group>"; };
 		D65EB2A1132AE1C10066E1FA /* NSString+Base64Encode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64Encode.m"; sourceTree = "<group>"; };
-		D65FD4B91302303A00F4C19D /* BarcodeScannerCardReaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarcodeScannerCardReaderDelegate.h; sourceTree = "<group>"; };
-		D65FD4BA1302303A00F4C19D /* BarcodeScannerCardReaderDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarcodeScannerCardReaderDelegate.m; sourceTree = "<group>"; };
 		D679438C131607A8004B8254 /* IntTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D683BE0C1321437A008D923F /* Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Store.h; sourceTree = "<group>"; };
 		D683BE0D1321437A008D923F /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
@@ -979,8 +976,6 @@
 				D69BF02312F9CCC80035D358 /* Helper */,
 				1D3623240D0F684500981E51 /* iPOSAppDelegate.h */,
 				1D3623250D0F684500981E51 /* iPOSAppDelegate.m */,
-				D65FD4B91302303A00F4C19D /* BarcodeScannerCardReaderDelegate.h */,
-				D65FD4BA1302303A00F4C19D /* BarcodeScannerCardReaderDelegate.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -2222,7 +2217,6 @@
 				D6B438341315A9E6000C0AA8 /* ASIHTTPRequest.m in Sources */,
 				D6B438351315A9E8000C0AA8 /* ASIInputStream.m in Sources */,
 				D6B438361315A9EA000C0AA8 /* ASINetworkQueue.m in Sources */,
-				D6B438371315A9EB000C0AA8 /* BarcodeScannerCardReaderDelegate.m in Sources */,
 				D6B438381315A9ED000C0AA8 /* CartItemDetailViewController.m in Sources */,
 				D6B438391315A9EE000C0AA8 /* CartItemsViewController.m in Sources */,
 				D6B4383B1315A9F0000C0AA8 /* CustomerViewController.m in Sources */,
