@@ -38,4 +38,19 @@
     return [numberFormatter stringFromNumber:value];
 }
 
+- (NSString *) padLeft:(NSString *) padString withMaxSize: (NSUInteger) maxSize {
+    if ([self length] + [padString length] <= maxSize) {
+        NSString *paddedString = [padString stringByAppendingString:self];
+        
+        while ([paddedString length] < maxSize) {
+            paddedString = [padString stringByAppendingString:paddedString];
+        }
+
+        return paddedString;
+
+    } else {
+        return [[self copy] autorelease];
+    }
+}
+
 @end

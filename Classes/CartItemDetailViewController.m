@@ -16,8 +16,8 @@
 #define LABEL_HEIGHT 18.0f
 #define TEXT_FIELD_HEIGHT 40.0f
 #define TEXT_FIELD_START_X 20.0f
-#define TEXT_FIELD_WIDTH 70.0f
-#define UOM_LABEL_START_X 100.0f
+#define TEXT_FIELD_WIDTH 90.0f
+#define UOM_LABEL_START_X 120.0f
 #define UOM_LABEL_WIDTH 60.0f
 #define ITEM_TOTAL_START_X 160.0f
 #define ITEM_TOTAL_WIDTH 160.0f
@@ -287,16 +287,18 @@
 	if (textField.text != nil) {
 		NSDecimalNumber *newQuantity = (NSDecimalNumber *)[quantityFormatter numberFromString:textField.text];
 		if (newQuantity != nil) {
-			self.orderItem.quantity = newQuantity;
-            
-            // Can I still attempt a close of item based on current item availability when the item was retrieved
-            // for the order 
-            if ([orderItem allowClose] && closeLineButton) {
-                closeLineButton.enabled = YES;
-            } else {
-                closeLineButton.enabled = NO;
+            // Has the value even changed??
+            if (![textField.text isEqualToString:[self.orderItem getQuantityForDisplay]]) {
+                self.orderItem.quantity = newQuantity;
+                
+                // Can I still attempt a close of item based on current item availability when the item was retrieved
+                // for the order 
+                if ([orderItem allowClose] && closeLineButton) {
+                    closeLineButton.enabled = YES;
+                } else {
+                    closeLineButton.enabled = NO;
+                }
             }
-            
 			[self updateViewLayout];
 		}
 	}
@@ -334,7 +336,7 @@
 		skuLabel.text = [self.orderItem.item.sku stringValue];
 		descLabel.text = self.orderItem.item.description;
 		priceLabel.text = [NSString stringWithFormat:@"%@ / %@", [NSString formatDecimalNumberAsMoney:self.orderItem.sellingPrice], self.orderItem.item.primaryUnitOfMeasure];
-		quantityField.text = [self.orderItem.quantity stringValue];
+		quantityField.text = [self.orderItem getQuantityForDisplay];
 		unitOfMeasureLabel.text = self.orderItem.item.primaryUnitOfMeasure;
 		NSDecimalNumber *lineTotal = [self.orderItem.sellingPrice decimalNumberByMultiplyingBy:self.orderItem.quantity];
 		itemTotalLabel.text = [NSString formatDecimalNumberAsMoney:lineTotal];

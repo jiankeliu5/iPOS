@@ -1,8 +1,8 @@
 //
-//  SampleUnitTestCase.h
+//  StringFormattersTestCase.h
 //  iPOS
 //
-//  Created by Torey Lomenda on 2/2/11.
+//  Created by Torey Lomenda on 4/25/11.
 //  Copyright 2011 Object Partners Inc. All rights reserved.
 //
 //  See Also: http://developer.apple.com/iphone/library/documentation/Xcode/Conceptual/iphone_development/135-Unit_Testing_Applications/unit_testing_applications.html
@@ -17,13 +17,14 @@
 //#import "application_headers" as required
 
 
-@interface SampleUnitTestCase : SenTestCase {
+@interface StringFormattersTestCase : SenTestCase {
 
 }
 
+#if USE_APPLICATION_UNIT_TEST
+- (void) testAppDelegate;       // simple test on application
+#else
 - (void) testMath;              // simple standalone test
-- (void) testBankersRounding;
-- (void) testDecimalCompare;
-
+#endif
 
 @end

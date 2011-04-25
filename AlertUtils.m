@@ -25,7 +25,7 @@
 
 + (void) showModalAlertForErrors:(NSArray *)errorList {
     NSMutableString *errMsg = [[[NSMutableString alloc] init] autorelease];
-    [errMsg appendString:@"Error in new order quote!"];
+    
     for (Error *e in errorList) {
         NSLog(@"Error Id: %d %@", [e errorId], [e message]);
         [errMsg appendFormat:@"\nError (%d): %@", [e errorId], [e message]];

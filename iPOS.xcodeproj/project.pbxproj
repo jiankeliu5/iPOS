@@ -339,6 +339,7 @@
 		D6BA07FF1302586800B77769 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FE1302586800B77769 /* MobileCoreServices.framework */; };
 		D6BA08011302586800B77769 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
 		D6BA08031302586800B77769 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08021302586800B77769 /* libz.1.2.3.dylib */; };
+		D6C6E8D61365CA7C00560DCF /* StringFormattersTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C6E8D51365CA7C00560DCF /* StringFormattersTestCase.m */; };
 		D6C7770613574A7900D41AD9 /* PaymentServiceTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C7770513574A7900D41AD9 /* PaymentServiceTestCase.m */; };
 		D6CC18DB1331D1690042745E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FC1302586800B77769 /* CFNetwork.framework */; };
 		D6CC18DC1331D1690042745E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
@@ -367,6 +368,8 @@
 		D6DCA825134DFA8E00ACBDD9 /* OrderCart.h in Headers */ = {isa = PBXBuildFile; fileRef = D6DCA823134DFA8E00ACBDD9 /* OrderCart.h */; };
 		D6DCA826134DFA8E00ACBDD9 /* OrderCart.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DCA824134DFA8E00ACBDD9 /* OrderCart.m */; };
 		D6E24DCE1331CCC900931787 /* AppTests.octest in Resources */ = {isa = PBXBuildFile; fileRef = D6334A2D1331C9CE000DEDBB /* AppTests.octest */; };
+		D6E5C7521365F5C1009BCA68 /* Particle.png in Resources */ = {isa = PBXBuildFile; fileRef = D698A4A91325E83300371985 /* Particle.png */; };
+		D6E5C7531365F5C9009BCA68 /* Particle.png in Resources */ = {isa = PBXBuildFile; fileRef = D698A4A91325E83300371985 /* Particle.png */; };
 		D6E9E9D11316037900FF1498 /* libiPOSFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */; };
 		D6E9E9D21316037900FF1498 /* libOPIFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B435B213159F72000C0AA8 /* libOPIFoundation.a */; };
 		D6E9EA601316056500FF1498 /* libiPOSFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */; };
@@ -803,6 +806,7 @@
 		D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPOSServiceImpl.m; path = Classes/iPOSServiceImpl.m; sourceTree = "<group>"; };
 		D6BCD40612FCB3F70029F4B2 /* SessionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionInfo.h; sourceTree = "<group>"; };
 		D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionInfo.m; sourceTree = "<group>"; };
+		D6C6E8D51365CA7C00560DCF /* StringFormattersTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringFormattersTestCase.m; sourceTree = "<group>"; };
 		D6C7770513574A7900D41AD9 /* PaymentServiceTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentServiceTestCase.m; sourceTree = "<group>"; };
 		D6DB9254135F383A00877788 /* ItemSellingPriceApprovalRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemSellingPriceApprovalRequest.h; sourceTree = "<group>"; };
 		D6DB9255135F383A00877788 /* ItemSellingPriceApprovalRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemSellingPriceApprovalRequest.m; sourceTree = "<group>"; };
@@ -1413,6 +1417,7 @@
 				D656013C130B71B4000968BA /* iPosFacadeWithMocksTestCase.h */,
 				D656013D130B71B4000968BA /* iPosFacadeWithMocksTestCase.m */,
 				D64783721354AE240017178D /* OrderItemCalculationTestCase.m */,
+				D6C6E8D51365CA7C00560DCF /* StringFormattersTestCase.m */,
 			);
 			name = UnitTests;
 			sourceTree = "<group>";
@@ -1951,6 +1956,7 @@
 				B4CEE05813527F330067DEBC /* EditConfirmDelete@2x.png in Resources */,
 				D64F39B8135CBE050058BB04 /* CreditCard.png in Resources */,
 				D64F39B9135CBE050058BB04 /* CreditCard@2x.png in Resources */,
+				D6E5C7531365F5C9009BCA68 /* Particle.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2001,6 +2007,7 @@
 				B4CEE05C13527F330067DEBC /* EditConfirmDelete@2x.png in Resources */,
 				D64F39B6135CBE050058BB04 /* CreditCard.png in Resources */,
 				D64F39B7135CBE050058BB04 /* CreditCard@2x.png in Resources */,
+				D6E5C7521365F5C1009BCA68 /* Particle.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2124,6 +2131,7 @@
 				D6B195BA133CEF05004C4FD1 /* ProductItemOxmTestCase.m in Sources */,
 				D6B195BC133CEF1C004C4FD1 /* LoginOxmTestCase.m in Sources */,
 				D64783731354AE240017178D /* OrderItemCalculationTestCase.m in Sources */,
+				D6C6E8D61365CA7C00560DCF /* StringFormattersTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

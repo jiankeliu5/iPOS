@@ -12,6 +12,11 @@
 
 #import "NSString+Base64Encode.h"
 
+//Define CONSTANTS:
+#define BRUSH_OPACITY		(3.0 / 3.0)
+#define BRUSH_PIXELSTEP		1
+#define BRUSH_WIDTH			4
+
 // A class extension to declare private methods
 @interface SignaturePad (private)
 
@@ -109,6 +114,7 @@ NSString * const SIGNATURE_AS_JPG =@"jpg";
 		// Setup the view port in Pixels
 		glOrthof(0, frame.size.width * scale, 0, frame.size.height * scale, -1, 1);
 		glViewport(0, 0, frame.size.width * scale, frame.size.height * scale);
+        
 		glMatrixMode(GL_MODELVIEW);
 		
 		glDisable(GL_DITHER);
@@ -300,8 +306,7 @@ NSString * const SIGNATURE_AS_JPG =@"jpg";
 	[context presentRenderbuffer:GL_RENDERBUFFER_OES];
 }
 
-- (BOOL)createFramebuffer
-{
+- (BOOL)createFramebuffer {
 	// Generate IDs for a framebuffer object and a color renderbuffer
 	glGenFramebuffersOES(1, &viewFramebuffer);
 	glGenRenderbuffersOES(1, &viewRenderbuffer);

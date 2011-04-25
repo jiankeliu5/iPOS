@@ -61,4 +61,6 @@
 - (NSDecimalNumber *) calcLineTax;
 - (NSDecimalNumber *) calcLineDiscount;
 
+- (NSString *) getQuantityForDisplay;
+
 @end

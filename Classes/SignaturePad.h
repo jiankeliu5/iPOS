@@ -11,11 +11,6 @@
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 
-//CONSTANTS:
-#define BRUSH_OPACITY		(3.0 / 3.0)
-#define BRUSH_PIXELSTEP		1
-#define BRUSH_WIDTH			4
-
 extern NSString * const SIGNATURE_AS_PNG;
 extern NSString * const SIGNATURE_AS_JPG;
 

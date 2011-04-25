@@ -103,6 +103,11 @@
         // Clear out any errors previously set
         [ccPayment removeAllErrors];
         
+        Error *paymentError = [[[Error alloc] init] autorelease];
+        paymentError.errorId = @"ERR_PAY";
+        paymentError.message = [NSString stringWithFormat:@"Could not process payment for order '%@'.", ccPayment.orderId];
+        [ccPayment addError:paymentError];
+        
         for (Error *error in requestErrors) {
             [ccPayment addError:error];
         }

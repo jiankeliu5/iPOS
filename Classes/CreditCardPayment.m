@@ -7,6 +7,7 @@
 //
 
 #import "CreditCardPayment.h"
+#import "NSString+StringFormatters.h"
 
 #import "Order.h"
 #import "CCPaymentXmlMarshaller.h"
@@ -36,7 +37,29 @@
 #pragma mark Accessors
 - (void) setExpireDateMonthYear:(NSString *) month year: (NSString *) year {
     if (month != nil && year != nil) {
-        self.expireDate = [NSString stringWithFormat:@"%@%@", month, [year substringFromIndex:[year length] - 2]];
+        int MAX_LENGTH = 2;
+        NSString *padMonth = month;
+        NSString *padYear = year;
+        
+        if ([padMonth length] != MAX_LENGTH) {
+            if ([padMonth length] < MAX_LENGTH) {
+                padMonth = [padMonth padLeft:@"0" withMaxSize:MAX_LENGTH];
+            } else {
+                padMonth = [padMonth substringFromIndex:[padMonth length]-MAX_LENGTH];
+            }
+        }
+        
+        if ([padYear length] != 2) {
+            if ([padYear length] < MAX_LENGTH) {
+                padYear = [padYear padLeft:@"0" withMaxSize:MAX_LENGTH];
+            } else {
+                padYear = [padYear substringFromIndex:[padYear length]-MAX_LENGTH];
+            }
+        }
+        
+        
+        
+        self.expireDate = [NSString stringWithFormat:@"%@%@", padMonth, padYear];
     }
 }
 
@@ -98,7 +121,18 @@
 - (void) mergeWith: (CreditCardPayment *) mergePayment {
     // If there are errors just merge the errors, otherwise merge everything else
     if (mergePayment.errorList && [mergePayment.errorList count] > 0) {
-        self.errorList = [NSArray arrayWithArray: mergePayment.errorList];
+        NSArray *errors = [NSArray arrayWithArray:mergePayment.errorList];
+            
+        // Add an error at index 0
+        Error *paymentError = [[[Error alloc] init] autorelease];
+        paymentError.errorId = @"ERR_PAY";
+        paymentError.message = [NSString stringWithFormat:@"Could not process payment for order '%@'.", self.orderId];
+        [self addError:paymentError];
+        
+        for (Error *error in errors) {
+            [self addError:error];
+        }
+        
         return;
     }
     

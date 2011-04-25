@@ -113,7 +113,7 @@
 						  orderItem.item.primaryUnitOfMeasure];
 	descriptionLabel.text = descText;
 	
-	NSString *quantityText = [NSString stringWithFormat:@"%@ %@", orderItem.quantity, orderItem.item.primaryUnitOfMeasure];
+	NSString *quantityText = [NSString stringWithFormat:@"%@ %@", [orderItem getQuantityForDisplay], orderItem.item.primaryUnitOfMeasure];
 	quantityLabel.text = quantityText;
 	
 	lineCostLabel.text = [NSString formatDecimalNumberAsMoney: [orderItem.sellingPrice decimalNumberByMultiplyingBy:orderItem.quantity]];

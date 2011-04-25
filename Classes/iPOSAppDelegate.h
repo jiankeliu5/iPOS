@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "LoginViewController.h"
-#import "BarcodeScannerCardReaderDelegate.h"
 
 @interface iPOSAppDelegate : NSObject <UIApplicationDelegate> 
 {

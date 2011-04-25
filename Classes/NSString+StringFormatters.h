@@ -14,4 +14,6 @@
 + (NSString *) formatNumberAsMoney:(NSNumber *)value;
 + (NSString *) formatDecimalNumberAsMoney:(NSDecimalNumber *)value;
 
+- (NSString *) padLeft:(NSString *) padString withMaxSize: (NSUInteger) maxSize;
+
 @end

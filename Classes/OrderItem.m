@@ -15,6 +15,7 @@ static int const STATUS_CANCEL = 4;
 
 // Private interface
 @interface OrderItem()
+    - (BOOL) isConvertedQuantity;
     - (NSDecimalNumber *) convertQuantity: (NSDecimalNumber *) quantity;
 @end
 
@@ -177,18 +178,24 @@ static int const STATUS_CANCEL = 4;
     return discount;
 }
 
+- (NSString *) getQuantityForDisplay {
+    NSDecimalNumber *displayQuantity = self.quantity;
+    
+    if ([self isConvertedQuantity]) {
+        NSDecimalNumberHandler *roundingUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:2 
+                                                                                                      raiseOnExactness:NO raiseOnOverflow:NO 
+                                                                                                      raiseOnUnderflow:NO raiseOnDivideByZero:NO]; 
+        displayQuantity = [displayQuantity decimalNumberByRoundingAccordingToBehavior:roundingUp];
+    }
+    
+    return [NSString stringWithFormat:@"%@", displayQuantity];
+}
+
 #pragma mark -
 #pragma mark Private Methods
 -(NSDecimalNumber *) convertQuantity: (NSDecimalNumber *) quantityToConvert {
-    BOOL isConversionNeeded = NO;
-    
-    if (item && 
-        item.conversion && 
-        item.piecesPerBox && 
-        [item.conversion compare: [NSDecimalNumber decimalNumberWithString:@"1.0"]] != NSOrderedSame) {
-        isConversionNeeded = YES;
-    }
-    
+    BOOL isConversionNeeded = [self isConvertedQuantity];
+        
     if (!isConversionNeeded) {
         return quantityToConvert;
     }
@@ -203,6 +210,19 @@ static int const STATUS_CANCEL = 4;
     NSDecimalNumber *boxesNeeded = [[piecesNeeded decimalNumberByDividingBy:piecesPerBox] decimalNumberByRoundingAccordingToBehavior:roundUp];
     
     return [[boxesNeeded decimalNumberByMultiplyingBy:piecesPerBox] decimalNumberByMultiplyingBy:item.conversion];
+}
+
+- (BOOL) isConvertedQuantity {
+    BOOL isConversionNeeded = NO;
+    
+    if (item && 
+        item.conversion && 
+        item.piecesPerBox && 
+        [item.conversion compare: [NSDecimalNumber decimalNumberWithString:@"1.0"]] != NSOrderedSame) {
+        isConversionNeeded = YES;
+    }
+
+    return isConversionNeeded;
 }
 
 @end
