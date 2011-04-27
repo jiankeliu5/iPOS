@@ -13,6 +13,10 @@
 #import "InventoryServiceImpl.h"
 #import "PaymentServiceImpl.h"
 
+typedef enum { SessionOk = 0,
+			   SessionBadPassword = 1,
+			   SessionExpired = 2 } SessionStatus;
+
 @interface iPOSFacade : NSObject {
     id<iPOSService> posService;
     id<InventoryService> inventoryService;

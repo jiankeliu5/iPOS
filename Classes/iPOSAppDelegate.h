@@ -19,11 +19,13 @@
 	BOOL resignedActive;
 	iPOSFacade *facade;
 	SessionVerificationView *verificationView;
+	NSInteger verifyPasswordTries;
 }
 
 @property (retain) UIWindow* window;
 @property (retain) UINavigationController* navigationController;
 @property (retain) LoginViewController* loginViewController;
 @property (nonatomic, assign) BOOL resignedActive;
+@property (nonatomic, assign) NSInteger verifyPasswordTries;
 @end
 

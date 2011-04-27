@@ -65,8 +65,11 @@ static iPOSFacade *facade = nil;
 	return FALSE;
 }
 
--(BOOL) verifySession:(NSString *)passwordToVerify {
-    return [self.posService verifySession:sessionInfo withPassword:passwordToVerify];
+-(SessionStatus) verifySession:(NSString *)passwordToVerify {
+	if (passwordToVerify && ![passwordToVerify isEqualToString:self.sessionInfo.passwordForVerification]) {
+		return SessionBadPassword;
+	}
+    return ([self.posService verifySession:sessionInfo withPassword:passwordToVerify]) ? SessionOk : SessionExpired;
 }
 
 -(BOOL) logout {

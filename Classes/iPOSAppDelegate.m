@@ -9,6 +9,8 @@
 #import "iPOSAppDelegate.h"
 #import "AlertUtils.h"
 
+#define MAX_PASSWORD_RETRIES 3
+
 #pragma mark -
 @implementation iPOSAppDelegate
 
@@ -16,6 +18,7 @@
 @synthesize navigationController;
 @synthesize loginViewController;
 @synthesize resignedActive;
+@synthesize verifyPasswordTries;
 
 #pragma mark Constructors
 - (void) applicationDidFinishLaunching:(UIApplication*)application 
@@ -28,6 +31,7 @@
     [defaults synchronize];
     
 	self.resignedActive = NO;
+	self.verifyPasswordTries = 0;
 	facade = [iPOSFacade sharedInstance];
 	
     // Create window
@@ -104,14 +108,34 @@
 - (void) verificationView:(SessionVerificationView *)aVerificationView submitPassword:(NSString *)password {
 	if ([password length] == 0) {
 		[AlertUtils showModalAlertMessage:@"Please input a password."];
+		[aVerificationView makePasswordFieldFirstResponder];
 	} else {
-		BOOL sessionValid = [facade verifySession:password];
-		if (sessionValid) {
-			[aVerificationView removeFromSuperview];
-		} else {
-			[AlertUtils showModalAlertMessage:@"Session expired, please login again."];
-			[aVerificationView removeFromSuperview];
-			[navigationController popToRootViewControllerAnimated:YES];
+		SessionStatus sessionValid = [facade verifySession:password];
+		switch (sessionValid) {
+			case SessionOk:
+				[aVerificationView removeFromSuperview];
+				self.verifyPasswordTries = 0;
+				break;
+			case SessionBadPassword:
+				self.verifyPasswordTries++;
+				if (self.verifyPasswordTries >= MAX_PASSWORD_RETRIES) {
+					[AlertUtils showModalAlertMessage:@"Password retry limit exceeded.  Logging out."];
+					self.verifyPasswordTries = 0;
+					[aVerificationView removeFromSuperview];
+					[navigationController popToRootViewControllerAnimated:YES];
+				} else {
+					[AlertUtils showModalAlertMessage:@"Invalid Password.  Please try again."];
+					[aVerificationView makePasswordFieldFirstResponder];
+				}
+				break;
+			case SessionExpired:
+				[AlertUtils showModalAlertMessage:@"Session expired, please login again."];
+				self.verifyPasswordTries = 0;
+				[aVerificationView removeFromSuperview];
+				[navigationController popToRootViewControllerAnimated:YES];
+				break;
+			default:
+				break;
 		}
 	}
 }
