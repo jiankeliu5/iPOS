@@ -112,7 +112,7 @@ static iPOSFacade *facade = nil;
 }
 
 -(BOOL) isProductItemAvailable: (NSNumber *) itemId forQuantity: (NSDecimalNumber *) quantity {
-    return [self.inventoryService isProductItemAvailable:itemId forQuantity:quantity withSession:sessionInfo];;
+    return [self.inventoryService isProductItemAvailable:itemId forQuantity:quantity withSession:sessionInfo];
 }
 
 - (BOOL) adjustSellingPriceFor:(OrderItem *)orderItem withCustomer:(Customer *)customer {

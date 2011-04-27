@@ -8,15 +8,22 @@
 
 #import <UIKit/UIKit.h>
 #import "LoginViewController.h"
+#import "iPOSFacade.h"
+#import "SessionVerificationView.h"
 
-@interface iPOSAppDelegate : NSObject <UIApplicationDelegate> 
+@interface iPOSAppDelegate : NSObject <UIApplicationDelegate, SessionVerificationViewDelegate> 
 {
     UIWindow* window;
 	UINavigationController* navigationController;
-	LoginViewController* loginViewController;}
+	LoginViewController* loginViewController;
+	BOOL resignedActive;
+	iPOSFacade *facade;
+	SessionVerificationView *verificationView;
+}
 
 @property (retain) UIWindow* window;
 @property (retain) UINavigationController* navigationController;
 @property (retain) LoginViewController* loginViewController;
+@property (nonatomic, assign) BOOL resignedActive;
 @end
 
