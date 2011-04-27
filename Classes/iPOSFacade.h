@@ -36,7 +36,7 @@ typedef enum { SessionOk = 0,
 
 #pragma mark iPOS Session Mgmt
 - (BOOL) login: (NSString *) username password: (NSString *) password;
-- (BOOL) verifySession: (NSString *) passwordToVerify;
+- (SessionStatus) verifySession: (NSString *) passwordToVerify;
 - (BOOL) logout;
 
 #pragma mark iPOS Customer Management

@@ -18,8 +18,8 @@
 
 // Private interface
 @interface iPOSServiceImpl()
-    - (ASIHTTPRequest *) initRequestForSession:(SessionInfo *) sessionInfo serviceDomainUri: (NSString *) serviceDomainUri serviceUri: (NSString *) serviceUri;
-    - (ASIHTTPRequest *) initRequestForSession:(SessionInfo *) sessionInfo url: (NSString *) urlString;
+    - (ASIHTTPRequest *) getRequestForSession:(SessionInfo *) sessionInfo serviceDomainUri: (NSString *) serviceDomainUri serviceUri: (NSString *) serviceUri;
+    - (ASIHTTPRequest *) getRequestForSession:(SessionInfo *) sessionInfo url: (NSString *) urlString;
 
     - (void) createOrder: (Order *) order withSession: (SessionInfo *) sessionInfo;
 @end
@@ -90,7 +90,7 @@
     SessionInfo *sessionInfo = [[[SessionInfo alloc] init] autorelease];
     
     // Make Synchronous HTTP request
-    ASIHTTPRequest *request = [self initRequestForSession:sessionInfo serviceDomainUri:posSessionMgmtUri serviceUri:@"login"];
+    ASIHTTPRequest *request = [self getRequestForSession:sessionInfo serviceDomainUri:posSessionMgmtUri serviceUri:@"login"];
    
     // We will be posting the login as an XML Request
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
@@ -128,7 +128,7 @@
     }
 
     if (password && [password isEqualToString:sessionInfo.passwordForVerification]) {
-        ASIHTTPRequest *request = [self initRequestForSession:sessionInfo serviceDomainUri:posSessionMgmtUri serviceUri:@"verify"];
+        ASIHTTPRequest *request = [self getRequestForSession:sessionInfo serviceDomainUri:posSessionMgmtUri serviceUri:@"verify"];
         
         [request startSynchronous];
         
@@ -152,7 +152,7 @@
     }
     
     // Make Synchronous HTTP request
-    ASIHTTPRequest *request = [self initRequestForSession:sessionInfo serviceDomainUri:posSessionMgmtUri serviceUri:@"logout"];
+    ASIHTTPRequest *request = [self getRequestForSession:sessionInfo serviceDomainUri:posSessionMgmtUri serviceUri:@"logout"];
     
     [request startSynchronous];
     
@@ -176,7 +176,7 @@
 
     // Send the lookup request
     NSString *customerlookupUri = [NSString stringWithFormat:@"%@", phoneNumber];
-    ASIHTTPRequest *request = [self initRequestForSession:sessionInfo serviceDomainUri:posCustomerMgmtUri serviceUri:customerlookupUri];
+    ASIHTTPRequest *request = [self getRequestForSession:sessionInfo serviceDomainUri:posCustomerMgmtUri serviceUri:customerlookupUri];
     
     [request setTimeOutSeconds:10];
     [request startSynchronous];
@@ -210,7 +210,7 @@
     customer.store.storeId = sessionInfo.storeId;
     
     // Send the lookup request
-    ASIHTTPRequest *request = [self initRequestForSession:sessionInfo serviceDomainUri:posCustomerMgmtUri serviceUri:@"new"];
+    ASIHTTPRequest *request = [self getRequestForSession:sessionInfo serviceDomainUri:posCustomerMgmtUri serviceUri:@"new"];
     
     // Post data for customer
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
@@ -240,7 +240,7 @@
     } 
     
     // Send the lookup request
-    ASIHTTPRequest *request = [self initRequestForSession:sessionInfo serviceDomainUri:posCustomerMgmtUri serviceUri:@"update"];
+    ASIHTTPRequest *request = [self getRequestForSession:sessionInfo serviceDomainUri:posCustomerMgmtUri serviceUri:@"update"];
     
     // Post data for customer
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
@@ -300,7 +300,7 @@
         order.salesPersonEmployeeId = sessionInfo.employeeId;
     }
     // Send the new order request
-    ASIHTTPRequest *request = [self initRequestForSession:sessionInfo serviceDomainUri:posOrderMgmtUri serviceUri:@"new"];
+    ASIHTTPRequest *request = [self getRequestForSession:sessionInfo serviceDomainUri:posOrderMgmtUri serviceUri:@"new"];
     
     // Post data for order
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
@@ -340,7 +340,7 @@
     NSString *orderId = [NSString stringWithFormat:@"%@", order.orderId];
     NSString *email = order.customer.emailAddress;
     NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@/%@/%@", baseUrl, posReportMgmtUri, @"receipt", orderId, email];
-    ASIHTTPRequest *request = [self initRequestForSession:sessionInfo url:urlString];
+    ASIHTTPRequest *request = [self getRequestForSession:sessionInfo url:urlString];
     
     [request startSynchronous];
     
@@ -357,12 +357,13 @@
 
 #pragma mark -
 #pragma mark Private interface
--(ASIHTTPRequest *) initRequestForSession:(SessionInfo *)sessionInfo serviceDomainUri:(NSString *)serviceDomainUri serviceUri:(NSString *)serviceUri {
+-(ASIHTTPRequest *) getRequestForSession:(SessionInfo *)sessionInfo serviceDomainUri:(NSString *)serviceDomainUri serviceUri:(NSString *)serviceUri {
     // Make Synchronous HTTP request to verify the login session
     NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@", baseUrl, serviceDomainUri, serviceUri];
-    return [self initRequestForSession:sessionInfo url:urlString];
+    ASIHTTPRequest *request = [self getRequestForSession:sessionInfo url:urlString];
+    return request;
 }
--(ASIHTTPRequest *) initRequestForSession:(SessionInfo *)sessionInfo url:(NSString *) urlString {
+-(ASIHTTPRequest *) getRequestForSession:(SessionInfo *)sessionInfo url:(NSString *) urlString {
     // Make Synchronous HTTP request to verify the login session
     NSURL *url = [NSURL URLWithString:urlString];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
