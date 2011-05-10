@@ -378,6 +378,10 @@
         
         // De we hide or show the default to box (only when item needs conversion)
         if ([orderItem isConversionNeeded]) {
+        
+            // The switch on/off is based on the order item flag
+            convertToBoxesSwitch.on = orderItem.doConversionToFullBoxes;
+        
             convertToBoxesLabel.hidden = NO;
             convertToBoxesSwitch.hidden = NO;
         } else {

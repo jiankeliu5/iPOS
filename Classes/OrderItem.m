@@ -41,6 +41,9 @@ static int const STATUS_CANCEL = 4;
         return nil;
     }
     
+    // Set the doConversionToBoxes based on item defaultToBoxes
+    doConversionToFullBoxes = productItem.defaultToBox;
+    
     // Default the status to open
     statusId = [[NSNumber numberWithInt:STATUS_OPEN] retain];
     
@@ -74,6 +77,9 @@ static int const STATUS_CANCEL = 4;
     if (item != productItem) {
 		[item release];
 		item = [productItem	retain];
+        
+        // Set the doConversionToBoxes based on item defaultToBoxes
+        doConversionToFullBoxes = productItem.defaultToBox;
 	}
 }
 
