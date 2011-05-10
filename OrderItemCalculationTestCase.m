@@ -22,6 +22,7 @@
     OrderItem *orderItem = nil;
     ProductItem *item = [[[ProductItem alloc] init] autorelease];
     
+    item.defaultToBox = YES;
     item.conversion = [NSDecimalNumber decimalNumberWithString:@"2.2579095"];
     item.piecesPerBox = [NSNumber numberWithInt:6];
     item.primaryUnitOfMeasure = @"CV";

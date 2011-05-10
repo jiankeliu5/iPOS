@@ -2481,7 +2481,8 @@
 				OTHER_LDFLAGS = "-lxml2";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos4.2;
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Distribution;
@@ -2559,6 +2560,7 @@
 				PRODUCT_NAME = iPOSDemo;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C4EBD5F7-4031-4666-98FA-7288F49636E7";
 				SDKROOT = iphoneos;
+				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 			};
 			name = Distribution;
 		};
@@ -2726,7 +2728,8 @@
 				OTHER_LDFLAGS = "-lxml2";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos4.2;
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -2745,7 +2748,8 @@
 				OTHER_LDFLAGS = "-lxml2";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos4.2;
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -3059,7 +3063,7 @@
 				);
 				PRODUCT_NAME = iPOSDemo;
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "armv7 armv6";
+				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 			};
 			name = Debug;
 		};
@@ -3084,6 +3088,7 @@
 				PRIVATE_HEADERS_FOLDER_PATH = iPOSDemo.app/PrivateHeaders;
 				PRODUCT_NAME = iPOSDemo;
 				SDKROOT = iphoneos;
+				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 			};
 			name = Release;
 		};
