@@ -74,9 +74,12 @@
 
 -(NSString *) unitOfMeasureDisplay:(NSString*)uom;
 
+- (NSComparisonResult)compare:(id)otherObject;
+
 #pragma mark -
 #pragma mark Marshalling methods
 + (ProductItem *) fromXml: (NSString *) xmlString;
++ (NSArray *) listFromXml: (NSString *) xmlString;
 - (NSString *) toXml;
 
 @end

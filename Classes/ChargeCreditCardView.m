@@ -31,14 +31,14 @@
 #define MARGIN_BOTTOM 10.0f
 
 #define STRIP_COLOR [UIColor colorWithRed:170.0f/255.0f green:204.0f/255.0f blue:0.0f alpha:1.0f]
-#define STRIP_HEIGHT 82.0f
+#define STRIP_HEIGHT 60.0f
 #define AMOUNT_LABEL_WIDTH 20.0f
 #define AMOUNT_LABEL_HEIGHT 40.0f
 #define AMOUNT_TEXT_FIELD_HEIGHT 40.0f
 #define AMOUNT_TEXT_FIELD_WIDTH 180.0f
 #define CHARGE_AMOUNT_VIEW_HEIGHT 142.0f
 #define ENTER_CHARGE_AMT_WIDTH 240.0f
-#define ENTER_CHARGE_AMT_HEIGHT 80.0f
+#define ENTER_CHARGE_AMT_HEIGHT 60.0f
 
 #define SWIPE_MSG_VIEW_HEIGHT 142.0f
 
@@ -171,9 +171,9 @@
     stripView.backgroundColor = STRIP_COLOR;
 	[stripView.layer setBorderWidth:1.0f];
 	[stripView.layer setBorderColor:[[UIColor blackColor] CGColor]];
-    UILabel *enterAmountText = [[[UILabel alloc] initWithFrame:CGRectMake(0, 2*MARGIN_TOP, OVERLAY_VIEW_WIDTH, LABEL_SMALL_FONT_SIZE)] autorelease];
+    UILabel *enterAmountText = [[[UILabel alloc] initWithFrame:CGRectMake(0, MARGIN_TOP, OVERLAY_VIEW_WIDTH, LABEL_SMALL_FONT_SIZE)] autorelease];
     UILabel *creditCardText = [[[UILabel alloc] 
-                                initWithFrame:CGRectMake(0, STRIP_HEIGHT - LABEL_LARGE_FONT_SIZE - 2*MARGIN_BOTTOM, OVERLAY_VIEW_WIDTH, LABEL_LARGE_FONT_SIZE)] 
+                                initWithFrame:CGRectMake(0, STRIP_HEIGHT - LABEL_LARGE_FONT_SIZE - MARGIN_BOTTOM, OVERLAY_VIEW_WIDTH, LABEL_LARGE_FONT_SIZE)] 
                                 autorelease];
     
     enterAmountText.backgroundColor = [UIColor clearColor];
@@ -201,7 +201,7 @@
                                                           endColor:[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f]];
     
     UILabel *dollarSignLabel = [[[UILabel alloc] 
-                                 initWithFrame:CGRectMake(floorf(MARGIN_LEFT/2), MARGIN_TOP*2, AMOUNT_LABEL_WIDTH, AMOUNT_LABEL_HEIGHT)] 
+                                 initWithFrame:CGRectMake(floorf(MARGIN_LEFT/2), MARGIN_TOP, AMOUNT_LABEL_WIDTH, AMOUNT_LABEL_HEIGHT)] 
                                  autorelease];
     
     dollarSignLabel.backgroundColor = [UIColor clearColor];
@@ -211,7 +211,7 @@
     dollarSignLabel.text = @"$";
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
     chargeAmountTextField = [[[ExtUITextField alloc] 
-                              initWithFrame:CGRectMake(floorf(MARGIN_LEFT/2)+AMOUNT_LABEL_WIDTH, MARGIN_TOP*2, AMOUNT_TEXT_FIELD_WIDTH, AMOUNT_TEXT_FIELD_HEIGHT)] 
+                              initWithFrame:CGRectMake(floorf(MARGIN_LEFT/2)+AMOUNT_LABEL_WIDTH, MARGIN_TOP, AMOUNT_TEXT_FIELD_WIDTH, AMOUNT_TEXT_FIELD_HEIGHT)] 
                               autorelease];
 	chargeAmountTextField.textColor = [UIColor blackColor];
 	chargeAmountTextField.borderStyle = UITextBorderStyleRoundedRect;

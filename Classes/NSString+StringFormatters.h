@@ -13,7 +13,7 @@
 + (NSString *) formatAsUSPhone:(NSString *)phone;
 + (NSString *) formatNumberAsMoney:(NSNumber *)value;
 + (NSString *) formatDecimalNumberAsMoney:(NSDecimalNumber *)value;
-
++ (NSString *) formatDecimalNumber: (NSDecimalNumber *)value toScale: (int) scale;
 - (NSString *) padLeft:(NSString *) padString withMaxSize: (NSUInteger) maxSize;
 
 @end

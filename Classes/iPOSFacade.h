@@ -54,6 +54,7 @@ typedef enum { SessionOk = 0,
 
 #pragma mark Inventory Management
 -(ProductItem *) lookupProductItem:(NSString *) itemSku;
+- (NSArray *) lookupProductItemByName:(NSString *) itemName;
 
 -(BOOL) isProductItemAvailable: (NSNumber *) itemId forQuantity: (NSDecimalNumber *) quantity;
 

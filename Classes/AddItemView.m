@@ -14,19 +14,20 @@
 #import "AddItemView.h"
 #import "LayoutUtils.h"
 #import "ProductItem.h"
-#import "DistributionCenter.h"
 
-#define AVAILABLE_COLOR [UIColor colorWithRed:170.0f/255.0f green:204.0f/255.0f blue:0.0f alpha:1.0f]
-#define UNAVAILABLE_COLOR [UIColor colorWithRed:255.0f/255.0f green:70.0f/255.0f blue:0.0f alpha:1.0f]
-#define LARGE_FONT_SIZE 16.0f
-#define BIG_LABEL_HEIGHT 16.0f
-#define AVAILABILITY_VIEW_HEIGHT 56.0f
+#import "iPOSFacade.h"
+
+#define ITEM_VIEW_HEIGHT 299.0f
+
 #define ROUND_VIEW_X 20.0f
 #define ROUND_VIEW_Y 7.0f
 #define ROUND_VIEW_WIDTH 280.0f
 #define ROUND_VIEW_HEIGHT 402.0f
 #define KEYBOARD_TOOLBAR_HEIGHT 44.0f
 #define KEYBOARD_TOOLBAR_WIDTH 320.0f
+
+#define MOVE_OFF_TO_LEFT_X -280.0f
+#define MOVE_OFF_TO_RIGHT_X 280.0f 
 
 #pragma mark -
 #pragma mark Private Interface
@@ -38,13 +39,16 @@
 - (void) removeKeyboardListeners;
 - (void) dismissKeyboard:(id)sender;
 - (void) dismissKeyboardWithCancel:(id)sender;
+
+- (void) slideToItemDetails;
+- (void) slideToItemList;
 @end
 
 #pragma mark -
 @implementation AddItemView
 
 // This is our data item to display and work with
-@synthesize productItem;
+@synthesize productItemList, itemToAdd;
 
 // Our delegate to hand off to when we either cancel or enter a quantity.
 @synthesize viewDelegate;
@@ -59,14 +63,6 @@
     self = [super initWithFrame:frame];
     if (self == nil)
         return nil;
-    
-	priceFormatter = [[NSNumberFormatter alloc] init];
-	[priceFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-	
-	availableFormatter = [[NSNumberFormatter alloc] init];
-	[availableFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-	[availableFormatter setMaximumFractionDigits:2];
-	[availableFormatter setMinimumFractionDigits:2];
 	
 	quantityFormatter = [[NSNumberFormatter alloc] init];
 	[quantityFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
@@ -81,36 +77,45 @@
 	
 	[self setCurrentFirstResponder:nil];
 	
-	[priceFormatter release];
-	priceFormatter = nil;
-	
-	[availableFormatter release];
-	availableFormatter = nil;
-	
 	[quantityFormatter release];
 	quantityFormatter = nil;
 	
-	[productItem release];
-	productItem = nil;
+    [productItemList release];
+    productItemList = nil;
+    
+    [itemToAdd release];
+    itemToAdd = nil;
 	
     [super dealloc];
 }
 
 #pragma mark -
 #pragma mark Accessors
-- (id) productItem {
-	return productItem;
-}
-
-- (void) setProductItem:(id)product {
+- (void) setProductItemList:(NSArray *)productList {
 	// This basically does the same as the standard synthesized
 	// retain setter, but we have to override it in order to
 	// make ourselves redisplay when we get a new productItem 
 	// set.
-	if (productItem != product) {
-		[productItem release];
-		productItem = [product retain];
-		[self setNeedsDisplay];
+	if (productItemList != productList) {
+        // If the list of products is only 1, default the item to add to the first element
+        // and release the list
+        if (productList && [productList count] == 1) {
+            itemToAdd = [(ProductItem *) [productList objectAtIndex:0] retain];
+            
+            [productItemList release];
+            productItemList = nil;
+        } else {
+            [productItemList release];
+            productItemList = [productList retain];
+            
+            [itemToAdd release];
+            itemToAdd = nil;
+        }
+
+        if ([self.subviews count] > 0) {
+            [self updateDisplayValues];
+            [self setNeedsDisplay];
+        }
 	}
 }
 
@@ -131,80 +136,10 @@
 		[roundedView release];
 	}
 	
-	// Keep track of how far down we are in the view
-	CGFloat cy = 10.0f;
-	
-	if (skuLabel == nil) {
-		skuLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, BIG_LABEL_HEIGHT)];
-		skuLabel.backgroundColor = [UIColor clearColor];
-		skuLabel.textColor = [UIColor blackColor];
-		skuLabel.textAlignment = UITextAlignmentCenter;
-		skuLabel.font = [UIFont boldSystemFontOfSize:LARGE_FONT_SIZE];
-		skuLabel.text = @"NA";
-		[roundedView addSubview:skuLabel];
-		[skuLabel release];
-	}
-	
-	cy += BIG_LABEL_HEIGHT;
-	
-	if (descriptionLabel == nil) {
-		descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, BIG_LABEL_HEIGHT)];
-		descriptionLabel.backgroundColor = [UIColor clearColor];
-		descriptionLabel.textColor = [UIColor blackColor];
-		descriptionLabel.textAlignment = UITextAlignmentCenter;
-		descriptionLabel.font = [UIFont boldSystemFontOfSize:LARGE_FONT_SIZE];
-		descriptionLabel.text = @"NA";
-		[roundedView addSubview:descriptionLabel];
-		[descriptionLabel release];
-	}
-	
-	cy += BIG_LABEL_HEIGHT;
-	
-	if (priceLabel == nil) {
-		priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, BIG_LABEL_HEIGHT)];
-		priceLabel.backgroundColor = [UIColor clearColor];
-		priceLabel.textColor = [UIColor blackColor];
-		priceLabel.textAlignment = UITextAlignmentCenter;
-		priceLabel.font = [UIFont boldSystemFontOfSize:LARGE_FONT_SIZE];
-		priceLabel.text = @"NA";
-		[roundedView addSubview:priceLabel];
-		[priceLabel release];
-	}
-	
-	cy += BIG_LABEL_HEIGHT + 10.0f;
-	
-
-	if (storeInfoView == nil) {
-		storeInfoView = [[AvailabilityView alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, AVAILABILITY_VIEW_HEIGHT)];
-		[roundedView addSubview:storeInfoView];
-		[storeInfoView release];
-	}
-	
-	cy += AVAILABILITY_VIEW_HEIGHT;
-
-	if (dc1InfoView == nil) {
-		dc1InfoView = [[AvailabilityView alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, AVAILABILITY_VIEW_HEIGHT)];
-		[roundedView addSubview:dc1InfoView];
-		[dc1InfoView release];
-	}
-	
-	cy += AVAILABILITY_VIEW_HEIGHT;
-
-	if (dc2InfoView == nil) {
-		dc2InfoView = [[AvailabilityView alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, AVAILABILITY_VIEW_HEIGHT)];
-		[roundedView addSubview:dc2InfoView];
-		[dc2InfoView release];
-	}
-	
-	cy += AVAILABILITY_VIEW_HEIGHT;
-	
-	if (dc3InfoView == nil) {
-		dc3InfoView = [[AvailabilityView alloc] initWithFrame:CGRectMake(0.0f, cy, ROUND_VIEW_WIDTH, AVAILABILITY_VIEW_HEIGHT)];
-		[roundedView addSubview:dc3InfoView];
-		[dc3InfoView release];
-	}
-	
-	cy += AVAILABILITY_VIEW_HEIGHT + 15.0f;
+    // Keep track of how far down we are in the view
+	CGFloat cy = 0;
+    
+	cy += ITEM_VIEW_HEIGHT + 8.0f;
 	
 	if (addToCartButton == nil) {
 		addToCartButton = [[MOGlassButton alloc] initWithFrame:CGRectMake(46.0f, cy, 80.0f, 80.0f)];
@@ -275,49 +210,83 @@
 	self.keyboardCancelled = NO;
 	
 	[self updateDisplayValues];
-
 }
 
-- (void)updateDisplayValues {
-	if (self.productItem != nil) {
-		ProductItem *pi = (ProductItem *)self.productItem;
-		skuLabel.text = [pi.sku stringValue];
-		descriptionLabel.text = pi.description;
-		priceLabel.text = [NSString stringWithFormat:@"%@ / %@", [priceFormatter stringFromNumber:pi.retailPrice], pi.primaryUnitOfMeasure];
-		
-		[storeInfoView setStoreAvailabilityAtStoreId:pi.store.storeId withAvailable:pi.store.availability];
-		
-		if ([pi.distributionCenterList count] > 0) {
-			DistributionCenter *dc1 = (DistributionCenter *)[pi.distributionCenterList objectAtIndex:0];
-			[dc1InfoView setDistributionCenter:dc1];
-		}
-		
-		if ([pi.distributionCenterList count] > 1) {
-			DistributionCenter *dc2 = (DistributionCenter *)[pi.distributionCenterList objectAtIndex:1];
-			[dc2InfoView setDistributionCenter:dc2];
-		}
-		
-		if ([pi.distributionCenterList count] > 2) {
-			DistributionCenter *dc3 = (DistributionCenter *)[pi.distributionCenterList objectAtIndex:2];
-			[dc3InfoView setDistributionCenter:dc3];
-		}
-
-	}
+- (void)updateDisplayValues {    
+    // Add the Item Detail View if it not in the layout
+    if (itemDetailView == nil) {
+        itemDetailView = [[ItemDetailView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, ROUND_VIEW_WIDTH, ITEM_VIEW_HEIGHT)];            
+        [roundedView addSubview:itemDetailView];
+        [itemDetailView release];
+    }
+    
+    // Determine if the list view needs to be added
+    if (itemToAdd != nil) {
+        itemDetailView.item = itemToAdd;
+        addToCartButton.enabled = YES;
+        
+        // Move Item List View off to the left of main view
+        if (itemListView) {
+            CGRect slideOutFrame = itemListView.frame;
+            slideOutFrame.origin.x = MOVE_OFF_TO_LEFT_X;
+            itemListView.frame = slideOutFrame;
+        }
+    } else if (productItemList != nil) {
+        if (itemListView == nil) {
+            itemListView = [[ItemListView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, ROUND_VIEW_WIDTH, ITEM_VIEW_HEIGHT)];
+            itemListView.viewDelegate = self;
+            [roundedView addSubview:itemListView];
+            [itemListView release];
+        }
+        
+        itemListView.itemList = productItemList;
+        addToCartButton.enabled = NO;
+        
+        // Move Item Detail View off to the right
+        if (itemDetailView) {
+            CGRect slideOutFrame = itemDetailView.frame;
+            slideOutFrame.origin.x = MOVE_OFF_TO_RIGHT_X;
+            itemDetailView.frame = slideOutFrame;
+        }
+    }
 }
 
 - (void)handleExitButton:(id)sender {
-	if (viewDelegate != nil && [viewDelegate respondsToSelector:@selector(cancelAddItem:)]) {
-		// This used to have a release of addQuantityView.  This is not necessary since removing
-        // this view from the parent view will release all subviews of this object.
-		[viewDelegate cancelAddItem:self];
-	}
+    if ([exitButton.titleLabel.text isEqualToString:@"EXIT"]) {
+        if (viewDelegate != nil && [viewDelegate respondsToSelector:@selector(cancelAddItem:)]) {
+            // This used to have a release of addQuantityView.  This is not necessary since removing
+            // this view from the parent view will release all subviews of this object.
+            [viewDelegate cancelAddItem:self];
+        }
+    } else if ([exitButton.titleLabel.text isEqualToString:@"BACK"]) {
+        [self slideToItemList];
+    }       
 }
 
 - (void)handleAddToCartButton:(id)sender {
 	[self addKeyboardListeners];
-	ProductItem *pi = (ProductItem *)self.productItem;
+	ProductItem *pi = itemToAdd;
 	addQuantityUnitsLabel.text = [pi unitOfMeasureDisplay:pi.primaryUnitOfMeasure];
 	addQuantityView.hidden = NO;
+}
+
+#pragma mark -
+#pragma mark ItemListViewDelegate
+- (void) selectItem:(ProductItem *)item {
+    NSArray *itemList = self.productItemList;
+    if (item && itemList && [itemList containsObject:item]) {
+        
+        // Fetch the details for the item and display them
+        NSString *sku = [NSString stringWithFormat:@"%@", item.sku];
+        
+        self.itemToAdd = [[iPOSFacade sharedInstance] lookupProductItem:sku];
+        
+        if (itemToAdd == nil) {
+            [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Problem getting item details with sku '%@'", sku]]; 
+        } else {
+            [self slideToItemDetails];
+        }
+    }
 }
 
 #pragma mark -
@@ -342,7 +311,7 @@
 	
 	NSDecimalNumber *quantity = ([textField.text length] > 0) ? (NSDecimalNumber *)[quantityFormatter numberFromString:textField.text] : nil;
 	if (self.keyboardCancelled == NO && quantity != nil) {
-		ProductItem *pi = (ProductItem *)self.productItem;
+		ProductItem *pi = itemToAdd;
 		if (viewDelegate != nil && [viewDelegate respondsToSelector:@selector(addItem:orderQuantity:ofUnits:)]) {
 			[viewDelegate addItem:self orderQuantity:quantity ofUnits:pi.primaryUnitOfMeasure];
 		}
@@ -444,6 +413,60 @@
 		[UIView commitAnimations];
 		previousViewOriginY = 0.0f;
 	}
+}
+
+#pragma mark -
+#pragma mark Slide Animation Methods
+- (void) slideToItemList {
+    if (itemDetailView && itemListView) {
+        CGRect slideOutFrame = itemDetailView.frame;
+        CGRect slideInFrame = itemListView.frame;
+        
+        slideOutFrame.origin.x = 0.0f;
+        slideInFrame.origin.x = MOVE_OFF_TO_LEFT_X;
+        
+        itemDetailView.item = nil;
+        
+        // Deselect any item from the search results
+        [itemListView deselectTableRow];
+        
+        [UIView beginAnimations:nil context:nil];  
+        [UIView setAnimationDuration:0.3];
+            slideOutFrame.origin.x = MOVE_OFF_TO_RIGHT_X;
+            slideInFrame.origin.x = 0.0f;
+            itemDetailView.frame = slideOutFrame;
+            itemListView.frame = slideInFrame;
+        [UIView commitAnimations]; 
+        
+        addToCartButton.enabled = NO;
+        [exitButton setTitle:@"EXIT" forState:UIControlStateNormal];
+    }
+}
+
+- (void) slideToItemDetails {
+    if (itemToAdd && itemListView && itemDetailView) {
+        CGRect slideOutFrame = itemListView.frame;
+        CGRect slideInFrame = itemDetailView.frame;
+        
+        slideOutFrame.origin.x = 0.0f;
+        slideInFrame.origin.x = MOVE_OFF_TO_RIGHT_X;
+        
+        itemDetailView.item = itemToAdd;
+        itemDetailView.frame = slideInFrame;
+        
+        [UIView beginAnimations:nil context:nil];  
+        [UIView setAnimationDuration:0.3];
+            slideOutFrame.origin.x = MOVE_OFF_TO_LEFT_X;
+            slideInFrame.origin.x = 0.0f;
+            itemListView.frame = slideOutFrame;
+            itemDetailView.frame = slideInFrame;
+        [UIView commitAnimations]; 
+        
+        addToCartButton.enabled = YES;
+        
+        // Change state of exit button
+        [exitButton setTitle:@"BACK" forState:UIControlStateNormal];
+    }
 }
 
 

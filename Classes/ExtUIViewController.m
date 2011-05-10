@@ -27,7 +27,7 @@
     self = [super init];
     if (self == nil)
         return nil;
-    
+
     return self;
 }
 
@@ -65,6 +65,12 @@
 	// Call super at the beginning
 	[super viewDidAppear:animated];
 	[self addKeyboardListeners];
+    
+    // [TL]Track the actual Y origin of the view.  This fixes defect when view does not adjust up with multiple text fields
+    // and the previous Y origin messes up the anchor point for the loaded view when the keyboard is hidden.
+    if (self.view) {
+        actualOriginY = self.view.frame.origin.y;
+    }
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -102,6 +108,18 @@
 	keyboardToolbar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
 	keyboardToolbar.barStyle = UIBarStyleBlackTranslucent;
 	UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissKeyboard:)] autorelease];
+	UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAndDismissKeyboard:)] autorelease];
+	UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+    NSArray *items = [[[NSArray alloc] initWithObjects:doneButton, flex, cancelButton, nil] autorelease];
+	[keyboardToolbar setItems:items];
+	[textField setInputAccessoryView:keyboardToolbar];
+}
+
+- (void) addSearchAndCancelToolbarForTextField:(ExtUITextField *)textField {
+	UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, KEYBOARD_TOOLBAR_WIDTH, KEYBOARD_TOOLBAR_HEIGHT)] autorelease];
+	keyboardToolbar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
+	keyboardToolbar.barStyle = UIBarStyleBlackTranslucent;
+	UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(dismissKeyboard:)] autorelease];
 	UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAndDismissKeyboard:)] autorelease];
 	UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
     NSArray *items = [[[NSArray alloc] initWithObjects:doneButton, flex, cancelButton, nil] autorelease];
@@ -166,18 +184,25 @@
 		previousViewOriginY = frame.origin.y;
 		CGFloat adjustUpBy = (windowRect.size.height - keyboardRect.size.height) - (CGRectGetMaxY(viewRectAbsolute) + 10.0f);
 		
-		if (adjustUpBy < 0) {
-			frame.origin.y = adjustUpBy;
+        if (adjustUpBy != 0) {
+            if (adjustUpBy < 0) {
+                frame.origin.y = adjustUpBy;
+            } else {
+                frame.origin.y = actualOriginY;
+            }
+			
 			[UIView beginAnimations:nil context:NULL];
-			[UIView setAnimationDuration:[[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
+            NSTimeInterval duration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue] != 0 ? 
+            [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue] : 0.3;
+			[UIView setAnimationDuration:duration];
 			[UIView setAnimationCurve:[[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
 			self.view.frame = frame;
 			[UIView commitAnimations];
-		}
+        }
+
 		// iOS 3 sends hide and show notifications right after each other
 		// when switching between textFields, so cancel -scrollToOldPosition requests
 		[NSObject cancelPreviousPerformRequestsWithTarget:self];
-		
 	}
 }
 
@@ -186,15 +211,16 @@
 		NSDictionary* userInfo = [notification userInfo];
 		
 		CGRect frame = self.view.frame;
-		if (frame.origin.y != previousViewOriginY) {
+		if (frame.origin.y != actualOriginY) {
 			[UIView beginAnimations:nil context:NULL];
 			[UIView setAnimationDuration:[[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
 			[UIView setAnimationCurve:[[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
-			frame.origin.y = previousViewOriginY;
+			frame.origin.y = actualOriginY;
 			self.view.frame = frame;
 			[UIView commitAnimations];
-			previousViewOriginY = 0.0f;
 		}
+        
+        previousViewOriginY = actualOriginY;
 	}
 }
 

@@ -23,6 +23,9 @@
     ManagerInfo *managerApprover;
     ProductItem *item;
 	
+    // This boolean controls whether conversion converts to pieces or full boxes
+    BOOL doConversionToFullBoxes;
+    
 	// These are for batch editing of the order.
 	BOOL shouldDelete;
 	BOOL shouldClose;
@@ -38,11 +41,14 @@
 @property (nonatomic, retain) ManagerInfo *managerApprover;
 @property (nonatomic, retain) ProductItem *item;
 
+@property (nonatomic, assign) BOOL doConversionToFullBoxes;
 @property (nonatomic, assign) BOOL shouldDelete;
 @property (nonatomic, assign) BOOL shouldClose;
 
 -(id) initWithItem: (ProductItem *) productItem AndQuantity: (NSDecimalNumber *) productQuantity;
 
+- (BOOL) isConversionNeeded;
+- (NSNumber *) getQuantityInPieces;
 - (NSNumber *) getQuantityInBoxes;
 - (NSNumber *) getPiecesPerBox;
 

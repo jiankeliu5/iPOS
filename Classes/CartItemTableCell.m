@@ -42,7 +42,6 @@
 		[self.contentView addSubview:descriptionLabel];
 		
 		quantityLabel = [[[UILabel alloc] init] autorelease];
-		quantityLabel = [[[UILabel alloc] init] autorelease];
 		quantityLabel.backgroundColor = [UIColor clearColor];
 		quantityLabel.textColor = [UIColor blackColor];
 		quantityLabel.textAlignment = UITextAlignmentCenter;
@@ -50,7 +49,6 @@
 		quantityLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:quantityLabel];
 		
-		lineCostLabel = [[[UILabel alloc] init] autorelease];
 		lineCostLabel = [[[UILabel alloc] init] autorelease];
 		lineCostLabel.backgroundColor = [UIColor clearColor];
 		lineCostLabel.textColor = [UIColor blackColor];

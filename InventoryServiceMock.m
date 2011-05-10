@@ -74,6 +74,10 @@
     return item;
 }
 
+- (NSArray *) lookupProductItemByName:(NSString *)itemName withSession:(SessionInfo *)sessionInfo {
+    return [NSArray arrayWithObjects:nil];
+}
+
 -(BOOL) isProductItemAvailable:  (NSNumber *) itemId forQuantity: (NSDecimalNumber *) quantity withSession:  (SessionInfo *) sessionInfo {
     return YES;
 }

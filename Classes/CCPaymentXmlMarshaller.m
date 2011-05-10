@@ -8,6 +8,7 @@
 
 #import "CCPaymentXmlMarshaller.h"
 #import "POSOxmUtils.h"
+#import "NSString+StringFormatters.h"
 
 #import "CreditCardPayment.h"
 
@@ -67,7 +68,7 @@ static NSString * const PAYMENT_XML = @""
             storeId = [NSString stringWithFormat:@"%@", ccPayment.storeId];
         }
         if (ccPayment.paymentAmount) {
-            paymentAmount = [NSString stringWithFormat:@"%@", ccPayment.paymentAmount]; 
+            paymentAmount = [NSString formatDecimalNumber:ccPayment.paymentAmount toScale:2];
         }
         if (ccPayment.expireDate) {
             expireDate = ccPayment.expireDate;

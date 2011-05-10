@@ -22,21 +22,13 @@
     OrderCart *orderCart;
     
 	UILabel *scanItemLabel;
-	ExtUITextField *lookupItemField;
-	ExtUITextField *lookupOrderField;
+	ExtUITextField *lookupItemNameField;
+	ExtUITextField *lookupItemSkuField;
 	MOGlassButton *customerButton;
 	MOGlassButton *cartButton;
-	
-	NSString *lookupItemSku;
-	NSString *scannedItemSku;
-	NSString *lookupOrderNum;
     
     Linea *linea;
 	
 }
-
-@property (nonatomic, copy) NSString *lookupItemSku;
-@property (nonatomic, copy) NSString *scannedItemSku;
-@property (nonatomic, copy) NSString *lookupOrderNum;
 
 @end

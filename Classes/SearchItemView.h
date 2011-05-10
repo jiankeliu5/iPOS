@@ -16,6 +16,7 @@
 @protocol SearchItemViewDelegate
 
 - (void) searchItem:(SearchItemView *)aSearchItemView withSku:(NSString *)aSku;
+- (void) searchItem:(SearchItemView *)aSearchItemView withName:(NSString *)aName;
 - (void) cancelSearchItem:(SearchItemView *)aSearchItemView;					 
 
 @end
@@ -27,7 +28,8 @@
 	
 	GradientView *roundedView;
 	UILabel *lookupSkuLabel;
-	ExtUITextField *lookupSkuField;
+	ExtUITextField *lookupNameField;
+    ExtUITextField *lookupSkuField;
 	
 	id currentFirstResponder;
 	BOOL keyboardCancelled;

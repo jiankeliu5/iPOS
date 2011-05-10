@@ -16,16 +16,25 @@
 #define LABEL_HEIGHT 18.0f
 #define TEXT_FIELD_HEIGHT 40.0f
 #define TEXT_FIELD_START_X 20.0f
+#define TEXT_FIELD_START_Y 20.0f
 #define TEXT_FIELD_WIDTH 90.0f
 #define UOM_LABEL_START_X 120.0f
 #define UOM_LABEL_WIDTH 60.0f
 #define ITEM_TOTAL_START_X 160.0f
 #define ITEM_TOTAL_WIDTH 160.0f
+
+#define CONVERT_TO_BOX_SPACING 15.0f
+#define CONVERT_TO_BOX_LABEL_WIDTH 185.0f
+#define CONVERT_TO_BOX_SWITCH_HEIGHT 27.0f
+
+
 #define BUTTON_HEIGHT 40.0f
 #define BUTTON_WIDTH 212.0f
 #define BUTTON_SPACE 10.0f
 
 @interface CartItemDetailViewController()
+- (void) handleConvertToBoxesSwitch: (id) sender;
+
 - (void) handleDeleteButton:(id)sender;
 - (void) handleOpenButton:(id)sender;
 - (void) handleCloseButton:(id)sender;
@@ -138,7 +147,7 @@
 	orderItemView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, cy, self.view.bounds.size.width, TEXT_FIELD_HEIGHT * 3.0f)];
 	orderItemView.backgroundColor = [UIColor colorWithWhite:0.50f alpha:1.0f];
 	
-	vy = TEXT_FIELD_HEIGHT;
+	vy = TEXT_FIELD_START_Y;
 	quantityField = [[ExtUITextField alloc] initWithFrame:CGRectMake(TEXT_FIELD_START_X, vy, TEXT_FIELD_WIDTH, TEXT_FIELD_HEIGHT)];
 	quantityField.textColor = [UIColor blackColor];
 	quantityField.borderStyle = UITextBorderStyleRoundedRect;
@@ -176,7 +185,26 @@
 	itemTotalLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
 	[orderItemView addSubview:itemTotalLabel];
 	[itemTotalLabel release];
-	
+    
+    // Add the convert to boxes control
+    vy += TEXT_FIELD_HEIGHT + CONVERT_TO_BOX_SPACING;
+    convertToBoxesSwitch = [[UISwitch alloc] initWithFrame: CGRectMake(TEXT_FIELD_START_X + CONVERT_TO_BOX_LABEL_WIDTH, vy, 0, CONVERT_TO_BOX_SWITCH_HEIGHT)];
+    [convertToBoxesSwitch addTarget:self action:@selector(handleConvertToBoxesSwitch:) forControlEvents:UIControlEventValueChanged];
+    convertToBoxesSwitch.on = YES;
+    convertToBoxesSwitch.hidden = YES;
+    [orderItemView addSubview:convertToBoxesSwitch];
+    [convertToBoxesSwitch release];
+    
+    centerToText = floorf((CONVERT_TO_BOX_SWITCH_HEIGHT - LABEL_HEIGHT) / 2.0f);
+    convertToBoxesLabel = [[UILabel alloc] initWithFrame:CGRectMake(TEXT_FIELD_START_X, vy+centerToText, CONVERT_TO_BOX_LABEL_WIDTH, LABEL_HEIGHT)];
+    convertToBoxesLabel.text = @"Convert To Full Boxes";
+    convertToBoxesLabel.backgroundColor = [UIColor clearColor];
+	convertToBoxesLabel.textColor = [UIColor blackColor];
+	convertToBoxesLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
+    convertToBoxesLabel.hidden = YES;
+    [orderItemView addSubview:convertToBoxesLabel];
+	[convertToBoxesLabel release];
+    
 	[self.view addSubview:orderItemView];
 	[orderItemView release];
 	
@@ -282,7 +310,6 @@
 
 #pragma mark -
 #pragma mark ExtUIViewController delegates
-
 - (void) extTextFieldFinishedEditing:(ExtUITextField *) textField {
 	if (textField.text != nil) {
 		NSDecimalNumber *newQuantity = (NSDecimalNumber *)[quantityFormatter numberFromString:textField.text];
@@ -305,7 +332,7 @@
 }
 
 #pragma mark -
-#pragma mark UIButton handlers
+#pragma mark UIButton/UISwitch handlers
 - (void) handleOpenButton:(id)sender {
     [orderItem setStatusToOpen];
     [self.navigationController popViewControllerAnimated:YES];
@@ -329,6 +356,14 @@
 	[self.navigationController pushViewController:priceAdjust animated:YES];
 }
 
+- (void) handleConvertToBoxesSwitch: (id) sender {
+    if (orderItem != nil) {
+        orderItem.doConversionToFullBoxes = convertToBoxesSwitch.on;
+        
+        [self updateViewLayout];
+    }
+}
+
 #pragma mark -
 #pragma mark View Update methods
 - (void) updateViewLayout {
@@ -340,6 +375,15 @@
 		unitOfMeasureLabel.text = self.orderItem.item.primaryUnitOfMeasure;
 		NSDecimalNumber *lineTotal = [self.orderItem.sellingPrice decimalNumberByMultiplyingBy:self.orderItem.quantity];
 		itemTotalLabel.text = [NSString formatDecimalNumberAsMoney:lineTotal];
+        
+        // De we hide or show the default to box (only when item needs conversion)
+        if ([orderItem isConversionNeeded]) {
+            convertToBoxesLabel.hidden = NO;
+            convertToBoxesSwitch.hidden = NO;
+        } else {
+            convertToBoxesLabel.hidden = YES;
+            convertToBoxesSwitch.hidden = YES;
+        }
 	}
 }
 

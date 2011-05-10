@@ -11,7 +11,12 @@
 #import "GradientView.h"
 #import "MOGlassButton.h"
 #import "ExtUITextField.h"
+
+#import "ItemDetailView.h"
+#import "ItemListView.h"
 #import "AvailabilityView.h"
+
+#import "ProductItem.h"
 
 @class AddItemView;
 
@@ -22,23 +27,16 @@
 
 @end
 
-@interface AddItemView : UIView <UITextFieldDelegate>
-{
-	id productItem;
+@interface AddItemView : UIView <UITextFieldDelegate, ItemListViewDelegate> {
+	NSArray *productItemList;
+    
+    ProductItem *itemToAdd;
+    
 	NSObject <AddItemViewDelegate>* viewDelegate;
 	
 	GradientView *roundedView;
-	UILabel *skuLabel;
-	UILabel *descriptionLabel;
-	UILabel *priceLabel;
-	
-	AvailabilityView *storeInfoView;
-	
-	AvailabilityView *dc1InfoView;
-	
-	AvailabilityView *dc2InfoView;
-	
-	AvailabilityView *dc3InfoView;
+    ItemListView *itemListView;
+    ItemDetailView *itemDetailView;
 	
 	MOGlassButton *addToCartButton;
 	MOGlassButton *exitButton;
@@ -46,18 +44,18 @@
 	UILabel *addQuantityUnitsLabel;
 	ExtUITextField *addQuantityField;
 	
-	NSNumberFormatter *priceFormatter;
-	NSNumberFormatter *availableFormatter;
-	
 	id currentFirstResponder;
 	CGFloat previousViewOriginY;
 	BOOL keyboardCancelled;
 	
 	NSNumberFormatter *quantityFormatter;
+    
 
 }
 
-@property (nonatomic, retain) id productItem;
+@property (nonatomic, retain) NSArray *productItemList;
+@property (nonatomic, retain) ProductItem *itemToAdd;
+
 @property (nonatomic, assign) NSObject<AddItemViewDelegate>* viewDelegate;
 @property (nonatomic, retain) id currentFirstResponder;
 @property                     BOOL keyboardCancelled;

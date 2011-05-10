@@ -27,9 +27,6 @@
 }
 
 + (NSString *) formatDecimalNumberAsMoney:(NSDecimalNumber *)value {
-    // Ensure we use banker's rounding algorithm
-  //  NSDecimalNumberHandler *bankersRoundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:2 raiseOnExactness:NO raiseOnOverflow:NO raiseOnUnderflow:NO raiseOnDivideByZero:NO];
-  //  NSDecimalNumber *bankersRoundedNumber = [value decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
     NSLocale *usLocale = [[[NSLocale alloc] initWithLocaleIdentifier: @"en_US"] autorelease];
     NSNumberFormatter *numberFormatter = [[[NSNumberFormatter alloc] init] autorelease];
     [numberFormatter setLocale:usLocale];
@@ -37,6 +34,15 @@
     
     return [numberFormatter stringFromNumber:value];
 }
+
++ (NSString *) formatDecimalNumber:(NSDecimalNumber *) value toScale: (int) scale {
+    NSNumberFormatter * nf = [[[NSNumberFormatter alloc] init] autorelease];
+    [nf setMinimumFractionDigits:scale];
+    [nf setMaximumFractionDigits:scale];
+    
+    return [nf stringFromNumber:value];
+}
+
 
 - (NSString *) padLeft:(NSString *) padString withMaxSize: (NSUInteger) maxSize {
     if ([self length] + [padString length] <= maxSize) {

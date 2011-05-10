@@ -9,8 +9,10 @@
 #import "ItemSellingPriceApprovalMarshaller.h"
 #import "ItemSellingPriceApprovalRequest.h"
 #import "ItemSellingPriceApprovalResponse.h"
+#import "NSString+StringFormatters.h"
 
 #import "POSOxmUtils.h"
+
 
 static NSString * const PRICE_APPROVAL_REQUEST_XML = @""
     "<ItemSellingPriceApproval>"
@@ -49,13 +51,13 @@ static NSString * const APPROVER_XML = @""
             itemId = [NSString stringWithFormat:@"%@", approvalRequest.itemId];
         }
         if (approvalRequest.sellingPrice) {
-            sellingPrice = [NSString stringWithFormat:@"%@", approvalRequest.sellingPrice];
+            sellingPrice = [NSString formatDecimalNumber:approvalRequest.sellingPrice toScale:2];
         }
         if (approvalRequest.priceGroupId) {
             priceGroupId = [NSString stringWithFormat:@"%@", approvalRequest.priceGroupId];
         }
         if (approvalRequest.retailPrice) {
-            retailPrice = [NSString stringWithFormat:@"%@", approvalRequest.retailPrice];
+            retailPrice = [NSString formatDecimalNumber:approvalRequest.retailPrice toScale:2];
         }
         
         requestXml = [NSString stringWithFormat:PRICE_APPROVAL_REQUEST_XML, itemId, sellingPrice, priceGroupId, retailPrice];

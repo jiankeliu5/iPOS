@@ -7,6 +7,7 @@
 //
 
 #import "OrderXmlMarshaller.h"
+#import "NSString+StringFormatters.h"
 
 #import "POSOxmUtils.h"
 
@@ -228,8 +229,7 @@ static NSString * const ORDER_LINEITEM_XML = @""
                     quantity = [NSString stringWithFormat: @"%@", orderItem.quantity];
                 }
                 if (orderItem.sellingPrice) {
-                    sellingPrice = [NSString stringWithFormat: @"%@", orderItem.sellingPrice];
-                }
+                    sellingPrice = [NSString formatDecimalNumber:orderItem.sellingPrice toScale:2];                }
                 if (orderItem.item.conversion) {
                     conversion = [NSString stringWithFormat: @"%@", orderItem.item.conversion];
                 }
@@ -261,7 +261,7 @@ static NSString * const ORDER_LINEITEM_XML = @""
                     secondaryUom = orderItem.item.secondaryUnitOfMeasure;
                 }
                 if (orderItem.item.retailPrice) {
-                    retailPrice = [NSString stringWithFormat: @"%@", orderItem.item.retailPrice];
+                    retailPrice = [NSString formatDecimalNumber:orderItem.item.retailPrice toScale:2];
                 }
                 if (order.salesPersonEmployeeId) {
                     salepersonEmpId = [NSString stringWithFormat: @"%@", order.salesPersonEmployeeId];

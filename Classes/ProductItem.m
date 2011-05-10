@@ -8,6 +8,7 @@
 
 #import "ProductItem.h"
 #import "ProductItemXmlMarshaller.h"
+#import "ProductItemListXmlMarshaller.h"
 
 @implementation ProductItem
 
@@ -78,10 +79,22 @@
 }
 
 #pragma mark -
+#pragma mark Comparison Methods
+- (NSComparisonResult)compare:(id)otherObject {
+    ProductItem *compareToItem = (ProductItem *) otherObject;
+    return [self.description compare:compareToItem.description];
+}
+
+#pragma mark -
 #pragma mark XML marshalling
 +(ProductItem *) fromXml:(NSString *)xmlString {
     ProductItemXmlMarshaller *marshaller = [[[ProductItemXmlMarshaller alloc] init] autorelease];
     return (ProductItem *) [marshaller toObject:xmlString];    
+}
+
++ (NSArray *) listFromXml:(NSString *)xmlString {
+    ProductItemListXmlMarshaller *marshaller = [[[ProductItemListXmlMarshaller alloc] init] autorelease];
+    return (NSArray *) [marshaller toObject:xmlString];    
 }
 
 - (NSString *) toXml {

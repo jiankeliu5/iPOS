@@ -179,6 +179,12 @@
 		D618490613185C200051CEFF /* DistributionCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = D618490413185C200051CEFF /* DistributionCenter.m */; };
 		D61B635C1328428C0030E87E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D698A47E1325E50E00371985 /* OpenGLES.framework */; };
 		D61B635D132842970030E87E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D698A47E1325E50E00371985 /* OpenGLES.framework */; };
+		D61D83B013785D0200FD19C9 /* ItemTableCell.h in Headers */ = {isa = PBXBuildFile; fileRef = D61D83AE13785D0200FD19C9 /* ItemTableCell.h */; };
+		D61D83B113785D0200FD19C9 /* ItemTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D61D83AF13785D0200FD19C9 /* ItemTableCell.m */; };
+		D624BAA01373049E00ED6120 /* ItemListView.h in Headers */ = {isa = PBXBuildFile; fileRef = D624BA9E1373049E00ED6120 /* ItemListView.h */; };
+		D624BAA11373049E00ED6120 /* ItemListView.m in Sources */ = {isa = PBXBuildFile; fileRef = D624BA9F1373049E00ED6120 /* ItemListView.m */; };
+		D624BAA4137304B200ED6120 /* ItemDetailView.h in Headers */ = {isa = PBXBuildFile; fileRef = D624BAA2137304B200ED6120 /* ItemDetailView.h */; };
+		D624BAA5137304B200ED6120 /* ItemDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = D624BAA3137304B200ED6120 /* ItemDetailView.m */; };
 		D6334A361331CA25000DEDBB /* BasicAppTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D6334A351331CA25000DEDBB /* BasicAppTestCase.m */; };
 		D6334A571331CADB000DEDBB /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 		D6412B911356310E002AC1AC /* CCPaymentXmlMarshaller.h in Headers */ = {isa = PBXBuildFile; fileRef = D6412B8F1356310E002AC1AC /* CCPaymentXmlMarshaller.h */; };
@@ -343,6 +349,8 @@
 		D6BA08031302586800B77769 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08021302586800B77769 /* libz.1.2.3.dylib */; };
 		D6C6E8D61365CA7C00560DCF /* StringFormattersTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C6E8D51365CA7C00560DCF /* StringFormattersTestCase.m */; };
 		D6C7770613574A7900D41AD9 /* PaymentServiceTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C7770513574A7900D41AD9 /* PaymentServiceTestCase.m */; };
+		D6CB6140137321C200E024B6 /* ProductItemListXmlMarshaller.h in Headers */ = {isa = PBXBuildFile; fileRef = D6CB613E137321C200E024B6 /* ProductItemListXmlMarshaller.h */; };
+		D6CB6141137321C200E024B6 /* ProductItemListXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CB613F137321C200E024B6 /* ProductItemListXmlMarshaller.m */; };
 		D6CC18DB1331D1690042745E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FC1302586800B77769 /* CFNetwork.framework */; };
 		D6CC18DC1331D1690042745E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		D6CC18DD1331D1690042745E /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
@@ -670,6 +678,12 @@
 		D61C3C6312FCA97F003C3A47 /* ProductItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductItem.m; sourceTree = "<group>"; };
 		D61C3C6812FCA9C0003C3A47 /* OrderItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderItem.h; sourceTree = "<group>"; };
 		D61C3C6912FCA9C0003C3A47 /* OrderItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderItem.m; sourceTree = "<group>"; };
+		D61D83AE13785D0200FD19C9 /* ItemTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemTableCell.h; sourceTree = "<group>"; };
+		D61D83AF13785D0200FD19C9 /* ItemTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemTableCell.m; sourceTree = "<group>"; };
+		D624BA9E1373049E00ED6120 /* ItemListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemListView.h; sourceTree = "<group>"; };
+		D624BA9F1373049E00ED6120 /* ItemListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemListView.m; sourceTree = "<group>"; };
+		D624BAA2137304B200ED6120 /* ItemDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemDetailView.h; sourceTree = "<group>"; };
+		D624BAA3137304B200ED6120 /* ItemDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemDetailView.m; sourceTree = "<group>"; };
 		D62853C412FB9B650024228B /* LayoutUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutUtils.h; sourceTree = "<group>"; };
 		D62853C512FB9B650024228B /* LayoutUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutUtils.m; sourceTree = "<group>"; };
 		D6334A2D1331C9CE000DEDBB /* AppTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -812,6 +826,8 @@
 		D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionInfo.m; sourceTree = "<group>"; };
 		D6C6E8D51365CA7C00560DCF /* StringFormattersTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringFormattersTestCase.m; sourceTree = "<group>"; };
 		D6C7770513574A7900D41AD9 /* PaymentServiceTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentServiceTestCase.m; sourceTree = "<group>"; };
+		D6CB613E137321C200E024B6 /* ProductItemListXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductItemListXmlMarshaller.h; sourceTree = "<group>"; };
+		D6CB613F137321C200E024B6 /* ProductItemListXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductItemListXmlMarshaller.m; sourceTree = "<group>"; };
 		D6DB9254135F383A00877788 /* ItemSellingPriceApprovalRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemSellingPriceApprovalRequest.h; sourceTree = "<group>"; };
 		D6DB9255135F383A00877788 /* ItemSellingPriceApprovalRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemSellingPriceApprovalRequest.m; sourceTree = "<group>"; };
 		D6DB9277135F3DF700877788 /* ItemSellingPriceApprovalResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemSellingPriceApprovalResponse.h; sourceTree = "<group>"; };
@@ -1313,6 +1329,12 @@
 			children = (
 				B4C46B0413075F5D001EADE4 /* AddItemView.h */,
 				B4C46B0513075F5D001EADE4 /* AddItemView.m */,
+				D61D83AE13785D0200FD19C9 /* ItemTableCell.h */,
+				D61D83AF13785D0200FD19C9 /* ItemTableCell.m */,
+				D624BA9E1373049E00ED6120 /* ItemListView.h */,
+				D624BA9F1373049E00ED6120 /* ItemListView.m */,
+				D624BAA2137304B200ED6120 /* ItemDetailView.h */,
+				D624BAA3137304B200ED6120 /* ItemDetailView.m */,
 				B4300A75131AC317000210C7 /* AvailabilityView.h */,
 				B4300A76131AC317000210C7 /* AvailabilityView.m */,
 			);
@@ -1552,6 +1574,8 @@
 				D6B19372133C02F7004C4FD1 /* OrderXmlMarshaller.m */,
 				D6B19377133C0314004C4FD1 /* ProductItemXmlMarshaller.h */,
 				D6B19378133C0314004C4FD1 /* ProductItemXmlMarshaller.m */,
+				D6CB613E137321C200E024B6 /* ProductItemListXmlMarshaller.h */,
+				D6CB613F137321C200E024B6 /* ProductItemListXmlMarshaller.m */,
 				D6412B8F1356310E002AC1AC /* CCPaymentXmlMarshaller.h */,
 				D6412B901356310E002AC1AC /* CCPaymentXmlMarshaller.m */,
 				D6412B9713563229002AC1AC /* PaymentSignatureXmlMarshaller.h */,
@@ -1738,6 +1762,10 @@
 				D6DB9285135F40EF00877788 /* ItemSellingPriceApprovalMarshaller.h in Headers */,
 				D6DB9353135F6BBB00877788 /* ChargeCreditCardView.h in Headers */,
 				B4D308281367B86400F26C5E /* SessionVerificationView.h in Headers */,
+				D624BAA01373049E00ED6120 /* ItemListView.h in Headers */,
+				D624BAA4137304B200ED6120 /* ItemDetailView.h in Headers */,
+				D6CB6140137321C200E024B6 /* ProductItemListXmlMarshaller.h in Headers */,
+				D61D83B013785D0200FD19C9 /* ItemTableCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2292,6 +2320,10 @@
 				D6DB9286135F40EF00877788 /* ItemSellingPriceApprovalMarshaller.m in Sources */,
 				D6DB9354135F6BBB00877788 /* ChargeCreditCardView.m in Sources */,
 				B4D308291367B86400F26C5E /* SessionVerificationView.m in Sources */,
+				D624BAA11373049E00ED6120 /* ItemListView.m in Sources */,
+				D624BAA5137304B200ED6120 /* ItemDetailView.m in Sources */,
+				D6CB6141137321C200E024B6 /* ProductItemListXmlMarshaller.m in Sources */,
+				D61D83B113785D0200FD19C9 /* ItemTableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

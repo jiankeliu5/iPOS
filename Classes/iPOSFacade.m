@@ -114,6 +114,10 @@ static iPOSFacade *facade = nil;
     return [self.inventoryService lookupProductItem:itemSku withSession:sessionInfo];
 }
 
+- (NSArray *) lookupProductItemByName:(NSString *)itemName {
+    return [self.inventoryService lookupProductItemByName:itemName withSession:sessionInfo];
+}
+
 -(BOOL) isProductItemAvailable: (NSNumber *) itemId forQuantity: (NSDecimalNumber *) quantity {
     return [self.inventoryService isProductItemAvailable:itemId forQuantity:quantity withSession:sessionInfo];
 }

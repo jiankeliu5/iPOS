@@ -67,9 +67,11 @@
 
 - (CustomerViewController *)findCustomerViewController;
 
-- (void) searchforSku:(id)sender;
+- (void) searchforItem:(id)sender;
 - (void) restoreDefaultToolbar;
 - (void) updateSelectionCount;
+
+- (void) showAddItemOverlay: (NSArray *) foundItems;
 @end
 
 @implementation CartItemsViewController
@@ -207,7 +209,7 @@
 	UIBarButtonItem *searchButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search.png"] 
 																	style:UIBarButtonItemStylePlain 
 																   target:self 
-																   action:@selector(searchforSku:)] autorelease];
+																   action:@selector(searchforItem:)] autorelease];
 	
 	UIBarButtonItem *tbFlex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
 	
@@ -500,8 +502,7 @@
 	NSMutableArray *orderItemsToDelete = [NSMutableArray arrayWithCapacity:5];
 	// Iterate over the items in the order first to see which ones need to be deleted and closed.
 	// Must do this for delete because we cannot change the array while iterating over it.
-	// TODO: what do we need to close the line?  OrderItem?
-	for (OrderItem *orderItem in [[orderCart getOrder] getOrderItems]) {
+    for (OrderItem *orderItem in [[orderCart getOrder] getOrderItems]) {
 		if (orderItem.shouldDelete) {
 			[orderItemsToDelete addObject:orderItem];
 		}
@@ -525,6 +526,9 @@
 	[self restoreDefaultToolbar];
 	[self updateSelectionCount];
 	[self.navigationItem setLeftBarButtonItem:self.editBarButton animated:NO];
+    
+    // Recalculate order labels
+    [self calculateOrder];
 }
 
 - (void) updateSelectionCount {
@@ -652,7 +656,7 @@
 
 #pragma mark -
 #pragma mark SearchItemView delegate
-- (void) searchforSku:(id)sender {
+- (void) searchforItem:(id)sender {
 	[linea removeDelegate:self];
 	SearchItemView *searchOverlay = [[SearchItemView alloc] initWithFrame:self.view.bounds];
 	[searchOverlay setDelegate:self];
@@ -662,27 +666,30 @@
 
 - (void) searchItem:(SearchItemView *)aSearchItemView withSku:(NSString *)aSku {
 	
-	NSString *s = [NSString stringWithString:aSku];
 	[aSearchItemView removeFromSuperview];
-	
 	[linea addDelegate:self];
 	
 	// Set the values and do the work here
-	if ([s length] > 0) {
-		// Call the service and display the overlay view
-		ProductItem *item = [facade lookupProductItem:s];
-		// TODO: Do we have to check inside ProductItem because of the test service at OPI?
-		if(item != nil && [item.sku isEqualToNumber:[NSNumber numberWithInt:0]] == NO) {
-			[linea removeDelegate:self];
-			AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
-			[overlay setViewDelegate:self];
-			[self.view addSubview:overlay];
-			[overlay setProductItem:item];
-			[overlay release];
-		} else {
-			[AlertUtils showModalAlertMessage: @"Item not found"];
-		}
+	if (aSku && [aSku length] > 0) {
+		ProductItem *item = [facade lookupProductItem:aSku];
+        NSArray *foundItems = nil;
+        
+        if(item != nil && [item.sku isEqualToNumber:[NSNumber numberWithInt:0]] == NO) {
+            foundItems = [NSArray arrayWithObject:item];
+        }
+        
+        [self showAddItemOverlay:foundItems];        
+	}
+}
 
+- (void) searchItem:(SearchItemView *)aSearchItemView withName: (NSString *) aName {
+    [aSearchItemView removeFromSuperview];
+	[linea addDelegate:self];
+	
+	// Set the values and do the work here
+	if (aName && [aName length] > 0) {
+		NSArray *foundItems = [facade lookupProductItemByName:aName];
+        [self showAddItemOverlay:foundItems];        
 	}
 }
 
@@ -695,25 +702,20 @@
 #pragma mark Linea Delegate
 -(void)barcodeData:(NSString *)barcode type:(int)type {
     ProductItem *item = [facade lookupProductItem:barcode];
+    NSArray *foundItems = nil;
     
     if(item != nil && [item.sku isEqualToNumber:[NSNumber numberWithInt:0]] == NO) {
-		[linea removeDelegate:self];
-		AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
-		[overlay setViewDelegate:self];
-		[self.view addSubview:overlay];
-		[overlay setProductItem:item];
-		[overlay release];
-    } else {
-		[AlertUtils showModalAlertMessage: @"Item not found"];
+		foundItems = [NSArray arrayWithObject:item];
 	}
-
+    
+    [self showAddItemOverlay:foundItems];
 }
 
 #pragma mark -
 #pragma mark AddItemViewDelegate
 - (void) addItem:(AddItemView *)addItemView orderQuantity:(NSDecimalNumber *)quantity ofUnits:(NSString *)unitOfMeasure {
 	
-	ProductItem *item = [addItemView productItem];
+	ProductItem *item = addItemView.itemToAdd;
 	
     [orderCart addItem:item withQuantity:quantity];
     if ([orderCart getOrder].errorList && [[orderCart getOrder].errorList count] > 0) {
@@ -747,6 +749,30 @@
 	label.textAlignment = alignment;
 	label.font = [UIFont boldSystemFontOfSize:ORDER_LABEL_FONT_SIZE];
 	return [label autorelease];
+}
+
+#pragma mark -
+#pragma mark Show Add Item Overlay
+- (void) showAddItemOverlay: (NSArray *) foundItems {
+    if (foundItems && [foundItems count] > 0) {
+        [linea removeDelegate:self];
+        
+        AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
+        [overlay setViewDelegate:self];
+        
+        [self.view addSubview:overlay];
+        
+        if ([foundItems count] == 1) {
+            [overlay setItemToAdd:(ProductItem *) [foundItems objectAtIndex:0]];
+        } else {
+            [overlay setProductItemList:foundItems];
+        }
+        
+        [overlay release];
+    } else {
+        [AlertUtils showModalAlertMessage:@"No item(s) found"];
+    }
+    
 }
 
 @end

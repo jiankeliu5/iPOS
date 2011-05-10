@@ -13,6 +13,9 @@
 #pragma mark Product Item Services
 @required
 -(ProductItem *) lookupProductItem: (NSString *) itemSku withSession:  (SessionInfo *) sessionInfo;
+- (NSArray *) lookupProductItemByName: (NSString *) itemName withSession: (SessionInfo *) sessionInfo;
+
+
 -(BOOL) isProductItemAvailable:  (NSNumber *) itemId forQuantity: (NSDecimalNumber *) quantity withSession:  (SessionInfo *) sessionInfo;
 
 - (BOOL) adjustSellingPriceFor: (OrderItem *) orderItem withCustomer: (Customer *) customer withSession: (SessionInfo *) sessionInfo;

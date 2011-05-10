@@ -72,6 +72,24 @@
     STAssertTrue([productItem.distributionCenterList count] == 3, @"Expected count to be 3");
 }
 
+- (void) testPosFacadeLookupProductItemByName {
+    iPOSFacade *facade = [iPOSFacade sharedInstance];
+    
+    // We are setting to demo mode
+    [((iPOSServiceImpl *) facade.posService) setToDemoMode];
+    [((InventoryServiceImpl *) facade.inventoryService) setToDemoMode];
+    
+    [facade login:@"123" password:@"456"];
+    
+    NSArray *itemList = [facade lookupProductItemByName: @"match"];
+    
+    STAssertNotNil(itemList, @"Expected Item List to not be nil");
+    STAssertTrue([itemList count] == 2, @"Expected items matched to be 2.");
+    
+    STAssertTrue([((ProductItem *) [itemList objectAtIndex:0]).sku isEqualToNumber: [NSNumber numberWithInt:440915]], @"Expected sku to be equal");
+    STAssertTrue([((ProductItem *) [itemList objectAtIndex:1]).sku isEqualToNumber: [NSNumber numberWithInt:689751]], @"Expected sku to be equal");
+}
+
 #pragma mark -
 #pragma mark Customer Mgmt Tests
 - (void) testPosFacadeLookupCustomer {

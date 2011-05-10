@@ -17,15 +17,16 @@
 #include "Order.h"
 
 @interface MainMenuViewController()
+- (void) showAddItemOverlay: (NSArray *) foundItems;
+
 - (void) customerPressed:(id)sender;
+- (void) cartPressed:(id)sender;
+
+- (void) performSearch: (ExtUITextField *) textField;
 @end
 
 
 @implementation MainMenuViewController
-
-@synthesize lookupItemSku;
-@synthesize scannedItemSku;
-@synthesize lookupOrderNum;
 
 #pragma mark Constructors
 - (id)init
@@ -49,11 +50,6 @@
 }
 
 - (void)dealloc {
-	
-	[self setLookupItemSku:nil];
-	[self setScannedItemSku:nil];
-	[self setLookupOrderNum:nil];
-	
     [super dealloc];
 }
 
@@ -68,18 +64,13 @@
 #pragma mark Linea Delegate
 -(void)barcodeData:(NSString *)barcode type:(int)type {
     ProductItem *item = [facade lookupProductItem:barcode];
+    NSArray *foundItemList = nil;
     
     if(item != nil && [item.sku isEqualToNumber:[NSNumber numberWithInt:0]] == NO) {
-		[linea removeDelegate:self];
-		[self removeKeyboardListeners];
-		AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
-		[overlay setViewDelegate:self];
-		[self.view addSubview:overlay];
-		[overlay setProductItem:item];
-		[overlay release];
-    } else {
-		[AlertUtils showModalAlertMessage: @"Item not found"];
-	}
+        foundItemList = [NSArray arrayWithObject: item];
+    }
+    
+    [self showAddItemOverlay:foundItemList];
 
 }
 
@@ -115,31 +106,34 @@
 	[self.view addSubview:scanItemLabel];
 	[scanItemLabel release];
 	
-	lookupItemField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
-	lookupItemField.textColor = [UIColor blackColor];
-	lookupItemField.borderStyle = UITextBorderStyleRoundedRect;
-	lookupItemField.textAlignment = UITextAlignmentCenter;
-	lookupItemField.clearsOnBeginEditing = YES;
-	lookupItemField.placeholder = @"Look Up Item";
-	lookupItemField.tagName = @"LookupItem";
-	lookupItemField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-	lookupItemField.returnKeyType = UIReturnKeySearch;
-	lookupItemField.keyboardType = UIKeyboardTypeNumberPad;
-	[super addDoneAndCancelToolbarForTextField:lookupItemField];
-	[self.view addSubview:lookupItemField];
-	[lookupItemField release];
+    lookupItemNameField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
+	lookupItemNameField.textColor = [UIColor blackColor];
+	lookupItemNameField.borderStyle = UITextBorderStyleRoundedRect;
+	lookupItemNameField.textAlignment = UITextAlignmentCenter;
+	lookupItemNameField.clearsOnBeginEditing = YES;
+	lookupItemNameField.placeholder = @"Item By Name";
+	lookupItemNameField.tagName = @"LookupItemName";
+    lookupItemNameField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    lookupItemNameField.returnKeyType = UIReturnKeySearch;
+	lookupItemNameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+
+	[super addSearchAndCancelToolbarForTextField:lookupItemNameField];
+	[self.view addSubview:lookupItemNameField];
+	[lookupItemNameField release];
+    
+	lookupItemSkuField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
+	lookupItemSkuField.textColor = [UIColor blackColor];
+	lookupItemSkuField.borderStyle = UITextBorderStyleRoundedRect;
+	lookupItemSkuField.textAlignment = UITextAlignmentCenter;
+	lookupItemSkuField.clearsOnBeginEditing = YES;
+	lookupItemSkuField.placeholder = @"Item By SKU";
+	lookupItemSkuField.tagName = @"LookupItemSku";
+	lookupItemSkuField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	
-	// Look up order will be in a later release
-	//lookupOrderField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
-	//lookupOrderField.textColor = [UIColor blackColor];
-	//lookupOrderField.borderStyle = UITextBorderStyleRoundedRect;
-	//lookupOrderField.textAlignment = UITextAlignmentCenter;
-	//lookupOrderField.clearsOnBeginEditing = YES;
-	//lookupOrderField.placeholder = @"Look Up Order";
-	//lookupOrderField.tagName = @"LookupOrder";
-	//lookupOrderField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-	//[self.view addSubview:lookupOrderField];
-	//[lookupOrderField release];
+	lookupItemSkuField.keyboardType = UIKeyboardTypeNumberPad;
+	[super addSearchAndCancelToolbarForTextField:lookupItemSkuField];
+	[self.view addSubview:lookupItemSkuField];
+	[lookupItemSkuField release];
 	
 	customerButton = [[[MOGlassButton alloc] initWithFrame:CGRectZero] autorelease];
 	[customerButton setTitle:@"Customer" forState:UIControlStateNormal];
@@ -147,7 +141,7 @@
 	[self.view addSubview:customerButton];
 	
 	cartButton = [[[MOGlassButton alloc] initWithFrame:CGRectZero] autorelease];
-	[cartButton setTitle:@"Order" forState:UIControlStateNormal];
+	[cartButton setTitle:@"Order Cart" forState:UIControlStateNormal];
 	[cartButton setupAsBlackButton];
 	[self.view addSubview:cartButton];
 	 
@@ -163,8 +157,9 @@
 	}
 	
 	self.delegate = self;
-	lookupItemField.delegate = self;
-	//lookupOrderField.delegate = self;
+	lookupItemNameField.delegate = self;
+    lookupItemSkuField.delegate = self;
+    
 	[customerButton addTarget:self action:@selector(customerPressed:) forControlEvents:UIControlEventTouchUpInside];
     [cartButton addTarget:self action:@selector(cartPressed:) forControlEvents:UIControlEventTouchUpInside];
 	
@@ -191,17 +186,16 @@
 	
 	CGRect viewBounds = self.view.bounds;
 	CGFloat labelButtonWidth = viewBounds.size.width * 0.60f;
-	CGFloat	labelButtonSpacing = viewBounds.size.height * 0.20f;
+	CGFloat	labelButtonSpacing = viewBounds.size.height * 0.15f;
 	
 	scanItemLabel.frame = CGRectMake(0.0f, 0.0f, labelButtonWidth, 40.0f);
 	scanItemLabel.center = CGPointMake((viewBounds.size.width / 2.0f), labelButtonSpacing);
 	
-	lookupItemField.frame = CGRectOffset(scanItemLabel.frame, 0.0f, labelButtonSpacing);
-	
-	//lookupOrderField.frame = CGRectOffset(lookupItemField.frame, 0.0f, labelButtonSpacing);
-	
+	lookupItemNameField.frame = CGRectOffset(scanItemLabel.frame, 0.0f, labelButtonSpacing);
+    lookupItemSkuField.frame = CGRectOffset(lookupItemNameField.frame, 0.0f, labelButtonSpacing);
+    	
 	// Change to work from lookupOrderField position when that is implemented
-	customerButton.frame = CGRectOffset(lookupItemField.frame, 0.0f, labelButtonSpacing);
+	customerButton.frame = CGRectOffset(lookupItemSkuField.frame, 0.0f, labelButtonSpacing);
 	
 	cartButton.frame = CGRectOffset(customerButton.frame, 0.0f, labelButtonSpacing);
 	
@@ -230,8 +224,56 @@
 }
 
 #pragma mark -
-#pragma mark UIButton callbacks
+#pragma mark ExtUIViewController delegate
+- (void)extTextFieldFinishedEditing:(ExtUITextField *)textField {
+    // Do nothing
+}
 
+- (void) dismissKeyboard:(id)sender {
+    ExtUITextField *textField = (ExtUITextField *) self.currentFirstResponder;
+    
+    [super dismissKeyboard:sender];
+    
+    [self performSearch:textField];
+}
+
+- (BOOL)textFieldShouldReturn:(ExtUITextField *)textField {
+	[textField resignFirstResponder];
+    
+    [self performSearch:textField];
+	return YES;
+}
+
+
+
+
+#pragma mark -
+#pragma mark AddItemViewDelegate
+- (void) cancelAddItem:(AddItemView *)addItemView {
+	[addItemView removeFromSuperview];
+	[linea addDelegate:self];
+	[self addKeyboardListeners];
+}
+
+- (void) addItem:(AddItemView *)addItemView orderQuantity:(NSDecimalNumber *)quantity ofUnits:(NSString *)unitOfMeasure {
+	
+	ProductItem *item = addItemView.itemToAdd;
+    
+    [orderCart addItem:item withQuantity:quantity];
+    if ([orderCart getOrder].errorList && [[orderCart getOrder].errorList count] > 0) {
+        [AlertUtils showModalAlertForErrors:[orderCart getOrder].errorList];
+        return;
+    }
+    
+    [addItemView removeFromSuperview];
+
+    CartItemsViewController *cartViewController = [[CartItemsViewController alloc] init];
+	[[self navigationController] pushViewController:cartViewController animated:TRUE];
+	[cartViewController release];
+}
+
+#pragma mark -
+#pragma mark UIButton callbacks
 - (void)customerPressed:(id)sender {
 	[linea removeDelegate:self];
 	[self removeKeyboardListeners];
@@ -249,58 +291,55 @@
 }
 
 #pragma mark -
-#pragma mark ExtUIViewController delegate
-
-- (void)extTextFieldFinishedEditing:(ExtUITextField *)textField {
-	if ([textField.tagName isEqualToString:@"LookupItem"] && [textField.text length] > 0) {
-		[self setLookupItemSku: nil];
-		[self setLookupItemSku: textField.text];
-		// Call the service and display the overlay view
-		ProductItem *item = [facade lookupProductItem:self.lookupItemSku];
-		// TODO: do we have to do the additional check on sku because of the OPI test service?
-		if(item != nil && [item.sku isEqualToNumber:[NSNumber numberWithInt:0]] == NO) {
-			[linea removeDelegate:self];
-			[self removeKeyboardListeners];
-			AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
-			[overlay setViewDelegate:self];
-			[self.view addSubview:overlay];
-			[overlay setProductItem:item];
-			[overlay release];
-			textField.text = nil;
-		} else {
-			[AlertUtils showModalAlertMessage: @"Item not found"];
-		}
-
-		
-	} else if ([textField.tagName isEqualToString:@"LookupOrder"] && [textField.text length] > 0) {
-		[self setLookupOrderNum:nil];
-		[self setLookupOrderNum:textField.text];
-		// Call the service and set up the order review (later revision)
-	}
+#pragma mark Private Methods
+- (void) showAddItemOverlay:(NSArray *)foundItems {
+    if (foundItems && [foundItems count] > 0) {
+        [linea removeDelegate:self];
+        [self removeKeyboardListeners];
+        
+        AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
+        [overlay setViewDelegate:self];
+        
+        [self.view addSubview:overlay];
+        
+        if ([foundItems count] == 1) {
+            [overlay setItemToAdd:(ProductItem *) [foundItems objectAtIndex:0]];
+        } else {
+            [overlay setProductItemList:foundItems];
+        }
+        
+        [overlay release];
+    } else {
+        [AlertUtils showModalAlertMessage:@"No item(s) found"];
+    }
 }
 
-- (void) cancelAddItem:(AddItemView *)addItemView {
-	[addItemView removeFromSuperview];
-	[linea addDelegate:self];
-	[self addKeyboardListeners];
-}
+- (void) performSearch:(ExtUITextField *)textField {
+    if (textField && [textField.text length] > 0) {
+        NSString *lookupText = textField.text;
+        NSArray *foundItemList = nil;
 
-- (void) addItem:(AddItemView *)addItemView orderQuantity:(NSDecimalNumber *)quantity ofUnits:(NSString *)unitOfMeasure {
-	
-	ProductItem *item = [addItemView productItem];
-    
-    [orderCart addItem:item withQuantity:quantity];
-    if ([orderCart getOrder].errorList && [[orderCart getOrder].errorList count] > 0) {
-        [AlertUtils showModalAlertForErrors:[orderCart getOrder].errorList];
-        return;
+        if ([textField.tagName isEqualToString:@"LookupItemSku"] && [textField.text length] > 0) {
+            // Call the service and display the overlay view
+            ProductItem *item = [facade lookupProductItem:lookupText];
+            
+            if(item != nil && [item.sku isEqualToNumber:[NSNumber numberWithInt:0]] == NO) {
+                foundItemList = [NSArray arrayWithObject:item];
+                textField.text = nil;
+            }
+            
+            [self showAddItemOverlay:foundItemList];
+        } else if ([textField.tagName isEqualToString:@"LookupItemName"] && [textField.text length] > 0) {
+            // Call the service to get a list of items
+            foundItemList = [facade lookupProductItemByName:lookupText];
+            
+            if (foundItemList && [foundItemList count] > 0) {
+                textField.text = nil;
+            } 
+            
+            [self showAddItemOverlay:foundItemList];
+        }
     }
     
-    [addItemView removeFromSuperview];
-
-    CartItemsViewController *cartViewController = [[CartItemsViewController alloc] init];
-	[[self navigationController] pushViewController:cartViewController animated:TRUE];
-	[cartViewController release];
-		 
 }
-
 @end

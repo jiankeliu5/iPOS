@@ -66,7 +66,11 @@
 	if (distributionCenter != distCenter) {
 		[distributionCenter release];
 		distributionCenter = [distCenter retain];
-		[self setNeedsDisplay];
+        
+        if ([self.subviews count] > 0) {
+            [self updateDisplayValues];
+            [self setNeedsDisplay];
+        }
 	}
 }
 
@@ -112,7 +116,11 @@
 	[self setStoreId:sId];
 	[self setStoreAvailability:sAvail.available];
 	[self setStoreOnHand:sAvail.onHand];
-	[self setNeedsDisplay];
+	
+    if ([self.subviews count] > 0) {
+        [self updateDisplayValues];
+        [self setNeedsDisplay];
+    }
 }
 											
 #pragma mark -

@@ -42,6 +42,11 @@
 
 @interface TenderPaymentViewController()
 
+// Demo Methods
+- (void) processOrderAsDemo: (id) sender;
+- (BOOL) tenderDemoPayment;
+
+// Production Methods
 - (UIView *) buildTenderTotalView;
 - (UIView *) buildSeparatorView;
 
@@ -228,7 +233,6 @@
     [self.navigationItem.leftBarButtonItem setEnabled:YES];
     [self.navigationItem.rightBarButtonItem setEnabled:YES];
     
-    // NOTE:  If we enable animations this would be done in dismissChargeCCAnimationHasFinished
     if (chargeCCView) {
         [chargeCCView removeFromSuperview];
     } 
@@ -237,9 +241,15 @@
 - (void) readyForCardSwipe:(NSDecimalNumber *)chargeAmount fromView:(ChargeCreditCardView *)chargeCCView {
     // Set the payment amount
     self.paymentAmount = chargeAmount;
-    
+        
+#if TARGET_IPHONE_SIMULATOR
+    // Setup a timer to simulate accepting credit card payment
+    [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(processOrderAsDemo:) userInfo:nil repeats: NO];        
+#else
     // Add this controller as a Linea Device Delegate
     [linea addDelegate:self];
+#endif
+
 }
 
 #pragma mark -
@@ -336,6 +346,59 @@
 	// We are not capturing the signature as an image, but as base64encoded string.
 }
 
+
+#pragma mark -
+#pragma mark Demo Methods
+- (void) processOrderAsDemo: (id) sender {
+    BOOL isOrderCreated = NO;
+    BOOL isPaymentTendered = NO;
+    
+    // When the Credit Card is scanned we are going to:
+    // 1.  Create the order in POS
+    // 2.  Process the payment with indicated amount
+    // 3.  Prompt for signature
+    isOrderCreated = [self createOrder];
+    
+    if (isOrderCreated) {
+        isPaymentTendered = [self tenderDemoPayment];
+    }
+    
+    if (isPaymentTendered) {
+        SignatureViewController *ccSignatureViewController = [[[SignatureViewController alloc] init] autorelease];
+        
+        ccSignatureViewController.delegate = self;
+        
+        [self presentModalViewController:ccSignatureViewController animated:YES];
+        ccSignatureViewController.payAmountLabel.text = [NSString formatDecimalNumberAsMoney:self.paymentAmount];
+        
+        // Remove the credit card view
+        if (chargeCCView) {
+            [chargeCCView removeFromSuperview];
+        } 
+    }
+}
+- (BOOL) tenderDemoPayment {
+    BOOL isPaymentTendered = NO;
+    	
+    NSDecimalNumberHandler *bankersRoundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:2 
+                                                                                                      raiseOnExactness:NO raiseOnOverflow:NO 
+                                                                                                      raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+    self.ccPayment = [[[CreditCardPayment alloc] initWithOrder:[orderCart getOrder]] autorelease];
+    
+    ccPayment.nameOnCard = @"Joe Testing";
+    ccPayment.cardNumber = @"1111222233334444";
+    [ccPayment setExpireDateMonthYear:@"11" year:@"14"] ;
+    ccPayment.paymentAmount = [[self paymentAmount] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
+    
+    [facade tenderPaymentWithCC:ccPayment];
+    
+    if ([ccPayment.errorList count] == 0) {
+        isPaymentTendered = YES;
+    } else {
+        [AlertUtils showModalAlertForErrors:ccPayment.errorList];
+    }    
+    return isPaymentTendered;
+}
 
 #pragma mark -
 #pragma mark Private Interface

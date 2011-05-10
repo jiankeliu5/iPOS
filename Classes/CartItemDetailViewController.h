@@ -27,6 +27,9 @@
 	ExtUITextField *quantityField;
 	UILabel *unitOfMeasureLabel;
 	UILabel *itemTotalLabel;
+    
+    UILabel *convertToBoxesLabel;
+    UISwitch *convertToBoxesSwitch;
 	
 	MOGlassButton *deleteButton;
 	MOGlassButton *closeLineButton;

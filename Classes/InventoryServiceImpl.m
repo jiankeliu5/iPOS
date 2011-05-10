@@ -96,6 +96,36 @@
     return item;
 }
 
+- (NSArray *) lookupProductItemByName:(NSString *)itemName withSession:(SessionInfo *)sessionInfo {
+    if (sessionInfo == nil) {
+        return nil;
+    }
+    
+    // Fetch the list
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/name/%@", baseUrl, posInventoryMgmtUri, sessionInfo.storeId]];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    
+    [request setValidatesSecureCertificate:NO];
+    [request setTimeOutSeconds:30];
+    [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    
+    NSString *requestXml = [NSString stringWithFormat:@"<ItemSearch>%@</ItemSearch>", itemName];    
+    [request appendPostData:[requestXml dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [request startSynchronous];
+    
+    NSArray *requestErrors = [request validateAsXmlContent];
+    if ([requestErrors count] > 0) {
+        return nil;   
+    } 
+    
+    NSArray *items = [ProductItem listFromXml:[request responseString]];
+    
+    return [items sortedArrayUsingSelector:@selector(compare:)];
+}
+    
+
 -(BOOL) isProductItemAvailable:  (NSNumber *) itemId forQuantity: (NSDecimalNumber *) quantity withSession:  (SessionInfo *) sessionInfo {
     if (sessionInfo == nil) {
         return NO;

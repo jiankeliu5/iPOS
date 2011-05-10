@@ -25,6 +25,7 @@
 	id currentFirstResponder;
 	BOOL keyboardCancelled;
 	CGFloat previousViewOriginY;
+    CGFloat actualOriginY;
 	NSObject <ExtUIViewControllerDelegate>* delegate;
 	
 }
@@ -43,5 +44,6 @@
 - (void) addDoneToolbarForTextField:(ExtUITextField *)textField;
 - (void) addCancelToolbarForTextField:(ExtUITextField *)textField;
 - (void) addDoneAndCancelToolbarForTextField:(ExtUITextField *)textField;
+- (void) addSearchAndCancelToolbarForTextField:(ExtUITextField *)textField;
 - (void) resignFirstResponderIfPossible;
 @end
