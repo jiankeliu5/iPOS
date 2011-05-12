@@ -13,9 +13,12 @@
 
 - (void) testAppDelegate {
     
-    id appDelegate = [[UIApplication sharedApplication] delegate];
-    
+    iPOSAppDelegate *appDelegate = (iPOSAppDelegate *) [[UIApplication sharedApplication] delegate];
     STAssertNotNil(appDelegate, @"UIApplication failed to find the AppDelegate");
+    
+    LoginViewController *loginController = appDelegate.loginViewController;
+    STAssertNotNil(loginController, @"Login View Controller is not initialized.");
+
 }
 
 

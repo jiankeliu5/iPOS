@@ -391,7 +391,7 @@
 		loginTextField.tag = row;
 		loginTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		loginTextField.delegate = self;
-		[self addDoneAndCancelToolbarForTextField:loginTextField];
+        [self addDoneAndCancelToolbarForTextField:loginTextField];
 		
 		switch (row) {
 			case 0:
@@ -410,6 +410,7 @@
 			default:
 				break;
 		}
+        
 		cell.accessoryView = loginTextField;
 		[loginTextField release];
 	}
@@ -437,7 +438,8 @@
 	UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAndDismissKeyboard:)] autorelease];
 	UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
     NSArray *items = [[[NSArray alloc] initWithObjects:doneButton, flex, cancelButton, nil] autorelease];
-	[keyboardToolbar setItems:items];
+    
+    [keyboardToolbar setItems:items];
 	[textField setInputAccessoryView:keyboardToolbar];
 }
 

@@ -113,6 +113,7 @@
 	lookupItemNameField.clearsOnBeginEditing = YES;
 	lookupItemNameField.placeholder = @"Item By Name";
 	lookupItemNameField.tagName = @"LookupItemName";
+    lookupItemNameField.autocorrectionType = UITextAutocorrectionTypeNo;
     lookupItemNameField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     lookupItemNameField.returnKeyType = UIReturnKeySearch;
 	lookupItemNameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;

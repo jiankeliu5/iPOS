@@ -1,0 +1,7 @@
+#import "loginView.js"
+#import "mainMenuView.js"
+#import "customerView.js"
+#import "addItemView.js"
+#import "orderCartView.js"
+#import "orderItemDetailView.js"
+#import "tenderPaymentView.js"
