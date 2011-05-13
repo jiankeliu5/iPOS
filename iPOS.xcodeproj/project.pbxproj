@@ -668,6 +668,33 @@
 		D6179DF51317DBEE00ACAFDD /* InventoryServiceMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryServiceMock.h; sourceTree = "<group>"; };
 		D618490313185C200051CEFF /* DistributionCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DistributionCenter.h; sourceTree = "<group>"; };
 		D618490413185C200051CEFF /* DistributionCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DistributionCenter.m; sourceTree = "<group>"; };
+		D61BB06A137DADAC0014D547 /* addItemView.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = addItemView.js; sourceTree = "<group>"; };
+		D61BB06B137DADAC0014D547 /* behaviors.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = behaviors.js; sourceTree = "<group>"; };
+		D61BB06C137DADAC0014D547 /* customerView.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = customerView.js; sourceTree = "<group>"; };
+		D61BB06D137DADAC0014D547 /* loginView.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = loginView.js; sourceTree = "<group>"; };
+		D61BB06E137DADAC0014D547 /* mainMenuView.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = mainMenuView.js; sourceTree = "<group>"; };
+		D61BB06F137DADAC0014D547 /* orderCartView.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = orderCartView.js; sourceTree = "<group>"; };
+		D61BB070137DADAC0014D547 /* orderItemDetailView.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = orderItemDetailView.js; sourceTree = "<group>"; };
+		D61BB071137DADAC0014D547 /* tenderPaymentView.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = tenderPaymentView.js; sourceTree = "<group>"; };
+		D61BB073137DADAC0014D547 /* testData.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = testData.js; sourceTree = "<group>"; };
+		D61BB074137DADAC0014D547 /* header.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = header.js; sourceTree = "<group>"; };
+		D61BB075137DADAC0014D547 /* namespaces.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = namespaces.js; sourceTree = "<group>"; };
+		D61BB077137DADAC0014D547 /* appWakeUp-verifySession.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "appWakeUp-verifySession.js"; sourceTree = "<group>"; };
+		D61BB078137DADAC0014D547 /* createOrder-newCustomer.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "createOrder-newCustomer.js"; sourceTree = "<group>"; };
+		D61BB079137DADAC0014D547 /* createOrder-priceAdjustment.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "createOrder-priceAdjustment.js"; sourceTree = "<group>"; };
+		D61BB07A137DADAC0014D547 /* createOrder-uomConvertToPieces.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "createOrder-uomConvertToPieces.js"; sourceTree = "<group>"; };
+		D61BB07B137DADAC0014D547 /* createOrder.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = createOrder.js; sourceTree = "<group>"; };
+		D61BB07C137DADAC0014D547 /* createQuote.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = createQuote.js; sourceTree = "<group>"; };
+		D61BB07D137DADAC0014D547 /* invalidLogin.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = invalidLogin.js; sourceTree = "<group>"; };
+		D61BB07E137DADAC0014D547 /* noItemFound.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = noItemFound.js; sourceTree = "<group>"; };
+		D61BB080137DADAC0014D547 /* assertions.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = assertions.js; sourceTree = "<group>"; };
+		D61BB081137DADAC0014D547 /* lang-ext.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "lang-ext.js"; sourceTree = "<group>"; };
+		D61BB082137DADAC0014D547 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		D61BB083137DADAC0014D547 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		D61BB084137DADAC0014D547 /* screen.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = screen.js; sourceTree = "<group>"; };
+		D61BB085137DADAC0014D547 /* test.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = test.js; sourceTree = "<group>"; };
+		D61BB086137DADAC0014D547 /* tuneup.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = tuneup.js; sourceTree = "<group>"; };
+		D61BB087137DADAC0014D547 /* uiautomation-ext.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "uiautomation-ext.js"; sourceTree = "<group>"; };
 		D61C3C3012FCA530003C3A47 /* Customer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Customer.h; sourceTree = "<group>"; };
 		D61C3C3112FCA530003C3A47 /* Customer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Customer.m; sourceTree = "<group>"; };
 		D61C3C3312FCA535003C3A47 /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
@@ -1429,6 +1456,72 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		D61BB068137DADAC0014D547 /* UIAutomation */ = {
+			isa = PBXGroup;
+			children = (
+				D61BB069137DADAC0014D547 /* behaviors */,
+				D61BB072137DADAC0014D547 /* data */,
+				D61BB074137DADAC0014D547 /* header.js */,
+				D61BB075137DADAC0014D547 /* namespaces.js */,
+				D61BB076137DADAC0014D547 /* scripts */,
+				D61BB07F137DADAC0014D547 /* tuneup */,
+			);
+			path = UIAutomation;
+			sourceTree = "<group>";
+		};
+		D61BB069137DADAC0014D547 /* behaviors */ = {
+			isa = PBXGroup;
+			children = (
+				D61BB06A137DADAC0014D547 /* addItemView.js */,
+				D61BB06B137DADAC0014D547 /* behaviors.js */,
+				D61BB06C137DADAC0014D547 /* customerView.js */,
+				D61BB06D137DADAC0014D547 /* loginView.js */,
+				D61BB06E137DADAC0014D547 /* mainMenuView.js */,
+				D61BB06F137DADAC0014D547 /* orderCartView.js */,
+				D61BB070137DADAC0014D547 /* orderItemDetailView.js */,
+				D61BB071137DADAC0014D547 /* tenderPaymentView.js */,
+			);
+			path = behaviors;
+			sourceTree = "<group>";
+		};
+		D61BB072137DADAC0014D547 /* data */ = {
+			isa = PBXGroup;
+			children = (
+				D61BB073137DADAC0014D547 /* testData.js */,
+			);
+			path = data;
+			sourceTree = "<group>";
+		};
+		D61BB076137DADAC0014D547 /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				D61BB077137DADAC0014D547 /* appWakeUp-verifySession.js */,
+				D61BB078137DADAC0014D547 /* createOrder-newCustomer.js */,
+				D61BB079137DADAC0014D547 /* createOrder-priceAdjustment.js */,
+				D61BB07A137DADAC0014D547 /* createOrder-uomConvertToPieces.js */,
+				D61BB07B137DADAC0014D547 /* createOrder.js */,
+				D61BB07C137DADAC0014D547 /* createQuote.js */,
+				D61BB07D137DADAC0014D547 /* invalidLogin.js */,
+				D61BB07E137DADAC0014D547 /* noItemFound.js */,
+			);
+			path = scripts;
+			sourceTree = "<group>";
+		};
+		D61BB07F137DADAC0014D547 /* tuneup */ = {
+			isa = PBXGroup;
+			children = (
+				D61BB080137DADAC0014D547 /* assertions.js */,
+				D61BB081137DADAC0014D547 /* lang-ext.js */,
+				D61BB082137DADAC0014D547 /* LICENSE */,
+				D61BB083137DADAC0014D547 /* README.md */,
+				D61BB084137DADAC0014D547 /* screen.js */,
+				D61BB085137DADAC0014D547 /* test.js */,
+				D61BB086137DADAC0014D547 /* tuneup.js */,
+				D61BB087137DADAC0014D547 /* uiautomation-ext.js */,
+			);
+			path = tuneup;
+			sourceTree = "<group>";
+		};
 		D64B7E2612F9D869006AB141 /* LogicalUnitTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1460,6 +1553,7 @@
 		D64B7E3312F9D8B4006AB141 /* TestSuites */ = {
 			isa = PBXGroup;
 			children = (
+				D61BB068137DADAC0014D547 /* UIAutomation */,
 				D65B25B61331C8A40052AEE2 /* AppTests */,
 				D64B7E2612F9D869006AB141 /* LogicalUnitTests */,
 				D64B7E2712F9D87C006AB141 /* LogicalIntTests */,

@@ -19,10 +19,6 @@ ipos.behavior.addItemView = function(target, app) {
 		tapDoneOnKeyboard(app);
 	}
 	
-	function exit() {
-		
-	}
-	
 	return {
 		// methods
 		addItemToCart: function(quantity) {
