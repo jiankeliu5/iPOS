@@ -3,6 +3,17 @@ ipos.behavior.mainMenuView = function(target, app) {
 	var app = app;
 	var testData = ipos.data.values;
 	
+	function attachAlertHandler() {
+		UIATarget.onAlert = function onAlert(alert) {
+			var staticTexts = alert.staticTexts();
+			assertNotNull(staticTexts);
+			assertTrue(staticTexts.length == 2, "Expected 2 text messages on alert.");
+			assertTrue(staticTexts[0].name() == 'iPOS', "Expected alert title to be '" + staticTexts[0].name() + "'.");
+			assertTrue(staticTexts[1].name() == 'No item(s) found', "Expected message '" + staticTexts[1].name() + "'.");
+			return false;
+		};
+	}
+	
 	function searchBySku(sku) {
 		var window = app.mainWindow();
 		var itemBySkuField = window.textFields()[1];
@@ -11,9 +22,6 @@ ipos.behavior.mainMenuView = function(target, app) {
 		
 		itemBySkuField.setValue(sku);
 		tapSearchOnKeyboard(app);
-		
-	//  Needed to ensure we detect the alert
-		target.delay(1);
 	}
 	
 	function searchByName(name) {
@@ -24,41 +32,29 @@ ipos.behavior.mainMenuView = function(target, app) {
 		
 		itemByNameField.setValue(name);
 		tapSearchOnKeyboard(app);
-		
-	//  Needed to ensure we detect the alert
-		target.delay(1);
 	}
 	
 	return {
 		// search by valid SKU
-		searchByValidSku: function() {
-			searchBySku(testData.itemBySku.validSku1);			
+		searchItemByValidSku: function(sku) {
+			searchBySku(sku);			
 		},
 		
 		// search by invalid SKU
-		searchByInvalidSku: function() {
-			UIATarget.onAlert = function onAlert(alert) {
-				var staticTexts = alert.staticTexts();
-				assertNotNull(staticTexts);
-				assertTrue(staticTexts.length == 2, "Expected 2 text messages on alert.");
-				assertTrue(staticTexts[0].name() == 'iPOS', "Expected alert title to be '" + staticTexts[0].name() + "'.");
-				assertTrue(staticTexts[1].name() == 'No item(s) found', "Expected login failure message '" + staticTexts[1].name() + "'.");
-				return false;
-			};
-			
-			searchBySku(testData.itemBySku.invalidSku);
-			
-			
+		searchItemByInvalidSku: function(sku) {
+			attachAlertHandler();
+			searchBySku(sku);
 		},
 		
 		// search by valid match
-		searchByValidNameMatch: function() {
-			
+		searchItemByValidName: function(name) {
+			searchByName(name);
 		},
 		
 		// search by invalid match
-		searchByInvalidNameMatch: function() {
-			
+		searchItemByInvalidName: function(name) {
+			attachAlertHandler();
+			searchByName(name);
 		},
 		
 		// Assertion methods

@@ -29,6 +29,11 @@ ipos.behavior.addItemView = function(target, app) {
 			addToCart(quantity);
 		},
 		
+		tapItemAtIndex: function(index) {
+			var window = app.mainWindow(), tableView = window.tableViews()[0];
+			tableView.cells()[index].tap();
+		},
+		
 		// Assertion methods
 		assertOnAddItemView : function() {
 			var buttons, window = app.mainWindow();
@@ -39,6 +44,14 @@ ipos.behavior.addItemView = function(target, app) {
 			buttons = window.buttons();
 			assertTrue(buttons['ADD\nTO\nCART']  instanceof UIAButton, "Expected an Add To Cart button.");
 			assertTrue(buttons['EXIT'] instanceof UIAButton, "Expected an Exit button.");
+		},
+		
+		assertOnSearchResults: function() {
+			var window = app.mainWindow(), tableView = window.tableViews()[0];
+			var matchesFound = window.staticTexts()[tableView.cells().length + ' matches found'];
+			
+			assertTrue (tableView instanceof UIATableView, "Expected Table View of search results.");
+			assertTrue (matchesFound instanceof UIAStaticText, "Expected Matches Found Text.");
 		}
 	}
 };
