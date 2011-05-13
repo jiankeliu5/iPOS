@@ -757,8 +757,8 @@
 		D6B195B7133CEEEA004C4FD1 /* CustomerOxmTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerOxmTestCase.m; sourceTree = "<group>"; };
 		D6B195B9133CEF05004C4FD1 /* ProductItemOxmTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductItemOxmTestCase.m; sourceTree = "<group>"; };
 		D6B195BB133CEF1C004C4FD1 /* LoginOxmTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginOxmTestCase.m; sourceTree = "<group>"; };
-		D6B19791133D3832004C4FD1 /* ASIHTTPRequest+Validate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ASIHTTPRequest+Validate.h"; path = "../ASIHTTPRequest+Validate.h"; sourceTree = "<group>"; };
-		D6B19792133D3832004C4FD1 /* ASIHTTPRequest+Validate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ASIHTTPRequest+Validate.m"; path = "../ASIHTTPRequest+Validate.m"; sourceTree = "<group>"; };
+		D6B19791133D3832004C4FD1 /* ASIHTTPRequest+Validate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ASIHTTPRequest+Validate.h"; sourceTree = "<group>"; };
+		D6B19792133D3832004C4FD1 /* ASIHTTPRequest+Validate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ASIHTTPRequest+Validate.m"; sourceTree = "<group>"; };
 		D6B435B213159F72000C0AA8 /* libOPIFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOPIFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiPOSFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6BA07B21302580500B77769 /* CTidy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTidy.h; sourceTree = "<group>"; };
@@ -814,14 +814,14 @@
 		D6BA07FE1302586800B77769 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		D6BA08001302586800B77769 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D6BA08021302586800B77769 /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
-		D6BCD3F512FCB3D80029F4B2 /* InventoryService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryService.h; path = Classes/InventoryService.h; sourceTree = "<group>"; };
-		D6BCD3F612FCB3D80029F4B2 /* InventoryServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryServiceImpl.h; path = Classes/InventoryServiceImpl.h; sourceTree = "<group>"; };
-		D6BCD3F712FCB3D80029F4B2 /* InventoryServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InventoryServiceImpl.m; path = Classes/InventoryServiceImpl.m; sourceTree = "<group>"; };
-		D6BCD3FA12FCB3D80029F4B2 /* iPOSFacade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPOSFacade.h; path = Classes/iPOSFacade.h; sourceTree = "<group>"; };
-		D6BCD3FB12FCB3D80029F4B2 /* iPOSFacade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPOSFacade.m; path = Classes/iPOSFacade.m; sourceTree = "<group>"; };
-		D6BCD3FC12FCB3D80029F4B2 /* iPOSService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPOSService.h; path = Classes/iPOSService.h; sourceTree = "<group>"; };
-		D6BCD3FD12FCB3D80029F4B2 /* iPOSServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPOSServiceImpl.h; path = Classes/iPOSServiceImpl.h; sourceTree = "<group>"; };
-		D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPOSServiceImpl.m; path = Classes/iPOSServiceImpl.m; sourceTree = "<group>"; };
+		D6BCD3F512FCB3D80029F4B2 /* InventoryService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryService.h; sourceTree = "<group>"; };
+		D6BCD3F612FCB3D80029F4B2 /* InventoryServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryServiceImpl.h; sourceTree = "<group>"; };
+		D6BCD3F712FCB3D80029F4B2 /* InventoryServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryServiceImpl.m; sourceTree = "<group>"; };
+		D6BCD3FA12FCB3D80029F4B2 /* iPOSFacade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSFacade.h; sourceTree = "<group>"; };
+		D6BCD3FB12FCB3D80029F4B2 /* iPOSFacade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPOSFacade.m; sourceTree = "<group>"; };
+		D6BCD3FC12FCB3D80029F4B2 /* iPOSService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSService.h; sourceTree = "<group>"; };
+		D6BCD3FD12FCB3D80029F4B2 /* iPOSServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSServiceImpl.h; sourceTree = "<group>"; };
+		D6BCD3FE12FCB3D80029F4B2 /* iPOSServiceImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPOSServiceImpl.m; sourceTree = "<group>"; };
 		D6BCD40612FCB3F70029F4B2 /* SessionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionInfo.h; sourceTree = "<group>"; };
 		D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionInfo.m; sourceTree = "<group>"; };
 		D6C6E8D51365CA7C00560DCF /* StringFormattersTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringFormattersTestCase.m; sourceTree = "<group>"; };
@@ -992,10 +992,10 @@
 				B4C469C1130702E0001EADE4 /* Customer */,
 				B4C469BB1307011B001EADE4 /* AddItem */,
 				B40B942E1304EF1A0024C2DC /* MainMenu */,
-				B4B367C312F9368D00F37FE9 /* Util */,
+				B4B367C312F9368D00F37FE9 /* Utils */,
 				B47AA7EB12F7DCE500AAD34C /* Login */,
 				B47AA7EA12F7DCD900AAD34C /* PlaceHolder */,
-				D69BEFD412F9C66A0035D358 /* POSInterface */,
+				D69BEFD412F9C66A0035D358 /* iPOSInterface */,
 				D69BEFD712F9C6890035D358 /* Model */,
 				D69BF02312F9CCC80035D358 /* Helper */,
 				1D3623240D0F684500981E51 /* iPOSAppDelegate.h */,
@@ -1030,8 +1030,6 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				D6A96658130F0C3C004D90C4 /* Settings.bundle */,
-				D6334A2E1331C9CE000DEDBB /* AppTests-Info.plist */,
-				B43E1BDA135745DE00E49615 /* Entitlements.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -1079,13 +1077,15 @@
 				B4300B34131B4312000210C7 /* iPosLogin@2x.png */,
 				B4300B2F131B4300000210C7 /* iPosIcon.png */,
 				B4300B30131B4300000210C7 /* iPosIcon@2x.png */,
+				B43E1BDA135745DE00E49615 /* Entitlements.plist */,
+				D6334A2E1331C9CE000DEDBB /* AppTests-Info.plist */,
 				D64B7E1412F9D7EA006AB141 /* UnitTests-Info.plist */,
 				D64B7EB112F9DFA7006AB141 /* IntTests-Info.plist */,
 				8D1107310486CEB800E47090 /* iPOS-Info.plist */,
 				D697D1E21312DCD0002C3EF6 /* iPOSDemo-Info.plist */,
 				D65B25E31331C8B60052AEE2 /* iPOSTesting-Info.plist */,
 			);
-			name = Resources;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
@@ -1286,7 +1286,6 @@
 				B47AA7EE12F7DD1000AAD34C /* PlaceHolderView.m */,
 			);
 			name = PlaceHolder;
-			path = ..;
 			sourceTree = "<group>";
 		};
 		B47AA7EB12F7DCE500AAD34C /* Login */ = {
@@ -1298,7 +1297,6 @@
 				B4D308271367B86400F26C5E /* SessionVerificationView.m */,
 			);
 			name = Login;
-			path = ..;
 			sourceTree = "<group>";
 		};
 		B48263B4135A1B6A00E29B68 /* SSToolKit */ = {
@@ -1310,7 +1308,7 @@
 			name = SSToolKit;
 			sourceTree = "<group>";
 		};
-		B4B367C312F9368D00F37FE9 /* Util */ = {
+		B4B367C312F9368D00F37FE9 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
 				D62853C412FB9B650024228B /* LayoutUtils.h */,
@@ -1320,8 +1318,7 @@
 				B40B94231304ED500024C2DC /* AlertUtils.h */,
 				B40B94241304ED500024C2DC /* AlertUtils.m */,
 			);
-			name = Util;
-			path = ..;
+			name = Utils;
 			sourceTree = "<group>";
 		};
 		B4C469BB1307011B001EADE4 /* AddItem */ = {
@@ -1432,7 +1429,7 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
-		D64B7E2612F9D869006AB141 /* UnitTests */ = {
+		D64B7E2612F9D869006AB141 /* LogicalUnitTests */ = {
 			isa = PBXGroup;
 			children = (
 				D6B193A7133C2A61004C4FD1 /* OXM */,
@@ -1447,27 +1444,27 @@
 				D64783721354AE240017178D /* OrderItemCalculationTestCase.m */,
 				D6C6E8D51365CA7C00560DCF /* StringFormattersTestCase.m */,
 			);
-			name = UnitTests;
+			path = LogicalUnitTests;
 			sourceTree = "<group>";
 		};
-		D64B7E2712F9D87C006AB141 /* IntTests */ = {
+		D64B7E2712F9D87C006AB141 /* LogicalIntTests */ = {
 			isa = PBXGroup;
 			children = (
 				D64B7EBF12F9DFF5006AB141 /* iPOSServiceIntTestCase.h */,
 				D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */,
 				D6C7770513574A7900D41AD9 /* PaymentServiceTestCase.m */,
 			);
-			name = IntTests;
+			path = LogicalIntTests;
 			sourceTree = "<group>";
 		};
 		D64B7E3312F9D8B4006AB141 /* TestSuites */ = {
 			isa = PBXGroup;
 			children = (
 				D65B25B61331C8A40052AEE2 /* AppTests */,
-				D64B7E2612F9D869006AB141 /* UnitTests */,
-				D64B7E2712F9D87C006AB141 /* IntTests */,
+				D64B7E2612F9D869006AB141 /* LogicalUnitTests */,
+				D64B7E2712F9D87C006AB141 /* LogicalIntTests */,
 			);
-			name = TestSuites;
+			path = TestSuites;
 			sourceTree = "<group>";
 		};
 		D65B25B61331C8A40052AEE2 /* AppTests */ = {
@@ -1476,7 +1473,7 @@
 				D6334A341331CA25000DEDBB /* BasicAppTestCase.h */,
 				D6334A351331CA25000DEDBB /* BasicAppTestCase.m */,
 			);
-			name = AppTests;
+			path = AppTests;
 			sourceTree = "<group>";
 		};
 		D66892E11311DE320046C68F /* ThirdParty */ = {
@@ -1490,7 +1487,7 @@
 			name = ThirdParty;
 			sourceTree = "<group>";
 		};
-		D69BEFD412F9C66A0035D358 /* POSInterface */ = {
+		D69BEFD412F9C66A0035D358 /* iPOSInterface */ = {
 			isa = PBXGroup;
 			children = (
 				D6BCD3F512FCB3D80029F4B2 /* InventoryService.h */,
@@ -1505,8 +1502,7 @@
 				D64784401355FB9A0017178D /* PaymentServiceImpl.h */,
 				D64784411355FB9A0017178D /* PaymentServiceImpl.m */,
 			);
-			name = POSInterface;
-			path = ..;
+			name = iPOSInterface;
 			sourceTree = "<group>";
 		};
 		D69BEFD712F9C6890035D358 /* Model */ = {
@@ -2426,7 +2422,7 @@
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_USE_STANDARD_INCLUDE_SEARCHING = YES;
-				INFOPLIST_FILE = "iPOS-Info.plist";
+				INFOPLIST_FILE = "Resources/iPOS-Info.plist";
 				INFOPLIST_PREPROCESS = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2452,7 +2448,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
-				INFOPLIST_FILE = "iPOS-Info.plist";
+				INFOPLIST_FILE = "Resources/iPOS-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2497,7 +2493,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
-				INFOPLIST_FILE = "iPOS-Info.plist";
+				INFOPLIST_FILE = "Resources/iPOS-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2521,7 +2517,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
-				INFOPLIST_FILE = "iPOS-Info copy.plist";
+				INFOPLIST_FILE = "Resources/iPOSTesting-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\"$(SRCROOT)\\\"",
@@ -2541,12 +2537,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				CODE_SIGN_ENTITLEMENTS = Resources/Entitlements.plist;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: The Tile Shop LLC";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
-				INFOPLIST_FILE = "iPOSDemo-Info.plist";
+				INFOPLIST_FILE = "Resources/iPOSDemo-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2578,7 +2574,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
-				INFOPLIST_FILE = "UnitTests-Info.plist";
+				INFOPLIST_FILE = "Resources/UnitTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2616,7 +2612,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEMO_MODE=1";
-				INFOPLIST_FILE = "IntTests-Info.plist";
+				INFOPLIST_FILE = "Resources/IntTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2653,7 +2649,7 @@
 				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				INFOPLIST_FILE = "AppTests-Info.plist";
+				INFOPLIST_FILE = "Resources/AppTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2768,7 +2764,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				INFOPLIST_FILE = "AppTests-Info.plist";
+				INFOPLIST_FILE = "Resources/AppTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2804,7 +2800,7 @@
 				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				INFOPLIST_FILE = "AppTests-Info.plist";
+				INFOPLIST_FILE = "Resources/AppTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2846,7 +2842,7 @@
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEMO_MODE=1";
 				GCC_VERSION = 4.2;
-				INFOPLIST_FILE = "UnitTests-Info.plist";
+				INFOPLIST_FILE = "Resources/UnitTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2884,7 +2880,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
-				INFOPLIST_FILE = "UnitTests-Info.plist";
+				INFOPLIST_FILE = "Resources/UnitTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2920,7 +2916,7 @@
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_USE_STANDARD_INCLUDE_SEARCHING = YES;
-				INFOPLIST_FILE = "iPOSTesting-Info.plist";
+				INFOPLIST_FILE = "Resources/iPOSTesting-Info.plist";
 				INFOPLIST_PREPROCESS = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2945,7 +2941,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
-				INFOPLIST_FILE = "iPOS-Info copy.plist";
+				INFOPLIST_FILE = "Resources/iPOSTesting-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\\\"$(SRCROOT)\\\"",
@@ -2976,7 +2972,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEMO_MODE=1";
-				INFOPLIST_FILE = "IntTests-Info.plist";
+				INFOPLIST_FILE = "Resources/IntTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -3013,7 +3009,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEMO_MODE=1";
-				INFOPLIST_FILE = "IntTests-Info.plist";
+				INFOPLIST_FILE = "Resources/IntTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -3042,7 +3038,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				CODE_SIGN_ENTITLEMENTS = Resources/Entitlements.plist;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -3050,7 +3046,7 @@
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_USE_STANDARD_INCLUDE_SEARCHING = YES;
-				INFOPLIST_FILE = "iPOSDemo-Info.plist";
+				INFOPLIST_FILE = "Resources/iPOSDemo-Info.plist";
 				INFOPLIST_PREPROCESS = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3071,11 +3067,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				CODE_SIGN_ENTITLEMENTS = Resources/Entitlements.plist;
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
-				INFOPLIST_FILE = "iPOSDemo-Info.plist";
+				INFOPLIST_FILE = "Resources/iPOSDemo-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
