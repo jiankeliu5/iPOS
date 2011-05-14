@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#Command:  vtool -tag <new-marketing-version>
 if [ "$1" = "-tag" ]
 then
     agvtool -usesvn tag -baseurlfortag https://opi.svn.cvsdude.com/tileshop/iPOS/tags 
@@ -8,6 +9,7 @@ fi
 #Always bump the Build Number
 agvtool bump -all
 
+#Optionally update the marketing version number
 if [ $2 ]
 then
     agvtool new-marketing-version $2
