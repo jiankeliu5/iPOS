@@ -1,6 +1,6 @@
 #import "../header.js"
 
-test("Login To iPOS", function (target, app) {
+test("iPOS - Verify Session On App Wakeup", function (target, app) {
 	
 	var window = app.mainWindow();
 	var loginFormCells = window.tableViews()[0].cells();
