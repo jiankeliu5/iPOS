@@ -422,20 +422,6 @@
 			remoteGlobalIDString = D6B435B113159F72000C0AA8;
 			remoteInfo = OPIFoundation;
 		};
-		D679447A13160CE0004B8254 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D64B7E1212F9D7EA006AB141;
-			remoteInfo = UnitTests;
-		};
-		D679459F13160D17004B8254 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D679438B131607A8004B8254;
-			remoteInfo = AppTests;
-		};
 		D6B4386E1315ABA8000C0AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -470,6 +456,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = D6B435B113159F72000C0AA8;
 			remoteInfo = OPIFoundation;
+		};
+		D6C5F4A41382CB7700041D62 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D64B7E1212F9D7EA006AB141;
+			remoteInfo = UnitTests;
+		};
+		D6C5F4A61382CB7700041D62 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D679438B131607A8004B8254;
+			remoteInfo = IntTests;
 		};
 		D6CC18BC1331D1150042745E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1871,10 +1871,10 @@
 			buildRules = (
 			);
 			dependencies = (
-				D6B4386F1315ABA8000C0AA8 /* PBXTargetDependency */,
 				D6B438FD1315B1BB000C0AA8 /* PBXTargetDependency */,
-				D679447B13160CE0004B8254 /* PBXTargetDependency */,
-				D67945A013160D17004B8254 /* PBXTargetDependency */,
+				D6B4386F1315ABA8000C0AA8 /* PBXTargetDependency */,
+				D6C5F4A51382CB7700041D62 /* PBXTargetDependency */,
+				D6C5F4A71382CB7700041D62 /* PBXTargetDependency */,
 			);
 			name = iPOS;
 			productName = iPOS;
@@ -2443,16 +2443,6 @@
 			target = D6B435B113159F72000C0AA8 /* OPIFoundation */;
 			targetProxy = D67943A91316089C004B8254 /* PBXContainerItemProxy */;
 		};
-		D679447B13160CE0004B8254 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D64B7E1212F9D7EA006AB141 /* UnitTests */;
-			targetProxy = D679447A13160CE0004B8254 /* PBXContainerItemProxy */;
-		};
-		D67945A013160D17004B8254 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D679438B131607A8004B8254 /* IntTests */;
-			targetProxy = D679459F13160D17004B8254 /* PBXContainerItemProxy */;
-		};
 		D6B4386F1315ABA8000C0AA8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D6B4366E1315A7DD000C0AA8 /* iPOSFoundation */;
@@ -2477,6 +2467,16 @@
 			isa = PBXTargetDependency;
 			target = D6B435B113159F72000C0AA8 /* OPIFoundation */;
 			targetProxy = D6B439121315B242000C0AA8 /* PBXContainerItemProxy */;
+		};
+		D6C5F4A51382CB7700041D62 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D64B7E1212F9D7EA006AB141 /* UnitTests */;
+			targetProxy = D6C5F4A41382CB7700041D62 /* PBXContainerItemProxy */;
+		};
+		D6C5F4A71382CB7700041D62 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D679438B131607A8004B8254 /* IntTests */;
+			targetProxy = D6C5F4A61382CB7700041D62 /* PBXContainerItemProxy */;
 		};
 		D6CC18BD1331D1150042745E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2581,6 +2581,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_ENTITLEMENTS = Resources/Entitlements.plist;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: The Tile Shop LLC";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: The Tile Shop LLC";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2596,6 +2597,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = iPOS;
+				PROVISIONING_PROFILE = "C4EBD5F7-4031-4666-98FA-7288F49636E7";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C4EBD5F7-4031-4666-98FA-7288F49636E7";
 				SDKROOT = iphoneos;
 			};
@@ -2630,6 +2632,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = Resources/Entitlements.plist;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: The Tile Shop LLC";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: The Tile Shop LLC";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2646,6 +2649,7 @@
 				);
 				PRIVATE_HEADERS_FOLDER_PATH = iPOSDemo.app/PrivateHeaders;
 				PRODUCT_NAME = iPOSDemo;
+				PROVISIONING_PROFILE = "C4EBD5F7-4031-4666-98FA-7288F49636E7";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C4EBD5F7-4031-4666-98FA-7288F49636E7";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -2781,6 +2785,7 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = iPOSFoundation;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Distribution;
@@ -2797,6 +2802,7 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = OPIFoundation;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Distribution;
@@ -3193,6 +3199,7 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = OPIFoundation;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -3208,6 +3215,7 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = OPIFoundation;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -3233,6 +3241,7 @@
 				PRODUCT_NAME = iPOSFoundation;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -3252,6 +3261,7 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = iPOSFoundation;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
