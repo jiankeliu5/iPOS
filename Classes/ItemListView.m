@@ -129,7 +129,7 @@
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	ProductItem *item = [self.itemList objectAtIndex:indexPath.row];
-	NSString *itemCellIdentifier = [item.sku stringValue];
+	NSString *itemCellIdentifier = item.sku;
 	
 	ItemTableCell *cell = (ItemTableCell *)[tableView dequeueReusableCellWithIdentifier:itemCellIdentifier];
 	
@@ -152,7 +152,7 @@
         if (count < MAX_SEARCH_RESULT) {
             matchesLabel.text = [NSString stringWithFormat:@"%d matches found", count];
         } else {
-            matchesLabel.text = @"More than 200 matches found.  Refine search.";
+            matchesLabel.text = @"More than 200 matches.  Refine search.";
         }
     } else {
         matchesLabel.text = @"No matches found";

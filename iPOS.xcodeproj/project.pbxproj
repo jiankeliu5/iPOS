@@ -2527,7 +2527,7 @@
 				);
 				PRODUCT_NAME = iPOS;
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "armv6 armv7";
+				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 			};
 			name = Debug;
 		};

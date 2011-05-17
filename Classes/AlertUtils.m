@@ -27,8 +27,8 @@
     NSMutableString *errMsg = [[[NSMutableString alloc] init] autorelease];
     
     for (Error *e in errorList) {
-        NSLog(@"Error Id: %d %@", [e errorId], [e message]);
-        [errMsg appendFormat:@"\nError (%d): %@", [e errorId], [e message]];
+        NSLog(@"Error Id: %@ %@", e.errorId, e.message);
+        [errMsg appendFormat:@"\nError (%@): %@", e.errorId, e.message];
     }
     
     [AlertUtils showModalAlertMessage:errMsg];

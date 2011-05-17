@@ -15,7 +15,7 @@
     NSNumber *itemId;
     
     // Basic Info
-    NSNumber *sku;
+    NSString *sku;
     NSString *description;
     NSString *vendorName;
     NSString *statusCode;
@@ -50,7 +50,7 @@
 }
 
 @property(nonatomic, retain) NSNumber *itemId;
-@property(nonatomic, retain) NSNumber *sku;
+@property(nonatomic, retain) NSString *sku;
 @property(nonatomic, retain) NSString *description;
 @property(nonatomic, retain) NSString *vendorName;
 @property(nonatomic, retain) NSString *statusCode;

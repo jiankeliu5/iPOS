@@ -86,7 +86,7 @@
     ASIHTTPRequest *request =  [self startGetRequest:[NSString stringWithFormat:@"%@/%@/%@/%@", baseUrl, posInventoryMgmtUri, sessionInfo.storeId, itemSku] withSession:sessionInfo];
     NSArray *requestErrors = [request validateAsXmlContent];
     if ([requestErrors count] > 0) {
-        return NO;   
+        return nil;   
     } 
     
     // Create an XML document parser

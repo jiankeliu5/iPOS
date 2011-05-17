@@ -20,7 +20,6 @@
 @interface AvailabilityView : UIView 
 {
 	// We will either display for a distribution center or a store.
-	// TODO Make one object to hold both store and distribution center availability info?
 	DistributionCenter *distributionCenter;
 	
 	NSNumber *storeId;

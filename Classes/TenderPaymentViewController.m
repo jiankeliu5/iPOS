@@ -57,6 +57,10 @@
 
 - (BOOL) createOrder;
 - (BOOL) tenderPaymentFromCardData: (NSString *)track1 track2:(NSString *)track2 track3:(NSString *)track3;
+- (BOOL) isOrderCreated;
+
+- (void) showPaymentRetryAlert:(CreditCardPayment *) aCCPayment;
+- (void) cancelTenderAndLogout;
 
 - (void) navToReceipt;
 @end
@@ -229,13 +233,18 @@
     frame.origin.y = 480;
     theChargeCCView.frame = frame;
     
-    self.navigationItem.hidesBackButton = NO;
-    [self.navigationItem.leftBarButtonItem setEnabled:YES];
-    [self.navigationItem.rightBarButtonItem setEnabled:YES];
-    
-    if (chargeCCView) {
-        [chargeCCView removeFromSuperview];
-    } 
+    // If the order is already created, logout and prompt user to process payment on POS
+    if ([self isOrderCreated]) { 
+        [self cancelTenderAndLogout];
+    } else {
+        self.navigationItem.hidesBackButton = NO;
+        [self.navigationItem.leftBarButtonItem setEnabled:YES];
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+        
+        if (chargeCCView) {
+            [chargeCCView removeFromSuperview];
+        }
+    }
 }
 
 - (void) readyForCardSwipe:(NSDecimalNumber *)chargeAmount fromView:(ChargeCreditCardView *)chargeCCView {
@@ -255,7 +264,7 @@
 #pragma mark -
 #pragma mark Linea Delegate Methods
 - (void) magneticCardData:(NSString *)track1 track2:(NSString *)track2 track3:(NSString *)track3 {
-    BOOL isOrderCreated = NO;
+    BOOL isOrderCreated = [self isOrderCreated];
     BOOL isPaymentTendered = NO;
     
     int sound[]={2730,150,0,30,2730,150};
@@ -265,7 +274,11 @@
     // 1.  Create the order in POS
     // 2.  Process the payment with indicated amount
     // 3.  Prompt for signature
-    isOrderCreated = [self createOrder];
+    
+    // Only create the order if it is not created at this point
+    if (!isOrderCreated) {
+        isOrderCreated = [self createOrder];
+    }
     
     if (isOrderCreated) {
         isPaymentTendered = [self tenderPaymentFromCardData:track1 track2:track2 track3:track3];
@@ -346,18 +359,32 @@
 	// We are not capturing the signature as an image, but as base64encoded string.
 }
 
+#pragma mark -
+#pragma mark UIAlertView delegate
+- (void)alertView:(UIAlertView *)anAlertView clickedButtonAtIndex:(NSInteger)aButtonIndex {
+	if ([anAlertView.title isEqualToString:@"Payment Retry?"]) {
+		if (aButtonIndex == 1) {
+			[self cancelTenderAndLogout];
+		}
+	}
+	// On a retry or other generic alerts, it will just fall through and dismiss with no other actions.
+}
+
 
 #pragma mark -
 #pragma mark Demo Methods
 - (void) processOrderAsDemo: (id) sender {
-    BOOL isOrderCreated = NO;
+    BOOL isOrderCreated = [self isOrderCreated];
     BOOL isPaymentTendered = NO;
     
     // When the Credit Card is scanned we are going to:
     // 1.  Create the order in POS
     // 2.  Process the payment with indicated amount
     // 3.  Prompt for signature
-    isOrderCreated = [self createOrder];
+    
+    if (!isOrderCreated) {
+        isOrderCreated = [self createOrder];
+    }
     
     if (isOrderCreated) {
         isPaymentTendered = [self tenderDemoPayment];
@@ -395,7 +422,7 @@
     if ([ccPayment.errorList count] == 0) {
         isPaymentTendered = YES;
     } else {
-        [AlertUtils showModalAlertForErrors:ccPayment.errorList];
+        [self showPaymentRetryAlert:ccPayment];
     }    
     return isPaymentTendered;
 }
@@ -605,11 +632,36 @@
         if ([ccPayment.errorList count] == 0) {
             isPaymentTendered = YES;
         } else {
-            [AlertUtils showModalAlertForErrors:ccPayment.errorList];
+            [self showPaymentRetryAlert:ccPayment];
         }
     }
     
     return isPaymentTendered;
+}
+
+- (void) showPaymentRetryAlert:(CreditCardPayment *) aCCPayment {
+    
+    if (ccPayment) {
+        UIAlertView *paymentAlert = [[UIAlertView alloc] init];
+        NSMutableString *errMsg = [[[NSMutableString alloc] init] autorelease];
+        
+        for (Error *e in aCCPayment.errorList) {
+            NSLog(@"Error Id: %@ %@", e.errorId, e.message);
+            [errMsg appendFormat:@"\nError (%@): %@", e.errorId, e.message];
+        }
+        
+        [errMsg appendString:@"\nWould you like to try again?"];
+        
+        
+        paymentAlert.title = @"Payment Retry?";
+        paymentAlert.message = errMsg;
+        paymentAlert.delegate = self;
+        
+        [paymentAlert addButtonWithTitle:@"Retry"];
+        [paymentAlert addButtonWithTitle:@"Cancel"];
+        [paymentAlert show];
+        [paymentAlert release];
+    }
 }
 
 -(void) navToReceipt {
@@ -622,6 +674,24 @@
     
     // Navigate to the Send Receipt View Controller
     [[self navigationController] pushViewController:[[[ReceiptViewController alloc]init]autorelease] animated:YES];
+}
+
+- (BOOL) isOrderCreated {
+    // If the order is already created it will have a valid order id.
+    Order *order = [orderCart getOrder];
+    
+    if (order.orderId != nil && ![order.orderId isEqualToNumber:[NSNumber numberWithInt:0]]) { 
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (void) cancelTenderAndLogout {
+    Order *order = [orderCart getOrder];
+    
+    [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Order %@ was created, but no payment received.", order.orderId]];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end

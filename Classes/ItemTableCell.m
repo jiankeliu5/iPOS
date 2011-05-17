@@ -54,7 +54,7 @@
 	item = anItem;
 	
 	NSString *descText = [NSString stringWithFormat:@"%@  %@",
-						  [item.sku stringValue],
+						  item.sku,
 						  item.description];
 	itemDescriptionLabel.text = descText;
 }

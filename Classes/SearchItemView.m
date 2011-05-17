@@ -94,7 +94,7 @@
 	lookupNameField.textColor = [UIColor blackColor];
 	lookupNameField.borderStyle = UITextBorderStyleRoundedRect;
 	lookupNameField.textAlignment = UITextAlignmentCenter;
-	lookupNameField.clearsOnBeginEditing = YES;
+	lookupNameField.clearsOnBeginEditing = NO;
 	lookupNameField.placeholder = @"Item By Name";
 	lookupNameField.tagName = @"LookupItemName";
 	lookupNameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
@@ -107,7 +107,7 @@
 	lookupSkuField.textColor = [UIColor blackColor];
 	lookupSkuField.borderStyle = UITextBorderStyleRoundedRect;
 	lookupSkuField.textAlignment = UITextAlignmentCenter;
-	lookupSkuField.clearsOnBeginEditing = YES;
+	lookupSkuField.clearsOnBeginEditing = NO;
 	lookupSkuField.placeholder = @"Item By SKU";
 	lookupSkuField.tagName = @"LookupItemSku";
 	lookupSkuField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;

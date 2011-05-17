@@ -105,7 +105,7 @@
 	orderItem = ordItem;
 	
 	NSString *descText = [NSString stringWithFormat:@"%@  %@  %@ / %@",
-						  [orderItem.item.sku stringValue],
+						  orderItem.item.sku,
 						  orderItem.item.description,
 						  [NSString formatDecimalNumberAsMoney: orderItem.sellingPrice],
 						  orderItem.item.primaryUnitOfMeasure];

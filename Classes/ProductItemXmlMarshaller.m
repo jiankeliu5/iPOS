@@ -37,7 +37,7 @@
     
     // Product Item Fields
     item.itemId = [root elementNumberValue:@"ItemID"];
-    item.sku = [root elementNumberValue:@"ItemNumber"];
+    item.sku = [root elementStringValue:@"ItemNumber"];
     item.description = [root elementStringValue:@"ItemDescription"];
     item.type = [root elementStringValue:@"ItemType"];
     item.typeId = [root elementNumberValue:@"ItemTypeID"];

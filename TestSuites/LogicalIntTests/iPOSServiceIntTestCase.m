@@ -86,8 +86,8 @@
     STAssertNotNil(itemList, @"Expected Item List to not be nil");
     STAssertTrue([itemList count] == 2, @"Expected items matched to be 2.");
     
-    STAssertTrue([((ProductItem *) [itemList objectAtIndex:0]).sku isEqualToNumber: [NSNumber numberWithInt:689751]], @"Expected sku to be equal");
-    STAssertTrue([((ProductItem *) [itemList objectAtIndex:1]).sku isEqualToNumber: [NSNumber numberWithInt:440915]], @"Expected sku to be equal");
+    STAssertTrue([((ProductItem *) [itemList objectAtIndex:0]).sku isEqualToString: @"689751"], @"Expected sku to be equal");
+    STAssertTrue([((ProductItem *) [itemList objectAtIndex:1]).sku isEqualToString: @"440915"], @"Expected sku to be equal");
 }
 
 #pragma mark -
@@ -303,7 +303,7 @@
     // Build the item
     item.store = store;
     item.itemId = [NSNumber numberWithInt:1414];
-    item.sku = [NSNumber numberWithInt:232323];
+    item.sku = @"232323";
     item.description = @"Some product";
     item.defaultToBox = YES;
     item.conversion = [NSDecimalNumber decimalNumberWithString:@"1.0"];

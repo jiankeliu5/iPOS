@@ -27,7 +27,7 @@
     dc2Availability = dc2Availability;
     
     item.itemId = [NSNumber numberWithInt:283186];
-    item.sku = [NSNumber numberWithInt: 440915];
+    item.sku = @"440915";
     item.description = @"Driftwood Hon. Martel";
     item.vendorName = @"SHAO LIN STONE/CHINA METALLURGICAL";
     item.statusCode = @"S";

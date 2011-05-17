@@ -27,8 +27,8 @@
 
 @implementation SignaturePad
 
-NSString * const SIGNATURE_AS_PNG =@"png";
-NSString * const SIGNATURE_AS_JPG =@"jpg";
+NSString * const SIGNATURE_AS_PNG = @"png";
+NSString * const SIGNATURE_AS_JPG = @"jpg";
 
 @synthesize  location;
 @synthesize  previousLocation;
@@ -119,6 +119,7 @@ NSString * const SIGNATURE_AS_JPG =@"jpg";
 		
 		glDisable(GL_DITHER);
 		glEnable(GL_TEXTURE_2D);
+        
 		glEnableClientState(GL_VERTEX_ARRAY);
 		
 	    glEnable(GL_BLEND);
@@ -128,6 +129,9 @@ NSString * const SIGNATURE_AS_JPG =@"jpg";
 		glEnable(GL_POINT_SPRITE_OES);
 		glTexEnvf(GL_POINT_SPRITE_OES, GL_COORD_REPLACE_OES, GL_TRUE);
 		glPointSize(BRUSH_WIDTH);
+        
+        glEnable(GL_LINE_SMOOTH);
+        glLineWidth(BRUSH_WIDTH);
         
         // Make sure to start with a cleared buffer
 		needsErase = YES;

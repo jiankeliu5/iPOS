@@ -45,7 +45,7 @@
     // Build the item
     item.store = store;
     item.itemId = [NSNumber numberWithInt:1414];
-    item.sku = [NSNumber numberWithInt:232323];
+    item.sku = @"232323";
     item.description = @"Some product";
     item.defaultToBox = YES;
     item.conversion = [NSDecimalNumber decimalNumberWithString:@"1.0"];

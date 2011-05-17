@@ -66,7 +66,7 @@
     ProductItem *item = [facade lookupProductItem:barcode];
     NSArray *foundItemList = nil;
     
-    if(item != nil && [item.sku isEqualToNumber:[NSNumber numberWithInt:0]] == NO) {
+    if(item != nil && (![item.itemId isEqualToNumber:[NSNumber numberWithInt:0]] || ![item.sku isEqualToString:@""])) {
         foundItemList = [NSArray arrayWithObject: item];
     }
     
@@ -110,7 +110,7 @@
 	lookupItemNameField.textColor = [UIColor blackColor];
 	lookupItemNameField.borderStyle = UITextBorderStyleRoundedRect;
 	lookupItemNameField.textAlignment = UITextAlignmentCenter;
-	lookupItemNameField.clearsOnBeginEditing = YES;
+	lookupItemNameField.clearsOnBeginEditing = NO;
 	lookupItemNameField.placeholder = @"Item By Name";
 	lookupItemNameField.tagName = @"LookupItemName";
     lookupItemNameField.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -126,7 +126,7 @@
 	lookupItemSkuField.textColor = [UIColor blackColor];
 	lookupItemSkuField.borderStyle = UITextBorderStyleRoundedRect;
 	lookupItemSkuField.textAlignment = UITextAlignmentCenter;
-	lookupItemSkuField.clearsOnBeginEditing = YES;
+	lookupItemSkuField.clearsOnBeginEditing = NO;
 	lookupItemSkuField.placeholder = @"Item By SKU";
 	lookupItemSkuField.tagName = @"LookupItemSku";
 	lookupItemSkuField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
@@ -324,7 +324,7 @@
             // Call the service and display the overlay view
             ProductItem *item = [facade lookupProductItem:lookupText];
             
-            if(item != nil && [item.sku isEqualToNumber:[NSNumber numberWithInt:0]] == NO) {
+            if(item != nil && (![item.itemId isEqualToNumber:[NSNumber numberWithInt:0]] || ![item.sku isEqualToString:@""])) {
                 foundItemList = [NSArray arrayWithObject:item];
                 textField.text = nil;
             }

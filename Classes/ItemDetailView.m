@@ -146,7 +146,7 @@
 #pragma mark Private Methods
 - (void) updateDisplayValues {
     if (item) {
-        skuLabel.text = [item.sku stringValue];
+        skuLabel.text = item.sku;
 		descriptionLabel.text = item.description;
 		priceLabel.text = [NSString stringWithFormat:@"%@ / %@", [priceFormatter stringFromNumber:item.retailPrice], item.primaryUnitOfMeasure];
 		

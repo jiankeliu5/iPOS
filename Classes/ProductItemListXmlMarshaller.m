@@ -29,7 +29,7 @@
         
         item.description = [node elementStringValue:@"ItemDescription"];
         item.itemId = [node elementNumberValue:@"ItemID"];
-        item.sku = [node elementNumberValue:@"ItemNumber"];
+        item.sku = [node elementStringValue:@"ItemNumber"];
         
         [itemList addObject:item];
         

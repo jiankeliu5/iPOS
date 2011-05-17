@@ -35,6 +35,4 @@
 - (void) openItem: (OrderItem *) orderItem;
 - (BOOL) closeItem: (OrderItem *) orderItem;
 
-- (BOOL) adjustSellingPriceFor: (OrderItem *) orderItem withDiscount: (NSDecimalNumber *) discountAmt withManagerApproval: (ManagerInfo *) managerApprover;
-
 @end

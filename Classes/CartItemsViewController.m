@@ -484,7 +484,6 @@
 
 - (void) cancelEditMode:(id)sender {
 	// Clear the flags on the order items.
-	// TODO: this should go into the Order or a Cart class
 	for (OrderItem *orderItem in [[orderCart getOrder] getOrderItems]) {
 		orderItem.shouldClose = NO;
 		orderItem.shouldDelete = NO;
@@ -514,8 +513,7 @@
 			[orderItem setStatusToOpen];
 		}
 	}
-	
-	// TODO: need a bulk way to delete multiple order items from the order at one time??
+
 	for (OrderItem *item in orderItemsToDelete) {
 		[orderCart removeItem:item];
 	}
@@ -603,7 +601,7 @@
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	OrderItem *orderItem = [[[orderCart getOrder] getOrderItems] objectAtIndex:indexPath.row];
-	NSString *orderCellIdentifier = [orderItem.item.sku stringValue];
+	NSString *orderCellIdentifier = orderItem.item.sku;
 	
 	CartItemTableCell *cell = (CartItemTableCell *)[tableView dequeueReusableCellWithIdentifier:orderCellIdentifier];
 	
@@ -674,7 +672,7 @@
 		ProductItem *item = [facade lookupProductItem:aSku];
         NSArray *foundItems = nil;
         
-        if(item != nil && [item.sku isEqualToNumber:[NSNumber numberWithInt:0]] == NO) {
+        if(item != nil && (![item.itemId isEqualToNumber:[NSNumber numberWithInt:0]] || ![item.sku isEqualToString:@""])) {
             foundItems = [NSArray arrayWithObject:item];
         }
         
@@ -704,7 +702,7 @@
     ProductItem *item = [facade lookupProductItem:barcode];
     NSArray *foundItems = nil;
     
-    if(item != nil && [item.sku isEqualToNumber:[NSNumber numberWithInt:0]] == NO) {
+    if(item != nil && (![item.itemId isEqualToNumber:[NSNumber numberWithInt:0]] || ![item.sku isEqualToString:@""])) {
 		foundItems = [NSArray arrayWithObject:item];
 	}
     

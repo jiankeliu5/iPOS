@@ -5,9 +5,7 @@
 //  Created by Torey Lomenda on 4/7/11.
 //  Copyright 2011 Object Partners Inc. All rights reserved.
 //
-
 #import "OrderCart.h"
-
 
 @implementation OrderCart
 
@@ -172,14 +170,6 @@ static OrderCart *cart = nil;
     }
     
     return isAvailableForClose;
-}
-
-- (BOOL) adjustSellingPriceFor: (OrderItem *) orderItem withDiscount: (NSDecimalNumber *) discountAmt withManagerApproval: (ManagerInfo *) managerApprover {
-    BOOL isAllowed = YES;
-    
-    // TODO:  adjust price service returning boolean
-    
-    return isAllowed;
 }
 
 @end

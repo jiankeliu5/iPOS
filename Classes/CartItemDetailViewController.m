@@ -78,7 +78,7 @@
 	orderCart = [OrderCart sharedInstance];
 	[self setOrderItem:editOrderItem];
 	
-	[[self navigationItem] setTitle:[editOrderItem.item.sku stringValue]];
+	[[self navigationItem] setTitle:editOrderItem.item.sku];
 	
 	return self;
 }
@@ -368,7 +368,7 @@
 #pragma mark View Update methods
 - (void) updateViewLayout {
 	if (self.orderItem != nil) {
-		skuLabel.text = [self.orderItem.item.sku stringValue];
+		skuLabel.text = self.orderItem.item.sku;
 		descLabel.text = self.orderItem.item.description;
 		priceLabel.text = [NSString stringWithFormat:@"%@ / %@", [NSString formatDecimalNumberAsMoney:self.orderItem.sellingPrice], self.orderItem.item.primaryUnitOfMeasure];
 		quantityField.text = [self.orderItem getQuantityForDisplay];
