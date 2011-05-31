@@ -16,12 +16,18 @@
 #define BRUSH_OPACITY		(3.0 / 3.0)
 #define BRUSH_PIXELSTEP		1
 #define BRUSH_WIDTH			4
+#define LINE_WIDTH          2
+
 
 // A class extension to declare private methods
 @interface SignaturePad (private)
 
+- (BOOL) initializeWithTexture: (BOOL) enableTexture;
+
 - (BOOL)createFramebuffer;
 - (void)destroyFramebuffer;
+
+- (void) clearSignaturePixels;
 
 @end
 
@@ -30,9 +36,12 @@
 NSString * const SIGNATURE_AS_PNG = @"png";
 NSString * const SIGNATURE_AS_JPG = @"jpg";
 
+@synthesize delegate;
+
 @synthesize  location;
 @synthesize  previousLocation;
 @synthesize signatureImageFormat;
+@synthesize isEnabled;
 
 // Implement this to override the default layer class (which is [CALayer class]).
 // We do this so that our view will be backed by a layer that is capable of OpenGL ES rendering.
@@ -42,127 +51,168 @@ NSString * const SIGNATURE_AS_JPG = @"jpg";
 }
 
 - (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    
+    if (self) {
+        if (![self initializeWithTexture:YES]) {
+            [self release];
+            return nil;
+        };
+    }
+    
+    return self;
+    
+}
+
+- (id)initWithFrame:(CGRect)frame andTextureEnabled: (BOOL) enableTexture {
+	self = [super initWithFrame:frame];
+    
+    if (self) {
+        if (![self initializeWithTexture:enableTexture]) {
+            [self release];
+            return nil;
+        };
+    }
+    
+    return self;
+}
+
+- (BOOL) initializeWithTexture:(BOOL)enableTexture {
 	CGImageRef		brushImage;
 	CGContextRef	brushContext;
 	GLubyte			*brushData;
 	size_t			width, height;
     
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.layer.borderColor = [UIColor blackColor].CGColor;
-        self.layer.borderWidth = 3.0f;
-        
-        // Set the default image format for the signature
-        signatureImageFormat = SIGNATURE_AS_PNG;
-        
-        // Perform the Open GL initialization code
-        CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
-		
-		eaglLayer.opaque = NO;
-        
-		// In this application, we want to retain the EAGLDrawable contents after a call to presentRenderbuffer.
-		eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
-										[NSNumber numberWithBool:YES], kEAGLDrawablePropertyRetainedBacking, kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
-		
-		context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
-		
-		if (!context || ![EAGLContext setCurrentContext:context]) {
-			[self release];
-			return nil;
-		}
-		
-		// Create a texture from an image
-		// First create a UIImage object from the data in a image file, and then extract the Core Graphics image
-		brushImage = [UIImage imageNamed:@"Particle.png"].CGImage;
-		
-		// Get the width and height of the image
-		width = CGImageGetWidth(brushImage);
-		height = CGImageGetHeight(brushImage);
-		
-		// Texture dimensions must be a power of 2. If you write an application that allows users to supply an image,
-		// you'll want to add code that checks the dimensions and takes appropriate action if they are not a power of 2.
-		
-		// Make sure the image exists
-		if(brushImage) {
-			// Allocate  memory needed for the bitmap context
-			brushData = (GLubyte *) calloc(width * height * 4, sizeof(GLubyte));
-			// Use  the bitmap creation function provided by the Core Graphics framework. 
-			brushContext = CGBitmapContextCreate(brushData, width, height, 8, width * 4, CGImageGetColorSpace(brushImage), kCGImageAlphaPremultipliedLast);
-			// After you create the context, you can draw the  image to the context.
-			CGContextDrawImage(brushContext, CGRectMake(0.0, 0.0, (CGFloat)width, (CGFloat)height), brushImage);
-			// You don't need the context at this point, so you need to release it to avoid memory leaks.
-			CGContextRelease(brushContext);
-			// Use OpenGL ES to generate a name for the texture.
-			glGenTextures(1, &brushTexture);
-			// Bind the texture name. 
-			glBindTexture(GL_TEXTURE_2D, brushTexture);
-			// Set the texture parameters to use a minifying filter and a linear filer (weighted average)
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			// Specify a 2D texture image, providing the a pointer to the image data in memory
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, brushData);
-			// Release  the image data; it's no longer needed
-            free(brushData);
-		}
-		
-		// Set the view's scale factor
-		self.contentScaleFactor = 1.0;
-        
-		// Setup OpenGL states
-		glMatrixMode(GL_PROJECTION);
-		CGRect frame = self.bounds;
-		CGFloat scale = self.contentScaleFactor;
-		// Setup the view port in Pixels
-		glOrthof(0, frame.size.width * scale, 0, frame.size.height * scale, -1, 1);
-		glViewport(0, 0, frame.size.width * scale, frame.size.height * scale);
-        
-		glMatrixMode(GL_MODELVIEW);
-		
-		glDisable(GL_DITHER);
-		glEnable(GL_TEXTURE_2D);
-        
-		glEnableClientState(GL_VERTEX_ARRAY);
-		
-	    glEnable(GL_BLEND);
-		// Set a blending function appropriate for premultiplied alpha pixel data
-		glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-		
-		glEnable(GL_POINT_SPRITE_OES);
-		glTexEnvf(GL_POINT_SPRITE_OES, GL_COORD_REPLACE_OES, GL_TRUE);
-		glPointSize(BRUSH_WIDTH);
-        
-        glEnable(GL_LINE_SMOOTH);
-        glLineWidth(BRUSH_WIDTH);
-        
-        // Make sure to start with a cleared buffer
-		needsErase = YES;
+    self.layer.borderColor = [UIColor blackColor].CGColor;
+    self.layer.borderWidth = 3.0f;
+    
+    // Set the default image format for the signature
+    signatureImageFormat = SIGNATURE_AS_PNG;
+    
+    // set the defaults for signature pixels
+    pixelsGL = nil;
+    pixels = nil;
+    
+    // Default signature pad to enabled
+    isEnabled = YES;
+    
+    // Perform the Open GL initialization code
+    CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
+    
+    eaglLayer.opaque = NO;
+    
+    // In this application, we want to retain the EAGLDrawable contents after a call to presentRenderbuffer.
+    eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [NSNumber numberWithBool:YES], kEAGLDrawablePropertyRetainedBacking, kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
+    
+    context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
+    
+    if (!context || ![EAGLContext setCurrentContext:context]) {
+        return NO;
     }
-         
-    return self;
+    
+    // Create a texture from an image
+    // First create a UIImage object from the data in a image file, and then extract the Core Graphics image
+    brushImage = nil; 
+    
+    if (enableTexture) {
+        brushImage = [UIImage imageNamed:@"Particle.png"].CGImage;
+    }
+    
+    // Get the width and height of the image
+    width = CGImageGetWidth(brushImage);
+    height = CGImageGetHeight(brushImage);
+    
+    // Texture dimensions must be a power of 2. If you write an application that allows users to supply an image,
+    // you'll want to add code that checks the dimensions and takes appropriate action if they are not a power of 2.
+    
+    // Make sure the image exists
+    if(brushImage) {
+        // Allocate  memory needed for the bitmap context
+        brushData = (GLubyte *) calloc(width * height * 4, sizeof(GLubyte));
+        // Use  the bitmap creation function provided by the Core Graphics framework. 
+        brushContext = CGBitmapContextCreate(brushData, width, height, 8, width * 4, CGImageGetColorSpace(brushImage), kCGImageAlphaPremultipliedLast);
+        // After you create the context, you can draw the  image to the context.
+        CGContextDrawImage(brushContext, CGRectMake(0.0, 0.0, (CGFloat)width, (CGFloat)height), brushImage);
+        // You don't need the context at this point, so you need to release it to avoid memory leaks.
+        CGContextRelease(brushContext);
+        
+        // Use OpenGL ES to generate a name for the texture.
+        glGenTextures(1, &brushTexture);
+        // Bind the texture name. 
+        glBindTexture(GL_TEXTURE_2D, brushTexture);
+        // Set the texture parameters to use a minifying filter and a linear filer (weighted average)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        // Specify a 2D texture image, providing the a pointer to the image data in memory
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, brushData);
+        
+        // Release  the image data; it's no longer needed
+        free(brushData);
+    }
+    
+    // Set the view's scale factor
+    self.contentScaleFactor = 1.0;
+    
+    // Setup OpenGL states
+    glMatrixMode(GL_PROJECTION);
+    CGRect frame = self.bounds;
+    CGFloat scale = self.contentScaleFactor;
+    
+    // Setup the view port in Pixels
+    glOrthof(0, frame.size.width * scale, 0, frame.size.height * scale, -1, 1);
+    glViewport(0, 0, frame.size.width * scale, frame.size.height * scale);
+    
+    
+    glMatrixMode(GL_MODELVIEW);
+    glDisable(GL_DITHER);
+    
+    glEnableClientState(GL_VERTEX_ARRAY);
+    
+    if (enableTexture) {
+        glEnable(GL_TEXTURE_2D);
+        glEnable(GL_BLEND);
+        
+        // Set a blending function appropriate for premultiplied alpha pixel data
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+        
+        glEnable(GL_POINT_SPRITE_OES);
+        glTexEnvf(GL_POINT_SPRITE_OES, GL_COORD_REPLACE_OES, GL_TRUE);
+        
+        glPointSize(BRUSH_WIDTH);
+    } else {
+        glEnable(GL_LINE_SMOOTH);
+        glPointSize(LINE_WIDTH);
+    }
+    
+    // Make sure to start with a cleared buffer
+    needsErase = YES;
+    
+    return YES;
 }
+
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code.
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect {
+ // Drawing code.
+ }
+ */
 
 - (void)dealloc {
-    if (brushTexture)
-	{
+    if (brushTexture) {
 		glDeleteTextures(1, &brushTexture);
 		brushTexture = 0;
 	}
 	
-	if([EAGLContext currentContext] == context)
-	{
+	if([EAGLContext currentContext] == context) {
 		[EAGLContext setCurrentContext:nil];
 	}
 	
 	[context release];
-    
     [signatureImageFormat release];
+    
+    [self clearSignaturePixels];
     
     [super dealloc];
 }
@@ -197,6 +247,13 @@ NSString * const SIGNATURE_AS_JPG = @"jpg";
 	// Display the buffer
 	glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
 	[context presentRenderbuffer:GL_RENDERBUFFER_OES];
+    
+    // Clear the signature pixels
+    [self clearSignaturePixels];
+    
+    if (delegate) {
+        [delegate signatureErased];
+    }
 }
 
 - (void)initBrushColor {
@@ -210,23 +267,27 @@ NSString * const SIGNATURE_AS_JPG = @"jpg";
 - (UIImage *) getSignatureAsImage {
     int width = self.frame.size.width;
     int height = self.frame.size.height;
-    
     NSInteger myDataLength = width * height * 4;
-    // allocate array and read pixels into it.
-    GLubyte *buffer = (GLubyte *) malloc(myDataLength);
-    glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+    
+    [self clearSignaturePixels];
+    
+    pixelsGL = (GLubyte *) malloc(myDataLength);
+    
     // gl renders "upside down" so swap top to bottom into new array.
     // there's gotta be a better way, but this works.
-    GLubyte *buffer2 = (GLubyte *) malloc(myDataLength);
-    for(int y = 0; y < height; y++)
-    {
-        for(int x = 0; x < width * 4; x++)
-        {
-            buffer2[((height - 1) - y) * width * 4 + x] = buffer[y * 4 * width + x];
+    pixels = (GLubyte *) malloc(myDataLength);
+    
+    glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixelsGL);
+    
+    for(int y = 0; y < height; y++) {
+        for(int x = 0; x < width * 4; x++) {
+            pixels[((height - 1) - y) * width * 4 + x] = pixelsGL[y * 4 * width + x];
         }
     }
+    
     // make data provider with data.
-    CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, buffer2, myDataLength, NULL);
+    CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, pixels, myDataLength, NULL);
+    
     // prep the ingredients
     int bitsPerComponent = 8;
     int bitsPerPixel = 32;
@@ -234,13 +295,16 @@ NSString * const SIGNATURE_AS_JPG = @"jpg";
     CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
     CGBitmapInfo bitmapInfo = kCGImageAlphaPremultipliedLast; // This setting allows the image to be created with transparent background!!
     CGColorRenderingIntent renderingIntent = kCGRenderingIntentDefault;
+    
     // make the cgimage
     CGImageRef imageRef = CGImageCreate(width, height, bitsPerComponent, bitsPerPixel, bytesPerRow, colorSpaceRef, bitmapInfo, provider, NULL, YES, renderingIntent);
     // then make the uiimage from that
     UIImage *myImage = [UIImage imageWithCGImage:imageRef];
-	CGImageRelease(imageRef);
+	
+    CGImageRelease(imageRef);
 	CGColorSpaceRelease(colorSpaceRef);
 	CGDataProviderRelease(provider);
+    
     return myImage;
 }
 
@@ -355,43 +419,67 @@ NSString * const SIGNATURE_AS_JPG = @"jpg";
 	}
 }
 
+#pragma mark -
+#pragma mark Other Private methods
+- (void) clearSignaturePixels {
+    if (pixelsGL != nil) {
+        free(pixelsGL);
+        pixelsGL = nil;
+    }
+    
+    if (pixels) {
+        free(pixels);
+        pixels = nil;
+    }
+}
+
 
 #pragma mark -
 #pragma mark Touch Event Handling
 // Handles the start of a touch
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	CGRect				bounds = [self bounds];
-    UITouch*	touch = [[event touchesForView:self] anyObject];
-	firstTouch = YES;
-	// Convert touch point from UIView referential to OpenGL one (upside-down flip)
-	location = [touch locationInView:self];
-	location.y = bounds.size.height - location.y;
+    if (isEnabled) {
+        CGRect		bounds = [self bounds];
+        UITouch*	touch = [[event touchesForView:self] anyObject];
+        firstTouch = YES;
+        
+        // Convert touch point from UIView referential to OpenGL one (upside-down flip)
+        location = [touch locationInView:self];
+        location.y = bounds.size.height - location.y;
+    }
 }
 
 // Handles the continuation of a touch.
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {  
-    
-	CGRect				bounds = [self bounds];
-	UITouch*			touch = [[event touchesForView:self] anyObject];    
-    location = [touch locationInView:self];
-    location.y = bounds.size.height - location.y;
-    previousLocation = [touch previousLocationInView:self];
-    previousLocation.y = bounds.size.height - previousLocation.y;
-    
-	// Render the stroke
-	[self renderLineFromPoint:previousLocation toPoint:location];
+    if (isEnabled) {
+        CGRect				bounds = [self bounds];
+        UITouch*			touch = [[event touchesForView:self] anyObject];    
+        location = [touch locationInView:self];
+        location.y = bounds.size.height - location.y;
+        previousLocation = [touch previousLocationInView:self];
+        previousLocation.y = bounds.size.height - previousLocation.y;
+        
+        // Render the stroke
+        [self renderLineFromPoint:previousLocation toPoint:location];
+    }
 }
 
 // Handles the end of a touch event when the touch is a tap.
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-	CGRect				bounds = [self bounds];
-    UITouch*	touch = [[event touchesForView:self] anyObject];
-	if (firstTouch) {
-		firstTouch = NO;
-		previousLocation = [touch previousLocationInView:self];
-		previousLocation.y = bounds.size.height - previousLocation.y;
-		[self renderLineFromPoint:previousLocation toPoint:location];
-	}
+	if (isEnabled) {
+        CGRect		bounds = [self bounds];
+        UITouch*	touch = [[event touchesForView:self] anyObject];
+        if (firstTouch) {
+            firstTouch = NO;
+            previousLocation = [touch previousLocationInView:self];
+            previousLocation.y = bounds.size.height - previousLocation.y;
+            [self renderLineFromPoint:previousLocation toPoint:location];
+        }
+        
+        if (delegate) {
+            [delegate signatureRendered];
+        }
+    }
 }
 
 // Handles the end of a touch event.

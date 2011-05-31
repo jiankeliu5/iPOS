@@ -83,7 +83,7 @@
     payAmountLabel.font = [UIFont boldSystemFontOfSize:14.0f];
     payAmountLabel.text = @"0.00";
     
-    signaturePad = [[[SignaturePad alloc] initWithFrame:CGRectMake(10, 94, 460, 170)] autorelease];
+    signaturePad = [[[SignaturePad alloc] initWithFrame:CGRectMake(10, 94, 460, 170) andTextureEnabled:YES] autorelease];
     
     // Add the the bg view
     [bgView addSubview:toolbar]; 
