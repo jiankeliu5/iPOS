@@ -222,7 +222,11 @@ static int const ORDER_TYPE_CLOSED = 4;
         }
     }
     
-    return taxTotal;        
+    // Round the tax up
+    NSDecimalNumberHandler *roundUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:2 
+                                                                                  raiseOnExactness:NO raiseOnOverflow:NO 
+                                                                                  raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+    return [taxTotal decimalNumberByRoundingAccordingToBehavior:roundUp];        
 }
 
 - (NSDecimalNumber *) calcOrderDiscountTotal {
@@ -267,7 +271,8 @@ static int const ORDER_TYPE_CLOSED = 4;
     
     for (OrderItem *item in orderItemList) {
         if ([item isClosed]) {
-            balance = [[item calcLineSubTotal] decimalNumberByAdding: [item calcLineTax]];
+            // Fixed to ensure balance is accumulative [Defect:  2011-06-01]
+            balance = [balance decimalNumberByAdding:[[item calcLineSubTotal] decimalNumberByAdding: [item calcLineTax]]];
         }
     }
     

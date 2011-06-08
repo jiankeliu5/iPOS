@@ -49,6 +49,9 @@
 		IBATextFormField *emailFormField = [[IBATextFormField alloc] initWithKeyPath:@"emailAddress" title:@"Email"];
 		[emailFormField setMaxLength:[NSNumber numberWithInt:100]];
 		emailFormField.textFormFieldCell.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        
+        // Fixed to ensure no autocorrect on e-mail [Defect:  2011-06-01]
+        emailFormField.textFormFieldCell.textField.autocorrectionType = UITextAutocorrectionTypeNo;
 		emailFormField.textFormFieldCell.textField.keyboardType = UIKeyboardTypeEmailAddress;
 		[customerFormSection addFormField:[emailFormField autorelease]];
 		
