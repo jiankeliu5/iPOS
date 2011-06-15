@@ -11,11 +11,20 @@
 #import "ProductItemListXmlMarshaller.h"
 
 @implementation ProductItem
+ 
+NSString * const UOM_EACH = @"EA";
+NSString * const UOM_CARTON = @"CA";
+NSString * const UOM_BOX = @"BX";
+NSString * const UOM_COVERAGE = @"CV";
+NSString * const UOM_LINEARFOOT = @"LF";
+NSString * const UOM_QYARD = @"QY";
+NSString * const UOM_SET = @"SE";
+NSString * const UOM_SQFT = @"SF";
 
 @synthesize itemId, sku, description, vendorName, statusCode, type, typeId;
 @synthesize binLocation, stockingCode;
-@synthesize defaultToBox, piecesPerBox, primaryUnitOfMeasure, secondaryUnitOfMeasure, conversion;
-@synthesize priceGroupId, retailPrice, standardCost, taxRate, taxExempt;
+@synthesize selectedUOM, defaultToBox, piecesPerBox, primaryUnitOfMeasure, secondaryUnitOfMeasure, conversion;
+@synthesize priceGroupId, retailPricePrimary, retailPriceSecondary, standardCost, taxRate, taxExempt;
 @synthesize store, distributionCenterList;
 
 #pragma mark Constuctor/Deconstructor
@@ -32,15 +41,18 @@
                                 @"SET",
                                 @"SQ FT",
                                nil] forKeys:[NSArray arrayWithObjects:
-                                             @"BX",
-                                             @"CA",
-                                             @"CV",
-                                             @"EA",
-                                             @"LF",
-                                             @"QY",
-                                             @"SE",
-                                             @"SF",
+                                             UOM_BOX,
+                                             UOM_CARTON,
+                                             UOM_COVERAGE,
+                                             UOM_EACH,
+                                             UOM_LINEARFOOT,
+                                             UOM_QYARD,
+                                             UOM_SET,
+                                             UOM_SQFT,
                                              nil]] retain];
+    
+    // Set a default for the selected UOM
+    selectedUOM = UOMPrimary;
     
 	return self;
 }
@@ -64,7 +76,8 @@
     [conversion release];
     
     [priceGroupId release];
-    [retailPrice release];
+    [retailPricePrimary release];
+    [retailPriceSecondary release];
     [standardCost release];
     [taxRate release];
     
@@ -72,6 +85,42 @@
     [distributionCenterList release];
     
     [super dealloc];
+}
+
+#pragma mark -
+#pragma mark Methods
+- (BOOL) isUOMConversionRequired {
+    if ([primaryUnitOfMeasure isEqualToString:secondaryUnitOfMeasure]) {
+        return NO;
+    }
+    
+    return YES;
+}
+- (void) toggleUOM {
+    if (selectedUOM == UOMPrimary) {
+        selectedUOM = UOMSecondary;
+    } else {
+        selectedUOM = UOMPrimary;
+    }
+}
+
+- (NSString *) getSelectedUOMForDisplay {
+    if (selectedUOM == UOMPrimary) {
+        return primaryUnitOfMeasure;
+    }
+    
+    return secondaryUnitOfMeasure;
+}
+
+- (NSString *) getRetailPriceForDisplay {
+    NSDecimalNumber *value = nil;
+    if (selectedUOM == UOMPrimary) {
+        value = retailPricePrimary;
+    } else {
+        value = retailPriceSecondary;
+    }
+    
+    return [NSString stringWithFormat:@"%@", value];
 }
 
 -(NSString *) unitOfMeasureDisplay:(NSString*)uom {

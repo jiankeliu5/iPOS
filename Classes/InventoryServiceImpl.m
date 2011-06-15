@@ -152,10 +152,11 @@
     
     // If the customer is a retail customer, selling price is retail price
     if ([customer isRetailCustomer]) {
-        orderItem.sellingPrice = [[orderItem.item.retailPrice copy] autorelease];
+        orderItem.sellingPricePrimary = [[orderItem.item.retailPricePrimary copy] autorelease];
+        orderItem.sellingPriceSecondary = [[orderItem.item.retailPriceSecondary copy] autorelease];
     } else {
         ASIHTTPRequest *request =  [self startGetRequest:[NSString stringWithFormat:@"%@/%@/customerSellingPrice/%@/%@/%@", 
-                                                                baseUrl, posInventoryMgmtUri, customer.priceLevelId, orderItem.item.priceGroupId, orderItem.item.retailPrice] withSession:sessionInfo];
+                                                                baseUrl, posInventoryMgmtUri, customer.priceLevelId, orderItem.item.priceGroupId, orderItem.item.retailPricePrimary] withSession:sessionInfo];
         NSArray *requestErrors = [request validateAsXmlContent];
         if ([requestErrors count] > 0) {
             return NO;   
@@ -165,7 +166,7 @@
         NSDecimalNumber *sellingPrice = [POSOxmUtils parseAsDecimal:[request responseString]];
         
         if (sellingPrice) {
-            orderItem.sellingPrice = sellingPrice;
+            orderItem.sellingPricePrimary = sellingPrice;
         }
     }
     return YES;
@@ -176,7 +177,7 @@
     ItemSellingPriceApprovalRequest *sellingApprovalReq = [[[ItemSellingPriceApprovalRequest alloc] initWithOrderItem:orderItem managerInfo:managerApprover] autorelease];
     
     if (orderItem) {
-         sellingApprovalReq.sellingPrice = [orderItem calcSellingPriceFrom:discountAmount];
+         sellingApprovalReq.sellingPrice = [orderItem calcSellingPricePrimaryFrom:discountAmount];
          
         // Is it allowed?
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/changePriceApproval", baseUrl, posInventoryMgmtUri]];
@@ -209,7 +210,7 @@
     }
 
     if (allowAdjustment) {
-        orderItem.sellingPrice = [orderItem calcSellingPriceFrom:discountAmount];
+        [orderItem setSellingPriceFrom:discountAmount];
     }
     
     return allowAdjustment;

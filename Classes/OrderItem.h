@@ -17,8 +17,11 @@
     
     NSNumber *priceAuthorizationId;
     
-    NSDecimalNumber *sellingPrice;
-    NSDecimalNumber *quantity;
+    NSDecimalNumber *sellingPricePrimary;
+    NSDecimalNumber *sellingPriceSecondary;
+    
+    NSDecimalNumber *quantityPrimary;
+    NSDecimalNumber *quantitySecondary;
     
     ManagerInfo *managerApprover;
     ProductItem *item;
@@ -35,8 +38,10 @@
 @property (nonatomic, retain) NSNumber *statusId;
 @property (nonatomic, retain) NSNumber *priceAuthorizationId;
 
-@property (nonatomic, retain) NSDecimalNumber *sellingPrice;
-@property (nonatomic, retain) NSDecimalNumber *quantity;
+@property (nonatomic, retain) NSDecimalNumber *sellingPricePrimary;
+@property (nonatomic, retain) NSDecimalNumber *sellingPriceSecondary;
+@property (nonatomic, retain) NSDecimalNumber *quantityPrimary;
+@property (nonatomic, retain) NSDecimalNumber *quantitySecondary;
 
 @property (nonatomic, retain) ManagerInfo *managerApprover;
 @property (nonatomic, retain) ProductItem *item;
@@ -47,11 +52,6 @@
 
 -(id) initWithItem: (ProductItem *) productItem AndQuantity: (NSDecimalNumber *) productQuantity;
 
-- (BOOL) isConversionNeeded;
-- (NSNumber *) getQuantityInPieces;
-- (NSNumber *) getQuantityInBoxes;
-- (NSNumber *) getPiecesPerBox;
-
 - (void) setStatusToClosed;
 - (void) setStatusToOpen;
 
@@ -60,13 +60,26 @@
 - (BOOL) allowClose;
 
 #pragma mark -
+#pragma mark Custom Accessors
+- (BOOL) isConversionNeeded;
+- (NSNumber *) getPiecesPerBox;
+- (void) setQuantity: (NSDecimalNumber *) newQuantity;
+- (void) setSellingPriceFrom: (NSDecimalNumber *) discount;
+
+#pragma mark -
 #pragma mark Order Item Calculations
-- (NSDecimalNumber *) calcSellingPriceFrom: (NSDecimalNumber *) discount;
+- (NSDecimalNumber *) calcSellingPricePrimaryFrom: (NSDecimalNumber *) discount;
+- (NSDecimalNumber *) calcSellingPriceSecondaryFrom: (NSDecimalNumber *) discount;
 - (NSDecimalNumber *) calcLineRetailSubTotal;
 - (NSDecimalNumber *) calcLineSubTotal;
 - (NSDecimalNumber *) calcLineTax;
 - (NSDecimalNumber *) calcLineDiscount;
 
+#pragma mark -
+#pragma mark UOM Switching support
+- (void) toggleUOM;
+- (NSString *) getUOMForDisplay;
 - (NSString *) getQuantityForDisplay;
+- (NSString *) getSellingPriceForDisplay;
 
 @end

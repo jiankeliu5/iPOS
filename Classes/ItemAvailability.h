@@ -11,17 +11,28 @@
 @class ProductItem;
 @interface ItemAvailability : NSObject {
 
-    NSDecimalNumber *available;
-    NSDecimalNumber *onHand;
+    NSDecimalNumber *availablePrimary;
+    NSDecimalNumber *availableSecondary;
+    
+    NSDecimalNumber *onHandPrimary;
+    NSDecimalNumber *onHandSecondary;
+    
     NSString *etaDateAsString;
     
     ProductItem *item;
 }
 
-@property (nonatomic, retain) NSDecimalNumber *available;
-@property (nonatomic, retain) NSDecimalNumber *onHand;
+@property (nonatomic, retain) NSDecimalNumber *availablePrimary;
+@property (nonatomic, retain) NSDecimalNumber *availableSecondary;
+
+@property (nonatomic, retain) NSDecimalNumber *onHandPrimary;
+@property (nonatomic, retain) NSDecimalNumber *onHandSecondary;
+
 @property (nonatomic, retain) NSString *etaDateAsString;
 
 @property (nonatomic,assign) ProductItem *item;
+
+- (NSDecimalNumber *) getSelectedAvailability;
+- (NSDecimalNumber *) getSelectedOnHand;
 
 @end

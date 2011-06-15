@@ -27,14 +27,27 @@
 #define KEYBOARD_TOOLBAR_WIDTH 320.0f
 
 #define MOVE_OFF_TO_LEFT_X -280.0f
-#define MOVE_OFF_TO_RIGHT_X 280.0f 
+#define MOVE_OFF_TO_RIGHT_X 280.0f
+
+#define ADD_QUANTITYVIEW_WIDTH 188.0f
+#define ADD_QUANTITYVIEW_HEIGHT 80.0f
+#define ADD_QUANTITYVIEW_W_SWITCH_WIDTH 220.0f
+#define ADD_QUANTITYVIEW_W_SWITCH_HEIGHT 100.0f
+#define ADD_QUANTITYVIEW_MARGIN_LEFT 46.0f
+#define ADD_QUANTITYVIEW_W_SWITCH_MARGIN_LEFT 30.0f
+#define ADD_QUANTITYVIEW_MARGIN_TOP 10.0f
+
 
 #pragma mark -
 #pragma mark Private Interface
 @interface AddItemView ()
 - (void) updateDisplayValues;
+
+- (void) handleDefaultFullBoxesSwitch: (id) sender;
+
 - (void) handleExitButton:(id)sender;
 - (void) handleAddToCartButton:(id)sender;
+
 - (void) addKeyboardListeners;
 - (void) removeKeyboardListeners;
 - (void) dismissKeyboard:(id)sender;
@@ -164,7 +177,7 @@
 	}
 	
 	if (addQuantityView == nil) {
-		addQuantityView = [[GradientView alloc] initWithFrame:CGRectMake(46.0f, cy, 188.0f, 80.0f)];
+		addQuantityView = [[GradientView alloc] initWithFrame:CGRectMake(30.0f, cy, ADD_QUANTITYVIEW_WIDTH, ADD_QUANTITYVIEW_HEIGHT)];
 		[addQuantityView.layer setCornerRadius:5.0f];
 		[addQuantityView.layer setMasksToBounds:YES];
 		[addQuantityView.layer setBorderWidth:1.0f];
@@ -172,7 +185,7 @@
 		[addQuantityView setStart:[UIColor colorWithRed:96.0/255.0 green:96.0/255.0 blue:96.0/255.0 alpha:1.0] andEndColor:[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f]];
 		addQuantityView.hidden = YES;
 		
-		addQuantityField = [[ExtUITextField alloc] initWithFrame:CGRectMake(15.0f, 20.0f, 90.0f, 40.0f)];
+		addQuantityField = [[ExtUITextField alloc] initWithFrame:CGRectMake(15.0f, ADD_QUANTITYVIEW_MARGIN_TOP, 90.0f, 40.0f)];
 		addQuantityField.textColor = [UIColor blackColor];
 		addQuantityField.borderStyle = UITextBorderStyleRoundedRect;
 		addQuantityField.textAlignment = UITextAlignmentCenter;
@@ -195,16 +208,32 @@
 		[addQuantityView addSubview:addQuantityField];
   	    [addQuantityField release];
 		
-		addQuantityUnitsLabel = [[UILabel alloc] initWithFrame:CGRectMake(120.0f, 20.0f, 53.0f, 40.0f)];
+		addQuantityUnitsLabel = [[UILabel alloc] initWithFrame:CGRectMake(120.0f, ADD_QUANTITYVIEW_MARGIN_TOP, 53.0f, 40.0f)];
 		addQuantityUnitsLabel.textAlignment = UITextAlignmentCenter;
 		addQuantityUnitsLabel.textColor = [UIColor whiteColor];
 		addQuantityUnitsLabel.backgroundColor = [UIColor clearColor];
 		[addQuantityView addSubview:addQuantityUnitsLabel];
     	[addQuantityUnitsLabel release];
+        
+        addQuantityFullBoxesLabel = [[UILabel alloc] initWithFrame:CGRectMake(15.0f, ADD_QUANTITYVIEW_MARGIN_TOP+40.0f, 90.0f, 40.0f)];
+        addQuantityFullBoxesLabel.text = @"Full Boxes";
+		addQuantityFullBoxesLabel.textAlignment = UITextAlignmentLeft;
+		addQuantityFullBoxesLabel.textColor = [UIColor whiteColor];
+		addQuantityFullBoxesLabel.backgroundColor = [UIColor clearColor];
+        addQuantityFullBoxesLabel.hidden = YES;
+		[addQuantityView addSubview:addQuantityFullBoxesLabel];
+    	[addQuantityFullBoxesLabel release];
+        
+        addQuantityFullBoxSwitch = [[UISwitch alloc] initWithFrame: CGRectMake(120.0f, ADD_QUANTITYVIEW_MARGIN_TOP+40.0f+5.0f, 0, 0)];
+        [addQuantityFullBoxSwitch addTarget:self action:@selector(handleDefaultFullBoxesSwitch:) forControlEvents:UIControlEventValueChanged];
+        addQuantityFullBoxSwitch.on = YES;
+        addQuantityFullBoxSwitch.hidden = YES;
+        [addQuantityView addSubview:addQuantityFullBoxSwitch];
+        [addQuantityFullBoxSwitch release];
+
 		[roundedView addSubview:addQuantityView];
         
-        [addQuantityView release];
-		
+        [addQuantityView release];		
 	}
 	
 	self.keyboardCancelled = NO;
@@ -215,7 +244,8 @@
 - (void)updateDisplayValues {    
     // Add the Item Detail View if it not in the layout
     if (itemDetailView == nil) {
-        itemDetailView = [[ItemDetailView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, ROUND_VIEW_WIDTH, ITEM_VIEW_HEIGHT)];            
+        itemDetailView = [[ItemDetailView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, ROUND_VIEW_WIDTH, ITEM_VIEW_HEIGHT)];       
+        itemDetailView.delegate = self;
         [roundedView addSubview:itemDetailView];
         [itemDetailView release];
     }
@@ -266,8 +296,49 @@
 - (void)handleAddToCartButton:(id)sender {
 	[self addKeyboardListeners];
 	ProductItem *pi = itemToAdd;
-	addQuantityUnitsLabel.text = [pi unitOfMeasureDisplay:pi.primaryUnitOfMeasure];
+	addQuantityUnitsLabel.text = [pi unitOfMeasureDisplay:[pi getSelectedUOMForDisplay]];
+    
+    // Do I show the convert to boxes toggle
+    CGRect addQuantityFrame = addQuantityView.frame;
+    CGRect quantityTextFrame = addQuantityField.frame;
+    CGRect quantityLabelFrame = addQuantityUnitsLabel.frame;
+    if ([pi isUOMConversionRequired]) {
+        addQuantityFrame.origin.x = ADD_QUANTITYVIEW_W_SWITCH_MARGIN_LEFT;
+        addQuantityFrame.size.height = ADD_QUANTITYVIEW_HEIGHT+ADD_QUANTITYVIEW_MARGIN_TOP; 
+        addQuantityFrame.size.width = ADD_QUANTITYVIEW_W_SWITCH_WIDTH;
+        
+        quantityLabelFrame.origin.y = ADD_QUANTITYVIEW_MARGIN_TOP;
+        quantityTextFrame.origin.y = ADD_QUANTITYVIEW_MARGIN_TOP;
+        
+        addQuantityFullBoxSwitch.on = pi.defaultToBox;
+        addQuantityFullBoxesLabel.hidden = NO;
+        addQuantityFullBoxSwitch.hidden = NO;
+        
+    } else {
+        addQuantityFrame.origin.x = ADD_QUANTITYVIEW_MARGIN_LEFT;
+        addQuantityFrame.size.height = ADD_QUANTITYVIEW_HEIGHT; 
+        addQuantityFrame.size.width = ADD_QUANTITYVIEW_WIDTH;
+        
+        quantityLabelFrame.origin.y = ADD_QUANTITYVIEW_MARGIN_TOP*2;
+        quantityTextFrame.origin.y = ADD_QUANTITYVIEW_MARGIN_TOP*2;
+        
+        addQuantityFullBoxSwitch.on = pi.defaultToBox;
+        addQuantityFullBoxesLabel.hidden = YES;
+        addQuantityFullBoxSwitch.hidden = YES;
+    }
+    addQuantityView.frame = addQuantityFrame;
+    addQuantityField.frame = quantityTextFrame;
+    addQuantityUnitsLabel.frame = quantityLabelFrame;
+    
 	addQuantityView.hidden = NO;
+}
+
+- (void) handleDefaultFullBoxesSwitch:(id)sender {
+    ProductItem *pi = itemToAdd;
+    
+    if (pi) {
+        pi.defaultToBox = addQuantityFullBoxSwitch.on;
+    }
 }
 
 #pragma mark -
@@ -286,6 +357,15 @@
         } else {
             [self slideToItemDetails];
         }
+    }
+}
+
+#pragma mark -
+#pragma mark ItemDetailViewDelegate
+- (void) unitOfMeasureExchange:(ItemDetailView *)itemDetailView selectedUOM:(NSString *)uom {
+    if (!addQuantityView.hidden) {
+        ProductItem *pi = itemToAdd;
+        addQuantityUnitsLabel.text = [pi unitOfMeasureDisplay:[pi getSelectedUOMForDisplay]];
     }
 }
 

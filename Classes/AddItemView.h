@@ -27,7 +27,7 @@
 
 @end
 
-@interface AddItemView : UIView <UITextFieldDelegate, ItemListViewDelegate> {
+@interface AddItemView : UIView <UITextFieldDelegate, ItemListViewDelegate, ItemDetailViewDelegate> {
 	NSArray *productItemList;
     
     ProductItem *itemToAdd;
@@ -40,9 +40,13 @@
 	
 	MOGlassButton *addToCartButton;
 	MOGlassButton *exitButton;
+    
 	GradientView *addQuantityView;
 	UILabel *addQuantityUnitsLabel;
-	ExtUITextField *addQuantityField;
+	UILabel *addQuantityFullBoxesLabel;
+    UISwitch *addQuantityFullBoxSwitch;
+    
+    ExtUITextField *addQuantityField;
 	
 	id currentFirstResponder;
 	CGFloat previousViewOriginY;

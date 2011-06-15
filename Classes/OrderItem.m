@@ -7,6 +7,7 @@
 //
 
 #import "OrderItem.h"
+#import "NSString+StringFormatters.h"
 
 static int const STATUS_OPEN = 1;
 static int const STATUS_CLOSE = 2;
@@ -15,12 +16,18 @@ static int const STATUS_CANCEL = 4;
 
 // Private interface
 @interface OrderItem()
-    - (NSDecimalNumber *) convertQuantity: (NSDecimalNumber *) quantity;
+- (void) convertToQuantity: (NSDecimalNumber *) productQuantity;
+
+- (NSDecimalNumber *) adjustQuantity: (NSDecimalNumber *) quantityToConvert forUOM: (NSString *) uom;
+- (NSDecimalNumber *) convertToPieces: (NSDecimalNumber *) quantityToConvert;
+- (NSDecimalNumber *) convertToBoxesWithPieces: (NSDecimalNumber *) quantityToConvert;
+- (NSDecimalNumber *) convertToSquareFeet: (NSDecimalNumber *) quantityInPieces;
 @end
 
 @implementation OrderItem
 
-@synthesize lineNumber, statusId, priceAuthorizationId, sellingPrice, quantity, managerApprover, item;
+@synthesize sellingPricePrimary, sellingPriceSecondary, quantityPrimary, quantitySecondary;
+@synthesize lineNumber, statusId, priceAuthorizationId, managerApprover, item;
 @synthesize doConversionToFullBoxes, shouldDelete, shouldClose;
 
 #pragma mark Constructor/Deconstructor
@@ -48,10 +55,14 @@ static int const STATUS_CANCEL = 4;
     statusId = [[NSNumber numberWithInt:STATUS_OPEN] retain];
     
     // Default selling price to retail price
-    sellingPrice = [productItem.retailPrice copy];
+    sellingPricePrimary = [productItem.retailPricePrimary copy];
+    sellingPriceSecondary = [productItem.retailPriceSecondary copy];
     
     item = [productItem retain];
-    quantity = [[self convertQuantity:productQuantity] retain];
+    
+    // Is the product item quantity in primary or secondary UOM ??
+    [self convertToQuantity:productQuantity];
+    
     return self;
 }
 
@@ -59,14 +70,16 @@ static int const STATUS_CANCEL = 4;
     [lineNumber release];
     [statusId release];
     [priceAuthorizationId release];
-    [sellingPrice release];
+    [sellingPricePrimary release];
+    [sellingPriceSecondary release];
     
     if (managerApprover != nil) {
         [managerApprover release];
     }
     
     [item release];
-    [quantity release];
+    [quantityPrimary release];
+    [quantitySecondary release];
     
     [super dealloc];
 }
@@ -84,10 +97,7 @@ static int const STATUS_CANCEL = 4;
 }
 
 - (void) setQuantity:(NSDecimalNumber *) newQuantity {
-    if (quantity != newQuantity) {
-		[quantity release];
-		quantity = [[self convertQuantity:newQuantity] retain];
-	}
+    [self convertToQuantity:newQuantity];
 }
 
 - (void) setDoConversionToFullBoxes:(BOOL) newValue {
@@ -95,13 +105,20 @@ static int const STATUS_CANCEL = 4;
         doConversionToFullBoxes = newValue;
         
         // Perform conversion if necessary
-        NSDecimalNumber *newQuantity = [NSDecimalNumber decimalNumberWithDecimal:[quantity decimalValue]];
-        [self setQuantity:newQuantity];
+        NSDecimalNumber *convertValue = nil;
+        if (item.selectedUOM == UOMPrimary) {
+            convertValue = [quantityPrimary copy];
+        } else {
+            convertValue = [quantitySecondary copy];
+        }
+        
+        [self convertToQuantity:convertValue];
+        [convertValue release];
     }
 }
 
 #pragma mark -
-#pragma mark Conversion Methods
+#pragma mark Custom Accessors
 - (BOOL) isConversionNeeded {
     BOOL isConversionNeeded = NO;
     
@@ -115,45 +132,6 @@ static int const STATUS_CANCEL = 4;
     return isConversionNeeded;
 }
 
-- (NSNumber *) getQuantityInPieces {
-    if (item && 
-        item.conversion && 
-        item.piecesPerBox && 
-        [item.conversion compare: [NSDecimalNumber decimalNumberWithString:@"1.0"]] != NSOrderedSame) {
-        
-        // Get the number of pieces needed
-        NSDecimalNumberHandler *roundUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:0 
-                                                                                      raiseOnExactness:NO raiseOnOverflow:NO 
-                                                                                      raiseOnUnderflow:NO raiseOnDivideByZero:NO];
-        NSDecimalNumber *piecesNeeded = [[quantity decimalNumberByDividingBy:item.conversion] decimalNumberByRoundingAccordingToBehavior:roundUp];
-        
-        return piecesNeeded;
-    } 
-    
-    return nil;
-}
-
-- (NSNumber *) getQuantityInBoxes {    
-    if (item && 
-        item.conversion && 
-        item.piecesPerBox && 
-        [item.conversion compare: [NSDecimalNumber decimalNumberWithString:@"1.0"]] != NSOrderedSame) {
-        
-        // Get the number of pieces needed
-        NSDecimalNumberHandler *roundUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:0 
-                                                                                      raiseOnExactness:NO raiseOnOverflow:NO 
-                                                                                      raiseOnUnderflow:NO raiseOnDivideByZero:NO];
-        
-        NSDecimalNumber *piecesPerBox = [NSDecimalNumber decimalNumberWithDecimal:[item.piecesPerBox decimalValue]];
-        NSDecimalNumber *piecesNeeded = [NSDecimalNumber decimalNumberWithDecimal:[[self getQuantityInPieces] decimalValue]];
-        NSDecimalNumber *boxesNeeded = [[piecesNeeded decimalNumberByDividingBy:piecesPerBox] decimalNumberByRoundingAccordingToBehavior:roundUp];
-        
-        return boxesNeeded;
-    } 
-    
-    return nil;
-}
-
 - (NSNumber *) getPiecesPerBox {
     if (self.item == nil) {
         return nil;
@@ -162,6 +140,49 @@ static int const STATUS_CANCEL = 4;
     return self.item.piecesPerBox;
 }
 
+- (void) setSellingPriceFrom:(NSDecimalNumber *)discount {
+    if (discount) {
+        
+        if (item.selectedUOM == UOMPrimary) {
+            self.sellingPricePrimary = [self calcSellingPricePrimaryFrom:discount];
+        } else {
+            self.sellingPriceSecondary = [self calcSellingPriceSecondaryFrom:discount];
+        }
+    }
+}
+
+//=========================================================== 
+// - setSellingPricePrimary:
+//=========================================================== 
+- (void)setSellingPricePrimary:(NSDecimalNumber *)aSellingPricePrimary {
+    if (sellingPricePrimary != aSellingPricePrimary) {
+        [aSellingPricePrimary retain];
+        [sellingPricePrimary release];
+        sellingPricePrimary = aSellingPricePrimary;
+        
+        // Convert for selling price secondary
+        if ([self isConversionNeeded]) {
+            [sellingPriceSecondary release];
+            sellingPriceSecondary = [[aSellingPricePrimary decimalNumberByDividingBy:item.conversion] retain];
+        }
+    }
+}
+//=========================================================== 
+// - setSellingPriceSecondary:
+//=========================================================== 
+- (void)setSellingPriceSecondary:(NSDecimalNumber *)aSellingPriceSecondary {
+    if (sellingPriceSecondary != aSellingPriceSecondary) {
+        [aSellingPriceSecondary retain];
+        [sellingPriceSecondary release];
+        sellingPriceSecondary = aSellingPriceSecondary;
+        
+        // Convert for selling price primary
+        if ([self isConversionNeeded]) {
+            [sellingPricePrimary release];
+            sellingPricePrimary = [[aSellingPriceSecondary decimalNumberByMultiplyingBy:item.conversion] retain];
+        }
+    }
+}
 
 #pragma mark -
 #pragma mark Method implementations
@@ -174,10 +195,10 @@ static int const STATUS_CANCEL = 4;
 }
 
 - (BOOL) allowClose {
-    NSDecimalNumber *numberAvailableInStore = item.store.availability.available;
+    NSDecimalNumber *numberAvailableInStore = item.store.availability.availablePrimary;
     
     // If quantity is greater do not allow a close
-    if ([self.quantity compare:numberAvailableInStore] == NSOrderedDescending){
+    if ([self.quantityPrimary compare:numberAvailableInStore] == NSOrderedDescending){
         return NO;
     }
     
@@ -199,31 +220,44 @@ static int const STATUS_CANCEL = 4;
 #pragma mark -
 #pragma mark Order Item Calculations
 - (NSDecimalNumber *) calcLineRetailSubTotal {
-    NSDecimalNumber *retailTotal = [item.retailPrice decimalNumberByMultiplyingBy:quantity];
+    NSDecimalNumber *retailTotal = [item.retailPricePrimary decimalNumberByMultiplyingBy:quantityPrimary];
     
     return retailTotal;
 }
 
 - (NSDecimalNumber *) calcLineSubTotal {
-    NSDecimalNumber *lineTotal = [sellingPrice decimalNumberByMultiplyingBy:quantity];
+    NSDecimalNumber *lineTotal = [sellingPricePrimary decimalNumberByMultiplyingBy:quantityPrimary];
     
     return lineTotal;
 }
 
 - (NSDecimalNumber *) calcLineTax {
-    NSDecimalNumber *lineTax = [[item.taxRate decimalNumberByMultiplyingBy:sellingPrice] decimalNumberByMultiplyingBy:quantity];
+    NSDecimalNumber *lineTax = [[item.taxRate decimalNumberByMultiplyingBy:sellingPricePrimary] decimalNumberByMultiplyingBy:quantityPrimary];
+    
     return lineTax;
 }
 
--(NSDecimalNumber *) calcSellingPriceFrom:(NSDecimalNumber *)discount {
-    if (quantity == nil || 
-        [quantity compare:[NSDecimalNumber zero]] == NSOrderedSame ||
-        [quantity compare:[NSDecimalNumber zero]] == NSOrderedAscending) {
-        return sellingPrice;
+-(NSDecimalNumber *) calcSellingPricePrimaryFrom:(NSDecimalNumber *)discount {
+    if (quantityPrimary == nil || 
+        [quantityPrimary compare:[NSDecimalNumber zero]] == NSOrderedSame ||
+        [quantityPrimary compare:[NSDecimalNumber zero]] == NSOrderedAscending) {
+        return sellingPricePrimary;
     }
     
     // Calculate a new selling price
-    NSDecimalNumber *newSellingPrice = [sellingPrice  decimalNumberBySubtracting:[discount decimalNumberByDividingBy:quantity]];
+    NSDecimalNumber *newSellingPrice = [sellingPricePrimary  decimalNumberBySubtracting:[discount decimalNumberByDividingBy:quantityPrimary]];
+    return newSellingPrice;
+}
+
+-(NSDecimalNumber *) calcSellingPriceSecondaryFrom:(NSDecimalNumber *)discount {
+    if (quantitySecondary == nil || 
+        [quantitySecondary compare:[NSDecimalNumber zero]] == NSOrderedSame ||
+        [quantitySecondary compare:[NSDecimalNumber zero]] == NSOrderedAscending) {
+        return quantitySecondary;
+    }
+    
+    // Calculate a new selling price
+    NSDecimalNumber *newSellingPrice = [sellingPriceSecondary  decimalNumberBySubtracting:[discount decimalNumberByDividingBy:quantitySecondary]];
     return newSellingPrice;
 }
 
@@ -232,41 +266,180 @@ static int const STATUS_CANCEL = 4;
     return discount;
 }
 
-- (NSString *) getQuantityForDisplay {
-    NSDecimalNumber *displayQuantity = self.quantity;
-    
-    if ([self isConversionNeeded]) {
-        NSDecimalNumberHandler *roundingUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:2 
-                                                                                                      raiseOnExactness:NO raiseOnOverflow:NO 
-                                                                                                      raiseOnUnderflow:NO raiseOnDivideByZero:NO]; 
-        displayQuantity = [displayQuantity decimalNumberByRoundingAccordingToBehavior:roundingUp];
+#pragma mark -
+#pragma mark UOM toggle Support
+- (void) toggleUOM {
+    if (item) {
+        [item toggleUOM];
+    }
+}
+
+- (NSString *) getUOMForDisplay {
+    if (item) {
+        return [item getSelectedUOMForDisplay];
     }
     
-    return [NSString stringWithFormat:@"%@", displayQuantity];
+    return @"";
+}
+- (NSString *) getQuantityForDisplay {
+    NSDecimalNumber *displayQuantity = nil;
+    
+    if (item.selectedUOM == UOMPrimary) {
+        displayQuantity = quantityPrimary; 
+    } else {
+        displayQuantity = quantitySecondary;
+    }
+    
+    NSDecimalNumberHandler *roundingUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:2 
+                                                                                     raiseOnExactness:NO raiseOnOverflow:NO 
+                                                                                     raiseOnUnderflow:NO raiseOnDivideByZero:NO]; 
+    return [NSString stringWithFormat:@"%@", [displayQuantity decimalNumberByRoundingAccordingToBehavior:roundingUp]];
+}
+
+- (NSString *) getSellingPriceForDisplay {
+    NSDecimalNumber *displayPrice = nil;
+    
+    if (item.selectedUOM == UOMPrimary) {
+        displayPrice = sellingPricePrimary; 
+    } else {
+        displayPrice = sellingPriceSecondary;
+    }
+    
+    return [NSString formatDecimalNumberAsMoney: displayPrice];
 }
 
 #pragma mark -
-#pragma mark Private Methods
--(NSDecimalNumber *) convertQuantity: (NSDecimalNumber *) quantityToConvert {
+#pragma mark Private Methods (Conversion)
+- (void) convertToQuantity:(NSDecimalNumber *)productQuantity {
+    NSString *selectedUOM = nil;
+    NSDecimalNumber *quantityForConversion = nil;
+    
+    if (item.selectedUOM == UOMPrimary) {
+        selectedUOM = item.primaryUnitOfMeasure;
+    } else {
+        selectedUOM = item.secondaryUnitOfMeasure;
+    }
+    
+    quantityForConversion = [self adjustQuantity:productQuantity forUOM:selectedUOM];
+    
+    if (![self isConversionNeeded]) {
+        self.quantityPrimary = quantityForConversion;
+        self.quantitySecondary = quantityForConversion;
+    } else if ([item.primaryUnitOfMeasure isEqualToString:UOM_EACH]){
+        if (item.selectedUOM == UOMPrimary) {
+            self.quantityPrimary = [self adjustQuantity:[self convertToBoxesWithPieces:quantityForConversion] forUOM:selectedUOM];
+            self.quantitySecondary = [self convertToSquareFeet:quantityPrimary];
+        } else {
+            self.quantityPrimary = [self adjustQuantity:[self convertToPieces:quantityForConversion] forUOM:item.primaryUnitOfMeasure];
+            self.quantitySecondary = [self convertToSquareFeet:quantityPrimary];
+        }
+    } else if ([item.primaryUnitOfMeasure isEqualToString:UOM_COVERAGE] || [item.primaryUnitOfMeasure isEqualToString:UOM_SQFT]) {
+        if (item.selectedUOM == UOMPrimary) {
+            self.quantityPrimary = [self convertToSquareFeet:quantityForConversion];
+            self.quantitySecondary = [self adjustQuantity:[self convertToPieces:quantityForConversion] forUOM:item.secondaryUnitOfMeasure];
+        } else {
+            self.quantitySecondary = [self adjustQuantity:[self convertToBoxesWithPieces:quantityForConversion] forUOM:item.secondaryUnitOfMeasure];
+            self.quantityPrimary = [self convertToSquareFeet:quantitySecondary];
+        }
+    } else {
+        // Straight conversion (NOTE:  Based on feedback from The Tile Shop, this should not happen, but I am putting it here for completeness).
+        if (item.selectedUOM == UOMPrimary) {
+            self.quantityPrimary = quantityForConversion;
+            self.quantitySecondary = [self adjustQuantity:[quantityForConversion decimalNumberByMultiplyingBy:item.conversion] forUOM:selectedUOM];
+        } else {
+            self.quantityPrimary = [self adjustQuantity:[quantityForConversion decimalNumberByDividingBy:item.conversion] forUOM:item.primaryUnitOfMeasure];
+            self.quantitySecondary = quantityForConversion;
+        }
+
+    }
+}
+
+/**
+ * Determines if initial rounding is required.  UOMs for box, each, set, carton needs to be rounded up.
+ * If the uom is sq ft, cv, lf, or qy do not perform any rounding.
+ */ 
+- (NSDecimalNumber *) adjustQuantity: (NSDecimalNumber *) quantityToConvert forUOM: (NSString *) uom {
+    
+    if ([uom isEqualToString:UOM_EACH] || [uom isEqualToString:UOM_BOX] || [uom isEqualToString:UOM_CARTON] || [uom isEqualToString:UOM_SET]) {
+        // Get the number of pieces needed
+        NSDecimalNumberHandler *roundUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:0 
+                                                                                      raiseOnExactness:NO raiseOnOverflow:NO 
+                                                                                      raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+        return [quantityToConvert decimalNumberByRoundingAccordingToBehavior:roundUp];
+    }
+         
+     return [[quantityToConvert copy] autorelease];
+}
+
+- (NSDecimalNumber *) convertToBoxesWithPieces:(NSDecimalNumber *) quantityToConvert {
     BOOL isConversionNeeded = [self isConversionNeeded];
-        
+    
     if (!isConversionNeeded) {
         return quantityToConvert;
     }
     
     // Get the number of pieces needed
     NSDecimalNumberHandler *roundUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:0 
-                                                                                       raiseOnExactness:NO raiseOnOverflow:NO 
-                                                                                       raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+                                                                                  raiseOnExactness:NO raiseOnOverflow:NO 
+                                                                                  raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+    
+    // Do we convert to full boxes or not ??
+    NSDecimalNumber *piecesNeeded = [quantityToConvert decimalNumberByRoundingAccordingToBehavior:roundUp];
+
+    if (!doConversionToFullBoxes) {
+        return piecesNeeded;
+    }
+    
+    NSDecimalNumber *piecesPerBox = [NSDecimalNumber decimalNumberWithDecimal:[item.piecesPerBox decimalValue]]; 
+    NSDecimalNumber *boxesNeeded = [[piecesNeeded decimalNumberByDividingBy:piecesPerBox] decimalNumberByRoundingAccordingToBehavior:roundUp];
+    return [boxesNeeded decimalNumberByMultiplyingBy:piecesPerBox];
+}
+
+
+- (NSDecimalNumber *) convertToPieces:(NSDecimalNumber *) quantityToConvert {
+    BOOL isConversionNeeded = [self isConversionNeeded];
+    
+    if (!isConversionNeeded) {
+        return quantityToConvert;
+    }
+    
+    // Get the number of pieces needed
+    NSDecimalNumberHandler *roundUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:0 
+                                                                                  raiseOnExactness:NO raiseOnOverflow:NO 
+                                                                                  raiseOnUnderflow:NO raiseOnDivideByZero:NO];
     
     // Do we convert to full boxes or not ??
     if (!doConversionToFullBoxes) {
-       NSDecimalNumber *piecesNeeded = [[quantityToConvert decimalNumberByDividingBy:item.conversion] decimalNumberByRoundingAccordingToBehavior:roundUp];
-       return [piecesNeeded decimalNumberByMultiplyingBy:item.conversion];
+        NSDecimalNumber *piecesNeeded = [[quantityToConvert decimalNumberByDividingBy:item.conversion] decimalNumberByRoundingAccordingToBehavior:roundUp];
+        return piecesNeeded;
     }
     
     NSDecimalNumber *piecesPerBox = [NSDecimalNumber decimalNumberWithDecimal:[item.piecesPerBox decimalValue]];                                                                                                                                                                  
     NSDecimalNumber *piecesNeeded = [[quantityToConvert decimalNumberByDividingBy:item.conversion] decimalNumberByRoundingAccordingToBehavior:roundUp];
+    NSDecimalNumber *boxesNeeded = [[piecesNeeded decimalNumberByDividingBy:piecesPerBox] decimalNumberByRoundingAccordingToBehavior:roundUp];
+    return [boxesNeeded decimalNumberByMultiplyingBy:piecesPerBox];
+}
+
+- (NSDecimalNumber *) convertToSquareFeet:(NSDecimalNumber *) quantityInPieces {
+    BOOL isConversionNeeded = [self isConversionNeeded];
+    
+    if (!isConversionNeeded) {
+        return quantityInPieces;
+    }
+    
+    // Get the number of pieces needed
+    NSDecimalNumberHandler *roundUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:0 
+                                                                                  raiseOnExactness:NO raiseOnOverflow:NO 
+                                                                                  raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+    
+    // Do we convert to full boxes or not ??
+    if (!doConversionToFullBoxes) {
+        NSDecimalNumber *piecesNeeded = [quantityInPieces decimalNumberByRoundingAccordingToBehavior:roundUp];
+        return [piecesNeeded decimalNumberByMultiplyingBy:item.conversion];
+    }
+    
+    NSDecimalNumber *piecesPerBox = [NSDecimalNumber decimalNumberWithDecimal:[item.piecesPerBox decimalValue]];                                                                                                                                                                  
+    NSDecimalNumber *piecesNeeded = [quantityInPieces decimalNumberByRoundingAccordingToBehavior:roundUp];
     NSDecimalNumber *boxesNeeded = [[piecesNeeded decimalNumberByDividingBy:piecesPerBox] decimalNumberByRoundingAccordingToBehavior:roundUp];
     return [[boxesNeeded decimalNumberByMultiplyingBy:piecesPerBox] decimalNumberByMultiplyingBy:item.conversion];
 }

@@ -727,12 +727,17 @@
 	
 	[orderTable reloadData];
     
+    self.logoutBarButton.enabled = YES;
+    
 	[self calculateOrder];
     
 }
 
 - (void) cancelAddItem:(AddItemView *)addItemView {
 	[addItemView removeFromSuperview];
+    
+    self.logoutBarButton.enabled = YES;
+    
 	[linea addDelegate:self];
 }
 
@@ -765,6 +770,9 @@
         } else {
             [overlay setProductItemList:foundItems];
         }
+        
+        // Disable the suspend button
+        self.logoutBarButton.enabled = NO;
         
         [overlay release];
     } else {

@@ -27,8 +27,8 @@
     if (orderItem && orderItem.item) {
         itemId = [orderItem.item.itemId retain];
         priceGroupId = [orderItem.item.priceGroupId retain];
-        retailPrice = [orderItem.item.retailPrice retain];
-        sellingPrice = [orderItem.sellingPrice retain];
+        retailPrice = [orderItem.item.retailPricePrimary retain];
+        sellingPrice = [orderItem.sellingPricePrimary retain];
     }
     
     if (theManagerInfo) {

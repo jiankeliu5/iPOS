@@ -47,6 +47,13 @@ static int const ORDER_TYPE_CLOSED = 4;
 #pragma Accessor Methods
 - (void) setAsQuote {
     orderTypeId = [NSNumber numberWithInt:ORDER_TYPE_QUOTE];
+    
+    // Open all order items
+    if (orderItemList && [orderItemList count] > 0) {
+        for (OrderItem *item in orderItemList) {
+            [item setStatusToOpen];
+        }
+    }
 }
 
 - (NSNumber *) getOrderTypeId {
@@ -139,8 +146,6 @@ static int const ORDER_TYPE_CLOSED = 4;
         // Set the selling price to the retail price
         // Default the status to 1 (Open)
         [orderItem setStatusToOpen];
-        orderItem.sellingPrice = [[item.retailPrice copy] autorelease];    
-        
     }
 }
 
@@ -222,11 +227,7 @@ static int const ORDER_TYPE_CLOSED = 4;
         }
     }
     
-    // Round the tax up
-    NSDecimalNumberHandler *roundUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:2 
-                                                                                  raiseOnExactness:NO raiseOnOverflow:NO 
-                                                                                  raiseOnUnderflow:NO raiseOnDivideByZero:NO];
-    return [taxTotal decimalNumberByRoundingAccordingToBehavior:roundUp];        
+    return taxTotal;        
 }
 
 - (NSDecimalNumber *) calcOrderDiscountTotal {

@@ -8,7 +8,9 @@
 
 #import "CartItemDetailViewController.h"
 #import "UIViewController+ViewControllerLayout.h"
+#import "UIView+ViewLayout.h"
 #import "NSString+StringFormatters.h"
+
 #import "AlertUtils.h"
 #import "PriceAdjustViewController.h"
 
@@ -27,12 +29,16 @@
 #define CONVERT_TO_BOX_LABEL_WIDTH 185.0f
 #define CONVERT_TO_BOX_SWITCH_HEIGHT 27.0f
 
-
 #define BUTTON_HEIGHT 40.0f
 #define BUTTON_WIDTH 212.0f
 #define BUTTON_SPACE 10.0f
 
+#define UOM_EXCHANGE_BUTTON_WIDTH 37.0f
+#define UOM_EXCHANGE_BUTTON_HEIGHT 37.0f
+
 @interface CartItemDetailViewController()
+- (void) switchSelectedUOM: (id) selector;
+
 - (void) handleConvertToBoxesSwitch: (id) sender;
 
 - (void) handleDeleteButton:(id)sender;
@@ -59,7 +65,8 @@
 
 	// Set up the right side button if desired, edit button for example.
 	//[[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
-	
+	nextRotationDegreesForExchangeButton = 180;
+    
 	quantityFormatter = [[NSNumberFormatter alloc] init];
 	[quantityFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
 	[quantityFormatter setGeneratesDecimalNumbers:YES];
@@ -75,6 +82,7 @@
 		return nil;
 	}
 	
+    nextRotationDegreesForExchangeButton = 180;
 	orderCart = [OrderCart sharedInstance];
 	[self setOrderItem:editOrderItem];
 	
@@ -112,6 +120,16 @@
 	productItemView.backgroundColor = [UIColor colorWithWhite:0.70f alpha:1.0f];
 	
 	// Where we are in the productItem view 
+    if (uomExchangeButton == nil) {
+        uomExchangeButton = [[UIButton alloc] initWithFrame:CGRectMake(productItemView.bounds.size.width - UOM_EXCHANGE_BUTTON_WIDTH, 0.0f, UOM_EXCHANGE_BUTTON_HEIGHT, UOM_EXCHANGE_BUTTON_HEIGHT)];
+        [uomExchangeButton setImage:[UIImage imageNamed:@"exchange.png"] forState:UIControlStateNormal];
+        [uomExchangeButton addTarget:self action:@selector(switchSelectedUOM:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [productItemView addSubview:uomExchangeButton];
+        uomExchangeButton.hidden = NO;
+        [uomExchangeButton release];
+    }
+
 	CGFloat vy = LABEL_HEIGHT / 2.0f;
 	skuLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, vy, productItemView.bounds.size.width, LABEL_HEIGHT)];
 	skuLabel.backgroundColor = [UIColor clearColor];
@@ -197,7 +215,7 @@
     
     centerToText = floorf((CONVERT_TO_BOX_SWITCH_HEIGHT - LABEL_HEIGHT) / 2.0f);
     convertToBoxesLabel = [[UILabel alloc] initWithFrame:CGRectMake(TEXT_FIELD_START_X, vy+centerToText, CONVERT_TO_BOX_LABEL_WIDTH, LABEL_HEIGHT)];
-    convertToBoxesLabel.text = @"Convert To Full Boxes";
+    convertToBoxesLabel.text = @"Full Boxes";
     convertToBoxesLabel.backgroundColor = [UIColor clearColor];
 	convertToBoxesLabel.textColor = [UIColor blackColor];
 	convertToBoxesLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
@@ -316,7 +334,7 @@
 		if (newQuantity != nil) {
             // Has the value even changed??
             if (![textField.text isEqualToString:[self.orderItem getQuantityForDisplay]]) {
-                self.orderItem.quantity = newQuantity;
+                [self.orderItem setQuantity:newQuantity];
                 
                 // Can I still attempt a close of item based on current item availability when the item was retrieved
                 // for the order 
@@ -370,10 +388,10 @@
 	if (self.orderItem != nil) {
 		skuLabel.text = self.orderItem.item.sku;
 		descLabel.text = self.orderItem.item.description;
-		priceLabel.text = [NSString stringWithFormat:@"%@ / %@", [NSString formatDecimalNumberAsMoney:self.orderItem.sellingPrice], self.orderItem.item.primaryUnitOfMeasure];
+		priceLabel.text = [NSString stringWithFormat:@"%@ / %@", [self.orderItem getSellingPriceForDisplay], [self.orderItem getUOMForDisplay]];
 		quantityField.text = [self.orderItem getQuantityForDisplay];
-		unitOfMeasureLabel.text = self.orderItem.item.primaryUnitOfMeasure;
-		NSDecimalNumber *lineTotal = [self.orderItem.sellingPrice decimalNumberByMultiplyingBy:self.orderItem.quantity];
+		unitOfMeasureLabel.text = [self.orderItem getUOMForDisplay];
+		NSDecimalNumber *lineTotal = [self.orderItem calcLineSubTotal];
 		itemTotalLabel.text = [NSString formatDecimalNumberAsMoney:lineTotal];
         
         // De we hide or show the default to box (only when item needs conversion)
@@ -388,7 +406,31 @@
             convertToBoxesLabel.hidden = YES;
             convertToBoxesSwitch.hidden = YES;
         }
+        
+        // Do we show or hide exchange button
+        if ([orderItem.item isUOMConversionRequired]) {
+            uomExchangeButton.hidden = NO;
+        } else {
+            uomExchangeButton.hidden = YES;  
+        }
 	}
 }
+
+#pragma mark -
+#pragma mark Private Methods
+-(void) switchSelectedUOM:(id)selector {
+    [uomExchangeButton rotateView:nextRotationDegreesForExchangeButton animated:YES];    
+    
+    if (nextRotationDegreesForExchangeButton == 180) {
+        nextRotationDegreesForExchangeButton = 0;
+    } else {
+        nextRotationDegreesForExchangeButton = 180;
+    }
+    
+    // Toggle the item
+    [orderItem.item toggleUOM];
+    [self updateViewLayout];
+}
+
 
 @end

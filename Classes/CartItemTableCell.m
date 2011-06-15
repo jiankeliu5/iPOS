@@ -107,14 +107,14 @@
 	NSString *descText = [NSString stringWithFormat:@"%@  %@  %@ / %@",
 						  orderItem.item.sku,
 						  orderItem.item.description,
-						  [NSString formatDecimalNumberAsMoney: orderItem.sellingPrice],
-						  orderItem.item.primaryUnitOfMeasure];
+						  [orderItem getSellingPriceForDisplay],
+						  [orderItem getUOMForDisplay]];
 	descriptionLabel.text = descText;
 	
-	NSString *quantityText = [NSString stringWithFormat:@"%@ %@", [orderItem getQuantityForDisplay], orderItem.item.primaryUnitOfMeasure];
+	NSString *quantityText = [NSString stringWithFormat:@"%@ %@", [orderItem getQuantityForDisplay], [orderItem getUOMForDisplay]];
 	quantityLabel.text = quantityText;
 	
-	lineCostLabel.text = [NSString formatDecimalNumberAsMoney: [orderItem.sellingPrice decimalNumberByMultiplyingBy:orderItem.quantity]];
+	lineCostLabel.text = [NSString formatDecimalNumberAsMoney: [orderItem calcLineSubTotal]];
 	
 	self.deleteChecked = orderItem.shouldDelete;
 	self.closeChecked = orderItem.shouldClose || [orderItem isClosed];

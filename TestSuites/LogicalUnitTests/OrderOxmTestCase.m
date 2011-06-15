@@ -54,7 +54,8 @@
     item.piecesPerBox = [NSNumber numberWithInt: 12];
     item.primaryUnitOfMeasure = @"EA";
     item.secondaryUnitOfMeasure = @"EA";
-    item.retailPrice = [NSDecimalNumber decimalNumberWithString:@"3.75"];
+    item.retailPricePrimary = [NSDecimalNumber decimalNumberWithString:@"3.75"];
+    item.retailPriceSecondary = [NSDecimalNumber decimalNumberWithString:@"3.75"];
     item.standardCost = [NSDecimalNumber decimalNumberWithString:@"2.70"]; 
     item.stockingCode = @"S";
     item.taxRate = [NSDecimalNumber decimalNumberWithString:@"0.7"];
@@ -85,8 +86,8 @@
                   "<OrderDetail><Line><Conversion>1</Conversion><DefaultToBox>true</DefaultToBox><ItemID>1414</ItemID><ItemNumber>232323</ItemNumber>"
                   "<ItemDescription>Some product</ItemDescription><ItemStatusCode>S</ItemStatusCode><ItemTypeID>1</ItemTypeID>"
                   "<LineID>1</LineID><OrderDetailsStatusID>1</OrderDetailsStatusID><PiecesPerBox>12</PiecesPerBox><PrimaryUOM>EA</PrimaryUOM>"
-                  "<QuantityOrderedPrimary>24.5</QuantityOrderedPrimary><RetailPricePrimary>3.75</RetailPricePrimary>"
-                  "<SalesPersonID>1111</SalesPersonID><SecondaryUOM>EA</SecondaryUOM><SellingPricePrimary>3.75</SellingPricePrimary>"
+                  "<QuantityOrderedPrimary>25</QuantityOrderedPrimary><QuantityOrderedSecondary>25</QuantityOrderedSecondary><RetailPricePrimary>3.75</RetailPricePrimary>"
+                  "<SalesPersonID>1111</SalesPersonID><SecondaryUOM>EA</SecondaryUOM><SellingPricePrimary>3.75</SellingPricePrimary><SellingPriceSecondary>3.75</SellingPriceSecondary>"
                   "<StdCost>2.7</StdCost><StockingCode>S</StockingCode><StoreID>1234</StoreID><TaxExempt>false</TaxExempt>"
                   "<TaxRate>0.7</TaxRate></Line></OrderDetail></OrderClass>"], xml);
 }

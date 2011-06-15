@@ -66,12 +66,12 @@
 	if (distributionCenter != distCenter) {
 		[distributionCenter release];
 		distributionCenter = [distCenter retain];
-        
-        if ([self.subviews count] > 0) {
-            [self updateDisplayValues];
-            [self setNeedsDisplay];
-        }
 	}
+    
+    if ([self.subviews count] > 0) {
+        [self updateDisplayValues];
+        [self setNeedsDisplay];
+    }
 }
 
 // We don't do a redisplay on the individual setters just due to efficiency
@@ -114,8 +114,8 @@
 // We do a setNeedsDisplay here because we set them all in one go.
 - (void) setStoreAvailabilityAtStoreId:(NSNumber *)sId withAvailable:(ItemAvailability *)sAvail {
 	[self setStoreId:sId];
-	[self setStoreAvailability:sAvail.available];
-	[self setStoreOnHand:sAvail.onHand];
+	[self setStoreAvailability:[sAvail getSelectedAvailability]];
+	[self setStoreOnHand:[sAvail getSelectedOnHand]];
 	
     if ([self.subviews count] > 0) {
         [self updateDisplayValues];
@@ -192,12 +192,16 @@
 			[idText appendString:@"*"];
 		}
 		locationIdLabel.text = idText;
-		locationAvailableLabel.text = [NSString stringWithFormat:@"%@ available", [availableFormatter stringFromNumber:self.distributionCenter.availability.available]];
-		NSString *onHandText = [NSString stringWithFormat:@"%@ on hand", [availableFormatter stringFromNumber:self.distributionCenter.availability.onHand]];
+        
+        
+        NSDecimalNumber *selectedAvailability = [self.distributionCenter.availability getSelectedAvailability];
+        NSDecimalNumber *selectedOnHand = [self.distributionCenter.availability getSelectedOnHand];
+		locationAvailableLabel.text = [NSString stringWithFormat:@"%@ available", [availableFormatter stringFromNumber:selectedAvailability]];
+		NSString *onHandText = [NSString stringWithFormat:@"%@ on hand", [availableFormatter stringFromNumber:selectedOnHand]];
 		locationOnHandLabel.text = onHandText;
 		
-		if ([self.distributionCenter.availability.available compare:[NSDecimalNumber zero]] == NSOrderedSame
-                || [self.distributionCenter.availability.available compare:[NSDecimalNumber zero]] == NSOrderedAscending) {
+		if ([selectedAvailability compare:[NSDecimalNumber zero]] == NSOrderedSame
+                || [selectedAvailability compare:[NSDecimalNumber zero]] == NSOrderedAscending) {
 			if (self.distributionCenter.availability.etaDateAsString != nil && 
 				    [[self.distributionCenter.availability.etaDateAsString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length] > 0) {
 				NSString *etaText = [NSString stringWithFormat:@" - ETA %@", self.distributionCenter.availability.etaDateAsString];

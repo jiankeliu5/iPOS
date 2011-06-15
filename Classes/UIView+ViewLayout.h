@@ -20,4 +20,7 @@
 - (void) applyShineGradientToBackgroundWithColor:(UIColor *)color;
 - (void) applyGradientToBackgroundWithStartColor:(UIColor *)startColor endColor:(UIColor *)endColor;
 
+#pragma mark Transformation Functions
+- (void) rotateView:(NSInteger) degrees animated:(BOOL) isAnimated;
+
 @end

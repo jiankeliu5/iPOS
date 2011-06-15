@@ -40,20 +40,20 @@
     item.secondaryUnitOfMeasure = @"EA";
     item.conversion = [NSDecimalNumber decimalNumberWithString:@"1.00"];
     item.priceGroupId = [NSNumber numberWithInt:123];
-    item.retailPrice = [NSDecimalNumber decimalNumberWithString:@"18.99"];
+    item.retailPricePrimary = [NSDecimalNumber decimalNumberWithString:@"18.99"];
     item.standardCost = [NSDecimalNumber decimalNumberWithString:@"3.99"];
     item.taxRate = [NSDecimalNumber decimalNumberWithString:@"0.7"];
     item.taxExempt = NO;
     
     // Initialize the distribution center
     dc1.dcId = [NSNumber numberWithInt:801];
-    dc1.availability.available = [NSDecimalNumber decimalNumberWithString:@"1212"];
-    dc1.availability.onHand = [NSDecimalNumber decimalNumberWithString:@"1000"];
+    dc1.availability.availablePrimary = [NSDecimalNumber decimalNumberWithString:@"1212"];
+    dc1.availability.onHandPrimary = [NSDecimalNumber decimalNumberWithString:@"1000"];
     dc1.isPrimary = YES;
     
     dc2.dcId = [NSNumber numberWithInt:806];
-    dc2.availability.available = [NSDecimalNumber decimalNumberWithString:@"0"];
-    dc2.availability.onHand = [NSDecimalNumber decimalNumberWithString:@"0"];
+    dc2.availability.availablePrimary = [NSDecimalNumber decimalNumberWithString:@"0"];
+    dc2.availability.onHandPrimary = [NSDecimalNumber decimalNumberWithString:@"0"];
     dc2.availability.etaDateAsString = @"JAN 24 2011";
     dc2.isPrimary = NO;
     
@@ -64,8 +64,8 @@
     [dcList addObject: dc2];
     
     store.storeId = [NSNumber numberWithInt: 1200];
-    store.availability.available = [NSDecimalNumber decimalNumberWithString: @"13"];
-    store.availability.onHand = [NSDecimalNumber decimalNumberWithString:@"10"];
+    store.availability.availablePrimary = [NSDecimalNumber decimalNumberWithString: @"13"];
+    store.availability.onHandPrimary = [NSDecimalNumber decimalNumberWithString:@"10"];
     
     item.store = store;
     item.distributionCenterList = [[dcList copy] autorelease];

@@ -51,10 +51,12 @@ static NSString * const ORDER_LINEITEM_XML = @""
             @"${priceAuthorizationXml}"
             @"<PrimaryUOM>%@</PrimaryUOM>"
             @"<QuantityOrderedPrimary>%@</QuantityOrderedPrimary>"
+            @"<QuantityOrderedSecondary>%@</QuantityOrderedSecondary>"
             @"<RetailPricePrimary>%@</RetailPricePrimary>"
             @"<SalesPersonID>%@</SalesPersonID>"
             @"<SecondaryUOM>%@</SecondaryUOM>"
             @"<SellingPricePrimary>%@</SellingPricePrimary>"
+            @"<SellingPriceSecondary>%@</SellingPriceSecondary>"
             @"<StdCost>%@</StdCost>"
             @"<StockingCode>%@</StockingCode>"
             @"<StoreID>%@</StoreID>"
@@ -170,8 +172,10 @@ static NSString * const ORDER_LINEITEM_XML = @""
     
     NSString *orderDetailsStatus = nil;
     NSString *lineNumber = nil;
-    NSString *quantity = nil;
-    NSString *sellingPrice = nil;
+    NSString *quantityPrimary = nil;
+    NSString *quantitySecondary = nil;
+    NSString *sellingPricePrimary = nil;
+    NSString *sellingPriceSecondary = nil;
     
     NSString *conversion = nil;
     NSString *defaultToBox = nil;
@@ -199,8 +203,10 @@ static NSString * const ORDER_LINEITEM_XML = @""
             for (OrderItem *orderItem in items) {
                 orderDetailsStatus = @"1";
                 lineNumber = @"0";
-                quantity = @"0";
-                sellingPrice = @"";
+                quantityPrimary = @"0";
+                quantitySecondary = @"0";
+                sellingPricePrimary = @"";
+                sellingPriceSecondary = @"";
                 conversion = @"0";
                 defaultToBox = @"false";
                 itemId = @"0";
@@ -225,11 +231,18 @@ static NSString * const ORDER_LINEITEM_XML = @""
                 if (orderItem.lineNumber) {
                     lineNumber = [NSString stringWithFormat: @"%@", orderItem.lineNumber];
                 }
-                if (orderItem.quantity) {
-                    quantity = [NSString stringWithFormat: @"%@", orderItem.quantity];
+                if (orderItem.quantityPrimary) {
+                    quantityPrimary = [NSString stringWithFormat: @"%@", orderItem.quantityPrimary];
                 }
-                if (orderItem.sellingPrice) {
-                    sellingPrice = [NSString formatDecimalNumber:orderItem.sellingPrice toScale:2];                }
+                if (orderItem.quantitySecondary) {
+                    quantitySecondary = [NSString stringWithFormat: @"%@", orderItem.quantitySecondary];
+                }
+                if (orderItem.sellingPricePrimary) {
+                    sellingPricePrimary = [NSString stringWithFormat: @"%@", orderItem.sellingPricePrimary];    
+                }
+                if (orderItem.sellingPriceSecondary) {
+                    sellingPriceSecondary = [NSString stringWithFormat: @"%@", orderItem.sellingPriceSecondary];    
+                }
                 if (orderItem.item.conversion) {
                     conversion = [NSString stringWithFormat: @"%@", orderItem.item.conversion];
                 }
@@ -260,8 +273,8 @@ static NSString * const ORDER_LINEITEM_XML = @""
                 if (orderItem.item.secondaryUnitOfMeasure) {
                     secondaryUom = orderItem.item.secondaryUnitOfMeasure;
                 }
-                if (orderItem.item.retailPrice) {
-                    retailPrice = [NSString formatDecimalNumber:orderItem.item.retailPrice toScale:2];
+                if (orderItem.item.retailPricePrimary) {
+                    retailPrice = [NSString stringWithFormat: @"%@", orderItem.item.retailPricePrimary]; 
                 }
                 if (order.salesPersonEmployeeId) {
                     salepersonEmpId = [NSString stringWithFormat: @"%@", order.salesPersonEmployeeId];
@@ -283,8 +296,8 @@ static NSString * const ORDER_LINEITEM_XML = @""
                 }
                 
                 lineItemXml = [lineItemXml stringByAppendingFormat:ORDER_LINEITEM_XML, conversion, defaultToBox, itemId, itemNumber, itemDescription, itemStatusCode, itemTypeId, 
-                               lineNumber, orderDetailsStatus, piecesPerBox, primaryUom, quantity, retailPrice, salepersonEmpId,
-                               secondaryUom, sellingPrice, stdCost, stockingCode, storeId, taxExempt, taxRate];
+                               lineNumber, orderDetailsStatus, piecesPerBox, primaryUom, quantityPrimary, quantitySecondary, retailPrice, salepersonEmpId,
+                               secondaryUom, sellingPricePrimary, sellingPriceSecondary, stdCost, stockingCode, storeId, taxExempt, taxRate];
                                
                 // Is there an authorization ID for selling price?
                 if (orderItem.priceAuthorizationId) {

@@ -427,7 +427,7 @@ NSString * const SIGNATURE_AS_JPG = @"jpg";
         pixelsGL = nil;
     }
     
-    if (pixels) {
+    if (pixels != nil) {
         free(pixels);
         pixels = nil;
     }

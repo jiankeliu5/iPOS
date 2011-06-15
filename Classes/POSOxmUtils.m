@@ -60,15 +60,20 @@
     }
     
     NSNumber *storeId = [parentXmlElement elementNumberValue:@"StoreID"];
-    NSDecimalNumber *available = [parentXmlElement elementDecimalValue:@"StoreAvailability"];
-    NSDecimalNumber *onHand = [parentXmlElement elementDecimalValue:@"StoreOnHand"];
+    NSDecimalNumber *availablePrimary = [parentXmlElement elementDecimalValue:@"StoreAvailabilityPrimary"];
+    NSDecimalNumber *onHandPrimary = [parentXmlElement elementDecimalValue:@"StoreOnHandPrimary"];
+    NSDecimalNumber *availableSecondary = [parentXmlElement elementDecimalValue:@"StoreAvailabilitySecondary"];
+    NSDecimalNumber *onHandSecondary = [parentXmlElement elementDecimalValue:@"StoreOnHandSecondary"];
+
     
     Store *store = [[[Store alloc] init] autorelease];
     ItemAvailability *storeAvailability = [[[ItemAvailability alloc] init] autorelease];
     
     store.storeId = storeId;
-    storeAvailability.available = available;
-    storeAvailability.onHand = onHand;
+    storeAvailability.availablePrimary = availablePrimary;
+    storeAvailability.availableSecondary = availableSecondary;
+    storeAvailability.onHandPrimary = onHandPrimary;
+    storeAvailability.onHandSecondary = onHandSecondary;
     store.availability = storeAvailability;
     
     return store;
@@ -92,8 +97,11 @@
         dc.dcId = [node elementNumberValue:@"dcID"];
         dc.isPrimary = [node elementBoolValue:@"primary"];
         
-        availability.available = [node elementDecimalValue:@"availability"];
-        availability.onHand = [node elementDecimalValue:@"onHand"];
+        availability.availablePrimary = [node elementDecimalValue:@"availabilityPrimary"];
+        availability.onHandPrimary = [node elementDecimalValue:@"onHandPrimary"];
+        availability.availableSecondary = [node elementDecimalValue:@"availabilitySecondary"];
+        availability.onHandSecondary = [node elementDecimalValue:@"onHandSecondary"];
+
         availability.etaDateAsString = [node elementStringValue:@"eta"];
         
         availability.item = item;

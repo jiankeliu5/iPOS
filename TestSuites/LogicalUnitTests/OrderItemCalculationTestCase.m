@@ -23,15 +23,16 @@
     ProductItem *item = [[[ProductItem alloc] init] autorelease];
     
     item.defaultToBox = YES;
+    item.selectedUOM = UOMSecondary;
     item.conversion = [NSDecimalNumber decimalNumberWithString:@"2.2579095"];
     item.piecesPerBox = [NSNumber numberWithInt:6];
-    item.primaryUnitOfMeasure = @"CV";
-    item.secondaryUnitOfMeasure = @"EA";
+    item.primaryUnitOfMeasure = @"EA";
+    item.secondaryUnitOfMeasure = @"CV";
     
     orderItem = [[[OrderItem alloc] initWithItem:item AndQuantity:[NSDecimalNumber decimalNumberWithString:@"200"]] autorelease];
     
-    NSString *quantityAsStr = [NSString stringWithFormat:@"Expected to be equal to:  %@", orderItem.quantity];
-    STAssertTrue ([orderItem.quantity compare:[NSDecimalNumber decimalNumberWithString:@"203.211855"]] == NSOrderedSame, quantityAsStr);
+    NSString *quantityAsStr = [NSString stringWithFormat:@"Expected to be equal to:  %@", orderItem.quantityPrimary];
+    STAssertTrue ([orderItem.quantitySecondary compare:[NSDecimalNumber decimalNumberWithString:@"203.211855"]] == NSOrderedSame, quantityAsStr);
 }
 
 - (void) testQuantityNoConversion {
@@ -45,8 +46,8 @@
     
     orderItem = [[[OrderItem alloc] initWithItem:item AndQuantity:[NSDecimalNumber decimalNumberWithString:@"200"]] autorelease];
     
-    NSString *quantityAsStr = [NSString stringWithFormat:@"Expected to be equal to:  %@", orderItem.quantity];
-    STAssertTrue ([orderItem.quantity compare:[NSDecimalNumber decimalNumberWithString:@"200"]] == NSOrderedSame, quantityAsStr);
+    NSString *quantityAsStr = [NSString stringWithFormat:@"Expected to be equal to:  %@", orderItem.quantityPrimary];
+    STAssertTrue ([orderItem.quantityPrimary compare:[NSDecimalNumber decimalNumberWithString:@"200"]] == NSOrderedSame, quantityAsStr);
     
 }
 

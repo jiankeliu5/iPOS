@@ -49,12 +49,20 @@
     item.primaryUnitOfMeasure = [root elementStringValue:@"PrimaryUOM"];
     item.secondaryUnitOfMeasure = [root elementStringValue:@"SecondaryUOM"];
     item.priceGroupId = [root elementNumberValue:@"PriceGroupID"];
-    item.retailPrice = [root elementDecimalValue:@"RetailPrice"];
+    item.retailPricePrimary = [root elementDecimalValue:@"RetailPricePrimary"];
+    item.retailPriceSecondary = [root elementDecimalValue:@"RetailPriceSecondary"];
     item.standardCost = [root elementDecimalValue:@"StdCost"];
     item.stockingCode = [root elementStringValue:@"StockingCode"];
     item.taxExempt = [root elementBoolValue:@"TaxExempt"];
     item.taxRate = [root elementDecimalValue:@"TaxRate"];
     item.vendorName = [root elementStringValue:@"VendorName"];
+    
+    // Determine selected UOM.  If there is a conversion select the second UOM as the default
+    if (![item.primaryUnitOfMeasure isEqualToString:item.secondaryUnitOfMeasure] && [item.conversion compare: [NSDecimalNumber decimalNumberWithString:@"1.0"]] != NSOrderedSame) {
+        item.selectedUOM = UOMSecondary;
+    } else {
+        item.selectedUOM = UOMPrimary;
+    }
     
     // Store (Set the item on availability
     item.store = [POSOxmUtils toStore:root];

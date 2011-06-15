@@ -163,7 +163,7 @@ static OrderCart *cart = nil;
         return NO;
     }
     
-    BOOL isAvailableForClose = [facade isProductItemAvailable: orderItem.item.itemId forQuantity:orderItem.quantity];
+    BOOL isAvailableForClose = [facade isProductItemAvailable: orderItem.item.itemId forQuantity:orderItem.quantityPrimary];
     
     if (isAvailableForClose) {
         [orderItem setStatusToClosed];

@@ -11,6 +11,11 @@
 #import "DistributionCenter.h"
 #import "Store.h"
 
+typedef enum { 
+    UOMPrimary = 0,
+    UOMSecondary = 1 
+} SelectedUOM;
+
 @interface ProductItem : NSObject {
     NSNumber *itemId;
     
@@ -27,6 +32,8 @@
     NSString *stockingCode;
     
     // Unit of Measure Info
+    SelectedUOM selectedUOM;
+    
     BOOL defaultToBox;
     NSNumber *piecesPerBox;
     NSString *primaryUnitOfMeasure;
@@ -35,7 +42,8 @@
     
     // Pricing Info
     NSNumber *priceGroupId;
-    NSDecimalNumber *retailPrice;
+    NSDecimalNumber *retailPricePrimary;
+    NSDecimalNumber *retailPriceSecondary;
     NSDecimalNumber *standardCost;
     NSDecimalNumber *taxRate;
     BOOL taxExempt;     
@@ -49,6 +57,15 @@
 	NSDictionary *unitOfMeasureLookup;
 }
 
+extern NSString * const UOM_EACH;
+extern NSString * const UOM_CARTON;
+extern NSString * const UOM_BOX;
+extern NSString * const UOM_COVERAGE;
+extern NSString * const UOM_LINEARFOOT;
+extern NSString * const UOM_QYARD;
+extern NSString * const UOM_SET;
+extern NSString * const UOM_SQFT;
+
 @property(nonatomic, retain) NSNumber *itemId;
 @property(nonatomic, retain) NSString *sku;
 @property(nonatomic, retain) NSString *description;
@@ -58,13 +75,16 @@
 @property(nonatomic, retain) NSNumber *typeId;
 @property(nonatomic, retain) NSString *binLocation;
 @property(nonatomic, retain) NSString *stockingCode;
+
+@property (nonatomic, assign) SelectedUOM selectedUOM;
 @property                    BOOL defaultToBox;
 @property(nonatomic, retain) NSNumber *piecesPerBox;
 @property(nonatomic, retain) NSString *primaryUnitOfMeasure;
 @property(nonatomic, retain) NSString *secondaryUnitOfMeasure;
 @property(nonatomic, retain) NSDecimalNumber *conversion;
 @property(nonatomic, retain) NSNumber *priceGroupId;
-@property(nonatomic, retain) NSDecimalNumber *retailPrice;
+@property(nonatomic, retain) NSDecimalNumber *retailPricePrimary;
+@property(nonatomic, retain) NSDecimalNumber *retailPriceSecondary;
 @property(nonatomic, retain) NSDecimalNumber *standardCost;
 @property(nonatomic, retain) NSDecimalNumber *taxRate;
 @property                    BOOL taxExempt;
@@ -72,8 +92,11 @@
 @property (nonatomic, retain) Store *store;
 @property(nonatomic, retain) NSArray *distributionCenterList;
 
+- (BOOL) isUOMConversionRequired;
+- (void) toggleUOM;
+- (NSString *) getSelectedUOMForDisplay;
+- (NSString *) getRetailPriceForDisplay;
 -(NSString *) unitOfMeasureDisplay:(NSString*)uom;
-
 - (NSComparisonResult)compare:(id)otherObject;
 
 #pragma mark -

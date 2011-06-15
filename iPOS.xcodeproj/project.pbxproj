@@ -185,6 +185,9 @@
 		D624BAA11373049E00ED6120 /* ItemListView.m in Sources */ = {isa = PBXBuildFile; fileRef = D624BA9F1373049E00ED6120 /* ItemListView.m */; };
 		D624BAA4137304B200ED6120 /* ItemDetailView.h in Headers */ = {isa = PBXBuildFile; fileRef = D624BAA2137304B200ED6120 /* ItemDetailView.h */; };
 		D624BAA5137304B200ED6120 /* ItemDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = D624BAA3137304B200ED6120 /* ItemDetailView.m */; };
+		D62B8C0313A4484E00EC056F /* exchange.png in Resources */ = {isa = PBXBuildFile; fileRef = D62B8C0213A4484E00EC056F /* exchange.png */; };
+		D62B8C0413A4484E00EC056F /* exchange.png in Resources */ = {isa = PBXBuildFile; fileRef = D62B8C0213A4484E00EC056F /* exchange.png */; };
+		D62B8C0513A4484E00EC056F /* exchange.png in Resources */ = {isa = PBXBuildFile; fileRef = D62B8C0213A4484E00EC056F /* exchange.png */; };
 		D6334A361331CA25000DEDBB /* BasicAppTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D6334A351331CA25000DEDBB /* BasicAppTestCase.m */; };
 		D6334A571331CADB000DEDBB /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 		D6412B911356310E002AC1AC /* CCPaymentXmlMarshaller.h in Headers */ = {isa = PBXBuildFile; fileRef = D6412B8F1356310E002AC1AC /* CCPaymentXmlMarshaller.h */; };
@@ -712,6 +715,7 @@
 		D624BAA3137304B200ED6120 /* ItemDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemDetailView.m; sourceTree = "<group>"; };
 		D62853C412FB9B650024228B /* LayoutUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutUtils.h; sourceTree = "<group>"; };
 		D62853C512FB9B650024228B /* LayoutUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutUtils.m; sourceTree = "<group>"; };
+		D62B8C0213A4484E00EC056F /* exchange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exchange.png; sourceTree = "<group>"; };
 		D6334A2D1331C9CE000DEDBB /* AppTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6334A2E1331C9CE000DEDBB /* AppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AppTests-Info.plist"; sourceTree = "<group>"; };
 		D6334A341331CA25000DEDBB /* BasicAppTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicAppTestCase.h; sourceTree = "<group>"; };
@@ -1072,6 +1076,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D62B8C0213A4484E00EC056F /* exchange.png */,
 				D64F39B2135CBE050058BB04 /* CreditCard.png */,
 				D64F39B3135CBE050058BB04 /* CreditCard@2x.png */,
 				B4CEE05113527F330067DEBC /* EditConfirmClose@2x.png */,
@@ -2080,6 +2085,7 @@
 				D64F39B8135CBE050058BB04 /* CreditCard.png in Resources */,
 				D64F39B9135CBE050058BB04 /* CreditCard@2x.png in Resources */,
 				D6E5C7531365F5C9009BCA68 /* Particle.png in Resources */,
+				D62B8C0313A4484E00EC056F /* exchange.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2131,6 +2137,7 @@
 				D64F39B6135CBE050058BB04 /* CreditCard.png in Resources */,
 				D64F39B7135CBE050058BB04 /* CreditCard@2x.png in Resources */,
 				D6E5C7521365F5C1009BCA68 /* Particle.png in Resources */,
+				D62B8C0413A4484E00EC056F /* exchange.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2177,6 +2184,7 @@
 				B4CEE06013527F330067DEBC /* EditConfirmDelete@2x.png in Resources */,
 				D64F39B4135CBE050058BB04 /* CreditCard.png in Resources */,
 				D64F39B5135CBE050058BB04 /* CreditCard@2x.png in Resources */,
+				D62B8C0513A4484E00EC056F /* exchange.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2560,7 +2568,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2812,7 +2820,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2833,7 +2841,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 9;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

@@ -113,4 +113,18 @@
 	}
 }
 
+#pragma mark -
+#pragma mark Transformation Methods
+- (void) rotateView:(NSInteger)degrees animated:(BOOL)isAnimated {
+    
+    if (isAnimated) {
+        [UIView beginAnimations:nil context:NULL];
+    }
+    
+    self.transform = CGAffineTransformMakeRotation(degrees * M_PI / 180.0);
+    
+    if (isAnimated) {
+        [UIView commitAnimations];
+    }
+}
 @end

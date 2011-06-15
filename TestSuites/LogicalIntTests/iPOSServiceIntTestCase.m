@@ -84,7 +84,7 @@
     NSArray *itemList = [facade lookupProductItemByName: @"match"];
     
     STAssertNotNil(itemList, @"Expected Item List to not be nil");
-    STAssertTrue([itemList count] == 2, @"Expected items matched to be 2.");
+    STAssertTrue([itemList count] == 5, @"Expected items matched to be 5.");
     
     STAssertTrue([((ProductItem *) [itemList objectAtIndex:0]).sku isEqualToString: @"689751"], @"Expected sku to be equal");
     STAssertTrue([((ProductItem *) [itemList objectAtIndex:1]).sku isEqualToString: @"440915"], @"Expected sku to be equal");
@@ -312,7 +312,8 @@
     item.piecesPerBox = [NSNumber numberWithInt: 12];
     item.primaryUnitOfMeasure = @"EA";
     item.secondaryUnitOfMeasure = @"EA";
-    item.retailPrice = [NSDecimalNumber decimalNumberWithString:@"3.75"];
+    item.retailPricePrimary = [NSDecimalNumber decimalNumberWithString:@"3.75"];
+    item.retailPriceSecondary = [NSDecimalNumber decimalNumberWithString:@"3.75"];
     item.standardCost = [NSDecimalNumber decimalNumberWithString:@"2.70"]; 
     item.stockingCode = @"S";
     item.taxRate = [NSDecimalNumber decimalNumberWithString:@"0.7"];

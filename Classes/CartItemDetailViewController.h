@@ -19,7 +19,10 @@
 	OrderItem *orderItem;
 	
 	UIView *productItemView;
-	UILabel *skuLabel;
+    UIButton *uomExchangeButton;
+	NSInteger nextRotationDegreesForExchangeButton;
+    
+    UILabel *skuLabel;
 	UILabel *descLabel;
 	UILabel *priceLabel;
 	
