@@ -18,8 +18,8 @@
     // Is the status code NOT 200 ??
     if ([self error]) {
         Error *appError = [[[Error alloc] init] autorelease];
-        appError.errorId = @"ERR_HTTP_STATUS_CODE";
-        appError.message = [NSString stringWithFormat:@"Service error.  Status code '%d'.", [self responseStatusCode]];
+        appError.errorId = @"Service Error";
+        appError.message = [NSString stringWithFormat:@"Service error.  Status code '%d'.  Description: %@", [self responseStatusCode], error.localizedDescription];
         [errorList addObject:appError];
     } else {
         // I am expecting xml to be returned        

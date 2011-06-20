@@ -338,6 +338,12 @@
                 textField.text = nil;
             } 
             
+            // If one item is returned, load the details for the item
+            if (foundItemList && [foundItemList count] == 1) {
+                ProductItem *foundItem = [facade lookupProductItem:((ProductItem *) [foundItemList objectAtIndex:0]).sku];
+                foundItemList = [NSArray arrayWithObjects:foundItem, nil];
+            }
+            
             [self showAddItemOverlay:foundItemList];
         }
     }

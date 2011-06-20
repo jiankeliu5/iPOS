@@ -687,6 +687,13 @@
 	// Set the values and do the work here
 	if (aName && [aName length] > 0) {
 		NSArray *foundItems = [facade lookupProductItemByName:aName];
+        
+        // If one item is returned, load the details for the item
+        if (foundItems && [foundItems count] == 1) {
+            ProductItem *foundItem = [facade lookupProductItem:((ProductItem *) [foundItems objectAtIndex:0]).sku];
+            foundItems = [NSArray arrayWithObjects:foundItem, nil];
+        }
+
         [self showAddItemOverlay:foundItems];        
 	}
 }
