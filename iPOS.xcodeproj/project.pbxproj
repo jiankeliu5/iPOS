@@ -2640,8 +2640,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = Resources/Entitlements.plist;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: The Tile Shop LLC";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: The Tile Shop LLC";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Object Partners Incorporated";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
@@ -2657,8 +2657,7 @@
 				);
 				PRIVATE_HEADERS_FOLDER_PATH = iPOSDemo.app/PrivateHeaders;
 				PRODUCT_NAME = iPOSDemo;
-				PROVISIONING_PROFILE = "C4EBD5F7-4031-4666-98FA-7288F49636E7";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C4EBD5F7-4031-4666-98FA-7288F49636E7";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "01DFA51C-4D85-49EB-B5D3-7651D61A2348";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 			};
