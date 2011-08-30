@@ -8,14 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "LineaSDK.h"
-
+#import "ProfitMarginViewController.h"
 #import "OrderCart.h"
 #import "AddItemView.h"
 #import "ExtUITextField.h"
 #import "SearchItemView.h"
 #import "CartItemTableCell.h"
 
-@interface CartItemsViewController : UIViewController <LineaDelegate, AddItemViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, SearchItemViewDelegate, CartItemCellDelegate> {
+
+@interface CartItemsViewController : UIViewController <LineaDelegate, AddItemViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, SearchItemViewDelegate, CartItemCellDelegate, ProfitMarginViewDelegate> {
 	iPOSFacade *facade;
     OrderCart *orderCart;
     

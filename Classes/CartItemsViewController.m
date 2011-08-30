@@ -18,6 +18,7 @@
 #import "CartItemDetailViewController.h"
 #import "CustomerViewController.h"
 #import "TenderPaymentViewController.h"
+#import "ProfitMarginViewController.h"
 
 #define CUST_SELECTED_COLOR [UIColor colorWithRed:170.0f/255.0f green:204.0f/255.0f blue:0.0f alpha:1.0f]
 #define NO_CUST_SELECTED_COLOR [UIColor colorWithRed:255.0f/255.0f green:70.0f/255.0f blue:0.0f alpha:1.0f]
@@ -131,8 +132,7 @@
 
 #pragma mark -
 #pragma mark Accessors
-- (UIView *) contentView
-{
+- (UIView *) contentViewx{
 	return (UIView *)[self view];
 }
 
@@ -141,6 +141,7 @@
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
+    
 	UIView *cartView = [[UIView alloc] initWithFrame:[self rectForNav]];
 	cartView.backgroundColor = [UIColor whiteColor];
 	[self setView:cartView];
@@ -226,15 +227,20 @@
 																	target:self 
 																	action:@selector(sendOrderAsQuote:)] autorelease];
     
-    // The quote button is displayed when we have a customer and an order with at least one item.
+    // The order button is displayed when we have a customer and an order with at least one item.
 	UIBarButtonItem *orderButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Cash.png"] 
 																	 style:UIBarButtonItemStylePlain 
 																	target:self 
 																	action:@selector(tenderOrder:)] autorelease];
+    
+    UIBarButtonItem *marginButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stats.png"] 
+																	 style:UIBarButtonItemStylePlain 
+																	target:self 
+																	action:@selector(calculateProfitMargin:)] autorelease];
                                                                     
 	// Basic toolbar
     self.toolbarBasic = [[[NSArray alloc] initWithObjects:searchButton, tbFixed, custButton, tbFlex, nil] autorelease];
-	self.toolbarWithQuoteAndOrder = [[[NSArray alloc] initWithObjects:searchButton, tbFixed, custButton, tbFlex, quoteButton, tbFixed, tbFixed, orderButton, nil] autorelease];
+	self.toolbarWithQuoteAndOrder = [[[NSArray alloc] initWithObjects:searchButton, tbFixed, custButton, tbFlex, marginButton, tbFixed, quoteButton, tbFixed, orderButton, nil] autorelease];
 	
 	// Edit mode toolbar
 	UIView *customToolbarView = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, COMMIT_EDIT_BUTTON_WIDTH, COMMIT_EDIT_HEIGHT)] autorelease];
@@ -374,7 +380,8 @@
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations.
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    //return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return (interfaceOrientation == UIInterfaceOrientationPortrait) || UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -440,6 +447,16 @@
     UINavigationController *navController = self.navigationController;
 		
     [navController pushViewController:tenderViewController animated:YES];
+}
+
+//Used to call out to external service to calculate profit margin for order.
+- (void)calculateProfitMargin:(id) sender{
+    NSLog(@"Sending request for profit margin");
+   
+    ProfitMarginViewController *pmvc = [[ProfitMarginViewController alloc] initWithOrder:[orderCart getOrder]];
+    pmvc.delegate = self;
+    pmvc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentModalViewController:pmvc animated:YES];
 }
 
 - (CustomerViewController *)findCustomerViewController {
@@ -746,6 +763,16 @@
     self.logoutBarButton.enabled = YES;
     
 	[linea addDelegate:self];
+}
+
+#pragma mark -
+#pragma mark ProfitMarginViewDelegate Methods
+-(void) exit:(id)sender
+{
+    NSLog(@"exiting profit margin view");
+    [self dismissModalViewControllerAnimated:YES];
+    
+    
 }
 
 #pragma mark -

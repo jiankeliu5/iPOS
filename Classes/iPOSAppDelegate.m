@@ -10,6 +10,7 @@
 #import "AlertUtils.h"
 
 #define MAX_PASSWORD_RETRIES 3
+#define TIMEOUT_VALUE 60.0
 
 #pragma mark -
 @implementation iPOSAppDelegate
@@ -56,7 +57,15 @@
 	// If we had a live session and resigned as the active application
 	// due to inactivity or being backgrounded, we need to have the user
 	// input their password and re-validate the session.
-	if (self.resignedActive == YES && facade.sessionInfo != nil) {
+    endTime = [[NSDate alloc] init];
+
+    NSTimeInterval interval = [endTime timeIntervalSinceDate:startTime];
+    [startTime release];
+    
+    if (!isnan(interval) && (interval >= TIMEOUT_VALUE))
+    {
+        
+        if (self.resignedActive == YES && facade.sessionInfo != nil) {
 		verificationView = [[[SessionVerificationView alloc] initWithFrame:window.bounds] autorelease];
 		verificationView.delegate = self;
 		[window addSubview:verificationView];
@@ -90,17 +99,28 @@
 		verificationView.transform = CGAffineTransformMakeRotation(angle);
 		verificationView.frame = newFrame;
 		[verificationView makePasswordFieldFirstResponder];
-	}
+    }
+     
+    }
 	self.resignedActive = NO;
 }
 
+
+-(void)releaseTimer:(NSDate *)date
+{
+    [date release];
+}
 - (void) applicationWillResignActive:(UIApplication *)application {
 	// So we know to check our session when we come back.
+    [endTime release];
+    startTime = [[NSDate alloc] init];
 	self.resignedActive = YES;
 }
 
 - (void) applicationWillTerminate:(UIApplication*)application {	
 	[navigationController release];
+    [endTime release];
+    [startTime release];
     [window release];
     [super dealloc];
 }

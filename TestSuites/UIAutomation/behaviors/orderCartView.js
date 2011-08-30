@@ -115,6 +115,19 @@ ipos.behavior.orderCartView = function(target, app) {
 			
 			target.delay(1);
 		},
+        
+        tapProfitButton: function() {
+            var window = app.mainWindow();
+            var toolbar  = window.toolbar();
+            var profitButton = toolbar.buttons()['stats'];
+            
+            assertTrue(profitButton instanceof UIAButton, "Expected Profit Margin Button");
+            profitButton.tap();
+            
+            target.delay(1);
+            
+        
+        },
 		
 		// Assertion methods
 		assertOnCartView : function() {

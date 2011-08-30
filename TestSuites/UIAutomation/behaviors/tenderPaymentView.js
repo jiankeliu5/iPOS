@@ -26,6 +26,7 @@ ipos.behavior.tenderView = function(target, app) {
 			assertTrue(staticTexts[1].name().indexOf('Receipt e-mailed to customer at') != -1, "Expected message '" + staticTexts[1].name() + "'.");
 			return false;
 		};
+            
 	}
 
     return {
@@ -71,6 +72,17 @@ ipos.behavior.tenderView = function(target, app) {
             emailButton.tap();
             target.delay(1);
         },
+        
+        exitWithoutReceipt: function() {
+        var noEmailButton = app.mainWindow().buttons()['Exit Without Receipt'];
+        
+        assertTrue(emailButton instanceof UIAButton, "Expected an E-Mail Receipt Button");
+        
+        attachNoEmailReceiptAlertHandler();
+        emailButton.tap();
+        target.delay(1);
+    },
+
 
         // Assertion methods
         assertOnTenderView: function() {

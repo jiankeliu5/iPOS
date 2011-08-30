@@ -18,6 +18,8 @@
     NSString *customerType;
     NSNumber *customerTypeId;
     NSNumber *priceLevelId;
+    NSNumber *holdStatus;
+    NSString *holdStatusText;
     
     NSString *firstName;
     NSString *lastName;
@@ -34,6 +36,9 @@
 @property (nonatomic, retain) NSString *customerType;
 @property (nonatomic, retain) NSNumber *customerTypeId;
 @property (nonatomic, retain) NSNumber *priceLevelId;
+@property (nonatomic, retain) NSNumber *holdStatus;
+@property (nonatomic, retain) NSString *holdStatusText;
+
 
 @property (nonatomic, retain) NSString *firstName;
 @property (nonatomic, retain) NSString *lastName;
@@ -54,6 +59,7 @@
 #pragma mark -
 #pragma mark Accessors
 - (BOOL) isRetailCustomer;
+- (BOOL) isOnHold;
 
 #pragma mark -
 #pragma mark Marshalling methods

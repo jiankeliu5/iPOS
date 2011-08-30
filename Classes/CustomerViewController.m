@@ -26,7 +26,7 @@
 #define LABEL_SPACING 7.0f
 #define DETAIL_VIEW_X 10.0f
 #define DETAIL_VIEW_WIDTH 300.0f
-#define DETAIL_VIEW_HEIGHT 77.0f
+#define DETAIL_VIEW_HEIGHT 82.0f
 #define DETAIL_LABEL_X 0.0f
 #define DETAIL_LABEL_WIDTH 40.0f
 #define DETAIL_DATA_X 40.0f
@@ -143,6 +143,14 @@
 
 	zip = [self createBoldLabel:nil withRect:CGRectMake(DETAIL_DATA_X, dy, DETAIL_DATA_WIDTH, LABEL_HEIGHT)];
 	[detailView addSubview:zip];
+    
+    dy += LABEL_HEIGHT + LABEL_SPACING;
+    holdStatusLabel = [self createNormalLabel:@"Status" withRect:CGRectMake(DETAIL_LABEL_X, dy, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
+    holdStatus = [self createBoldLabel:nil withRect:CGRectMake(DETAIL_DATA_X, dy, DETAIL_DATA_WIDTH, LABEL_HEIGHT)];
+    holdStatus.textColor = [UIColor redColor];
+    
+    [detailView addSubview:holdStatusLabel];
+    [detailView addSubview:holdStatus];
 	
 	detailView.hidden = YES;
 	[self.view addSubview:detailView];
@@ -343,6 +351,7 @@
 		lastName.text = customer.lastName;
 		email.text = customer.emailAddress;
 		zip.text = customer.address.zipPostalCode;
+        holdStatus.text = customer.holdStatusText;
 	}
 
 	CGFloat width = self.view.bounds.size.width;
@@ -356,14 +365,29 @@
 		confirmButton.hidden = YES;
 		custSearchButton.center = [self.view centerAt:cy];
 	} else {
-		cy += TEXT_FIELD_HEIGHT;
-		detailView.frame = CGRectMake(DETAIL_VIEW_X, cy, DETAIL_VIEW_WIDTH, DETAIL_VIEW_HEIGHT);
-		detailView.hidden = NO;
-		cy += DETAIL_VIEW_HEIGHT + SPACING;
-		CGFloat buttonSpace = floorf((width - BUTTON_WIDTH * 2.0f) / 3.0f);
-		custSearchButton.frame = CGRectMake(buttonSpace, cy, BUTTON_WIDTH, BUTTON_HEIGHT);
-		confirmButton.frame = CGRectMake(((buttonSpace * 2.0f) + BUTTON_WIDTH), cy, BUTTON_WIDTH, BUTTON_HEIGHT);
-		confirmButton.hidden = NO;
+        
+        if (![customer isOnHold])
+        {
+            cy += TEXT_FIELD_HEIGHT;
+            detailView.frame = CGRectMake(DETAIL_VIEW_X, cy, DETAIL_VIEW_WIDTH, DETAIL_VIEW_HEIGHT);
+            detailView.hidden = NO;
+            cy += DETAIL_VIEW_HEIGHT + SPACING;
+            CGFloat buttonSpace = floorf((width - BUTTON_WIDTH * 2.0f) / 3.0f);
+            custSearchButton.frame = CGRectMake(buttonSpace, cy, BUTTON_WIDTH, BUTTON_HEIGHT);
+            confirmButton.frame = CGRectMake(((buttonSpace * 2.0f) + BUTTON_WIDTH), cy, BUTTON_WIDTH, BUTTON_HEIGHT);
+            confirmButton.hidden = NO;  
+        }
+        else
+        {
+            cy += TEXT_FIELD_HEIGHT;
+            detailView.frame = CGRectMake(DETAIL_VIEW_X, cy, DETAIL_VIEW_WIDTH, DETAIL_VIEW_HEIGHT);
+            detailView.hidden = NO;
+            cy += DETAIL_VIEW_HEIGHT + SPACING;
+            CGFloat buttonSpace = floorf((width - BUTTON_WIDTH * 2.0f) / 3.0f);
+            custSearchButton.frame = CGRectMake(buttonSpace, cy, BUTTON_WIDTH, BUTTON_HEIGHT);
+          
+            
+        }
 	}
 }
 

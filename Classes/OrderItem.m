@@ -266,6 +266,14 @@ static int const STATUS_CANCEL = 4;
     return discount;
 }
 
+- (NSDecimalNumber *) calculateExtendedCost{ //Make sure to round up to two decimal places
+    return [self.quantityPrimary decimalNumberByMultiplyingBy:self.item.standardCost withBehavior:[NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:2 raiseOnExactness:NO raiseOnOverflow:NO raiseOnUnderflow:NO raiseOnDivideByZero:YES]];
+}
+
+-(NSDecimalNumber *)calculateExtendedPrice { //make sure to round up to two decimal places
+    return [self.quantityPrimary decimalNumberByMultiplyingBy:self.sellingPricePrimary withBehavior:[NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:2 raiseOnExactness:NO raiseOnOverflow:NO raiseOnUnderflow:NO raiseOnDivideByZero:YES]];
+}
+
 #pragma mark -
 #pragma mark UOM toggle Support
 - (void) toggleUOM {

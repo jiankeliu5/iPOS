@@ -22,6 +22,7 @@
     
     NSDecimalNumber *quantityPrimary;
     NSDecimalNumber *quantitySecondary;
+
     
     ManagerInfo *managerApprover;
     ProductItem *item;
@@ -74,6 +75,8 @@
 - (NSDecimalNumber *) calcLineSubTotal;
 - (NSDecimalNumber *) calcLineTax;
 - (NSDecimalNumber *) calcLineDiscount;
+- (NSDecimalNumber *) calculateExtendedCost;
+- (NSDecimalNumber *) calculateExtendedPrice;
 
 #pragma mark -
 #pragma mark UOM Switching support

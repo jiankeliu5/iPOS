@@ -12,7 +12,7 @@
 
 @implementation Customer
 
-@synthesize customerId, customerType, customerTypeId, priceLevelId, firstName, lastName, phoneNumber, emailAddress, store, address, taxExempt;
+@synthesize customerId, customerType, customerTypeId, priceLevelId, firstName, lastName, phoneNumber, emailAddress, store, address, taxExempt, holdStatus,holdStatusText;
 
 #pragma mark Initializer and Memory Mgmt
 -(id) init {
@@ -41,6 +41,7 @@
 	[self setLastName:[aModel valueForKey:@"lastName"]];
 	[self setPhoneNumber:[aModel valueForKey:@"phoneNumber"]];
 	[self setEmailAddress:[aModel valueForKey:@"emailAddress"]];
+    [self setHoldStatus:[aModel valueForKey:@"holdStatus"]];
 	
 	Store *s = [[[Store alloc] init] autorelease];
 	[s setStoreId:[aModel valueForKey:@"storeId"]];
@@ -120,6 +121,8 @@
     [lastName release];
     [phoneNumber release];
     [emailAddress release];
+    [holdStatus release];
+    [holdStatusText release];
     
     [store release];
     [address release];
@@ -342,6 +345,18 @@
 #pragma mark Accessors
 - (BOOL) isRetailCustomer {
     return [customerTypeId isEqualToNumber:[NSNumber numberWithInt:1]];
+}
+
+-(BOOL) isOnHold {
+    
+    if ([self.holdStatus integerValue] == 0)
+    {
+        return NO;
+    }
+    else
+    {
+        return YES;
+    }
 }
 
 #pragma mark -

@@ -267,6 +267,35 @@ static int const ORDER_TYPE_CLOSED = 4;
     return balanceDue;
 }
 
+/* Calculates the profit margin for a given order 
+ For display use banker rounding - look at cart display for example*/
+-(NSDecimalNumber *) calculateProfitMargin {
+    NSDecimalNumber *totalExtendedCost = [NSDecimalNumber zero];
+    NSDecimalNumber *totalExtendedPrice = [NSDecimalNumber zero];
+    NSDecimalNumberHandler *roundUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:0 
+                                                                                  raiseOnExactness:NO raiseOnOverflow:NO 
+                                                                                  raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+    
+    for (OrderItem *item in orderItemList)
+    {
+        totalExtendedCost = [totalExtendedCost decimalNumberByAdding:item.calculateExtendedCost];
+        totalExtendedPrice = [totalExtendedPrice decimalNumberByAdding:item.calculateExtendedPrice];
+    }
+    
+    
+    NSDecimalNumber *costTimesPrice = [totalExtendedCost decimalNumberByDividingBy: totalExtendedPrice];
+    
+    NSDecimalNumber *oneMinusCostPrice = [[NSDecimalNumber one] decimalNumberBySubtracting: costTimesPrice  ];
+        
+    NSDecimalNumber *tempMargin = [oneMinusCostPrice decimalNumberByMultiplyingBy: 
+                                   [NSDecimalNumber decimalNumberWithString:@"100.0"] withBehavior: roundUp];
+    
+    NSDecimalNumber *pointFive = [NSDecimalNumber decimalNumberWithString:@"0.05"];
+    NSDecimalNumber *profitMargin = [tempMargin decimalNumberBySubtracting: [tempMargin decimalNumberByMultiplyingBy: pointFive]];
+    
+    return profitMargin;
+}
+
 - (NSDecimalNumber *) calcClosedItemsBalance {
     NSDecimalNumber *balance = [NSDecimalNumber zero];
     

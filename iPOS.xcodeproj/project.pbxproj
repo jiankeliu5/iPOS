@@ -10,6 +10,24 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		365B593F1407DBAE000B0277 /* ProfitMarginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C6B44E14057BBD009A455F /* ProfitMarginViewController.m */; };
+		365B5946140C092E000B0277 /* OrderTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 365B5945140C092E000B0277 /* OrderTestCase.m */; };
+		365B5947140C0E23000B0277 /* OrderTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 365B5945140C092E000B0277 /* OrderTestCase.m */; };
+		365B594F140D44CA000B0277 /* profitView.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B594E140D44C9000B0277 /* profitView.js */; };
+		365B5950140D44CA000B0277 /* profitView.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B594E140D44C9000B0277 /* profitView.js */; };
+		365B5951140D44CA000B0277 /* profitView.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B594E140D44C9000B0277 /* profitView.js */; };
+		365B5952140D44CA000B0277 /* profitView.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B594E140D44C9000B0277 /* profitView.js */; };
+		365B5953140D44CA000B0277 /* profitView.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B594E140D44C9000B0277 /* profitView.js */; };
+		365B5955140D4658000B0277 /* displayProfitMargin.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B5954140D4658000B0277 /* displayProfitMargin.js */; };
+		365B5956140D4658000B0277 /* displayProfitMargin.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B5954140D4658000B0277 /* displayProfitMargin.js */; };
+		365B5957140D4658000B0277 /* displayProfitMargin.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B5954140D4658000B0277 /* displayProfitMargin.js */; };
+		365B5958140D4658000B0277 /* displayProfitMargin.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B5954140D4658000B0277 /* displayProfitMargin.js */; };
+		365B5959140D4658000B0277 /* displayProfitMargin.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B5954140D4658000B0277 /* displayProfitMargin.js */; };
+		365B595D140D83AA000B0277 /* stats.png in Resources */ = {isa = PBXBuildFile; fileRef = 365B595C140D83AA000B0277 /* stats.png */; };
+		365B595E140D83AA000B0277 /* stats.png in Resources */ = {isa = PBXBuildFile; fileRef = 365B595C140D83AA000B0277 /* stats.png */; };
+		365B595F140D83AA000B0277 /* stats.png in Resources */ = {isa = PBXBuildFile; fileRef = 365B595C140D83AA000B0277 /* stats.png */; };
+		365B5960140D83AA000B0277 /* stats.png in Resources */ = {isa = PBXBuildFile; fileRef = 365B595C140D83AA000B0277 /* stats.png */; };
+		365B5961140D83AA000B0277 /* stats.png in Resources */ = {isa = PBXBuildFile; fileRef = 365B595C140D83AA000B0277 /* stats.png */; };
 		B401FBB61335B0490082C7D4 /* IBABooleanFormField.h in Headers */ = {isa = PBXBuildFile; fileRef = B401FB731335B0490082C7D4 /* IBABooleanFormField.h */; };
 		B401FBB71335B0490082C7D4 /* IBABooleanFormField.m in Sources */ = {isa = PBXBuildFile; fileRef = B401FB741335B0490082C7D4 /* IBABooleanFormField.m */; };
 		B401FBB81335B0490082C7D4 /* IBAButtonFormField.h in Headers */ = {isa = PBXBuildFile; fileRef = B401FB751335B0490082C7D4 /* IBAButtonFormField.h */; };
@@ -380,7 +398,6 @@
 		D6DB9711135FAC0300877788 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D698A47E1325E50E00371985 /* OpenGLES.framework */; };
 		D6DCA825134DFA8E00ACBDD9 /* OrderCart.h in Headers */ = {isa = PBXBuildFile; fileRef = D6DCA823134DFA8E00ACBDD9 /* OrderCart.h */; };
 		D6DCA826134DFA8E00ACBDD9 /* OrderCart.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DCA824134DFA8E00ACBDD9 /* OrderCart.m */; };
-		D6E24DCE1331CCC900931787 /* AppTests.octest in Resources */ = {isa = PBXBuildFile; fileRef = D6334A2D1331C9CE000DEDBB /* AppTests.octest */; };
 		D6E5C7521365F5C1009BCA68 /* Particle.png in Resources */ = {isa = PBXBuildFile; fileRef = D698A4A91325E83300371985 /* Particle.png */; };
 		D6E5C7531365F5C9009BCA68 /* Particle.png in Resources */ = {isa = PBXBuildFile; fileRef = D698A4A91325E83300371985 /* Particle.png */; };
 		D6E9E9D11316037900FF1498 /* libiPOSFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */; };
@@ -390,7 +407,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D6334A321331C9DD000DEDBB /* PBXContainerItemProxy */ = {
+		365B59421407F873000B0277 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
@@ -513,6 +530,13 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iPOS_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOS_Prefix.pch; sourceTree = "<group>"; };
+		365B5944140C092D000B0277 /* OrderTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderTestCase.h; sourceTree = "<group>"; };
+		365B5945140C092E000B0277 /* OrderTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderTestCase.m; sourceTree = "<group>"; };
+		365B594E140D44C9000B0277 /* profitView.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = profitView.js; sourceTree = "<group>"; };
+		365B5954140D4658000B0277 /* displayProfitMargin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = displayProfitMargin.js; sourceTree = "<group>"; };
+		365B595C140D83AA000B0277 /* stats.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stats.png; sourceTree = "<group>"; };
+		36C6B44D14057BBD009A455F /* ProfitMarginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfitMarginViewController.h; sourceTree = "<group>"; };
+		36C6B44E14057BBD009A455F /* ProfitMarginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfitMarginViewController.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* iPOS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "iPOS-Info.plist"; sourceTree = "<group>"; };
 		B401FB731335B0490082C7D4 /* IBABooleanFormField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBABooleanFormField.h; sourceTree = "<group>"; };
 		B401FB741335B0490082C7D4 /* IBABooleanFormField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBABooleanFormField.m; sourceTree = "<group>"; };
@@ -1011,6 +1035,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				366900A613FD7159004B6981 /* History */,
 				B42609A51357F287001E5BA2 /* PriceAdjust */,
 				B418577C1347D650009461D4 /* SearchItem */,
 				B4D1983C1326BDF0007CCE08 /* Categories */,
@@ -1076,6 +1101,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				365B595C140D83AA000B0277 /* stats.png */,
 				D62B8C0213A4484E00EC056F /* exchange.png */,
 				D64F39B2135CBE050058BB04 /* CreditCard.png */,
 				D64F39B3135CBE050058BB04 /* CreditCard@2x.png */,
@@ -1134,6 +1160,13 @@
 				B40FC0F11311928600D7D79D /* QuartzCore.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		366900A613FD7159004B6981 /* History */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = History;
 			sourceTree = "<group>";
 		};
 		B401FB701335B0490082C7D4 /* IBAForms */ = {
@@ -1391,6 +1424,8 @@
 				B4C469E01307047F001EADE4 /* CartItemsViewController.m */,
 				B45D260B13403CCD00AFC9D2 /* CartItemTableCell.h */,
 				B45D260C13403CCD00AFC9D2 /* CartItemTableCell.m */,
+				36C6B44D14057BBD009A455F /* ProfitMarginViewController.h */,
+				36C6B44E14057BBD009A455F /* ProfitMarginViewController.m */,
 			);
 			name = CartItems;
 			sourceTree = "<group>";
@@ -1484,6 +1519,7 @@
 				D61BB06F137DADAC0014D547 /* orderCartView.js */,
 				D61BB070137DADAC0014D547 /* orderItemDetailView.js */,
 				D61BB071137DADAC0014D547 /* tenderPaymentView.js */,
+				365B594E140D44C9000B0277 /* profitView.js */,
 			);
 			path = behaviors;
 			sourceTree = "<group>";
@@ -1506,6 +1542,7 @@
 				D61BB07B137DADAC0014D547 /* createOrder.js */,
 				D61BB07C137DADAC0014D547 /* createQuote.js */,
 				D61BB07D137DADAC0014D547 /* invalidLogin.js */,
+				365B5954140D4658000B0277 /* displayProfitMargin.js */,
 			);
 			path = scripts;
 			sourceTree = "<group>";
@@ -1539,6 +1576,8 @@
 				D656013D130B71B4000968BA /* iPosFacadeWithMocksTestCase.m */,
 				D64783721354AE240017178D /* OrderItemCalculationTestCase.m */,
 				D6C6E8D51365CA7C00560DCF /* StringFormattersTestCase.m */,
+				365B5944140C092D000B0277 /* OrderTestCase.h */,
+				365B5945140C092E000B0277 /* OrderTestCase.m */,
 			);
 			path = LogicalUnitTests;
 			sourceTree = "<group>";
@@ -1937,9 +1976,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				365B59431407F873000B0277 /* PBXTargetDependency */,
 				D65B25BE1331C8B60052AEE2 /* PBXTargetDependency */,
 				D65B25C01331C8B60052AEE2 /* PBXTargetDependency */,
-				D6334A331331C9DD000DEDBB /* PBXTargetDependency */,
 			);
 			name = iPOSTesting;
 			productName = iPOS;
@@ -2025,6 +2064,9 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0410;
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "iPOS" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -2086,6 +2128,7 @@
 				D64F39B9135CBE050058BB04 /* CreditCard@2x.png in Resources */,
 				D6E5C7531365F5C9009BCA68 /* Particle.png in Resources */,
 				D62B8C0313A4484E00EC056F /* exchange.png in Resources */,
+				365B595D140D83AA000B0277 /* stats.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2100,6 +2143,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				365B5960140D83AA000B0277 /* stats.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2109,7 +2153,6 @@
 			files = (
 				B44D1ED0133EA3C7004E7EDE /* icon-magnify2.png in Resources */,
 				B44D1ED1133EA3C7004E7EDE /* icon-magnify2@2x.png in Resources */,
-				D6E24DCE1331CCC900931787 /* AppTests.octest in Resources */,
 				D65B25C71331C8B60052AEE2 /* iPosIcon.png in Resources */,
 				D65B25C81331C8B60052AEE2 /* iPosIcon@2x.png in Resources */,
 				D65B25C91331C8B60052AEE2 /* iPosLogin.png in Resources */,
@@ -2138,6 +2181,7 @@
 				D64F39B7135CBE050058BB04 /* CreditCard@2x.png in Resources */,
 				D6E5C7521365F5C1009BCA68 /* Particle.png in Resources */,
 				D62B8C0413A4484E00EC056F /* exchange.png in Resources */,
+				365B595E140D83AA000B0277 /* stats.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2145,6 +2189,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				365B5961140D83AA000B0277 /* stats.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2185,6 +2230,7 @@
 				D64F39B4135CBE050058BB04 /* CreditCard.png in Resources */,
 				D64F39B5135CBE050058BB04 /* CreditCard@2x.png in Resources */,
 				D62B8C0513A4484E00EC056F /* exchange.png in Resources */,
+				365B595F140D83AA000B0277 /* stats.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2238,6 +2284,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6B4359F13159ECD000C0AA8 /* main.m in Sources */,
+				365B5946140C092E000B0277 /* OrderTestCase.m in Sources */,
+				365B594F140D44CA000B0277 /* profitView.js in Sources */,
+				365B5955140D4658000B0277 /* displayProfitMargin.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2253,6 +2302,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				365B5947140C0E23000B0277 /* OrderTestCase.m in Sources */,
 				D697D15E1312D98D002C3EF6 /* iPosFacadeWithMocksTestCase.m in Sources */,
 				D697D15F1312D98F002C3EF6 /* SampleUnitTestCase.m in Sources */,
 				D6179DF61317DBEE00ACAFDD /* iPOSServiceMock.m in Sources */,
@@ -2263,6 +2313,8 @@
 				D6B195BC133CEF1C004C4FD1 /* LoginOxmTestCase.m in Sources */,
 				D64783731354AE240017178D /* OrderItemCalculationTestCase.m in Sources */,
 				D6C6E8D61365CA7C00560DCF /* StringFormattersTestCase.m in Sources */,
+				365B5952140D44CA000B0277 /* profitView.js in Sources */,
+				365B5958140D4658000B0277 /* displayProfitMargin.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2271,6 +2323,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D65B25CC1331C8B60052AEE2 /* main.m in Sources */,
+				365B5950140D44CA000B0277 /* profitView.js in Sources */,
+				365B5956140D4658000B0277 /* displayProfitMargin.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2280,6 +2334,8 @@
 			files = (
 				D67943A313160884004B8254 /* iPOSServiceIntTestCase.m in Sources */,
 				D6C7770613574A7900D41AD9 /* PaymentServiceTestCase.m in Sources */,
+				365B5953140D44CA000B0277 /* profitView.js in Sources */,
+				365B5959140D4658000B0277 /* displayProfitMargin.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2288,6 +2344,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D697D19A1312DCD0002C3EF6 /* main.m in Sources */,
+				365B5951140D44CA000B0277 /* profitView.js in Sources */,
+				365B5957140D4658000B0277 /* displayProfitMargin.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2339,6 +2397,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				365B593F1407DBAE000B0277 /* ProfitMarginViewController.m in Sources */,
 				B4300AA0131AEF8A000210C7 /* AvailabilityView.m in Sources */,
 				D6B438121315A923000C0AA8 /* Address.m in Sources */,
 				D6B438131315A927000C0AA8 /* Customer.m in Sources */,
@@ -2426,10 +2485,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		D6334A331331C9DD000DEDBB /* PBXTargetDependency */ = {
+		365B59431407F873000B0277 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D6334A2C1331C9CE000DEDBB /* AppTests */;
-			targetProxy = D6334A321331C9DD000DEDBB /* PBXContainerItemProxy */;
+			targetProxy = 365B59421407F873000B0277 /* PBXContainerItemProxy */;
 		};
 		D65B25BE1331C8B60052AEE2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2522,8 +2581,10 @@
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_USE_STANDARD_INCLUDE_SEARCHING = YES;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Resources/iPOS-Info.plist";
 				INFOPLIST_PREPROCESS = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2548,7 +2609,9 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Resources/iPOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2574,8 +2637,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-lxml2";
-				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -2594,7 +2657,9 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Resources/iPOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -2619,6 +2684,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Resources/iPOSTesting-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2645,6 +2711,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Resources/iPOSDemo-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2674,9 +2741,9 @@
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Resources/UnitTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2693,7 +2760,6 @@
 					"-framework",
 					UIKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = UnitTests;
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = octest;
@@ -2712,9 +2778,9 @@
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEMO_MODE=1";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Resources/IntTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2731,7 +2797,6 @@
 					"-framework",
 					UIKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = AppTests;
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = octest;
@@ -2750,8 +2815,8 @@
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Resources/AppTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2768,7 +2833,6 @@
 					"-framework",
 					UIKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = AppTests;
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = octest;
@@ -2782,14 +2846,13 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PREFIX_HEADER = IPOS_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
 				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
 				PRODUCT_NAME = iPOSFoundation;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -2803,10 +2866,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
 				PRODUCT_NAME = OPIFoundation;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -2818,6 +2880,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 11;
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -2825,9 +2888,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-lxml2";
-				PREBINDING = NO;
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -2846,8 +2910,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-lxml2";
-				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -2866,9 +2930,9 @@
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Resources/AppTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2885,7 +2949,6 @@
 					"-framework",
 					UIKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = AppTests;
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = octest;
@@ -2903,8 +2966,8 @@
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Resources/AppTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2921,7 +2984,6 @@
 					"-framework",
 					UIKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = AppTests;
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = octest;
@@ -2941,12 +3003,11 @@
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEMO_MODE=1";
-				GCC_VERSION = 4.2;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Resources/UnitTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2963,7 +3024,6 @@
 					"-framework",
 					UIKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = UnitTests;
 				SDKROOT = iphoneos;
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -2982,9 +3042,9 @@
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Resources/UnitTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3001,7 +3061,6 @@
 					"-framework",
 					UIKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = UnitTests;
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = octest;
@@ -3021,6 +3080,7 @@
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_USE_STANDARD_INCLUDE_SEARCHING = YES;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Resources/iPOSTesting-Info.plist";
 				INFOPLIST_PREPROCESS = NO;
 				LIBRARY_SEARCH_PATHS = (
@@ -3046,6 +3106,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Resources/iPOSTesting-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3073,10 +3134,10 @@
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEMO_MODE=1";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Resources/IntTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3093,7 +3154,6 @@
 					"-framework",
 					UIKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = IntTests;
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = octest;
@@ -3111,9 +3171,9 @@
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
 				);
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEMO_MODE=1";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Resources/IntTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3130,7 +3190,6 @@
 					"-framework",
 					UIKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = AppTests;
 				SDKROOT = iphoneos;
 				WRAPPER_EXTENSION = octest;
@@ -3151,6 +3210,7 @@
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_USE_STANDARD_INCLUDE_SEARCHING = YES;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Resources/iPOSDemo-Info.plist";
 				INFOPLIST_PREPROCESS = NO;
 				LIBRARY_SEARCH_PATHS = (
@@ -3176,6 +3236,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				INFOPLIST_FILE = "Resources/iPOSDemo-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3202,8 +3263,8 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
 				PRODUCT_NAME = OPIFoundation;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -3216,10 +3277,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
 				PRODUCT_NAME = OPIFoundation;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -3231,12 +3291,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = IPOS_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3244,7 +3305,6 @@
 				);
 				LINK_WITH_STANDARD_LIBRARIES = YES;
 				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
 				PRODUCT_NAME = iPOSFoundation;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
@@ -3258,14 +3318,13 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PREFIX_HEADER = IPOS_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
 				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
 				PRODUCT_NAME = iPOSFoundation;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;

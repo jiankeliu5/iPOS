@@ -34,6 +34,8 @@
 	UILabel *email;
 	UILabel *zipLabel;
 	UILabel *zip;
+    UILabel *holdStatusLabel;
+    UILabel *holdStatus;
 	
 	BOOL custDetailsOpen;
 	

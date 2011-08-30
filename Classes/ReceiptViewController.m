@@ -16,7 +16,7 @@
 #define OVERLAY_MARGIN_TOP 75.0f
 #define OVERLAY_MARGIN_LEFT 40.0f
 #define OVERLAY_MARGIN_RIGHT 40.0f
-#define OVERLAY_MARGIN_BOTTOM 125.0f
+#define OVERLAY_MARGIN_BOTTOM 80.0f
 #define BUTTON_SPACE 20.0f
 #define BUTTON_WIDTH  200.0f
 #define BUTTON_HEIGHT 40.0f
@@ -89,6 +89,11 @@
     MOGlassButton *printEmailReceiptButton = [[[MOGlassButton alloc] 
                                           initWithFrame:CGRectMake(floorf((receiptRoundedView.bounds.size.width - BUTTON_WIDTH) / 2.0f), 2*BUTTON_HEIGHT+3*BUTTON_SPACE, BUTTON_WIDTH, BUTTON_HEIGHT)] 
                                          autorelease];
+    MOGlassButton *exitWithoutReceiptButton = [[[MOGlassButton alloc] 
+                                               initWithFrame:CGRectMake(floorf((receiptRoundedView.bounds.size.width - BUTTON_WIDTH) / 2.0f), 3*BUTTON_HEIGHT+4*BUTTON_SPACE, BUTTON_WIDTH, BUTTON_HEIGHT)] 
+                                              autorelease];
+
+    
     [emailReceiptButton setupAsSmallBlackButton];
     [emailReceiptButton setTitle:@"E-Mail Receipt" forState:UIControlStateNormal];
     [emailReceiptButton addTarget:self action:@selector(handleEmailReceiptButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -104,9 +109,15 @@
     printEmailReceiptButton.titleLabel.textAlignment = UITextAlignmentCenter;
     printEmailReceiptButton.enabled = NO;
     
+    [exitWithoutReceiptButton setupAsSmallBlackButton];
+    [exitWithoutReceiptButton setTitle:@"Exit Without Receipt" forState:UIControlStateNormal];
+    [exitWithoutReceiptButton addTarget:self action:@selector(handleExitWithoutReceiptButton:) forControlEvents:UIControlEventTouchUpInside];
+    exitWithoutReceiptButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    
     [receiptRoundedView addSubview:emailReceiptButton];  
     [receiptRoundedView addSubview:printReceiptButton];
-    [receiptRoundedView addSubview:printEmailReceiptButton];  
+    [receiptRoundedView addSubview:printEmailReceiptButton]; 
+     [receiptRoundedView addSubview:exitWithoutReceiptButton]; 
     [overlay addSubview:receiptRoundedView];
     [self.view addSubview:overlay];
 }
@@ -183,6 +194,10 @@
     
     // Logoff
     [self. navigationController popToRootViewControllerAnimated:YES];
+}
+
+-(void)handleExitWithoutReceiptButton:(id)sender {
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end

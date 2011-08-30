@@ -63,5 +63,6 @@
 - (NSDecimalNumber *) calcOrderDiscountTotal;
 - (NSDecimalNumber *) calcBalanceDue;
 - (NSDecimalNumber *) calcClosedItemsBalance;
+- (NSDecimalNumber *) calculateProfitMargin;
 
 @end

@@ -71,11 +71,11 @@ static NSString * const CUSTOMER_XML = @""
         if (customer.address && customer.address.zipPostalCode) {
             addrZip = customer.address.zipPostalCode;
         }
-        if (customer.firstName && customer.lastName) {
+        if ((customer.firstName && customer.lastName) && ([customer.firstName length ] > 0 && [customer.lastName length] > 0)) {
             name = [NSString stringWithFormat:@"%@, %@", customer.lastName, customer.firstName];
-        } else if (customer.lastName) {
+        } else if (customer.lastName && [customer.lastName length] > 0) {
             name = customer.lastName;
-        } else if (customer.firstName) {
+        } else if (customer.firstName && [customer.firstName length] > 0) {
             name = customer.firstName;
         }
         if (customer.emailAddress) {
@@ -127,6 +127,8 @@ static NSString * const CUSTOMER_XML = @""
         customer.phoneNumber = [root elementStringValue:@"Phone1"];
         customer.emailAddress = [root elementStringValue:@"Email"];
         customer.taxExempt = [root elementBoolValue:@"TaxExempt"];
+        customer.holdStatus = [[NSNumber alloc]initWithUnsignedInteger:0];//[root elementNumberValue:@"HoldTypeID"];
+        customer.holdStatusText = [root elementStringValue:@"HoldType"];
         
         
         // Customer Name

@@ -19,6 +19,8 @@
 	BOOL resignedActive;
 	iPOSFacade *facade;
 	SessionVerificationView *verificationView;
+    NSDate *startTime;
+    NSDate *endTime;
 	NSInteger verifyPasswordTries;
 }
 
