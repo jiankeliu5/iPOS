@@ -74,6 +74,8 @@
     order.store = store;
     order.customer = customer;
     order.orderTypeId = [NSNumber numberWithInt:1];
+    order.notes = @"Notes";
+    order.purchaseOrderId = @"112";
     [order addItemToOrder:item withQuantity:[NSDecimalNumber decimalNumberWithString:@"24.5"]];
     
     // Render the xml
@@ -89,7 +91,7 @@
                   "<QuantityOrderedPrimary>25</QuantityOrderedPrimary><QuantityOrderedSecondary>25</QuantityOrderedSecondary><RetailPricePrimary>3.75</RetailPricePrimary>"
                   "<SalesPersonID>1111</SalesPersonID><SecondaryUOM>EA</SecondaryUOM><SellingPricePrimary>3.75</SellingPricePrimary><SellingPriceSecondary>3.75</SellingPriceSecondary>"
                   "<StdCost>2.7</StdCost><StockingCode>S</StockingCode><StoreID>1234</StoreID><TaxExempt>false</TaxExempt>"
-                  "<TaxRate>0.7</TaxRate></Line></OrderDetail></OrderClass>"], xml);
+                  "<TaxRate>0.7</TaxRate></Line></OrderDetail><Notes>Notes</Notes><PurchaseOrder>112</PurchaseOrder></OrderClass>"], xml);
 }
 
 @end

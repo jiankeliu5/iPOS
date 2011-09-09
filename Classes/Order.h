@@ -17,6 +17,8 @@
     NSNumber *orderId;
     NSNumber *orderTypeId;
     NSNumber *salesPersonEmployeeId;
+    NSString *notes;
+    NSString *purchaseOrderId;
     
     Store *store;
     Customer *customer;
@@ -27,6 +29,8 @@
 @property (nonatomic, retain) NSNumber *orderId;
 @property (nonatomic, retain) NSNumber *orderTypeId;
 @property (nonatomic, retain) NSNumber *salesPersonEmployeeId;
+@property (nonatomic, retain) NSString *notes;
+@property (nonatomic, retain) NSString *purchaseOrderId;
 @property (nonatomic, retain) Store *store;
 @property (nonatomic, retain) Customer *customer;
 

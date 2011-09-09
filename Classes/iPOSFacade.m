@@ -7,6 +7,7 @@
 //
 
 #import "iPOSFacade.h"
+#import "AccountPayment.h"
 
 
 @implementation iPOSFacade
@@ -138,6 +139,10 @@ static iPOSFacade *facade = nil;
 
 - (BOOL) acceptSignatureFor:(CreditCardPayment *)ccPayment {
     return [self.paymentService acceptSignatureFor:ccPayment withSession:sessionInfo];
+}
+
+- (void) tenderPaymentOnAccount:(AccountPayment *)accountPayment {
+    [self.paymentService tenderPaymentOnAccount:accountPayment withSession:sessionInfo];
 }
 
 @end

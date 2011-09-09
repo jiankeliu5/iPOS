@@ -35,6 +35,10 @@
     
     UIView *bgView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen]applicationFrame]];
    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(close:)];
+    singleTap.numberOfTapsRequired = 1;
+    [bgView addGestureRecognizer:singleTap];
+    
 	bgView.backgroundColor = [UIColor whiteColor];
 	[self setView:bgView];
 	[bgView release];
@@ -51,15 +55,9 @@
     
     [self.view addSubview:totalProfitLabel];
     [totalProfitLabel release];
-    
-    doneButton = [[[MOGlassButton alloc] initWithFrame:CGRectMake(100,90, 106.0f, 40.0f)] autorelease];
-	[doneButton setTitle:@"Done" forState:UIControlStateNormal];
-	[doneButton setupAsBlackButton];
-    
-    [self.view addSubview:doneButton];   
 }
 
-- (void)foo:(id)sender{
+- (void)close:(id)sender{
     [self.delegate exit:sender];
 }
 

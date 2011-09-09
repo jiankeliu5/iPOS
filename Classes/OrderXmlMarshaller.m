@@ -33,6 +33,8 @@ static NSString * const ORDER_XML = @""
         "<OrderDetail>"
             "${lineItemXml}"
         "</OrderDetail>"
+        "<Notes>%@</Notes>"
+        "<PurchaseOrder>%@</PurchaseOrder>"
     "</OrderClass>";
 
 
@@ -104,6 +106,8 @@ static NSString * const ORDER_LINEITEM_XML = @""
         NSString *customerTypeId = @"";
         NSString *customerTaxExempt = @"false";
         NSString *customerZip = @"";
+        NSString *notes = @"";
+        NSString *purchaseOrder = @"";
         
         // Set the header element values from the order
         if (order.orderId) {
@@ -132,9 +136,15 @@ static NSString * const ORDER_LINEITEM_XML = @""
                 customerZip = order.customer.address.zipPostalCode;
             }
         }
+        if (order.notes) {
+            notes = order.notes;
+        }
+        if (order.purchaseOrderId) {
+            purchaseOrder = order.purchaseOrderId;
+        }
         
         // Create the XML
-        orderXml = [NSString stringWithFormat: ORDER_XML, customerId, customerTypeId, customerTaxExempt, customerZip, orderTypeId, salespersonEmpId, storeId];
+        orderXml = [NSString stringWithFormat: ORDER_XML, customerId, customerTypeId, customerTaxExempt, customerZip, orderTypeId, salespersonEmpId, storeId, notes, purchaseOrder];
         
         // Perform any variable replacement (ignore the order id field if it is not there
         if (orderId) {

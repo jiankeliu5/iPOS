@@ -16,7 +16,7 @@ static int const ORDER_TYPE_CLOSED = 4;
 
 @implementation Order
 
-@synthesize orderId, orderTypeId, salesPersonEmployeeId, store, customer;
+@synthesize orderId, orderTypeId, salesPersonEmployeeId, store, customer, notes, purchaseOrderId;
 
 #pragma mark Constructor/Deconstructor
 -(id) init {
