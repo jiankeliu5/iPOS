@@ -16,7 +16,7 @@ static int const ORDER_TYPE_CLOSED = 4;
 
 @implementation Order
 
-@synthesize orderId, orderTypeId, salesPersonEmployeeId, store, customer, notes, purchaseOrderId;
+@synthesize orderId, orderTypeId, salesPersonEmployeeId, store, customer, notes, purchaseOrderId, partialPaymentOnAccount;
 
 #pragma mark Constructor/Deconstructor
 -(id) init {
@@ -24,6 +24,7 @@ static int const ORDER_TYPE_CLOSED = 4;
     
     if (self == nil) {
         return self;
+        self.partialPaymentOnAccount = NO;
     }
     
     orderItemList = [[NSMutableArray arrayWithCapacity:0] retain];
@@ -260,7 +261,14 @@ static int const ORDER_TYPE_CLOSED = 4;
                                                   
         } else {
             // Assume the customer is a Contractor and only pays for closed items
-            balanceDue = [balanceDue decimalNumberByAdding:balanceClosedItems];
+            
+                balanceDue = [balanceDue decimalNumberByAdding:balanceClosedItems];
+                
+                if (partialPaymentOnAccount && [customer isPaymentOnAccountEligable])
+                {
+                    //If there was payment on the account, set the balance due as the payment on account - balanceDue
+                    balanceDue = [balanceDue decimalNumberBySubtracting:customer.amountAppliedOnAccount];
+                }
         }
     }
     

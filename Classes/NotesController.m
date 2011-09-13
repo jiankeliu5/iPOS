@@ -20,6 +20,11 @@
 #define TEXTVIEW_MAX_LENGTH  255
 #define TEXTFIELD_MAX_LENGTH 22
 
+@interface NotesController()
+-(BOOL) validateString:(NSString *)text;
+-(void) displayAlert:(NSString *) alertText;
+@end
+
 
 @implementation NotesController
 

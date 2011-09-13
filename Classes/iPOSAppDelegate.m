@@ -10,7 +10,7 @@
 #import "AlertUtils.h"
 
 #define MAX_PASSWORD_RETRIES 3
-#define TIMEOUT_VALUE 60.0
+#define TIMEOUT_VALUE 300.0
 
 #pragma mark -
 @implementation iPOSAppDelegate

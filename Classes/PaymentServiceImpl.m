@@ -121,6 +121,8 @@
     [ccPayment mergeWith:paymentReturned];
 }
 
+
+
 - (BOOL) acceptSignatureFor:(CreditCardPayment *)ccPayment withSession:(SessionInfo *)sessionInfo {
     if (sessionInfo == nil || ccPayment == nil || ccPayment.signature == nil || [[ccPayment.signature validate] count] > 0) {
         return NO;
@@ -165,6 +167,52 @@
     return isSuccessful;
 }
 
+- (void) tenderPaymentOnAccount:(AccountPayment *)accountPayment withSession:(SessionInfo *)sessionInfo {
+    if (sessionInfo == nil || accountPayment == nil) {
+        return;
+    }
+    
+    // Send the request to tender payment
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@", baseUrl, posPaymentMgmtUri, @"tender"]];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    
+    [request setValidatesSecureCertificate:NO];
+    [request setTimeOutSeconds:30];
+    
+    if (sessionInfo && sessionInfo.deviceId) {
+        [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
+    }
+    
+    // Post data for payment
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    
+    NSString *paymentXml = [accountPayment toXml];    
+    [request appendPostData:[paymentXml dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [request startSynchronous];
+    
+    // Post verification and complete request
+    NSArray *requestErrors = [request validateAsXmlContent];
+    if ([requestErrors count] > 0) {
+        // Clear out any errors previously set
+        [accountPayment removeAllErrors];
+        
+        Error *paymentError = [[[Error alloc] init] autorelease];
+        paymentError.errorId = @"ERR_PAY";
+        paymentError.message = [NSString stringWithFormat:@"Could not process payment for order '%@'.", accountPayment.orderId];
+        [accountPayment addError:paymentError];
+        
+        for (Error *error in requestErrors) {
+            [accountPayment addError:error];
+        }
+        
+        return;   
+    }
+    
+    // Parse the XML response for the order details
+    AccountPayment *paymentReturned =  [AccountPayment fromXml:[request responseString]];
+    [accountPayment mergeWith:paymentReturned];
+}
 
 
 @end

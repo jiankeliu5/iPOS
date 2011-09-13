@@ -10,11 +10,13 @@
 
 #import "SessionInfo.h"
 #import "CreditCardPayment.h"
+#import "AccountPayment.h"
 
 @protocol PaymentService <NSObject>
 
 @required
 -(void) tenderPaymentWithCC: (CreditCardPayment *) ccPayment withSession: (SessionInfo *) sessionInfo;
+- (void) tenderPaymentOnAccount:(AccountPayment *)accountPayment withSession:(SessionInfo *)sessionInfo;
 
 -(BOOL) acceptSignatureFor: (CreditCardPayment *) ccPayment withSession: (SessionInfo *) sessionInfo;
 

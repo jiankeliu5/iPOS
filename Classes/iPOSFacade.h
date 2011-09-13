@@ -65,5 +65,6 @@ typedef enum { SessionOk = 0,
 #pragma mark Payment Management
 -(void) tenderPaymentWithCC: (CreditCardPayment *) ccPayment;
 -(BOOL) acceptSignatureFor: (CreditCardPayment *) ccPayment;
+-(void) tenderPaymentOnAccount:(AccountPayment *)accountPayment;
 
 @end

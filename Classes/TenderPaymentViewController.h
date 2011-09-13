@@ -13,8 +13,11 @@
 #import "ChargeCreditCardView.h"
 #import "SignatureViewController.h"
 #import "LineaSDK.h"
+#import "NotesController.h"
+#import "AccountPaymentView.h"
+#import "PaymentView.h"
 
-@interface TenderPaymentViewController : ExtUIViewController<ExtUIViewControllerDelegate, ChargeCreditCardViewDelegate, LineaDelegate, SignatureDelegate> {
+@interface TenderPaymentViewController : ExtUIViewController<ExtUIViewControllerDelegate, ChargeCreditCardViewDelegate, LineaDelegate, SignatureDelegate, NotesControllerDelegate, AccountPaymentViewDelegate> {
 	NSDecimalNumber *paymentAmount;
     CreditCardPayment *ccPayment;
     
@@ -29,7 +32,7 @@
     UILabel *totalLabel;
     UILabel *balanceDueLabel;
     ChargeCreditCardView *chargeCCView;
-    
+    AccountPaymentView *accountPaymentView;
     Linea *linea;
 }
 

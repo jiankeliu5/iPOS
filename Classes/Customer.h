@@ -20,6 +20,10 @@
     NSNumber *priceLevelId;
     NSNumber *holdStatus;
     NSString *holdStatusText;
+    NSDecimalNumber *creditBalance;
+    NSDecimalNumber *creditLimit;
+    NSNumber *termsTypeId;
+    NSDecimalNumber *amountAppliedOnAccount;
     
     NSString *firstName;
     NSString *lastName;
@@ -38,7 +42,10 @@
 @property (nonatomic, retain) NSNumber *priceLevelId;
 @property (nonatomic, retain) NSNumber *holdStatus;
 @property (nonatomic, retain) NSString *holdStatusText;
-
+@property (nonatomic, retain) NSDecimalNumber *creditBalance;
+@property (nonatomic, retain) NSDecimalNumber *creditLimit;
+@property (nonatomic, retain) NSNumber *termsTypeId;
+@property (nonatomic, retain) NSDecimalNumber *amountAppliedOnAccount;
 
 @property (nonatomic, retain) NSString *firstName;
 @property (nonatomic, retain) NSString *lastName;
@@ -53,13 +60,14 @@
 - (id) initWithModel:(id)aModel;
 - (id) modelFromCustomer;
 - (BOOL) isValidCustomer:(BOOL)newCustomer;
-
 - (void) mergeWith: (Customer *) mergeCustomer;
 
 #pragma mark -
 #pragma mark Accessors
 - (BOOL) isRetailCustomer;
 - (BOOL) isOnHold;
+-(BOOL) isPaymentOnAccountEligable;
+-(NSDecimalNumber *) calculateAccountBalance;
 
 #pragma mark -
 #pragma mark Marshalling methods

@@ -19,6 +19,7 @@
     NSNumber *salesPersonEmployeeId;
     NSString *notes;
     NSString *purchaseOrderId;
+    BOOL partialPaymentOnAccount;
     
     Store *store;
     Customer *customer;
@@ -33,6 +34,7 @@
 @property (nonatomic, retain) NSString *purchaseOrderId;
 @property (nonatomic, retain) Store *store;
 @property (nonatomic, retain) Customer *customer;
+@property (nonatomic, assign) BOOL partialPaymentOnAccount;
 
 - (NSArray *) getOrderItems;
 - (void) addItemToOrder: (ProductItem *) item withQuantity: (NSDecimalNumber *) quantity;

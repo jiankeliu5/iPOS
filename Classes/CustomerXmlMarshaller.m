@@ -129,6 +129,9 @@ static NSString * const CUSTOMER_XML = @""
         customer.taxExempt = [root elementBoolValue:@"TaxExempt"];
         customer.holdStatus = [[NSNumber alloc]initWithUnsignedInteger:0];//[root elementNumberValue:@"HoldTypeID"];
         customer.holdStatusText = [root elementStringValue:@"HoldType"];
+        customer.creditBalance = [root elementDecimalValue:@"CreditBalance"];
+        customer.creditLimit = [root elementDecimalValue:@"CreditLimit"];
+        customer.termsTypeId = [root elementNumberValue:@"TermsTypeId"];
         
         
         // Customer Name

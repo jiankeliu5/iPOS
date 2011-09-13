@@ -21,7 +21,9 @@
 #import "NSString+StringFormatters.h"
 
 #import "CreditCardPayment.h"
-
+#import "AccountPayment.h"
+#import "NotesController.h"
+#import "PaymentView.h"
 
 #define TOOLBAR_HEIGHT 44.0f
 #define SEPARATOR_HEIGHT 5.0f
@@ -40,6 +42,9 @@
 #define LINE_WIDTH 70.0f
 #define LINE_HEIGHT 2.0f
 
+static NSString * const ACCOUNT = @"account";
+static NSString * const CREDIT = @"credit";
+
 @interface TenderPaymentViewController()
 
 // Demo Methods
@@ -52,6 +57,7 @@
 
 - (void) handleCreditCardPayment:(id)sender;
 - (void) handleSuspendOrder: (id) sender;
+-(void) sendPaymentOnAccount:(NSDecimalNumber *) amount;
 
 - (void) updateViewLayout;
 
@@ -59,7 +65,7 @@
 - (BOOL) tenderPaymentFromCardData: (NSString *)track1 track2:(NSString *)track2 track3:(NSString *)track3;
 - (BOOL) isOrderCreated;
 
-- (void) showPaymentRetryAlert:(CreditCardPayment *) aCCPayment;
+- (void) showPaymentRetryAlert:(Payment *) aCCPayment;
 - (void) cancelTenderAndLogout;
 
 - (void) navToReceipt;
@@ -106,9 +112,16 @@
     // Create the background view
     UIView *bgView = [[UIView alloc] initWithFrame:rectForView];
 	bgView.backgroundColor = [UIColor whiteColor];
+    
+    //Just used as an example of how we can change screens.  
+    UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(displayNotesAndPOView:)];
+    [bgView addGestureRecognizer:swipeRight];
+
+    
+    
 	[self setView:bgView];
 	[bgView release];
-    
+    [self.view setNeedsDisplay]; //Needed to redraw with updated balance info when paying on Account
     [self.view addSubview:[self buildTenderTotalView]];
     [self.view addSubview:[self buildSeparatorView]];
        
@@ -145,11 +158,35 @@
     paymentToolbar.barStyle = UIBarStyleBlack;
     
     UIBarButtonItem *tbFlex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+    UIBarButtonItem *notesAndPOButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"pencil2.png"] 
+                                                                          style:UIBarButtonItemStylePlain 
+                                                                         target:self 
+                                                                         action:@selector(displayNotesAndPOView:)] autorelease];
+    
+    
+    UIBarButtonItem *accountPaymentButton;
+    
+    if ([orderCart getCustomerForOrder].isPaymentOnAccountEligable)
+    {
+        accountPaymentButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"notes_2.png"] 
+                                                                                  style:UIBarButtonItemStylePlain 
+                                                                                 target:self 
+                                                                                 action:@selector(handleAccountPayment:)] autorelease];
+    }
+    else
+    {
+        accountPaymentButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"pencil2.png"] 
+                                                                 style:UIBarButtonItemStylePlain 
+                                                                target:self 
+                                                                action:@selector(handleUnAuthorizedAction:)] autorelease];
+    }
+    
+    
     UIBarButtonItem *creditCardButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"CreditCard.png"] 
                                                                     style:UIBarButtonItemStylePlain 
                                                                    target:self 
                                                                    action:@selector(handleCreditCardPayment:)] autorelease];
-    NSArray *paymentToolbarItems = [[[NSArray alloc] initWithObjects:tbFlex, creditCardButton, nil] autorelease];
+    NSArray *paymentToolbarItems = [[[NSArray alloc] initWithObjects:notesAndPOButton, tbFlex,accountPaymentButton, tbFlex, creditCardButton, nil] autorelease];
     [paymentToolbar setItems:paymentToolbarItems];
     
     [self.view addSubview:paymentToolbar];
@@ -212,9 +249,13 @@
     // e.g. self.myOutlet = nil;
 }
 
+
+
+
+
 #pragma mark -
 #pragma mark ChargeCreditCardViewDelegate
-- (void) setupKeyboardSupport:(ChargeCreditCardView *)theChargeCCView {
+- (void) setupKeyboardSupport:(PaymentView *)theChargeCCView {
     ExtUITextField *chargeAmtField = [theChargeCCView getChargeAmountTextField];
     
     chargeAmtField.returnKeyType = UIReturnKeyDone;
@@ -299,6 +340,11 @@
     }
 }
 
+-(NSDecimalNumber *) getOrderBalanceDue{
+    
+    return [[orderCart getOrder] calcBalanceDue];
+}
+
 #pragma mark -
 #pragma mark ExtUIViewController delegates
 - (void) extTextFieldFinishedEditing:(ExtUITextField *) textField {
@@ -309,30 +355,74 @@
                                                                                                   raiseOnExactness:NO raiseOnOverflow:NO 
                                                                                                   raiseOnUnderflow:NO raiseOnDivideByZero:NO];
     NSDecimalNumber *amount = [[NSDecimalNumber decimalNumberWithString:textField.text] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
-    NSDecimalNumber *balanceDue = [[order calcBalanceDue] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
-    NSDecimalNumber *orderAmount = [[[order calcOrderSubTotal] decimalNumberByAdding:[order calcOrderTax]] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];  
-      
-    if ([amount compare:balanceDue] == NSOrderedAscending) {
-        [AlertUtils showModalAlertMessage:@"Cannot charge less than the balance due."];
-        return;
-    } else if ([amount compare:orderAmount] == NSOrderedDescending) {
-        [AlertUtils showModalAlertMessage:@"Cannot charge more than the order total balance."];
-        return;
-    }
+    NSDecimalNumber *balanceDue = [[self getOrderBalanceDue] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
+    NSDecimalNumber *orderAmount = [[[order calcOrderSubTotal] decimalNumberByAdding:[order calcOrderTax]] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
     
-    // If the amount was $0.00 at this point, it is a fully open order.  Create the open order and we are done.
-    if ([amount compare:[NSDecimalNumber zero]] == NSOrderedSame) {
-        BOOL isOrderCreated = [self createOrder];
+    if (textField.tagName == ACCOUNT)
+    {
+        //If the amount is greater than our credit available then display a warning
+        if([amount compare:[[orderCart getCustomerForOrder] calculateAccountBalance]] == NSOrderedDescending)
+        {
+            [AlertUtils showModalAlertMessage:@"Cannot charge more than the account balance."];
+            return; 
+        }
+        else
+        {
+            if([amount compare:balanceDue] == NSOrderedSame)
+            {
+                //make a call out to the payment service to complete the transaction
+                [self sendPaymentOnAccount:amount];
+                [self navToReceipt];
+            }
+            else
+            {
+                [orderCart getCustomerForOrder].amountAppliedOnAccount = amount;
+                [orderCart getOrder].partialPaymentOnAccount = YES;
+                [self sendPaymentOnAccount:amount];
+                [accountPaymentView removeFromSuperview];
+            }
+            
+        }
         
-        if (isOrderCreated) {
-            [self navToReceipt];
-        }
-    } else {
-        // We are good at this point so show the message to have user swipe credit card
-        if (chargeCCView) {
-            [chargeCCView switchCardSwipeToReady];
-        }
     }
+    else if (textField.tagName == CREDIT)
+    {
+        if ([amount compare:balanceDue] == NSOrderedAscending) {
+            [AlertUtils showModalAlertMessage:@"Cannot charge less than the balance due."];
+            return;
+        } else if ([amount compare:orderAmount] == NSOrderedDescending) {
+            [AlertUtils showModalAlertMessage:@"Cannot charge more than the order total balance."];
+            return;
+        }
+        
+        // If the amount was $0.00 at this point, it is a fully open order.  Create the open order and we are done.
+        if ([amount compare:[NSDecimalNumber zero]] == NSOrderedSame) {
+            BOOL isOrderCreated = [self createOrder];
+            
+            if (isOrderCreated) {
+                [self navToReceipt];
+            }
+        } else {
+            // We are good at this point so show the message to have user swipe credit card
+            if (chargeCCView) {
+                [chargeCCView switchCardSwipeToReady];
+            }
+        }
+    }  
+}
+
+//submits the payment to the payment service
+-(void) sendPaymentOnAccount:(NSDecimalNumber *) amount {
+    AccountPayment *payment = [[AccountPayment alloc] initWithOrder:[orderCart getOrder]];
+    payment.paymentAmount = amount;
+    [facade tenderPaymentOnAccount:payment];
+    
+    if ([payment.errorList count] == 0) {
+        //isPaymentTendered = YES;
+    } else {
+        [self showPaymentRetryAlert:payment];
+    }
+
 }
 
 #pragma mark -
@@ -568,7 +658,7 @@
         subTotalLabel.text = [NSString formatDecimalNumberAsMoney:subTotal];
         taxTotalLabel.text = [NSString formatDecimalNumberAsMoney:tax];
         totalLabel.text = [NSString formatDecimalNumberAsMoney: [subTotal decimalNumberByAdding:tax]];
-        balanceDueLabel.text = [NSString formatDecimalNumberAsMoney:[order calcBalanceDue]];
+        balanceDueLabel.text = [NSString formatDecimalNumberAsMoney:[self getOrderBalanceDue]];
     } else {
         retailTotalLabel.text = @"0.00";
         discountTotalLabel.text =  @"(0.00)";
@@ -591,6 +681,33 @@
     chargeCCView.totalBalance = totalLabel.text;
     
     [self.view addSubview:chargeCCView];
+}
+
+-(void)handleAccountPayment:(id)sender {
+    self.navigationItem.hidesBackButton = YES;
+    [self.navigationItem.leftBarButtonItem setEnabled:NO];
+    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    
+    CGRect overlayRect = self.view.bounds;
+    accountPaymentView = [[AccountPaymentView alloc] initWithFrame:overlayRect];
+    accountPaymentView.viewDelegate = self;
+    accountPaymentView.balanceDue = balanceDueLabel.text;
+    accountPaymentView.totalAccountBalance =  [[[orderCart getCustomerForOrder] calculateAccountBalance] stringValue];
+    
+    [self.view addSubview:accountPaymentView];
+    
+}
+
+-(void)displayNotesAndPOView:(id)sender {
+    
+    NSLog(@"displaying Notes and PO view");
+    
+    NotesController *notesOverlay = [[NotesController alloc] init];
+    notesOverlay.notesDelegate = self;
+    notesOverlay.notesData = [orderCart getOrder].notes;
+    notesOverlay.purchaseOrderData = [orderCart getOrder].purchaseOrderId;
+    notesOverlay.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentModalViewController:notesOverlay animated:YES];
 }
 
 - (void) handleSuspendOrder:(id) sender {
@@ -639,7 +756,7 @@
     return isPaymentTendered;
 }
 
-- (void) showPaymentRetryAlert:(CreditCardPayment *) aCCPayment {
+- (void) showPaymentRetryAlert:(Payment *) aCCPayment {
     
     if (ccPayment) {
         UIAlertView *paymentAlert = [[UIAlertView alloc] init];
@@ -662,6 +779,22 @@
         [paymentAlert show];
         [paymentAlert release];
     }
+}
+
+#pragma mark- Notes And PO View delegate method 
+-(void)close:(NotesController *)notesView {
+    
+    if (notesView.notesData != nil)
+    {
+        [orderCart getOrder].notes = notesView.notesData;
+    }
+    
+    if (notesView.purchaseOrderData != nil)
+    {
+        [orderCart getOrder].purchaseOrderId = notesView.purchaseOrderData;
+    }
+    
+     [self dismissModalViewControllerAnimated:YES];
 }
 
 -(void) navToReceipt {
@@ -692,6 +825,24 @@
     
     [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Order %@ was created, but no payment received.", order.orderId]];
     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+#pragma mark - Payment on Account
+-(void)cancelAccountPayment:(id)sender {
+    self.navigationItem.hidesBackButton = NO;
+    [self.navigationItem.leftBarButtonItem setEnabled:YES];
+    [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    
+    if (accountPaymentView) {
+        [accountPaymentView removeFromSuperview];
+    }
+}
+       
+-(void)handleUnAuthorizedAction:(id) sender {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Not Authorized for this payment type." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    
+    [alertView show];
+    [alertView release];
 }
 
 @end

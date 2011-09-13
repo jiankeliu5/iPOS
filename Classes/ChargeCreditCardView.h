@@ -9,18 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "ExtUITextField.h"
 #import "MOGlassButton.h"
+#import "PaymentView.h"
 
 @class ChargeCreditCardView;
-
+@class PaymentView;
 @protocol ChargeCreditCardViewDelegate
 
-- (void) setupKeyboardSupport:(ChargeCreditCardView *) chargeCCView;
+- (void) setupKeyboardSupport:(PaymentView *) chargeCCView;
 - (void) readyForCardSwipe:(NSDecimalNumber *) chargeAmount fromView:(ChargeCreditCardView *) chargeCCView;
 - (void) cancelCardSwipe:(ChargeCreditCardView *) chargeCCView;
 
 @end
 
-@interface ChargeCreditCardView : UIView {
+@interface ChargeCreditCardView : UIView<PaymentView>{
     NSString *balanceDue;
     NSString *totalBalance;
         
@@ -41,7 +42,6 @@
 
 @property (nonatomic, assign) NSObject<ChargeCreditCardViewDelegate>* viewDelegate;
 
-- (ExtUITextField *) getChargeAmountTextField;
 
 - (void) switchCardSwipeToReady;
 

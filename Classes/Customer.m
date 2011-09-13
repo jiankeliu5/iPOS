@@ -12,7 +12,8 @@
 
 @implementation Customer
 
-@synthesize customerId, customerType, customerTypeId, priceLevelId, firstName, lastName, phoneNumber, emailAddress, store, address, taxExempt, holdStatus,holdStatusText;
+@synthesize customerId, customerType, customerTypeId, priceLevelId, firstName, lastName, phoneNumber, emailAddress, store, address, taxExempt, holdStatus,holdStatusText, creditLimit, creditBalance;
+@synthesize termsTypeId, amountAppliedOnAccount;
 
 #pragma mark Initializer and Memory Mgmt
 -(id) init {
@@ -41,8 +42,7 @@
 	[self setLastName:[aModel valueForKey:@"lastName"]];
 	[self setPhoneNumber:[aModel valueForKey:@"phoneNumber"]];
 	[self setEmailAddress:[aModel valueForKey:@"emailAddress"]];
-    [self setHoldStatus:[aModel valueForKey:@"holdStatus"]];
-	
+    	
 	Store *s = [[[Store alloc] init] autorelease];
 	[s setStoreId:[aModel valueForKey:@"storeId"]];
 	[self setStore:s];
@@ -123,6 +123,8 @@
     [emailAddress release];
     [holdStatus release];
     [holdStatusText release];
+    [creditBalance release];
+    [creditLimit release];
     
     [store release];
     [address release];
@@ -302,7 +304,11 @@
         if (mergeCustomer.priceLevelId && ![mergeCustomer.priceLevelId isEqualToNumber:[NSNumber numberWithInt:0]]) {
 			self.priceLevelId = mergeCustomer.priceLevelId;
 		}
-        
+		
+        self.holdStatus = mergeCustomer.holdStatus;
+        self.creditLimit = mergeCustomer.creditLimit;
+        self.creditBalance = mergeCustomer.creditBalance;
+        self.termsTypeId = mergeCustomer.termsTypeId;
 		self.taxExempt = mergeCustomer.taxExempt;
         
         // Merge Address information
@@ -357,6 +363,29 @@
     {
         return YES;
     }
+}
+
+//TODO: CHANGE TO NO, once I get more fake users added
+-(BOOL) isPaymentOnAccountEligable {
+    
+    if (termsTypeId &&( [self.termsTypeId integerValue] == 2 || [self.termsTypeId integerValue] == 3 ||[self.termsTypeId integerValue] == 4 || [self.termsTypeId integerValue] == 5))
+    {
+        return YES;
+    }
+    
+    return YES;  
+}
+
+-(NSDecimalNumber *) calculateAccountBalance {
+    
+    NSDecimalNumberHandler *bankersRoundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:2 
+                                                                                                  raiseOnExactness:NO raiseOnOverflow:NO 
+                                                                                                  raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+    
+    NSDecimalNumber *availCredit = [self.creditLimit decimalNumberByAdding:self.creditBalance];
+    
+    return [availCredit decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior]; ;
+    
 }
 
 #pragma mark -
