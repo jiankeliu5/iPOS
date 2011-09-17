@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ExtUIViewController.h"
 #import "ExtUITextField.h"
+#import "SSTextView.h"
 
 
 @class NotesController;
@@ -22,10 +23,8 @@
 @interface NotesController : ExtUIViewController<UITextFieldDelegate, UITextViewDelegate>
 {
     id<NotesControllerDelegate> notesDelegate;
-    UITextView *notes;
+    SSTextView *notes;
     ExtUITextField *purchaseOrder;
-    UILabel *notesHeader;
-    UILabel *purchaseOrderHeader;
     NSString *notesData;
     NSString *purchaseOrderData;
 }

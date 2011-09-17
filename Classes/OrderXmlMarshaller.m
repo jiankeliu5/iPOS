@@ -17,67 +17,67 @@
 static NSString * const ORDER_STATUS_ROOT = @"<OrderStatus";
 
 static NSString * const ORDER_XML = @""
-    "<OrderClass>"
-        "<OrderHeader>"
-            "<Customer>"
-                "<CustomerID>%@</CustomerID>"
-                "<CustomerTypeID>%@</CustomerTypeID>"
-                "<TaxExempt>%@</TaxExempt>"
-                "<Zip>%@</Zip>"
-            "</Customer>"
-            "${orderIdXml}"
-            "<OrderTypeID>%@</OrderTypeID>"
-            "<SalesPersonID>%@</SalesPersonID>"
-            "<StoreID>%@</StoreID>"
-        "</OrderHeader>"
-        "<OrderDetail>"
-            "${lineItemXml}"
-        "</OrderDetail>"
-        "<Notes>%@</Notes>"
-        "<PurchaseOrder>%@</PurchaseOrder>"
-    "</OrderClass>";
+"<OrderClass>"
+"<OrderHeader>"
+"<Customer>"
+"<CustomerID>%@</CustomerID>"
+"<CustomerTypeID>%@</CustomerTypeID>"
+"<TaxExempt>%@</TaxExempt>"
+"<Zip>%@</Zip>"
+"</Customer>"
+"${orderIdXml}"
+"<OrderTypeID>%@</OrderTypeID>"
+"<SalesPersonID>%@</SalesPersonID>"
+"<StoreID>%@</StoreID>"
+"<Notes>%@</Notes>"
+"<PurchaseOrder>%@</PurchaseOrder>"
+"</OrderHeader>"
+"<OrderDetail>"
+"${lineItemXml}"
+"</OrderDetail>"
+"</OrderClass>";
 
 
 static NSString * const ORDER_LINEITEM_XML = @""
-        @"<Line>"
-            @"<Conversion>%@</Conversion>"
-            @"<DefaultToBox>%@</DefaultToBox>"
-            @"<ItemID>%@</ItemID>"
-            @"<ItemNumber>%@</ItemNumber>"
-            @"<ItemDescription>%@</ItemDescription>"
-            @"<ItemStatusCode>%@</ItemStatusCode>"
-            @"<ItemTypeID>%@</ItemTypeID>"
-            @"<LineID>%@</LineID>"
-            @"<OrderDetailsStatusID>%@</OrderDetailsStatusID>"
-            @"<PiecesPerBox>%@</PiecesPerBox>"
-            @"${priceAuthorizationXml}"
-            @"<PrimaryUOM>%@</PrimaryUOM>"
-            @"<QuantityOrderedPrimary>%@</QuantityOrderedPrimary>"
-            @"<QuantityOrderedSecondary>%@</QuantityOrderedSecondary>"
-            @"<RetailPricePrimary>%@</RetailPricePrimary>"
-            @"<SalesPersonID>%@</SalesPersonID>"
-            @"<SecondaryUOM>%@</SecondaryUOM>"
-            @"<SellingPricePrimary>%@</SellingPricePrimary>"
-            @"<SellingPriceSecondary>%@</SellingPriceSecondary>"
-            @"<StdCost>%@</StdCost>"
-            @"<StockingCode>%@</StockingCode>"
-            @"<StoreID>%@</StoreID>"
-            @"<TaxExempt>%@</TaxExempt>"
-            @"<TaxRate>%@</TaxRate>"
-        @"</Line>";
+@"<Line>"
+@"<Conversion>%@</Conversion>"
+@"<DefaultToBox>%@</DefaultToBox>"
+@"<ItemID>%@</ItemID>"
+@"<ItemNumber>%@</ItemNumber>"
+@"<ItemDescription>%@</ItemDescription>"
+@"<ItemStatusCode>%@</ItemStatusCode>"
+@"<ItemTypeID>%@</ItemTypeID>"
+@"<LineID>%@</LineID>"
+@"<OrderDetailsStatusID>%@</OrderDetailsStatusID>"
+@"<PiecesPerBox>%@</PiecesPerBox>"
+@"${priceAuthorizationXml}"
+@"<PrimaryUOM>%@</PrimaryUOM>"
+@"<QuantityOrderedPrimary>%@</QuantityOrderedPrimary>"
+@"<QuantityOrderedSecondary>%@</QuantityOrderedSecondary>"
+@"<RetailPricePrimary>%@</RetailPricePrimary>"
+@"<SalesPersonID>%@</SalesPersonID>"
+@"<SecondaryUOM>%@</SecondaryUOM>"
+@"<SellingPricePrimary>%@</SellingPricePrimary>"
+@"<SellingPriceSecondary>%@</SellingPriceSecondary>"
+@"<StdCost>%@</StdCost>"
+@"<StockingCode>%@</StockingCode>"
+@"<StoreID>%@</StoreID>"
+@"<TaxExempt>%@</TaxExempt>"
+@"<TaxRate>%@</TaxRate>"
+@"</Line>";
 
 #pragma mark -
 #pragma mark Private Interface
 @interface OrderXmlMarshaller()
-    -(Order *) toOrderFromOrderStatus: (NSString *) xmlString;
-    - (NSString *) orderItemsToXml: (Order *) order;
+-(Order *) toOrderFromOrderStatus: (NSString *) xmlString;
+- (NSString *) orderItemsToXml: (Order *) order;
 @end
 
 @implementation OrderXmlMarshaller
 
 #pragma mark -
 -(id) toObject:(NSString *)xmlString {
-
+    
     if (xmlString == nil) {
         return nil;
     }
@@ -150,9 +150,9 @@ static NSString * const ORDER_LINEITEM_XML = @""
         if (orderId) {
             orderXml = [POSOxmUtils replaceInXmlTemplate:orderXml parameter:@"orderIdXml" withValue:[POSOxmUtils genXmlElementWithName:@"OrderID" value:orderId]];
         } else {
-             orderXml = [POSOxmUtils replaceInXmlTemplate:orderXml parameter:@"orderIdXml" withValue:@""];
+            orderXml = [POSOxmUtils replaceInXmlTemplate:orderXml parameter:@"orderIdXml" withValue:@""];
         }
-
+        
         
         // The Order items xml
         orderXml = [POSOxmUtils replaceInXmlTemplate:orderXml parameter:@"lineItemXml" withValue:[self orderItemsToXml:order]];
@@ -168,12 +168,12 @@ static NSString * const ORDER_LINEITEM_XML = @""
     CXMLElement *root = [xmlParser rootElement];
     
     Order *order = [[[Order alloc] init] autorelease];
-        
+    
     order.orderId = [root elementNumberValue:@"OrderID"];
     
     // Parse any errors
     [POSOxmUtils attachErrors:[root firstElementNamed:@"ErrorList"] toModel:order];
-        
+    
     return order;
 }
 
@@ -308,7 +308,7 @@ static NSString * const ORDER_LINEITEM_XML = @""
                 lineItemXml = [lineItemXml stringByAppendingFormat:ORDER_LINEITEM_XML, conversion, defaultToBox, itemId, itemNumber, itemDescription, itemStatusCode, itemTypeId, 
                                lineNumber, orderDetailsStatus, piecesPerBox, primaryUom, quantityPrimary, quantitySecondary, retailPrice, salepersonEmpId,
                                secondaryUom, sellingPricePrimary, sellingPriceSecondary, stdCost, stockingCode, storeId, taxExempt, taxRate];
-                               
+                
                 // Is there an authorization ID for selling price?
                 if (orderItem.priceAuthorizationId) {
                     lineItemXml = [POSOxmUtils replaceInXmlTemplate:lineItemXml parameter:@"priceAuthorizationXml" 
@@ -316,7 +316,7 @@ static NSString * const ORDER_LINEITEM_XML = @""
                 } else {
                     lineItemXml = [POSOxmUtils replaceInXmlTemplate:lineItemXml parameter:@"priceAuthorizationXml" withValue:@""];
                 }
-
+                
             }
         }
     }

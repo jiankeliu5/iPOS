@@ -29,7 +29,7 @@
 
 - (id) initWithModel:(id)aModel {
 	self = [super init];
-
+    
 	if (self == nil) {
 		return nil;
 	}
@@ -42,7 +42,9 @@
 	[self setLastName:[aModel valueForKey:@"lastName"]];
 	[self setPhoneNumber:[aModel valueForKey:@"phoneNumber"]];
 	[self setEmailAddress:[aModel valueForKey:@"emailAddress"]];
-    	
+    [self setCreditBalance:[aModel valueForKey:@"creditBalance"]];
+    [self setCreditLimit:[aModel valueForKey:@"creditLimit"]];
+    
 	Store *s = [[[Store alloc] init] autorelease];
 	[s setStoreId:[aModel valueForKey:@"storeId"]];
 	[self setStore:s];
@@ -54,13 +56,13 @@
 	[addr setStateProv:[aModel valueForKey:@"stateProv"]];
 	// Use the code below if the state is a pick list
 	/*
-	if ([aModel valueForKey:@"stateProv"] != nil) {
-		NSMutableSet *st = (NSMutableSet *)[aModel valueForKey:@"stateProv"];
-		if ([st count] > 0) {
-			NSArray *a = [st allObjects];
-			[addr setStateProv:[a objectAtIndex:0]];
-		}
-	}
+     if ([aModel valueForKey:@"stateProv"] != nil) {
+     NSMutableSet *st = (NSMutableSet *)[aModel valueForKey:@"stateProv"];
+     if ([st count] > 0) {
+     NSArray *a = [st allObjects];
+     [addr setStateProv:[a objectAtIndex:0]];
+     }
+     }
 	 */
 	[addr setZipPostalCode:[aModel valueForKey:@"zipPostalCode"]];
 	[addr setCountry:[aModel valueForKey:@"country"]];
@@ -86,6 +88,8 @@
 	[aModel setValue:[self lastName] forKey:@"lastName"];
 	[aModel setValue:[self phoneNumber] forKey:@"phoneNumber"];
 	[aModel setValue:[self emailAddress] forKey:@"emailAddress"];
+    [aModel setValue:[self creditBalance] forKey:@"creditBalance"];
+    [aModel setValue:[self creditLimit] forKey:@"creditLimit"];
 	
 	if ([self store] != nil) {
 		[aModel setValue:[self.store storeId] forKey:@"storeId"];
@@ -98,12 +102,12 @@
 		[aModel setValue:[self.address stateProv] forKey:@"stateProv"];
 		// Use the code below for state if it is a pick list
 		/*
-		if ([self.address stateProv] != nil) {
-			NSMutableSet *st = [[[NSMutableSet alloc] initWithCapacity:1] autorelease];
-			[st addObject:[self.address stateProv]];
-			[aModel setValue:st forKey:@"stateProv"];
-		}
-		*/
+         if ([self.address stateProv] != nil) {
+         NSMutableSet *st = [[[NSMutableSet alloc] initWithCapacity:1] autorelease];
+         [st addObject:[self.address stateProv]];
+         [aModel setValue:st forKey:@"stateProv"];
+         }
+         */
 		[aModel setValue:[self.address zipPostalCode] forKey:@"zipPostalCode"];
 		[aModel setValue:[self.address country] forKey:@"country"];
 	}
@@ -159,7 +163,7 @@
         
     }
 	
-   if (self.firstName == nil && self.lastName == nil) {
+    if (self.firstName == nil && self.lastName == nil) {
  		// Attach an error
 		Error *error = [[[Error alloc] init] autorelease];
 		
@@ -365,7 +369,6 @@
     }
 }
 
-//TODO: CHANGE TO NO, once I get more fake users added
 -(BOOL) isPaymentOnAccountEligable {
     
     if (termsTypeId &&( [self.termsTypeId integerValue] == 2 || [self.termsTypeId integerValue] == 3 ||[self.termsTypeId integerValue] == 4 || [self.termsTypeId integerValue] == 5))
@@ -373,7 +376,7 @@
         return YES;
     }
     
-    return YES;  
+    return NO;  
 }
 
 -(NSDecimalNumber *) calculateAccountBalance {

@@ -12,22 +12,22 @@
 #import "Customer.h"
 
 static NSString * const CUSTOMER_XML = @""
-    "<CustomerClass>"
-        "<Address>"
-            "<CustomerAddress>"
-                "<Address1>%@</Address1>"
-                "<Address2>%@</Address2>"
-                "<City>%@</City>"
-                "<State>%@</State>"
-                "<Zip>%@</Zip>"
-            "</CustomerAddress>"
-        "</Address>"
-        "${customerIdXml}"
-        "<CustomerName>%@</CustomerName>"
-        "<Email>%@</Email>"
-        "${phoneXml}"
-        "${storeXml}"
-    "</CustomerClass>";
+"<CustomerClass>"
+"<Address>"
+"<CustomerAddress>"
+"<Address1>%@</Address1>"
+"<Address2>%@</Address2>"
+"<City>%@</City>"
+"<State>%@</State>"
+"<Zip>%@</Zip>"
+"</CustomerAddress>"
+"</Address>"
+"${customerIdXml}"
+"<CustomerName>%@</CustomerName>"
+"<Email>%@</Email>"
+"${phoneXml}"
+"${storeXml}"
+"</CustomerClass>";
 
 @implementation CustomerXmlMarshaller
 
@@ -97,7 +97,7 @@ static NSString * const CUSTOMER_XML = @""
             customerXml = [POSOxmUtils replaceInXmlTemplate:customerXml parameter:@"phoneXml" withValue:[POSOxmUtils genXmlElementWithName:@"Phone1" value:phone]];
             customerXml = [POSOxmUtils replaceInXmlTemplate:customerXml parameter:@"storeXml" withValue:[POSOxmUtils genXmlElementWithName:@"StoreID" value:storeId]];
         }
-
+        
         
     }
     
@@ -127,7 +127,7 @@ static NSString * const CUSTOMER_XML = @""
         customer.phoneNumber = [root elementStringValue:@"Phone1"];
         customer.emailAddress = [root elementStringValue:@"Email"];
         customer.taxExempt = [root elementBoolValue:@"TaxExempt"];
-        customer.holdStatus = [[NSNumber alloc]initWithUnsignedInteger:0];//[root elementNumberValue:@"HoldTypeID"];
+        customer.holdStatus = [root elementNumberValue:@"HoldTypeID"];
         customer.holdStatusText = [root elementStringValue:@"HoldType"];
         customer.creditBalance = [root elementDecimalValue:@"CreditBalance"];
         customer.creditLimit = [root elementDecimalValue:@"CreditLimit"];

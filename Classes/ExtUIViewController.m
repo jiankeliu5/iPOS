@@ -27,7 +27,7 @@
     self = [super init];
     if (self == nil)
         return nil;
-
+    
     return self;
 }
 
@@ -156,6 +156,7 @@
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification {
+    
 	if (self.navigationController.topViewController == self) {
 		NSDictionary* userInfo = [notification userInfo];
 		
@@ -199,7 +200,7 @@
 			self.view.frame = frame;
 			[UIView commitAnimations];
         }
-
+        
 		// iOS 3 sends hide and show notifications right after each other
 		// when switching between textFields, so cancel -scrollToOldPosition requests
 		[NSObject cancelPreviousPerformRequestsWithTarget:self];
@@ -236,7 +237,8 @@
 }
 
 - (void)textFieldDidEndEditing:(ExtUITextField *)textField {
-	self.currentFirstResponder = nil;
+    [self.currentFirstResponder resignFirstResponder];
+	//self.currentFirstResponder = nil;
 	if (self.keyboardCancelled == NO) {
 		// Set the values and do the work here.  Need to call delegate.
 		if (delegate != nil && [delegate respondsToSelector:@selector(extTextFieldFinishedEditing:)]) {

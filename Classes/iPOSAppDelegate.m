@@ -51,14 +51,14 @@
 	[window addSubview:[navigationController view]];
 	
     [window makeKeyAndVisible];
-   }
+}
 
 - (void) applicationDidBecomeActive:(UIApplication *)application {
 	// If we had a live session and resigned as the active application
 	// due to inactivity or being backgrounded, we need to have the user
 	// input their password and re-validate the session.
     endTime = [[NSDate alloc] init];
-
+    
     NSTimeInterval interval = [endTime timeIntervalSinceDate:startTime];
     [startTime release];
     
@@ -66,41 +66,41 @@
     {
         
         if (self.resignedActive == YES && facade.sessionInfo != nil) {
-		verificationView = [[[SessionVerificationView alloc] initWithFrame:window.bounds] autorelease];
-		verificationView.delegate = self;
-		[window addSubview:verificationView];
-		UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-		
-		CGFloat angle = 0.0;
-		CGRect newFrame = verificationView.window.bounds;
-		CGSize statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
-		
-		switch (orientation) { 
-			case UIInterfaceOrientationPortraitUpsideDown:
-				angle = M_PI; 
-				newFrame.size.height -= statusBarSize.height;
-				break;
-			case UIInterfaceOrientationLandscapeLeft:
-				angle = - M_PI / 2.0f;
-				newFrame.origin.x += statusBarSize.width;
-				newFrame.size.width -= statusBarSize.width; 
-				break;
-			case UIInterfaceOrientationLandscapeRight:
-				angle = M_PI / 2.0f;
-				newFrame.size.width -= statusBarSize.width;
-				break;
-			default: // as UIInterfaceOrientationPortrait
-				angle = 0.0;
-				newFrame.origin.y += statusBarSize.height;
-				newFrame.size.height -= statusBarSize.height;
-				break;
-		} 
-		
-		verificationView.transform = CGAffineTransformMakeRotation(angle);
-		verificationView.frame = newFrame;
-		[verificationView makePasswordFieldFirstResponder];
-    }
-     
+            verificationView = [[[SessionVerificationView alloc] initWithFrame:window.bounds] autorelease];
+            verificationView.delegate = self;
+            [window addSubview:verificationView];
+            UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+            
+            CGFloat angle = 0.0;
+            CGRect newFrame = verificationView.window.bounds;
+            CGSize statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
+            
+            switch (orientation) { 
+                case UIInterfaceOrientationPortraitUpsideDown:
+                    angle = M_PI; 
+                    newFrame.size.height -= statusBarSize.height;
+                    break;
+                case UIInterfaceOrientationLandscapeLeft:
+                    angle = - M_PI / 2.0f;
+                    newFrame.origin.x += statusBarSize.width;
+                    newFrame.size.width -= statusBarSize.width; 
+                    break;
+                case UIInterfaceOrientationLandscapeRight:
+                    angle = M_PI / 2.0f;
+                    newFrame.size.width -= statusBarSize.width;
+                    break;
+                default: // as UIInterfaceOrientationPortrait
+                    angle = 0.0;
+                    newFrame.origin.y += statusBarSize.height;
+                    newFrame.size.height -= statusBarSize.height;
+                    break;
+            } 
+            
+            verificationView.transform = CGAffineTransformMakeRotation(angle);
+            verificationView.frame = newFrame;
+            [verificationView makePasswordFieldFirstResponder];
+        }
+        
     }
 	self.resignedActive = NO;
 }
@@ -120,7 +120,7 @@
 - (void) applicationWillTerminate:(UIApplication*)application {	
 	[navigationController release];
     [endTime release];
-    [startTime release];
+    //[startTime release];
     [window release];
     [super dealloc];
 }

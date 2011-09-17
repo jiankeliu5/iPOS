@@ -7,6 +7,7 @@
 //
 
 #import "NotesController.h"
+#import "SSTextView.h"
 
 #define ROUND_VIEW_X 20.0f
 #define ROUND_VIEW_Y 7.0f
@@ -23,6 +24,8 @@
 @interface NotesController()
 -(BOOL) validateString:(NSString *)text;
 -(void) displayAlert:(NSString *) alertText;
+-(void) adjustViewForKeyBoard:(NSInteger)value;
+-(NSInteger) calculateViewAdujustment:(UITextField *)textField;
 @end
 
 
@@ -34,7 +37,7 @@
 {
     self = [super init];
     if (self) {
-
+        
     }
     return self;
 }
@@ -55,15 +58,15 @@
 {
     UIView *bgView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen]applicationFrame]];
     bgView.backgroundColor = [UIColor colorWithWhite:0.85f alpha:1.0f];
-        
+    
     /*UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(close:)];
-    singleTap.numberOfTapsRequired = 1;
-    [bgView addGestureRecognizer:singleTap];*/
+     singleTap.numberOfTapsRequired = 1;
+     [bgView addGestureRecognizer:singleTap];*/
     
     UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(close:)];
     [bgView addGestureRecognizer:swipeRight];
     [self setView:bgView];
-
+    
     [bgView release];
     
     UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, KEYBOARD_TOOLBAR_WIDTH, KEYBOARD_TOOLBAR_HEIGHT)] autorelease];
@@ -76,21 +79,13 @@
     
     CGFloat cy = floorf(SPACING_HEIGHT / 2.0f);
 	CGFloat width = floorf(self.view.bounds.size.width * 0.60f);
-	
-    notesHeader = [[[UILabel alloc] initWithFrame:CGRectMake(floorf((self.view.bounds.size.width - width) / 2.0f), cy, width, LABEL_HEIGHT)] autorelease];
-	notesHeader.backgroundColor = [UIColor clearColor];
-	notesHeader.textColor = [UIColor blackColor];
-	notesHeader.text = @"Notes";
-	notesHeader.textAlignment = UITextAlignmentCenter;
-    [self.view addSubview:notesHeader];
-    cy += (LABEL_HEIGHT);
-		
-	notes = [[[UITextView alloc] initWithFrame:CGRectMake(floorf((self.view.bounds.size.width - width) / 5), cy, floorf(self.view.bounds.size.width * 0.85f), 100.0f)] autorelease];
+    
+	notes = [[[SSTextView alloc] initWithFrame:CGRectMake(floorf((self.view.bounds.size.width - width) / 5), cy, floorf(self.view.bounds.size.width * 0.85f), 100.0f)] autorelease];
 	notes.textColor = [UIColor blackColor];
     notes.autocorrectionType = UITextAutocorrectionTypeNo;
     notes.autocapitalizationType = UITextAutocapitalizationTypeNone;
 	notes.returnKeyType = UIReturnKeyDefault;
-    //notes.layer.cornerRadius = 10.0f;
+    notes.placeholder = @"Notes";
     notes.font = [UIFont fontWithName:@"Helvetica" size:17.0];
 	notes.delegate = self;
     [notes setInputAccessoryView:keyboardToolbar];
@@ -99,7 +94,7 @@
         notes.text = notesData;
     }
     [self.view addSubview:notes];
-
+    
     cy += (LABEL_HEIGHT + SPACING_HEIGHT + 50);
     
     purchaseOrder = [[[ExtUITextField alloc] initWithFrame:CGRectMake(floorf((self.view.bounds.size.width - width) / 2.0f), cy, width, LABEL_HEIGHT)] autorelease];
@@ -119,12 +114,24 @@
 
 
 /*
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+ // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+ - (void)viewDidLoad
+ {
+ [super viewDidLoad];
+ }
+ */
+
+- (void) viewDidAppear:(BOOL)animated {
+	// Call super at the beginning
+	[super viewDidAppear:animated];
+	[self addKeyboardListeners];
+    
+    // [TL]Track the actual Y origin of the view.  This fixes defect when view does not adjust up with multiple text fields
+    // and the previous Y origin messes up the anchor point for the loaded view when the keyboard is hidden.
+    if (self.view) {
+        actualOriginY = self.view.frame.origin.y;
+    }
 }
-*/
 
 - (void)viewDidUnload
 {
@@ -150,6 +157,31 @@
     [self.currentFirstResponder resignFirstResponder];
     return YES;
 }
+
+/*- (void)textViewDidBeginEditing:(UITextView *)textView
+ {
+ if(self.interfaceOrientation == UIDeviceOrientationLandscapeLeft)
+ {
+ [self adjustViewForKeyBoard: 25]; 
+ }
+ else if (self.interfaceOrientation == UIDeviceOrientationLandscapeRight)
+ {
+ [self adjustViewForKeyBoard: -25];
+ }
+ }
+ 
+ - (void)textViewDidEndEditing:(UITextView *)textView
+ {
+ 
+ if(self.interfaceOrientation == UIDeviceOrientationLandscapeLeft)
+ {
+ [self adjustViewForKeyBoard: -25]; 
+ }
+ else if (self.interfaceOrientation == UIDeviceOrientationLandscapeRight)
+ {
+ [self adjustViewForKeyBoard: 25];
+ }
+ }*/
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {  
     BOOL shouldChangeText = YES;  
@@ -184,7 +216,69 @@
     return shouldChangeText;  
 } 
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+	
+    CGRect viewRectAbsolute = [textField convertRect:textField.bounds toView:self.view];
+    
+    CGFloat height = textField.bounds.size.height;
+    CGFloat absoluteHeight = CGRectGetHeight(viewRectAbsolute);
+    NSInteger adjustValue = height + absoluteHeight;
+    
+    if(self.interfaceOrientation == UIDeviceOrientationLandscapeLeft)
+    {
+        [self adjustViewForKeyBoard: adjustValue]; 
+    }
+    else if (self.interfaceOrientation == UIDeviceOrientationLandscapeRight)
+    {
+        [self adjustViewForKeyBoard: -1 * adjustValue];
+    }
+    
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+	
+    
+    if(self.interfaceOrientation == UIDeviceOrientationLandscapeLeft)
+    {
+        NSInteger adjustment = [self calculateViewAdujustment:textField];
+        [self adjustViewForKeyBoard: -1 * adjustment]; 
+    }
+    else if (self.interfaceOrientation == UIDeviceOrientationLandscapeRight)
+    {
+        [self adjustViewForKeyBoard: [self calculateViewAdujustment:textField]];
+    }
+}
+
 #pragma mark - Misc methods
+
+
+-(NSInteger) calculateViewAdujustment:(UITextField *)textField
+{
+    CGRect viewRectAbsolute = [textField convertRect:textField.bounds toView:self.view];
+    
+    CGFloat height = textField.bounds.size.height;
+    CGFloat absoluteHeight = CGRectGetHeight(viewRectAbsolute);
+    return height + absoluteHeight;
+    
+    
+}
+
+-(void) adjustViewForKeyBoard:(NSInteger)value
+{
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    self.view.frame = CGRectMake((self.view.frame.origin.x + value), self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
+    [UIView commitAnimations];
+    
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	[self.currentFirstResponder resignFirstResponder];
+}
+
 
 -(void)dismissKeyboardForTextView:(id)sender
 {

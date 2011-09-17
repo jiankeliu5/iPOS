@@ -85,7 +85,7 @@ static NSString * const CREDIT = @"credit";
 	// Set up the items that will appear in a navigation controller bar if
 	// this view controller is added to a UINavigationController.
 	[[self navigationItem] setTitle:@"Tender"];
-
+    
 	// Set up the right side button if desired, edit button for example.
 	//[[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
 	
@@ -116,15 +116,13 @@ static NSString * const CREDIT = @"credit";
     //Just used as an example of how we can change screens.  
     UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(displayNotesAndPOView:)];
     [bgView addGestureRecognizer:swipeRight];
-
-    
     
 	[self setView:bgView];
 	[bgView release];
     [self.view setNeedsDisplay]; //Needed to redraw with updated balance info when paying on Account
     [self.view addSubview:[self buildTenderTotalView]];
     [self.view addSubview:[self buildSeparatorView]];
-       
+    
     // Add Balance Due
     CGFloat balanceDueY = rectForView.size.height - [self navBarHeight] - LABEL_SPACING - LABEL_HEIGHT;
     UILabel *balanceDueTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(LABEL_BALDUE_STARTX, balanceDueY, LABEL_BALDUE_WIDTH, LABEL_HEIGHT)];
@@ -143,7 +141,7 @@ static NSString * const CREDIT = @"credit";
     
     [balanceDueTitleLabel release];
     [balanceDueLabel release];
-            
+    
     // Add the susend button
     UIBarButtonItem *suspendButton = [[UIBarButtonItem alloc] init];
     suspendButton.title = @"Suspend";
@@ -158,6 +156,8 @@ static NSString * const CREDIT = @"credit";
     paymentToolbar.barStyle = UIBarStyleBlack;
     
     UIBarButtonItem *tbFlex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+    UIBarButtonItem *tbFixed = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil] autorelease];
+    tbFixed.width = 150.0;
     UIBarButtonItem *notesAndPOButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"pencil2.png"] 
                                                                           style:UIBarButtonItemStylePlain 
                                                                          target:self 
@@ -169,13 +169,13 @@ static NSString * const CREDIT = @"credit";
     if ([orderCart getCustomerForOrder].isPaymentOnAccountEligable)
     {
         accountPaymentButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"notes_2.png"] 
-                                                                                  style:UIBarButtonItemStylePlain 
-                                                                                 target:self 
-                                                                                 action:@selector(handleAccountPayment:)] autorelease];
+                                                                 style:UIBarButtonItemStylePlain 
+                                                                target:self 
+                                                                action:@selector(handleAccountPayment:)] autorelease];
     }
     else
     {
-        accountPaymentButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"pencil2.png"] 
+        accountPaymentButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"notes_2.png"] 
                                                                  style:UIBarButtonItemStylePlain 
                                                                 target:self 
                                                                 action:@selector(handleUnAuthorizedAction:)] autorelease];
@@ -183,10 +183,10 @@ static NSString * const CREDIT = @"credit";
     
     
     UIBarButtonItem *creditCardButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"CreditCard.png"] 
-                                                                    style:UIBarButtonItemStylePlain 
-                                                                   target:self 
-                                                                   action:@selector(handleCreditCardPayment:)] autorelease];
-    NSArray *paymentToolbarItems = [[[NSArray alloc] initWithObjects:notesAndPOButton, tbFlex,accountPaymentButton, tbFlex, creditCardButton, nil] autorelease];
+                                                                          style:UIBarButtonItemStylePlain 
+                                                                         target:self 
+                                                                         action:@selector(handleCreditCardPayment:)] autorelease];
+    NSArray *paymentToolbarItems = [[[NSArray alloc] initWithObjects:notesAndPOButton, tbFixed, accountPaymentButton, tbFlex, creditCardButton, nil] autorelease];
     [paymentToolbar setItems:paymentToolbarItems];
     
     [self.view addSubview:paymentToolbar];
@@ -210,6 +210,7 @@ static NSString * const CREDIT = @"credit";
 
 - (void) viewWillAppear:(BOOL)animated {
     [self updateViewLayout];
+    [super viewWillAppear:animated];
 }
 
 // Override to allow orientations other than the default portrait orientation.
@@ -250,9 +251,6 @@ static NSString * const CREDIT = @"credit";
 }
 
 
-
-
-
 #pragma mark -
 #pragma mark ChargeCreditCardViewDelegate
 - (void) setupKeyboardSupport:(PaymentView *)theChargeCCView {
@@ -266,10 +264,10 @@ static NSString * const CREDIT = @"credit";
 }
 
 - (void) cancelCardSwipe: (ChargeCreditCardView *) theChargeCCView {
-
+    
     // Remove as a Linea Delegate
     [linea removeDelegate:self];
-
+    
     CGRect frame = theChargeCCView.frame;
     frame.origin.y = 480;
     theChargeCCView.frame = frame;
@@ -291,7 +289,7 @@ static NSString * const CREDIT = @"credit";
 - (void) readyForCardSwipe:(NSDecimalNumber *)chargeAmount fromView:(ChargeCreditCardView *)chargeCCView {
     // Set the payment amount
     self.paymentAmount = chargeAmount;
-        
+    
 #if TARGET_IPHONE_SIMULATOR
     // Setup a timer to simulate accepting credit card payment
     [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(processOrderAsDemo:) userInfo:nil repeats: NO];        
@@ -299,7 +297,7 @@ static NSString * const CREDIT = @"credit";
     // Add this controller as a Linea Device Delegate
     [linea addDelegate:self];
 #endif
-
+    
 }
 
 #pragma mark -
@@ -324,10 +322,10 @@ static NSString * const CREDIT = @"credit";
     if (isOrderCreated) {
         isPaymentTendered = [self tenderPaymentFromCardData:track1 track2:track2 track3:track3];
     }
-
+    
     if (isPaymentTendered) {
         SignatureViewController *ccSignatureViewController = [[[SignatureViewController alloc] init] autorelease];
-   
+        
         ccSignatureViewController.delegate = self;
         
         [self presentModalViewController:ccSignatureViewController animated:YES];
@@ -366,13 +364,22 @@ static NSString * const CREDIT = @"credit";
             [AlertUtils showModalAlertMessage:@"Cannot charge more than the account balance."];
             return; 
         }
+        else if ([amount compare:orderAmount] == NSOrderedDescending) {
+            [AlertUtils showModalAlertMessage:@"Cannot charge more than the order total balance."];
+            return;        
+        }
         else
         {
             if([amount compare:balanceDue] == NSOrderedSame)
             {
                 //make a call out to the payment service to complete the transaction
                 [self sendPaymentOnAccount:amount];
-                [self navToReceipt];
+                
+                BOOL isOrderCreated = [self createOrder];
+                
+                if (isOrderCreated) {
+                    [self navToReceipt];
+                }
             }
             else
             {
@@ -380,6 +387,7 @@ static NSString * const CREDIT = @"credit";
                 [orderCart getOrder].partialPaymentOnAccount = YES;
                 [self sendPaymentOnAccount:amount];
                 [accountPaymentView removeFromSuperview];
+                [self updateViewLayout];
             }
             
         }
@@ -422,7 +430,7 @@ static NSString * const CREDIT = @"credit";
     } else {
         [self showPaymentRetryAlert:payment];
     }
-
+    
 }
 
 #pragma mark -
@@ -440,7 +448,7 @@ static NSString * const CREDIT = @"credit";
         [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"A Signature was not provided for payment with ref #%@.", ccPayment.paymentRefId]];
         isSignatureAccepted = NO;
     }
-
+    
     if (isSignatureAccepted) {
         [self navToReceipt];
     }
@@ -496,10 +504,10 @@ static NSString * const CREDIT = @"credit";
 }
 - (BOOL) tenderDemoPayment {
     BOOL isPaymentTendered = NO;
-    	
+    
     NSDecimalNumberHandler *bankersRoundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:2 
-                                                                                                      raiseOnExactness:NO raiseOnOverflow:NO 
-                                                                                                      raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+                                                                                                  raiseOnExactness:NO raiseOnOverflow:NO 
+                                                                                                  raiseOnUnderflow:NO raiseOnDivideByZero:NO];
     self.ccPayment = [[[CreditCardPayment alloc] initWithOrder:[orderCart getOrder]] autorelease];
     
     ccPayment.nameOnCard = @"Joe Testing";
@@ -692,7 +700,7 @@ static NSString * const CREDIT = @"credit";
     accountPaymentView = [[AccountPaymentView alloc] initWithFrame:overlayRect];
     accountPaymentView.viewDelegate = self;
     accountPaymentView.balanceDue = balanceDueLabel.text;
-    accountPaymentView.totalAccountBalance =  [[[orderCart getCustomerForOrder] calculateAccountBalance] stringValue];
+    accountPaymentView.totalAccountBalance =  [NSString formatDecimalNumberAsMoney:[[orderCart getCustomerForOrder] calculateAccountBalance]];
     
     [self.view addSubview:accountPaymentView];
     
@@ -702,7 +710,7 @@ static NSString * const CREDIT = @"credit";
     
     NSLog(@"displaying Notes and PO view");
     
-    NotesController *notesOverlay = [[NotesController alloc] init];
+    NotesController *notesOverlay = [[[NotesController alloc] init] autorelease];
     notesOverlay.notesDelegate = self;
     notesOverlay.notesData = [orderCart getOrder].notes;
     notesOverlay.purchaseOrderData = [orderCart getOrder].purchaseOrderId;
@@ -794,7 +802,7 @@ static NSString * const CREDIT = @"credit";
         [orderCart getOrder].purchaseOrderId = notesView.purchaseOrderData;
     }
     
-     [self dismissModalViewControllerAnimated:YES];
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 -(void) navToReceipt {
@@ -837,7 +845,7 @@ static NSString * const CREDIT = @"credit";
         [accountPaymentView removeFromSuperview];
     }
 }
-       
+
 -(void)handleUnAuthorizedAction:(id) sender {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Not Authorized for this payment type." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     

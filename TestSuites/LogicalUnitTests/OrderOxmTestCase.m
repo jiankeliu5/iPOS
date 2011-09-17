@@ -19,14 +19,14 @@
 @implementation OrderOxmTestCase
 
 -(void) testOrderFromOrderStatusXml {
-   NSString *xmlString = @"<OrderStatus>"
+    NSString *xmlString = @"<OrderStatus>"
     "<ErrorList><Error><ErrorID>1</ErrorID><Message>Error1</Message></Error>"
     "<Error><ErrorID>2</ErrorID><Message>Error2</Message></Error></ErrorList>"
     "<OrderID>1234</OrderID></OrderStatus>";
-
+    
     Order *order = [Order fromXml:xmlString];
     
-                        
+    
     STAssertNotNil(order, @"Expected Order to not be nil");                                   
     STAssertEquals([order.orderId intValue], 1234, @"I expected this to be equal to 1234");
     STAssertNotNil(order.errorList, @"Expected Order Error List to not be nil");  
@@ -84,14 +84,14 @@
     STAssertNotNil(xml, @"Expected an XML String");
     STAssertTrue([xml isEqualToString:@"<OrderClass>"
                   "<OrderHeader><Customer><CustomerID>1414</CustomerID><CustomerTypeID>1</CustomerTypeID><TaxExempt>false</TaxExempt><Zip>55044</Zip></Customer>"
-                  "<OrderTypeID>1</OrderTypeID><SalesPersonID>1111</SalesPersonID><StoreID>1234</StoreID></OrderHeader>"
+                  "<OrderTypeID>1</OrderTypeID><SalesPersonID>1111</SalesPersonID><StoreID>1234</StoreID><Notes>Notes</Notes><PurchaseOrder>112</PurchaseOrder></OrderHeader>"
                   "<OrderDetail><Line><Conversion>1</Conversion><DefaultToBox>true</DefaultToBox><ItemID>1414</ItemID><ItemNumber>232323</ItemNumber>"
                   "<ItemDescription>Some product</ItemDescription><ItemStatusCode>S</ItemStatusCode><ItemTypeID>1</ItemTypeID>"
                   "<LineID>1</LineID><OrderDetailsStatusID>1</OrderDetailsStatusID><PiecesPerBox>12</PiecesPerBox><PrimaryUOM>EA</PrimaryUOM>"
                   "<QuantityOrderedPrimary>25</QuantityOrderedPrimary><QuantityOrderedSecondary>25</QuantityOrderedSecondary><RetailPricePrimary>3.75</RetailPricePrimary>"
                   "<SalesPersonID>1111</SalesPersonID><SecondaryUOM>EA</SecondaryUOM><SellingPricePrimary>3.75</SellingPricePrimary><SellingPriceSecondary>3.75</SellingPriceSecondary>"
                   "<StdCost>2.7</StdCost><StockingCode>S</StockingCode><StoreID>1234</StoreID><TaxExempt>false</TaxExempt>"
-                  "<TaxRate>0.7</TaxRate></Line></OrderDetail><Notes>Notes</Notes><PurchaseOrder>112</PurchaseOrder></OrderClass>"], xml);
+                  "<TaxRate>0.7</TaxRate></Line></OrderDetail></OrderClass>"], xml);
 }
 
 @end
