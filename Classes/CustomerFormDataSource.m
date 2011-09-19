@@ -9,6 +9,7 @@
 #import "CustomerFormDataSource.h"
 #import "NSString+StringFormatters.h"
 #import "IBATextFormField.h"
+#import "IBAReadOnlyTextFormField.h"
 #import "IBAPickListFormField.h"
 #import "Address.h"
 
@@ -38,22 +39,37 @@
 		
 		customerFormSection.formFieldStyle = style;
 		
-		IBATextFormField *firstFormField = [[IBATextFormField alloc] initWithKeyPath:@"firstName" title:@"First"];
-		[firstFormField setMaxLength:[NSNumber numberWithInt:40]];
-		[customerFormSection addFormField:[firstFormField autorelease]];
-		
-		IBATextFormField *lastFormField = [[IBATextFormField alloc] initWithKeyPath:@"lastName" title:@"Last"];
-		[lastFormField setMaxLength:[NSNumber numberWithInt:40]];
-		[customerFormSection addFormField:[lastFormField autorelease]];
-		
+        
+        if ([(NSDictionary *)aModel count] > 1)
+        {
+            IBAReadOnlyTextFormField *firstFormField = [[IBAReadOnlyTextFormField alloc] initWithKeyPath:@"firstName" title:@"First"];           
+            [customerFormSection addFormField:[firstFormField autorelease]];
+            
+            IBAReadOnlyTextFormField *lastFormField = [[IBAReadOnlyTextFormField alloc] initWithKeyPath:@"lastName" title:@"Last"];
+            [customerFormSection addFormField:[lastFormField autorelease]];
+
+        }
+        else
+        {
+            IBATextFormField *firstFormField = [[IBATextFormField alloc] initWithKeyPath:@"firstName" title:@"First"];
+            [firstFormField setMaxLength:[NSNumber numberWithInt:40]];
+            [customerFormSection addFormField:[firstFormField autorelease]];
+            
+            IBATextFormField *lastFormField = [[IBATextFormField alloc] initWithKeyPath:@"lastName" title:@"Last"];
+            [lastFormField setMaxLength:[NSNumber numberWithInt:40]];
+            [customerFormSection addFormField:[lastFormField autorelease]];
+        }
+        
+				
 		IBATextFormField *emailFormField = [[IBATextFormField alloc] initWithKeyPath:@"emailAddress" title:@"Email"];
+        [customerFormSection addFormField:[emailFormField autorelease]];
 		[emailFormField setMaxLength:[NSNumber numberWithInt:100]];
 		emailFormField.textFormFieldCell.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         
         // Fixed to ensure no autocorrect on e-mail [Defect:  2011-06-01]
         emailFormField.textFormFieldCell.textField.autocorrectionType = UITextAutocorrectionTypeNo;
 		emailFormField.textFormFieldCell.textField.keyboardType = UIKeyboardTypeEmailAddress;
-		[customerFormSection addFormField:[emailFormField autorelease]];
+		
 		
 		IBATextFormField *addrLine1Field = [[IBATextFormField alloc] initWithKeyPath:@"addressLine1" title:@"Address 1"];
 		[addrLine1Field setMaxLength:[NSNumber numberWithInt:40]];
@@ -68,9 +84,10 @@
 		[customerFormSection addFormField:[cityField autorelease]];
 		
 		IBATextFormField *stateFormField = [[IBATextFormField alloc] initWithKeyPath:@"stateProv" title:@"State"];
+        [customerFormSection addFormField:[stateFormField autorelease]];
 		[stateFormField setMaxLength:[NSNumber numberWithInt:2]];
 		stateFormField.textFormFieldCell.textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
-		[customerFormSection addFormField:[stateFormField autorelease]];
+		
 		
 		/*
 		NSArray *pickListOptions = [IBAPickListFormOption pickListOptionsForStrings:[Address usStateCodes]];
