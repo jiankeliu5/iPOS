@@ -131,7 +131,7 @@ static NSString * const CUSTOMER_XML = @""
         customer.holdStatusText = [root elementStringValue:@"HoldType"];
         customer.creditBalance = [root elementDecimalValue:@"CreditBalance"];
         customer.creditLimit = [root elementDecimalValue:@"CreditLimit"];
-        customer.termsTypeId = [root elementNumberValue:@"TermsTypeId"];
+        customer.termsTypeId = [root elementNumberValue:@"TermsTypeID"];
         
         
         // Customer Name

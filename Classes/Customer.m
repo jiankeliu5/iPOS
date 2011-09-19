@@ -44,6 +44,7 @@
 	[self setEmailAddress:[aModel valueForKey:@"emailAddress"]];
     [self setCreditBalance:[aModel valueForKey:@"creditBalance"]];
     [self setCreditLimit:[aModel valueForKey:@"creditLimit"]];
+    [self setTermsTypeId:[aModel valueForKey:@"termsTypeID"]];
     
 	Store *s = [[[Store alloc] init] autorelease];
 	[s setStoreId:[aModel valueForKey:@"storeId"]];
@@ -90,6 +91,7 @@
 	[aModel setValue:[self emailAddress] forKey:@"emailAddress"];
     [aModel setValue:[self creditBalance] forKey:@"creditBalance"];
     [aModel setValue:[self creditLimit] forKey:@"creditLimit"];
+    [aModel setValue:[self termsTypeId] forKey:@"termsTypeID"];
 	
 	if ([self store] != nil) {
 		[aModel setValue:[self.store storeId] forKey:@"storeId"];

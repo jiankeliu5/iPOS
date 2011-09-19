@@ -147,7 +147,7 @@
     dy += LABEL_HEIGHT + LABEL_SPACING;
     holdStatusLabel = [self createNormalLabel:@"Status" withRect:CGRectMake(DETAIL_LABEL_X, dy, DETAIL_LABEL_WIDTH, LABEL_HEIGHT)];
     holdStatus = [self createBoldLabel:nil withRect:CGRectMake(DETAIL_DATA_X, dy, DETAIL_DATA_WIDTH, LABEL_HEIGHT)];
-    holdStatus.textColor = [UIColor redColor];
+    //holdStatus.textColor = [UIColor redColor];
     
     [detailView addSubview:holdStatusLabel];
     [detailView addSubview:holdStatus];
@@ -379,6 +379,7 @@
         }
         else
         {
+            holdStatus.textColor = [UIColor redColor];
             cy += TEXT_FIELD_HEIGHT;
             detailView.frame = CGRectMake(DETAIL_VIEW_X, cy, DETAIL_VIEW_WIDTH, DETAIL_VIEW_HEIGHT);
             detailView.hidden = NO;
