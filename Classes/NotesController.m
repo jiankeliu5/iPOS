@@ -8,6 +8,8 @@
 
 #import "NotesController.h"
 #import "SSTextView.h"
+#import "UIViewController+ViewControllerLayout.h"
+#import "UIView+ViewLayout.h"
 
 #define ROUND_VIEW_X 20.0f
 #define ROUND_VIEW_Y 7.0f
@@ -26,6 +28,7 @@
 -(void) displayAlert:(NSString *) alertText;
 -(void) adjustViewForKeyBoard:(NSInteger)value;
 -(NSInteger) calculateViewAdujustment:(UITextField *)textField;
+-(void) close:(id)sender;
 @end
 
 
@@ -37,6 +40,8 @@
 {
     self = [super init];
     if (self) {
+        [[self navigationItem] setTitle:@"Notes"];
+        isKeyboardPresent = NO;
         
     }
     return self;
@@ -56,14 +61,15 @@
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView
 {
-    UIView *bgView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen]applicationFrame]];
+    CGRect rectForView = [self rectForNavAndStatus];
+  
+    UIView *bgView = [[UIView alloc] initWithFrame:rectForView];
     bgView.backgroundColor = [UIColor colorWithWhite:0.85f alpha:1.0f];
     
-    /*UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(close:)];
-     singleTap.numberOfTapsRequired = 1;
-     [bgView addGestureRecognizer:singleTap];*/
-    
+    bgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(close:)];
+    //[bgView setAllAutoresizingMask: YES];
+    
     [bgView addGestureRecognizer:swipeRight];
     [self setView:bgView];
     
@@ -77,10 +83,12 @@
     NSArray *items = [[[NSArray alloc] initWithObjects:doneButton, flex, nil] autorelease];
 	[keyboardToolbar setItems:items];
     
-    CGFloat cy = floorf(SPACING_HEIGHT / 2.0f);
+    CGFloat cy = floorf(LABEL_HEIGHT + SPACING_HEIGHT + SPACING_HEIGHT);
 	CGFloat width = floorf(self.view.bounds.size.width * 0.60f);
     
-	notes = [[[SSTextView alloc] initWithFrame:CGRectMake(floorf((self.view.bounds.size.width - width) / 5), cy, floorf(self.view.bounds.size.width * 0.85f), 100.0f)] autorelease];
+	notes = [[[SSTextView alloc] initWithFrame:CGRectMake(floorf((self.view.bounds.size.width - width) / 15), cy, floorf(self.view.bounds.size.width * 0.95f), (rectForView.size.height /2))] autorelease];
+    notes.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    notes.layer.cornerRadius = 10.0f;
 	notes.textColor = [UIColor blackColor];
     notes.autocorrectionType = UITextAutocorrectionTypeNo;
     notes.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -95,56 +103,139 @@
     }
     [self.view addSubview:notes];
     
-    cy += (LABEL_HEIGHT + SPACING_HEIGHT + 50);
+    cy += (SPACING_HEIGHT + notes.frame.size.height);
     
-    purchaseOrder = [[[ExtUITextField alloc] initWithFrame:CGRectMake(floorf((self.view.bounds.size.width - width) / 2.0f), cy, width, LABEL_HEIGHT)] autorelease];
+    purchaseOrder = [[[ExtUITextField alloc] initWithFrame:CGRectMake(floorf((self.view.bounds.size.width - width) / 10.0f), cy, width, LABEL_HEIGHT)] autorelease];
+    notes.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
 	purchaseOrder.textColor = [UIColor blackColor];
     purchaseOrder.placeholder = @"PO";
     purchaseOrder.borderStyle = UITextBorderStyleRoundedRect;
 	purchaseOrder.textAlignment = UITextAlignmentCenter;
+    purchaseOrder.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	purchaseOrder.delegate = self;
     [super addDoneToolbarForTextField:purchaseOrder];
     if (purchaseOrderData && purchaseOrderData != nil)
     {
         purchaseOrder.text = purchaseOrderData;
     }
+
     [self.view addSubview:purchaseOrder];
  	
 }
 
+-(CGRect) buildNotesLayoutForPortrait{
+    CGFloat cy = floorf(LABEL_HEIGHT + SPACING_HEIGHT + SPACING_HEIGHT);
+	CGFloat width = floorf(self.view.bounds.size.width * 0.60f);
+    
+    return CGRectMake(floorf((self.view.bounds.size.width - width) / 15), cy, floorf(self.view.bounds.size.width * 0.95f), (self.view.frame.size.height /2)); 
+}
 
-/*
+-(CGRect) buildPurchaseOrderLayOutForPortrait{
+    
+    CGFloat cy = floorf(LABEL_HEIGHT + SPACING_HEIGHT + SPACING_HEIGHT);
+    cy += (SPACING_HEIGHT + notes.frame.size.height);
+	CGFloat width = floorf(self.view.bounds.size.width * 0.60f);
+    
+    return CGRectMake(floorf((self.view.bounds.size.width - width) / 10.0f), cy, width, LABEL_HEIGHT);
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    
+    if ([self.currentFirstResponder isKindOfClass:[UITextView class]])
+    {
+        CGFloat width = floorf(self.view.bounds.size.width * 0.60f);
+        notes.frame = CGRectMake(floorf((self.view.bounds.size.width - width) / 15), notes.frame.origin.y, floor(self.view.frame.size.width * .95f), ((self.view.frame.size.height / 4) - 5));
+    }
+    
+    [super keyboardWillShow:notification];
+    
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    
+    if ([self.currentFirstResponder isKindOfClass:[UITextView class]])
+    {
+        CGFloat width = floorf(self.view.bounds.size.width * 0.60f);
+        notes.frame = CGRectMake(floorf((self.view.bounds.size.width - width) / 15), notes.frame.origin.y, floor(self.view.frame.size.width * .95f), (self.view.frame.size.height / 2));
+    }
+    
+    [super keyboardWillHide:notification];
+    
+}
+
  // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
  - (void)viewDidLoad
  {
  [super viewDidLoad];
+     if (self.navigationController != nil) {
+         [self.navigationController setNavigationBarHidden:NO];
+     }
  }
- */
+
 
 - (void) viewDidAppear:(BOOL)animated {
 	// Call super at the beginning
 	[super viewDidAppear:animated];
 	[self addKeyboardListeners];
     
-    // [TL]Track the actual Y origin of the view.  This fixes defect when view does not adjust up with multiple text fields
-    // and the previous Y origin messes up the anchor point for the loaded view when the keyboard is hidden.
-    if (self.view) {
-        actualOriginY = self.view.frame.origin.y;
     }
-}
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    [notes release];
+    [purchaseOrder release];
     
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+- (void) viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self close:self];
+    
+    
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self.currentFirstResponder resignFirstResponder];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait) || UIInterfaceOrientationIsLandscape(interfaceOrientation);
+}
+
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    CGFloat cy = floorf(SPACING_HEIGHT / 2.0f);
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    
+    if (UIDeviceOrientationIsLandscape(fromInterfaceOrientation))
+    {
+        notes.frame = [self buildNotesLayoutForPortrait];
+        purchaseOrder.frame = [self buildPurchaseOrderLayOutForPortrait];
+        
+    }
+    else if (UIDeviceOrientationIsPortrait(fromInterfaceOrientation))
+    {
+        CGFloat width = floorf(self.view.bounds.size.width * 0.60f);
+        notes.frame = CGRectMake(floorf((self.view.bounds.size.width - width) / 15), cy, floor(self.view.frame.size.width * .95f), (self.view.frame.size.height / 2));
+        cy += (SPACING_HEIGHT + notes.frame.size.height);
+        purchaseOrder.frame = CGRectMake(floorf((self.view.bounds.size.width - width) / 10.0f), cy, width, LABEL_HEIGHT);
+        
+    }
+    [self.currentFirstResponder becomeFirstResponder];
+    [UIView commitAnimations];
+    
+    
 }
 
 #pragma mark - Text View Delegate methods
@@ -158,44 +249,17 @@
     return YES;
 }
 
-/*- (void)textViewDidBeginEditing:(UITextView *)textView
- {
- if(self.interfaceOrientation == UIDeviceOrientationLandscapeLeft)
- {
- [self adjustViewForKeyBoard: 25]; 
- }
- else if (self.interfaceOrientation == UIDeviceOrientationLandscapeRight)
- {
- [self adjustViewForKeyBoard: -25];
- }
- }
- 
- - (void)textViewDidEndEditing:(UITextView *)textView
- {
- 
- if(self.interfaceOrientation == UIDeviceOrientationLandscapeLeft)
- {
- [self adjustViewForKeyBoard: -25]; 
- }
- else if (self.interfaceOrientation == UIDeviceOrientationLandscapeRight)
- {
- [self adjustViewForKeyBoard: 25];
- }
- }*/
-
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {  
     BOOL shouldChangeText = YES;  
     
-    if([text isEqualToString:@"\n"] || [textView.text length] < TEXTVIEW_MAX_LENGTH)
-    {
-        shouldChangeText = YES;
-    }
-    else{
-        shouldChangeText = NO;
+    if(range.length > text.length){
+        shouldChangeText =  YES;
+    }else if([[textView text] length] + text.length > TEXTVIEW_MAX_LENGTH){
         [self displayAlert: @"Only 255 characters are allowed"];
-    } 
+        shouldChangeText =  NO;
+    }
     
-    return shouldChangeText;  
+    return shouldChangeText;
 } 
 
 #pragma mark - TextField Delegate methods
@@ -216,39 +280,6 @@
     return shouldChangeText;  
 } 
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-	
-    CGRect viewRectAbsolute = [textField convertRect:textField.bounds toView:self.view];
-    
-    CGFloat height = textField.bounds.size.height;
-    CGFloat absoluteHeight = CGRectGetHeight(viewRectAbsolute);
-    NSInteger adjustValue = height + absoluteHeight;
-    
-    if(self.interfaceOrientation == UIDeviceOrientationLandscapeLeft)
-    {
-        [self adjustViewForKeyBoard: adjustValue]; 
-    }
-    else if (self.interfaceOrientation == UIDeviceOrientationLandscapeRight)
-    {
-        [self adjustViewForKeyBoard: -1 * adjustValue];
-    }
-    
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-	
-    
-    if(self.interfaceOrientation == UIDeviceOrientationLandscapeLeft)
-    {
-        NSInteger adjustment = [self calculateViewAdujustment:textField];
-        [self adjustViewForKeyBoard: -1 * adjustment]; 
-    }
-    else if (self.interfaceOrientation == UIDeviceOrientationLandscapeRight)
-    {
-        [self adjustViewForKeyBoard: [self calculateViewAdujustment:textField]];
-    }
-}
-
 #pragma mark - Misc methods
 
 
@@ -259,8 +290,6 @@
     CGFloat height = textField.bounds.size.height;
     CGFloat absoluteHeight = CGRectGetHeight(viewRectAbsolute);
     return height + absoluteHeight;
-    
-    
 }
 
 -(void) adjustViewForKeyBoard:(NSInteger)value

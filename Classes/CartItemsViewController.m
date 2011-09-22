@@ -73,6 +73,7 @@
 - (void) updateSelectionCount;
 
 - (void) showAddItemOverlay: (NSArray *) foundItems;
+- (void) displayProfitMarginOverlay;
 @end
 
 @implementation CartItemsViewController
@@ -449,14 +450,9 @@
     [navController pushViewController:tenderViewController animated:YES];
 }
 
-//Used to call out to external service to calculate profit margin for order.
+
 - (void)calculateProfitMargin:(id) sender{
-    NSLog(@"Sending request for profit margin");
-   
-    ProfitMarginViewController *pmvc = [[ProfitMarginViewController alloc] initWithOrder:[orderCart getOrder]];
-    pmvc.delegate = self;
-    pmvc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self presentModalViewController:pmvc animated:YES];
+    [self displayProfitMarginOverlay];
 }
 
 - (CustomerViewController *)findCustomerViewController {
@@ -814,5 +810,29 @@
     }
     
 }
+
+#pragma mark -
+#pragma mark ProfitMargin Overlay
+-(void)displayProfitMarginOverlay
+{
+    
+    UILabel *textLabel = [[UILabel alloc ]initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.size.height - 95, self.view.frame.size.width, 50.0f)];
+    textLabel.textColor = [UIColor whiteColor];
+    //textLabel.layer.cornerRadius = 5.0f;
+    textLabel.text = [NSString stringWithFormat:@"PM %@", [[orderCart getOrder] calculateProfitMargin]];
+    textLabel.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.3f];
+    textLabel.textAlignment = UITextAlignmentCenter;
+    
+	[UIView beginAnimations: @"Fade Out" context:nil];
+	
+	// wait for time before begin
+	[UIView setAnimationDelay:0.0];
+	[self.view addSubview:textLabel];
+	// druation of animation
+	[UIView setAnimationDuration:2.0];
+	textLabel.alpha = 0.0;
+	[UIView commitAnimations];
+}
+
 
 @end

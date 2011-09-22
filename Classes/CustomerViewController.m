@@ -375,7 +375,9 @@
             CGFloat buttonSpace = floorf((width - BUTTON_WIDTH * 2.0f) / 3.0f);
             custSearchButton.frame = CGRectMake(buttonSpace, cy, BUTTON_WIDTH, BUTTON_HEIGHT);
             confirmButton.frame = CGRectMake(((buttonSpace * 2.0f) + BUTTON_WIDTH), cy, BUTTON_WIDTH, BUTTON_HEIGHT);
-            confirmButton.hidden = NO;  
+            confirmButton.hidden = NO;
+            [confirmButton setEnabled:YES];
+            holdStatus.textColor = [UIColor blackColor];
         }
         else
         {
@@ -386,8 +388,8 @@
             cy += DETAIL_VIEW_HEIGHT + SPACING;
             CGFloat buttonSpace = floorf((width - BUTTON_WIDTH * 2.0f) / 3.0f);
             custSearchButton.frame = CGRectMake(buttonSpace, cy, BUTTON_WIDTH, BUTTON_HEIGHT);
-          
-            
+            confirmButton.frame = CGRectMake(((buttonSpace * 2.0f) + BUTTON_WIDTH), cy, BUTTON_WIDTH, BUTTON_HEIGHT);
+            [confirmButton setEnabled:NO];
         }
 	}
 }

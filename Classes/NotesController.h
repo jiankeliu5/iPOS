@@ -27,6 +27,7 @@
     ExtUITextField *purchaseOrder;
     NSString *notesData;
     NSString *purchaseOrderData;
+    BOOL isKeyboardPresent;
 }
 
 @property(nonatomic, assign) id notesDelegate;
