@@ -75,8 +75,8 @@ static iPOSFacade *facade = nil;
 
 -(BOOL) logout {
 	BOOL logoutStatus = [posService logout:sessionInfo];
-	[self.sessionInfo release];
-	self.sessionInfo = nil;
+	[sessionInfo release];
+	sessionInfo = nil;
     return logoutStatus;
 }
 
