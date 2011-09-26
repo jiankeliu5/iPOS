@@ -11,6 +11,8 @@
 
 @implementation AccountPayment
 
+
+@synthesize signature;
 - (id)init
 {
     self = [super init];
@@ -19,6 +21,14 @@
     }
     
     return self;
+}
+
+- (void) attachSignature:(NSString *)signatureAsBase64 {
+    // Create the payment signature and assign it
+    PaymentSignature *paySignature = [[[PaymentSignature alloc] initWithPayment:self] autorelease];
+    
+    paySignature.signatureAsBase64 = signatureAsBase64;
+    self.signature = paySignature;
 }
 
 #pragma mark -

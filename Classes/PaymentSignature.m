@@ -8,10 +8,11 @@
 
 #import "PaymentSignature.h"
 #import "PaymentSignatureXmlMarshaller.h"
+#import "AccountPayment.h"
 
 @implementation PaymentSignature
 
-@synthesize signatureAsBase64, paymentRefId;
+@synthesize signatureAsBase64, paymentRefId, isPayOnAccount;
 
 #pragma mark -
 #pragma mark Constructor/Deconstructor
@@ -24,6 +25,16 @@
     
     if (self == nil) {
         return nil;
+    }
+    
+    if ([payment isKindOfClass:[AccountPayment class]])
+    {
+        isPayOnAccount = YES;
+        
+    }
+    else
+    {
+        isPayOnAccount = NO;
     }
     
     paymentRefId = [payment.paymentRefId retain];

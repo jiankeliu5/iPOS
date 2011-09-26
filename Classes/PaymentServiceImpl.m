@@ -15,7 +15,7 @@
 
 @interface PaymentServiceImpl()
 
-
+- (BOOL) sendSignatureRequest:(NSString *)signatureXml forPayment:(Payment *) payment withSessionInfo:(SessionInfo *) sessionInfo;
 @end
 
 @implementation PaymentServiceImpl
@@ -122,6 +122,12 @@
 }
 
 
+- (BOOL) acceptSignatureOnAccount:(AccountPayment *)payment withSession:(SessionInfo *)sessionInfo {
+    
+     NSString *xml = [payment.signature toXml];
+    return [self sendSignatureRequest:xml forPayment:payment withSessionInfo:sessionInfo];
+}
+
 
 - (BOOL) acceptSignatureFor:(CreditCardPayment *)ccPayment withSession:(SessionInfo *)sessionInfo {
     if (sessionInfo == nil || ccPayment == nil || ccPayment.signature == nil || [[ccPayment.signature validate] count] > 0) {
@@ -165,6 +171,47 @@
     
     // Return result
     return isSuccessful;
+}
+
+- (BOOL) sendSignatureRequest:(NSString *)signatureXml forPayment:(Payment *) payment withSessionInfo:(SessionInfo *) sessionInfo {
+    
+    // Send the request to tender payment
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@", baseUrl, posPaymentMgmtUri, @"signature"]];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    
+    [request setValidatesSecureCertificate:NO];
+    [request setTimeOutSeconds:30];
+    
+    if (sessionInfo && sessionInfo.deviceId) {
+        [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
+    }
+    
+    // Post data for payment
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+       
+    [request appendPostData:[signatureXml dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [request startSynchronous];
+    
+    // Post verification and complete request
+    NSArray *requestErrors = [request validateAsXmlContent];
+    if ([requestErrors count] > 0) {
+        // Clear out any errors previously set
+        [payment removeAllErrors];
+        
+        for (Error *error in requestErrors) {
+            [payment addError:error];
+        }
+        
+        return NO;   
+    }    
+    
+    BOOL isSuccessful = [POSOxmUtils isXmlResultTrue:[request responseString]];
+    
+    
+    // Return result
+    return isSuccessful;
+
 }
 
 - (void) tenderPaymentOnAccount:(AccountPayment *)accountPayment withSession:(SessionInfo *)sessionInfo {

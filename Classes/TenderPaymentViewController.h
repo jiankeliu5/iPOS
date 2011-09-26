@@ -19,7 +19,7 @@
 
 @interface TenderPaymentViewController : ExtUIViewController<ExtUIViewControllerDelegate, ChargeCreditCardViewDelegate, LineaDelegate, SignatureDelegate, NotesControllerDelegate, AccountPaymentViewDelegate> {
 	NSDecimalNumber *paymentAmount;
-    CreditCardPayment *ccPayment;
+    id ccPayment;
     
     iPOSFacade *facade;
     OrderCart *orderCart;
@@ -37,5 +37,6 @@
 }
 
 @property (nonatomic, retain) NSDecimalNumber *paymentAmount;
-@property (nonatomic, retain) CreditCardPayment *ccPayment;
+@property (nonatomic, retain) id ccPayment;
+
 @end

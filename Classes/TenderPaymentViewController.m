@@ -14,6 +14,7 @@
 #import "GradientView.h"
 #import "SSLineView.h"
 
+
 #import "ChargeCreditCardView.h"
 #import "ReceiptViewController.h"
 #import "SignatureViewController.h"
@@ -67,13 +68,15 @@ static NSString * const CREDIT = @"credit";
 
 - (void) showPaymentRetryAlert:(Payment *) aCCPayment;
 - (void) cancelTenderAndLogout;
+-(NSDecimalNumber *) getOrderBalanceDue;
 
 - (void) navToReceipt;
+- (void) displayPayOnAccountSuccesfulView;
 @end
 
 @implementation TenderPaymentViewController
 
-@synthesize paymentAmount, ccPayment;
+@synthesize paymentAmount, ccPayment;//, accountPayment;
 
 #pragma mark Constructors
 - (id)init
@@ -119,7 +122,6 @@ static NSString * const CREDIT = @"credit";
     
 	[self setView:bgView];
 	[bgView release];
-    [self.view setNeedsDisplay]; //Needed to redraw with updated balance info when paying on Account
     [self.view addSubview:[self buildTenderTotalView]];
     [self.view addSubview:[self buildSeparatorView]];
     
@@ -164,23 +166,16 @@ static NSString * const CREDIT = @"credit";
                                                                          action:@selector(displayNotesAndPOView:)] autorelease];
     
     
-    UIBarButtonItem *accountPaymentButton;
+        UIBarButtonItem * accountPaymentButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"notes_2.png"] 
+                                                             style:UIBarButtonItemStylePlain 
+                                                            target:self 
+                                                            action:@selector(handleAccountPayment:)] autorelease];
     
-    if ([orderCart getCustomerForOrder].isPaymentOnAccountEligable)
-    {
-        accountPaymentButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"notes_2.png"] 
-                                                                 style:UIBarButtonItemStylePlain 
-                                                                target:self 
-                                                                action:@selector(handleAccountPayment:)] autorelease];
-    }
-    else
-    {
-        accountPaymentButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"notes_2.png"] 
-                                                                 style:UIBarButtonItemStylePlain 
-                                                                target:self 
-                                                                action:@selector(handleUnAuthorizedAction:)] autorelease];
-    }
     
+    if (![orderCart getCustomerForOrder].isPaymentOnAccountEligable)
+    {
+        [accountPaymentButton setEnabled:NO];
+    }
     
     UIBarButtonItem *creditCardButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"CreditCard.png"] 
                                                                           style:UIBarButtonItemStylePlain 
@@ -338,10 +333,16 @@ static NSString * const CREDIT = @"credit";
     }
 }
 
--(NSDecimalNumber *) getOrderBalanceDue{
+-(NSDecimalNumber *) getOrderBalanceDue {
     
-    return [[orderCart getOrder] calcBalanceDue];
+    NSDecimalNumberHandler *bankersRoundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:2 
+                                                                                                  raiseOnExactness:NO raiseOnOverflow:NO 
+                                                                                                  raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+    NSDecimalNumber *balanceDue = [[[orderCart getOrder] calcBalanceDue] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
+    
+    return balanceDue;
 }
+
 
 #pragma mark -
 #pragma mark ExtUIViewController delegates
@@ -353,7 +354,7 @@ static NSString * const CREDIT = @"credit";
                                                                                                   raiseOnExactness:NO raiseOnOverflow:NO 
                                                                                                   raiseOnUnderflow:NO raiseOnDivideByZero:NO];
     NSDecimalNumber *amount = [[NSDecimalNumber decimalNumberWithString:textField.text] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
-    NSDecimalNumber *balanceDue = [[self getOrderBalanceDue] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
+    NSDecimalNumber *balanceDue = [self getOrderBalanceDue];//[[self getOrderBalanceDue] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
     NSDecimalNumber *orderAmount = [[[order calcOrderSubTotal] decimalNumberByAdding:[order calcOrderTax]] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
     
     if (textField.tagName == ACCOUNT)
@@ -372,22 +373,17 @@ static NSString * const CREDIT = @"credit";
         {
             if([amount compare:balanceDue] == NSOrderedSame)
             {
-                //make a call out to the payment service to complete the transaction
-                [self sendPaymentOnAccount:amount];
-                
-                BOOL isOrderCreated = [self createOrder];
-                
-                if (isOrderCreated) {
-                    [self navToReceipt];
+                if ([self createOrder])
+                {
+                    [self sendPaymentOnAccount:amount];
                 }
             }
             else
             {
                 [orderCart getCustomerForOrder].amountAppliedOnAccount = amount;
                 [orderCart getOrder].partialPaymentOnAccount = YES;
+                [self createOrder];
                 [self sendPaymentOnAccount:amount];
-                [accountPaymentView removeFromSuperview];
-                [self updateViewLayout];
             }
             
         }
@@ -419,38 +415,96 @@ static NSString * const CREDIT = @"credit";
     }  
 }
 
-//submits the payment to the payment service
+#pragma mark -
+#pragma mark Send payment on account method.
 -(void) sendPaymentOnAccount:(NSDecimalNumber *) amount {
-    AccountPayment *payment = [[AccountPayment alloc] initWithOrder:[orderCart getOrder]];
-    payment.paymentAmount = amount;
-    [facade tenderPaymentOnAccount:payment];
+    self.ccPayment = [[[AccountPayment alloc] initWithOrder:[orderCart getOrder]] autorelease];
+    [ccPayment setPaymentAmount:amount];
+    [facade tenderPaymentOnAccount:ccPayment];
     
-    if ([payment.errorList count] == 0) {
-        //isPaymentTendered = YES;
+    if ([[ccPayment errorList] count] == 0) {
+        SignatureViewController *signatureViewController = [[[SignatureViewController alloc] init] autorelease];
+        signatureViewController.delegate = self;
+        signatureViewController.payAmountLabel.text = [NSString formatDecimalNumberAsMoney:self.paymentAmount];
+        [self presentModalViewController:signatureViewController animated:YES];
+        
     } else {
-        [self showPaymentRetryAlert:payment];
+        [self showPaymentRetryAlert:ccPayment];
     }
     
 }
 
 #pragma mark -
+
+-(void)displayPayOnAccountSuccesfulView
+{
+    
+    UILabel *textLabel = [[UILabel alloc ]initWithFrame:CGRectMake(self.view.frame.size.width / 6, self.view.frame.size.height / 4, 225.0f, 100.0f)];
+    textLabel.textColor = [UIColor whiteColor];
+    textLabel.layer.cornerRadius = 5.0f;
+    textLabel.text = @"Payment Successful";
+    textLabel.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
+    textLabel.textAlignment = UITextAlignmentCenter;
+    
+	[UIView beginAnimations: @"Fade Out" context:nil];
+	
+	// wait for time before begin
+	[UIView setAnimationDelay:0.0];
+	[self.view addSubview:textLabel];
+	// druation of animation
+	[UIView setAnimationDuration:3.0];
+	textLabel.alpha = 0.0;
+	[UIView commitAnimations];
+}
+
+#pragma mark -
 #pragma mark SignatureDelegate methods
+
 - (void) signatureController:(SignatureViewController *)signatureController signatureAsBase64:(NSString *)signature savePressed:(id)sender {
     BOOL isSignatureAccepted = YES;
-    if (self.ccPayment && signature) { 
-        [self.ccPayment attachSignature:signature];
-        
-        if (![facade acceptSignatureFor:self.ccPayment]) {
-            [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Problem accepting signature for payment with ref #%@.", ccPayment.paymentRefId]];
-            isSignatureAccepted = NO;
-        };
-    } else {
-        [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"A Signature was not provided for payment with ref #%@.", ccPayment.paymentRefId]];
-        isSignatureAccepted = NO;
+
+    if (ccPayment && signature)
+    {
+        if([ccPayment isKindOfClass:[CreditCardPayment class]])
+        {
+            NSLog(@"It is a credit card!");
+            [self.ccPayment attachSignature:signature];
+            
+            if (![facade acceptSignatureFor:self.ccPayment]) {
+                [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Problem accepting signature for payment with ref #%@.", [ccPayment paymentRefId]]];
+                isSignatureAccepted = NO;
+            }
+            else {
+                [self navToReceipt];
+            }
+            
+        }
+        else if ([ccPayment isKindOfClass:[AccountPayment class]])
+        {
+            [self.ccPayment attachSignature:signature];
+
+            if (![facade acceptSignatureOnAccount:self.ccPayment]) {
+                [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Problem accepting signature for payment with ref #%@.", [ccPayment paymentRefId]]];
+            }
+            else {
+                
+                if([[ccPayment paymentAmount] compare:[self getOrderBalanceDue]] == NSOrderedSame) {
+                     [self navToReceipt];
+
+                }
+                else {
+                    [self dismissModalViewControllerAnimated:YES];
+                    [accountPaymentView removeFromSuperview];
+                    [self updateViewLayout];
+                    [self displayPayOnAccountSuccesfulView];
+                }
+            }
+        }
     }
-    
-    if (isSignatureAccepted) {
-        [self navToReceipt];
+    else
+    {
+      [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"A Signature was not provided for payment with ref #%@.", [ccPayment paymentRefId]]];
+       
     }
 }
 -(void) signatureController: (SignatureViewController *) signatureController signatureAsImage: (UIImage *) signature savePressed: (id) sender {
@@ -510,14 +564,14 @@ static NSString * const CREDIT = @"credit";
                                                                                                   raiseOnUnderflow:NO raiseOnDivideByZero:NO];
     self.ccPayment = [[[CreditCardPayment alloc] initWithOrder:[orderCart getOrder]] autorelease];
     
-    ccPayment.nameOnCard = @"Joe Testing";
-    ccPayment.cardNumber = @"1111222233334444";
+    [ccPayment setNameOnCard:@"Joe Testing"];
+    [ccPayment setCardNumber:@"1111222233334444"];
     [ccPayment setExpireDateMonthYear:@"11" year:@"14"] ;
-    ccPayment.paymentAmount = [[self paymentAmount] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
+    [ccPayment setPaymentAmount:[[self paymentAmount] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior]];
     
     [facade tenderPaymentWithCC:ccPayment];
     
-    if ([ccPayment.errorList count] == 0) {
+    if ([[ccPayment errorList] count] == 0) {
         isPaymentTendered = YES;
     } else {
         [self showPaymentRetryAlert:ccPayment];
@@ -714,8 +768,7 @@ static NSString * const CREDIT = @"credit";
     notesOverlay.notesDelegate = self;
     notesOverlay.notesData = [orderCart getOrder].notes;
     notesOverlay.purchaseOrderData = [orderCart getOrder].purchaseOrderId;
-    notesOverlay.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self presentModalViewController:notesOverlay animated:YES];
+    [self.navigationController pushViewController:notesOverlay animated:NO];
 }
 
 - (void) handleSuspendOrder:(id) sender {
@@ -745,16 +798,15 @@ static NSString * const CREDIT = @"credit";
                                                                                                       raiseOnExactness:NO raiseOnOverflow:NO 
                                                                                                       raiseOnUnderflow:NO raiseOnDivideByZero:NO];
 		self.ccPayment = [[[CreditCardPayment alloc] initWithOrder:[orderCart getOrder]] autorelease];
-        
-        ccPayment.nameOnCard = [[card.cardholderName copy] autorelease];
-        ccPayment.cardNumber = [[card.accountNumber copy] autorelease];
+        [ccPayment setNameOnCard:[[card.cardholderName copy] autorelease]];
+        [ccPayment setCardNumber:[[card.accountNumber copy] autorelease]];
+        [ccPayment setPaymentAmount:[[self paymentAmount] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior]];
         [ccPayment setExpireDateMonthYear:[NSString stringWithFormat:@"%d",card.exirationMonth] 
                                      year:[NSString stringWithFormat:@"%d",card.exirationYear]] ;
-        ccPayment.paymentAmount = [[self paymentAmount] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
         
         [facade tenderPaymentWithCC:ccPayment];
         
-        if ([ccPayment.errorList count] == 0) {
+        if ([[ccPayment errorList] count] == 0) {
             isPaymentTendered = YES;
         } else {
             [self showPaymentRetryAlert:ccPayment];
@@ -801,8 +853,6 @@ static NSString * const CREDIT = @"credit";
     {
         [orderCart getOrder].purchaseOrderId = notesView.purchaseOrderData;
     }
-    
-    [self dismissModalViewControllerAnimated:YES];
 }
 
 -(void) navToReceipt {
@@ -846,11 +896,5 @@ static NSString * const CREDIT = @"credit";
     }
 }
 
--(void)handleUnAuthorizedAction:(id) sender {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Warning" message:@"Not Authorized for this payment type." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    
-    [alertView show];
-    [alertView release];
-}
 
 @end

@@ -146,6 +146,7 @@
         CGFloat width = floorf(self.view.bounds.size.width * 0.60f);
         notes.frame = CGRectMake(floorf((self.view.bounds.size.width - width) / 15), notes.frame.origin.y, floor(self.view.frame.size.width * .95f), ((self.view.frame.size.height / 4) - 5));
     }
+    NSLog(@"Calling show keyboard");
     
     [super keyboardWillShow:notification];
     
@@ -176,7 +177,7 @@
 - (void) viewDidAppear:(BOOL)animated {
 	// Call super at the beginning
 	[super viewDidAppear:animated];
-	[self addKeyboardListeners];
+	//[self addKeyboardListeners];
     
     }
 
@@ -281,33 +282,6 @@
 } 
 
 #pragma mark - Misc methods
-
-
--(NSInteger) calculateViewAdujustment:(UITextField *)textField
-{
-    CGRect viewRectAbsolute = [textField convertRect:textField.bounds toView:self.view];
-    
-    CGFloat height = textField.bounds.size.height;
-    CGFloat absoluteHeight = CGRectGetHeight(viewRectAbsolute);
-    return height + absoluteHeight;
-}
-
--(void) adjustViewForKeyBoard:(NSInteger)value
-{
-    
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    self.view.frame = CGRectMake((self.view.frame.origin.x + value), self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
-    [UIView commitAnimations];
-    
-}
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	[self.currentFirstResponder resignFirstResponder];
-}
-
 
 -(void)dismissKeyboardForTextView:(id)sender
 {

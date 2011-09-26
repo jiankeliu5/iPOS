@@ -12,10 +12,12 @@
 @interface PaymentSignature : NSObject {
     NSString *signatureAsBase64;
     NSString *paymentRefId;
+    BOOL isPayOnAccount;
 }
 
 @property (nonatomic, retain) NSString *signatureAsBase64;
 @property (nonatomic, retain) NSString *paymentRefId;
+@property (nonatomic, assign) BOOL isPayOnAccount;
 
 - (id) initWithPayment: (Payment *) payment;
 

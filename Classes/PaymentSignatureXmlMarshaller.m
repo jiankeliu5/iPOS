@@ -11,6 +11,7 @@
 
 static NSString * const PAYMENT_SINGATURE_XML = @""
     "<PaymentSignature>"
+        "<OnAccount>%@</OnAccount>"
         "<SignatureAsBase64>%@</SignatureAsBase64>"
         "<TroutD>%@</TroutD>"
     "</PaymentSignature>";
@@ -29,6 +30,7 @@ static NSString * const PAYMENT_SINGATURE_XML = @""
         
         NSString *payRefId = @"";
         NSString *signatureAsBase64 = @"0.00";
+        NSString *isPayOnAccount = @"false";
         
         if (signature.paymentRefId) {
             payRefId = signature.paymentRefId;
@@ -36,9 +38,17 @@ static NSString * const PAYMENT_SINGATURE_XML = @""
         if (signature.signatureAsBase64) {
             signatureAsBase64 = signature.signatureAsBase64;
         }
+        if (signature.isPayOnAccount)
+        {
+            if(signature.isPayOnAccount == YES)
+            {
+                isPayOnAccount = @"true";
+            }
+            
+        }
                 
         // Create the XML
-        paymentSignatureXml = [NSString stringWithFormat: PAYMENT_SINGATURE_XML, signatureAsBase64, payRefId];
+        paymentSignatureXml = [NSString stringWithFormat: PAYMENT_SINGATURE_XML, isPayOnAccount, signatureAsBase64, payRefId];
     }
     
     return paymentSignatureXml;

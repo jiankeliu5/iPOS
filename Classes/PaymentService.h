@@ -19,5 +19,6 @@
 - (void) tenderPaymentOnAccount:(AccountPayment *)accountPayment withSession:(SessionInfo *)sessionInfo;
 
 -(BOOL) acceptSignatureFor: (CreditCardPayment *) ccPayment withSession: (SessionInfo *) sessionInfo;
+- (BOOL) acceptSignatureOnAccount:(AccountPayment *)payment withSession:(SessionInfo *)sessionInfo;
 
 @end

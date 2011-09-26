@@ -137,6 +137,10 @@ static iPOSFacade *facade = nil;
     [self.paymentService tenderPaymentWithCC:ccPayment withSession:sessionInfo];
 }
 
+- (BOOL) acceptSignatureOnAccount:(AccountPayment *)payment {
+    return [self.paymentService acceptSignatureOnAccount:payment withSession:sessionInfo];
+}
+
 - (BOOL) acceptSignatureFor:(CreditCardPayment *)ccPayment {
     return [self.paymentService acceptSignatureFor:ccPayment withSession:sessionInfo];
 }
