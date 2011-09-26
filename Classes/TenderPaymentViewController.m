@@ -425,8 +425,9 @@ static NSString * const CREDIT = @"credit";
     if ([[ccPayment errorList] count] == 0) {
         SignatureViewController *signatureViewController = [[[SignatureViewController alloc] init] autorelease];
         signatureViewController.delegate = self;
-        signatureViewController.payAmountLabel.text = [NSString formatDecimalNumberAsMoney:self.paymentAmount];
+        
         [self presentModalViewController:signatureViewController animated:YES];
+        signatureViewController.payAmountLabel.text = [NSString formatDecimalNumberAsMoney:amount];
         
     } else {
         [self showPaymentRetryAlert:ccPayment];
