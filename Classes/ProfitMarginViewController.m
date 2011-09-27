@@ -35,7 +35,7 @@
     
     UIView *bgView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen]applicationFrame]];
    
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(close:)];
+    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(close:)] autorelease];
     singleTap.numberOfTapsRequired = 1;
     [bgView addGestureRecognizer:singleTap];
     

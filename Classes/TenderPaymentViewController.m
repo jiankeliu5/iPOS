@@ -117,7 +117,7 @@ static NSString * const CREDIT = @"credit";
 	bgView.backgroundColor = [UIColor whiteColor];
     
     //Just used as an example of how we can change screens.  
-    UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(displayNotesAndPOView:)];
+    UISwipeGestureRecognizer *swipeRight = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(displayNotesAndPOView:)] autorelease];
     [bgView addGestureRecognizer:swipeRight];
     
 	[self setView:bgView];
@@ -452,6 +452,7 @@ static NSString * const CREDIT = @"credit";
 	// wait for time before begin
 	[UIView setAnimationDelay:0.0];
 	[self.view addSubview:textLabel];
+    [textLabel release];
 	// druation of animation
 	[UIView setAnimationDuration:3.0];
 	textLabel.alpha = 0.0;
@@ -462,7 +463,7 @@ static NSString * const CREDIT = @"credit";
 #pragma mark SignatureDelegate methods
 
 - (void) signatureController:(SignatureViewController *)signatureController signatureAsBase64:(NSString *)signature savePressed:(id)sender {
-    BOOL isSignatureAccepted = YES;
+   // BOOL isSignatureAccepted = YES;
 
     if (ccPayment && signature)
     {
@@ -473,7 +474,7 @@ static NSString * const CREDIT = @"credit";
             
             if (![facade acceptSignatureFor:self.ccPayment]) {
                 [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Problem accepting signature for payment with ref #%@.", [ccPayment paymentRefId]]];
-                isSignatureAccepted = NO;
+                //isSignatureAccepted = NO;
             }
             else {
                 [self navToReceipt];

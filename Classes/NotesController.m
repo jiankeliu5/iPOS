@@ -67,8 +67,8 @@
     bgView.backgroundColor = [UIColor colorWithWhite:0.85f alpha:1.0f];
     
     bgView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(close:)];
-    //[bgView setAllAutoresizingMask: YES];
+    UISwipeGestureRecognizer *swipeRight = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(close:)] autorelease];
+    
     
     [bgView addGestureRecognizer:swipeRight];
     [self setView:bgView];

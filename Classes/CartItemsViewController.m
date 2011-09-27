@@ -828,6 +828,7 @@
 	// wait for time before begin
 	[UIView setAnimationDelay:0.0];
 	[self.view addSubview:textLabel];
+    [textLabel release];
 	// druation of animation
 	[UIView setAnimationDuration:2.0];
 	textLabel.alpha = 0.0;
