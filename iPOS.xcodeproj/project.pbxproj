@@ -14,14 +14,9 @@
 		365B593F1407DBAE000B0277 /* ProfitMarginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C6B44E14057BBD009A455F /* ProfitMarginViewController.m */; };
 		365B5946140C092E000B0277 /* OrderTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 365B5945140C092E000B0277 /* OrderTestCase.m */; };
 		365B5947140C0E23000B0277 /* OrderTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 365B5945140C092E000B0277 /* OrderTestCase.m */; };
-		365B594F140D44CA000B0277 /* profitView.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B594E140D44C9000B0277 /* profitView.js */; };
-		365B5950140D44CA000B0277 /* profitView.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B594E140D44C9000B0277 /* profitView.js */; };
-		365B5951140D44CA000B0277 /* profitView.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B594E140D44C9000B0277 /* profitView.js */; };
 		365B5952140D44CA000B0277 /* profitView.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B594E140D44C9000B0277 /* profitView.js */; };
 		365B5953140D44CA000B0277 /* profitView.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B594E140D44C9000B0277 /* profitView.js */; };
 		365B5955140D4658000B0277 /* displayProfitMargin.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B5954140D4658000B0277 /* displayProfitMargin.js */; };
-		365B5956140D4658000B0277 /* displayProfitMargin.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B5954140D4658000B0277 /* displayProfitMargin.js */; };
-		365B5957140D4658000B0277 /* displayProfitMargin.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B5954140D4658000B0277 /* displayProfitMargin.js */; };
 		365B5958140D4658000B0277 /* displayProfitMargin.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B5954140D4658000B0277 /* displayProfitMargin.js */; };
 		365B5959140D4658000B0277 /* displayProfitMargin.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B5954140D4658000B0277 /* displayProfitMargin.js */; };
 		365B595D140D83AA000B0277 /* stats.png in Resources */ = {isa = PBXBuildFile; fileRef = 365B595C140D83AA000B0277 /* stats.png */; };
@@ -50,7 +45,6 @@
 		36E72249141A70E40009D71A /* notes_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 36E72248141A70E40009D71A /* notes_2.png */; };
 		36E7224A141A71580009D71A /* notes_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 36E72248141A70E40009D71A /* notes_2.png */; };
 		36E7224B141A71780009D71A /* notes_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 36E72248141A70E40009D71A /* notes_2.png */; };
-		36E7224D141A78430009D71A /* payOnAccount.js in Sources */ = {isa = PBXBuildFile; fileRef = 36E7224C141A78430009D71A /* payOnAccount.js */; };
 		B401FC031335B1D50082C7D4 /* CustomerEditViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B401FC011335B1D50082C7D4 /* CustomerEditViewController.h */; };
 		B401FC041335B1D50082C7D4 /* CustomerEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B401FC021335B1D50082C7D4 /* CustomerEditViewController.m */; };
 		B401FC071335B56C0082C7D4 /* CustomerFormDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = B401FC051335B56C0082C7D4 /* CustomerFormDataSource.h */; };
@@ -2210,9 +2204,7 @@
 			files = (
 				D6B4359F13159ECD000C0AA8 /* main.m in Sources */,
 				365B5946140C092E000B0277 /* OrderTestCase.m in Sources */,
-				365B594F140D44CA000B0277 /* profitView.js in Sources */,
 				365B5955140D4658000B0277 /* displayProfitMargin.js in Sources */,
-				36E7224D141A78430009D71A /* payOnAccount.js in Sources */,
 				369C9A8C142400AB0094C17B /* TenderPaymentViewController.m in Sources */,
 				369C9A93142403380094C17B /* SSTextView.m in Sources */,
 			);
@@ -2251,8 +2243,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D65B25CC1331C8B60052AEE2 /* main.m in Sources */,
-				365B5950140D44CA000B0277 /* profitView.js in Sources */,
-				365B5956140D4658000B0277 /* displayProfitMargin.js in Sources */,
 				369C9A8D142400AB0094C17B /* TenderPaymentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2273,8 +2263,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D697D19A1312DCD0002C3EF6 /* main.m in Sources */,
-				365B5951140D44CA000B0277 /* profitView.js in Sources */,
-				365B5957140D4658000B0277 /* displayProfitMargin.js in Sources */,
 				369C9A8E142400AB0094C17B /* TenderPaymentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -43,6 +43,7 @@
 #define SWIPE_MSG_VIEW_HEIGHT 142.0f
 
 @interface AccountPaymentView()
+- (void) layoutSubviews;
 - (void) layoutBalanceDueLabels: (UIView *) parentView;
 - (void) layoutCreditAvailableLabels: (UIView *) parentView;
 - (void) layoutChargeAmountView: (UIView *) parentView;
