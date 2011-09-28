@@ -26,8 +26,6 @@
 @interface NotesController()
 -(BOOL) validateString:(NSString *)text;
 -(void) displayAlert:(NSString *) alertText;
--(void) adjustViewForKeyBoard:(NSInteger)value;
--(NSInteger) calculateViewAdujustment:(UITextField *)textField;
 -(void) close:(id)sender;
 @end
 

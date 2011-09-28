@@ -47,7 +47,6 @@
 - (void) layoutBalanceDueLabels: (UIView *) parentView;
 - (void) layoutCreditAvailableLabels: (UIView *) parentView;
 - (void) layoutChargeAmountView: (UIView *) parentView;
-- (void) layoutSwipeMsgView: (UIView *) parentView;
 - (void) handleCancelButton:(id) sender;
 
 @end
@@ -89,7 +88,6 @@
     
     // Add subviews
     [self layoutChargeAmountView:mainRoundedView];
-    //[self layoutSwipeMsgView:mainRoundedView];
     
     // Add a cancel button
     cancelButton = [[[MOGlassButton alloc] 

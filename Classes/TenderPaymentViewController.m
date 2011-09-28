@@ -248,14 +248,19 @@ static NSString * const CREDIT = @"credit";
 
 #pragma mark -
 #pragma mark ChargeCreditCardViewDelegate
-- (void) setupKeyboardSupport:(PaymentView *)theChargeCCView {
-    ExtUITextField *chargeAmtField = [theChargeCCView getChargeAmountTextField];
+- (void) setupKeyboardSupport:(id)theChargeCCView {
     
-    chargeAmtField.returnKeyType = UIReturnKeyDone;
-	chargeAmtField.keyboardType = UIKeyboardTypeDecimalPad;
-	[self addDoneAndCancelToolbarForTextField:chargeAmtField];
+    if([theChargeCCView conformsToProtocol:@protocol(PaymentView)] == YES)
+    {
+        ExtUITextField *chargeAmtField = [theChargeCCView getChargeAmountTextField];
+        
+        chargeAmtField.returnKeyType = UIReturnKeyDone;
+        chargeAmtField.keyboardType = UIKeyboardTypeDecimalPad;
+        [self addDoneAndCancelToolbarForTextField:chargeAmtField];
+        
+        chargeAmtField.delegate = self;  
+    }
     
-    chargeAmtField.delegate = self;
 }
 
 - (void) cancelCardSwipe: (ChargeCreditCardView *) theChargeCCView {

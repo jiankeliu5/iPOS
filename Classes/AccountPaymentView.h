@@ -13,15 +13,9 @@
 #import "PaymentView.h"
 @class AccountPaymentView;
 @class PaymentView;
-/*@protocol ChargeAccountiewDelegate
-
-- (void) setupKeyboardSupport:(AccountPaymentView *) accountPaymentView;
-- (void) cancelAccountPayment:(AccountPaymentView *) accountPaymentView;
-
-@end*/
 
 @protocol AccountPaymentViewDelegate
-
+- (void) setupKeyboardSupport:(id) accountPaymentView;
 -(void) cancelAccountPayment:(id) sender;
 
 @end

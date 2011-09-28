@@ -15,7 +15,7 @@
 @class PaymentView;
 @protocol ChargeCreditCardViewDelegate
 
-- (void) setupKeyboardSupport:(PaymentView *) chargeCCView;
+- (void) setupKeyboardSupport:(id) chargeCCView;
 - (void) readyForCardSwipe:(NSDecimalNumber *) chargeAmount fromView:(ChargeCreditCardView *) chargeCCView;
 - (void) cancelCardSwipe:(ChargeCreditCardView *) chargeCCView;
 
