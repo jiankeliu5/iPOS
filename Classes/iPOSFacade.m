@@ -14,7 +14,7 @@
 
 static iPOSFacade *facade = nil;
 
-@synthesize posService, inventoryService, paymentService, sessionInfo;
+@synthesize posService, inventoryService, paymentService, sessionInfo, orderHistoryService;
 
 #pragma mark Singleton Initializer
 + (iPOSFacade *) sharedInstance {
@@ -41,6 +41,7 @@ static iPOSFacade *facade = nil;
     posService = [[iPOSServiceImpl alloc] init];
     inventoryService = [[InventoryServiceImpl alloc] init];    
     paymentService = [[PaymentServiceImpl alloc] init];
+    orderHistoryService = [[OrderHistoryService alloc] init];
     
     return self;
 }
@@ -148,5 +149,17 @@ static iPOSFacade *facade = nil;
 - (void) tenderPaymentOnAccount:(AccountPayment *)accountPayment {
     [self.paymentService tenderPaymentOnAccount:accountPayment withSession:sessionInfo];
 }
+
+#pragma mark -
+#pragma mark Order History
+-(NSArray *) lookupOrderByPhoneNumber: (NSString *)phoneNumber{
+    
+    return [self.orderHistoryService lookupOrderByPhoneNumber:phoneNumber withSessionInfo:sessionInfo];
+}
+
+-(PaymentHistory *) getPaymentHistoryForOrderid: (NSString *)orderId{
+    return [self.orderHistoryService getPaymentHistoryForOrderid:orderId withSessionInfo:sessionInfo];
+}
+
 
 @end

@@ -58,6 +58,7 @@ static NSString * const PAYMENT_XML = @""
         }
         if (accountPayment.paymentAmount) {
             paymentAmount = [NSString formatDecimalNumber:accountPayment.paymentAmount toScale:2];
+                            
         }
                 
         // Create the XML

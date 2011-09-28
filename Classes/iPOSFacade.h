@@ -12,6 +12,7 @@
 #import "iPOSServiceImpl.h"
 #import "InventoryServiceImpl.h"
 #import "PaymentServiceImpl.h"
+#import "OrderHistoryService.h"
 
 typedef enum { SessionOk = 0,
 			   SessionBadPassword = 1,
@@ -21,6 +22,7 @@ typedef enum { SessionOk = 0,
     id<iPOSService> posService;
     id<InventoryService> inventoryService;
     id<PaymentService> paymentService;
+    id<OrderHistoryServiceProtocol> orderHistoryService;
     
     SessionInfo * sessionInfo;
 }
@@ -28,6 +30,7 @@ typedef enum { SessionOk = 0,
 @property (nonatomic, retain) id<iPOSService> posService;
 @property (nonatomic, retain) id<InventoryService> inventoryService;
 @property (nonatomic, retain) id<PaymentService> paymentService;
+@property (nonatomic, retain) id<OrderHistoryServiceProtocol> orderHistoryService;
 
 @property (assign) SessionInfo *sessionInfo;
 
