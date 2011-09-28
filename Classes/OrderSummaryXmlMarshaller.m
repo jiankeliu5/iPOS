@@ -8,6 +8,7 @@
 
 #import "OrderSummaryXmlMarshaller.h"
 #import "OrderSummary.h"
+#import "PreviousOrder.h"
 
 @implementation OrderSummaryXmlMarshaller
 
@@ -15,7 +16,6 @@
 {
     self = [super init];
     if (self) {
-        // Initialization code here.
     }
     
     return self;
@@ -23,25 +23,24 @@
 
 -(id) toObject:(NSString *)xmlString {
     
-    
     CXMLDocument *xmlParser = [[[CXMLDocument alloc] initWithXMLString:xmlString options:0 error:nil] autorelease];
     CXMLElement *root = [xmlParser rootElement];
     NSMutableArray *itemList = [NSMutableArray arrayWithCapacity:0];
-    OrderSummary *summary = nil;
+    PreviousOrder *order = nil;
     
      for (CXMLElement *node in [root elementsForName:@"OrderList"]) {
          
-         summary = [[OrderSummary alloc] init];
+         order = [[PreviousOrder alloc] init];
          
-         summary.orderDate = [node elementStringValue:@"ItemDescription"];
-         summary.orderId = [node elementNumberValue:@"ItemDescription"];
-         summary.orderTotal =[node elementDecimalValue:@"ItemDescription"];
-         summary.orderType = [node elementStringValue:@"ItemDescription"];
+         order.orderDate = [node elementStringValue:@"ItemDescription"];
+         order.orderId = [node elementNumberValue:@"ItemDescription"];
+         order.orderTotal =[node elementDecimalValue:@"ItemDescription"];
+         order.orderType = [node elementStringValue:@"ItemDescription"];
          
-         [itemList addObject:summary];
+         [itemList addObject:order];
          
-         [summary release];
-         summary = nil;
+         [order release];
+         order = nil;
      }
     
     return [NSArray arrayWithArray: itemList];

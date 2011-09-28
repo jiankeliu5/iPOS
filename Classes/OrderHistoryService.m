@@ -65,7 +65,7 @@
 }
 
 //TODO: Change this method!!
-/*-(Order *) lookupOrderByOrderId:(NSString *) orderId withSessionInfo: (SessionInfo *) sessionInfo {
+/*-(NSArray *) lookupOrderByOrderId:(NSString *) orderId withSessionInfo: (SessionInfo *) sessionInfo {
     
     if (sessionInfo == nil) {
         return nil;
@@ -87,9 +87,9 @@
         return nil;   
     } 
     
-    Order *order = [OrderHistoryXmlMarshaller toObject:[request responseString]];
+    NSArray *orders = [[[[OrderSummaryXmlMarshaller alloc] init]toObject:[request responseString]] autorelease];
     
-    return order;
+    return orders;
 }*/
 
 -(NSArray *) lookupOrderByPhoneNumber: (NSString *)phoneNumber withSessionInfo:(SessionInfo *) sessionInfo{
@@ -117,7 +117,7 @@
         return nil;   
     } 
     
-    NSArray *orders = [[[[OrderSummaryXmlMarshaller alloc] init]toObject:[request responseString]] autorelease];
+    NSArray *orders = [[[OrderSummaryXmlMarshaller alloc] init]toObject:[request responseString]];
     
     return orders;
 }
@@ -144,7 +144,7 @@
         return nil;   
     } 
     
-    return [[[[PaymentHistoryXMLMarshaller alloc] init] toObject:[request responseString]] autorelease];
+    return [[[PaymentHistoryXMLMarshaller alloc] init] toObject:[request responseString]];
 }
 
 

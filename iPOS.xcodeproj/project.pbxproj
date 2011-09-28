@@ -14,8 +14,6 @@
 		3606E5CD14333F7C00FBB02A /* AccountPaymentHistoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3606E5C314333F7C00FBB02A /* AccountPaymentHistoryItem.m */; };
 		3606E5CE14333F7C00FBB02A /* CreditCardPaymentHistoryItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3606E5C414333F7C00FBB02A /* CreditCardPaymentHistoryItem.h */; };
 		3606E5CF14333F7C00FBB02A /* CreditCardPaymentHistoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3606E5C514333F7C00FBB02A /* CreditCardPaymentHistoryItem.m */; };
-		3606E5D014333F7C00FBB02A /* OrderSummary.h in Headers */ = {isa = PBXBuildFile; fileRef = 3606E5C614333F7C00FBB02A /* OrderSummary.h */; };
-		3606E5D114333F7C00FBB02A /* OrderSummary.m in Sources */ = {isa = PBXBuildFile; fileRef = 3606E5C714333F7C00FBB02A /* OrderSummary.m */; };
 		3606E5D214333F7C00FBB02A /* PaymentHistory.h in Headers */ = {isa = PBXBuildFile; fileRef = 3606E5C814333F7C00FBB02A /* PaymentHistory.h */; };
 		3606E5D314333F7C00FBB02A /* PaymentHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3606E5C914333F7C00FBB02A /* PaymentHistory.m */; };
 		3606E5D414333F7C00FBB02A /* PaymentHistoryItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3606E5CA14333F7C00FBB02A /* PaymentHistoryItem.h */; };
@@ -26,6 +24,8 @@
 		3606E5E114333FAD00FBB02A /* PaymentHistoryXMLMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 3606E5DB14333FAD00FBB02A /* PaymentHistoryXMLMarshaller.m */; };
 		3606E5E414333FCF00FBB02A /* OrderHistoryService.h in Headers */ = {isa = PBXBuildFile; fileRef = 3606E5E214333FCF00FBB02A /* OrderHistoryService.h */; };
 		3606E5E514333FCF00FBB02A /* OrderHistoryService.m in Sources */ = {isa = PBXBuildFile; fileRef = 3606E5E314333FCF00FBB02A /* OrderHistoryService.m */; };
+		360C1288143383E000235580 /* PreviousOrder.h in Headers */ = {isa = PBXBuildFile; fileRef = 360C1286143383E000235580 /* PreviousOrder.h */; };
+		360C1289143383E000235580 /* PreviousOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 360C1287143383E000235580 /* PreviousOrder.m */; };
 		364B56C61430D02D0028FE09 /* libIBAForms.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 364B56BF1430CF5D0028FE09 /* libIBAForms.a */; };
 		365B593F1407DBAE000B0277 /* ProfitMarginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C6B44E14057BBD009A455F /* ProfitMarginViewController.m */; };
 		365B5946140C092E000B0277 /* OrderTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 365B5945140C092E000B0277 /* OrderTestCase.m */; };
@@ -375,6 +375,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		3606E5E81433445600FBB02A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D6334A2C1331C9CE000DEDBB;
+			remoteInfo = AppTests;
+		};
 		363FF3F7141E7D54007BA32A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -409,13 +416,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = IBAForms;
-		};
-		365B59421407F873000B0277 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D6334A2C1331C9CE000DEDBB;
-			remoteInfo = AppTests;
 		};
 		36F34076141E8A0A00913116 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -523,8 +523,6 @@
 		3606E5C314333F7C00FBB02A /* AccountPaymentHistoryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountPaymentHistoryItem.m; sourceTree = "<group>"; };
 		3606E5C414333F7C00FBB02A /* CreditCardPaymentHistoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditCardPaymentHistoryItem.h; sourceTree = "<group>"; };
 		3606E5C514333F7C00FBB02A /* CreditCardPaymentHistoryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreditCardPaymentHistoryItem.m; sourceTree = "<group>"; };
-		3606E5C614333F7C00FBB02A /* OrderSummary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderSummary.h; sourceTree = "<group>"; };
-		3606E5C714333F7C00FBB02A /* OrderSummary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderSummary.m; sourceTree = "<group>"; };
 		3606E5C814333F7C00FBB02A /* PaymentHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentHistory.h; sourceTree = "<group>"; };
 		3606E5C914333F7C00FBB02A /* PaymentHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentHistory.m; sourceTree = "<group>"; };
 		3606E5CA14333F7C00FBB02A /* PaymentHistoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentHistoryItem.h; sourceTree = "<group>"; };
@@ -535,6 +533,8 @@
 		3606E5DB14333FAD00FBB02A /* PaymentHistoryXMLMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentHistoryXMLMarshaller.m; sourceTree = "<group>"; };
 		3606E5E214333FCF00FBB02A /* OrderHistoryService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderHistoryService.h; sourceTree = "<group>"; };
 		3606E5E314333FCF00FBB02A /* OrderHistoryService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderHistoryService.m; sourceTree = "<group>"; };
+		360C1286143383E000235580 /* PreviousOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviousOrder.h; sourceTree = "<group>"; };
+		360C1287143383E000235580 /* PreviousOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviousOrder.m; sourceTree = "<group>"; };
 		364B56B71430CF5C0028FE09 /* IBAForms.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IBAForms.xcodeproj; path = ../ThirdParty/IBAForms/IBAForms.xcodeproj; sourceTree = "<group>"; };
 		365B5944140C092D000B0277 /* OrderTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderTestCase.h; sourceTree = "<group>"; };
 		365B5945140C092E000B0277 /* OrderTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderTestCase.m; sourceTree = "<group>"; };
@@ -1664,8 +1664,6 @@
 				3606E5C314333F7C00FBB02A /* AccountPaymentHistoryItem.m */,
 				3606E5C414333F7C00FBB02A /* CreditCardPaymentHistoryItem.h */,
 				3606E5C514333F7C00FBB02A /* CreditCardPaymentHistoryItem.m */,
-				3606E5C614333F7C00FBB02A /* OrderSummary.h */,
-				3606E5C714333F7C00FBB02A /* OrderSummary.m */,
 				3606E5C814333F7C00FBB02A /* PaymentHistory.h */,
 				3606E5C914333F7C00FBB02A /* PaymentHistory.m */,
 				3606E5CA14333F7C00FBB02A /* PaymentHistoryItem.h */,
@@ -1709,6 +1707,8 @@
 				D6412B9413563216002AC1AC /* PaymentSignature.m */,
 				36E72240141A37370009D71A /* AccountPayment.h */,
 				36E72241141A37370009D71A /* AccountPayment.m */,
+				360C1286143383E000235580 /* PreviousOrder.h */,
+				360C1287143383E000235580 /* PreviousOrder.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1900,12 +1900,12 @@
 				D61D83B013785D0200FD19C9 /* ItemTableCell.h in Headers */,
 				3606E5CC14333F7C00FBB02A /* AccountPaymentHistoryItem.h in Headers */,
 				3606E5CE14333F7C00FBB02A /* CreditCardPaymentHistoryItem.h in Headers */,
-				3606E5D014333F7C00FBB02A /* OrderSummary.h in Headers */,
 				3606E5D214333F7C00FBB02A /* PaymentHistory.h in Headers */,
 				3606E5D414333F7C00FBB02A /* PaymentHistoryItem.h in Headers */,
 				3606E5DE14333FAD00FBB02A /* OrderSummaryXmlMarshaller.h in Headers */,
 				3606E5E014333FAD00FBB02A /* PaymentHistoryXMLMarshaller.h in Headers */,
 				3606E5E414333FCF00FBB02A /* OrderHistoryService.h in Headers */,
+				360C1288143383E000235580 /* PreviousOrder.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1984,8 +1984,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				3606E5E91433445600FBB02A /* PBXTargetDependency */,
 				364B56C31430CFDD0028FE09 /* PBXTargetDependency */,
-				365B59431407F873000B0277 /* PBXTargetDependency */,
 				D65B25BE1331C8B60052AEE2 /* PBXTargetDependency */,
 				D65B25C01331C8B60052AEE2 /* PBXTargetDependency */,
 			);
@@ -2492,18 +2492,23 @@
 				D61D83B113785D0200FD19C9 /* ItemTableCell.m in Sources */,
 				3606E5CD14333F7C00FBB02A /* AccountPaymentHistoryItem.m in Sources */,
 				3606E5CF14333F7C00FBB02A /* CreditCardPaymentHistoryItem.m in Sources */,
-				3606E5D114333F7C00FBB02A /* OrderSummary.m in Sources */,
 				3606E5D314333F7C00FBB02A /* PaymentHistory.m in Sources */,
 				3606E5D514333F7C00FBB02A /* PaymentHistoryItem.m in Sources */,
 				3606E5DF14333FAD00FBB02A /* OrderSummaryXmlMarshaller.m in Sources */,
 				3606E5E114333FAD00FBB02A /* PaymentHistoryXMLMarshaller.m in Sources */,
 				3606E5E514333FCF00FBB02A /* OrderHistoryService.m in Sources */,
+				360C1289143383E000235580 /* PreviousOrder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		3606E5E91433445600FBB02A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D6334A2C1331C9CE000DEDBB /* AppTests */;
+			targetProxy = 3606E5E81433445600FBB02A /* PBXContainerItemProxy */;
+		};
 		363FF3F8141E7D54007BA32A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D6B435B113159F72000C0AA8 /* OPIFoundation */;
@@ -2523,11 +2528,6 @@
 			isa = PBXTargetDependency;
 			name = IBAForms;
 			targetProxy = 364B56C41430CFE10028FE09 /* PBXContainerItemProxy */;
-		};
-		365B59431407F873000B0277 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D6334A2C1331C9CE000DEDBB /* AppTests */;
-			targetProxy = 365B59421407F873000B0277 /* PBXContainerItemProxy */;
 		};
 		36F34077141E8A0A00913116 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2742,6 +2742,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = iPOS;
+				SDKROOT = iphoneos4.3;
 				VERSION_INFO_FILE = iPOSTesting_vers.c;
 			};
 			name = Distribution;
@@ -3164,6 +3165,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = iPOSTesting;
+				SDKROOT = iphoneos4.3;
 				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Debug;
@@ -3193,6 +3195,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = iPOS;
+				SDKROOT = iphoneos4.3;
 				VERSION_INFO_FILE = iPOSTesting_vers.c;
 			};
 			name = Release;

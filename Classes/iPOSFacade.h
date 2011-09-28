@@ -71,4 +71,8 @@ typedef enum { SessionOk = 0,
 - (BOOL) acceptSignatureOnAccount:(AccountPayment *)payment;
 -(void) tenderPaymentOnAccount:(AccountPayment *)accountPayment;
 
+#pragma mark - 
+#pragma mark Order History
+-(PaymentHistory *) getPaymentHistoryForOrderid: (NSNumber *)orderId;
+
 @end

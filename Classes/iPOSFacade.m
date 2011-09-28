@@ -157,8 +157,8 @@ static iPOSFacade *facade = nil;
     return [self.orderHistoryService lookupOrderByPhoneNumber:phoneNumber withSessionInfo:sessionInfo];
 }
 
--(PaymentHistory *) getPaymentHistoryForOrderid: (NSString *)orderId{
-    return [self.orderHistoryService getPaymentHistoryForOrderid:orderId withSessionInfo:sessionInfo];
+-(PaymentHistory *) getPaymentHistoryForOrderid: (NSNumber *)orderId{
+    return [self.orderHistoryService getPaymentHistoryForOrderid:[orderId stringValue] withSessionInfo:sessionInfo];
 }
 
 
