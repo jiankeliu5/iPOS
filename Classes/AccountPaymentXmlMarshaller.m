@@ -9,6 +9,7 @@
 #import "AccountPaymentXmlMarshaller.h"
 #import "AccountPayment.h"
 #import "POSOxmUtils.h"
+#import "NSString+StringFormatters.h"
 
 static NSString * const PAYMENT_STATUS_ROOT = @"<PaymentStatus";
 
