@@ -7,7 +7,7 @@
 //
 
 #import "OrderSummaryXmlMarshaller.h"
-#import "OrderSummary.h"
+
 #import "PreviousOrder.h"
 
 @implementation OrderSummaryXmlMarshaller
@@ -32,10 +32,10 @@
          
          order = [[PreviousOrder alloc] init];
          
-         order.orderDate = [node elementStringValue:@"ItemDescription"];
-         order.orderId = [node elementNumberValue:@"ItemDescription"];
-         order.orderTotal =[node elementDecimalValue:@"ItemDescription"];
-         order.orderType = [node elementStringValue:@"ItemDescription"];
+         order.orderDate = [node elementStringValue:@"OrderDate"];
+         order.orderId = [node elementNumberValue:@"OrderID"];
+         order.orderTotal =[node elementDecimalValue:@"OrderTotal"];
+         order.orderType = [node elementStringValue:@"OrderType"];
          
          [itemList addObject:order];
          

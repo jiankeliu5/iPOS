@@ -216,6 +216,12 @@
 	
 }
 
+// Override to allow orientations other than the default portrait orientation.
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    // Return YES for supported orientations.
+    return YES;
+}
+
 - (CustomerViewController *)findCustomerViewController {
 	if ([self navigationController] != nil) {
 		NSArray *controllers = [[self navigationController] viewControllers];
