@@ -19,5 +19,7 @@
 @interface OrderHistoryTestCase : SenTestCase
 
 - (void) testOrderSummary;
+-(void) testOrderPaymentHistory;
+-(void) testOrderHistoryByOrderID;
 
 @end

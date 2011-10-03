@@ -44,6 +44,8 @@
 		365B5971140E85C0000B0277 /* pencil2.png in Resources */ = {isa = PBXBuildFile; fileRef = 365B5970140E85C0000B0277 /* pencil2.png */; };
 		365B5972140E85C0000B0277 /* pencil2.png in Resources */ = {isa = PBXBuildFile; fileRef = 365B5970140E85C0000B0277 /* pencil2.png */; };
 		368B10921434F675001AAD73 /* OrderHistoryTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F3E99F1434C1A2004376B8 /* OrderHistoryTestCase.m */; };
+		368B1095143531C3001AAD73 /* OrderHistoryXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 368B1094143531C3001AAD73 /* OrderHistoryXmlMarshaller.m */; };
+		368B109614364857001AAD73 /* OrderHistoryXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 368B1094143531C3001AAD73 /* OrderHistoryXmlMarshaller.m */; };
 		369C9A94142403A00094C17B /* SSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 369C9A92142403380094C17B /* SSTextView.m */; };
 		369C9A95142404020094C17B /* SSTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 369C9A91142403380094C17B /* SSTextView.h */; };
 		36BB91B814168510003E5386 /* NotesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BB91B6141671A6003E5386 /* NotesController.m */; };
@@ -550,6 +552,8 @@
 		365B595C140D83AA000B0277 /* stats.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stats.png; sourceTree = "<group>"; };
 		365B596B140E8135000B0277 /* pencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pencil.png; sourceTree = "<group>"; };
 		365B5970140E85C0000B0277 /* pencil2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pencil2.png; sourceTree = "<group>"; };
+		368B1093143531C3001AAD73 /* OrderHistoryXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderHistoryXmlMarshaller.h; sourceTree = "<group>"; };
+		368B1094143531C3001AAD73 /* OrderHistoryXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderHistoryXmlMarshaller.m; sourceTree = "<group>"; };
 		369C9A8B142400AB0094C17B /* TenderPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TenderPaymentViewController.m; sourceTree = "<group>"; };
 		369C9A91142403380094C17B /* SSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTextView.h; sourceTree = "<group>"; };
 		369C9A92142403380094C17B /* SSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTextView.m; sourceTree = "<group>"; };
@@ -1738,6 +1742,8 @@
 		D6B1935A133BEEC9004C4FD1 /* Oxm */ = {
 			isa = PBXGroup;
 			children = (
+				368B1093143531C3001AAD73 /* OrderHistoryXmlMarshaller.h */,
+				368B1094143531C3001AAD73 /* OrderHistoryXmlMarshaller.m */,
 				3606E5D814333FAD00FBB02A /* OrderSummaryXmlMarshaller.h */,
 				3606E5D914333FAD00FBB02A /* OrderSummaryXmlMarshaller.m */,
 				3606E5DA14333FAD00FBB02A /* PaymentHistoryXMLMarshaller.h */,
@@ -2334,6 +2340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6B4359F13159ECD000C0AA8 /* main.m in Sources */,
+				368B1095143531C3001AAD73 /* OrderHistoryXmlMarshaller.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2415,6 +2422,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				368B109614364857001AAD73 /* OrderHistoryXmlMarshaller.m in Sources */,
 				36F3E98B1434ACA3004376B8 /* TenderPaymentViewController.m in Sources */,
 				369C9A94142403A00094C17B /* SSTextView.m in Sources */,
 				36E72247141A4E2D0009D71A /* AccountPaymentXmlMarshaller.m in Sources */,

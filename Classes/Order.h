@@ -19,6 +19,16 @@
     NSNumber *salesPersonEmployeeId;
     NSString *notes;
     NSString *purchaseOrderId;
+    
+    NSNumber *depositAuthorizationID;
+    NSString *followUpdate;
+    NSString *orderDCTO;
+    NSString *promiseDate;
+    NSString *requestDate;
+    NSNumber *selectionId;
+    BOOL taxExempt;
+    
+    
     BOOL partialPaymentOnAccount;
     
     Store *store;
@@ -32,12 +42,22 @@
 @property (nonatomic, retain) NSNumber *salesPersonEmployeeId;
 @property (nonatomic, retain) NSString *notes;
 @property (nonatomic, retain) NSString *purchaseOrderId;
+
+@property (nonatomic, retain) NSNumber *depositAuthorizationID;
+@property (nonatomic, retain) NSString *followUpdate;
+@property (nonatomic, retain) NSString *orderDCTO;
+@property (nonatomic, retain) NSString *promiseDate;
+@property (nonatomic, retain) NSString *requestDate;
+@property (nonatomic, retain) NSNumber *selectionId;
+@property (nonatomic, assign) BOOL taxExempt;
+
 @property (nonatomic, retain) Store *store;
 @property (nonatomic, retain) Customer *customer;
 @property (nonatomic, assign) BOOL partialPaymentOnAccount;
 
 - (NSArray *) getOrderItems;
 - (void) addItemToOrder: (ProductItem *) item withQuantity: (NSDecimalNumber *) quantity;
+- (void) addOrderItemToOrder:(OrderItem *)orderItem;
 - (void) removeItemFromOrder: (OrderItem *) item;
 - (void) removeAll;
 

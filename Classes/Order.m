@@ -17,7 +17,7 @@ static int const ORDER_TYPE_CLOSED = 4;
 @implementation Order
 
 @synthesize orderId, orderTypeId, salesPersonEmployeeId, store, customer, notes, purchaseOrderId, partialPaymentOnAccount;
-
+@synthesize depositAuthorizationID, followUpdate,orderDCTO, promiseDate, requestDate, selectionId, taxExempt;
 #pragma mark Constructor/Deconstructor
 -(id) init {
     self = [super init];
@@ -148,6 +148,11 @@ static int const ORDER_TYPE_CLOSED = 4;
         // Default the status to 1 (Open)
         [orderItem setStatusToOpen];
     }
+}
+
+- (void) addOrderItemToOrder:(OrderItem *)orderItem {
+    
+    [orderItemList addObject:orderItem];
 }
 
 -(void) removeItemFromOrder:(OrderItem *)item {

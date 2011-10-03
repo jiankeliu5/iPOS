@@ -305,7 +305,9 @@
     // Post data for order
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     
-    NSString *orderXml = [order toXml];    
+    NSString *orderXml = [order toXml];  
+    
+    
     [request appendPostData:[orderXml dataUsingEncoding:NSUTF8StringEncoding]];
     
     [request startSynchronous];

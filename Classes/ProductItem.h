@@ -46,7 +46,15 @@ typedef enum {
     NSDecimalNumber *retailPriceSecondary;
     NSDecimalNumber *standardCost;
     NSDecimalNumber *taxRate;
-    BOOL taxExempt;     
+    BOOL taxExempt; 
+    
+   /* NSNumber *locn;
+    NSNumber *lotn;
+    NSNumber *lttr;
+    NSNumber *mcu;
+    NSNumber *nxtr;
+    NSNumber *urrf;*/
+    //NSString *openItemStatus;
     
     // Store
     Store *store;
@@ -91,6 +99,15 @@ extern NSString * const UOM_SQFT;
 
 @property (nonatomic, retain) Store *store;
 @property(nonatomic, retain) NSArray *distributionCenterList;
+
+
+@property(nonatomic, retain) NSNumber *locn;
+@property(nonatomic, retain) NSNumber *lotn;
+@property(nonatomic, retain) NSNumber *lttr;
+@property(nonatomic, retain) NSNumber *mcu;
+@property(nonatomic, retain) NSNumber *nxtr;
+@property(nonatomic, retain) NSNumber *urrf;
+@property(nonatomic, retain) NSString *openItemStatus;
 
 - (BOOL) isUOMConversionRequired;
 - (void) toggleUOM;

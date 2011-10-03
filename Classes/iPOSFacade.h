@@ -73,6 +73,7 @@ typedef enum { SessionOk = 0,
 
 #pragma mark - 
 #pragma mark Order History
+-(Order *) lookupOrderByOrderId:(NSNumber *) orderId;
 -(NSArray *) lookupOrderByPhoneNumber: (NSString *)phoneNumber;
 -(PaymentHistory *) getPaymentHistoryForOrderid: (NSNumber *)orderId;
 

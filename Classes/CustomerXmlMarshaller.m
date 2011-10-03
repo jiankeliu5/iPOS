@@ -154,5 +154,34 @@ static NSString * const CUSTOMER_XML = @""
     return customer;
 }
 
+- (void) addCustomerName:(NSString *) customerName toCustomer:(Customer *) customer
+{
+    NSArray *names = [customerName componentsSeparatedByString:@","];
+    
+    if ([names count] == 2) {
+        customer.lastName = [(NSString *) [names objectAtIndex:0] stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
+        customer.firstName = [(NSString *) [names objectAtIndex:1] stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
+    } else {
+        customer.firstName = [names objectAtIndex:0];
+    }
+}
+
+- (id) toObjectFromXmlElement: (CXMLElement *) root {
+    
+     Customer *customer = [[Customer alloc] init];
+    
+     customer.customerId = [root elementNumberValue:@"CustomerID"];
+     customer.customerTypeId = [root elementNumberValue:@"CustomerTypeID"];
+    [self addCustomerName:[root elementStringValue:@"CustomerName"] toCustomer:customer];
+    customer.taxExempt = [root elementBoolValue:@"TaxExempt"];
+    
+    Address *address = [[Address alloc] init];
+    address.zipPostalCode = [root elementStringValue:@"zip"];
+    
+    customer.address = address;
+    
+    return customer;
+}
+
 
 @end

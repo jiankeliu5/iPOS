@@ -10,7 +10,7 @@
 #import "ASIHTTPRequest.h"
 
 #import "ASIHTTPRequest+Validate.h"
-//#import "OrderHistoryXmlMarshaller.h"
+#import "OrderHistoryXmlMarshaller.h"
 #import "OrderSummaryXmlMarshaller.h"
 #import "PaymentHistoryXMLMarshaller.h"
 
@@ -53,7 +53,7 @@
     // For apps you could use [NSBundle mainBundle] to get the main plist, however this does not work with test bundles.
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     
-    self.baseUrl = (NSString *) [bundle objectForInfoDictionaryKey:@"ipos.service.demo.baseurl"];    
+    self.baseUrl = (NSString *) [bundle objectForInfoDictionaryKey:@"ipos.service.demo.local.baseurl"];    
     self.orderHistoryUri = @"OrderService";
 }
 
@@ -64,8 +64,8 @@
     self.orderHistoryUri = @"OrderService";
 }
 
-//TODO: Change this method!!
-/*-(NSArray *) lookupOrderByOrderId:(NSString *) orderId withSessionInfo: (SessionInfo *) sessionInfo {
+
+-(Order *) lookupOrderByOrderId:(NSString *) orderId withSessionInfo: (SessionInfo *) sessionInfo {
     
     if (sessionInfo == nil) {
         return nil;
@@ -87,10 +87,10 @@
         return nil;   
     } 
     
-    NSArray *orders = [[[[OrderSummaryXmlMarshaller alloc] init]toObject:[request responseString]] autorelease];
+    Order * order = [[[OrderHistoryXmlMarshaller alloc] init]toObject:[request responseString]];
     
-    return orders;
-}*/
+    return order;
+}
 
 -(NSArray *) lookupOrderByPhoneNumber: (NSString *)phoneNumber withSessionInfo:(SessionInfo *) sessionInfo{
     
@@ -101,7 +101,6 @@
     // Fetch the list
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/orderlookup", baseUrl, orderHistoryUri]];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    
     [request setValidatesSecureCertificate:NO];
     [request setTimeOutSeconds:30];
     [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];

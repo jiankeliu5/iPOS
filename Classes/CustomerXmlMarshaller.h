@@ -13,4 +13,6 @@
 
 }
 
+- (id) toObjectFromXmlElement: (CXMLElement *) root;
+
 @end

@@ -25,6 +25,6 @@
 @property (nonatomic, retain) NSDecimalNumber *orderTotal;
 @property (nonatomic, retain) NSString *orderType;
 
--(void) getItemsForOrder;
+-(Order *) getItemsForOrder;
 
 @end

@@ -33,11 +33,14 @@
     {
         [paymentHistory release];    
     }
+    
+    [super dealloc];
 }
 
 //Needs to call out to the server every time the method is invoked
--(void) getItemsForOrder
+-(Order *) getItemsForOrder
 {
+    return [facade lookupOrderByOrderId:orderId];
     
 }
 

@@ -22,6 +22,17 @@
     
     NSDecimalNumber *quantityPrimary;
     NSDecimalNumber *quantitySecondary;
+    NSString *requestDate;
+    NSNumber *returnReferenceId;
+    NSNumber *orderId;
+    
+    BOOL split;
+    NSString *locn;
+    NSString *lotn;
+    NSString *lttr;
+    NSString *mcu;
+    NSString *nxtr;
+    NSString *openItemStatus;
 
     
     ManagerInfo *managerApprover;
@@ -50,6 +61,20 @@
 @property (nonatomic, assign) BOOL doConversionToFullBoxes;
 @property (nonatomic, assign) BOOL shouldDelete;
 @property (nonatomic, assign) BOOL shouldClose;
+
+@property (nonatomic, retain) NSString *requestDate;
+@property (nonatomic, retain) NSNumber *returnReferenceId;
+@property (nonatomic, assign) BOOL split;
+@property (nonatomic, retain) NSNumber *orderId;
+
+
+@property(nonatomic, retain) NSString *locn;
+@property(nonatomic, retain) NSString *lotn;
+@property(nonatomic, retain) NSString *lttr;
+@property(nonatomic, retain) NSString *mcu;
+@property(nonatomic, retain) NSString *nxtr;
+@property(nonatomic, retain) NSString *urrf;
+@property(nonatomic, retain) NSString *openItemStatus;
 
 -(id) initWithItem: (ProductItem *) productItem AndQuantity: (NSDecimalNumber *) productQuantity;
 

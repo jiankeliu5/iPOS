@@ -29,28 +29,41 @@
     PreviousOrder *prevOrder = [result objectAtIndex:0];
     
     STAssertNotNil(prevOrder, @"Order doesn't exist");
-    //Assert info on the object
     
     PreviousOrder *prevOrderTwo = [result objectAtIndex:1];
     
     STAssertNotNil(prevOrderTwo, @"Order doesn't exist");
-    //Asset Info on the object
     
 }
 
 -(void) testOrderPaymentHistory
 {
-   /* iPOSFacade *facade = [iPOSFacade sharedInstance];
+    iPOSFacade *facade = [iPOSFacade sharedInstance];
     [((iPOSServiceImpl *) facade.posService) setToDemoMode];
     [((iPOSServiceImpl *) facade.orderHistoryService) setToDemoMode];
     BOOL loginResult = [facade login:@"123" password:@"456"];
     STAssertTrue(loginResult, @"I expected the login result to be true :-(");
     
-    PaymentHistory *paymentHistory = [facade getPaymentHistoryForOrderid:[NSNumber numberWithInt:308422]];*/
+    PaymentHistory *paymentHistory = [facade getPaymentHistoryForOrderid:[NSNumber numberWithInt:308422]];
     
-    //STAssertNotNil(PaymentHistory, @"Didn't get any payment history");
+    STAssertNotNil(paymentHistory, @"Didn't get any payment history");
+}
+
+-(void) testOrderHistoryByOrderID {
+    iPOSFacade *facade = [iPOSFacade sharedInstance];
+    [((iPOSServiceImpl *) facade.posService) setToDemoMode];
+    [((iPOSServiceImpl *) facade.orderHistoryService) setToDemoMode];
     
-    //Assert information on the payment object
+    BOOL loginResult = [facade login:@"123" password:@"456"];
+    STAssertTrue(loginResult, @"I expected the login result to be true :-(");
+    
+    Order *result = [facade lookupOrderByOrderId:[NSNumber numberWithInt:308422]];
+    
+    STAssertNotNil(result, @"Didn't get any payment history");
+    
+    STAssertTrue([result.orderId compare: [NSNumber numberWithInt: 3834770]] == NSOrderedSame,@"Wrong order id");
+    
+    STAssertNotNil(result.customer, @"Customer should not be empty");
 }
 
 

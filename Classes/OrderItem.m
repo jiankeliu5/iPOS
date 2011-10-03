@@ -29,6 +29,8 @@ static int const STATUS_CANCEL = 4;
 @synthesize sellingPricePrimary, sellingPriceSecondary, quantityPrimary, quantitySecondary;
 @synthesize lineNumber, statusId, priceAuthorizationId, managerApprover, item;
 @synthesize doConversionToFullBoxes, shouldDelete, shouldClose;
+@synthesize requestDate, returnReferenceId,split,orderId;
+@synthesize locn, lotn, lttr, mcu, nxtr,urrf, openItemStatus;
 
 #pragma mark Constructor/Deconstructor
 -(id) init {
