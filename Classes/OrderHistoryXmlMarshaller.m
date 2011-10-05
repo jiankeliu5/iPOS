@@ -106,6 +106,8 @@
     
     order.customer = customer;
     
+    [customerXmlMarshaller release];
+    
     return order;
 }
 

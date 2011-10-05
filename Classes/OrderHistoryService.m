@@ -53,7 +53,7 @@
     // For apps you could use [NSBundle mainBundle] to get the main plist, however this does not work with test bundles.
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     
-    self.baseUrl = (NSString *) [bundle objectForInfoDictionaryKey:@"ipos.service.demo.local.baseurl"];    
+    self.baseUrl = (NSString *) [bundle objectForInfoDictionaryKey:@"ipos.service.demo.baseurl"];    
     self.orderHistoryUri = @"OrderService";
 }
 

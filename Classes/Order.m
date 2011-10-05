@@ -17,7 +17,7 @@ static int const ORDER_TYPE_CLOSED = 4;
 @implementation Order
 
 @synthesize orderId, orderTypeId, salesPersonEmployeeId, store, customer, notes, purchaseOrderId, partialPaymentOnAccount;
-@synthesize depositAuthorizationID, followUpdate,orderDCTO, promiseDate, requestDate, selectionId, taxExempt;
+@synthesize depositAuthorizationID, followUpdate,orderDCTO, promiseDate, requestDate, selectionId, taxExempt, isNewOrder;
 #pragma mark Constructor/Deconstructor
 -(id) init {
     self = [super init];

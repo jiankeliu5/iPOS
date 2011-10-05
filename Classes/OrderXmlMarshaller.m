@@ -18,53 +18,70 @@ static NSString * const ORDER_STATUS_ROOT = @"<OrderStatus";
 
 static NSString * const ORDER_XML = @""
 "<OrderClass>"
-"<OrderHeader>"
-"<Customer>"
-"<CustomerID>%@</CustomerID>"
-"<CustomerTypeID>%@</CustomerTypeID>"
-"<TaxExempt>%@</TaxExempt>"
-"<Zip>%@</Zip>"
-"</Customer>"
-"${orderIdXml}"
-"<OrderTypeID>%@</OrderTypeID>"
-"<SalesPersonID>%@</SalesPersonID>"
-"<StoreID>%@</StoreID>"
-"<Notes>%@</Notes>"
-"<PurchaseOrder>%@</PurchaseOrder>"
-"</OrderHeader>"
-"<OrderDetail>"
-"${lineItemXml}"
-"</OrderDetail>"
+    "<OrderHeader>"
+        "<Customer>"
+            "<CustomerID>%@</CustomerID>"
+            "<CustomerTypeID>%@</CustomerTypeID>"
+            "<TaxExempt>%@</TaxExempt>"
+            "<Zip>%@</Zip>"
+        "</Customer>"
+        "${orderIdXml}"
+        "<OrderTypeID>%@</OrderTypeID>"
+        "<SalesPersonID>%@</SalesPersonID>"
+        "<StoreID>%@</StoreID>"
+        "<Notes>%@</Notes>"
+        "<PurchaseOrder>%@</PurchaseOrder>"
+        "<DepositAuthorizationID>%@</DepositAuthorizationID>"
+        "<OrderDCTO>%@</OrderDCTO>"
+        "<PromiseDate>%@</PromiseDate>"
+        "<RequestDate>%@</RequestDate>"
+        "<New>%@</New>"
+    "</OrderHeader>"
+    "<OrderDetail>"
+        "${lineItemXml}"
+    "</OrderDetail>"
 "</OrderClass>";
 
 
 static NSString * const ORDER_LINEITEM_XML = @""
-@"<Line>"
-@"<Conversion>%@</Conversion>"
-@"<DefaultToBox>%@</DefaultToBox>"
-@"<ItemID>%@</ItemID>"
-@"<ItemNumber>%@</ItemNumber>"
-@"<ItemDescription>%@</ItemDescription>"
-@"<ItemStatusCode>%@</ItemStatusCode>"
-@"<ItemTypeID>%@</ItemTypeID>"
-@"<LineID>%@</LineID>"
-@"<OrderDetailsStatusID>%@</OrderDetailsStatusID>"
-@"<PiecesPerBox>%@</PiecesPerBox>"
-@"${priceAuthorizationXml}"
-@"<PrimaryUOM>%@</PrimaryUOM>"
-@"<QuantityOrderedPrimary>%@</QuantityOrderedPrimary>"
-@"<QuantityOrderedSecondary>%@</QuantityOrderedSecondary>"
-@"<RetailPricePrimary>%@</RetailPricePrimary>"
-@"<SalesPersonID>%@</SalesPersonID>"
-@"<SecondaryUOM>%@</SecondaryUOM>"
-@"<SellingPricePrimary>%@</SellingPricePrimary>"
-@"<SellingPriceSecondary>%@</SellingPriceSecondary>"
-@"<StdCost>%@</StdCost>"
-@"<StockingCode>%@</StockingCode>"
-@"<StoreID>%@</StoreID>"
-@"<TaxExempt>%@</TaxExempt>"
-@"<TaxRate>%@</TaxRate>"
-@"</Line>";
+    @"<Line>"
+        @"<Conversion>%@</Conversion>"
+        @"<DefaultToBox>%@</DefaultToBox>"
+        @"<ItemID>%@</ItemID>"
+        @"<ItemNumber>%@</ItemNumber>"
+        @"<ItemDescription>%@</ItemDescription>"
+        @"<ItemStatusCode>%@</ItemStatusCode>"
+        @"<ItemTypeID>%@</ItemTypeID>"
+        @"<LineID>%@</LineID>"
+        @"<OrderDetailsStatusID>%@</OrderDetailsStatusID>"
+        @"<PiecesPerBox>%@</PiecesPerBox>"
+        @"${priceAuthorizationXml}"
+        @"<PrimaryUOM>%@</PrimaryUOM>"
+        @"<QuantityOrderedPrimary>%@</QuantityOrderedPrimary>"
+        @"<QuantityOrderedSecondary>%@</QuantityOrderedSecondary>"
+        @"<RetailPricePrimary>%@</RetailPricePrimary>"
+        @"<SalesPersonID>%@</SalesPersonID>"
+        @"<SecondaryUOM>%@</SecondaryUOM>"
+        @"<SellingPricePrimary>%@</SellingPricePrimary>"
+        @"<SellingPriceSecondary>%@</SellingPriceSecondary>"
+        @"<StdCost>%@</StdCost>"
+        @"<StockingCode>%@</StockingCode>"
+        @"<StoreID>%@</StoreID>"
+        @"<TaxExempt>%@</TaxExempt>"
+        @"<TaxRate>%@</TaxRate>"
+        @"<LOCN>%@</LOCN>"
+        @"<LOTN>%@</LOTN>"
+        @"<LineID>%@</LineID>"
+        @"<MCU>%@</MCU>"
+        @"<NXTR>%@</NXTR>"
+        @"<OrderID>%@</OrderID>"
+        @"<RequestDate>%@</RequestDate>"
+        @"<ReturnReferenceID>%@</ReturnReferenceID>"
+        @"<Spiff>%@</Spiff>"
+        @"<Split>%@</Split>"
+        @"<URRF>%@</URRF>"
+        @"<LineState>%@</LineState>"
+    @"</Line>";
 
 #pragma mark -
 #pragma mark Private Interface
@@ -108,6 +125,12 @@ static NSString * const ORDER_LINEITEM_XML = @""
         NSString *customerZip = @"";
         NSString *notes = @"";
         NSString *purchaseOrder = @"";
+        NSString *depositAuthorizationID = @"";
+        NSString *orderDCTO = @"";
+        NSString *promiseDate = @"";
+        NSString *requestDate = @"";
+        NSString *new = @"";
+
         
         // Set the header element values from the order
         if (order.orderId) {
@@ -143,8 +166,39 @@ static NSString * const ORDER_LINEITEM_XML = @""
             purchaseOrder = order.purchaseOrderId;
         }
         
+        if(order.depositAuthorizationID)
+        {
+            depositAuthorizationID = [order.depositAuthorizationID stringValue];
+        }
+        
+        if (order.orderDCTO)
+        {
+            orderDCTO = order.orderDCTO;
+        }
+        
+        if(order.promiseDate)
+        {
+            promiseDate = order.promiseDate;
+        }
+        
+        if (order.requestDate)
+        {
+            requestDate = order.requestDate;
+        }
+        
+        if(order.isNewOrder)
+        {
+            if (order.isNewOrder == NO)
+            {
+                new = @"false";
+            }
+            else{
+                new = @"true";
+            }
+        }
+        
         // Create the XML
-        orderXml = [NSString stringWithFormat: ORDER_XML, customerId, customerTypeId, customerTaxExempt, customerZip, orderTypeId, salespersonEmpId, storeId, notes, purchaseOrder];
+        orderXml = [NSString stringWithFormat: ORDER_XML, customerId, customerTypeId, customerTaxExempt, customerZip, orderTypeId, salespersonEmpId, storeId, notes, purchaseOrder, depositAuthorizationID, orderDCTO, promiseDate, requestDate, new];
         
         // Perform any variable replacement (ignore the order id field if it is not there
         if (orderId) {
@@ -204,6 +258,19 @@ static NSString * const ORDER_LINEITEM_XML = @""
     NSString *storeId = nil;
     NSString *taxExempt = nil;
     NSString *taxRate = nil;
+    
+    NSString *locn = nil;
+    NSString *lotn = nil;
+    NSString *lineID = nil;
+    NSString *mcu = nil;
+    NSString *nxtr = nil;
+    NSString *orderID = nil;
+    NSString *requestDate = nil;
+    NSString *returnedReferenceID = nil;
+    NSString *spiff = nil;
+    NSString *split = nil;
+    NSString *urrf = nil;
+    NSString *lineState = nil;
     
     
     if (order) {
@@ -305,9 +372,66 @@ static NSString * const ORDER_LINEITEM_XML = @""
                     taxRate = [NSString stringWithFormat: @"%@", orderItem.item.taxRate];
                 }
                 
+                if (orderItem.item.locn)
+                {
+                    locn = [ orderItem.item.locn stringValue];
+                }
+                
+                if (orderItem.item.lotn)
+                {
+                    lotn = [orderItem.item.lotn stringValue];
+                }
+                
+                if (orderItem.item.mcu)
+                {
+                    mcu = [orderItem.item.mcu stringValue];
+                }
+                
+                if (orderItem.item.nxtr)
+                {
+                    nxtr = [orderItem.item.nxtr stringValue];
+                }
+                
+                if (orderItem.orderId)
+                {
+                    orderID = [orderItem.orderId stringValue];
+                }
+                
+                if (orderItem.requestDate)
+                {
+                    requestDate = orderItem.requestDate;
+                }
+                
+                if (orderItem.returnReferenceId)
+                {
+                    returnedReferenceID = [orderItem.returnReferenceId stringValue];
+                }
+                
+                if (orderItem.split)
+                {
+                    if (orderItem.split == NO)
+                    {
+                        split = @"false";
+                    }
+                    else {
+                        split = @"true";
+                    }
+                }
+                
+                if(orderItem.urrf)
+                {
+                    urrf = orderItem.urrf;
+                }
+                
+                if (orderItem.item.lineState)
+                {
+                    lineState = orderItem.item.lineState;
+                }
+
+                
                 lineItemXml = [lineItemXml stringByAppendingFormat:ORDER_LINEITEM_XML, conversion, defaultToBox, itemId, itemNumber, itemDescription, itemStatusCode, itemTypeId, 
                                lineNumber, orderDetailsStatus, piecesPerBox, primaryUom, quantityPrimary, quantitySecondary, retailPrice, salepersonEmpId,
-                               secondaryUom, sellingPricePrimary, sellingPriceSecondary, stdCost, stockingCode, storeId, taxExempt, taxRate];
+                               secondaryUom, sellingPricePrimary, sellingPriceSecondary, stdCost, stockingCode, storeId, taxExempt, taxRate, locn, lotn, lineID, mcu, nxtr, orderID, requestDate,returnedReferenceID, spiff, split, urrf, lineState];
                 
                 // Is there an authorization ID for selling price?
                 if (orderItem.priceAuthorizationId) {

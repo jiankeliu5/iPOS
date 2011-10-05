@@ -26,6 +26,7 @@ typedef enum {
     NSString *statusCode;
     NSString *type;
     NSNumber *typeId;
+    NSString *lineState;
     
     // Stocking Information
     NSString *binLocation;
@@ -47,14 +48,7 @@ typedef enum {
     NSDecimalNumber *standardCost;
     NSDecimalNumber *taxRate;
     BOOL taxExempt; 
-    
-   /* NSNumber *locn;
-    NSNumber *lotn;
-    NSNumber *lttr;
-    NSNumber *mcu;
-    NSNumber *nxtr;
-    NSNumber *urrf;*/
-    //NSString *openItemStatus;
+
     
     // Store
     Store *store;
@@ -81,6 +75,7 @@ extern NSString * const UOM_SQFT;
 @property(nonatomic, retain) NSString *statusCode;
 @property(nonatomic, retain) NSString *type;
 @property(nonatomic, retain) NSNumber *typeId;
+@property(nonatomic, retain) NSString *lineState;
 @property(nonatomic, retain) NSString *binLocation;
 @property(nonatomic, retain) NSString *stockingCode;
 

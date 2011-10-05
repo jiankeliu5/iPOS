@@ -27,7 +27,7 @@
     NSString *requestDate;
     NSNumber *selectionId;
     BOOL taxExempt;
-    
+    BOOL isNewOrder;
     
     BOOL partialPaymentOnAccount;
     
@@ -50,10 +50,11 @@
 @property (nonatomic, retain) NSString *requestDate;
 @property (nonatomic, retain) NSNumber *selectionId;
 @property (nonatomic, assign) BOOL taxExempt;
-
+@property (nonatomic, assign) BOOL isNewOrder;
 @property (nonatomic, retain) Store *store;
 @property (nonatomic, retain) Customer *customer;
 @property (nonatomic, assign) BOOL partialPaymentOnAccount;
+
 
 - (NSArray *) getOrderItems;
 - (void) addItemToOrder: (ProductItem *) item withQuantity: (NSDecimalNumber *) quantity;

@@ -180,6 +180,8 @@ static NSString * const CUSTOMER_XML = @""
     
     customer.address = address;
     
+    [address release];
+    
     return customer;
 }
 
