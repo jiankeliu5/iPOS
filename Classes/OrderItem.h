@@ -27,6 +27,7 @@
     NSNumber *orderId;
     
     BOOL split;
+    NSNumber *spiff;
     NSString *locn;
     NSString *lotn;
     NSString *lttr;
@@ -65,6 +66,7 @@
 @property (nonatomic, retain) NSString *requestDate;
 @property (nonatomic, retain) NSNumber *returnReferenceId;
 @property (nonatomic, assign) BOOL split;
+@property(nonatomic, retain) NSNumber *spiff;
 @property (nonatomic, retain) NSNumber *orderId;
 
 

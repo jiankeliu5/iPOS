@@ -29,6 +29,7 @@
     NSString *lastName;
     NSString *phoneNumber;
     NSString *emailAddress;
+    NSNumber *eOneCustoemrId;
     
     Store   *store;
     Address *address; 
@@ -54,6 +55,7 @@
 
 @property (nonatomic, retain) Store *store;
 @property (nonatomic, retain) Address *address;
+@property (nonatomic, retain) NSNumber *eOneCustoemrId;
 
 @property                     BOOL taxExempt;
 

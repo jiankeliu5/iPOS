@@ -13,7 +13,7 @@
 @implementation Customer
 
 @synthesize customerId, customerType, customerTypeId, priceLevelId, firstName, lastName, phoneNumber, emailAddress, store, address, taxExempt, holdStatus,holdStatusText, creditLimit, creditBalance;
-@synthesize termsTypeId, amountAppliedOnAccount;
+@synthesize termsTypeId, amountAppliedOnAccount, eOneCustoemrId;
 
 #pragma mark Initializer and Memory Mgmt
 -(id) init {

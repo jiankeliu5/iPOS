@@ -259,18 +259,18 @@ static NSString * const ORDER_LINEITEM_XML = @""
     NSString *taxExempt = nil;
     NSString *taxRate = nil;
     
-    NSString *locn = nil;
-    NSString *lotn = nil;
-    NSString *lineID = nil;
-    NSString *mcu = nil;
-    NSString *nxtr = nil;
-    NSString *orderID = nil;
-    NSString *requestDate = nil;
-    NSString *returnedReferenceID = nil;
-    NSString *spiff = nil;
-    NSString *split = nil;
-    NSString *urrf = nil;
-    NSString *lineState = nil;
+    NSString *locn = @"";
+    NSString *lotn = @"";
+    NSString *lineID = @"";
+    NSString *mcu = @"";
+    NSString *nxtr = @"";
+    NSString *orderID = @"";
+    NSString *requestDate = @"";
+    NSString *returnedReferenceID = @"";
+    NSString *spiff = @"";
+    NSString *split = @"";
+    NSString *urrf = @"";
+    NSString *lineState = @"";
     
     
     if (order) {
@@ -372,24 +372,24 @@ static NSString * const ORDER_LINEITEM_XML = @""
                     taxRate = [NSString stringWithFormat: @"%@", orderItem.item.taxRate];
                 }
                 
-                if (orderItem.item.locn)
+                if (orderItem.locn)
                 {
-                    locn = [ orderItem.item.locn stringValue];
+                    locn = orderItem.locn;
                 }
                 
-                if (orderItem.item.lotn)
+                if (orderItem.lotn)
                 {
-                    lotn = [orderItem.item.lotn stringValue];
+                    lotn = orderItem.lotn;
                 }
                 
-                if (orderItem.item.mcu)
+                if (orderItem.mcu)
                 {
-                    mcu = [orderItem.item.mcu stringValue];
+                    mcu = orderItem.mcu;
                 }
                 
-                if (orderItem.item.nxtr)
+                if (orderItem.nxtr)
                 {
-                    nxtr = [orderItem.item.nxtr stringValue];
+                    nxtr = orderItem.nxtr;
                 }
                 
                 if (orderItem.orderId)
@@ -426,6 +426,11 @@ static NSString * const ORDER_LINEITEM_XML = @""
                 if (orderItem.item.lineState)
                 {
                     lineState = orderItem.item.lineState;
+                }
+                
+                if(orderItem.spiff)
+                {
+                    spiff = [orderItem.spiff stringValue];
                 }
 
                 
