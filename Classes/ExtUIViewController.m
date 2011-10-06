@@ -178,7 +178,16 @@
 		if (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation ||UIInterfaceOrientationLandscapeRight == self.interfaceOrientation ) {
 			viewRectAbsolute = [self swapRect:viewRectAbsolute];
 		}
+        
+        //Need to adjust the y value since the cooridnate system is flipped.
+        if (UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
+        {
+            viewRectAbsolute.origin.y = windowRect.size.height -   viewRectAbsolute.origin.y - tf.frame.size.height;
+            
+        }
 		
+        CGFloat maxY = CGRectGetMaxY(viewRectAbsolute);
+        
 		CGRect frame = self.view.frame;
 		CGRect keyboardRect = [keyboardFrameValue CGRectValue];
 		
