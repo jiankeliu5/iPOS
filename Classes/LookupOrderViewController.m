@@ -123,12 +123,20 @@
 - (void)layoutView {
     CGRect viewBounds = self.view.bounds;
     CGFloat textFieldWidth = viewBounds.size.width * 0.60f;
-	CGFloat	textFieldSpacing = viewBounds.size.height * 0.15f;
+	CGFloat	textFieldSpacing = viewBounds.size.height * 0.10f;
 	
 	lookupOrderIdField.frame = CGRectMake(0.0f, 0.0f, textFieldWidth, TEXT_FIELD_HEIGHT);
 	lookupOrderIdField.center = CGPointMake((viewBounds.size.width / 2.0f), textFieldSpacing);
 	
-	lookupOrderPhoneField.frame = CGRectOffset(lookupOrderIdField.frame, 0.0f, textFieldSpacing);
+	lookupOrderPhoneField.frame = CGRectOffset(lookupOrderIdField.frame, 0.0f, textFieldSpacing + (TEXT_FIELD_HEIGHT / 2.0f));
+    
+    // UIKit bug.  Need to do this to re-center the placeholder text.
+    lookupOrderIdField.textAlignment = UITextAlignmentLeft;
+    lookupOrderIdField.textAlignment = UITextAlignmentCenter;
+    
+    // UIKit bug.  Need to do this to re-center the placeholder text.
+    lookupOrderPhoneField.textAlignment = UITextAlignmentLeft;
+    lookupOrderPhoneField.textAlignment = UITextAlignmentCenter;
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
