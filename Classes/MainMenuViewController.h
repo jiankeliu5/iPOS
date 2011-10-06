@@ -26,6 +26,7 @@
 	ExtUITextField *lookupItemSkuField;
 	MOGlassButton *customerButton;
 	MOGlassButton *cartButton;
+    UIBarButtonItem *orderLookupButton;
     
     Linea *linea;
 	

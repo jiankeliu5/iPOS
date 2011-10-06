@@ -71,6 +71,8 @@
 		B401FEB31336DCB80082C7D4 /* NSString+StringFormatters.m in Sources */ = {isa = PBXBuildFile; fileRef = B401FE781336D8F20082C7D4 /* NSString+StringFormatters.m */; };
 		B404DD531345617500D85E1E /* ExtUIViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B404DD511345617500D85E1E /* ExtUIViewController.h */; };
 		B404DD541345617500D85E1E /* ExtUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B404DD521345617500D85E1E /* ExtUIViewController.m */; };
+		B40D9307143D45F900F9D89C /* LookupOrderViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B40D9305143D45F900F9D89C /* LookupOrderViewController.h */; };
+		B40D9308143D45F900F9D89C /* LookupOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B40D9306143D45F900F9D89C /* LookupOrderViewController.m */; };
 		B40FC0F21311928600D7D79D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
 		B41857211347C500009461D4 /* customer.png in Resources */ = {isa = PBXBuildFile; fileRef = B418571B1347C500009461D4 /* customer.png */; };
 		B41857221347C500009461D4 /* customer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B418571C1347C500009461D4 /* customer@2x.png */; };
@@ -621,6 +623,8 @@
 		B40B94241304ED500024C2DC /* AlertUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertUtils.m; sourceTree = "<group>"; };
 		B40B942F1304EF620024C2DC /* MainMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuViewController.h; sourceTree = "<group>"; };
 		B40B94301304EF620024C2DC /* MainMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuViewController.m; sourceTree = "<group>"; };
+		B40D9305143D45F900F9D89C /* LookupOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookupOrderViewController.h; sourceTree = "<group>"; };
+		B40D9306143D45F900F9D89C /* LookupOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookupOrderViewController.m; sourceTree = "<group>"; };
 		B40FC0571311890700D7D79D /* Global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Global.h; sourceTree = "<group>"; };
 		B40FC0581311890700D7D79D /* MOButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOButton.h; sourceTree = "<group>"; };
 		B40FC0591311890700D7D79D /* MOButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOButton.m; sourceTree = "<group>"; };
@@ -1048,6 +1052,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B40D9304143D457600F9D89C /* LookupOrder */,
 				366900A613FD7159004B6981 /* History */,
 				B42609A51357F287001E5BA2 /* PriceAdjust */,
 				B418577C1347D650009461D4 /* SearchItem */,
@@ -1328,6 +1333,15 @@
 				B40B94301304EF620024C2DC /* MainMenuViewController.m */,
 			);
 			name = MainMenu;
+			sourceTree = "<group>";
+		};
+		B40D9304143D457600F9D89C /* LookupOrder */ = {
+			isa = PBXGroup;
+			children = (
+				B40D9305143D45F900F9D89C /* LookupOrderViewController.h */,
+				B40D9306143D45F900F9D89C /* LookupOrderViewController.m */,
+			);
+			name = LookupOrder;
 			sourceTree = "<group>";
 		};
 		B40FC056131188F800D7D79D /* GlassButtons */ = {
@@ -1927,6 +1941,7 @@
 				3606E5E014333FAD00FBB02A /* PaymentHistoryXMLMarshaller.h in Headers */,
 				3606E5E414333FCF00FBB02A /* OrderHistoryService.h in Headers */,
 				360C1288143383E000235580 /* PreviousOrder.h in Headers */,
+				B40D9307143D45F900F9D89C /* LookupOrderViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2518,6 +2533,7 @@
 				3606E5E114333FAD00FBB02A /* PaymentHistoryXMLMarshaller.m in Sources */,
 				3606E5E514333FCF00FBB02A /* OrderHistoryService.m in Sources */,
 				360C1289143383E000235580 /* PreviousOrder.m in Sources */,
+				B40D9308143D45F900F9D89C /* LookupOrderViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

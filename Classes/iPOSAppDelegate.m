@@ -18,6 +18,8 @@
 @synthesize window;
 @synthesize navigationController;
 @synthesize loginViewController;
+@synthesize orderNavigationController;
+@synthesize lookupOrderViewController;
 @synthesize resignedActive;
 @synthesize verifyPasswordTries;
 
@@ -46,6 +48,11 @@
 	navigationController.navigationBar.barStyle = UIBarStyleBlack;
 	
 	[loginViewController release];
+    
+    lookupOrderViewController = [[LookupOrderViewController alloc] init];
+    orderNavigationController = [[UINavigationController alloc] initWithRootViewController:lookupOrderViewController];
+    orderNavigationController.navigationBar.barStyle = UIBarStyleBlack;
+    [lookupOrderViewController release];
 	
 	// Add the navigation controller view to the window
 	[window addSubview:[navigationController view]];
@@ -119,6 +126,7 @@
 
 - (void) applicationWillTerminate:(UIApplication*)application {	
 	[navigationController release];
+    [orderNavigationController release];
     [endTime release];
     //[startTime release];
     [window release];

@@ -15,12 +15,14 @@
 #include "CartItemsViewController.h"
 
 #include "Order.h"
+#include "iPOSAppDelegate.h"
 
 @interface MainMenuViewController()
 - (void) showAddItemOverlay: (NSArray *) foundItems;
 
 - (void) customerPressed:(id)sender;
 - (void) cartPressed:(id)sender;
+- (void) handleLookupOrder:(id)sender;
 
 - (void) performSearch: (ExtUITextField *) textField;
 @end
@@ -146,7 +148,10 @@
 	[cartButton setTitle:@"Order Cart" forState:UIControlStateNormal];
 	[cartButton setupAsBlackButton];
 	[self.view addSubview:cartButton];
-	 
+    
+    orderLookupButton = [[UIBarButtonItem alloc] initWithTitle:@"Orders" style:UIBarButtonItemStyleBordered target:self action:@selector(handleLookupOrder:)];
+	[[self navigationItem] setRightBarButtonItem:orderLookupButton];
+    [orderLookupButton release];
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -290,6 +295,13 @@
     CartItemsViewController *cartViewController = [[CartItemsViewController alloc] init];
 	[[self navigationController] pushViewController:cartViewController animated:TRUE];
 	[cartViewController release];
+}
+
+- (void)handleLookupOrder:(id)sender {
+    iPOSAppDelegate *app = (iPOSAppDelegate *)[[UIApplication sharedApplication] delegate];
+    UINavigationController *orderNav = [app orderNavigationController];
+    [orderNav setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [self presentModalViewController:orderNav animated:YES];
 }
 
 #pragma mark -

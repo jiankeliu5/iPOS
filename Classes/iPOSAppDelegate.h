@@ -10,12 +10,15 @@
 #import "LoginViewController.h"
 #import "iPOSFacade.h"
 #import "SessionVerificationView.h"
+#import "LookupOrderViewController.h"
 
 @interface iPOSAppDelegate : NSObject <UIApplicationDelegate, SessionVerificationViewDelegate> 
 {
     UIWindow* window;
 	UINavigationController* navigationController;
 	LoginViewController* loginViewController;
+    UINavigationController *orderNavigationController;
+    LookupOrderViewController *lookupOrderViewController;
 	BOOL resignedActive;
 	iPOSFacade *facade;
 	SessionVerificationView *verificationView;
@@ -27,6 +30,8 @@
 @property (retain) UIWindow* window;
 @property (retain) UINavigationController* navigationController;
 @property (retain) LoginViewController* loginViewController;
+@property (nonatomic, retain) UINavigationController *orderNavigationController;
+@property (nonatomic, retain) LookupOrderViewController *lookupOrderViewController;
 @property (nonatomic, assign) BOOL resignedActive;
 @property (nonatomic, assign) NSInteger verifyPasswordTries;
 @end
