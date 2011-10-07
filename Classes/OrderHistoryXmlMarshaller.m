@@ -74,7 +74,7 @@
          productItem.taxRate = [node elementDecimalValue:@"TaxRate"];
          
          
-         orderHistoryItem = [[OrderItem alloc] initWithItem:productItem AndQuantity:[NSDecimalNumber decimalNumberWithString:@"2.0"]];
+         orderHistoryItem = [[OrderItem alloc] initWithItem:productItem AndQuantity:[node elementDecimalValue:@"QuantityOrderedPrimary"]];
          orderHistoryItem.lineNumber = [node elementNumberValue:@"LineID"];
          orderHistoryItem.statusId = [node elementNumberValue:@"OrderDetailStatusID"];
          orderHistoryItem.sellingPricePrimary = [node elementDecimalValue:@"SellingPricePrimary"];

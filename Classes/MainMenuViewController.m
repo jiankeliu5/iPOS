@@ -18,6 +18,7 @@
 #include "iPOSAppDelegate.h"
 
 @interface MainMenuViewController()
+-(void) layoutView;
 - (void) showAddItemOverlay: (NSArray *) foundItems;
 
 - (void) customerPressed:(id)sender;
@@ -106,6 +107,7 @@
 	scanItemLabel.textColor = [UIColor blackColor];
 	scanItemLabel.text = @"-- SCAN ITEM --";
 	scanItemLabel.textAlignment = UITextAlignmentCenter;
+    
 	[self.view addSubview:scanItemLabel];
 	[scanItemLabel release];
 	
@@ -180,31 +182,51 @@
     // e.g. self.myOutlet = nil;
 }
 
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [self layoutView];
+}
+
+- (void) layoutView{
+    [linea addDelegate:self];
+    
+    
+	if (self.navigationController != nil) {
+		[self.navigationController setNavigationBarHidden:NO];
+		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Main" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
+	}
+    
+    CGRect viewBounds = self.view.bounds;
+	CGFloat labelButtonWidth = viewBounds.size.width * 0.60f;
+	CGFloat	labelButtonSpacing = viewBounds.size.height * 0.15f;
+	
+    scanItemLabel.frame = CGRectMake(0.0f, 0.0f, labelButtonWidth, 40.0f);
+    scanItemLabel.center = CGPointMake((viewBounds.size.width / 2.0f), labelButtonSpacing);
+    
+    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
+    {
+        labelButtonSpacing = labelButtonSpacing + 8.0;
+    }    
+    
+    lookupItemNameField.frame = CGRectOffset(scanItemLabel.frame, 0.0f, labelButtonSpacing);
+    lookupItemSkuField.frame = CGRectOffset(lookupItemNameField.frame, 0.0f, labelButtonSpacing);
+    
+    // Change to work from lookupOrderField position when that is implemented
+    customerButton.frame = CGRectOffset(lookupItemSkuField.frame, 0.0f, labelButtonSpacing);
+    
+    cartButton.frame = CGRectOffset(customerButton.frame, 0.0f, labelButtonSpacing);
+    
+    lookupItemNameField.textAlignment = UITextAlignmentLeft;
+    lookupItemSkuField.textAlignment = UITextAlignmentLeft;
+    lookupItemNameField.textAlignment = UITextAlignmentCenter;
+    lookupItemSkuField.textAlignment = UITextAlignmentCenter;
+}
 - (void)viewWillAppear:(BOOL)animated {
 
     // Add this controller as a Linea Device Delegate
     [linea addDelegate:self];
 
-
-	if (self.navigationController != nil) {
-		[self.navigationController setNavigationBarHidden:NO];
-		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Main" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
-	}
-	
-	CGRect viewBounds = self.view.bounds;
-	CGFloat labelButtonWidth = viewBounds.size.width * 0.60f;
-	CGFloat	labelButtonSpacing = viewBounds.size.height * 0.15f;
-	
-	scanItemLabel.frame = CGRectMake(0.0f, 0.0f, labelButtonWidth, 40.0f);
-	scanItemLabel.center = CGPointMake((viewBounds.size.width / 2.0f), labelButtonSpacing);
-	
-	lookupItemNameField.frame = CGRectOffset(scanItemLabel.frame, 0.0f, labelButtonSpacing);
-    lookupItemSkuField.frame = CGRectOffset(lookupItemNameField.frame, 0.0f, labelButtonSpacing);
-    	
-	// Change to work from lookupOrderField position when that is implemented
-	customerButton.frame = CGRectOffset(lookupItemSkuField.frame, 0.0f, labelButtonSpacing);
-	
-	cartButton.frame = CGRectOffset(customerButton.frame, 0.0f, labelButtonSpacing);
+    [self layoutView];
 	
 	// Do this last
 	[super viewWillAppear:animated];
