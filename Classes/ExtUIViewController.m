@@ -180,7 +180,7 @@
 		}
         
         //Need to adjust the y value since the cooridnate system is flipped.
-        if (UIInterfaceOrientationLandscapeRight == self.interfaceOrientation)
+        if (UIInterfaceOrientationLandscapeRight == self.interfaceOrientation || UIInterfaceOrientationPortraitUpsideDown == self.interfaceOrientation)
         {
             viewRectAbsolute.origin.y = windowRect.size.height -   viewRectAbsolute.origin.y - tf.frame.size.height;
             
