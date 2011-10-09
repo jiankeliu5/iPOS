@@ -113,6 +113,8 @@
 		B4300B9E131B486C000210C7 /* iPosLogin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B34131B4312000210C7 /* iPosLogin@2x.png */; };
 		B4300B9F131B486C000210C7 /* iPosIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B2F131B4300000210C7 /* iPosIcon.png */; };
 		B4300BA0131B486C000210C7 /* iPosIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4300B30131B4300000210C7 /* iPosIcon@2x.png */; };
+		B44BB2B714411C2F00E383CB /* OrderListTableCell.h in Headers */ = {isa = PBXBuildFile; fileRef = B44BB2B514411C2F00E383CB /* OrderListTableCell.h */; };
+		B44BB2B814411C2F00E383CB /* OrderListTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B44BB2B614411C2F00E383CB /* OrderListTableCell.m */; };
 		B44D1ECB133EA3BA004E7EDE /* icon-magnify2.png in Resources */ = {isa = PBXBuildFile; fileRef = B44D1E5B133E985E004E7EDE /* icon-magnify2.png */; };
 		B44D1ECC133EA3BA004E7EDE /* icon-magnify2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B44D1E5C133E985E004E7EDE /* icon-magnify2@2x.png */; };
 		B44D1ED0133EA3C7004E7EDE /* icon-magnify2.png in Resources */ = {isa = PBXBuildFile; fileRef = B44D1E5B133E985E004E7EDE /* icon-magnify2.png */; };
@@ -121,6 +123,8 @@
 		B44D1ED3133EA3D8004E7EDE /* icon-magnify2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B44D1E5C133E985E004E7EDE /* icon-magnify2@2x.png */; };
 		B45D260D13403CCD00AFC9D2 /* CartItemTableCell.h in Headers */ = {isa = PBXBuildFile; fileRef = B45D260B13403CCD00AFC9D2 /* CartItemTableCell.h */; };
 		B45D260E13403CCD00AFC9D2 /* CartItemTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B45D260C13403CCD00AFC9D2 /* CartItemTableCell.m */; };
+		B46240BC143EA6BE0094C485 /* OrderListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B46240BA143EA6BE0094C485 /* OrderListViewController.h */; };
+		B46240BD143EA6BE0094C485 /* OrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B46240BB143EA6BE0094C485 /* OrderListViewController.m */; };
 		B48263CA135A1B8700E29B68 /* SSLineView.h in Headers */ = {isa = PBXBuildFile; fileRef = B48263C8135A1B8700E29B68 /* SSLineView.h */; };
 		B48263CB135A1B8700E29B68 /* SSLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = B48263C9135A1B8700E29B68 /* SSLineView.m */; };
 		B4A7397D133457EA002DFA97 /* DoneDown3.png in Resources */ = {isa = PBXBuildFile; fileRef = B4A7397B133457EA002DFA97 /* DoneDown3.png */; };
@@ -652,10 +656,14 @@
 		B4300B33131B4312000210C7 /* iPosLogin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPosLogin.png; sourceTree = "<group>"; };
 		B4300B34131B4312000210C7 /* iPosLogin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPosLogin@2x.png"; sourceTree = "<group>"; };
 		B43E1BDA135745DE00E49615 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		B44BB2B514411C2F00E383CB /* OrderListTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderListTableCell.h; sourceTree = "<group>"; };
+		B44BB2B614411C2F00E383CB /* OrderListTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderListTableCell.m; sourceTree = "<group>"; };
 		B44D1E5B133E985E004E7EDE /* icon-magnify2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-magnify2.png"; sourceTree = "<group>"; };
 		B44D1E5C133E985E004E7EDE /* icon-magnify2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-magnify2@2x.png"; sourceTree = "<group>"; };
 		B45D260B13403CCD00AFC9D2 /* CartItemTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartItemTableCell.h; sourceTree = "<group>"; };
 		B45D260C13403CCD00AFC9D2 /* CartItemTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartItemTableCell.m; sourceTree = "<group>"; };
+		B46240BA143EA6BE0094C485 /* OrderListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderListViewController.h; sourceTree = "<group>"; };
+		B46240BB143EA6BE0094C485 /* OrderListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderListViewController.m; sourceTree = "<group>"; };
 		B47AA7ED12F7DD1000AAD34C /* PlaceHolderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceHolderView.h; sourceTree = "<group>"; };
 		B47AA7EE12F7DD1000AAD34C /* PlaceHolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceHolderView.m; sourceTree = "<group>"; };
 		B47AA7F412F7DD7200AAD34C /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -1340,6 +1348,10 @@
 			children = (
 				B40D9305143D45F900F9D89C /* LookupOrderViewController.h */,
 				B40D9306143D45F900F9D89C /* LookupOrderViewController.m */,
+				B46240BA143EA6BE0094C485 /* OrderListViewController.h */,
+				B46240BB143EA6BE0094C485 /* OrderListViewController.m */,
+				B44BB2B514411C2F00E383CB /* OrderListTableCell.h */,
+				B44BB2B614411C2F00E383CB /* OrderListTableCell.m */,
 			);
 			name = LookupOrder;
 			sourceTree = "<group>";
@@ -1942,6 +1954,8 @@
 				3606E5E414333FCF00FBB02A /* OrderHistoryService.h in Headers */,
 				360C1288143383E000235580 /* PreviousOrder.h in Headers */,
 				B40D9307143D45F900F9D89C /* LookupOrderViewController.h in Headers */,
+				B46240BC143EA6BE0094C485 /* OrderListViewController.h in Headers */,
+				B44BB2B714411C2F00E383CB /* OrderListTableCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2534,6 +2548,8 @@
 				3606E5E514333FCF00FBB02A /* OrderHistoryService.m in Sources */,
 				360C1289143383E000235580 /* PreviousOrder.m in Sources */,
 				B40D9308143D45F900F9D89C /* LookupOrderViewController.m in Sources */,
+				B46240BD143EA6BE0094C485 /* OrderListViewController.m in Sources */,
+				B44BB2B814411C2F00E383CB /* OrderListTableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

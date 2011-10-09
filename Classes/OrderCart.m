@@ -9,6 +9,9 @@
 
 @implementation OrderCart
 
+@synthesize previousOrderList;
+@synthesize previousOrder;
+
 static OrderCart *cart = nil;
 
 #pragma mark Singleton Initializer
@@ -57,6 +60,20 @@ static OrderCart *cart = nil;
     
     // Create a new blank order
     orderInCart = [[Order alloc] init];
+    
+    // Since the previous order and previous order list can
+    // change we will let their unset state be nil instead of
+    // an unfilled instance like orderInCart.
+    if (previousOrder != nil) {
+        [previousOrder release];
+        previousOrder = nil;
+    }
+    
+    if (previousOrderList != nil) {
+        [previousOrderList release];
+        previousOrderList = nil;
+    }
+
 }
 -(Order *) getOrder {
     if (orderInCart == nil) {

@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "iPOSFacade.h"
+#import "OrderCart.h"
 #import "ExtUIViewController.h"
 #import "ExtUITextField.h"
 
 @interface LookupOrderViewController : ExtUIViewController <ExtUIViewControllerDelegate> {
     iPOSFacade *facade;
+    OrderCart *orderCart;
     
     ExtUITextField *lookupOrderIdField;
     ExtUITextField *lookupOrderPhoneField;

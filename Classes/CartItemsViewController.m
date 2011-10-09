@@ -133,7 +133,7 @@
 
 #pragma mark -
 #pragma mark Accessors
-- (UIView *) contentViewx{
+- (UIView *) contentView {
 	return (UIView *)[self view];
 }
 

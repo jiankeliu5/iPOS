@@ -13,8 +13,13 @@
 
 @interface OrderCart : NSObject {
     iPOSFacade *facade;
-    Order *orderInCart; 
+    Order *orderInCart;
+    NSArray *previousOrderList;
+    Order *previousOrder;
 }
+
+@property (nonatomic, retain) NSArray *previousOrderList;
+@property (nonatomic, retain) Order *previousOrder;
 
 + (OrderCart *) sharedInstance;
 

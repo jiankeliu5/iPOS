@@ -43,6 +43,14 @@
     return [nf stringFromNumber:value];
 }
 
++ (NSString *) formatNumber:(NSNumber *) value toScale: (int) scale {
+    NSNumberFormatter * nf = [[[NSNumberFormatter alloc] init] autorelease];
+    [nf setMinimumFractionDigits:scale];
+    [nf setMaximumFractionDigits:scale];
+    
+    return [nf stringFromNumber:value];
+}
+
 
 - (NSString *) padLeft:(NSString *) padString withMaxSize: (NSUInteger) maxSize {
     if ([self length] + [padString length] <= maxSize) {

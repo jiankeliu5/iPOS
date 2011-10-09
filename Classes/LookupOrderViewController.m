@@ -10,6 +10,7 @@
 #import "Order.h"
 #import "PreviousOrder.h"
 #import "AlertUtils.h"
+#import "OrderListViewController.h"
 
 #define TEXT_FIELD_HEIGHT 40.0f
 
@@ -36,7 +37,8 @@
 	[self setTitle:@"Lookup Order"];
 	
     facade = [iPOSFacade sharedInstance];
-	
+	orderCart = [OrderCart sharedInstance];
+    
     orderIdFormatter = [[NSNumberFormatter alloc] init];
 	[orderIdFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
     
@@ -65,8 +67,7 @@
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations.
-    //return (interfaceOrientation == UIInterfaceOrientationPortrait);
-    return YES;
+    return (interfaceOrientation == UIInterfaceOrientationPortrait || UIInterfaceOrientationIsLandscape(interfaceOrientation));
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -220,11 +221,13 @@
         if ([textField.tagName isEqualToString:@"LookupOrderId"] && [textField.text length] > 0) {
             NSNumber *orderIdInput = [orderIdFormatter numberFromString:textField.text];
             if (orderIdInput != nil) {
+                // order comes back autoreleased
                 Order *order = [facade lookupOrderByOrderId:orderIdInput];
                 if (order != nil) {
                     // Prep and go to the order edit view controller
-                    textField.text = nil;
                     NSLog(@"Found Order: %@", order.orderId);
+                    textField.text = nil;
+                    [orderCart setPreviousOrder:order];
                 }
             }
     
@@ -238,14 +241,28 @@
             if ([regextest evaluateWithObject:searchString] == YES) {
                 foundOrderList = [facade lookupOrderByPhoneNumber:searchString];
                 if (foundOrderList && [foundOrderList count] > 0) {
-                    textField.text = nil;
                     if ([foundOrderList count] == 1) {
                         // Found one previous order, prep and go to order edit view controller
                         PreviousOrder *p = (PreviousOrder *)[foundOrderList objectAtIndex:0];
                         NSLog(@"Found one previous order: %@", p.orderId);
+                        Order *order = [facade lookupOrderByOrderId:p.orderId];
+                        if (order != nil) {
+                            // Prep and go to the order edit view controller
+                            NSLog(@"Single return from search by phone.  Found Order: %@", order.orderId);
+                            [orderCart setPreviousOrder:order];
+                        }
                     } else {
                         NSLog(@"Found %d previous orders.", [foundOrderList count]);
+                        // Set the previous order list on the order cart singleton
+                        [orderCart setPreviousOrderList:foundOrderList];
+                        
+                        OrderListViewController *orderListController = [[OrderListViewController alloc] init];
+                        [orderListController setSearchPhone:textField.text];
+                        [[self navigationController] pushViewController:orderListController animated:TRUE];
+                        [orderListController release];
                     }
+                    // Clear the text field here because we will send the number to the list view controller above.
+                    textField.text = nil;
                 }
             } else {
                 [AlertUtils showModalAlertMessage:@"Please enter a 10 digit phone number"];
