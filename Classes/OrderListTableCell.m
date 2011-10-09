@@ -64,7 +64,7 @@
 - (void) setPreviousOrder:(PreviousOrder *)pOrder {
     previousOrder = pOrder;
     
-    dateLabel.text = previousOrder.orderDate;
+    dateLabel.text = [previousOrder.orderDate stringByReplacingOccurrencesOfString:@"T" withString:@" "];
     totalLabel.text = [NSString formatDecimalNumberAsMoney:previousOrder.orderTotal];
     orderIdLabel.text = [NSString formatNumber:previousOrder.orderId toScale:0];
     statusLabel.text = previousOrder.orderType;

@@ -42,6 +42,10 @@
     orderIdFormatter = [[NSNumberFormatter alloc] init];
 	[orderIdFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
     
+    dateFormatter = [[NSDateFormatter alloc] init];
+    // The T literal needs to be escaped as 'T' or the match will not work.
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+    
     return self;
 
 }
@@ -51,6 +55,9 @@
     
     [orderIdFormatter release];
     orderIdFormatter = nil;
+    
+    [dateFormatter release];
+    dateFormatter = nil;
     
     [super dealloc];
 }
@@ -253,8 +260,15 @@
                         }
                     } else {
                         NSLog(@"Found %d previous orders.", [foundOrderList count]);
+                        // Sort the list of orders by date newest first.
+                        NSArray *sortedOrderList = [foundOrderList sortedArrayUsingComparator:^(id a, id b)
+                                                    {
+                                                        NSDate *dateA = [dateFormatter dateFromString:((PreviousOrder *)a).orderDate];
+                                                        NSDate *dateB = [dateFormatter dateFromString:((PreviousOrder *)b).orderDate];
+                                                        return [dateB compare:dateA];
+                                                    }];
                         // Set the previous order list on the order cart singleton
-                        [orderCart setPreviousOrderList:foundOrderList];
+                        [orderCart setPreviousOrderList:sortedOrderList];
                         
                         OrderListViewController *orderListController = [[OrderListViewController alloc] init];
                         [orderListController setSearchPhone:textField.text];

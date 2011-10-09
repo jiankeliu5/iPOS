@@ -25,6 +25,7 @@
 	NSObject <CartItemCellDelegate>* cellDelegate;
 	
 	UILabel *descriptionLabel;
+    UILabel *itemStatusLabel;
 	UILabel *quantityLabel;
 	UILabel *lineCostLabel;
 	BOOL deleteChecked;

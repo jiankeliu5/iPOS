@@ -22,6 +22,7 @@
     UIBarButtonItem *closeBarButton;
     
     NSNumberFormatter *orderIdFormatter;
+    NSDateFormatter *dateFormatter;
 }
 
 @property (nonatomic, retain) UIBarButtonItem *closeBarButton;

@@ -14,7 +14,8 @@
 #define LABEL_HEIGHT 16.0f
 #define START_X 10.0f
 #define START_Y 4.0f
-#define QUANTITY_LABEL_PERCENT_WIDTH 66.0f
+#define STATUS_LABEL_PERCENT_WIDTH 33.0f
+#define QUANTITY_LABEL_PERCENT_WIDTH 33.0f
 #define LINE_COST_LABEL_PERCENT_WIDTH 34.0f
 
 #pragma mark -
@@ -36,11 +37,19 @@
 		descriptionLabel = [[[UILabel alloc] init] autorelease];
 		descriptionLabel.backgroundColor = [UIColor clearColor];
 		descriptionLabel.textColor = [UIColor blackColor];
-		descriptionLabel.textAlignment = UITextAlignmentLeft;
+		descriptionLabel.textAlignment = UITextAlignmentCenter;
 		descriptionLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
 		descriptionLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:descriptionLabel];
-		
+
+        itemStatusLabel = [[[UILabel alloc] init] autorelease];
+		itemStatusLabel.backgroundColor = [UIColor clearColor];
+		itemStatusLabel.textColor = [UIColor blackColor];
+		itemStatusLabel.textAlignment = UITextAlignmentCenter;
+		itemStatusLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
+		itemStatusLabel.adjustsFontSizeToFitWidth = YES;
+		[self.contentView addSubview:itemStatusLabel];
+        
 		quantityLabel = [[[UILabel alloc] init] autorelease];
 		quantityLabel.backgroundColor = [UIColor clearColor];
 		quantityLabel.textColor = [UIColor blackColor];
@@ -95,12 +104,6 @@
 }
 
 - (void) setOrderItem:(OrderItem *)ordItem {
-	/*
-	if (orderItem != ordItem) {
-		[orderItem release];
-		orderItem = [ordItem retain];
-	}
-	*/
 	
 	orderItem = ordItem;
 	
@@ -111,6 +114,8 @@
 						  [orderItem getUOMForDisplay]];
 	descriptionLabel.text = descText;
 	
+    itemStatusLabel.text = [orderItem openItemStatus];
+    
 	NSString *quantityText = [NSString stringWithFormat:@"%@ %@", [orderItem getQuantityForDisplay], [orderItem getUOMForDisplay]];
 	quantityLabel.text = quantityText;
 	
@@ -170,12 +175,16 @@
 												  descriptionLabel.frame = rect;
 												  
 												  myY += LABEL_HEIGHT;
+                                                  CGFloat statusLabelWidth = floorf((cellWidth - START_X * 2.0f) * (STATUS_LABEL_PERCENT_WIDTH / 100.0f));
+                                                  rect = rect = CGRectMake(START_X, myY, statusLabelWidth, LABEL_HEIGHT);
+                                                  itemStatusLabel.frame = rect;
+                                                  
 												  CGFloat quantityLabelWidth = floorf((cellWidth - START_X * 2.0f) * (QUANTITY_LABEL_PERCENT_WIDTH / 100.0f));
-												  rect = CGRectMake(START_X, myY, quantityLabelWidth, LABEL_HEIGHT);
+												  rect = CGRectMake(statusLabelWidth, myY, quantityLabelWidth, LABEL_HEIGHT);
 												  quantityLabel.frame = rect;
 												  
-												  CGFloat lineCostLabelWidth = (cellWidth - START_X * 2.0f) - quantityLabelWidth;
-												  rect = CGRectMake(quantityLabelWidth, myY, lineCostLabelWidth, LABEL_HEIGHT);
+												  CGFloat lineCostLabelWidth = (cellWidth - START_X * 2.0f) - quantityLabelWidth - statusLabelWidth;
+												  rect = CGRectMake(quantityLabelWidth + statusLabelWidth, myY, lineCostLabelWidth, LABEL_HEIGHT);
 												  lineCostLabel.frame = rect;
 											  }
 											  completion:^(BOOL finished) {
@@ -190,9 +199,18 @@
 							 CGRect rect;
 							 rect = descriptionLabel.frame;
 							 descriptionLabel.frame = CGRectMake(rect.origin.x + offsetX, rect.origin.y, rect.size.width - offsetX, rect.size.height);
-							 
+                             
+                             CGFloat labelAdjust = floorf(offsetX / 3.0f);
+                             
+                             rect = itemStatusLabel.frame;
+                             itemStatusLabel.frame = CGRectMake(rect.origin.x + offsetX, rect.origin.y, rect.size.width - labelAdjust, rect.size.height);
+                             
 							 rect = quantityLabel.frame;
-							 quantityLabel.frame = CGRectMake(rect.origin.x + offsetX, rect.origin.y, rect.size.width - offsetX, rect.size.height);
+							 quantityLabel.frame = CGRectMake(rect.origin.x + offsetX - labelAdjust, rect.origin.y, rect.size.width - labelAdjust, rect.size.height);
+                             
+                             rect = lineCostLabel.frame;
+							 lineCostLabel.frame = CGRectMake(rect.origin.x + offsetX - (labelAdjust * 2.0f), rect.origin.y, rect.size.width - labelAdjust, rect.size.height);
+                             
 						 }
 						 completion:^(BOOL finished) {
 							 [UIView animateWithDuration:0.1 
