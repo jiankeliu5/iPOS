@@ -44,7 +44,7 @@
     BOOL loginResult = [facade login:@"123" password:@"456"];
     STAssertTrue(loginResult, @"I expected the login result to be true :-(");
     
-    PaymentHistory *paymentHistory = [facade getPaymentHistoryForOrderid:[NSNumber numberWithInt:308422]];
+    PaymentHistory *paymentHistory = [facade getPaymentHistoryForOrderid:[NSNumber numberWithInt:3084228]];
     
     STAssertNotNil(paymentHistory, @"Didn't get any payment history");
 }
@@ -57,7 +57,7 @@
     BOOL loginResult = [facade login:@"123" password:@"456"];
     STAssertTrue(loginResult, @"I expected the login result to be true :-(");
     
-    Order *result = [facade lookupOrderByOrderId:[NSNumber numberWithInt:308422]];
+    Order *result = [facade lookupOrderByOrderId:[NSNumber numberWithInt:3084229]];
     
     STAssertNotNil(result, @"Didn't get any payment history");
     
