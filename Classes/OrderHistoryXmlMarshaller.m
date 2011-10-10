@@ -34,9 +34,13 @@
     CXMLDocument *xmlParser = [[[CXMLDocument alloc] initWithXMLString:xmlString options:0 error:nil] autorelease];
     CXMLElement *root = [xmlParser rootElement];
 
+    
+    
     CustomerXmlMarshaller *customerXmlMarshaller = [[CustomerXmlMarshaller alloc] init];
     
     Order *order = [[[Order alloc] init] autorelease];
+    
+    [POSOxmUtils attachErrors: [root firstElementNamed:@"ErrorList"] toModel:order];
     
     CXMLElement *headerNode = [root firstElementNamed:@"OrderHeader"];
     
@@ -57,7 +61,9 @@
     OrderItem *orderHistoryItem = nil;
     ProductItem *productItem = nil;
     
-     for (CXMLElement *node in [root elementsForName:@"Line"]) {
+    CXMLElement *productItems = [root firstElementNamed:@"OrderDetail"];
+    
+     for (CXMLElement *node in [productItems elementsForName:@"Line"]) {
          
                   
          productItem = [[ProductItem alloc] init];
@@ -102,12 +108,13 @@
      }
     
     
-    Customer *customer = [customerXmlMarshaller toObjectFromXmlElement: [root firstElementNamed:@"Customer"]];
+    
+    Customer *customer = [customerXmlMarshaller toObjectFromXmlElement: [headerNode firstElementNamed:@"Customer"]];
     
     order.customer = customer;
     
     [customerXmlMarshaller release];
-    
+
     return order;
 }
 
