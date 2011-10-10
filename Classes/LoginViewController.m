@@ -146,8 +146,8 @@
     
     [linea disconnect];
     
-    // Clear out the order cart
-    [orderCart clearCart];
+    // Clear out all sections of the order cart
+    [orderCart clearAllCart];
 	
 	CGRect viewBounds = self.view.bounds;
 	

@@ -10,6 +10,8 @@
 #import "PreviousOrder.h"
 #import "NSString+StringFormatters.h"
 #import "OrderListTableCell.h"
+#import "AlertUtils.h"
+#import "CartItemsViewController.h"
 
 @interface OrderListViewController()
 - (void)layoutView;
@@ -140,6 +142,8 @@
 }
 
 - (void)handleClose:(id)sender {
+    // Switch the order cart back to working with a new order;
+    [orderCart setNewOrder:YES];
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -180,6 +184,16 @@
 	PreviousOrder *pOrder = (PreviousOrder *)[orderCart.previousOrderList objectAtIndex:indexPath.row];
 	if (pOrder != nil) {
         NSLog(@"Selected Order Number: %@ to edit.", [NSString formatNumber:pOrder.orderId toScale:0]);
+        Order *order = [facade lookupOrderByOrderId:pOrder.orderId];
+        if (order != nil) {
+            [orderCart setPreviousOrder:order];
+            CartItemsViewController *cartItemViewController = [[CartItemsViewController alloc] init];
+            [cartItemViewController setNewOrderMode:NO];
+            [[self navigationController] pushViewController:cartItemViewController animated:TRUE];
+            [cartItemViewController release];
+        } else {
+            [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Could not retrieve previous order.  Order Id: %@", pOrder.orderId]];
+        }
 	}
 }
 

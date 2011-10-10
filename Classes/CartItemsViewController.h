@@ -44,7 +44,17 @@
 	UIBarButtonItem *editBarButton;
     UIBarButtonItem *logoutBarButton;
 	UIBarButtonItem *cancelBarButton;
-	UIButton *commitEditsButton;
+    
+    UIBarButtonItem *searchButton;
+    UIBarButtonItem *custButton;
+    UIBarButtonItem *quoteButton;
+    UIBarButtonItem *orderButton;
+    UIBarButtonItem *marginButton;
+    UIBarButtonItem *logoutButton;
+    UIBarButtonItem *editButton;
+    UIBarButtonItem *cancelEditButton;
+    
+    UIButton *commitEditsButton;
 	UILabel *markDeleteLabel;
 	UILabel *markCloseLabel;
 	UIView *editHeaderView;
@@ -52,6 +62,11 @@
 	BOOL multiEditMode;
 	NSInteger countMarkedDelete;
 	NSInteger countMarkedClose;
+    
+    // If this is true work with the new order in the cart
+    // otherwise look for a previous order in the cart to 
+    // work with.
+    BOOL newOrderMode;
 	
 }
 
@@ -70,5 +85,7 @@
 @property (nonatomic, assign) BOOL multiEditMode;
 @property (nonatomic, assign) NSInteger countMarkDelete;
 @property (nonatomic, assign) NSInteger countMarkClose;
+
+@property (nonatomic, assign) BOOL newOrderMode;
 
 @end

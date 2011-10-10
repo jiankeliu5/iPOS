@@ -94,6 +94,8 @@
 @synthesize countMarkDelete;
 @synthesize countMarkClose;
 
+@synthesize newOrderMode;
+
 #pragma mark Constructors
 - (id)init
 {
@@ -112,6 +114,9 @@
 	facade = [iPOSFacade sharedInstance];
 	orderCart = [OrderCart sharedInstance];
 	
+    // By default we are going to assume we are working with a new order.
+    newOrderMode = true;
+    
     return self;
 }
 
@@ -208,7 +213,7 @@
 	// Create a toolbar for the bottom of the screen
 	orderToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, cy, self.view.frame.size.width, ORDER_TOOLBAR_HEIGHT)];
 	orderToolBar.barStyle = UIBarStyleBlack;
-	UIBarButtonItem *searchButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search.png"] 
+	searchButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search.png"] 
 																	style:UIBarButtonItemStylePlain 
 																   target:self 
 																   action:@selector(searchforItem:)] autorelease];
@@ -218,30 +223,59 @@
 	UIBarButtonItem *tbFixed = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil] autorelease];
 	tbFixed.width = 10.0f;
 	
-	UIBarButtonItem *custButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"customer.png"] 
+	custButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"customer.png"] 
 																	 style:UIBarButtonItemStylePlain 
 																	target:self 
 																	action:@selector(addOrEditCustomer:)] autorelease];
     // The quote button is displayed when we have a customer and an order with at least one item.
-	UIBarButtonItem *quoteButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"quotes-black.png"] 
+	quoteButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"quotes-black.png"] 
 																	 style:UIBarButtonItemStylePlain 
 																	target:self 
 																	action:@selector(sendOrderAsQuote:)] autorelease];
     
     // The order button is displayed when we have a customer and an order with at least one item.
-	UIBarButtonItem *orderButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Cash.png"] 
+	orderButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Cash.png"] 
 																	 style:UIBarButtonItemStylePlain 
 																	target:self 
 																	action:@selector(tenderOrder:)] autorelease];
     
-    UIBarButtonItem *marginButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stats.png"] 
+    marginButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stats.png"] 
 																	 style:UIBarButtonItemStylePlain 
 																	target:self 
 																	action:@selector(calculateProfitMargin:)] autorelease];
-                                                                    
+    
+    logoutButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stop_hand.png"]
+                                                     style:UIBarButtonItemStylePlain 
+                                                    target:self 
+                                                    action:@selector(handleLogout:)] autorelease];
+    
+    editButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"pencil.png"]
+                                                     style:UIBarButtonItemStylePlain 
+                                                    target:self 
+                                                    action:@selector(enterEditMode:)] autorelease];
+    
+    cancelEditButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"edit_cancel.png"]
+                                                   style:UIBarButtonItemStylePlain 
+                                                  target:self 
+                                                  action:@selector(cancelEditMode:)] autorelease];
+    
 	// Basic toolbar
-    self.toolbarBasic = [[[NSArray alloc] initWithObjects:searchButton, tbFixed, custButton, tbFlex, nil] autorelease];
-	self.toolbarWithQuoteAndOrder = [[[NSArray alloc] initWithObjects:searchButton, tbFixed, custButton, tbFlex, marginButton, tbFixed, quoteButton, tbFixed, orderButton, nil] autorelease];
+    self.toolbarBasic = [[[NSArray alloc] initWithObjects:searchButton, tbFixed, custButton, tbFlex, editButton, tbFixed, logoutButton, nil] autorelease];
+	self.toolbarWithQuoteAndOrder = [[[NSArray alloc] initWithObjects:
+                                      searchButton, 
+                                      tbFixed, 
+                                      custButton, 
+                                      tbFlex,
+                                      marginButton,
+                                      tbFixed,
+                                      quoteButton,
+                                      tbFixed,
+                                      orderButton,
+                                      tbFixed,
+                                      editButton,
+                                      tbFixed,
+                                      logoutButton,
+                                      nil] autorelease];
 	
 	// Edit mode toolbar
 	UIView *customToolbarView = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, COMMIT_EDIT_BUTTON_WIDTH, COMMIT_EDIT_HEIGHT)] autorelease];
@@ -268,7 +302,7 @@
 	
 	UIBarButtonItem *customBarButton = [[[UIBarButtonItem alloc] initWithCustomView:customToolbarView] autorelease];
 	
-	self.toolbarEditMode = [[[NSArray alloc] initWithObjects:tbFlex, customBarButton, tbFlex, nil] autorelease];
+	self.toolbarEditMode = [[[NSArray alloc] initWithObjects:tbFlex, customBarButton, tbFlex, cancelEditButton, nil] autorelease];
 	
 	// Start with the basic toolbar.
 	[orderToolBar setItems:self.toolbarBasic];
@@ -335,8 +369,8 @@
 		// This is what shows up on the back button in the *next* controller.
 		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Items" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
 		// We're going to put up an edit button on the left and a logout button on the right.
-		self.navigationItem.leftBarButtonItem = self.editBarButton;
-        self.navigationItem.rightBarButtonItem = self.logoutBarButton;
+		//self.navigationItem.leftBarButtonItem = self.editBarButton;
+        //self.navigationItem.rightBarButtonItem = self.logoutBarButton;
 	}
 	
 	Customer *cust = [orderCart getCustomerForOrder];
@@ -356,6 +390,12 @@
 	
 	[orderTable reloadData];
 	
+    if (newOrderMode) {
+        [custButton setEnabled:YES];
+    } else {
+        [custButton setEnabled:NO];
+    }
+    
 	// Do this last
 	[super viewWillAppear:animated];
 }
@@ -488,7 +528,7 @@
 	// Fire up the edit mode on the table.
 	
 	[orderToolBar setItems:self.toolbarEditMode];
-	[self.navigationItem setLeftBarButtonItem:self.cancelBarButton animated:NO];
+	//[self.navigationItem setLeftBarButtonItem:self.cancelBarButton animated:NO];
 	[self updateSelectionCount];
 	[self setMultiEditMode:YES];
 	[orderTable reloadData];
@@ -506,7 +546,7 @@
 	self.countMarkClose = 0;
 	[orderTable reloadData];
 	[self restoreDefaultToolbar];
-	[self.navigationItem setLeftBarButtonItem:self.editBarButton animated:NO];
+	//[self.navigationItem setLeftBarButtonItem:self.editBarButton animated:NO];
 	
 }
 
@@ -536,7 +576,7 @@
 	[orderTable reloadData];
 	[self restoreDefaultToolbar];
 	[self updateSelectionCount];
-	[self.navigationItem setLeftBarButtonItem:self.editBarButton animated:NO];
+	//[self.navigationItem setLeftBarButtonItem:self.editBarButton animated:NO];
     
     // Recalculate order labels
     [self calculateOrder];

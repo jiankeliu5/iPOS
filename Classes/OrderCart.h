@@ -16,19 +16,23 @@
     Order *orderInCart;
     NSArray *previousOrderList;
     Order *previousOrder;
+    BOOL newOrder;
 }
 
 @property (nonatomic, retain) NSArray *previousOrderList;
 @property (nonatomic, retain) Order *previousOrder;
+@property (nonatomic, assign) BOOL newOrder;
 
 + (OrderCart *) sharedInstance;
 
 #pragma mark -
 #pragma mark Accessors
 - (void) clearCart;
+- (void) clearPreviousCart;
+- (void) clearAllCart;
+
 - (Order *) getOrder;
 - (Customer *) getCustomerForOrder;
-
 
 #pragma mark -
 #pragma mark Cart methods

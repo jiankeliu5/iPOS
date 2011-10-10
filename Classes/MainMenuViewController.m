@@ -320,6 +320,8 @@
 }
 
 - (void)handleLookupOrder:(id)sender {
+    // Switch the order cart over to looking at existing orders rather than a new order.
+    [orderCart setNewOrder:NO];
     iPOSAppDelegate *app = (iPOSAppDelegate *)[[UIApplication sharedApplication] delegate];
     UINavigationController *orderNav = [app orderNavigationController];
     [orderNav setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];

@@ -160,13 +160,13 @@ static NSString * const CREDIT = @"credit";
     UIBarButtonItem *tbFlex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
     UIBarButtonItem *tbFixed = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil] autorelease];
     tbFixed.width = 150.0;
-    UIBarButtonItem *notesAndPOButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"pencil2.png"] 
+    UIBarButtonItem *notesAndPOButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"pencil.png"] 
                                                                           style:UIBarButtonItemStylePlain 
                                                                          target:self 
                                                                          action:@selector(displayNotesAndPOView:)] autorelease];
     
     
-        UIBarButtonItem * accountPaymentButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"notes_2.png"] 
+        UIBarButtonItem * accountPaymentButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"notes.png"] 
                                                              style:UIBarButtonItemStylePlain 
                                                             target:self 
                                                             action:@selector(handleAccountPayment:)] autorelease];

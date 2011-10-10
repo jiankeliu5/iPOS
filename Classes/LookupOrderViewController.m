@@ -11,6 +11,7 @@
 #import "PreviousOrder.h"
 #import "AlertUtils.h"
 #import "OrderListViewController.h"
+#import "CartItemsViewController.h"
 
 #define TEXT_FIELD_HEIGHT 40.0f
 
@@ -235,6 +236,12 @@
                     NSLog(@"Found Order: %@", order.orderId);
                     textField.text = nil;
                     [orderCart setPreviousOrder:order];
+                    CartItemsViewController *cartItemViewController = [[CartItemsViewController alloc] init];
+                    [cartItemViewController setNewOrderMode:NO];
+                    [[self navigationController] pushViewController:cartItemViewController animated:TRUE];
+                    [cartItemViewController release];
+                } else {
+                    [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Could not retrieve previous order.  Order Id: %@", order.orderId]];
                 }
             }
     
@@ -257,6 +264,12 @@
                             // Prep and go to the order edit view controller
                             NSLog(@"Single return from search by phone.  Found Order: %@", order.orderId);
                             [orderCart setPreviousOrder:order];
+                            CartItemsViewController *cartItemViewController = [[CartItemsViewController alloc] init];
+                            [cartItemViewController setNewOrderMode:NO];
+                            [[self navigationController] pushViewController:cartItemViewController animated:TRUE];
+                            [cartItemViewController release];
+                        } else {
+                            [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Could not retrieve previous order.  Order Id: %@", p.orderId]];
                         }
                     } else {
                         NSLog(@"Found %d previous orders.", [foundOrderList count]);
@@ -287,6 +300,8 @@
 }
 
 - (void)handleClose:(id)sender {
+    // Switch the order cart back to working with a new order.
+    [orderCart setNewOrder:YES];
     [self dismissModalViewControllerAnimated:YES];
 }
 

@@ -11,6 +11,7 @@
 
 @synthesize previousOrderList;
 @synthesize previousOrder;
+@synthesize newOrder;
 
 static OrderCart *cart = nil;
 
@@ -43,11 +44,16 @@ static OrderCart *cart = nil;
     // Create the order instance.  The Order Cart will manage access to the order cart and its items
     orderInCart = [[Order alloc] init];
     
+    // Default to working with the new order
+    newOrder = YES;
+    
     return self;
 }
 
 -(void) dealloc {
     [orderInCart release];
+    [self setPreviousOrderList:nil];
+    [self setPreviousOrder:nil];
     [super dealloc];
 }
 
@@ -60,7 +66,10 @@ static OrderCart *cart = nil;
     
     // Create a new blank order
     orderInCart = [[Order alloc] init];
-    
+
+}
+
+- (void) clearPreviousCart {
     // Since the previous order and previous order list can
     // change we will let their unset state be nil instead of
     // an unfilled instance like orderInCart.
@@ -73,13 +82,26 @@ static OrderCart *cart = nil;
         [previousOrderList release];
         previousOrderList = nil;
     }
-
 }
+
+- (void) clearAllCart {
+    [self clearCart];
+    
+    [self clearPreviousCart];
+    
+    // reset to pointing to the new order
+    newOrder = YES;
+}
+
 -(Order *) getOrder {
-    if (orderInCart == nil) {
-        orderInCart = [[Order alloc] init];
+    if (newOrder) {
+        if (orderInCart == nil) {
+            orderInCart = [[Order alloc] init];
+        }
+        return orderInCart;
+    } else {
+        return previousOrder;
     }
-    return orderInCart;
 }
 
 - (Customer *) getCustomerForOrder {
