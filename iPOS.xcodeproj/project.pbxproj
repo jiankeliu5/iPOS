@@ -10,14 +10,6 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
-		3606E5CC14333F7C00FBB02A /* AccountPaymentHistoryItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3606E5C214333F7C00FBB02A /* AccountPaymentHistoryItem.h */; };
-		3606E5CD14333F7C00FBB02A /* AccountPaymentHistoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3606E5C314333F7C00FBB02A /* AccountPaymentHistoryItem.m */; };
-		3606E5CE14333F7C00FBB02A /* CreditCardPaymentHistoryItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3606E5C414333F7C00FBB02A /* CreditCardPaymentHistoryItem.h */; };
-		3606E5CF14333F7C00FBB02A /* CreditCardPaymentHistoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3606E5C514333F7C00FBB02A /* CreditCardPaymentHistoryItem.m */; };
-		3606E5D214333F7C00FBB02A /* PaymentHistory.h in Headers */ = {isa = PBXBuildFile; fileRef = 3606E5C814333F7C00FBB02A /* PaymentHistory.h */; };
-		3606E5D314333F7C00FBB02A /* PaymentHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3606E5C914333F7C00FBB02A /* PaymentHistory.m */; };
-		3606E5D414333F7C00FBB02A /* PaymentHistoryItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3606E5CA14333F7C00FBB02A /* PaymentHistoryItem.h */; };
-		3606E5D514333F7C00FBB02A /* PaymentHistoryItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3606E5CB14333F7C00FBB02A /* PaymentHistoryItem.m */; };
 		3606E5DE14333FAD00FBB02A /* OrderSummaryXmlMarshaller.h in Headers */ = {isa = PBXBuildFile; fileRef = 3606E5D814333FAD00FBB02A /* OrderSummaryXmlMarshaller.h */; };
 		3606E5DF14333FAD00FBB02A /* OrderSummaryXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 3606E5D914333FAD00FBB02A /* OrderSummaryXmlMarshaller.m */; };
 		3606E5E014333FAD00FBB02A /* PaymentHistoryXMLMarshaller.h in Headers */ = {isa = PBXBuildFile; fileRef = 3606E5DA14333FAD00FBB02A /* PaymentHistoryXMLMarshaller.h */; };
@@ -554,14 +546,6 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iPOS_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOS_Prefix.pch; sourceTree = "<group>"; };
-		3606E5C214333F7C00FBB02A /* AccountPaymentHistoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountPaymentHistoryItem.h; sourceTree = "<group>"; };
-		3606E5C314333F7C00FBB02A /* AccountPaymentHistoryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountPaymentHistoryItem.m; sourceTree = "<group>"; };
-		3606E5C414333F7C00FBB02A /* CreditCardPaymentHistoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditCardPaymentHistoryItem.h; sourceTree = "<group>"; };
-		3606E5C514333F7C00FBB02A /* CreditCardPaymentHistoryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreditCardPaymentHistoryItem.m; sourceTree = "<group>"; };
-		3606E5C814333F7C00FBB02A /* PaymentHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentHistory.h; sourceTree = "<group>"; };
-		3606E5C914333F7C00FBB02A /* PaymentHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentHistory.m; sourceTree = "<group>"; };
-		3606E5CA14333F7C00FBB02A /* PaymentHistoryItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentHistoryItem.h; sourceTree = "<group>"; };
-		3606E5CB14333F7C00FBB02A /* PaymentHistoryItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentHistoryItem.m; sourceTree = "<group>"; };
 		3606E5D814333FAD00FBB02A /* OrderSummaryXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderSummaryXmlMarshaller.h; sourceTree = "<group>"; };
 		3606E5D914333FAD00FBB02A /* OrderSummaryXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderSummaryXmlMarshaller.m; sourceTree = "<group>"; };
 		3606E5DA14333FAD00FBB02A /* PaymentHistoryXMLMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentHistoryXMLMarshaller.h; sourceTree = "<group>"; };
@@ -1739,14 +1723,6 @@
 		D69BEFD712F9C6890035D358 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				3606E5C214333F7C00FBB02A /* AccountPaymentHistoryItem.h */,
-				3606E5C314333F7C00FBB02A /* AccountPaymentHistoryItem.m */,
-				3606E5C414333F7C00FBB02A /* CreditCardPaymentHistoryItem.h */,
-				3606E5C514333F7C00FBB02A /* CreditCardPaymentHistoryItem.m */,
-				3606E5C814333F7C00FBB02A /* PaymentHistory.h */,
-				3606E5C914333F7C00FBB02A /* PaymentHistory.m */,
-				3606E5CA14333F7C00FBB02A /* PaymentHistoryItem.h */,
-				3606E5CB14333F7C00FBB02A /* PaymentHistoryItem.m */,
 				D6B1935A133BEEC9004C4FD1 /* Oxm */,
 				D6B19383133C2450004C4FD1 /* AbstractModel.h */,
 				D6B19384133C2450004C4FD1 /* AbstractModel.m */,
@@ -1979,10 +1955,6 @@
 				D624BAA4137304B200ED6120 /* ItemDetailView.h in Headers */,
 				D6CB6140137321C200E024B6 /* ProductItemListXmlMarshaller.h in Headers */,
 				D61D83B013785D0200FD19C9 /* ItemTableCell.h in Headers */,
-				3606E5CC14333F7C00FBB02A /* AccountPaymentHistoryItem.h in Headers */,
-				3606E5CE14333F7C00FBB02A /* CreditCardPaymentHistoryItem.h in Headers */,
-				3606E5D214333F7C00FBB02A /* PaymentHistory.h in Headers */,
-				3606E5D414333F7C00FBB02A /* PaymentHistoryItem.h in Headers */,
 				3606E5DE14333FAD00FBB02A /* OrderSummaryXmlMarshaller.h in Headers */,
 				3606E5E014333FAD00FBB02A /* PaymentHistoryXMLMarshaller.h in Headers */,
 				3606E5E414333FCF00FBB02A /* OrderHistoryService.h in Headers */,
@@ -2593,10 +2565,6 @@
 				D624BAA5137304B200ED6120 /* ItemDetailView.m in Sources */,
 				D6CB6141137321C200E024B6 /* ProductItemListXmlMarshaller.m in Sources */,
 				D61D83B113785D0200FD19C9 /* ItemTableCell.m in Sources */,
-				3606E5CD14333F7C00FBB02A /* AccountPaymentHistoryItem.m in Sources */,
-				3606E5CF14333F7C00FBB02A /* CreditCardPaymentHistoryItem.m in Sources */,
-				3606E5D314333F7C00FBB02A /* PaymentHistory.m in Sources */,
-				3606E5D514333F7C00FBB02A /* PaymentHistoryItem.m in Sources */,
 				3606E5DF14333FAD00FBB02A /* OrderSummaryXmlMarshaller.m in Sources */,
 				3606E5E114333FAD00FBB02A /* PaymentHistoryXMLMarshaller.m in Sources */,
 				3606E5E514333FCF00FBB02A /* OrderHistoryService.m in Sources */,
