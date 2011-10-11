@@ -7,7 +7,6 @@
 //
 
 #import "PaymentHistoryXMLMarshaller.h"
-#import "PaymentHistory.h"
 #import "CreditCardPayment.h"
 #import "AccountPayment.h"
 
