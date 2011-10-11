@@ -44,7 +44,7 @@
     
 }
 
-- (PaymentHistory *) getPaymentHistory {
+- (NSArray *) getPaymentHistory {
     
     if (paymentHistory){
         return paymentHistory;

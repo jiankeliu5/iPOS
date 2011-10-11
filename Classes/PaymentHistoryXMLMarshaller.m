@@ -8,8 +8,8 @@
 
 #import "PaymentHistoryXMLMarshaller.h"
 #import "PaymentHistory.h"
-#import "CreditCardPaymentHistoryItem.h"
-#import "AccountPaymentHistoryItem.h"
+#import "CreditCardPayment.h"
+#import "AccountPayment.h"
 
 
 @implementation PaymentHistoryXMLMarshaller
@@ -26,48 +26,48 @@
 
 - (id) toObject:(NSString *) xmlString {
     
-    PaymentHistory *history = [[[PaymentHistory alloc] init] autorelease];
+    Payment *history;
+    
+    NSMutableArray *paymentList = [NSMutableArray arrayWithCapacity:0];
     
     CXMLDocument *xmlParser = [[[CXMLDocument alloc] initWithXMLString:xmlString options:0 error:nil] autorelease];
     CXMLElement *root = [xmlParser rootElement];
     
     for (CXMLElement *node in [root elementsForName:@"OrderPaymentStruct"]) {
+        history = [[[Payment alloc] init] autorelease];
         
         NSNumber *paymentTypeID = [node elementNumberValue:@"PaymentTypeID"]; 
         int paymentTypeIDIntVal = [paymentTypeID intValue];
         
         if (paymentTypeIDIntVal == 3 || paymentTypeIDIntVal == 4 || paymentTypeIDIntVal == 5 || paymentTypeIDIntVal == 6)
         {
-            CreditCardPaymentHistoryItem *ccItem = [[[CreditCardPaymentHistoryItem alloc] init] autorelease];
-            ccItem.amount = [node elementDecimalValue:@"Amount"];
-            ccItem.customerID = [node elementNumberValue:@"CustomerID"];
-            ccItem.orderId = [node elementNumberValue:@"OrderID"];
-            ccItem.orderPaymentId = [node elementNumberValue:@"OrderPaymentID"];
-            ccItem.paymentDate = [node elementStringValue:@"PaymentDate"];
-            ccItem.paymentTypeId = [node elementNumberValue:@"PaymentTypeID"];
-            ccItem.storeId = [node elementNumberValue:@"StoreID"];
-            ccItem.cardNumber = [node elementStringValue:@"CardNum"];
-            ccItem.lpToken = [node elementStringValue:@"LPToken"];
-            ccItem.tRouteD = [node elementStringValue:@"TrouteD"];
-            
-            history.creditCardPayment = ccItem;
+            history = [[CreditCardPayment alloc] init ];
+            history.cardNumber = [node elementStringValue:@"CardNum"];
         }
         else if (paymentTypeIDIntVal == 7)
         {
-            AccountPaymentHistoryItem *accountItem = [[AccountPaymentHistoryItem alloc] init];
-            accountItem.amount = [node elementDecimalValue:@"Amount"];
-            accountItem.customerID = [node elementNumberValue:@"CustomerID"];
-            accountItem.orderId = [node elementNumberValue:@"OrderID"];
-            accountItem.orderPaymentId = [node elementNumberValue:@"OrderPaymentID"];
-            accountItem.paymentDate = [node elementStringValue:@"PaymentDate"];
-            accountItem.paymentTypeId = [node elementNumberValue:@"PaymentTypeID"];
-            accountItem.storeId = [node elementNumberValue:@"StoreID"];
-            
-            history.accountPayment = accountItem; 
+            history = [[AccountPayment alloc] init]; 
         }
+        
+        history.paymentAmount = [node elementDecimalValue:@"Amount"];
+        history.customerId = [node elementNumberValue:@"CustomerID"];
+        history.orderId = [node elementNumberValue:@"OrderID"];
+        history.paymentRefId = [node elementStringValue:@"OrderPaymentID"];
+        history.paymentDate = [node elementStringValue:@"PaymentDate"];
+        history.paymentTypeId = [node elementNumberValue:@"PaymentTypeID"];
+        history.storeId = [node elementNumberValue:@"StoreID"];
+        history.lpToken = [node elementStringValue:@"LPToken"];
+        history.tRouteD = [node elementStringValue:@"TrouteD"];
+        history.orderPaymentId = [node elementNumberValue:@"OrderPaymentID"];
+        history.paymentTypeId = [node elementNumberValue:@"PaymentTypeID"];
+        
+        [paymentList addObject:history];
+        
+        [history release];
+        history = nil;
     }
     
-    return history;
+    return paymentList;
 }
 
 - (NSString *) toXml: (id) marshalObj

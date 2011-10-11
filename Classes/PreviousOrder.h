@@ -16,7 +16,7 @@
     NSNumber *orderId;
     NSDecimalNumber *orderTotal;
     NSString *orderType;
-    PaymentHistory *paymentHistory;
+    NSArray *paymentHistory;
     iPOSFacade *facade;
 }
 

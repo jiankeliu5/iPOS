@@ -121,7 +121,7 @@
     return orders;
 }
 
--(PaymentHistory *) getPaymentHistoryForOrderid: (NSString *)orderId withSessionInfo:(SessionInfo *) sessionInfo{
+-(NSArray *) getPaymentHistoryForOrderid: (NSString *)orderId withSessionInfo:(SessionInfo *) sessionInfo{
     
     if (sessionInfo == nil) {
         return nil;

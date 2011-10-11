@@ -20,6 +20,13 @@
     NSDecimalNumber *paymentAmount;
     
     NSString *paymentRefId;
+
+    NSString *lpToken;
+    NSString *tRouteD;
+    
+    NSNumber *orderPaymentId;
+    NSString *paymentDate;
+    NSNumber *paymentTypeId;
 }
 
 @property (nonatomic, retain) NSNumber *orderId;
@@ -29,6 +36,14 @@
 
 @property (nonatomic, retain) NSDecimalNumber *paymentAmount;
 @property (nonatomic, retain) NSString *paymentRefId;
+
+@property (nonatomic, retain) NSString *cardNumber;
+@property (nonatomic, retain) NSString *lpToken;
+@property (nonatomic, retain) NSString *tRouteD;
+
+@property (nonatomic, retain) NSNumber *orderPaymentId;
+@property (nonatomic, retain) NSString *paymentDate;
+@property (nonatomic, retain) NSNumber *paymentTypeId;
 
 -(id) initWithOrder: (Order *) order;
 

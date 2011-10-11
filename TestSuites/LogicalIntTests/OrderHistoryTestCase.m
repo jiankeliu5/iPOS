@@ -44,9 +44,11 @@
     BOOL loginResult = [facade login:@"123" password:@"456"];
     STAssertTrue(loginResult, @"I expected the login result to be true :-(");
     
-    PaymentHistory *paymentHistory = [facade getPaymentHistoryForOrderid:[NSNumber numberWithInt:3084228]];
+    NSArray *paymentHistory = [facade getPaymentHistoryForOrderid:[NSNumber numberWithInt:3084228]];
     
     STAssertNotNil(paymentHistory, @"Didn't get any payment history");
+    
+    STAssertTrue([[NSNumber numberWithUnsignedInt:[paymentHistory count]] compare: [NSNumber numberWithInt: 1 ]]  == NSOrderedSame, @"Size of array is not correct");
 }
 
 -(void) testOrderHistoryByOrderID {
