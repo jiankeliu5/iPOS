@@ -78,7 +78,7 @@
          productItem.stockingCode = [node elementStringValue:@"StockingCode"];
          productItem.taxExempt = [node elementBoolValue:@"TaxExempt"];
          productItem.taxRate = [node elementDecimalValue:@"TaxRate"];
-         
+         productItem.sku = [node elementStringValue:@"ItemNumber"];
          
          orderHistoryItem = [[OrderItem alloc] initWithItem:productItem AndQuantity:[node elementDecimalValue:@"QuantityOrderedPrimary"]];
          orderHistoryItem.lineNumber = [node elementNumberValue:@"LineID"];

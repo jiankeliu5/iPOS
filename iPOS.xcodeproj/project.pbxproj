@@ -22,9 +22,7 @@
 		365B593F1407DBAE000B0277 /* ProfitMarginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C6B44E14057BBD009A455F /* ProfitMarginViewController.m */; };
 		365B5947140C0E23000B0277 /* OrderTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 365B5945140C092E000B0277 /* OrderTestCase.m */; };
 		365B5952140D44CA000B0277 /* profitView.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B594E140D44C9000B0277 /* profitView.js */; };
-		365B5953140D44CA000B0277 /* profitView.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B594E140D44C9000B0277 /* profitView.js */; };
 		365B5958140D4658000B0277 /* displayProfitMargin.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B5954140D4658000B0277 /* displayProfitMargin.js */; };
-		365B5959140D4658000B0277 /* displayProfitMargin.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B5954140D4658000B0277 /* displayProfitMargin.js */; };
 		368B10921434F675001AAD73 /* OrderHistoryTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F3E99F1434C1A2004376B8 /* OrderHistoryTestCase.m */; };
 		368B1095143531C3001AAD73 /* OrderHistoryXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 368B1094143531C3001AAD73 /* OrderHistoryXmlMarshaller.m */; };
 		368B109614364857001AAD73 /* OrderHistoryXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 368B1094143531C3001AAD73 /* OrderHistoryXmlMarshaller.m */; };
@@ -2442,8 +2440,6 @@
 				368B10921434F675001AAD73 /* OrderHistoryTestCase.m in Sources */,
 				D67943A313160884004B8254 /* iPOSServiceIntTestCase.m in Sources */,
 				D6C7770613574A7900D41AD9 /* PaymentServiceTestCase.m in Sources */,
-				365B5953140D44CA000B0277 /* profitView.js in Sources */,
-				365B5959140D4658000B0277 /* displayProfitMargin.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

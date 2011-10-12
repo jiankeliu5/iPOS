@@ -10,7 +10,6 @@
 #import "iPOSFacade.h"
 #import "PreviousOrder.h"
 
-#import "PaymentHistory.h"
 
 @implementation OrderHistoryTestCase
 
@@ -49,6 +48,8 @@
     STAssertNotNil(paymentHistory, @"Didn't get any payment history");
     
     STAssertTrue([[NSNumber numberWithUnsignedInt:[paymentHistory count]] compare: [NSNumber numberWithInt: 1 ]]  == NSOrderedSame, @"Size of array is not correct");
+    
+   
 }
 
 -(void) testOrderHistoryByOrderID {
@@ -65,7 +66,14 @@
     
     STAssertTrue([result.orderId compare: [NSNumber numberWithInt: 3834770]] == NSOrderedSame,@"Wrong order id");
     
-    STAssertNotNil(result.customer, @"Customer should not be empty");
+    Customer *customer = result.customer;
+    
+    STAssertNotNil(customer, @"Customer should not be empty");
+    
+    
+    STAssertNotNil(customer.address.zipPostalCode, @"Zip code required");
+    
+    
 }
 
 
