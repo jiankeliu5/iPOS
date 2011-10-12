@@ -175,6 +175,7 @@ static NSString * const CUSTOMER_XML = @""
     [self addCustomerName:[root elementStringValue:@"CustomerName"] toCustomer:customer];
     customer.taxExempt = [root elementBoolValue:@"TaxExempt"];
     customer.eOneCustoemrId = [root elementNumberValue:@"E1CustomerID"];
+    customer.phoneNumber = [root elementStringValue:@"CustomerPhone"];
     Address *address = [[Address alloc] init];
     address.zipPostalCode = [root elementStringValue:@"Zip"];
     
