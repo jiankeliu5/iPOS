@@ -14,7 +14,7 @@
 #import "PreviousOrder.h"
 
 @implementation PreviousOrder
-@synthesize orderDate, orderId, orderType, orderTotal;
+@synthesize orderDate, orderId, orderType, orderTotal, orderTypeId;
 
 - (id)init
 {

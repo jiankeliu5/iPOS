@@ -36,6 +36,7 @@
          order.orderId = [node elementNumberValue:@"OrderID"];
          order.orderTotal =[node elementDecimalValue:@"OrderTotal"];
          order.orderType = [node elementStringValue:@"OrderType"];
+         order.orderTypeId = [node elementNumberValue:@"OrderTypeID"];
          
          [itemList addObject:order];
          

@@ -16,6 +16,7 @@
     NSDecimalNumber *orderTotal;
     NSString *orderType;
     NSArray *paymentHistory;
+    NSNumber *orderTypeId;
     iPOSFacade *facade;
 }
 
@@ -23,6 +24,7 @@
 @property (nonatomic, retain) NSNumber *orderId;
 @property (nonatomic, retain) NSDecimalNumber *orderTotal;
 @property (nonatomic, retain) NSString *orderType;
+@property (nonatomic, retain) NSNumber *orderTypeId;
 
 -(Order *) getItemsForOrder;
 
