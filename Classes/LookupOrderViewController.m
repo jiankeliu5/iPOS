@@ -241,8 +241,10 @@
                     [[self navigationController] pushViewController:cartItemViewController animated:TRUE];
                     [cartItemViewController release];
                 } else {
-                    [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Could not retrieve previous order.  Order Id: %@", order.orderId]];
+                    [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Could not retrieve previous order.  Order Id: %@", orderIdInput]];
                 }
+            } else {
+                [AlertUtils showModalAlertMessage:@"Please input a numeric order id."];
             }
     
         } else if ([textField.tagName isEqualToString:@"LookupOrderPhone"] && [textField.text length] > 0) {
@@ -276,9 +278,13 @@
                         // Sort the list of orders by date newest first.
                         NSArray *sortedOrderList = [foundOrderList sortedArrayUsingComparator:^(id a, id b)
                                                     {
-                                                        NSDate *dateA = [dateFormatter dateFromString:((PreviousOrder *)a).orderDate];
-                                                        NSDate *dateB = [dateFormatter dateFromString:((PreviousOrder *)b).orderDate];
-                                                        return [dateB compare:dateA];
+                                                        NSComparisonResult statusSort = [((PreviousOrder *)b).orderType compare:((PreviousOrder *)a).orderType];
+                                                        if (statusSort == NSOrderedSame) {
+                                                            NSDate *dateA = [dateFormatter dateFromString:((PreviousOrder *)a).orderDate];
+                                                            NSDate *dateB = [dateFormatter dateFromString:((PreviousOrder *)b).orderDate];
+                                                            return [dateB compare:dateA];
+                                                        } 
+                                                        return statusSort;
                                                     }];
                         // Set the previous order list on the order cart singleton
                         [orderCart setPreviousOrderList:sortedOrderList];

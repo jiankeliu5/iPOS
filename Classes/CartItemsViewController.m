@@ -19,6 +19,7 @@
 #import "CustomerViewController.h"
 #import "TenderPaymentViewController.h"
 #import "ProfitMarginViewController.h"
+#import "iPOSAppDelegate.h"
 
 #define CUST_SELECTED_COLOR [UIColor colorWithRed:170.0f/255.0f green:204.0f/255.0f blue:0.0f alpha:1.0f]
 #define NO_CUST_SELECTED_COLOR [UIColor colorWithRed:255.0f/255.0f green:70.0f/255.0f blue:0.0f alpha:1.0f]
@@ -74,6 +75,9 @@
 
 - (void) showAddItemOverlay: (NSArray *) foundItems;
 - (void) displayProfitMarginOverlay;
+
+- (void)handleLookupOrder:(id)sender;
+- (void)handleCloseLookupOrder:(id)sender;
 @end
 
 @implementation CartItemsViewController
@@ -82,9 +86,6 @@
 @synthesize toolbarWithQuoteAndOrder;
 @synthesize toolbarEditMode;
 
-@synthesize editBarButton;
-@synthesize logoutBarButton;
-@synthesize cancelBarButton;
 @synthesize commitEditsButton;
 @synthesize markDeleteLabel;
 @synthesize markCloseLabel;
@@ -125,9 +126,6 @@
 	[self setToolbarWithQuoteAndOrder:nil];
 	[self setToolbarEditMode:nil];
 	
-	[self setEditBarButton:nil];
-    [self setLogoutBarButton:nil];
-	[self setCancelBarButton:nil];
 	[self setCommitEditsButton:nil];
 	[self setMarkCloseLabel:nil];
 	[self setMarkDeleteLabel:nil];
@@ -309,13 +307,6 @@
 	[self.view addSubview:orderToolBar];
 	[orderToolBar release];
 	
-	// Keep reference to these buttons as we have to switch them in and out when we enter or exit edit mode.
-	// Button to put us into edit mode.
-	self.editBarButton = [[[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(enterEditMode:)] autorelease];
-    self.logoutBarButton = [[[UIBarButtonItem alloc] initWithTitle:@"Suspend" style:UIBarButtonItemStyleBordered target:self action:@selector(handleLogout:)] autorelease];
-	// Button to cancel edit mode.
-	self.cancelBarButton = [[[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelEditMode:)] autorelease];
-	
 	self.editHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, EDIT_HEADER_HEIGHT)] autorelease];
 	UILabel *deleteLabel = [[[UILabel alloc] initWithFrame:CGRectMake(EDIT_HEADER_LABEL_X, 0.0f, EDIT_HEADER_DELETE_LABEL_WIDTH, EDIT_HEADER_HEIGHT)] autorelease];
 	deleteLabel.backgroundColor = [UIColor whiteColor];
@@ -368,9 +359,19 @@
 		[self.navigationController setNavigationBarHidden:NO];
 		// This is what shows up on the back button in the *next* controller.
 		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Items" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
-		// We're going to put up an edit button on the left and a logout button on the right.
-		//self.navigationItem.leftBarButtonItem = self.editBarButton;
-        //self.navigationItem.rightBarButtonItem = self.logoutBarButton;
+		// Depending on whether we are working with a new order or an existing one we will either put up the button to switch to the previous order
+        // modal view controller or to close it.
+        if (self.newOrderMode) {
+            self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Orders" 
+                                                                                       style:UIBarButtonItemStyleBordered 
+                                                                                      target:self 
+                                                                                      action:@selector(handleLookupOrder:)] autorelease];
+        } else {
+            self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Close" 
+                                                                                       style:UIBarButtonItemStyleBordered 
+                                                                                      target:self 
+                                                                                      action:@selector(handleCloseLookupOrder:)] autorelease];
+        }
 	}
 	
 	Customer *cust = [orderCart getCustomerForOrder];
@@ -430,6 +431,25 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc. that aren't in use.
+}
+
+#pragma mark -
+#pragma mark Switch To Order Lookup
+- (void)handleLookupOrder:(id)sender {
+    // Switch the order cart over to looking at existing orders rather than a new order.
+    [orderCart setNewOrder:NO];
+    iPOSAppDelegate *app = (iPOSAppDelegate *)[[UIApplication sharedApplication] delegate];
+    UINavigationController *orderNav = [app orderNavigationController];
+    [orderNav setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    [self presentModalViewController:orderNav animated:YES];
+}
+
+#pragma mark -
+#pragma mark Switch Back To New Order
+- (void)handleCloseLookupOrder:(id)sender {
+    // Switch the order cart back to working with a new order.
+    [orderCart setNewOrder:YES];
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark -
@@ -519,16 +539,20 @@
 }
 
 - (void) handleLogout: (id) sender {
-    // Cancel the order and completely Logoff
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    UIAlertView *logoutAlert = [[UIAlertView alloc] init];
+	logoutAlert.title = @"Cancel and Logout?";
+	logoutAlert.message = @"This will cancel the order and return to the login screen.  Are you sure you wish to do this?";
+	logoutAlert.delegate = self;
+	[logoutAlert addButtonWithTitle:@"Cancel"];
+	[logoutAlert addButtonWithTitle:@"Logout"];
+	[logoutAlert show];
+	[logoutAlert release];
 }
 
 - (void) enterEditMode:(id)sender {
-	//[AlertUtils showModalAlertMessage:@"Edit functionality is not implemented yet.  Please use swipe to delete rows."];
 	// Fire up the edit mode on the table.
 	
 	[orderToolBar setItems:self.toolbarEditMode];
-	//[self.navigationItem setLeftBarButtonItem:self.cancelBarButton animated:NO];
 	[self updateSelectionCount];
 	[self setMultiEditMode:YES];
 	[orderTable reloadData];
@@ -546,7 +570,6 @@
 	self.countMarkClose = 0;
 	[orderTable reloadData];
 	[self restoreDefaultToolbar];
-	//[self.navigationItem setLeftBarButtonItem:self.editBarButton animated:NO];
 	
 }
 
@@ -576,7 +599,6 @@
 	[orderTable reloadData];
 	[self restoreDefaultToolbar];
 	[self updateSelectionCount];
-	//[self.navigationItem setLeftBarButtonItem:self.editBarButton animated:NO];
     
     // Recalculate order labels
     [self calculateOrder];
@@ -604,7 +626,9 @@
 #pragma mark -
 #pragma mark UIAlertView delegate
 - (void)alertView:(UIAlertView *)anAlertView clickedButtonAtIndex:(NSInteger)aButtonIndex {
-	if ([anAlertView.title isEqualToString:@"Send Quote?"]) {
+	
+    // Send quote modal.
+    if ([anAlertView.title isEqualToString:@"Send Quote?"]) {
 		// Check by titles rather than index since documentation suggests that different 
 		// devices can set the indexes differently.
 		NSString *clickedButtonTitle = [anAlertView buttonTitleAtIndex:aButtonIndex];
@@ -622,6 +646,15 @@
 			}
 		}
 	}
+
+    // Cancel and logout modal.
+    if ([anAlertView.title isEqualToString:@"Cancel and Logout?"]) {
+		NSString *clickedButtonTitle = [anAlertView buttonTitleAtIndex:aButtonIndex];
+		if ([clickedButtonTitle isEqualToString:@"Logout"]) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+		}
+	}
+
 	// Other generic alerts will just fall through and dismiss with no other actions.
 }
 
@@ -787,7 +820,7 @@
 	
 	[orderTable reloadData];
     
-    self.logoutBarButton.enabled = YES;
+    logoutButton.enabled = YES;
     
 	[self calculateOrder];
     
@@ -796,7 +829,7 @@
 - (void) cancelAddItem:(AddItemView *)addItemView {
 	[addItemView removeFromSuperview];
     
-    self.logoutBarButton.enabled = YES;
+    logoutButton.enabled = YES;
     
 	[linea addDelegate:self];
 }
@@ -842,7 +875,7 @@
         }
         
         // Disable the suspend button
-        self.logoutBarButton.enabled = NO;
+        logoutButton.enabled = NO;
         
         [overlay release];
     } else {

@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PaymentHistory.h"
 #import "iPOSFacade.h"
 
 @interface PreviousOrder : NSObject

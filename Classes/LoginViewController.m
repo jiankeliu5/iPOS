@@ -11,6 +11,7 @@
 #import "LayoutUtils.h"
 #import "AlertUtils.h"
 #import "MainMenuViewController.h"
+#import "iPOSAppDelegate.h"
 
 #pragma mark -
 #pragma mark Private Interface
@@ -149,6 +150,14 @@
     // Clear out all sections of the order cart
     [orderCart clearAllCart];
 	
+    // Not sure if I like reaching back to the app delegate all the time for the
+    // order lookup navigation controller.  Add it to the facade instead?
+    // Make sure when we log out that we pop the order lookup nav controller 
+    // all the way back too.
+    iPOSAppDelegate *app = (iPOSAppDelegate *)[[UIApplication sharedApplication] delegate];
+    UINavigationController *orderNav = [app orderNavigationController];
+    [orderNav popToRootViewControllerAnimated:YES];
+    
 	CGRect viewBounds = self.view.bounds;
 	
 	if (loginTableView) {

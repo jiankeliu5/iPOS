@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "Order.h"
 #import "SessionInfo.h"
-#import "PaymentHistory.h"
 
 @protocol OrderHistoryServiceProtocol <NSObject>
 -(Order *) lookupOrderByOrderId:(NSString *) orderId withSessionInfo: (SessionInfo *) sessionInfo;
