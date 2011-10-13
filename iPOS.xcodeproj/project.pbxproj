@@ -136,6 +136,8 @@
 		B48263CB135A1B8700E29B68 /* SSLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = B48263C9135A1B8700E29B68 /* SSLineView.m */; };
 		B4A7397D133457EA002DFA97 /* DoneDown3.png in Resources */ = {isa = PBXBuildFile; fileRef = B4A7397B133457EA002DFA97 /* DoneDown3.png */; };
 		B4A7397E133457EA002DFA97 /* DoneUp3.png in Resources */ = {isa = PBXBuildFile; fileRef = B4A7397C133457EA002DFA97 /* DoneUp3.png */; };
+		B4C8E93814466C4A0019A640 /* OrderItemsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = B4C8E93614466C4A0019A640 /* OrderItemsViewController.h */; };
+		B4C8E93914466C4A0019A640 /* OrderItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C8E93714466C4A0019A640 /* OrderItemsViewController.m */; };
 		B4CEE02213527CE80067DEBC /* Cash.png in Resources */ = {isa = PBXBuildFile; fileRef = B4CEE01E13527CE80067DEBC /* Cash.png */; };
 		B4CEE02313527CE80067DEBC /* Cash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4CEE01F13527CE80067DEBC /* Cash@2x.png */; };
 		B4CEE02613527CE80067DEBC /* Cash.png in Resources */ = {isa = PBXBuildFile; fileRef = B4CEE01E13527CE80067DEBC /* Cash.png */; };
@@ -699,6 +701,8 @@
 		B4C46B0513075F5D001EADE4 /* AddItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddItemView.m; sourceTree = "<group>"; };
 		B4C46B961308BBE7001EADE4 /* ExtUITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtUITextField.h; sourceTree = "<group>"; };
 		B4C46B971308BBE7001EADE4 /* ExtUITextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtUITextField.m; sourceTree = "<group>"; };
+		B4C8E93614466C4A0019A640 /* OrderItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderItemsViewController.h; sourceTree = "<group>"; };
+		B4C8E93714466C4A0019A640 /* OrderItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderItemsViewController.m; sourceTree = "<group>"; };
 		B4CEE01E13527CE80067DEBC /* Cash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cash.png; sourceTree = "<group>"; };
 		B4CEE01F13527CE80067DEBC /* Cash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cash@2x.png"; sourceTree = "<group>"; };
 		B4CEE02E13527D350067DEBC /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
@@ -1069,6 +1073,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B4C8E93514466B230019A640 /* OrderItems */,
 				B40D9304143D457600F9D89C /* LookupOrder */,
 				366900A613FD7159004B6981 /* History */,
 				B42609A51357F287001E5BA2 /* PriceAdjust */,
@@ -1547,6 +1552,15 @@
 			name = Components;
 			sourceTree = "<group>";
 		};
+		B4C8E93514466B230019A640 /* OrderItems */ = {
+			isa = PBXGroup;
+			children = (
+				B4C8E93614466C4A0019A640 /* OrderItemsViewController.h */,
+				B4C8E93714466C4A0019A640 /* OrderItemsViewController.m */,
+			);
+			name = OrderItems;
+			sourceTree = "<group>";
+		};
 		B4D1983C1326BDF0007CCE08 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -1960,6 +1974,7 @@
 				B40D9307143D45F900F9D89C /* LookupOrderViewController.h in Headers */,
 				B46240BC143EA6BE0094C485 /* OrderListViewController.h in Headers */,
 				B44BB2B714411C2F00E383CB /* OrderListTableCell.h in Headers */,
+				B4C8E93814466C4A0019A640 /* OrderItemsViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2568,6 +2583,7 @@
 				B40D9308143D45F900F9D89C /* LookupOrderViewController.m in Sources */,
 				B46240BD143EA6BE0094C485 /* OrderListViewController.m in Sources */,
 				B44BB2B814411C2F00E383CB /* OrderListTableCell.m in Sources */,
+				B4C8E93914466C4A0019A640 /* OrderItemsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

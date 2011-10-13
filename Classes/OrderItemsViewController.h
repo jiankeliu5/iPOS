@@ -1,5 +1,5 @@
 //
-//  CartItemsViewController.h
+//  OrderItemsViewController.h
 //  iPOS
 //
 //  Created by Steven McCoole on 2/10/11.
@@ -16,7 +16,7 @@
 #import "CartItemTableCell.h"
 
 
-@interface CartItemsViewController : UIViewController <LineaDelegate, AddItemViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, SearchItemViewDelegate, CartItemCellDelegate, ProfitMarginViewDelegate> {
+@interface OrderItemsViewController : UIViewController <LineaDelegate, AddItemViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, SearchItemViewDelegate, CartItemCellDelegate, ProfitMarginViewDelegate> {
 	iPOSFacade *facade;
     OrderCart *orderCart;
     
@@ -42,7 +42,6 @@
 	NSArray *toolbarEditMode;
     
     UIBarButtonItem *searchButton;
-    UIBarButtonItem *custButton;
     UIBarButtonItem *quoteButton;
     UIBarButtonItem *orderButton;
     UIBarButtonItem *marginButton;

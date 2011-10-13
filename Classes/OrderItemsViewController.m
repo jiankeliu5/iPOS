@@ -1,12 +1,12 @@
 //
-//  CartItemsViewController.m
+//  OrderItemsViewController.m
 //  iPOS
 //
 //  Created by Steven McCoole on 2/10/11.
 //  Copyright 2011 NA. All rights reserved.
 //
 
-#import "CartItemsViewController.h"
+#import "OrderItemsViewController.h"
 #import "UIViewController+ViewControllerLayout.h"
 #import "NSString+StringFormatters.h"
 #import "AlertUtils.h"
@@ -16,7 +16,6 @@
 #import "OrderItem.h"
 #import "ProductItem.h"
 #import "CartItemDetailViewController.h"
-#import "CustomerViewController.h"
 #import "TenderPaymentViewController.h"
 #import "ProfitMarginViewController.h"
 #import "iPOSAppDelegate.h"
@@ -55,19 +54,16 @@
 #define EDIT_HEADER_LABEL_X 5.0f
 #define EDIT_HEADER_FONT_SIZE 11.0f
 
-@interface CartItemsViewController()
+@interface OrderItemsViewController()
 - (UILabel *) createOrderLabel:(NSString *)text withRect:(CGRect)rect andAlignment:(int)alignment;
 - (void) calculateOrder;
 - (void) sendOrderAsQuote:(id)sender;
 - (void) enterEditMode:(id)sender;
 - (void) cancelEditMode:(id)sender;
 - (void) commitEdits:(id)sender;
-- (void) addOrEditCustomer:(id)sender;
 - (void) tenderOrder:(id)sender;
 
 - (void) handleLogout:(id) sender;
-
-- (CustomerViewController *)findCustomerViewController;
 
 - (void) searchforItem:(id)sender;
 - (void) restoreDefaultToolbar;
@@ -76,10 +72,10 @@
 - (void) showAddItemOverlay: (NSArray *) foundItems;
 - (void) displayProfitMarginOverlay;
 
-- (void)handleLookupOrder:(id)sender;
+- (void)handleCloseLookupOrder:(id)sender;
 @end
 
-@implementation CartItemsViewController
+@implementation OrderItemsViewController
 
 @synthesize toolbarBasic;
 @synthesize toolbarWithQuoteAndOrder;
@@ -102,16 +98,18 @@
         return nil;
     
 	// Set up the items that will appear in a navigation controller bar if
-	// this view controller is added to a UINavigationController.
-	[[self navigationItem] setTitle:@"Items"];
-	[self setTitle:@"Items"];
+	// this view controller is added to a UINavigationController.  These 
+    // are defaults, values are set from the order we are currently working
+    // on when the view appears.
+	[[self navigationItem] setTitle:@"Order Item"];
+	[self setTitle:@"Order Item"];
 
 	// Set up the right side button if desired, edit button for example.
 	//[[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
     
 	facade = [iPOSFacade sharedInstance];
 	orderCart = [OrderCart sharedInstance];
-    
+	
     return self;
 }
 
@@ -215,10 +213,6 @@
 	UIBarButtonItem *tbFixed = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil] autorelease];
 	tbFixed.width = 10.0f;
 	
-	custButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"customer.png"] 
-																	 style:UIBarButtonItemStylePlain 
-																	target:self 
-																	action:@selector(addOrEditCustomer:)] autorelease];
     // The quote button is displayed when we have a customer and an order with at least one item.
 	quoteButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"quotes-black.png"] 
 																	 style:UIBarButtonItemStylePlain 
@@ -252,11 +246,9 @@
                                                   action:@selector(cancelEditMode:)] autorelease];
     
 	// Basic toolbar
-    self.toolbarBasic = [[[NSArray alloc] initWithObjects:searchButton, tbFixed, custButton, tbFlex, editButton, tbFixed, logoutButton, nil] autorelease];
+    self.toolbarBasic = [[[NSArray alloc] initWithObjects:searchButton, tbFlex, editButton, tbFixed, logoutButton, nil] autorelease];
 	self.toolbarWithQuoteAndOrder = [[[NSArray alloc] initWithObjects:
-                                      searchButton, 
-                                      tbFixed, 
-                                      custButton, 
+                                      searchButton,  
                                       tbFlex,
                                       marginButton,
                                       tbFixed,
@@ -348,16 +340,22 @@
 	self.multiEditMode = NO;
 	self.countMarkDelete = 0;
 	self.countMarkClose = 0;
-	
+    
+    Order *order = [orderCart getOrder];
+	NSString *controllerTitle = (order != nil && order.orderId != nil) ? [order.orderId stringValue] : @"Order Item";
+    
 	if (self.navigationController != nil) {
 		[self.navigationController setNavigationBarHidden:NO];
 		// This is what shows up on the back button in the *next* controller.
-		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Items" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
-		// Be able to switch into the previous order navigation flow.
-        self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Orders" 
+		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:controllerTitle style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
+        [[self navigationItem] setTitle:controllerTitle];
+        [self setTitle:controllerTitle];
+        
+        // Set up the close button to go back the new order navigation controller
+        self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Close" 
                                                                                    style:UIBarButtonItemStyleBordered 
                                                                                   target:self 
-                                                                                  action:@selector(handleLookupOrder:)] autorelease];
+                                                                                  action:@selector(handleCloseLookupOrder:)] autorelease];
 	}
 	
 	Customer *cust = [orderCart getCustomerForOrder];
@@ -376,7 +374,7 @@
 	}
 	
 	[orderTable reloadData];
-	
+    
 	// Do this last
 	[super viewWillAppear:animated];
 }
@@ -414,14 +412,11 @@
 }
 
 #pragma mark -
-#pragma mark Switch To Order Lookup
-- (void)handleLookupOrder:(id)sender {
-    // Switch the order cart over to looking at existing orders rather than a new order.
-    [orderCart setNewOrder:NO];
-    iPOSAppDelegate *app = (iPOSAppDelegate *)[[UIApplication sharedApplication] delegate];
-    UINavigationController *orderNav = [app orderNavigationController];
-    [orderNav setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-    [self presentModalViewController:orderNav animated:YES];
+#pragma mark Switch Back To New Order
+- (void)handleCloseLookupOrder:(id)sender {
+    // Switch the order cart back to working with a new order.
+    [orderCart setNewOrder:YES];
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark -
@@ -450,31 +445,6 @@
 	}
 }
 
-- (void) addOrEditCustomer:(id)sender {
-	CustomerViewController *custViewController = [self findCustomerViewController];
-	if (custViewController == nil) {
-		// Pop ourselves and push to the customer view controller.
-		// When the customer is confirmed we get pushed back here.
-		
-		// Locally store the navigation controller since
-		// self.navigationController will be nil once we are popped
-		UINavigationController *navController = self.navigationController;
-		
-		// retain ourselves so that the controller will still exist once it's popped off
-		[[self retain] autorelease];
-		
-		custViewController = [[[CustomerViewController alloc] init] autorelease];
-		
-		// Pop this controller and replace with another
-		[navController popViewControllerAnimated:NO];
-		[navController pushViewController:custViewController animated:YES];
-	} else {
-		// Go back to the customer controller, when we confirm we end up back at the cart.
-		[self.navigationController popToViewController:custViewController animated:YES];
-	}
-
-}
-
 - (void) tenderOrder:(id)sender {
 	TenderPaymentViewController *tenderViewController = [[[TenderPaymentViewController alloc] init] autorelease];
     UINavigationController *navController = self.navigationController;
@@ -485,18 +455,6 @@
 
 - (void)calculateProfitMargin:(id) sender{
     [self displayProfitMarginOverlay];
-}
-
-- (CustomerViewController *)findCustomerViewController {
-	if ([self navigationController] != nil) {
-		NSArray *controllers = [[self navigationController] viewControllers];
-		for (UIViewController *vc in controllers) {
-			if ([vc title] != nil && [[vc title] isEqualToString:@"Customer"] && [vc isKindOfClass:[CustomerViewController class]]) {
-				return (CustomerViewController*)vc;
-			}
-		}
-	}
-	return nil;
 }
 
 - (void) sendOrderAsQuote:(id)sender {

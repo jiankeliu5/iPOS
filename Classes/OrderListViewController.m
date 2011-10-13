@@ -8,10 +8,11 @@
 
 #import "OrderListViewController.h"
 #import "PreviousOrder.h"
+#import "Order.h"
 #import "NSString+StringFormatters.h"
 #import "OrderListTableCell.h"
 #import "AlertUtils.h"
-#import "CartItemsViewController.h"
+#import "OrderItemsViewController.h"
 
 @interface OrderListViewController()
 - (void)layoutView;
@@ -174,7 +175,13 @@
 		cell = [[[OrderListTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:orderListTableIdentifier] autorelease];
     }
     cell.previousOrder = pOrder;
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+    if ([pOrder.orderTypeId intValue] != ORDER_TYPE_CANCELLED) {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    } else {
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
     
     return cell;
 }
@@ -187,14 +194,22 @@
         Order *order = [facade lookupOrderByOrderId:pOrder.orderId];
         if (order != nil) {
             [orderCart setPreviousOrder:order];
-            CartItemsViewController *cartItemViewController = [[CartItemsViewController alloc] init];
-            [cartItemViewController setNewOrderMode:NO];
-            [[self navigationController] pushViewController:cartItemViewController animated:TRUE];
-            [cartItemViewController release];
+            OrderItemsViewController *orderItemsViewController = [[OrderItemsViewController alloc] init];
+            [[self navigationController] pushViewController:orderItemsViewController animated:TRUE];
+            [orderItemsViewController release];
         } else {
             [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Could not retrieve previous order.  Order Id: %@", pOrder.orderId]];
         }
 	}
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    PreviousOrder *pOrder = (PreviousOrder *)[orderCart.previousOrderList objectAtIndex:indexPath.row];
+    // Prevent didSelectRowAtIndexPath from being called for a cancelled order
+    if (pOrder != nil && [pOrder.orderTypeId intValue] == ORDER_TYPE_CANCELLED) {
+        return nil;
+	}
+    return indexPath;
 }
 
 @end

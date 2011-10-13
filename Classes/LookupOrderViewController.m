@@ -11,7 +11,7 @@
 #import "PreviousOrder.h"
 #import "AlertUtils.h"
 #import "OrderListViewController.h"
-#import "CartItemsViewController.h"
+#import "OrderItemsViewController.h"
 
 #define TEXT_FIELD_HEIGHT 40.0f
 
@@ -236,10 +236,9 @@
                     NSLog(@"Found Order: %@", order.orderId);
                     textField.text = nil;
                     [orderCart setPreviousOrder:order];
-                    CartItemsViewController *cartItemViewController = [[CartItemsViewController alloc] init];
-                    [cartItemViewController setNewOrderMode:NO];
-                    [[self navigationController] pushViewController:cartItemViewController animated:TRUE];
-                    [cartItemViewController release];
+                    OrderItemsViewController *orderItemsViewController = [[OrderItemsViewController alloc] init];
+                    [[self navigationController] pushViewController:orderItemsViewController animated:TRUE];
+                    [orderItemsViewController release];
                 } else {
                     [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Could not retrieve previous order.  Order Id: %@", orderIdInput]];
                 }
@@ -266,10 +265,9 @@
                             // Prep and go to the order edit view controller
                             NSLog(@"Single return from search by phone.  Found Order: %@", order.orderId);
                             [orderCart setPreviousOrder:order];
-                            CartItemsViewController *cartItemViewController = [[CartItemsViewController alloc] init];
-                            [cartItemViewController setNewOrderMode:NO];
-                            [[self navigationController] pushViewController:cartItemViewController animated:TRUE];
-                            [cartItemViewController release];
+                            OrderItemsViewController *orderItemsViewController = [[OrderItemsViewController alloc] init];
+                            [[self navigationController] pushViewController:orderItemsViewController animated:TRUE];
+                            [orderItemsViewController release];
                         } else {
                             [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Could not retrieve previous order.  Order Id: %@", p.orderId]];
                         }
@@ -278,7 +276,7 @@
                         // Sort the list of orders by date newest first.
                         NSArray *sortedOrderList = [foundOrderList sortedArrayUsingComparator:^(id a, id b)
                                                     {
-                                                        NSComparisonResult statusSort = [((PreviousOrder *)b).orderType compare:((PreviousOrder *)a).orderType];
+                                                        NSComparisonResult statusSort = [((PreviousOrder *)a).orderTypeId compare:((PreviousOrder *)b).orderTypeId];
                                                         if (statusSort == NSOrderedSame) {
                                                             NSDate *dateA = [dateFormatter dateFromString:((PreviousOrder *)a).orderDate];
                                                             NSDate *dateB = [dateFormatter dateFromString:((PreviousOrder *)b).orderDate];
