@@ -27,6 +27,12 @@
 		367B7FE9144C8248008DB0B1 /* CashPayment.m in Sources */ = {isa = PBXBuildFile; fileRef = 367B7FE7144C8248008DB0B1 /* CashPayment.m */; };
 		367B7FEC144CA1D1008DB0B1 /* CheckPayment.h in Headers */ = {isa = PBXBuildFile; fileRef = 367B7FEA144CA1D1008DB0B1 /* CheckPayment.h */; };
 		367B7FED144CA1D1008DB0B1 /* CheckPayment.m in Sources */ = {isa = PBXBuildFile; fileRef = 367B7FEB144CA1D1008DB0B1 /* CheckPayment.m */; };
+		367B7FF0144CACEB008DB0B1 /* RefundXmlMarshaller.h in Headers */ = {isa = PBXBuildFile; fileRef = 367B7FEE144CACEB008DB0B1 /* RefundXmlMarshaller.h */; };
+		367B7FF1144CACEB008DB0B1 /* RefundXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 367B7FEF144CACEB008DB0B1 /* RefundXmlMarshaller.m */; };
+		367B7FF4144CB10B008DB0B1 /* Refund.h in Headers */ = {isa = PBXBuildFile; fileRef = 367B7FF2144CB10A008DB0B1 /* Refund.h */; };
+		367B7FF5144CB10B008DB0B1 /* Refund.m in Sources */ = {isa = PBXBuildFile; fileRef = 367B7FF3144CB10A008DB0B1 /* Refund.m */; };
+		367B7FF8144CB11D008DB0B1 /* RefundItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 367B7FF6144CB11C008DB0B1 /* RefundItem.h */; };
+		367B7FF9144CB11D008DB0B1 /* RefundItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 367B7FF7144CB11C008DB0B1 /* RefundItem.m */; };
 		368B10921434F675001AAD73 /* OrderHistoryTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F3E99F1434C1A2004376B8 /* OrderHistoryTestCase.m */; };
 		368B1095143531C3001AAD73 /* OrderHistoryXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 368B1094143531C3001AAD73 /* OrderHistoryXmlMarshaller.m */; };
 		368B109614364857001AAD73 /* OrderHistoryXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 368B1094143531C3001AAD73 /* OrderHistoryXmlMarshaller.m */; };
@@ -567,6 +573,12 @@
 		367B7FE7144C8248008DB0B1 /* CashPayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CashPayment.m; sourceTree = "<group>"; };
 		367B7FEA144CA1D1008DB0B1 /* CheckPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckPayment.h; sourceTree = "<group>"; };
 		367B7FEB144CA1D1008DB0B1 /* CheckPayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckPayment.m; sourceTree = "<group>"; };
+		367B7FEE144CACEB008DB0B1 /* RefundXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefundXmlMarshaller.h; sourceTree = "<group>"; };
+		367B7FEF144CACEB008DB0B1 /* RefundXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefundXmlMarshaller.m; sourceTree = "<group>"; };
+		367B7FF2144CB10A008DB0B1 /* Refund.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Refund.h; sourceTree = "<group>"; };
+		367B7FF3144CB10A008DB0B1 /* Refund.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Refund.m; sourceTree = "<group>"; };
+		367B7FF6144CB11C008DB0B1 /* RefundItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefundItem.h; sourceTree = "<group>"; };
+		367B7FF7144CB11C008DB0B1 /* RefundItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefundItem.m; sourceTree = "<group>"; };
 		368B1093143531C3001AAD73 /* OrderHistoryXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderHistoryXmlMarshaller.h; sourceTree = "<group>"; };
 		368B1094143531C3001AAD73 /* OrderHistoryXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderHistoryXmlMarshaller.m; sourceTree = "<group>"; };
 		369C9A8B142400AB0094C17B /* TenderPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TenderPaymentViewController.m; sourceTree = "<group>"; };
@@ -1788,6 +1800,10 @@
 				367B7FE7144C8248008DB0B1 /* CashPayment.m */,
 				367B7FEA144CA1D1008DB0B1 /* CheckPayment.h */,
 				367B7FEB144CA1D1008DB0B1 /* CheckPayment.m */,
+				367B7FF2144CB10A008DB0B1 /* Refund.h */,
+				367B7FF3144CB10A008DB0B1 /* Refund.m */,
+				367B7FF6144CB11C008DB0B1 /* RefundItem.h */,
+				367B7FF7144CB11C008DB0B1 /* RefundItem.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1829,6 +1845,8 @@
 				D6DB9284135F40EF00877788 /* ItemSellingPriceApprovalMarshaller.m */,
 				36E72243141A3B980009D71A /* AccountPaymentXmlMarshaller.h */,
 				36E72244141A3B980009D71A /* AccountPaymentXmlMarshaller.m */,
+				367B7FEE144CACEB008DB0B1 /* RefundXmlMarshaller.h */,
+				367B7FEF144CACEB008DB0B1 /* RefundXmlMarshaller.m */,
 			);
 			name = Oxm;
 			sourceTree = "<group>";
@@ -1989,6 +2007,9 @@
 				B4C8E93814466C4A0019A640 /* OrderItemsViewController.h in Headers */,
 				367B7FE8144C8248008DB0B1 /* CashPayment.h in Headers */,
 				367B7FEC144CA1D1008DB0B1 /* CheckPayment.h in Headers */,
+				367B7FF0144CACEB008DB0B1 /* RefundXmlMarshaller.h in Headers */,
+				367B7FF4144CB10B008DB0B1 /* Refund.h in Headers */,
+				367B7FF8144CB11D008DB0B1 /* RefundItem.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2600,6 +2621,9 @@
 				B4C8E93914466C4A0019A640 /* OrderItemsViewController.m in Sources */,
 				367B7FE9144C8248008DB0B1 /* CashPayment.m in Sources */,
 				367B7FED144CA1D1008DB0B1 /* CheckPayment.m in Sources */,
+				367B7FF1144CACEB008DB0B1 /* RefundXmlMarshaller.m in Sources */,
+				367B7FF5144CB10B008DB0B1 /* Refund.m in Sources */,
+				367B7FF9144CB11D008DB0B1 /* RefundItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
