@@ -9,11 +9,6 @@
 #import "OrderItem.h"
 #import "NSString+StringFormatters.h"
 
-static int const STATUS_OPEN = 1;
-static int const STATUS_CLOSE = 2;
-static int const STATUS_RETURN = 3;
-static int const STATUS_CANCEL = 4;
-
 // Private interface
 @interface OrderItem()
 - (void) convertToQuantity: (NSDecimalNumber *) productQuantity;
@@ -207,6 +202,10 @@ static int const STATUS_CANCEL = 4;
     return YES;
 }
 
+- (BOOL) allowEdit {
+    return ([self.statusId intValue] == STATUS_OPEN);
+}
+
 - (BOOL) isTaxExempt {
     if (item == nil) {
         return NO;
@@ -217,6 +216,10 @@ static int const STATUS_CANCEL = 4;
 
 - (BOOL) isClosed {
     return [self.statusId isEqualToNumber: [NSNumber numberWithInt:STATUS_CLOSE]];
+}
+
+- (BOOL) isOpen {
+    return ([self.statusId intValue] == STATUS_OPEN);
 }
 
 #pragma mark -

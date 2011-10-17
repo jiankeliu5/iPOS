@@ -344,6 +344,15 @@
     Order *order = [orderCart getOrder];
 	NSString *controllerTitle = (order != nil && order.orderId != nil) ? [order.orderId stringValue] : @"Order Item";
     
+    // Cannot edit an order if it is returned or closed status
+    if ([order canEditDetails] == NO) {
+        editButton.enabled = NO;
+    }
+    
+    if ([order canCancel] == NO) {
+        logoutButton.enabled = NO;
+    }
+    
 	if (self.navigationController != nil) {
 		[self.navigationController setNavigationBarHidden:NO];
 		// This is what shows up on the back button in the *next* controller.
@@ -616,7 +625,8 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-	OrderItem *orderItem = [[[orderCart getOrder] getOrderItems] objectAtIndex:indexPath.row];
+    Order *order = [orderCart getOrder];
+	OrderItem *orderItem = [[order getOrderItems] objectAtIndex:indexPath.row];
 	NSString *orderCellIdentifier = orderItem.item.sku;
 	
 	CartItemTableCell *cell = (CartItemTableCell *)[tableView dequeueReusableCellWithIdentifier:orderCellIdentifier];
@@ -625,24 +635,45 @@
 		cell = [[[CartItemTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:orderCellIdentifier] autorelease];
 	}
 	cell.orderItem = orderItem;
-	cell.multiEditing = self.multiEditMode;
-	cell.deleteChecked = orderItem.shouldDelete;
-	cell.closeChecked = orderItem.shouldClose = [orderItem isClosed];
-	cell.cellDelegate = self;
-	if (self.multiEditMode == NO) {
-		cell.accessoryType = ([orderItem isClosed]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-	} else {
-		cell.accessoryType = UITableViewCellAccessoryNone;
-	}
+    cell.cellDelegate = self;
 
+    if ([order canEditDetails] == NO) {
+        cell.multiEditing = NO;
+        cell.deleteChecked = NO;
+        cell.closeChecked = NO;
+        cell.accessoryType = ([orderItem isClosed]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    } else {
+        cell.multiEditing = self.multiEditMode;
+        cell.deleteChecked = orderItem.shouldDelete;
+        cell.closeChecked = orderItem.shouldClose = [orderItem isClosed];
+        if (self.multiEditMode == NO) {
+            cell.accessoryType = ([orderItem isClosed]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
+    }
+    
 	return cell;
 }
 
-/*
+
 - (UITableViewCellEditingStyle) tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return UITableViewCellEditingStyleNone;
+    Order *order = [orderCart getOrder];
+    
+    // Disable swipe delete for items in closed or returned orders
+    if ([order canEditDetails] == NO) {
+        return UITableViewCellEditingStyleNone;
+    }
+
+    OrderItem *orderItem = [[[orderCart getOrder] getOrderItems] objectAtIndex:indexPath.row];
+    // Prevent swipe delete for cancelled, closed or returned line items
+    if ([orderItem allowEdit] == NO) {
+        return UITableViewCellEditingStyleNone;
+    }
+    
+    return UITableViewCellEditingStyleDelete;
 }
-*/
+
 
 - (void)tableView:(UITableView *)theTableView commitEditingStyle: (UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath { 
 	
@@ -656,6 +687,22 @@
         [self calculateOrder];
     }
 	
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Order *order = [orderCart getOrder];
+    // Prevent didSelectRowAtIndexPath from being called for any order item on a closed or returned order.
+    if ([order canEditDetails] == NO) {
+        return nil;
+    }
+    
+    OrderItem *orderItem = [[[orderCart getOrder] getOrderItems] objectAtIndex:indexPath.row];
+    // Prevent didSelectRowAtIndexPath from being called for cancelled, closed or returned line items
+    if ([orderItem allowEdit] == NO) {
+        return nil;
+	}
+    
+    return indexPath;
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

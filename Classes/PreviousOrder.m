@@ -44,6 +44,10 @@
     
 }
 
+- (BOOL) canViewDetails {
+    return ([self.orderTypeId intValue] != ORDER_TYPE_CANCELLED);
+}
+
 - (NSArray *) getPaymentHistory {
     
     if (paymentHistory){

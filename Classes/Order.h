@@ -77,6 +77,11 @@ static int const ORDER_TYPE_RETURNED = 5;
 
 - (void) mergeWith: (Order *) mergeOrder;
 
+// These routines are more for determining what can be done with existing orders
+- (BOOL) canViewDetails;
+- (BOOL) canEditDetails;
+- (BOOL) canCancel;
+
 #pragma mark -
 #pragma mark Validation methods
 - (BOOL) validateAsNew;

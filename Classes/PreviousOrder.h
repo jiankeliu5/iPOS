@@ -26,6 +26,7 @@
 @property (nonatomic, retain) NSString *orderType;
 @property (nonatomic, retain) NSNumber *orderTypeId;
 
--(Order *) getItemsForOrder;
+- (Order *) getItemsForOrder;
+- (BOOL) canViewDetails;
 
 @end

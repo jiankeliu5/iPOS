@@ -11,6 +11,11 @@
 #import "ManagerInfo.h"
 #import "ProductItem.h"
 
+static int const STATUS_OPEN = 1;
+static int const STATUS_CLOSE = 2;
+static int const STATUS_RETURN = 3;
+static int const STATUS_CANCEL = 4;
+
 @interface OrderItem : NSObject {
     NSNumber *lineNumber;
     NSNumber *statusId;
@@ -85,7 +90,9 @@
 
 - (BOOL) isTaxExempt;
 - (BOOL) isClosed;
+- (BOOL) isOpen;
 - (BOOL) allowClose;
+- (BOOL) allowEdit;
 
 #pragma mark -
 #pragma mark Custom Accessors

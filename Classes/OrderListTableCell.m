@@ -14,7 +14,7 @@
 
 @implementation OrderListTableCell
 
-@synthesize previousOrder;
+@synthesize previousOrder, disabledLook;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -51,12 +51,23 @@
 		statusLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
 		statusLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:statusLabel];
+        
+        disabledLook = false;
     }
     return self;
 }
 
 #pragma mark -
 #pragma mark Accessors
+- (BOOL) disabledLook {
+    return disabledLook;
+}
+
+- (void) setDisabledLook:(BOOL)lookDisabled {
+    disabledLook = lookDisabled;
+    self.contentView.backgroundColor = (disabledLook) ? [UIColor colorWithWhite:0.90f alpha:1.0f] : [UIColor colorWithWhite:1.0f alpha:1.0f];
+}
+
 - (PreviousOrder *) previousOrder {
     return previousOrder;
 }

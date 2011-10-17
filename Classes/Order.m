@@ -74,6 +74,30 @@
     return YES;
 }
 
+- (BOOL) canViewDetails {
+    return ([self.orderTypeId intValue] != ORDER_TYPE_CANCELLED);
+}
+
+- (BOOL) canEditDetails {
+    if ([self.orderTypeId intValue] == ORDER_TYPE_CLOSED || [self.orderTypeId intValue] == ORDER_TYPE_RETURNED) {
+        return NO;
+    }
+    return YES;
+}
+
+- (BOOL) canCancel {
+    // Can only cancel an order if it is in quote or open status and all items in it are in open status
+    if ([self.orderTypeId intValue] == ORDER_TYPE_OPEN || [self.orderTypeId intValue] == ORDER_TYPE_QUOTE) {
+        for (OrderItem *orderItem in orderItemList) {
+            if ([orderItem isOpen] == NO) {
+                return NO;
+            }
+        }
+        return YES;
+    }
+    return NO;
+}
+
 #pragma mark -
 #pragma mark Marshalling
 + (Order *) fromXml:(NSString *)xmlString {

@@ -176,11 +176,12 @@
     }
     cell.previousOrder = pOrder;
 
-    if ([pOrder.orderTypeId intValue] != ORDER_TYPE_CANCELLED) {
+    if ([pOrder canViewDetails]) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     } else {
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.disabledLook = true;
     }
     
     return cell;

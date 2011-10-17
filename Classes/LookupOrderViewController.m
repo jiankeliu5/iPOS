@@ -273,7 +273,7 @@
                         }
                     } else {
                         NSLog(@"Found %d previous orders.", [foundOrderList count]);
-                        // Sort the list of orders by date newest first.
+                        // Sort the list of orders by order type and then date newest first.
                         NSArray *sortedOrderList = [foundOrderList sortedArrayUsingComparator:^(id a, id b)
                                                     {
                                                         NSComparisonResult statusSort = [((PreviousOrder *)a).orderTypeId compare:((PreviousOrder *)b).orderTypeId];

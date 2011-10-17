@@ -15,9 +15,11 @@
     UILabel *totalLabel;
     UILabel *orderIdLabel;
     UILabel *statusLabel;
+    BOOL disabledLook;
 }
 
 // Use assign because the previous orders are in a singleton.
 @property (nonatomic, assign) PreviousOrder *previousOrder;
+@property (nonatomic, assign) BOOL disabledLook;
 
 @end
