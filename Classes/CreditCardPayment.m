@@ -14,7 +14,7 @@
 
 @implementation CreditCardPayment
 
-@synthesize expireDate, cardNumber, nameOnCard, signature;
+@synthesize expireDate, cardNumber, nameOnCard, signature, lpToken, tRouteD;
 
 
 #pragma mark -

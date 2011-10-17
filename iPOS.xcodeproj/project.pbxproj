@@ -23,6 +23,10 @@
 		365B5947140C0E23000B0277 /* OrderTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 365B5945140C092E000B0277 /* OrderTestCase.m */; };
 		365B5952140D44CA000B0277 /* profitView.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B594E140D44C9000B0277 /* profitView.js */; };
 		365B5958140D4658000B0277 /* displayProfitMargin.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B5954140D4658000B0277 /* displayProfitMargin.js */; };
+		367B7FE8144C8248008DB0B1 /* CashPayment.h in Headers */ = {isa = PBXBuildFile; fileRef = 367B7FE6144C8248008DB0B1 /* CashPayment.h */; };
+		367B7FE9144C8248008DB0B1 /* CashPayment.m in Sources */ = {isa = PBXBuildFile; fileRef = 367B7FE7144C8248008DB0B1 /* CashPayment.m */; };
+		367B7FEC144CA1D1008DB0B1 /* CheckPayment.h in Headers */ = {isa = PBXBuildFile; fileRef = 367B7FEA144CA1D1008DB0B1 /* CheckPayment.h */; };
+		367B7FED144CA1D1008DB0B1 /* CheckPayment.m in Sources */ = {isa = PBXBuildFile; fileRef = 367B7FEB144CA1D1008DB0B1 /* CheckPayment.m */; };
 		368B10921434F675001AAD73 /* OrderHistoryTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F3E99F1434C1A2004376B8 /* OrderHistoryTestCase.m */; };
 		368B1095143531C3001AAD73 /* OrderHistoryXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 368B1094143531C3001AAD73 /* OrderHistoryXmlMarshaller.m */; };
 		368B109614364857001AAD73 /* OrderHistoryXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 368B1094143531C3001AAD73 /* OrderHistoryXmlMarshaller.m */; };
@@ -559,6 +563,10 @@
 		365B5945140C092E000B0277 /* OrderTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderTestCase.m; sourceTree = "<group>"; };
 		365B594E140D44C9000B0277 /* profitView.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = profitView.js; sourceTree = "<group>"; };
 		365B5954140D4658000B0277 /* displayProfitMargin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = displayProfitMargin.js; sourceTree = "<group>"; };
+		367B7FE6144C8248008DB0B1 /* CashPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CashPayment.h; sourceTree = "<group>"; };
+		367B7FE7144C8248008DB0B1 /* CashPayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CashPayment.m; sourceTree = "<group>"; };
+		367B7FEA144CA1D1008DB0B1 /* CheckPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckPayment.h; sourceTree = "<group>"; };
+		367B7FEB144CA1D1008DB0B1 /* CheckPayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckPayment.m; sourceTree = "<group>"; };
 		368B1093143531C3001AAD73 /* OrderHistoryXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderHistoryXmlMarshaller.h; sourceTree = "<group>"; };
 		368B1094143531C3001AAD73 /* OrderHistoryXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderHistoryXmlMarshaller.m; sourceTree = "<group>"; };
 		369C9A8B142400AB0094C17B /* TenderPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TenderPaymentViewController.m; sourceTree = "<group>"; };
@@ -1776,6 +1784,10 @@
 				36E72241141A37370009D71A /* AccountPayment.m */,
 				360C1286143383E000235580 /* PreviousOrder.h */,
 				360C1287143383E000235580 /* PreviousOrder.m */,
+				367B7FE6144C8248008DB0B1 /* CashPayment.h */,
+				367B7FE7144C8248008DB0B1 /* CashPayment.m */,
+				367B7FEA144CA1D1008DB0B1 /* CheckPayment.h */,
+				367B7FEB144CA1D1008DB0B1 /* CheckPayment.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1975,6 +1987,8 @@
 				B46240BC143EA6BE0094C485 /* OrderListViewController.h in Headers */,
 				B44BB2B714411C2F00E383CB /* OrderListTableCell.h in Headers */,
 				B4C8E93814466C4A0019A640 /* OrderItemsViewController.h in Headers */,
+				367B7FE8144C8248008DB0B1 /* CashPayment.h in Headers */,
+				367B7FEC144CA1D1008DB0B1 /* CheckPayment.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2584,6 +2598,8 @@
 				B46240BD143EA6BE0094C485 /* OrderListViewController.m in Sources */,
 				B44BB2B814411C2F00E383CB /* OrderListTableCell.m in Sources */,
 				B4C8E93914466C4A0019A640 /* OrderItemsViewController.m in Sources */,
+				367B7FE9144C8248008DB0B1 /* CashPayment.m in Sources */,
+				367B7FED144CA1D1008DB0B1 /* CheckPayment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

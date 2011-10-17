@@ -15,6 +15,9 @@
     NSString *expireDate;
     NSString *cardNumber;
     NSString *nameOnCard;
+    NSString *lpToken;
+    NSString *tRouteD;
+    
     
     PaymentSignature *signature;
 }
@@ -22,7 +25,8 @@
 @property (nonatomic, retain) NSString *expireDate;
 @property (nonatomic, retain) NSString *cardNumber;
 @property (nonatomic, retain) NSString *nameOnCard;
-
+@property (nonatomic, retain) NSString *lpToken;
+@property (nonatomic, retain) NSString *tRouteD;
 @property (nonatomic, retain) PaymentSignature *signature;
 
 - (void) setExpireDateMonthYear: (NSString *) month year: (NSString *) year;

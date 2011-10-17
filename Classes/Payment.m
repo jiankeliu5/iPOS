@@ -11,7 +11,7 @@
 
 @implementation Payment
 
-@synthesize customerId, orderId, salesPersonId, storeId, paymentAmount, paymentRefId, cardNumber, lpToken, tRouteD;
+@synthesize customerId, orderId, salesPersonId, storeId, paymentAmount, paymentRefId, cardNumber;
 @synthesize orderPaymentId, paymentDate, paymentTypeId;
 
 #pragma mark -

@@ -23,7 +23,7 @@
     
     NSArray *result = [facade lookupOrderByPhoneNumber:@"6127461580"];
     
-    STAssertTrue([result count ] == 3, @"Incorrect number of previous orders");
+    STAssertTrue([[NSNumber numberWithInt: [result count]] compare: [NSNumber numberWithInt: 5]] == NSOrderedSame, @"Incorrect number of previous orders");
     
     PreviousOrder *prevOrder = [result objectAtIndex:0];
     
@@ -43,11 +43,17 @@
     BOOL loginResult = [facade login:@"123" password:@"456"];
     STAssertTrue(loginResult, @"I expected the login result to be true :-(");
     
-    NSArray *paymentHistory = [facade getPaymentHistoryForOrderid:[NSNumber numberWithInt:3084228]];
+    NSMutableArray *paymentHistory = [facade getPaymentHistoryForOrderid:[NSNumber numberWithInt:3084228]];
     
     STAssertNotNil(paymentHistory, @"Didn't get any payment history");
     
     STAssertTrue([[NSNumber numberWithUnsignedInt:[paymentHistory count]] compare: [NSNumber numberWithInt: 1 ]]  == NSOrderedSame, @"Size of array is not correct");
+    
+    STAssertTrue([[paymentHistory objectAtIndex:0] isKindOfClass:[CreditCardPayment class]], @"Expected Payment of Type Credit Card");
+    
+    CreditCardPayment *cc = [paymentHistory objectAtIndex:0];
+    
+    STAssertNotNil(cc.tRouteD, @"tRouteD should not be nil");
     
    
 }
@@ -60,11 +66,11 @@
     BOOL loginResult = [facade login:@"123" password:@"456"];
     STAssertTrue(loginResult, @"I expected the login result to be true :-(");
     
-    Order *result = [facade lookupOrderByOrderId:[NSNumber numberWithInt:3084229]];
+    Order *result = [facade lookupOrderByOrderId:[NSNumber numberWithInt:3084226]];
     
     STAssertNotNil(result, @"Didn't get any payment history");
     
-    STAssertTrue([result.orderId compare: [NSNumber numberWithInt: 3834770]] == NSOrderedSame,@"Wrong order id");
+    STAssertTrue([result.orderId compare: [NSNumber numberWithInt: 3084232]] == NSOrderedSame,@"Wrong order id");
     
     Customer *customer = result.customer;
     
