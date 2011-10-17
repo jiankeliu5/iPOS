@@ -7,7 +7,30 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RefundItem.h"
 
 @interface Refund : NSObject
+{
+    NSNumber *orderId;
+    NSNumber *customerId;
+    NSNumber *storeId;
+    NSNumber *salesPersonId;
+    NSString *refundDate;
+    
+    NSMutableArray *refundItems;
+    
+    PaymentSignature *signature;
+}
 
+@property (nonatomic, retain) NSArray *refundItems;
+
+@property (nonatomic, retain) NSNumber *orderId;
+@property (nonatomic, retain) NSNumber *customerId;
+@property (nonatomic, retain) NSNumber *storeId;
+@property (nonatomic, retain) NSNumber *salesPersonId;
+@property (nonatomic, retain) NSString *refundDate;
+@property (nonatomic, retain) PaymentSignature *signature;
+
+- (void) addRefundItem:(RefundItem *)item;
+- (NSArray *) getRefundItems;
 @end

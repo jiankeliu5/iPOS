@@ -7,7 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CreditCardPayment.h"
 
 @interface RefundItem : NSObject
+{
+    
+    NSDecimalNumber *amount;
+    NSNumber *orderPaymentTypeID;
+    CreditCardPayment *creditCard;
+}
+
+@property (nonatomic, retain) NSDecimalNumber *amount;
+@property (nonatomic, retain) NSNumber *orderPaymentTypeID;
+@property (nonatomic, retain) CreditCardPayment *creditCard;
 
 @end

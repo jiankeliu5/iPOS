@@ -8,16 +8,28 @@
 
 #import "Refund.h"
 
+
 @implementation Refund
+
+@synthesize refundItems, orderId, customerId, storeId, salesPersonId, refundDate, signature;
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        // Initialization code here.
+        refundItems = [[NSMutableArray alloc] init];
     }
     
     return self;
+}
+
+- (void) addRefundItem:(RefundItem *)item{
+    
+    [refundItems addObject:item];
+}
+
+- (NSArray *) getRefundItems{
+    return refundItems;
 }
 
 @end

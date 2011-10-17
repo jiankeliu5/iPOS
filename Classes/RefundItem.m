@@ -10,6 +10,8 @@
 
 @implementation RefundItem
 
+@synthesize creditCard, amount, orderPayemntTypeID;
+
 - (id)init
 {
     self = [super init];
