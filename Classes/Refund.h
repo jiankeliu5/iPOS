@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "RefundItem.h"
 
-@interface Refund : NSObject
+@interface Refund : AbstractModel
 {
     NSNumber *orderId;
     NSNumber *customerId;
