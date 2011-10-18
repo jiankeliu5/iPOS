@@ -10,7 +10,7 @@
 
 @implementation RefundItem
 
-@synthesize creditCard, amount, orderPayemntTypeID;
+@synthesize creditCard, amount, orderPaymentTypeID;
 
 - (id)init
 {
@@ -20,6 +20,16 @@
     }
     
     return self;
+}
+
+
+-(BOOL) isCreditCard{
+    
+    int id = [self.orderPaymentTypeID intValue];
+    
+    return (id == 3 || id == 4 | id == 5 || id == 6);
+    
+    
 }
 
 @end

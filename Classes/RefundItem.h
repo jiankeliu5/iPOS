@@ -21,4 +21,6 @@
 @property (nonatomic, retain) NSNumber *orderPaymentTypeID;
 @property (nonatomic, retain) CreditCardPayment *creditCard;
 
+-(BOOL) isCreditCard;
+
 @end

@@ -33,6 +33,7 @@
 		367B7FF5144CB10B008DB0B1 /* Refund.m in Sources */ = {isa = PBXBuildFile; fileRef = 367B7FF3144CB10A008DB0B1 /* Refund.m */; };
 		367B7FF8144CB11D008DB0B1 /* RefundItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 367B7FF6144CB11C008DB0B1 /* RefundItem.h */; };
 		367B7FF9144CB11D008DB0B1 /* RefundItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 367B7FF7144CB11C008DB0B1 /* RefundItem.m */; };
+		367B7FFF144DEFD6008DB0B1 /* RefundOxmTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 367B7FFE144DEFD6008DB0B1 /* RefundOxmTestCase.m */; };
 		368B10921434F675001AAD73 /* OrderHistoryTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F3E99F1434C1A2004376B8 /* OrderHistoryTestCase.m */; };
 		368B1095143531C3001AAD73 /* OrderHistoryXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 368B1094143531C3001AAD73 /* OrderHistoryXmlMarshaller.m */; };
 		368B109614364857001AAD73 /* OrderHistoryXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 368B1094143531C3001AAD73 /* OrderHistoryXmlMarshaller.m */; };
@@ -579,6 +580,8 @@
 		367B7FF3144CB10A008DB0B1 /* Refund.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Refund.m; sourceTree = "<group>"; };
 		367B7FF6144CB11C008DB0B1 /* RefundItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefundItem.h; sourceTree = "<group>"; };
 		367B7FF7144CB11C008DB0B1 /* RefundItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefundItem.m; sourceTree = "<group>"; };
+		367B7FFD144DEFD6008DB0B1 /* RefundOxmTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefundOxmTestCase.h; sourceTree = "<group>"; };
+		367B7FFE144DEFD6008DB0B1 /* RefundOxmTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefundOxmTestCase.m; sourceTree = "<group>"; };
 		368B1093143531C3001AAD73 /* OrderHistoryXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderHistoryXmlMarshaller.h; sourceTree = "<group>"; };
 		368B1094143531C3001AAD73 /* OrderHistoryXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderHistoryXmlMarshaller.m; sourceTree = "<group>"; };
 		369C9A8B142400AB0094C17B /* TenderPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TenderPaymentViewController.m; sourceTree = "<group>"; };
@@ -1854,6 +1857,8 @@
 		D6B193A7133C2A61004C4FD1 /* OXM */ = {
 			isa = PBXGroup;
 			children = (
+				367B7FFD144DEFD6008DB0B1 /* RefundOxmTestCase.h */,
+				367B7FFE144DEFD6008DB0B1 /* RefundOxmTestCase.m */,
 				D6B193A9133C2AA0004C4FD1 /* OrderOxmTestCase.m */,
 				D6B195B7133CEEEA004C4FD1 /* CustomerOxmTestCase.m */,
 				D6B195B9133CEF05004C4FD1 /* ProductItemOxmTestCase.m */,
@@ -2472,6 +2477,7 @@
 				D6C6E8D61365CA7C00560DCF /* StringFormattersTestCase.m in Sources */,
 				365B5952140D44CA000B0277 /* profitView.js in Sources */,
 				365B5958140D4658000B0277 /* displayProfitMargin.js in Sources */,
+				367B7FFF144DEFD6008DB0B1 /* RefundOxmTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
