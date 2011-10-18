@@ -33,4 +33,5 @@
 
 - (void) addRefundItem:(RefundItem *)item;
 - (NSArray *) getRefundItems;
+- (NSString *) toXml;
 @end

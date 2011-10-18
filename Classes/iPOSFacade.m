@@ -165,5 +165,8 @@ static iPOSFacade *facade = nil;
     return [self.orderHistoryService getPaymentHistoryForOrderid:[orderId stringValue] withSessionInfo:sessionInfo];
 }
 
+-(BOOL) sendRefundRequest:(Refund *)refund{
+    return [self.paymentService sendRefundRequest:refund withSession:sessionInfo];
+}
 
 @end

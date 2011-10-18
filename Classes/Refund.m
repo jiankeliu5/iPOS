@@ -8,6 +8,8 @@
 
 #import "Refund.h"
 
+#import "RefundXmlMarshaller.h"
+
 
 @implementation Refund
 
@@ -30,6 +32,13 @@
 
 - (NSArray *) getRefundItems{
     return refundItems;
+}
+
+- (NSString *) toXml{
+    
+    RefundXmlMarshaller *xmlMarshaller = [[RefundXmlMarshaller alloc] init ];
+    
+    return [xmlMarshaller toXml:self];
 }
 
 @end

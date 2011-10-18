@@ -261,5 +261,43 @@
     [accountPayment mergeWith:paymentReturned];
 }
 
+- (BOOL) sendRefundRequest:(Refund *)refund withSession:(SessionInfo *)sessionInfo{
+    
+    // Send the request to tender payment
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@", baseUrl, posPaymentMgmtUri, @"refund"]];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    
+    [request setValidatesSecureCertificate:NO];
+    [request setTimeOutSeconds:30];
+    
+    if (sessionInfo && sessionInfo.deviceId) {
+        [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
+    }
+    
+    // Post data for payment
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    
+    [request appendPostData:[[refund toXml] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [request startSynchronous];
+    
+    // Post verification and complete request
+    NSArray *requestErrors = [request validateAsXmlContent];
+    if ([requestErrors count] > 0) {
+        // Clear out any errors previously set
+        [refund removeAllErrors];
+        
+        for (Error *error in requestErrors) {
+            //[payment addError:error];
+        }
+        
+        return NO;   
+    }    
+    
+    BOOL isSuccessful = [POSOxmUtils isXmlResultTrue:[request responseString]];
+    
+    // Return result
+    return isSuccessful;
+}
 
 @end

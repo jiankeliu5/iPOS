@@ -11,6 +11,7 @@
 #import "SessionInfo.h"
 #import "CreditCardPayment.h"
 #import "AccountPayment.h"
+#import "Refund.h"
 
 @protocol PaymentService <NSObject>
 
@@ -20,5 +21,6 @@
 
 -(BOOL) acceptSignatureFor: (CreditCardPayment *) ccPayment withSession: (SessionInfo *) sessionInfo;
 - (BOOL) acceptSignatureOnAccount:(AccountPayment *)payment withSession:(SessionInfo *)sessionInfo;
+- (BOOL) sendRefundRequest:(Refund *)refund withSession:(SessionInfo *)sessionInfo;
 
 @end

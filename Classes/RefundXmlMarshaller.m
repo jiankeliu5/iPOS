@@ -41,10 +41,7 @@ static NSString *CREDIT_CARD_XML = @""
     "<CardNum>%@</CardNum>"
     "<NameOnCard>%@</NameOnCard>"
 "</CreditCard>";
-
-
-
-
+    
 @interface RefundXmlMarshaller() 
 
 - (NSString *) createRefundItems:(Refund *)item;
@@ -69,7 +66,6 @@ static NSString *CREDIT_CARD_XML = @""
     return nil;
     
 }
-
 
 - (NSString *) toXml: (id) marshalObj{
     
@@ -127,8 +123,6 @@ static NSString *CREDIT_CARD_XML = @""
         }
     }
     
-    
-    
     return xml;
 }
 
@@ -137,7 +131,6 @@ static NSString *CREDIT_CARD_XML = @""
     NSString *creditCardXml = nil;
     NSString *amount = @"";
     NSString *type = @"";
-    
     
     NSArray *refundItems = item.refundItems;
     
