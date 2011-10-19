@@ -455,6 +455,11 @@
 }
 
 - (void) tenderOrder:(id)sender {
+    //decision point to decide if we need to do a refund, make a peyment, or do nothing
+    
+    Order *order = [orderCart getOrder];
+  
+    
 	TenderPaymentViewController *tenderViewController = [[[TenderPaymentViewController alloc] init] autorelease];
     UINavigationController *navController = self.navigationController;
 		

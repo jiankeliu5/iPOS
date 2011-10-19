@@ -36,7 +36,7 @@
 
 - (NSString *) toXml{
     
-    RefundXmlMarshaller *xmlMarshaller = [[RefundXmlMarshaller alloc] init ];
+    RefundXmlMarshaller *xmlMarshaller = [[[RefundXmlMarshaller alloc] init ] autorelease];
     
     return [xmlMarshaller toXml:self];
 }

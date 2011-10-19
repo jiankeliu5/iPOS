@@ -20,6 +20,8 @@
 
 #if USE_APPLICATION_UNIT_TEST
 - (void) testProfitMarginCalculation;
+-(void) testPreviousOrderCalcBalanceDueRefund;
+-(void) testPreviousOrderCalcBalanceDuePayMore;
 #endif
 
 @end

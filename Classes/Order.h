@@ -19,6 +19,12 @@ static int const ORDER_TYPE_CANCELLED = 3;
 static int const ORDER_TYPE_CLOSED = 4;
 static int const ORDER_TYPE_RETURNED = 5;
 
+typedef enum{
+    REFUND,
+    TENDER,
+    NOCHANGE
+} TenderDecision;
+
 @interface Order : AbstractModel {
     NSNumber *orderId;
     NSNumber *orderTypeId;
@@ -39,6 +45,9 @@ static int const ORDER_TYPE_RETURNED = 5;
     
     Store *store;
     Customer *customer;
+    
+    NSMutableArray *previousPayments;
+    
         
     @private NSMutableArray *orderItemList;
 }
@@ -60,6 +69,7 @@ static int const ORDER_TYPE_RETURNED = 5;
 @property (nonatomic, retain) Store *store;
 @property (nonatomic, retain) Customer *customer;
 @property (nonatomic, assign) BOOL partialPaymentOnAccount;
+@property (nonatomic, assign) NSMutableArray *previousPayments;
 
 
 - (NSArray *) getOrderItems;
@@ -102,5 +112,9 @@ static int const ORDER_TYPE_RETURNED = 5;
 - (NSDecimalNumber *) calcBalanceDue;
 - (NSDecimalNumber *) calcClosedItemsBalance;
 - (NSDecimalNumber *) calculateProfitMargin;
+
+#pragma mark -
+#pragma mark Refund methods
+-(TenderDecision) isRefundEligble;
 
 @end

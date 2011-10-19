@@ -8,21 +8,24 @@
 
 #import "Order.h"
 #import "OrderXmlMarshaller.h"
+#import "iPOSFacade.h"
 
 @implementation Order
 
 @synthesize orderId, orderTypeId, salesPersonEmployeeId, store, customer, notes, purchaseOrderId, partialPaymentOnAccount;
-@synthesize depositAuthorizationID, followUpdate,orderDCTO, promiseDate, requestDate, selectionId, taxExempt, isNewOrder;
+@synthesize depositAuthorizationID, followUpdate,orderDCTO, promiseDate, requestDate, selectionId, taxExempt, isNewOrder, previousPayments;
 #pragma mark Constructor/Deconstructor
 -(id) init {
     self = [super init];
-    
+            
     if (self == nil) {
         return self;
         self.partialPaymentOnAccount = NO;
     }
     
     orderItemList = [[NSMutableArray arrayWithCapacity:0] retain];
+    previousPayments = [[NSMutableArray arrayWithCapacity:0] retain];
+    
     return self;
 }
 
@@ -340,6 +343,44 @@
     
     return balance;
         
+}
+
+#pragma mark -
+#pragma mark Refund methods
+
+-(TenderDecision) isRefundEligble{
+    
+    if (!previousPayments)
+    {
+        previousPayments = (NSMutableArray *)[[iPOSFacade sharedInstance] getPaymentHistoryForOrderid:self.orderId];
+    }
+    
+    NSDecimalNumber *previousBalancePaid = [NSDecimalNumber zero];
+    NSDecimalNumberHandler *roundUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:2 
+                                                                                  raiseOnExactness:NO raiseOnOverflow:NO 
+                                                                                  raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+
+    for(Payment *currentPayment in previousPayments)
+    {
+        previousBalancePaid = [previousBalancePaid decimalNumberByAdding:currentPayment.paymentAmount];
+    }
+    
+    NSDecimalNumber *currentBalanceDue = [[self calcBalanceDue]  decimalNumberByRoundingAccordingToBehavior:roundUp];
+  
+    NSComparisonResult comparisonresult = [previousBalancePaid compare:currentBalanceDue];
+    
+    if (comparisonresult == NSOrderedSame)
+    {
+        return NOCHANGE;
+    }
+    else if (comparisonresult == NSOrderedAscending)
+    {
+        return TENDER;
+    }
+    else
+    {
+        return REFUND;
+    }
 }
 
 @end
