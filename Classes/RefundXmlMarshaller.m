@@ -63,7 +63,15 @@ static NSString *CREDIT_CARD_XML = @""
 
 - (id) toObject:(NSString *) xmlString{
     
-    return nil;
+    Refund *refund = [[Refund alloc] init];
+    CXMLDocument *xmlParser = [[[CXMLDocument alloc] initWithXMLString:xmlString options:0 error:nil] autorelease];
+    CXMLElement *root = [xmlParser rootElement];
+    
+    // Attach any errors
+    [POSOxmUtils attachErrors: [root firstElementNamed:@"ErrorList"] toModel:refund];
+    
+    
+    return refund;
     
 }
 
