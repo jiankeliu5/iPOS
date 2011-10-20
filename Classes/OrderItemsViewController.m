@@ -64,6 +64,7 @@
 - (void) tenderOrder:(id)sender;
 
 - (void) handleLogout:(id) sender;
+- (void) previousOrderChangeAlert;
 
 - (void) searchforItem:(id)sender;
 - (void) restoreDefaultToolbar;
@@ -459,11 +460,36 @@
     
     Order *order = [orderCart getOrder];
   
+    TenderDecision decision = [order isRefundEligble];
     
-	TenderPaymentViewController *tenderViewController = [[[TenderPaymentViewController alloc] init] autorelease];
-    UINavigationController *navController = self.navigationController;
+    if (decision == REFUND)
+    {
+        //go to refund screen
+    }
+    else if (decision == TENDER)
+    {
+        //go to the tender screen
+        TenderPaymentViewController *tenderViewController = [[[TenderPaymentViewController alloc] init] autorelease];
+        UINavigationController *navController = self.navigationController;
 		
-    [navController pushViewController:tenderViewController animated:YES];
+        [navController pushViewController:tenderViewController animated:YES];
+    }
+    else
+    {
+        //display prompt and exit
+        [self previousOrderChangeAlert];
+    }
+}
+
+- (void) previousOrderChangeAlert{
+    
+    UIAlertView *quoteAlert = [[UIAlertView alloc] init];
+	quoteAlert.title = @"Order Modification";
+	quoteAlert.message = [NSString stringWithFormat: @"No Changes made to previous order #%@", [orderCart getOrder].orderId];
+	quoteAlert.delegate = self;
+	[quoteAlert addButtonWithTitle:@"OK"];
+	[quoteAlert show];
+	[quoteAlert release];
 }
 
 
@@ -595,6 +621,14 @@
     if ([anAlertView.title isEqualToString:@"Cancel and Logout?"]) {
 		NSString *clickedButtonTitle = [anAlertView buttonTitleAtIndex:aButtonIndex];
 		if ([clickedButtonTitle isEqualToString:@"Logout"]) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+		}
+	}
+    
+    // No order changes.
+    if ([anAlertView.title isEqualToString:@"Order Modification"]) {
+		NSString *clickedButtonTitle = [anAlertView buttonTitleAtIndex:aButtonIndex];
+		if ([clickedButtonTitle isEqualToString:@"OK"]) {
             [self.navigationController popToRootViewControllerAnimated:YES];
 		}
 	}
@@ -889,6 +923,8 @@
 	textLabel.alpha = 0.0;
 	[UIView commitAnimations];
 }
+
+
 
 
 @end
