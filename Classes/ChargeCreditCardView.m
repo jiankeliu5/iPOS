@@ -108,14 +108,21 @@
 #pragma mark -
 - (void) layoutSubviews {
     self.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
+    CGFloat width = self.bounds.size.width;
     
     // Add the rounded view
-    UIView *mainRoundedView = [[[UIView alloc] initWithFrame:CGRectMake(OVERLAY_VIEW_X, OVERLAY_VIEW_Y, OVERLAY_VIEW_WIDTH, OVERLAY_VIEW_HEIGHT)] autorelease];
-   
+    CGRect roundedViewRect = CGRectMake((width-OVERLAY_VIEW_WIDTH)/2, OVERLAY_VIEW_Y, OVERLAY_VIEW_WIDTH, OVERLAY_VIEW_HEIGHT);
+    if (!mainRoundedView) {
+        mainRoundedView = [[UIView alloc] initWithFrame:roundedViewRect];
+        [self addSubview:mainRoundedView];
+        [mainRoundedView release];
+    } else {
+        mainRoundedView.frame = roundedViewRect;
+    }
+    
     [mainRoundedView applyRoundedStyle:[UIColor blackColor] withShadow:YES];
 	[mainRoundedView applyGradientToBackgroundWithStartColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0] 
 											  endColor:[UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1.0]];
-    [self addSubview:mainRoundedView];
     
     // Add balance due labels
     [self layoutBalanceDueLabels:mainRoundedView];

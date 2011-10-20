@@ -83,8 +83,8 @@
     [self addSubview:mainRoundedView];
     
     // Add balance due labels
-    [self layoutBalanceDueLabels: mainRoundedView];
     [self layoutCreditAvailableLabels: mainRoundedView];
+    [self layoutBalanceDueLabels: mainRoundedView];
     
     // Add subviews
     [self layoutChargeAmountView:mainRoundedView];
@@ -107,9 +107,26 @@
     }
 }
 
+- (void) layoutCreditAvailableLabels: (UIView *) parentView {
+    creditAvailableTitle = [[[UILabel alloc] initWithFrame:CGRectMake(MARGIN_LEFT, MARGIN_TOP, LABEL_WIDTH, LABEL_HEIGHT)] autorelease];
+    creditAvailableLabel = [[[UILabel alloc] initWithFrame:CGRectMake(MARGIN_LEFT+LABEL_WIDTH, MARGIN_TOP, LABEL_WIDTH, LABEL_HEIGHT)] autorelease];
+    
+    creditAvailableTitle.textAlignment = UITextAlignmentLeft;
+    creditAvailableTitle.text = @"Credit Available";
+    creditAvailableTitle.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];    
+    
+    creditAvailableLabel.textAlignment = UITextAlignmentRight;
+    creditAvailableLabel.textColor = [UIColor blueColor];
+    creditAvailableLabel.text = self.totalAccountBalance;
+    creditAvailableLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];   
+    
+    [parentView addSubview:creditAvailableTitle];
+    [parentView addSubview:creditAvailableLabel];
+}
+
 - (void) layoutBalanceDueLabels: (UIView *) parentView {
-    balanceDueTitle = [[[UILabel alloc] initWithFrame:CGRectMake(MARGIN_LEFT, MARGIN_TOP, LABEL_WIDTH, LABEL_HEIGHT)] autorelease];
-    balanceDueLabel = [[[UILabel alloc] initWithFrame:CGRectMake(MARGIN_LEFT+LABEL_WIDTH, MARGIN_TOP, LABEL_WIDTH, LABEL_HEIGHT)] autorelease];
+    balanceDueTitle = [[[UILabel alloc] initWithFrame:CGRectMake(MARGIN_LEFT, MARGIN_TOP + 20, LABEL_WIDTH, LABEL_HEIGHT)] autorelease];
+    balanceDueLabel = [[[UILabel alloc] initWithFrame:CGRectMake(MARGIN_LEFT+LABEL_WIDTH, MARGIN_TOP + 20, LABEL_WIDTH, LABEL_HEIGHT)] autorelease];
     
     balanceDueTitle.textAlignment = UITextAlignmentLeft;
     balanceDueTitle.text = @"Balance Due";
@@ -119,26 +136,9 @@
     balanceDueLabel.textColor = [UIColor blueColor];
     balanceDueLabel.text = self.balanceDue;
     balanceDueLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];    
-    
+
     [parentView addSubview:balanceDueTitle];
     [parentView addSubview:balanceDueLabel];
-}
-
-- (void) layoutCreditAvailableLabels: (UIView *) parentView {
-    creditAvailableTitle = [[[UILabel alloc] initWithFrame:CGRectMake(MARGIN_LEFT, MARGIN_TOP + 20, LABEL_WIDTH, LABEL_HEIGHT)] autorelease];
-    creditAvailableLabel = [[[UILabel alloc] initWithFrame:CGRectMake(MARGIN_LEFT+LABEL_WIDTH, MARGIN_TOP + 20, LABEL_WIDTH, LABEL_HEIGHT)] autorelease];
-    
-    creditAvailableTitle.textAlignment = UITextAlignmentLeft;
-    creditAvailableTitle.text = @"Credit Available";
-    creditAvailableTitle.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];    
-    
-    creditAvailableLabel.textAlignment = UITextAlignmentRight;
-    creditAvailableLabel.textColor = [UIColor blueColor];
-    creditAvailableLabel.text = self.totalAccountBalance;
-    creditAvailableLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];    
-    
-    [parentView addSubview:creditAvailableTitle];
-    [parentView addSubview:creditAvailableLabel];
 }
 
 

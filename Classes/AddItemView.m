@@ -17,30 +17,26 @@
 
 #import "iPOSFacade.h"
 
-#define ITEM_VIEW_HEIGHT 299.0f
+#define MARGIN 10.0f
+#define MARGIN_ADDQUANTITY 30.0f
 
-#define ROUND_VIEW_X 20.0f
-#define ROUND_VIEW_Y 7.0f
-#define ROUND_VIEW_WIDTH 280.0f
-#define ROUND_VIEW_HEIGHT 402.0f
+#define BUTTON_SIZE 80.0f
+#define BUTTON_SPACING 40.0f
+
+#define ADDQUANTITY_FIELD_HEIGHT 40.0f
+
 #define KEYBOARD_TOOLBAR_HEIGHT 44.0f
-#define KEYBOARD_TOOLBAR_WIDTH 320.0f
 
-#define MOVE_OFF_TO_LEFT_X -280.0f
-#define MOVE_OFF_TO_RIGHT_X 280.0f
-
-#define ADD_QUANTITYVIEW_WIDTH 188.0f
-#define ADD_QUANTITYVIEW_HEIGHT 80.0f
-#define ADD_QUANTITYVIEW_W_SWITCH_WIDTH 220.0f
-#define ADD_QUANTITYVIEW_W_SWITCH_HEIGHT 100.0f
-#define ADD_QUANTITYVIEW_MARGIN_LEFT 46.0f
-#define ADD_QUANTITYVIEW_W_SWITCH_MARGIN_LEFT 30.0f
-#define ADD_QUANTITYVIEW_MARGIN_TOP 10.0f
 
 
 #pragma mark -
 #pragma mark Private Interface
 @interface AddItemView ()
+
+- (void) layoutInPortrait;
+- (void) layoutInLandscape;
+- (void) layoutAddQuantityView;
+
 - (void) updateDisplayValues;
 
 - (void) handleDefaultFullBoxesSwitch: (id) sender;
@@ -80,6 +76,104 @@
 	quantityFormatter = [[NSNumberFormatter alloc] init];
 	[quantityFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
 	[quantityFormatter setGeneratesDecimalNumbers:YES];
+    
+    // Add the rounded view and the container views
+    roundedView = [[GradientView alloc] initWithFrame:CGRectZero];
+    [roundedView.layer setCornerRadius:5.0f];
+    [roundedView.layer setMasksToBounds:YES];
+    [roundedView.layer setBorderWidth:1.0f];
+    [roundedView.layer setBorderColor:[[UIColor blackColor] CGColor]];
+    [roundedView setStart:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0] andEndColor:[UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1.0]];
+    [self addSubview:roundedView];
+    [roundedView release];
+    
+    itemContentView = [[UIView alloc] initWithFrame:CGRectZero];
+    itemContentView.backgroundColor = [UIColor whiteColor];
+    [roundedView addSubview:itemContentView];
+    [itemContentView release];
+    
+    // Add the tools (Buttons and other controls)
+    toolsContentView = [[UIView alloc] initWithFrame:CGRectZero];
+    toolsContentView.backgroundColor = [UIColor whiteColor];
+    
+    addToCartButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
+    [addToCartButton setupAsBlackButton];
+    addToCartButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+    addToCartButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    [addToCartButton setTitle:@"ADD\nTO\nCART" forState:UIControlStateNormal];
+    [addToCartButton addTarget:self action:@selector(handleAddToCartButton:) forControlEvents:UIControlEventTouchUpInside];
+    [toolsContentView addSubview:addToCartButton];
+    [addToCartButton release];
+
+    exitButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
+    [exitButton setupAsBlackButton];
+    exitButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+    exitButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    [exitButton setTitle:@"EXIT" forState:UIControlStateNormal];
+    [exitButton addTarget:self action:@selector(handleExitButton:) forControlEvents:UIControlEventTouchUpInside];
+    [toolsContentView addSubview:exitButton];
+    [exitButton release];
+    
+    
+    addQuantityView = [[GradientView alloc] initWithFrame:CGRectZero];
+    [addQuantityView.layer setCornerRadius:5.0f];
+    [addQuantityView.layer setMasksToBounds:YES];
+    [addQuantityView.layer setBorderWidth:1.0f];
+    [addQuantityView.layer setBorderColor:[[UIColor blackColor] CGColor]];
+    [addQuantityView setStart:[UIColor colorWithRed:96.0/255.0 green:96.0/255.0 blue:96.0/255.0 alpha:1.0] andEndColor:[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f]];
+    addQuantityView.hidden = YES;
+    
+    addQuantityField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
+    addQuantityField.textColor = [UIColor blackColor];
+    addQuantityField.borderStyle = UITextBorderStyleRoundedRect;
+    addQuantityField.textAlignment = UITextAlignmentCenter;
+    addQuantityField.clearsOnBeginEditing = YES;
+    addQuantityField.placeholder = @"Quantity";
+    addQuantityField.tagName = @"AddQuantity";
+    addQuantityField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    addQuantityField.returnKeyType = UIReturnKeyGo;
+    addQuantityField.keyboardType = UIKeyboardTypeDecimalPad;
+    addQuantityField.delegate = self;
+    
+    UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectZero] autorelease];
+    keyboardToolbar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
+    keyboardToolbar.barStyle = UIBarStyleBlackTranslucent;
+    UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissKeyboardWithCancel:)] autorelease];
+    UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissKeyboard:)] autorelease];
+    UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+    NSArray *items = [[[NSArray alloc] initWithObjects:doneButton, flex, cancelButton, nil] autorelease];
+    [keyboardToolbar setItems:items];
+    [addQuantityField setInputAccessoryView:keyboardToolbar];
+    [addQuantityView addSubview:addQuantityField];
+    [addQuantityField release];
+    
+    addQuantityUnitsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    addQuantityUnitsLabel.textAlignment = UITextAlignmentLeft;
+    addQuantityUnitsLabel.textColor = [UIColor whiteColor];
+    addQuantityUnitsLabel.backgroundColor = [UIColor clearColor];
+    [addQuantityView addSubview:addQuantityUnitsLabel];
+    [addQuantityUnitsLabel release];
+    
+    addQuantityFullBoxesLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    addQuantityFullBoxesLabel.text = @"Full Boxes";
+    addQuantityFullBoxesLabel.textAlignment = UITextAlignmentLeft;
+    addQuantityFullBoxesLabel.textColor = [UIColor whiteColor];
+    addQuantityFullBoxesLabel.backgroundColor = [UIColor clearColor];
+    addQuantityFullBoxesLabel.hidden = YES;
+    [addQuantityView addSubview:addQuantityFullBoxesLabel];
+    [addQuantityFullBoxesLabel release];
+    
+    addQuantityFullBoxSwitch = [[UISwitch alloc] initWithFrame: CGRectZero];
+    [addQuantityFullBoxSwitch addTarget:self action:@selector(handleDefaultFullBoxesSwitch:) forControlEvents:UIControlEventValueChanged];
+    addQuantityFullBoxSwitch.on = YES;
+    addQuantityFullBoxSwitch.hidden = YES;
+    [addQuantityView addSubview:addQuantityFullBoxSwitch];
+    [addQuantityFullBoxSwitch release];
+    
+    [toolsContentView addSubview:addQuantityView];
+
+    [roundedView addSubview:toolsContentView];
+    [toolsContentView release];
 	
     return self;
 }
@@ -104,6 +198,28 @@
 
 #pragma mark -
 #pragma mark Accessors
+//=========================================================== 
+// - setItemToAdd:
+//=========================================================== 
+- (void)setItemToAdd:(ProductItem *)anItemToAdd {
+    if (itemToAdd != anItemToAdd) {
+        [anItemToAdd retain];
+        [itemToAdd release];
+        itemToAdd = anItemToAdd;
+        
+        // Initialize the details view if it is not 
+        if (itemDetailView == nil) {
+            itemDetailView = [[ItemDetailView alloc] initWithFrame:itemContentView.bounds];       
+            itemDetailView.delegate = self;
+            [itemContentView addSubview:itemDetailView];
+            [itemDetailView release];
+        }
+    }
+}
+
+//=========================================================== 
+// - setProductItemList:
+//=========================================================== 
 - (void) setProductItemList:(NSArray *)productList {
 	// This basically does the same as the standard synthesized
 	// retain setter, but we have to override it in order to
@@ -113,7 +229,7 @@
         // If the list of products is only 1, default the item to add to the first element
         // and release the list
         if (productList && [productList count] == 1) {
-            itemToAdd = [(ProductItem *) [productList objectAtIndex:0] retain];
+            self.itemToAdd = (ProductItem *) [productList objectAtIndex:0];
             
             [productItemList release];
             productItemList = nil;
@@ -121,8 +237,14 @@
             [productItemList release];
             productItemList = [productList retain];
             
-            [itemToAdd release];
-            itemToAdd = nil;
+            self.itemToAdd = nil;
+            
+            if (itemListView == nil) {
+                itemListView = [[ItemListView alloc] initWithFrame:itemContentView.bounds];
+                itemListView.viewDelegate = self;
+                [itemContentView addSubview:itemListView];
+                [itemListView release];
+            }
         }
 
         if ([self.subviews count] > 0) {
@@ -133,123 +255,170 @@
 }
 
 #pragma mark -
-#pragma mark Methods
-
+#pragma mark Layout Methods
 - (void) layoutSubviews {
-		
-	self.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-	if (roundedView == nil) {
-		roundedView = [[GradientView alloc] initWithFrame:CGRectMake(ROUND_VIEW_X, ROUND_VIEW_Y, ROUND_VIEW_WIDTH, ROUND_VIEW_HEIGHT)];
-		[roundedView.layer setCornerRadius:5.0f];
-		[roundedView.layer setMasksToBounds:YES];
-		[roundedView.layer setBorderWidth:1.0f];
-		[roundedView.layer setBorderColor:[[UIColor blackColor] CGColor]];
-		[roundedView setStart:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0] andEndColor:[UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1.0]];
-		[self addSubview:roundedView];
-		[roundedView release];
-	}
-	
-    // Keep track of how far down we are in the view
-	CGFloat cy = 0;
-    
-	cy += ITEM_VIEW_HEIGHT + 8.0f;
-	
-	if (addToCartButton == nil) {
-		addToCartButton = [[MOGlassButton alloc] initWithFrame:CGRectMake(46.0f, cy, 80.0f, 80.0f)];
-		[addToCartButton setupAsBlackButton];
-		addToCartButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
-		addToCartButton.titleLabel.textAlignment = UITextAlignmentCenter;
-		[addToCartButton setTitle:@"ADD\nTO\nCART" forState:UIControlStateNormal];
-		[addToCartButton addTarget:self action:@selector(handleAddToCartButton:) forControlEvents:UIControlEventTouchUpInside];
-		[roundedView addSubview:addToCartButton];
-		[addToCartButton release];
-	}
-	
-	if (exitButton == nil) {
-		exitButton = [[MOGlassButton alloc] initWithFrame:CGRectMake(154.0f, cy, 80.0f, 80.0f)];
-		[exitButton setupAsBlackButton];
-		exitButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
-		exitButton.titleLabel.textAlignment = UITextAlignmentCenter;
-		[exitButton setTitle:@"EXIT" forState:UIControlStateNormal];
-		[exitButton addTarget:self action:@selector(handleExitButton:) forControlEvents:UIControlEventTouchUpInside];
-		[roundedView addSubview:exitButton];
-		[exitButton release];
-	}
-	
-	if (addQuantityView == nil) {
-		addQuantityView = [[GradientView alloc] initWithFrame:CGRectMake(30.0f, cy, ADD_QUANTITYVIEW_WIDTH, ADD_QUANTITYVIEW_HEIGHT)];
-		[addQuantityView.layer setCornerRadius:5.0f];
-		[addQuantityView.layer setMasksToBounds:YES];
-		[addQuantityView.layer setBorderWidth:1.0f];
-		[addQuantityView.layer setBorderColor:[[UIColor blackColor] CGColor]];
-		[addQuantityView setStart:[UIColor colorWithRed:96.0/255.0 green:96.0/255.0 blue:96.0/255.0 alpha:1.0] andEndColor:[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f]];
-		addQuantityView.hidden = YES;
-		
-		addQuantityField = [[ExtUITextField alloc] initWithFrame:CGRectMake(15.0f, ADD_QUANTITYVIEW_MARGIN_TOP, 90.0f, 40.0f)];
-		addQuantityField.textColor = [UIColor blackColor];
-		addQuantityField.borderStyle = UITextBorderStyleRoundedRect;
-		addQuantityField.textAlignment = UITextAlignmentCenter;
-		addQuantityField.clearsOnBeginEditing = YES;
-		addQuantityField.placeholder = @"Quantity";
-		addQuantityField.tagName = @"AddQuantity";
-		addQuantityField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-		addQuantityField.returnKeyType = UIReturnKeyGo;
-		addQuantityField.keyboardType = UIKeyboardTypeDecimalPad;
-		addQuantityField.delegate = self;
-		UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, KEYBOARD_TOOLBAR_WIDTH, KEYBOARD_TOOLBAR_HEIGHT)] autorelease];
-		keyboardToolbar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
-		keyboardToolbar.barStyle = UIBarStyleBlackTranslucent;
-		UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissKeyboardWithCancel:)] autorelease];
-		UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissKeyboard:)] autorelease];
-		UIBarButtonItem *flex = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
-		NSArray *items = [[[NSArray alloc] initWithObjects:doneButton, flex, cancelButton, nil] autorelease];
-		[keyboardToolbar setItems:items];
-		[addQuantityField setInputAccessoryView:keyboardToolbar];
-		[addQuantityView addSubview:addQuantityField];
-  	    [addQuantityField release];
-		
-		addQuantityUnitsLabel = [[UILabel alloc] initWithFrame:CGRectMake(120.0f, ADD_QUANTITYVIEW_MARGIN_TOP, 53.0f, 40.0f)];
-		addQuantityUnitsLabel.textAlignment = UITextAlignmentCenter;
-		addQuantityUnitsLabel.textColor = [UIColor whiteColor];
-		addQuantityUnitsLabel.backgroundColor = [UIColor clearColor];
-		[addQuantityView addSubview:addQuantityUnitsLabel];
-    	[addQuantityUnitsLabel release];
-        
-        addQuantityFullBoxesLabel = [[UILabel alloc] initWithFrame:CGRectMake(15.0f, ADD_QUANTITYVIEW_MARGIN_TOP+40.0f, 90.0f, 40.0f)];
-        addQuantityFullBoxesLabel.text = @"Full Boxes";
-		addQuantityFullBoxesLabel.textAlignment = UITextAlignmentLeft;
-		addQuantityFullBoxesLabel.textColor = [UIColor whiteColor];
-		addQuantityFullBoxesLabel.backgroundColor = [UIColor clearColor];
-        addQuantityFullBoxesLabel.hidden = YES;
-		[addQuantityView addSubview:addQuantityFullBoxesLabel];
-    	[addQuantityFullBoxesLabel release];
-        
-        addQuantityFullBoxSwitch = [[UISwitch alloc] initWithFrame: CGRectMake(120.0f, ADD_QUANTITYVIEW_MARGIN_TOP+40.0f+5.0f, 0, 0)];
-        [addQuantityFullBoxSwitch addTarget:self action:@selector(handleDefaultFullBoxesSwitch:) forControlEvents:UIControlEventValueChanged];
-        addQuantityFullBoxSwitch.on = YES;
-        addQuantityFullBoxSwitch.hidden = YES;
-        [addQuantityView addSubview:addQuantityFullBoxSwitch];
-        [addQuantityFullBoxSwitch release];
-
-		[roundedView addSubview:addQuantityView];
-        
-        [addQuantityView release];		
-	}
-	
-	self.keyboardCancelled = NO;
-	
-	[self updateDisplayValues];
-}
-
-- (void)updateDisplayValues {    
-    // Add the Item Detail View if it not in the layout
-    if (itemDetailView == nil) {
-        itemDetailView = [[ItemDetailView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, ROUND_VIEW_WIDTH, ITEM_VIEW_HEIGHT)];       
-        itemDetailView.delegate = self;
-        [roundedView addSubview:itemDetailView];
-        [itemDetailView release];
+    if (self.bounds.size.width > self.bounds.size.height) {
+        [self layoutInLandscape];
+    } else {
+        [self layoutInPortrait];
     }
     
+    [self layoutAddQuantityView];
+    
+	self.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
+    
+    self.keyboardCancelled = NO;
+    [self updateDisplayValues];
+	}
+
+- (void) layoutInPortrait {
+    CGRect bounds = self.bounds;  
+    CGFloat width = bounds.size.width;
+    CGFloat height = bounds.size.height;
+    
+    // Layout the container views
+    CGRect topContainerRect = CGRectZero;
+    CGRect bottomContainerRect = CGRectZero;
+    
+    roundedView.frame = CGRectMake(MARGIN, MARGIN, width - MARGIN*2, height - MARGIN*2);
+    
+    CGRectDivide(CGRectMake(0, 0,roundedView.frame.size.width, roundedView.frame.size.height), &topContainerRect, &bottomContainerRect, height * 0.65, CGRectMinYEdge);
+    
+    itemContentView.frame = topContainerRect;
+    toolsContentView.frame = bottomContainerRect;
+    
+    // Resize the Item Content
+    if (itemDetailView) {
+        itemDetailView.frame = itemContentView.frame;
+    }
+    if (itemListView) {
+        itemListView.frame = itemContentView.frame;
+    }
+    
+    // Resize the tools content
+    CGRect addToCartRect = CGRectZero;
+    CGRect exitRect = CGRectZero;
+    CGRectDivide(toolsContentView.frame, &addToCartRect, &exitRect, toolsContentView.frame.size.width * 0.5, CGRectMinXEdge);
+    
+    addToCartButton.frame = CGRectMake(addToCartRect.size.width - BUTTON_SIZE - BUTTON_SPACING/2, 
+                                       (addToCartRect.size.height - BUTTON_SIZE)/2, 
+                                      BUTTON_SIZE, BUTTON_SIZE);
+    exitButton.frame = CGRectMake(exitRect.origin.x + BUTTON_SPACING/2, 
+                                  (exitRect.size.height - BUTTON_SIZE)/2, 
+                                  BUTTON_SIZE, BUTTON_SIZE);   
+}
+
+
+- (void) layoutInLandscape {
+    CGRect bounds = self.bounds;  
+    CGFloat width = bounds.size.width;
+    CGFloat height = bounds.size.height;
+    
+    // Layout the container views
+    CGRect leftContainerRect = CGRectZero;
+    CGRect rightContainerRect = CGRectZero;
+    
+    roundedView.frame = CGRectMake(MARGIN, MARGIN, width - MARGIN*2, height - MARGIN*2);
+    
+    CGRectDivide(CGRectMake(0, 0,roundedView.frame.size.width, roundedView.frame.size.height), &leftContainerRect, &rightContainerRect, width * 0.625, CGRectMinXEdge);
+    
+    itemContentView.frame = leftContainerRect;
+    toolsContentView.frame = rightContainerRect;
+    
+    // Resize the Item Content
+    if (itemDetailView) {
+        itemDetailView.frame = itemContentView.frame;
+    }
+    if (itemListView) {
+        itemListView.frame = itemContentView.frame;
+    }
+    
+    CGRect addToCartRect = CGRectZero;
+    CGRect exitRect = CGRectZero;
+    CGRectDivide(toolsContentView.frame, &addToCartRect, &exitRect, toolsContentView.frame.size.height * 0.5, CGRectMinYEdge);
+    
+    addToCartButton.frame = CGRectMake((addToCartRect.size.width - BUTTON_SIZE)/2, 
+                                       addToCartRect.size.height - BUTTON_SIZE - BUTTON_SPACING/2, 
+                                       BUTTON_SIZE, BUTTON_SIZE);
+    exitButton.frame = CGRectMake((exitRect.size.width - BUTTON_SIZE)/2, 
+                                  exitRect.origin.y + BUTTON_SPACING/2, 
+                                  BUTTON_SIZE, BUTTON_SIZE);
+    
+    // Resize the addQuantity Fields
+    addQuantityField.inputAccessoryView.frame = CGRectMake(0.0f, 0.0f, width, KEYBOARD_TOOLBAR_HEIGHT);
+}
+
+- (void) layoutAddQuantityView {
+    CGRect bounds = self.bounds;  
+    CGFloat width = bounds.size.width;
+    CGFloat height = bounds.size.height;
+    
+     
+    
+    addQuantityField.inputAccessoryView.frame = CGRectMake(0.0f, 0.0f, width, KEYBOARD_TOOLBAR_HEIGHT);
+    
+    CGRect beginRect = CGRectZero;
+    CGRect addQuantityLabelRect = CGRectZero;
+    CGRect addQuantityFieldRect = CGRectZero;
+    CGRect addQuantityFullBoxLabelRect = CGRectZero;
+    CGRect addQuantityFullBoxSwitchRect = CGRectZero;
+    
+    if (width < height) {
+        addQuantityView.frame = CGRectMake(MARGIN_ADDQUANTITY, MARGIN_ADDQUANTITY/2, toolsContentView.frame.size.width - MARGIN_ADDQUANTITY*2, toolsContentView.frame.size.height - MARGIN_ADDQUANTITY);   
+        beginRect = CGRectMake(0, 0, addQuantityView.frame.size.width, addQuantityView.frame.size.height);
+        
+        if (!addQuantityFullBoxesLabel.hidden) {
+            // Divide 2 rows, 2 cols
+            CGRectDivide(beginRect, &addQuantityFieldRect, &addQuantityLabelRect, beginRect.size.width * 0.5, CGRectMinXEdge);
+            CGRectDivide(addQuantityLabelRect, &addQuantityLabelRect, &addQuantityFullBoxSwitchRect, beginRect.size.height * 0.5, CGRectMinYEdge);
+            CGRectDivide(addQuantityFieldRect, &addQuantityFieldRect, &addQuantityFullBoxLabelRect, beginRect.size.height * 0.5, CGRectMinYEdge);
+        } else {
+            // Divide 1 row, 2 cols
+            CGRectDivide(beginRect, &addQuantityFieldRect, &addQuantityLabelRect, beginRect.size.width * 0.5, CGRectMinXEdge);
+        }
+        
+        // Lay out the views
+        addQuantityField.frame = CGRectMake(MARGIN*3, (addQuantityFieldRect.size.height - ADDQUANTITY_FIELD_HEIGHT)/2, addQuantityFieldRect.size.width - MARGIN*3, ADDQUANTITY_FIELD_HEIGHT);
+        addQuantityUnitsLabel.frame = CGRectMake(addQuantityLabelRect.origin.x + MARGIN*2, (addQuantityLabelRect.size.height - ADDQUANTITY_FIELD_HEIGHT)/2, addQuantityLabelRect.size.width, ADDQUANTITY_FIELD_HEIGHT);
+        addQuantityUnitsLabel.textAlignment = UITextAlignmentLeft;
+        
+        addQuantityFullBoxesLabel.frame = CGRectMake(MARGIN*3, addQuantityFieldRect.size.height + (addQuantityFullBoxLabelRect.size.height - ADDQUANTITY_FIELD_HEIGHT)/2, 
+                                                     addQuantityFullBoxLabelRect.size.width - MARGIN*3, ADDQUANTITY_FIELD_HEIGHT);
+        addQuantityFullBoxSwitch.frame = CGRectMake(addQuantityFullBoxSwitchRect.origin.x + MARGIN, addQuantityLabelRect.size.height + (addQuantityFullBoxSwitchRect.size.height - ADDQUANTITY_FIELD_HEIGHT)/2 + MARGIN, 
+                                                    addQuantityFullBoxSwitchRect.size.width, 0);
+    }
+    
+    if (width > height) {
+        addQuantityView.frame = CGRectMake(MARGIN_ADDQUANTITY/2, MARGIN_ADDQUANTITY/2, toolsContentView.frame.size.width - MARGIN_ADDQUANTITY, toolsContentView.frame.size.height - MARGIN_ADDQUANTITY);   
+        beginRect = CGRectMake(0, 0, addQuantityView.frame.size.width, addQuantityView.frame.size.height);
+        
+        if (!addQuantityFullBoxesLabel.hidden) {
+            // Divide 4 rows
+            CGRectDivide(beginRect, &addQuantityFieldRect, &addQuantityLabelRect, beginRect.size.height * 0.25, CGRectMinYEdge);
+            CGRectDivide(addQuantityLabelRect, &addQuantityLabelRect, &addQuantityFullBoxLabelRect, addQuantityLabelRect.size.height * 0.33, CGRectMinYEdge);
+            CGRectDivide(addQuantityFullBoxLabelRect, &addQuantityFullBoxLabelRect, &addQuantityFullBoxSwitchRect, addQuantityFullBoxLabelRect.size.height * 0.5, CGRectMinYEdge);
+        } else {
+            // Divide 2 rows
+            CGRectDivide(beginRect, &addQuantityFieldRect, &addQuantityLabelRect, beginRect.size.height * 0.5, CGRectMinYEdge);
+        }
+        
+        // Lay out the views
+        addQuantityField.frame = CGRectMake(MARGIN, addQuantityFieldRect.size.height - ADDQUANTITY_FIELD_HEIGHT, addQuantityFieldRect.size.width - MARGIN*2, ADDQUANTITY_FIELD_HEIGHT);
+        addQuantityUnitsLabel.frame = CGRectMake(MARGIN, addQuantityLabelRect.origin.y, addQuantityLabelRect.size.width, ADDQUANTITY_FIELD_HEIGHT);
+        addQuantityUnitsLabel.textAlignment = UITextAlignmentLeft;
+        
+        addQuantityFullBoxesLabel.frame = CGRectMake(MARGIN, addQuantityFullBoxLabelRect.origin.y + (addQuantityFullBoxLabelRect.size.height - ADDQUANTITY_FIELD_HEIGHT), 
+                                                     addQuantityFullBoxLabelRect.size.width - MARGIN*2, ADDQUANTITY_FIELD_HEIGHT);
+        addQuantityFullBoxSwitch.frame = CGRectMake(MARGIN, addQuantityFullBoxSwitchRect.origin.y,
+                                                    addQuantityFullBoxSwitchRect.size.width, 0);
+    }
+
+    
+}
+
+#pragma mark -
+#pragma mark Methods
+- (void)updateDisplayValues {    
     // Determine if the list view needs to be added
     if (itemToAdd != nil) {
         itemDetailView.item = itemToAdd;
@@ -258,24 +427,17 @@
         // Move Item List View off to the left of main view
         if (itemListView) {
             CGRect slideOutFrame = itemListView.frame;
-            slideOutFrame.origin.x = MOVE_OFF_TO_LEFT_X;
+            slideOutFrame.origin.x = - (itemContentView.bounds.size.width);
             itemListView.frame = slideOutFrame;
         }
     } else if (productItemList != nil) {
-        if (itemListView == nil) {
-            itemListView = [[ItemListView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, ROUND_VIEW_WIDTH, ITEM_VIEW_HEIGHT)];
-            itemListView.viewDelegate = self;
-            [roundedView addSubview:itemListView];
-            [itemListView release];
-        }
-        
         itemListView.itemList = productItemList;
         addToCartButton.enabled = NO;
         
         // Move Item Detail View off to the right
         if (itemDetailView) {
             CGRect slideOutFrame = itemDetailView.frame;
-            slideOutFrame.origin.x = MOVE_OFF_TO_RIGHT_X;
+            slideOutFrame.origin.x = itemContentView.bounds.size.width;
             itemDetailView.frame = slideOutFrame;
         }
     }
@@ -299,36 +461,18 @@
 	addQuantityUnitsLabel.text = [pi unitOfMeasureDisplay:[pi getSelectedUOMForDisplay]];
     
     // Do I show the convert to boxes toggle
-    CGRect addQuantityFrame = addQuantityView.frame;
-    CGRect quantityTextFrame = addQuantityField.frame;
-    CGRect quantityLabelFrame = addQuantityUnitsLabel.frame;
     if ([pi isUOMConversionRequired]) {
-        addQuantityFrame.origin.x = ADD_QUANTITYVIEW_W_SWITCH_MARGIN_LEFT;
-        addQuantityFrame.size.height = ADD_QUANTITYVIEW_HEIGHT+ADD_QUANTITYVIEW_MARGIN_TOP; 
-        addQuantityFrame.size.width = ADD_QUANTITYVIEW_W_SWITCH_WIDTH;
-        
-        quantityLabelFrame.origin.y = ADD_QUANTITYVIEW_MARGIN_TOP;
-        quantityTextFrame.origin.y = ADD_QUANTITYVIEW_MARGIN_TOP;
-        
-        addQuantityFullBoxSwitch.on = pi.defaultToBox;
+      addQuantityFullBoxSwitch.on = pi.defaultToBox;
         addQuantityFullBoxesLabel.hidden = NO;
         addQuantityFullBoxSwitch.hidden = NO;
         
     } else {
-        addQuantityFrame.origin.x = ADD_QUANTITYVIEW_MARGIN_LEFT;
-        addQuantityFrame.size.height = ADD_QUANTITYVIEW_HEIGHT; 
-        addQuantityFrame.size.width = ADD_QUANTITYVIEW_WIDTH;
-        
-        quantityLabelFrame.origin.y = ADD_QUANTITYVIEW_MARGIN_TOP*2;
-        quantityTextFrame.origin.y = ADD_QUANTITYVIEW_MARGIN_TOP*2;
-        
         addQuantityFullBoxSwitch.on = pi.defaultToBox;
         addQuantityFullBoxesLabel.hidden = YES;
         addQuantityFullBoxSwitch.hidden = YES;
     }
-    addQuantityView.frame = addQuantityFrame;
-    addQuantityField.frame = quantityTextFrame;
-    addQuantityUnitsLabel.frame = quantityLabelFrame;
+    
+    [self layoutAddQuantityView];
     
 	addQuantityView.hidden = NO;
 }
@@ -502,9 +646,6 @@
         CGRect slideOutFrame = itemDetailView.frame;
         CGRect slideInFrame = itemListView.frame;
         
-        slideOutFrame.origin.x = 0.0f;
-        slideInFrame.origin.x = MOVE_OFF_TO_LEFT_X;
-        
         itemDetailView.item = nil;
         
         // Deselect any item from the search results
@@ -512,8 +653,9 @@
         
         [UIView beginAnimations:nil context:nil];  
         [UIView setAnimationDuration:0.3];
-            slideOutFrame.origin.x = MOVE_OFF_TO_RIGHT_X;
+            slideOutFrame.origin.x = itemContentView.bounds.size.width;
             slideInFrame.origin.x = 0.0f;
+        
             itemDetailView.frame = slideOutFrame;
             itemListView.frame = slideInFrame;
         [UIView commitAnimations]; 
@@ -529,17 +671,19 @@
         CGRect slideInFrame = itemDetailView.frame;
         
         slideOutFrame.origin.x = 0.0f;
-        slideInFrame.origin.x = MOVE_OFF_TO_RIGHT_X;
+        slideInFrame.origin.x = itemContentView.bounds.size.width;
         
         itemDetailView.item = itemToAdd;
         itemDetailView.frame = slideInFrame;
         
         [UIView beginAnimations:nil context:nil];  
         [UIView setAnimationDuration:0.3];
-            slideOutFrame.origin.x = MOVE_OFF_TO_LEFT_X;
+            slideOutFrame.origin.x = - (itemContentView.bounds.size.width);
             slideInFrame.origin.x = 0.0f;
+        
             itemListView.frame = slideOutFrame;
             itemDetailView.frame = slideInFrame;
+            itemDetailView.alpha = 1.0;
         [UIView commitAnimations]; 
         
         addToCartButton.enabled = YES;

@@ -12,8 +12,10 @@
 
 #define LABEL_FONT_SIZE 14.0f
 #define LABEL_HEIGHT 16.0f
-#define START_X 10.0f
-#define START_Y 4.0f
+
+#define MARGIN_SIDE 10.0f
+#define MARGIN_TOP 4.0f
+
 #define STATUS_LABEL_PERCENT_WIDTH 33.0f
 #define QUANTITY_LABEL_PERCENT_WIDTH 33.0f
 #define LINE_COST_LABEL_PERCENT_WIDTH 34.0f
@@ -21,6 +23,8 @@
 #pragma mark -
 #pragma mark Private Interface
 @interface CartItemTableCell ()
+
+- (void) layoutLabelsDefault;
 - (void) updateDeleteButtonState;
 - (void) updateCloseButtonState;
 @end
@@ -61,7 +65,7 @@
 		lineCostLabel = [[[UILabel alloc] init] autorelease];
 		lineCostLabel.backgroundColor = [UIColor clearColor];
 		lineCostLabel.textColor = [UIColor blackColor];
-		lineCostLabel.textAlignment = UITextAlignmentCenter;
+		lineCostLabel.textAlignment = UITextAlignmentRight;
 		lineCostLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
 		lineCostLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:lineCostLabel];
@@ -139,22 +143,19 @@
 -(void) layoutSubviews {
     [super layoutSubviews];
 	
-	CGRect cellRect = self.contentView.bounds;
-	CGFloat cellWidth = cellRect.size.width;
-	CGRect frame;
-	CGFloat cy = START_Y;
+    CGRect frame;
 	
 	// Set up the hidden buttons, they will overlap initially but the rest of the cell
 	// will be re-arranged when we enter edit mode.
 	
 	UIImage *deleteCheckedImage = [UIImage imageNamed:@"DeleteSelected.png"];
-	frame = CGRectMake(START_X, cy, deleteCheckedImage.size.width, deleteCheckedImage.size.height);
+	frame = CGRectMake(MARGIN_SIDE, MARGIN_TOP, deleteCheckedImage.size.width, deleteCheckedImage.size.height);
 	deleteCheckButton.frame = frame;
 	UIImage *imageForDelete = (self.deleteChecked) ? deleteCheckedImage : [UIImage imageNamed:@"NotSelected.png"];
 	[deleteCheckButton setImage:imageForDelete forState:UIControlStateNormal];
 	
 	UIImage *closeCheckedImage = [UIImage imageNamed:@"CloseSelected.png"];
-	frame = CGRectMake((START_X * 2.0f) + deleteCheckedImage.size.width, cy, closeCheckedImage.size.width, closeCheckedImage.size.height);
+	frame = CGRectMake((MARGIN_SIDE * 2.0f) + deleteCheckedImage.size.width, MARGIN_TOP, closeCheckedImage.size.width, closeCheckedImage.size.height);
 	closeCheckButton.frame = frame;
 	UIImage *imageForClose = (self.closeChecked) ? closeCheckedImage : [UIImage imageNamed:@"NotSelected.png"];
 	[closeCheckButton setImage:imageForClose forState:UIControlStateNormal];
@@ -168,33 +169,17 @@
 						 completion:^(BOOL finished) {
 							 [UIView animateWithDuration:0.2
 											  animations:^{
-												  CGRect rect;
-												  CGFloat myY = cy;
-												  // Now set up the normal layout.
-												  rect = CGRectMake(START_X, myY, cellWidth - (START_X * 2.0f), LABEL_HEIGHT);
-												  descriptionLabel.frame = rect;
-												  
-												  myY += LABEL_HEIGHT;
-                                                  CGFloat statusLabelWidth = floorf((cellWidth - START_X * 2.0f) * (STATUS_LABEL_PERCENT_WIDTH / 100.0f));
-                                                  rect = rect = CGRectMake(START_X, myY, statusLabelWidth, LABEL_HEIGHT);
-                                                  itemStatusLabel.frame = rect;
-                                                  
-												  CGFloat quantityLabelWidth = floorf((cellWidth - START_X * 2.0f) * (QUANTITY_LABEL_PERCENT_WIDTH / 100.0f));
-												  rect = CGRectMake(statusLabelWidth, myY, quantityLabelWidth, LABEL_HEIGHT);
-												  quantityLabel.frame = rect;
-												  
-												  CGFloat lineCostLabelWidth = (cellWidth - START_X * 2.0f) - quantityLabelWidth - statusLabelWidth;
-												  rect = CGRectMake(quantityLabelWidth + statusLabelWidth, myY, lineCostLabelWidth, LABEL_HEIGHT);
-												  lineCostLabel.frame = rect;
+												  [self layoutLabelsDefault];
 											  }
 											  completion:^(BOOL finished) {
 												  ;
 											  }];
 						 }];
 	} else {
+        [self layoutLabelsDefault];
 		[UIView animateWithDuration:0.2 
 						 animations:^{
-							 CGFloat offsetX = deleteCheckButton.frame.size.width + START_X + closeCheckButton.frame.size.width + START_X;
+							 CGFloat offsetX = deleteCheckButton.frame.size.width + MARGIN_SIDE + closeCheckButton.frame.size.width + MARGIN_SIDE;
 							 
 							 CGRect rect;
 							 rect = descriptionLabel.frame;
@@ -224,6 +209,31 @@
 	}
 	
 	
+}
+
+- (void) layoutLabelsDefault {
+    CGRect cellRect = self.contentView.bounds;
+	CGFloat cellWidth = cellRect.size.width;
+	CGFloat cy = MARGIN_TOP;
+    
+    CGRect rect;
+    CGFloat myY = cy;
+    // Now set up the normal layout.
+    rect = CGRectMake(MARGIN_SIDE, myY, cellWidth - (MARGIN_SIDE * 2.0f), LABEL_HEIGHT);
+    descriptionLabel.frame = rect;
+    
+    myY += LABEL_HEIGHT;
+    CGFloat statusLabelWidth = floorf((cellWidth - MARGIN_SIDE * 2.0f) * (STATUS_LABEL_PERCENT_WIDTH / 100.0f));
+    rect = rect = CGRectMake(MARGIN_SIDE, myY, statusLabelWidth, LABEL_HEIGHT);
+    itemStatusLabel.frame = rect;
+    
+    CGFloat quantityLabelWidth = floorf((cellWidth - MARGIN_SIDE * 2.0f) * (QUANTITY_LABEL_PERCENT_WIDTH / 100.0f));
+    rect = CGRectMake(statusLabelWidth, myY, quantityLabelWidth, LABEL_HEIGHT);
+    quantityLabel.frame = rect;
+    
+    CGFloat lineCostLabelWidth = (cellWidth - MARGIN_SIDE * 2.0f) - quantityLabelWidth - statusLabelWidth;
+    rect = CGRectMake(quantityLabelWidth + statusLabelWidth, myY, lineCostLabelWidth, LABEL_HEIGHT);
+    lineCostLabel.frame = rect;
 }
 
 - (void)checkDeleteAction:(id)sender

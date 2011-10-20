@@ -10,15 +10,16 @@
 #import "AlertUtils.h"
 #import "ProductItem.h"
 
-#include "AddItemView.h"
 #include "CustomerViewController.h"
 #include "CartItemsViewController.h"
+
+#import "UIScreen+Helpers.h"
 
 #include "Order.h"
 #include "iPOSAppDelegate.h"
 
 @interface MainMenuViewController()
--(void) layoutView;
+-(void) layoutView: (UIInterfaceOrientation) interfaceOrientation;
 - (void) showAddItemOverlay: (NSArray *) foundItems;
 
 - (void) customerPressed:(id)sender;
@@ -85,6 +86,10 @@
     // Return YES for supported orientations.
     //return (interfaceOrientation == UIInterfaceOrientationPortrait);
     return YES;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [self layoutView:toInterfaceOrientation];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -182,51 +187,12 @@
     // e.g. self.myOutlet = nil;
 }
 
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    [self layoutView];
-}
-
-- (void) layoutView{
-    [linea addDelegate:self];
-    
-    
-	if (self.navigationController != nil) {
-		[self.navigationController setNavigationBarHidden:NO];
-		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Main" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
-	}
-    
-    CGRect viewBounds = self.view.bounds;
-	CGFloat labelButtonWidth = viewBounds.size.width * 0.60f;
-	CGFloat	labelButtonSpacing = viewBounds.size.height * 0.15f;
-	
-    scanItemLabel.frame = CGRectMake(0.0f, 0.0f, labelButtonWidth, 40.0f);
-    scanItemLabel.center = CGPointMake((viewBounds.size.width / 2.0f), labelButtonSpacing);
-    
-    if (UIInterfaceOrientationIsLandscape(self.interfaceOrientation))
-    {
-        labelButtonSpacing = labelButtonSpacing + 8.0;
-    }    
-    
-    lookupItemNameField.frame = CGRectOffset(scanItemLabel.frame, 0.0f, labelButtonSpacing);
-    lookupItemSkuField.frame = CGRectOffset(lookupItemNameField.frame, 0.0f, labelButtonSpacing);
-    
-    // Change to work from lookupOrderField position when that is implemented
-    customerButton.frame = CGRectOffset(lookupItemSkuField.frame, 0.0f, labelButtonSpacing);
-    
-    cartButton.frame = CGRectOffset(customerButton.frame, 0.0f, labelButtonSpacing);
-    
-    lookupItemNameField.textAlignment = UITextAlignmentLeft;
-    lookupItemSkuField.textAlignment = UITextAlignmentLeft;
-    lookupItemNameField.textAlignment = UITextAlignmentCenter;
-    lookupItemSkuField.textAlignment = UITextAlignmentCenter;
-}
 - (void)viewWillAppear:(BOOL)animated {
 
     // Add this controller as a Linea Device Delegate
     [linea addDelegate:self];
 
-    [self layoutView];
+    [self layoutView:[[UIApplication sharedApplication] statusBarOrientation]];
 	
 	// Do this last
 	[super viewWillAppear:animated];
@@ -280,6 +246,8 @@
 #pragma mark AddItemViewDelegate
 - (void) cancelAddItem:(AddItemView *)addItemView {
 	[addItemView removeFromSuperview];
+    addItemOverlay = nil;
+    
 	[linea addDelegate:self];
 	[self addKeyboardListeners];
 }
@@ -295,6 +263,7 @@
     }
     
     [addItemView removeFromSuperview];
+    addItemOverlay = nil;
 
     CartItemsViewController *cartViewController = [[CartItemsViewController alloc] init];
 	[[self navigationController] pushViewController:cartViewController animated:TRUE];
@@ -330,23 +299,63 @@
 
 #pragma mark -
 #pragma mark Private Methods
+- (void) layoutView:(UIInterfaceOrientation)interfaceOrientation {
+    [linea addDelegate:self];
+    
+    CGRect viewBounds = [UIScreen rectForScreenView:interfaceOrientation isNavBarVisible:YES];
+    self.view.frame = viewBounds;
+    
+	if (self.navigationController != nil) {
+		[self.navigationController setNavigationBarHidden:NO];
+		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Main" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
+	}
+    
+	CGFloat labelButtonWidth = viewBounds.size.width * 0.60f;
+	CGFloat	labelButtonSpacing = viewBounds.size.height * 0.15f;
+    
+    scanItemLabel.frame = CGRectMake(0.0f, 0.0f, labelButtonWidth, 40.0f);
+    scanItemLabel.center = CGPointMake((viewBounds.size.width / 2.0f), labelButtonSpacing);
+    
+    if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
+        labelButtonSpacing = labelButtonSpacing + 4.0;
+    } 
+    
+    lookupItemNameField.frame = CGRectOffset(scanItemLabel.frame, 0.0f, labelButtonSpacing);
+    lookupItemSkuField.frame = CGRectOffset(lookupItemNameField.frame, 0.0f, labelButtonSpacing);
+    
+    // Change to work from lookupOrderField position when that is implemented
+    customerButton.frame = CGRectOffset(lookupItemSkuField.frame, 0.0f, labelButtonSpacing);
+    
+    cartButton.frame = CGRectOffset(customerButton.frame, 0.0f, labelButtonSpacing);
+    
+    lookupItemNameField.textAlignment = UITextAlignmentLeft;
+    lookupItemSkuField.textAlignment = UITextAlignmentLeft;
+    lookupItemNameField.textAlignment = UITextAlignmentCenter;
+    lookupItemSkuField.textAlignment = UITextAlignmentCenter;
+    
+    // Layout add item overlay (adjusting frame triggers a layoutSubviews of add item overlay)
+    if (addItemOverlay) {
+        addItemOverlay.frame = viewBounds;
+    }
+}
+
 - (void) showAddItemOverlay:(NSArray *)foundItems {
     if (foundItems && [foundItems count] > 0) {
         [linea removeDelegate:self];
         [self removeKeyboardListeners];
         
-        AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
-        [overlay setViewDelegate:self];
+        addItemOverlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
+        [addItemOverlay setViewDelegate:self];
         
-        [self.view addSubview:overlay];
+        [self.view addSubview:addItemOverlay];
         
         if ([foundItems count] == 1) {
-            [overlay setItemToAdd:(ProductItem *) [foundItems objectAtIndex:0]];
+            [addItemOverlay setItemToAdd:(ProductItem *) [foundItems objectAtIndex:0]];
         } else {
-            [overlay setProductItemList:foundItems];
+            [addItemOverlay setProductItemList:foundItems];
         }
         
-        [overlay release];
+        [addItemOverlay release];
     } else {
         [AlertUtils showModalAlertMessage:@"No item(s) found"];
     }

@@ -24,6 +24,8 @@
 @interface ChargeCreditCardView : UIView<PaymentView>{
     NSString *balanceDue;
     NSString *totalBalance;
+    
+    UIView *mainRoundedView;
         
     UILabel *balanceDueTitle;
     UILabel *balanceDueLabel;

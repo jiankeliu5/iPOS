@@ -114,7 +114,7 @@
 		NSMutableString *errMsg = [[[NSMutableString alloc] init] autorelease];
 		[errMsg appendString:@"Error in customer save"];
 		for (Error *e in [editedCust errorList]) {
-			NSLog(@"Error Id: %d %@", [e errorId], [e message]);
+			NSLog(@"Error Id: %@ %@", [e errorId], [e message]);
 			[errMsg appendFormat:@"\nError (%d): %@", [e errorId], [e message]];
 		}
 		[AlertUtils showModalAlertMessage:errMsg];
@@ -172,7 +172,7 @@
 		NSMutableString *errMsg = [[[NSMutableString alloc] init] autorelease];
 		[errMsg appendString:@"Error in customer update!"];
 		for (Error *e in [editedCust errorList]) {
-			NSLog(@"Error Id: %d %@", [e errorId], [e message]);
+			NSLog(@"Error Id: %@ %@", [e errorId], [e message]);
 			[errMsg appendFormat:@"\nError (%d): %@", [e errorId], [e message]];
 		}
 		[AlertUtils showModalAlertMessage:errMsg];

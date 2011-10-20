@@ -9,6 +9,8 @@
 #import "AvailabilityView.h"
 #import <QuartzCore/QuartzCore.h>
 
+#define MARGIN 2.0f
+
 #pragma mark -
 #pragma mark Private Interface
 @interface AvailabilityView ()
@@ -131,7 +133,7 @@
 	[self.layer setBorderWidth:1.0f];
 	[self.layer setBorderColor:[[UIColor blackColor] CGColor]];
 	
-	CGFloat y = (SMALL_LABEL_HEIGHT / 2.0f);
+	CGFloat y = MARGIN;
 	
 	if (locationIdLabel == nil) {
 		locationIdLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, y, self.frame.size.width, SMALL_LABEL_HEIGHT)];

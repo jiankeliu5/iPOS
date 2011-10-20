@@ -21,6 +21,8 @@
     OrderCart *orderCart;
     
     Linea *linea;
+    
+    SearchItemView *searchOverlay;
 	
 	UILabel *custPhoneLabel;
 	UILabel *custNameLabel;

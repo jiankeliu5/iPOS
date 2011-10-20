@@ -16,6 +16,7 @@
 #import "NotesController.h"
 #import "AccountPaymentView.h"
 #import "PaymentView.h"
+#import "GradientView.h"
 
 @interface TenderPaymentViewController : ExtUIViewController<ExtUIViewControllerDelegate, ChargeCreditCardViewDelegate, LineaDelegate, SignatureDelegate, NotesControllerDelegate, AccountPaymentViewDelegate> {
 	NSDecimalNumber *paymentAmount;
@@ -30,9 +31,14 @@
     UILabel *subTotalLabel;
     UILabel *taxTotalLabel;
     UILabel *totalLabel;
+    
+    UILabel *balanceDueTitleLabel;
     UILabel *balanceDueLabel;
     ChargeCreditCardView *chargeCCView;
     AccountPaymentView *accountPaymentView;
+    
+    GradientView *separatorView;
+    GradientView *tenderTotalView;
     Linea *linea;
 }
 

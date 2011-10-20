@@ -362,7 +362,7 @@
         [self setTitle:controllerTitle];
         
         // Set up the close button to go back the new order navigation controller
-        self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Close" 
+        self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"New Order" 
                                                                                    style:UIBarButtonItemStyleBordered 
                                                                                   target:self 
                                                                                   action:@selector(handleCloseLookupOrder:)] autorelease];
@@ -411,7 +411,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations.
     //return (interfaceOrientation == UIInterfaceOrientationPortrait);
-    return (interfaceOrientation == UIInterfaceOrientationPortrait) || UIInterfaceOrientationIsLandscape(interfaceOrientation);
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -674,7 +674,7 @@
 		cell = [[[CartItemTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:orderCellIdentifier] autorelease];
 	}
 	cell.orderItem = orderItem;
-    cell.cellDelegate = self;
+	cell.cellDelegate = self;
 
     if ([order canEditDetails] == NO) {
         cell.multiEditing = NO;
@@ -758,7 +758,8 @@
 #pragma mark SearchItemView delegate
 - (void) searchforItem:(id)sender {
 	[linea removeDelegate:self];
-	SearchItemView *searchOverlay = [[SearchItemView alloc] initWithFrame:self.view.bounds];
+	
+     searchOverlay = [[SearchItemView alloc] initWithFrame:self.view.bounds];
 	[searchOverlay setDelegate:self];
 	[self.view addSubview:searchOverlay];
 	[searchOverlay release];
@@ -769,6 +770,8 @@
 	[aSearchItemView removeFromSuperview];
 	[linea addDelegate:self];
 	
+    searchOverlay = nil;
+    
 	// Set the values and do the work here
 	if (aSku && [aSku length] > 0) {
 		ProductItem *item = [facade lookupProductItem:aSku];
@@ -785,6 +788,8 @@
 - (void) searchItem:(SearchItemView *)aSearchItemView withName: (NSString *) aName {
     [aSearchItemView removeFromSuperview];
 	[linea addDelegate:self];
+    
+    searchOverlay = nil;
 	
 	// Set the values and do the work here
 	if (aName && [aName length] > 0) {
@@ -803,6 +808,8 @@
 - (void) cancelSearchItem:(SearchItemView *)aSearchItemView {
 	[aSearchItemView removeFromSuperview];
 	[linea addDelegate:self];
+    
+    searchOverlay = nil;
 }
 
 #pragma mark -

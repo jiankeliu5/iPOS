@@ -59,6 +59,8 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [linea disconnect];
+    
+    [topRowBeforeKeyboardShown release];
 	
 	[self setCurrentFirstResponder:nil];
 	[self setEmpId:nil];
@@ -71,6 +73,18 @@
 
 #pragma mark -
 #pragma mark Accessors
+//=========================================================== 
+// - setTopRowBeforeKeyboardShown:
+//=========================================================== 
+- (void)setTopRowBeforeKeyboardShown:(NSIndexPath *)aTopRowBeforeKeyboardShown {
+    if (topRowBeforeKeyboardShown != aTopRowBeforeKeyboardShown) {
+        [aTopRowBeforeKeyboardShown retain];
+        [topRowBeforeKeyboardShown release];
+        topRowBeforeKeyboardShown = aTopRowBeforeKeyboardShown;
+    }
+}
+
+
 
 
 #pragma mark -
@@ -235,9 +249,9 @@
 {
 	self.currentFirstResponder = textField;
 	if ([loginTableView indexPathsForVisibleRows].count) {
-		topRowBeforeKeyboardShown = (NSIndexPath *)[[loginTableView indexPathsForVisibleRows] objectAtIndex:0];
+		[self setTopRowBeforeKeyboardShown:(NSIndexPath *) [[loginTableView indexPathsForVisibleRows] objectAtIndex:0]];
 	} else {
-		topRowBeforeKeyboardShown = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self setTopRowBeforeKeyboardShown:[NSIndexPath indexPathForRow:0 inSection:0]];
 		[textField resignFirstResponder];
 	}
 }
@@ -366,37 +380,32 @@
 //}
 
 #pragma mark UITableViewDataSource
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	return 2;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger) section
-{
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger) section {
 	return nil;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *LoginTableIdentifier = @"LoginTableIdentifier";
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:LoginTableIdentifier];
 	
 	NSInteger row = indexPath.row;
 
 	if (cell == nil) {
-		cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:LoginTableIdentifier] autorelease];
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:LoginTableIdentifier] autorelease];
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 		
 		
 		UITextField *loginTextField = [[UITextField alloc] initWithFrame:CGRectMake(0.0f, 0.0f, floorf(tableView.frame.size.width / 2.0f), 21.0f)];
 		loginTextField.adjustsFontSizeToFitWidth = YES;
 		loginTextField.textColor = [UIColor blackColor];
-		loginTextField.backgroundColor = [UIColor whiteColor];
 		loginTextField.tag = row;
 		loginTextField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 		loginTextField.delegate = self;

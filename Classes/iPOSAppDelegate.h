@@ -27,9 +27,9 @@
 	NSInteger verifyPasswordTries;
 }
 
-@property (retain) UIWindow* window;
-@property (retain) UINavigationController* navigationController;
-@property (retain) LoginViewController* loginViewController;
+@property (nonatomic, retain) UIWindow* window;
+@property (nonatomic, retain) UINavigationController* navigationController;
+@property (nonatomic, retain) LoginViewController* loginViewController;
 @property (nonatomic, retain) UINavigationController *orderNavigationController;
 @property (nonatomic, retain) LookupOrderViewController *lookupOrderViewController;
 @property (nonatomic, assign) BOOL resignedActive;

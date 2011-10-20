@@ -11,7 +11,8 @@
 
 #import "TenderPaymentViewController.h"
 #import "UIViewController+ViewControllerLayout.h"
-#import "GradientView.h"
+#import "UIScreen+Helpers.h"
+
 #import "SSLineView.h"
 
 
@@ -29,7 +30,7 @@
 #define TOOLBAR_HEIGHT 44.0f
 #define SEPARATOR_HEIGHT 5.0f
 
-#define LABEL_STARTY 30.0f
+#define LABEL_STARTY 10.0f
 #define LABEL_STARTX 60.0f
 #define LABEL_BALDUE_STARTX 40.0f
 #define LABEL_HEIGHT 18.0f
@@ -60,7 +61,8 @@ static NSString * const CREDIT = @"credit";
 - (void) handleSuspendOrder: (id) sender;
 -(void) sendPaymentOnAccount:(NSDecimalNumber *) amount;
 
-- (void) updateViewLayout;
+- (void) layoutView: (UIInterfaceOrientation) orientation;
+- (void) updateDisplayValues;
 
 - (BOOL) createOrder;
 - (BOOL) tenderPaymentFromCardData: (NSString *)track1 track2:(NSString *)track2 track3:(NSString *)track3;
@@ -127,7 +129,7 @@ static NSString * const CREDIT = @"credit";
     
     // Add Balance Due
     CGFloat balanceDueY = rectForView.size.height - [self navBarHeight] - LABEL_SPACING - LABEL_HEIGHT;
-    UILabel *balanceDueTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(LABEL_BALDUE_STARTX, balanceDueY, LABEL_BALDUE_WIDTH, LABEL_HEIGHT)];
+    balanceDueTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(LABEL_BALDUE_STARTX, balanceDueY, LABEL_BALDUE_WIDTH, LABEL_HEIGHT)];
     balanceDueTitleLabel.text = @"Balance Due";
     balanceDueTitleLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
     balanceDueTitleLabel.textAlignment = UITextAlignmentLeft;
@@ -142,7 +144,7 @@ static NSString * const CREDIT = @"credit";
     [self.view addSubview:balanceDueLabel];
     
     [balanceDueTitleLabel release];
-    [balanceDueLabel release];
+    [balanceDueLabel release]; 
     
     // Add the susend button
     UIBarButtonItem *suspendButton = [[UIBarButtonItem alloc] init];
@@ -204,14 +206,19 @@ static NSString * const CREDIT = @"credit";
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    [self updateViewLayout];
+    [self layoutView:[UIApplication sharedApplication].statusBarOrientation];
+    [self updateDisplayValues];
     [super viewWillAppear:animated];
 }
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations.
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
+}
+
+- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [self layoutView:toInterfaceOrientation];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -245,6 +252,37 @@ static NSString * const CREDIT = @"credit";
     // e.g. self.myOutlet = nil;
 }
 
+#pragma mark -
+#pragma mark Layout View
+- (void) layoutView:(UIInterfaceOrientation) orientation {
+    
+    CGRect viewBounds = [UIScreen rectForScreenView:orientation isNavBarVisible:YES];
+    self.view.frame = viewBounds;
+    
+    // Re-position the separator view and the balance due
+    CGRect separatorFrame = separatorView.frame;
+    separatorFrame.origin.y = viewBounds.size.height - (3 * TOOLBAR_HEIGHT) - SEPARATOR_HEIGHT;
+    separatorFrame.size.width = viewBounds.size.width;
+    separatorView.frame = separatorFrame;
+    
+    CGRect tenderTotalFrame = tenderTotalView.frame;
+    tenderTotalFrame.size.height = viewBounds.size.height - (3 * TOOLBAR_HEIGHT);
+    tenderTotalFrame.size.width = viewBounds.size.width;
+    tenderTotalView.frame = tenderTotalFrame;
+    
+    CGFloat balanceDueY = viewBounds.size.height - LABEL_SPACING - LABEL_HEIGHT - TOOLBAR_HEIGHT;
+    
+    balanceDueTitleLabel.frame = CGRectMake(LABEL_BALDUE_STARTX, balanceDueY, LABEL_BALDUE_WIDTH, LABEL_HEIGHT);        
+    balanceDueLabel.frame = CGRectMake(LABEL_STARTX + LABEL_TITLE_WIDTH, balanceDueY, LABEL_WIDTH, LABEL_HEIGHT);
+    
+    // Layout the toolbar
+    paymentToolbar.frame = CGRectMake(0.0f, viewBounds.size.height - TOOLBAR_HEIGHT, viewBounds.size.width, TOOLBAR_HEIGHT);
+    
+    if (chargeCCView) {
+        chargeCCView.frame = self.view.bounds;
+    }
+
+}
 
 #pragma mark -
 #pragma mark ChargeCreditCardViewDelegate
@@ -502,7 +540,7 @@ static NSString * const CREDIT = @"credit";
                 else {
                     [self dismissModalViewControllerAnimated:YES];
                     [accountPaymentView removeFromSuperview];
-                    [self updateViewLayout];
+                    [self updateDisplayValues];
                     [self displayPayOnAccountSuccesfulView];
                 }
             }
@@ -592,7 +630,8 @@ static NSString * const CREDIT = @"credit";
     CGRect rect = [self rectForNavAndStatus];
     UIColor *bgColor = [UIColor colorWithWhite:0.85f alpha:1.0f];
     rect.size.height = rect.size.height - (3 * TOOLBAR_HEIGHT);
-    GradientView *tenderTotalView = [[[GradientView alloc] initWithFrame:rect] autorelease];
+    
+    tenderTotalView = [[[GradientView alloc] initWithFrame:rect] autorelease];
 	tenderTotalView.backgroundColor = bgColor;
     
     [tenderTotalView setStart:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0] andEndColor:[UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1.0]];
@@ -708,14 +747,14 @@ static NSString * const CREDIT = @"credit";
     rect.origin.y = rect.size.height - (3 * TOOLBAR_HEIGHT) - SEPARATOR_HEIGHT;
     rect.size.height = SEPARATOR_HEIGHT;
     
-    GradientView *separatorView = [[[GradientView alloc] initWithFrame:rect] autorelease];
+    separatorView = [[[GradientView alloc] initWithFrame:rect] autorelease];
 	separatorView.backgroundColor = bgColor;
     
     [separatorView setStart:[UIColor colorWithRed:150.0/255.0 green:150.0/255.0 blue:150.0/255.0 alpha:1.0] andEndColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0]];
     return separatorView;
 }
 
-- (void) updateViewLayout {
+- (void) updateDisplayValues {
     Order *order = [orderCart getOrder];
     
     if (order != nil) {

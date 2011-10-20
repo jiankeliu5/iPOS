@@ -14,6 +14,7 @@
 #import "ExtUITextField.h"
 #import "SearchItemView.h"
 #import "CartItemTableCell.h"
+#import "SearchItemView.h"
 
 
 @interface OrderItemsViewController : UIViewController <LineaDelegate, AddItemViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, SearchItemViewDelegate, CartItemCellDelegate, ProfitMarginViewDelegate> {
@@ -22,6 +23,7 @@
     
     Linea *linea;
 	
+    SearchItemView *searchOverlay;
 	UILabel *custPhoneLabel;
 	UILabel *custNameLabel;
 	UILabel *custZipLabel;

@@ -10,20 +10,31 @@
 #import "SSTextView.h"
 #import "UIViewController+ViewControllerLayout.h"
 #import "UIView+ViewLayout.h"
+#import "UIScreen+Helpers.h"
+
+#define MARGIN 20.0f
 
 #define ROUND_VIEW_X 20.0f
 #define ROUND_VIEW_Y 7.0f
 #define ROUND_VIEW_WIDTH 280.0f
 #define ROUND_VIEW_HEIGHT 400.0f
+
 #define LABEL_HEIGHT 40.0f
 #define TEXT_FIELD_HEIGHT 40.0f
-#define SPACING_HEIGHT 20.0f
+
 #define KEYBOARD_TOOLBAR_HEIGHT 44.0f
-#define KEYBOARD_TOOLBAR_WIDTH 320.0f
+
 #define TEXTVIEW_MAX_LENGTH  255
+
 #define TEXTFIELD_MAX_LENGTH 22
+#define TEXTFIELD_WIDTH 150.0f
 
 @interface NotesController()
+
+#pragma mark -
+#pragma mark Layout View
+- (void) layoutView:(UIInterfaceOrientation) orientation;
+
 -(BOOL) validateString:(NSString *)text;
 -(void) displayAlert:(NSString *) alertText;
 -(void) close:(id)sender;
@@ -73,7 +84,7 @@
     
     [bgView release];
     
-    UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, KEYBOARD_TOOLBAR_WIDTH, KEYBOARD_TOOLBAR_HEIGHT)] autorelease];
+    UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, bgView.frame.size.width, KEYBOARD_TOOLBAR_HEIGHT)] autorelease];
 	keyboardToolbar.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
 	keyboardToolbar.barStyle = UIBarStyleBlackTranslucent;
 	UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissKeyboardForTextView:)] autorelease];
@@ -81,10 +92,7 @@
     NSArray *items = [[[NSArray alloc] initWithObjects:doneButton, flex, nil] autorelease];
 	[keyboardToolbar setItems:items];
     
-    CGFloat cy = floorf(LABEL_HEIGHT + SPACING_HEIGHT + SPACING_HEIGHT);
-	CGFloat width = floorf(self.view.bounds.size.width * 0.60f);
-    
-	notes = [[[SSTextView alloc] initWithFrame:CGRectMake(floorf((self.view.bounds.size.width - width) / 15), cy, floorf(self.view.bounds.size.width * 0.95f), (rectForView.size.height /2))] autorelease];
+	notes = [[[SSTextView alloc] initWithFrame:CGRectZero] autorelease];
     notes.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     notes.layer.cornerRadius = 10.0f;
 	notes.textColor = [UIColor blackColor];
@@ -95,20 +103,17 @@
     notes.font = [UIFont fontWithName:@"Helvetica" size:17.0];
 	notes.delegate = self;
     [notes setInputAccessoryView:keyboardToolbar];
-    if (notesData && notesData != nil)
-    {
+    if (notesData && notesData != nil) {
         notes.text = notesData;
     }
     [self.view addSubview:notes];
     
-    cy += (SPACING_HEIGHT + notes.frame.size.height);
-    
-    purchaseOrder = [[[ExtUITextField alloc] initWithFrame:CGRectMake(floorf((self.view.bounds.size.width - width) / 10.0f), cy, width, LABEL_HEIGHT)] autorelease];
+    purchaseOrder = [[[ExtUITextField alloc] initWithFrame:CGRectZero] autorelease];
     notes.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
 	purchaseOrder.textColor = [UIColor blackColor];
     purchaseOrder.placeholder = @"PO";
     purchaseOrder.borderStyle = UITextBorderStyleRoundedRect;
-	purchaseOrder.textAlignment = UITextAlignmentCenter;
+	purchaseOrder.textAlignment = UITextAlignmentLeft;
     purchaseOrder.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	purchaseOrder.delegate = self;
     [super addDoneToolbarForTextField:purchaseOrder];
@@ -121,28 +126,14 @@
  	
 }
 
--(CGRect) buildNotesLayoutForPortrait{
-    CGFloat cy = floorf(LABEL_HEIGHT + SPACING_HEIGHT + SPACING_HEIGHT);
-	CGFloat width = floorf(self.view.bounds.size.width * 0.60f);
-    
-    return CGRectMake(floorf((self.view.bounds.size.width - width) / 15), cy, floorf(self.view.bounds.size.width * 0.95f), (self.view.frame.size.height /2)); 
-}
-
--(CGRect) buildPurchaseOrderLayOutForPortrait{
-    
-    CGFloat cy = floorf(LABEL_HEIGHT + SPACING_HEIGHT + SPACING_HEIGHT);
-    cy += (SPACING_HEIGHT + notes.frame.size.height);
-	CGFloat width = floorf(self.view.bounds.size.width * 0.60f);
-    
-    return CGRectMake(floorf((self.view.bounds.size.width - width) / 10.0f), cy, width, LABEL_HEIGHT);
-}
-
 - (void)keyboardWillShow:(NSNotification *)notification {
     
     if ([self.currentFirstResponder isKindOfClass:[UITextView class]])
     {
-        CGFloat width = floorf(self.view.bounds.size.width * 0.60f);
-        notes.frame = CGRectMake(floorf((self.view.bounds.size.width - width) / 15), notes.frame.origin.y, floor(self.view.frame.size.width * .95f), ((self.view.frame.size.height / 4) - 5));
+        CGRect frame = notes.frame;
+        frame.size.height = (self.view.frame.size.height / 4) - 5;
+        
+        notes.frame = frame;
     }
     NSLog(@"Calling show keyboard");
     
@@ -154,8 +145,8 @@
     
     if ([self.currentFirstResponder isKindOfClass:[UITextView class]])
     {
-        CGFloat width = floorf(self.view.bounds.size.width * 0.60f);
-        notes.frame = CGRectMake(floorf((self.view.bounds.size.width - width) / 15), notes.frame.origin.y, floor(self.view.frame.size.width * .95f), (self.view.frame.size.height / 2));
+        CGRect frame = CGRectMake(MARGIN, purchaseOrder.frame.size.height + MARGIN*2, self.view.bounds.size.width - MARGIN*2, self.view.bounds.size.height/2);
+        notes.frame = frame;
     }
     
     [super keyboardWillHide:notification];
@@ -171,7 +162,11 @@
      }
  }
 
-
+- (void) viewWillAppear:(BOOL)animated {
+    [self layoutView:[UIApplication sharedApplication].statusBarOrientation];
+    
+    [super viewWillAppear:animated];
+}
 - (void) viewDidAppear:(BOOL)animated {
 	// Call super at the beginning
 	[super viewDidAppear:animated];
@@ -197,44 +192,32 @@
     
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [self.currentFirstResponder resignFirstResponder];
-}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait) || UIInterfaceOrientationIsLandscape(interfaceOrientation);
+    return YES;
 }
 
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-{
-    CGFloat cy = floorf(SPACING_HEIGHT / 2.0f);
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationBeginsFromCurrentState:YES];
+    [self.currentFirstResponder resignFirstResponder];
+    [self layoutView:toInterfaceOrientation];
+}
+
+#pragma mark -
+#pragma mark Layout View
+- (void) layoutView:(UIInterfaceOrientation) orientation {
     
-    if (UIDeviceOrientationIsLandscape(fromInterfaceOrientation))
-    {
-        notes.frame = [self buildNotesLayoutForPortrait];
-        purchaseOrder.frame = [self buildPurchaseOrderLayOutForPortrait];
-        
-    }
-    else if (UIDeviceOrientationIsPortrait(fromInterfaceOrientation))
-    {
-        CGFloat width = floorf(self.view.bounds.size.width * 0.60f);
-        notes.frame = CGRectMake(floorf((self.view.bounds.size.width - width) / 15), cy, floor(self.view.frame.size.width * .95f), (self.view.frame.size.height / 2));
-        cy += (SPACING_HEIGHT + notes.frame.size.height);
-        purchaseOrder.frame = CGRectMake(floorf((self.view.bounds.size.width - width) / 10.0f), cy, width, LABEL_HEIGHT);
-        
-    }
-    [self.currentFirstResponder becomeFirstResponder];
-    [UIView commitAnimations];
+    CGRect viewBounds = [UIScreen rectForScreenView:orientation isNavBarVisible:YES];
+    self.view.frame = viewBounds;
     
+    // Position the Purchase Order
+    purchaseOrder.frame = CGRectMake(MARGIN, MARGIN, TEXTFIELD_WIDTH, TEXT_FIELD_HEIGHT);
     
+    // Position the notes
+    notes.frame = CGRectMake(MARGIN, purchaseOrder.frame.size.height + MARGIN*2, viewBounds.size.width - MARGIN*2, viewBounds.size.height/2);
 }
 
 #pragma mark - Text View Delegate methods

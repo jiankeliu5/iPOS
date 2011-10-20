@@ -21,23 +21,20 @@
 #import "ProfitMarginViewController.h"
 #import "iPOSAppDelegate.h"
 
+#import "UIScreen+Helpers.h"
+
 #define CUST_SELECTED_COLOR [UIColor colorWithRed:170.0f/255.0f green:204.0f/255.0f blue:0.0f alpha:1.0f]
 #define NO_CUST_SELECTED_COLOR [UIColor colorWithRed:255.0f/255.0f green:70.0f/255.0f blue:0.0f alpha:1.0f]
 
 #define CUST_LABEL_HEIGHT 14.0f
 #define CUST_LABEL_FONT_SIZE 12.0f
-#define CUST_LABEL_END_WIDTH 106.0f
-#define CUST_LABEL_MIDDLE_WIDTH 108.0f
 
-#define ORDER_TABLE_HEIGHT 310.0f
+#define ORDER_TOOLBAR_HEIGHT 44.0f
 
 #define ORDER_LABEL_FONT_SIZE 14.0f
-#define ORDER_LABEL_WIDTH 220.0f
 #define ORDER_LABEL_HEIGHT 16.0f
-#define ORDER_VALUE_X 240.0f
 #define ORDER_VALUE_WIDTH 80.0f
-#define ORDER_VALUE_HEIGHT 16.0f
-#define ORDER_TOOLBAR_HEIGHT 44.0f
+#define LABEL_SPACING 20.0f
 
 #define LOOKUP_SKU_X 2.0f
 #define LOOKUP_SKU_Y 7.0f
@@ -56,6 +53,9 @@
 #define EDIT_HEADER_FONT_SIZE 11.0f
 
 @interface CartItemsViewController()
+
+- (void) layoutView: (UIInterfaceOrientation) orientation;
+
 - (UILabel *) createOrderLabel:(NSString *)text withRect:(CGRect)rect andAlignment:(int)alignment;
 - (void) calculateOrder;
 - (void) sendOrderAsQuote:(id)sender;
@@ -145,30 +145,28 @@
 	[self setView:cartView];
 	[cartView release];
 	
-	// Where we are in the layout.
-	CGFloat cy = 0.0f;
-	
-	custPhoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, cy, CUST_LABEL_END_WIDTH, CUST_LABEL_HEIGHT)];
+    // Add the customer info
+	custPhoneLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	custPhoneLabel.font = [UIFont systemFontOfSize:CUST_LABEL_FONT_SIZE];
 	custPhoneLabel.textAlignment = UITextAlignmentCenter;
 	[self.view addSubview:custPhoneLabel];
 	[custPhoneLabel release];
 	
-	custNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CUST_LABEL_END_WIDTH, cy, CUST_LABEL_MIDDLE_WIDTH, CUST_LABEL_HEIGHT)];
+	custNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	custNameLabel.font = [UIFont systemFontOfSize:CUST_LABEL_FONT_SIZE];
 	custNameLabel.textAlignment = UITextAlignmentCenter;
 	[self.view addSubview:custNameLabel];
 	[custNameLabel release];
 
-	custZipLabel = [[UILabel alloc] initWithFrame:CGRectMake(CUST_LABEL_END_WIDTH +  CUST_LABEL_MIDDLE_WIDTH, cy, CUST_LABEL_END_WIDTH, CUST_LABEL_HEIGHT)];
+	custZipLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	custZipLabel.font = [UIFont systemFontOfSize:CUST_LABEL_FONT_SIZE];
 	custZipLabel.textAlignment = UITextAlignmentCenter;
 	[self.view addSubview:custZipLabel];
 	[custZipLabel release];
 	
-	cy += CUST_LABEL_HEIGHT;
 	
-	orderTable = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, cy, self.view.frame.size.width, ORDER_TABLE_HEIGHT) style:UITableViewStylePlain];
+    // Add the Order Items table
+	orderTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
 	orderTable.backgroundColor = [UIColor clearColor];
 	orderTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
 	orderTable.delegate = self;
@@ -176,34 +174,27 @@
 	[self.view addSubview:orderTable];
 	[orderTable release];
 	
-	cy += ORDER_TABLE_HEIGHT;
-	
-	subTotalLabel = [self createOrderLabel:@"Subtotal:" withRect:CGRectMake(0.0f, cy, ORDER_LABEL_WIDTH, ORDER_LABEL_HEIGHT) andAlignment:UITextAlignmentRight];
+    // Add the labels
+	subTotalLabel = [self createOrderLabel:@"Subtotal:" withRect:CGRectZero andAlignment:UITextAlignmentRight];
 	[self.view addSubview:subTotalLabel];
 	
-	subTotalValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_VALUE_X, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:UITextAlignmentLeft];
+	subTotalValue = [self createOrderLabel:@"$0.00" withRect:CGRectZero andAlignment:UITextAlignmentLeft];
 	[self.view addSubview:subTotalValue];
 	
-	cy += ORDER_LABEL_HEIGHT;
-	
-	taxLabel = [self createOrderLabel:@"Tax:" withRect:CGRectMake(0.0f, cy, ORDER_LABEL_WIDTH, ORDER_LABEL_HEIGHT) andAlignment:UITextAlignmentRight];
+	taxLabel = [self createOrderLabel:@"Tax:" withRect:CGRectZero andAlignment:UITextAlignmentRight];
 	[self.view addSubview:taxLabel];
 	
-	taxValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_VALUE_X, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:UITextAlignmentLeft];
+	taxValue = [self createOrderLabel:@"$0.00" withRect:CGRectZero andAlignment:UITextAlignmentLeft];
 	[self.view addSubview:taxValue];
 	
-	cy += ORDER_LABEL_HEIGHT;
-	
-	totalLabel = [self createOrderLabel:@"Total:" withRect:CGRectMake(0.0f, cy, ORDER_LABEL_WIDTH, ORDER_LABEL_HEIGHT) andAlignment:UITextAlignmentRight];
+	totalLabel = [self createOrderLabel:@"Total:" withRect:CGRectZero andAlignment:UITextAlignmentRight];
 	[self.view addSubview:totalLabel];
 	
-	totalValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_VALUE_X, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:UITextAlignmentLeft];
+	totalValue = [self createOrderLabel:@"$0.00" withRect:CGRectZero andAlignment:UITextAlignmentLeft];
 	[self.view addSubview:totalValue];
 	
-	cy += ORDER_LABEL_HEIGHT;
-	
 	// Create a toolbar for the bottom of the screen
-	orderToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, cy, self.view.frame.size.width, ORDER_TOOLBAR_HEIGHT)];
+	orderToolBar = [[UIToolbar alloc] initWithFrame:CGRectZero];
 	orderToolBar.barStyle = UIBarStyleBlack;
 	searchButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"search.png"] 
 																	style:UIBarButtonItemStylePlain 
@@ -341,6 +332,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [self layoutView:[UIApplication sharedApplication].statusBarOrientation];
+    
     // Add this controller as a Linea Device Delegate
     [linea addDelegate:self];
    
@@ -401,9 +394,11 @@
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations.
-    //return (interfaceOrientation == UIInterfaceOrientationPortrait);
-    return (interfaceOrientation == UIInterfaceOrientationPortrait) || UIInterfaceOrientationIsLandscape(interfaceOrientation);
+    return YES;
+}
+
+- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [self layoutView:toInterfaceOrientation];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -411,6 +406,57 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc. that aren't in use.
+}
+
+#pragma mark -
+#pragma mark Layout View
+- (void) layoutView:(UIInterfaceOrientation) orientation {
+
+    CGRect viewBounds = [UIScreen rectForScreenView:orientation isNavBarVisible:YES];
+    self.view.frame = viewBounds;
+    
+    
+    CGRect custInfoRect = CGRectZero;
+    CGRect orderTableRect = CGRectZero;
+    CGRect subTotalRect = CGRectZero;
+    CGRect taxRect = CGRectZero;
+    CGRect totalRect = CGRectZero;
+    CGRect toolbarRect = CGRectZero;
+    
+    CGRect custPhoneRect = CGRectZero;
+    CGRect custNameRect = CGRectZero;
+    CGRect custZipRect = CGRectZero;
+    
+    // Calculate the layout rects (rows and cols)
+    CGRectDivide(viewBounds, &custInfoRect, &orderTableRect, CUST_LABEL_HEIGHT, CGRectMinYEdge);
+    
+    CGRectDivide(custInfoRect, &custPhoneRect, &custNameRect, custInfoRect.size.width * 0.3, CGRectMinXEdge);
+    CGRectDivide(custNameRect, &custNameRect, &custZipRect, custNameRect.size.width * 0.5, CGRectMinXEdge);
+    
+    CGRectDivide(orderTableRect, &orderTableRect, &subTotalRect, orderTableRect.size.height - ORDER_LABEL_HEIGHT*3 - ORDER_TOOLBAR_HEIGHT, CGRectMinYEdge);
+    CGRectDivide(subTotalRect, &subTotalRect, &taxRect, ORDER_LABEL_HEIGHT, CGRectMinYEdge);
+    CGRectDivide(taxRect, &taxRect, &totalRect, ORDER_LABEL_HEIGHT, CGRectMinYEdge);
+    CGRectDivide(totalRect, &totalRect, &toolbarRect, ORDER_LABEL_HEIGHT, CGRectMinYEdge);
+    
+    // Set the layout frames for customer, order table, totals, and toolbar
+    custPhoneLabel.frame = custPhoneRect;
+    custNameLabel.frame = custNameRect;
+    custZipLabel.frame = custZipRect;
+    
+    orderTable.frame = orderTableRect;
+    
+    subTotalLabel.frame = CGRectMake(0, subTotalRect.origin.y, subTotalRect.size.width - LABEL_SPACING - ORDER_VALUE_WIDTH, ORDER_LABEL_HEIGHT);
+	subTotalValue.frame = CGRectMake(subTotalRect.size.width - ORDER_VALUE_WIDTH, subTotalRect.origin.y, ORDER_VALUE_WIDTH, ORDER_LABEL_HEIGHT);
+	taxLabel.frame = CGRectMake(0, taxRect.origin.y, taxRect.size.width - LABEL_SPACING - ORDER_VALUE_WIDTH, ORDER_LABEL_HEIGHT);
+	taxValue.frame = CGRectMake(taxRect.size.width - ORDER_VALUE_WIDTH, taxRect.origin.y, ORDER_VALUE_WIDTH, ORDER_LABEL_HEIGHT);
+	totalLabel.frame = CGRectMake(0, totalRect.origin.y, totalRect.size.width - LABEL_SPACING - ORDER_VALUE_WIDTH, ORDER_LABEL_HEIGHT);
+	totalValue.frame = CGRectMake(totalRect.size.width - ORDER_VALUE_WIDTH, totalRect.origin.y, ORDER_VALUE_WIDTH, ORDER_LABEL_HEIGHT);
+    
+    orderToolBar.frame = toolbarRect;
+    
+    if (searchOverlay) {
+        searchOverlay.frame = self.view.bounds;
+    }
 }
 
 #pragma mark -
@@ -714,7 +760,8 @@
 #pragma mark SearchItemView delegate
 - (void) searchforItem:(id)sender {
 	[linea removeDelegate:self];
-	SearchItemView *searchOverlay = [[SearchItemView alloc] initWithFrame:self.view.bounds];
+	 
+    searchOverlay = [[SearchItemView alloc] initWithFrame:self.view.bounds];
 	[searchOverlay setDelegate:self];
 	[self.view addSubview:searchOverlay];
 	[searchOverlay release];
@@ -724,6 +771,8 @@
 	
 	[aSearchItemView removeFromSuperview];
 	[linea addDelegate:self];
+    
+    searchOverlay = nil;
 	
 	// Set the values and do the work here
 	if (aSku && [aSku length] > 0) {
@@ -741,6 +790,8 @@
 - (void) searchItem:(SearchItemView *)aSearchItemView withName: (NSString *) aName {
     [aSearchItemView removeFromSuperview];
 	[linea addDelegate:self];
+    
+    searchOverlay = nil;
 	
 	// Set the values and do the work here
 	if (aName && [aName length] > 0) {
@@ -759,6 +810,8 @@
 - (void) cancelSearchItem:(SearchItemView *)aSearchItemView {
 	[aSearchItemView removeFromSuperview];
 	[linea addDelegate:self];
+    
+    searchOverlay = nil;
 }
 
 #pragma mark -

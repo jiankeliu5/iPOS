@@ -14,29 +14,38 @@
 #import "AlertUtils.h"
 #import "PriceAdjustViewController.h"
 
+#import "UIScreen+Helpers.h"
+
 #define LABEL_FONT_SIZE 16.0f
 #define LABEL_HEIGHT 18.0f
-#define TEXT_FIELD_HEIGHT 40.0f
-#define TEXT_FIELD_START_X 20.0f
-#define TEXT_FIELD_START_Y 20.0f
-#define TEXT_FIELD_WIDTH 90.0f
-#define UOM_LABEL_START_X 120.0f
-#define UOM_LABEL_WIDTH 60.0f
-#define ITEM_TOTAL_START_X 160.0f
-#define ITEM_TOTAL_WIDTH 160.0f
 
-#define CONVERT_TO_BOX_SPACING 15.0f
-#define CONVERT_TO_BOX_LABEL_WIDTH 185.0f
-#define CONVERT_TO_BOX_SWITCH_HEIGHT 27.0f
+#define MARGIN_ITEM 20.0f
+
+#define TEXT_FIELD_HEIGHT 40.0f
+#define TEXT_FIELD_WIDTH 90.0f
+
+//#define UOM_LABEL_START_X 120.0f
+//#define UOM_LABEL_WIDTH 60.0f
+//#define ITEM_TOTAL_START_X 160.0f
+//#define ITEM_TOTAL_WIDTH 160.0f
+//
+//#define CONVERT_TO_BOX_SPACING 15.0f
+//#define CONVERT_TO_BOX_LABEL_WIDTH 185.0f
+//#define CONVERT_TO_BOX_SWITCH_HEIGHT 27.0f
+//
 
 #define BUTTON_HEIGHT 40.0f
+#define BUTTON_HEIGHT_LANDSCAPE 30.0f
 #define BUTTON_WIDTH 212.0f
 #define BUTTON_SPACE 10.0f
-
-#define UOM_EXCHANGE_BUTTON_WIDTH 37.0f
-#define UOM_EXCHANGE_BUTTON_HEIGHT 37.0f
+//
+#define UOM_EXCHANGE_BUTTON_SIZE 37.0f
 
 @interface CartItemDetailViewController()
+
+- (void) layoutView: (UIInterfaceOrientation) orientation;
+- (void) updateDisplayValues;
+
 - (void) switchSelectedUOM: (id) selector;
 
 - (void) handleConvertToBoxesSwitch: (id) sender;
@@ -45,7 +54,7 @@
 - (void) handleOpenButton:(id)sender;
 - (void) handleCloseButton:(id)sender;
 - (void) handlePriceButton:(id)sender;
-- (void) updateViewLayout;
+
 @end
 
 @implementation CartItemDetailViewController
@@ -114,14 +123,12 @@
 	[self setView:bgView];
 	[bgView release];
 	
-	CGFloat cy = 0.0f;
-	
-	productItemView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, cy, self.view.bounds.size.width, LABEL_HEIGHT * 4.0f)];
+	productItemView = [[UIView alloc] initWithFrame:CGRectZero];
 	productItemView.backgroundColor = [UIColor colorWithWhite:0.70f alpha:1.0f];
 	
 	// Where we are in the productItem view 
     if (uomExchangeButton == nil) {
-        uomExchangeButton = [[UIButton alloc] initWithFrame:CGRectMake(productItemView.bounds.size.width - UOM_EXCHANGE_BUTTON_WIDTH, 0.0f, UOM_EXCHANGE_BUTTON_HEIGHT, UOM_EXCHANGE_BUTTON_HEIGHT)];
+        uomExchangeButton = [[UIButton alloc] initWithFrame:CGRectZero];
         [uomExchangeButton setImage:[UIImage imageNamed:@"exchange.png"] forState:UIControlStateNormal];
         [uomExchangeButton addTarget:self action:@selector(switchSelectedUOM:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -130,8 +137,7 @@
         [uomExchangeButton release];
     }
 
-	CGFloat vy = LABEL_HEIGHT / 2.0f;
-	skuLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, vy, productItemView.bounds.size.width, LABEL_HEIGHT)];
+	skuLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	skuLabel.backgroundColor = [UIColor clearColor];
 	skuLabel.textColor = [UIColor blackColor];
 	skuLabel.textAlignment = UITextAlignmentCenter;
@@ -139,8 +145,7 @@
 	[productItemView addSubview:skuLabel];
 	[skuLabel release];
 	
-	vy += LABEL_HEIGHT;
-	descLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, vy, productItemView.bounds.size.width, LABEL_HEIGHT)];
+	descLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	descLabel.backgroundColor = [UIColor clearColor];
 	descLabel.textColor = [UIColor blackColor];
 	descLabel.textAlignment = UITextAlignmentCenter;
@@ -148,8 +153,7 @@
 	[productItemView addSubview:descLabel];
 	[descLabel release];
 	
-	vy += LABEL_HEIGHT;
-	priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, vy, productItemView.bounds.size.width, LABEL_HEIGHT)];
+	priceLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	priceLabel.backgroundColor = [UIColor clearColor];
 	priceLabel.textColor = [UIColor blackColor];
 	priceLabel.textAlignment = UITextAlignmentCenter;
@@ -159,14 +163,11 @@
 	
 	[self.view addSubview:productItemView];
 	[productItemView release];
-	
-	cy += (LABEL_HEIGHT * 4.0f);
-	
-	orderItemView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, cy, self.view.bounds.size.width, TEXT_FIELD_HEIGHT * 3.0f)];
+		
+	orderItemView = [[UIView alloc] initWithFrame:CGRectZero];
 	orderItemView.backgroundColor = [UIColor colorWithWhite:0.50f alpha:1.0f];
 	
-	vy = TEXT_FIELD_START_Y;
-	quantityField = [[ExtUITextField alloc] initWithFrame:CGRectMake(TEXT_FIELD_START_X, vy, TEXT_FIELD_WIDTH, TEXT_FIELD_HEIGHT)];
+	quantityField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
 	quantityField.textColor = [UIColor blackColor];
 	quantityField.borderStyle = UITextBorderStyleRoundedRect;
 	quantityField.textAlignment = UITextAlignmentCenter;
@@ -188,15 +189,14 @@
 	[orderItemView addSubview:quantityField];
 	[quantityField release];
 	
-	CGFloat centerToText = floorf((TEXT_FIELD_HEIGHT - LABEL_HEIGHT) / 2.0f);
-	unitOfMeasureLabel = [[UILabel alloc] initWithFrame:CGRectMake(UOM_LABEL_START_X, vy+centerToText, UOM_LABEL_WIDTH, LABEL_HEIGHT)];
+	unitOfMeasureLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	unitOfMeasureLabel.backgroundColor = [UIColor clearColor];
 	unitOfMeasureLabel.textColor = [UIColor blackColor];
 	unitOfMeasureLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
 	[orderItemView addSubview:unitOfMeasureLabel];
 	[unitOfMeasureLabel release];
 	
-	itemTotalLabel = [[UILabel alloc] initWithFrame:CGRectMake(ITEM_TOTAL_START_X, vy+centerToText, ITEM_TOTAL_WIDTH, LABEL_HEIGHT)];
+	itemTotalLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	itemTotalLabel.backgroundColor = [UIColor clearColor];
 	itemTotalLabel.textColor = [UIColor blackColor];
 	itemTotalLabel.textAlignment = UITextAlignmentCenter;
@@ -205,17 +205,16 @@
 	[itemTotalLabel release];
     
     // Add the convert to boxes control
-    vy += TEXT_FIELD_HEIGHT + CONVERT_TO_BOX_SPACING;
-    convertToBoxesSwitch = [[UISwitch alloc] initWithFrame: CGRectMake(TEXT_FIELD_START_X + CONVERT_TO_BOX_LABEL_WIDTH, vy, 0, CONVERT_TO_BOX_SWITCH_HEIGHT)];
+    convertToBoxesSwitch = [[UISwitch alloc] initWithFrame: CGRectZero];
     [convertToBoxesSwitch addTarget:self action:@selector(handleConvertToBoxesSwitch:) forControlEvents:UIControlEventValueChanged];
     convertToBoxesSwitch.on = YES;
     convertToBoxesSwitch.hidden = YES;
     [orderItemView addSubview:convertToBoxesSwitch];
     [convertToBoxesSwitch release];
     
-    centerToText = floorf((CONVERT_TO_BOX_SWITCH_HEIGHT - LABEL_HEIGHT) / 2.0f);
-    convertToBoxesLabel = [[UILabel alloc] initWithFrame:CGRectMake(TEXT_FIELD_START_X, vy+centerToText, CONVERT_TO_BOX_LABEL_WIDTH, LABEL_HEIGHT)];
+    convertToBoxesLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     convertToBoxesLabel.text = @"Full Boxes";
+    convertToBoxesLabel.textAlignment = UITextAlignmentRight;
     convertToBoxesLabel.backgroundColor = [UIColor clearColor];
 	convertToBoxesLabel.textColor = [UIColor blackColor];
 	convertToBoxesLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
@@ -226,9 +225,7 @@
 	[self.view addSubview:orderItemView];
 	[orderItemView release];
 	
-	cy += (TEXT_FIELD_HEIGHT * 3.0f) + BUTTON_HEIGHT;
-	
-	deleteButton = [[MOGlassButton alloc] initWithFrame:CGRectMake(floorf((self.view.bounds.size.width - BUTTON_WIDTH) / 2.0f), cy, BUTTON_WIDTH, BUTTON_HEIGHT)];
+	deleteButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
 	[deleteButton setupAsRedButton];
 	deleteButton.titleLabel.textAlignment = UITextAlignmentCenter;
 	[deleteButton setTitle:@"Delete" forState:UIControlStateNormal];
@@ -237,16 +234,14 @@
 	
     // Request to re-open item or close and adjust price
     if (orderItem && [orderItem isClosed]) {
-        CGFloat openBtnY = deleteButton.center.y + BUTTON_HEIGHT/2 + BUTTON_SPACE;
-        openButton = [[MOGlassButton alloc] initWithFrame:CGRectMake(floorf((self.view.bounds.size.width - BUTTON_WIDTH) / 2.0f), openBtnY, BUTTON_WIDTH, BUTTON_HEIGHT)];
+        openButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
         [openButton setupAsBlackButton];
         openButton.titleLabel.textAlignment = UITextAlignmentCenter;
         [openButton setTitle:@"Open" forState:UIControlStateNormal];
         [self.view addSubview:openButton];
         [openButton release];
     } else {
-        CGFloat closeBtnY = deleteButton.center.y + BUTTON_HEIGHT/2 + BUTTON_SPACE;
-        closeLineButton = [[MOGlassButton alloc] initWithFrame:CGRectMake(floorf((self.view.bounds.size.width - BUTTON_WIDTH) / 2.0f), closeBtnY, BUTTON_WIDTH, BUTTON_HEIGHT)];
+        closeLineButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
         [closeLineButton setupAsGreenButton];
         closeLineButton.titleLabel.textAlignment = UITextAlignmentCenter;
         [closeLineButton setTitle:@"Close Line" forState:UIControlStateNormal];
@@ -258,9 +253,8 @@
         
         [self.view addSubview:closeLineButton];
         [closeLineButton release];
-        
-        CGFloat priceBtnY = closeLineButton.center.y + BUTTON_HEIGHT/2 + BUTTON_SPACE;
-        priceButton = [[MOGlassButton alloc] initWithFrame:CGRectMake(floorf((self.view.bounds.size.width - BUTTON_WIDTH) / 2.0f), priceBtnY, BUTTON_WIDTH, BUTTON_HEIGHT)];
+    
+        priceButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
         [priceButton setupAsBlueButton];
         priceButton.titleLabel.textAlignment = UITextAlignmentCenter;
         [priceButton setTitle:@"Price" forState:UIControlStateNormal];
@@ -268,8 +262,6 @@
         [self.view addSubview:priceButton];
         [priceButton release];
     }
-	
-	
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -301,7 +293,9 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-	[self updateViewLayout];
+	[self updateDisplayValues];
+    
+    [self layoutView:[UIApplication sharedApplication].statusBarOrientation];
 	
 	// Call super last
 	[super viewWillAppear:animated];
@@ -316,7 +310,11 @@
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations.
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
+}
+
+- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [self layoutView:toInterfaceOrientation];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -344,7 +342,7 @@
                     closeLineButton.enabled = NO;
                 }
             }
-			[self updateViewLayout];
+			[self updateDisplayValues];
 		}
 	}
 }
@@ -378,13 +376,100 @@
     if (orderItem != nil) {
         orderItem.doConversionToFullBoxes = convertToBoxesSwitch.on;
         
-        [self updateViewLayout];
+        [self updateDisplayValues];
+    }
+}
+
+#pragma mark -
+#pragma mark Layout View
+- (void) layoutView:(UIInterfaceOrientation) orientation {
+    
+    CGRect viewBounds = [UIScreen rectForScreenView:orientation isNavBarVisible:YES];
+    self.view.frame = viewBounds;
+    
+    CGRect productViewRect = CGRectZero;
+    CGRect itemViewRect = CGRectZero;
+    CGRect actionListRect = CGRectZero;
+    
+    // Layout Logic
+    CGRectDivide(viewBounds, &productViewRect, &itemViewRect, LABEL_HEIGHT * 4.0, CGRectMinYEdge);
+    CGRectDivide(itemViewRect, &itemViewRect, &actionListRect, itemViewRect.size.height * 0.4, CGRectMinYEdge);
+    
+    // productItemView (uomExchangeButton, skuLabel, descLabel, priceLabel)
+    productItemView.frame = productViewRect;
+    
+    CGRect labelsRect = CGRectZero;
+    CGRect uomExchangeButtonRect = CGRectZero;
+    CGRect skuLabelRect = CGRectZero;
+    CGRect descLabelRect = CGRectZero;
+    CGRect priceLabelRect = CGRectZero;
+    
+    CGRectDivide(productViewRect, &labelsRect, &uomExchangeButtonRect, productViewRect.size.width - UOM_EXCHANGE_BUTTON_SIZE, CGRectMinXEdge);
+    CGRectDivide(labelsRect, &skuLabelRect, &descLabelRect, labelsRect.size.height * 0.4, CGRectMinYEdge);
+    CGRectDivide(descLabelRect, &descLabelRect, &priceLabelRect, descLabelRect.size.height * 0.5, CGRectMinYEdge);
+    
+    uomExchangeButtonRect.size.height = UOM_EXCHANGE_BUTTON_SIZE;
+    skuLabelRect.size.width += UOM_EXCHANGE_BUTTON_SIZE;
+    descLabelRect.size.width += UOM_EXCHANGE_BUTTON_SIZE;
+    priceLabelRect.size.width += UOM_EXCHANGE_BUTTON_SIZE;
+    
+    uomExchangeButton.frame = uomExchangeButtonRect;
+    skuLabel.frame = skuLabelRect;
+    descLabel.frame = descLabelRect;
+    priceLabel.frame = priceLabelRect;
+    
+    // orderItemView (quantityField, unitOfMeasureLabel, itemTotalLabel, convertToBoxesSwitch, convertToBoxesLabel)
+    orderItemView.frame = itemViewRect;
+    
+    CGRect itemRect = CGRectZero;
+    CGRect convertToBoxesRect = CGRectZero;
+    
+    CGRect itemQuantityRect = CGRectZero;
+    CGRect itemUnitsRect = CGRectZero;
+    CGRect itemTotalRect = CGRectZero;
+    
+    CGRect convertBoxLabelRect = CGRectZero;
+    CGRect convertBoxSwitchRect = CGRectZero; 
+    
+    itemViewRect.origin.y = 0;
+    CGRectDivide(itemViewRect, &itemRect, &convertToBoxesRect, itemViewRect.size.height * 0.5, CGRectMinYEdge);
+    CGRectDivide(itemRect, &itemQuantityRect, &itemUnitsRect, itemRect.size.width * 0.4, CGRectMinXEdge);
+    CGRectDivide(itemUnitsRect, &itemUnitsRect, &itemTotalRect, itemUnitsRect.size.width * 0.5, CGRectMinXEdge);
+    
+    quantityField.frame = CGRectMake(itemQuantityRect.size.width - TEXT_FIELD_WIDTH - MARGIN_ITEM, 
+                                     (itemQuantityRect.size.height - TEXT_FIELD_HEIGHT)/2, TEXT_FIELD_WIDTH, TEXT_FIELD_HEIGHT);
+    unitOfMeasureLabel.frame = itemUnitsRect;
+    itemTotalLabel.frame = itemTotalRect;
+    
+    CGRectDivide(convertToBoxesRect, &convertBoxLabelRect, &convertBoxSwitchRect, convertToBoxesRect.size.width * 0.5, CGRectMinXEdge);
+    
+    convertToBoxesLabel.frame = convertBoxLabelRect;
+    convertToBoxesSwitch.frame = CGRectMake(convertBoxSwitchRect.origin.x + MARGIN_ITEM, 
+                                            convertBoxSwitchRect.origin.y + (convertToBoxesRect.size.height - convertToBoxesSwitch.frame.size.height)/2, 
+                                            convertBoxSwitchRect.size.width, 0);
+    
+    // The buttons (deleteButton, openButton, closeLineButton, priceButton)
+    CGFloat buttonHeight = BUTTON_HEIGHT;
+    CGFloat buttonSpace = BUTTON_SPACE;
+    
+    if (viewBounds.size.width > viewBounds.size.height) {
+        buttonHeight = BUTTON_HEIGHT_LANDSCAPE;
+        buttonSpace -= 3;
+    }
+    
+    deleteButton.frame = CGRectMake((viewBounds.size.width - BUTTON_WIDTH)/2, actionListRect.origin.y + buttonSpace, BUTTON_WIDTH, buttonHeight);
+        
+    if (openButton) {
+        openButton.frame = CGRectMake((viewBounds.size.width - BUTTON_WIDTH)/2, deleteButton.frame.origin.y + buttonSpace + buttonHeight, BUTTON_WIDTH, buttonHeight);
+    } else {
+        closeLineButton.frame = CGRectMake((viewBounds.size.width - BUTTON_WIDTH)/2, deleteButton.frame.origin.y + buttonSpace + buttonHeight, BUTTON_WIDTH, buttonHeight);
+        priceButton.frame = CGRectMake((viewBounds.size.width - BUTTON_WIDTH)/2, closeLineButton.frame.origin.y + buttonSpace + buttonHeight, BUTTON_WIDTH, buttonHeight);
     }
 }
 
 #pragma mark -
 #pragma mark View Update methods
-- (void) updateViewLayout {
+- (void) updateDisplayValues {
 	if (self.orderItem != nil) {
 		skuLabel.text = self.orderItem.item.sku;
 		descLabel.text = self.orderItem.item.description;
@@ -429,7 +514,7 @@
     
     // Toggle the item
     [orderItem.item toggleUOM];
-    [self updateViewLayout];
+    [self updateDisplayValues];
 }
 
 

@@ -9,13 +9,11 @@
 #import "ItemDetailView.h"
 #import "UIView+ViewLayout.h"
 
-#define AVAILABILITY_VIEW_HEIGHT 56.0f
-
 #define UOM_EXCHANGE_BUTTON_WIDTH 37.0f
 #define UOM_EXCHANGE_BUTTON_HEIGHT 37.0f
 
-#define DESCRIPTION_HEIGHT BIG_LABEL_HEIGHT + 4.0f
-#define TOP_MARGIN 15.f
+#define DESCRIPTION_HEIGHT BIG_LABEL_HEIGHT
+#define MARGIN 2.0f
 
 @interface ItemDetailView()
 
@@ -75,10 +73,10 @@
 #pragma mark -
 #pragma mark Layout
 - (void) layoutSubviews {
-    CGSize bounds = self.frame.size;
+    CGSize bounds = self.bounds.size;
     
     // Keep track of how far down we are in the view
-	CGFloat cy = TOP_MARGIN;
+	CGFloat cy = MARGIN;
     
 	if (skuLabel == nil) {
 		skuLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, cy, bounds.width, BIG_LABEL_HEIGHT)];
@@ -127,37 +125,46 @@
         [uomExchangeButton release];
     }
 	
-	cy += BIG_LABEL_HEIGHT + 10.0f;
-	
+	// Divide the item rect into 5 rows
 	if (storeInfoView == nil) {
-		storeInfoView = [[AvailabilityView alloc] initWithFrame:CGRectMake(0.0f, cy, bounds.width, AVAILABILITY_VIEW_HEIGHT)];
+		storeInfoView = [[AvailabilityView alloc] initWithFrame:CGRectZero];
 		[self addSubview:storeInfoView];
 		[storeInfoView release];
 	}
 	
-	cy += AVAILABILITY_VIEW_HEIGHT;
-    
 	if (dc1InfoView == nil) {
-		dc1InfoView = [[AvailabilityView alloc] initWithFrame:CGRectMake(0.0f, cy, bounds.width, AVAILABILITY_VIEW_HEIGHT)];
+		dc1InfoView = [[AvailabilityView alloc] initWithFrame:CGRectZero];
 		[self addSubview:dc1InfoView];
 		[dc1InfoView release];
 	}
 	
-	cy += AVAILABILITY_VIEW_HEIGHT;
-    
 	if (dc2InfoView == nil) {
-		dc2InfoView = [[AvailabilityView alloc] initWithFrame:CGRectMake(0.0f, cy, bounds.width, AVAILABILITY_VIEW_HEIGHT)];
+		dc2InfoView = [[AvailabilityView alloc] initWithFrame:CGRectZero];
 		[self addSubview:dc2InfoView];
 		[dc2InfoView release];
 	}
 	
-	cy += AVAILABILITY_VIEW_HEIGHT;
-	
 	if (dc3InfoView == nil) {
-		dc3InfoView = [[AvailabilityView alloc] initWithFrame:CGRectMake(0.0f, cy, self.frame.size.width, AVAILABILITY_VIEW_HEIGHT)];
+		dc3InfoView = [[AvailabilityView alloc] initWithFrame:CGRectZero];
 		[self addSubview:dc3InfoView];
 		[dc3InfoView release];
 	}
+    
+    CGRect detailRect = CGRectZero;
+    CGRect storeInfoRect = CGRectZero;
+    CGRect dcInfoRect1 = CGRectZero;
+    CGRect dcInfoRect2 = CGRectZero;
+    CGRect dcInfoRect3 = CGRectZero;
+	
+    CGRectDivide(self.bounds, &detailRect, &storeInfoRect, self.bounds.size.height * 0.2, CGRectMinYEdge);
+    CGRectDivide(storeInfoRect, &storeInfoRect, &dcInfoRect1, storeInfoRect.size.height * 0.25, CGRectMinYEdge);
+    CGRectDivide(dcInfoRect1, &dcInfoRect1, &dcInfoRect2, dcInfoRect1.size.height * 0.33, CGRectMinYEdge);
+    CGRectDivide(dcInfoRect2, &dcInfoRect2, &dcInfoRect3, dcInfoRect2.size.height * 0.5, CGRectMinYEdge);
+    
+    storeInfoView.frame = storeInfoRect;
+    dc1InfoView.frame = dcInfoRect1;
+    dc2InfoView.frame = dcInfoRect2;
+    dc3InfoView.frame = dcInfoRect3;
     
     [self updateDisplayValues];
 }

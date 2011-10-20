@@ -35,6 +35,11 @@
 	NSObject <AddItemViewDelegate>* viewDelegate;
 	
 	GradientView *roundedView;
+    
+    UIView *itemContentView;
+    UIView *toolsContentView;
+    
+    
     ItemListView *itemListView;
     ItemDetailView *itemDetailView;
 	

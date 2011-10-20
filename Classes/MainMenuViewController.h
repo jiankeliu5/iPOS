@@ -28,6 +28,8 @@
 	MOGlassButton *cartButton;
     UIBarButtonItem *orderLookupButton;
     
+    AddItemView *addItemOverlay;
+    
     Linea *linea;
 	
 }

@@ -19,6 +19,9 @@
 #define KEYBOARD_TOOLBAR_HEIGHT 44.0f
 #define KEYBOARD_TOOLBAR_WIDTH 320.0f
 
+#define SCROLL_TO_ITEMBYNAME_Y 40.0f
+#define SCROLL_TO_ITEMBYSKU_Y  100.0f
+
 #pragma mark -
 #pragma mark Private Interface
 @interface SearchItemView ()
@@ -61,7 +64,7 @@
 #pragma mark Methods
 - (void)layoutSubviews {
 	self.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-	roundedView.frame = CGRectMake(ROUND_VIEW_X, ROUND_VIEW_Y, ROUND_VIEW_WIDTH, ROUND_VIEW_HEIGHT);
+	roundedView.frame = CGRectMake((self.bounds.size.width - ROUND_VIEW_WIDTH)/2, ROUND_VIEW_Y, ROUND_VIEW_WIDTH, ROUND_VIEW_HEIGHT);
 	CGFloat cy = floorf(SPACING_HEIGHT / 2.0f);
 	CGFloat width = floorf(roundedView.bounds.size.width * 0.60f);
 	lookupSkuLabel.frame = CGRectMake(floorf((roundedView.bounds.size.width - width) / 2.0f), cy, width, LABEL_HEIGHT);
@@ -149,6 +152,21 @@
 
 - (void)textFieldDidBeginEditing:(ExtUITextField *)textField {
 	self.currentFirstResponder = textField;
+    
+    CGFloat scrollUpOffset = SCROLL_TO_ITEMBYNAME_Y;
+    
+    if ([textField.tagName isEqualToString:@"LookupItemSku"]) {
+        scrollUpOffset = SCROLL_TO_ITEMBYSKU_Y;
+    }
+    
+    // Move the rounded view up if in landscape
+    if (self.bounds.size.width > self.bounds.size.height) {
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect frame = roundedView.frame;
+            frame.origin.y -= scrollUpOffset;
+            roundedView.frame = frame;
+        }];
+    }
 }
 
 - (void)textFieldDidEndEditing:(ExtUITextField *)textField {
@@ -162,6 +180,15 @@
 		[self.currentFirstResponder resignFirstResponder];
 	}
     
+    // Move the rounded view down
+    if (self.bounds.size.width > self.bounds.size.height) {
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect frame = roundedView.frame;
+            frame.origin.y = ROUND_VIEW_Y;
+            roundedView.frame = frame;
+        }];
+    }
+    
     [self performSearch: textField];
 }
 
@@ -171,6 +198,15 @@
 		self.keyboardCancelled = YES;
 		[self.currentFirstResponder resignFirstResponder];
 	}
+    
+    // Move the rounded view down
+    if (self.bounds.size.width > self.bounds.size.height) {
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect frame = roundedView.frame;
+            frame.origin.y = ROUND_VIEW_Y;
+            roundedView.frame = frame;
+        }];
+    }
     
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(cancelSearchItem:)]) {
         [self.delegate cancelSearchItem:self];
