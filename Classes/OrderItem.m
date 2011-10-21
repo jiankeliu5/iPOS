@@ -23,7 +23,7 @@
 
 @synthesize sellingPricePrimary, sellingPriceSecondary, quantityPrimary, quantitySecondary;
 @synthesize lineNumber, statusId, priceAuthorizationId, managerApprover, item;
-@synthesize doConversionToFullBoxes, shouldDelete, shouldClose;
+@synthesize doConversionToFullBoxes, shouldDelete, shouldClose, isNewLineItem;
 @synthesize requestDate, returnReferenceId,split,orderId;
 @synthesize locn, lotn, lttr, mcu, nxtr,urrf, openItemStatus, spiff;
 
@@ -192,18 +192,33 @@
 }
 
 - (BOOL) allowClose {
-    NSDecimalNumber *numberAvailableInStore = item.store.availability.availablePrimary;
+    BOOL canClose = NO;
     
-    // If quantity is greater do not allow a close
-    if ([self.quantityPrimary compare:numberAvailableInStore] == NSOrderedDescending){
-        return NO;
+    if (isNewLineItem) {
+        // For a newly added line item, it can be closed if the store shows availability
+        NSDecimalNumber *numberAvailableInStore = item.store.availability.availablePrimary;
+        // If quantity is greater do not allow a close
+        if ([self.quantityPrimary compare:numberAvailableInStore] == NSOrderedDescending){
+            canClose = NO;
+        }
+        canClose = YES;
+    } else {
+        // For an existing line item, it can be closed if the status of the line item is 
+        // store received
+        if (self.openItemStatus != nil && [self.openItemStatus compare:OPEN_STATUS_STORE_RECEIVED] == NSOrderedSame) {
+            canClose = YES;
+        }
     }
     
-    return YES;
+    return canClose;
 }
 
 - (BOOL) allowEdit {
     return ([self.statusId intValue] == STATUS_OPEN);
+}
+
+- (BOOL) allowQuantityChange {
+    return ([self.statusId intValue] == STATUS_OPEN && self.isNewLineItem);
 }
 
 - (BOOL) isTaxExempt {

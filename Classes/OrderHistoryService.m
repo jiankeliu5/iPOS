@@ -87,6 +87,8 @@
         return nil;   
     } 
     
+    // NSLog(@"response string: %@", [request responseString]);
+    
     Order * order = [[[OrderHistoryXmlMarshaller alloc] init]toObject:[request responseString]];
     
     return order;

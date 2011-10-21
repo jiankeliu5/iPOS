@@ -169,6 +169,9 @@
         // Set the selling price to the retail price
         // Default the status to 1 (Open)
         [orderItem setStatusToOpen];
+        
+        // Set the order item to be a newly added
+        orderItem.isNewLineItem = YES;
     }
 }
 

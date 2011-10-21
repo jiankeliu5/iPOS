@@ -173,7 +173,7 @@
 	quantityField.textAlignment = UITextAlignmentCenter;
     quantityField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     
-    if (orderItem && [orderItem isClosed]) {
+    if (orderItem && [orderItem allowQuantityChange] == NO) {
         quantityField.enabled = NO;
     } else {
         // Enable editing

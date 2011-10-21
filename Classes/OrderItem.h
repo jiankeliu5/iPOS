@@ -16,6 +16,18 @@ static int const STATUS_CLOSE = 2;
 static int const STATUS_RETURN = 3;
 static int const STATUS_CANCEL = 4;
 
+static NSString * const OPEN_STATUS_BACK_ORDERED = @"Back Ordered";
+static NSString * const OPEN_STATUS_ZERO_SHIPPED = @"Zero Shipped";
+static NSString * const OPEN_STATUS_TO_BE_PICKED = @"To Be Picked";
+static NSString * const OPEN_STATUS_PICK_TICKET_RAN = @"Pick Ticket Ran";
+static NSString * const OPEN_STATUS_PULLED_TO_STAGE = @"Pulled to Stage";
+static NSString * const OPEN_STATUS_LEFT_OFF_TRUCK = @"Left Off Truck";
+static NSString * const OPEN_STATUS_LOADED_ON_TRUCK = @"Loaded on Truck";
+static NSString * const OPEN_STATUS_IN_TRAN = @"In Tran";
+static NSString * const OPEN_STATUS_STORE_RECEIVED = @"Store Received";
+static NSString * const OPEN_STATUS_NOT_AVAILABLE = @"Status Not Available";
+
+
 @interface OrderItem : NSObject {
     NSNumber *lineNumber;
     NSNumber *statusId;
@@ -50,6 +62,13 @@ static int const STATUS_CANCEL = 4;
 	// These are for batch editing of the order.
 	BOOL shouldDelete;
 	BOOL shouldClose;
+    
+    // Tells whether the line item is newly added or not.  This 
+    // lets us know what operations we can do on it compared to 
+    // line items that come from a previous order that has already
+    // been submitted.  This should always be set when adding a new
+    // line item.
+    BOOL isNewLineItem;
 }
 
 @property (nonatomic, retain) NSNumber *lineNumber;
@@ -67,6 +86,7 @@ static int const STATUS_CANCEL = 4;
 @property (nonatomic, assign) BOOL doConversionToFullBoxes;
 @property (nonatomic, assign) BOOL shouldDelete;
 @property (nonatomic, assign) BOOL shouldClose;
+@property (nonatomic, assign) BOOL isNewLineItem;
 
 @property (nonatomic, retain) NSString *requestDate;
 @property (nonatomic, retain) NSNumber *returnReferenceId;
@@ -93,6 +113,7 @@ static int const STATUS_CANCEL = 4;
 - (BOOL) isOpen;
 - (BOOL) allowClose;
 - (BOOL) allowEdit;
+- (BOOL) allowQuantityChange;
 
 #pragma mark -
 #pragma mark Custom Accessors

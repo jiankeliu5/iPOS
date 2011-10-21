@@ -345,9 +345,14 @@
     Order *order = [orderCart getOrder];
 	NSString *controllerTitle = (order != nil && order.orderId != nil) ? [order.orderId stringValue] : @"Order Item";
     
-    // Cannot edit an order if it is returned or closed status
+    // Cannot edit an order if it is returned or closed status.
+    // This means no adding items, quoting, or tendering either.
     if ([order canEditDetails] == NO) {
         editButton.enabled = NO;
+        searchButton.enabled = NO;
+        quoteButton.enabled = NO;
+        orderButton.enabled = NO;
+        marginButton.enabled = NO;
     }
     
     if ([order canCancel] == NO) {
