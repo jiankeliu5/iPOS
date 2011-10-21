@@ -12,7 +12,9 @@
 #import "SessionVerificationView.h"
 #import "LookupOrderViewController.h"
 
-@interface iPOSAppDelegate : NSObject <UIApplicationDelegate, SessionVerificationViewDelegate> 
+#import "Reachability.h"
+
+@interface iPOSAppDelegate : NSObject <UIApplicationDelegate, SessionVerificationViewDelegate, UIAlertViewDelegate> 
 {
     UIWindow* window;
 	UINavigationController* navigationController;
@@ -25,6 +27,10 @@
     NSDate *startTime;
     NSDate *endTime;
 	NSInteger verifyPasswordTries;
+    
+    BOOL isNotReachableDetected;
+    Reachability *reachability;
+    UIAlertView *reachabilityAlert;
 }
 
 @property (nonatomic, retain) UIWindow* window;
@@ -34,5 +40,8 @@
 @property (nonatomic, retain) LookupOrderViewController *lookupOrderViewController;
 @property (nonatomic, assign) BOOL resignedActive;
 @property (nonatomic, assign) NSInteger verifyPasswordTries;
+
+@property (nonatomic, retain) Reachability *reachability;
+
 @end
 

@@ -12,6 +12,14 @@
 #define MAX_PASSWORD_RETRIES 3
 #define TIMEOUT_VALUE 300.0
 
+@interface iPOSAppDelegate()
+
+- (void)reachabilityChanged:(NSNotification*) note;
+
+- (NSString *) reachabilityHost;
+
+@end
+
 #pragma mark -
 @implementation iPOSAppDelegate
 
@@ -22,11 +30,14 @@
 @synthesize lookupOrderViewController;
 @synthesize resignedActive;
 @synthesize verifyPasswordTries;
+@synthesize reachability;
+
 
 #pragma mark Constructors
 - (void) applicationDidFinishLaunching:(UIApplication*)application 
 {   
     // Set the application setting defaults
+    isNotReachableDetected = NO;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *appDefaults = [NSDictionary dictionaryWithObject:@"NO" forKey:@"enableDemoMode"];
     
@@ -58,6 +69,14 @@
 	[window addSubview:[navigationController view]];
 	
     [window makeKeyAndVisible];
+    
+    // Register for reachability (Detect changes to network
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                             selector:@selector(reachabilityChanged:) 
+                                                 name:kReachabilityChangedNotification object:nil];
+    
+    self.reachability = [Reachability reachabilityWithHostName:[self reachabilityHost]];
+	[reachability startNotifier];
 }
 
 - (void) applicationDidBecomeActive:(UIApplication *)application {
@@ -113,10 +132,10 @@
 }
 
 
--(void)releaseTimer:(NSDate *)date
-{
+-(void)releaseTimer:(NSDate *)date {
     [date release];
 }
+
 - (void) applicationWillResignActive:(UIApplication *)application {
 	// So we know to check our session when we come back.
     [endTime release];
@@ -130,6 +149,11 @@
     [endTime release];
     //[startTime release];
     [window release];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [reachability release];
+    reachability = nil;
+    
     [super dealloc];
 }
 
@@ -172,5 +196,62 @@
 	[aVerificationView removeFromSuperview];
 	[navigationController popToRootViewControllerAnimated:YES];
 }
+
+#pragma mark -
+#pragma mark UIAlertViewDelegate
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    reachabilityAlert = nil;
+}
+
+#pragma mark -
+#pragma mark Private Methods
+- (void) reachabilityChanged:(NSNotification *) note {
+    Reachability* r = [note object];
+	NetworkStatus ns = r.currentReachabilityStatus;
+    
+    if (ns == NotReachable && isNotReachableDetected == NO) {
+        if (reachabilityAlert != nil && [reachabilityAlert isVisible]) {
+            [reachabilityAlert dismissWithClickedButtonIndex:0 animated:NO];
+        }
+        
+        isNotReachableDetected = YES;
+        reachabilityAlert = [[UIAlertView alloc] init];
+        reachabilityAlert.title = @"Lost Connection";
+        reachabilityAlert.message = @"Unable to access to network.  You may have lost your WIFI connection.  Please verify and try again.";
+        reachabilityAlert.delegate = self;
+        [reachabilityAlert addButtonWithTitle:@"Ok"];
+        [reachabilityAlert show];
+        [reachabilityAlert release];
+    } else if (ns == ReachableViaWiFi && isNotReachableDetected) {
+        if (reachabilityAlert != nil && [reachabilityAlert isVisible]) {
+            [reachabilityAlert dismissWithClickedButtonIndex:0 animated:NO];
+        }
+        isNotReachableDetected = NO;
+        reachabilityAlert = [[UIAlertView alloc] init];
+        reachabilityAlert.title = @"Connected";
+        reachabilityAlert.message = @"You are now connected via WIFI.";
+        reachabilityAlert.delegate = self;
+        [reachabilityAlert addButtonWithTitle:@"Ok"];
+        [reachabilityAlert show];
+        [reachabilityAlert release];
+    }
+}
+
+- (NSString *) reachabilityHost {
+    // Get user preference for demo mode
+    NSString *hostName = nil;
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL demoEnabled = [defaults boolForKey:@"enableDemoMode"];
+    
+    if (demoEnabled) {
+        hostName = [bundle objectForInfoDictionaryKey:@"ipos.service.demo.baseurl"];
+    } else {
+        hostName = [bundle objectForInfoDictionaryKey:@"ipos.service.baseurl"];
+    }
+    
+    return hostName;
+}
+
 
 @end
