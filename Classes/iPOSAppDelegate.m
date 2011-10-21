@@ -17,6 +17,7 @@
 - (void)reachabilityChanged:(NSNotification*) note;
 
 - (NSString *) reachabilityHost;
+- (void) dismissAlert;
 
 @end
 
@@ -210,30 +211,28 @@
 	NetworkStatus ns = r.currentReachabilityStatus;
     
     if (ns == NotReachable && isNotReachableDetected == NO) {
-        if (reachabilityAlert != nil && [reachabilityAlert isVisible]) {
-            [reachabilityAlert dismissWithClickedButtonIndex:0 animated:NO];
-        }
+        [self dismissAlert];
         
         isNotReachableDetected = YES;
         reachabilityAlert = [[UIAlertView alloc] init];
         reachabilityAlert.title = @"Lost Connection";
         reachabilityAlert.message = @"Unable to access to network.  You may have lost your WIFI connection.  Please verify and try again.";
         reachabilityAlert.delegate = self;
-        [reachabilityAlert addButtonWithTitle:@"Ok"];
         [reachabilityAlert show];
         [reachabilityAlert release];
+        
+        [self performSelector:@selector(dismissAlert) withObject:nil afterDelay:2];
+        
     } else if (ns == ReachableViaWiFi && isNotReachableDetected) {
-        if (reachabilityAlert != nil && [reachabilityAlert isVisible]) {
-            [reachabilityAlert dismissWithClickedButtonIndex:0 animated:NO];
-        }
+        [self dismissAlert];
         isNotReachableDetected = NO;
         reachabilityAlert = [[UIAlertView alloc] init];
         reachabilityAlert.title = @"Connected";
-        reachabilityAlert.message = @"You are now connected via WIFI.";
+        reachabilityAlert.message = @"You are re-connected to the network via WIFI.";
         reachabilityAlert.delegate = self;
-        [reachabilityAlert addButtonWithTitle:@"Ok"];
         [reachabilityAlert show];
         [reachabilityAlert release];
+        [self performSelector:@selector(dismissAlert) withObject:nil afterDelay:2];
     }
 }
 
@@ -251,6 +250,13 @@
     }
     
     return hostName;
+}
+
+- (void) dismissAlert {
+    if (reachabilityAlert != nil && [reachabilityAlert isVisible]) {
+        [reachabilityAlert dismissWithClickedButtonIndex:0 animated:NO];
+        reachabilityAlert = nil;
+    }
 }
 
 
