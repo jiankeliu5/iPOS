@@ -198,17 +198,26 @@ static OrderCart *cart = nil;
 }
 
 - (BOOL) closeItem:(OrderItem *)orderItem {
-    if (orderItem == nil) {
-        return NO;
+    BOOL itemClosed = NO;
+    
+    if (orderItem == nil || [orderItem.statusId intValue] != ORDER_ITEM_STATUS_OPEN) {
+        return itemClosed;
     }
     
-    BOOL isAvailableForClose = [facade isProductItemAvailable: orderItem.item.itemId forQuantity:orderItem.quantityPrimary];
+    if (orderItem.isNewLineItem) {
+        // Don't use [orderItem allowClose] here because we want to check the store availability right now
+        // rather than using the previous value we found when we looked up the item.
+        itemClosed = [facade isProductItemAvailable: orderItem.item.itemId forQuantity:orderItem.quantityPrimary];
+    } else {
+        // For an existing line item, we can ask the order item if we can close it.
+        itemClosed = [orderItem allowClose];
+    }
     
-    if (isAvailableForClose) {
+    if (itemClosed) {
         [orderItem setStatusToClosed];
     }
     
-    return isAvailableForClose;
+    return itemClosed;
 }
 
 @end

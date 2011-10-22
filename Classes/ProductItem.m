@@ -26,7 +26,7 @@ NSString * const UOM_SQFT = @"SF";
 @synthesize selectedUOM, defaultToBox, piecesPerBox, primaryUnitOfMeasure, secondaryUnitOfMeasure, conversion;
 @synthesize priceGroupId, retailPricePrimary, retailPriceSecondary, standardCost, taxRate, taxExempt;
 @synthesize store, distributionCenterList;
-@synthesize openItemStatus, lineState;
+@synthesize openItemStatus;
 
 #pragma mark Constuctor/Deconstructor
 -(id) init {

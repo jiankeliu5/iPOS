@@ -11,10 +11,10 @@
 #import "ManagerInfo.h"
 #import "ProductItem.h"
 
-static int const STATUS_OPEN = 1;
-static int const STATUS_CLOSE = 2;
-static int const STATUS_RETURN = 3;
-static int const STATUS_CANCEL = 4;
+static int const ORDER_ITEM_STATUS_OPEN = 1;
+static int const ORDER_ITEM_STATUS_CLOSE = 2;
+static int const ORDER_ITEM_STATUS_RETURN = 3;
+static int const ORDER_ITEM_STATUS_CANCEL = 4;
 
 static NSString * const OPEN_STATUS_BACK_ORDERED = @"Back Ordered";
 static NSString * const OPEN_STATUS_ZERO_SHIPPED = @"Zero Shipped";
@@ -27,6 +27,12 @@ static NSString * const OPEN_STATUS_IN_TRAN = @"In Tran";
 static NSString * const OPEN_STATUS_STORE_RECEIVED = @"Store Received";
 static NSString * const OPEN_STATUS_NOT_AVAILABLE = @"Status Not Available";
 
+typedef enum {
+    LineStatusNone = 0,
+    LineStatusAdd = 1,
+    LineStatusModify = 2,
+    LineStatusCancel = 3
+} LineStatus;
 
 @interface OrderItem : NSObject {
     NSNumber *lineNumber;
@@ -51,7 +57,9 @@ static NSString * const OPEN_STATUS_NOT_AVAILABLE = @"Status Not Available";
     NSString *mcu;
     NSString *nxtr;
     NSString *openItemStatus;
-
+    
+    // Is the line newly added, modified or cancelled?
+    LineStatus lineStatus;
     
     ManagerInfo *managerApprover;
     ProductItem *item;
@@ -103,10 +111,13 @@ static NSString * const OPEN_STATUS_NOT_AVAILABLE = @"Status Not Available";
 @property(nonatomic, retain) NSString *urrf;
 @property(nonatomic, retain) NSString *openItemStatus;
 
+@property (nonatomic, assign) LineStatus lineStatus;
+
 -(id) initWithItem: (ProductItem *) productItem AndQuantity: (NSDecimalNumber *) productQuantity;
 
 - (void) setStatusToClosed;
 - (void) setStatusToOpen;
+- (void) setStatusToCancel;
 
 - (BOOL) isTaxExempt;
 - (BOOL) isClosed;

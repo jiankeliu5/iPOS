@@ -24,8 +24,9 @@
 @synthesize sellingPricePrimary, sellingPriceSecondary, quantityPrimary, quantitySecondary;
 @synthesize lineNumber, statusId, priceAuthorizationId, managerApprover, item;
 @synthesize doConversionToFullBoxes, shouldDelete, shouldClose, isNewLineItem;
-@synthesize requestDate, returnReferenceId,split,orderId;
-@synthesize locn, lotn, lttr, mcu, nxtr,urrf, openItemStatus, spiff;
+@synthesize requestDate, returnReferenceId, split, orderId;
+@synthesize locn, lotn, lttr, mcu, nxtr, urrf, openItemStatus, spiff;
+@synthesize lineStatus;
 
 #pragma mark Constructor/Deconstructor
 -(id) init {
@@ -33,6 +34,7 @@
     
     if (self) {
         doConversionToFullBoxes = YES;
+        lineStatus = LineStatusNone;
     }
     
     return self;
@@ -49,7 +51,7 @@
     doConversionToFullBoxes = productItem.defaultToBox;
     
     // Default the status to open
-    statusId = [[NSNumber numberWithInt:STATUS_OPEN] retain];
+    statusId = [[NSNumber numberWithInt:ORDER_ITEM_STATUS_OPEN] retain];
     
     // Default selling price to retail price
     sellingPricePrimary = [productItem.retailPricePrimary copy];
@@ -184,11 +186,15 @@
 #pragma mark -
 #pragma mark Method implementations
 - (void) setStatusToOpen {
-    self.statusId = [NSNumber numberWithInt:STATUS_OPEN];
+    self.statusId = [NSNumber numberWithInt:ORDER_ITEM_STATUS_OPEN];
 }
 
 - (void) setStatusToClosed {
-    self.statusId = [NSNumber numberWithInt:STATUS_CLOSE];
+    self.statusId = [NSNumber numberWithInt:ORDER_ITEM_STATUS_CLOSE];
+}
+
+- (void) setStatusToCancel {
+    self.statusId = [NSNumber numberWithInt:ORDER_ITEM_STATUS_CANCEL];
 }
 
 - (BOOL) allowClose {
@@ -214,11 +220,11 @@
 }
 
 - (BOOL) allowEdit {
-    return ([self.statusId intValue] == STATUS_OPEN);
+    return ([self.statusId intValue] == ORDER_ITEM_STATUS_OPEN);
 }
 
 - (BOOL) allowQuantityChange {
-    return ([self.statusId intValue] == STATUS_OPEN && self.isNewLineItem);
+    return ([self.statusId intValue] == ORDER_ITEM_STATUS_OPEN && self.isNewLineItem);
 }
 
 - (BOOL) isTaxExempt {
@@ -230,11 +236,11 @@
 }
 
 - (BOOL) isClosed {
-    return [self.statusId isEqualToNumber: [NSNumber numberWithInt:STATUS_CLOSE]];
+    return [self.statusId isEqualToNumber: [NSNumber numberWithInt:ORDER_ITEM_STATUS_CLOSE]];
 }
 
 - (BOOL) isOpen {
-    return ([self.statusId intValue] == STATUS_OPEN);
+    return ([self.statusId intValue] == ORDER_ITEM_STATUS_OPEN);
 }
 
 #pragma mark -

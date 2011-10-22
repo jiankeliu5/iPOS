@@ -269,7 +269,7 @@
 	self.markDeleteLabel.textColor = [UIColor whiteColor];
 	self.markDeleteLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"EditConfirmDelete.png"]];
 	self.markDeleteLabel.font = [UIFont systemFontOfSize:COMMIT_BUTTON_FONT_SIZE];
-	self.markDeleteLabel.text = @"Delete (0)";
+	self.markDeleteLabel.text = @"Delete/Cancel (0)";
 	[customToolbarView addSubview:self.markDeleteLabel];
 
 	self.markCloseLabel = [[[UILabel alloc] initWithFrame:CGRectMake(COMMIT_EDIT_BUTTON_WIDTH / 2.0f, 0.0f, COMMIT_EDIT_BUTTON_WIDTH / 2.0f, COMMIT_EDIT_HEIGHT)] autorelease];
@@ -553,20 +553,27 @@
 	// Iterate over the items in the order first to see which ones need to be deleted and closed.
 	// Must do this for delete because we cannot change the array while iterating over it.
     for (OrderItem *orderItem in [[orderCart getOrder] getOrderItems]) {
-		if (orderItem.shouldDelete) {
-			[orderItemsToDelete addObject:orderItem];
-		}
-		if (orderItem.shouldClose && [orderItem isClosed] == NO) {
-			if (![orderCart closeItem:orderItem]) {
-				[AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Cannot close line for sku %@.  Stock not available.", orderItem.item.sku]];
-			}
-		} else if ([orderItem isClosed] && orderItem.shouldClose == NO) {
-			[orderItem setStatusToOpen];
-		}
+        if ([orderItem allowEdit]) {
+            if (orderItem.shouldDelete) {
+                [orderItemsToDelete addObject:orderItem];
+            }
+            if (orderItem.shouldClose && [orderItem isClosed] == NO) {
+                if (![orderCart closeItem:orderItem]) {
+                    [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Cannot close line for sku %@.  Stock not available.", orderItem.item.sku]];
+                }
+            } else if ([orderItem isClosed] && orderItem.shouldClose == NO) {
+                [orderItem setStatusToOpen];
+            }
+        }
 	}
 
 	for (OrderItem *item in orderItemsToDelete) {
-		[orderCart removeItem:item];
+        if (item.isNewLineItem) {
+            [orderCart removeItem:item];
+        } else {
+            [item setStatusToCancel];
+        }
+		
 	}
 	[self setMultiEditMode:NO];
 	self.countMarkDelete = 0;
@@ -580,7 +587,7 @@
 }
 
 - (void) updateSelectionCount {
-	self.markDeleteLabel.text = [NSString stringWithFormat:@"Delete (%d)", self.countMarkDelete];
+	self.markDeleteLabel.text = [NSString stringWithFormat:@"Delete/Cancel (%d)", self.countMarkDelete];
 	self.markCloseLabel.text = [NSString stringWithFormat:@"Close (%d)", self.countMarkClose];
 }
 
@@ -685,16 +692,27 @@
         cell.multiEditing = NO;
         cell.deleteChecked = NO;
         cell.closeChecked = NO;
-        cell.accessoryType = ([orderItem isClosed]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.disabledLook = YES;
     } else {
-        cell.multiEditing = self.multiEditMode;
-        cell.deleteChecked = orderItem.shouldDelete;
-        cell.closeChecked = orderItem.shouldClose = [orderItem isClosed];
-        if (self.multiEditMode == NO) {
-            cell.accessoryType = ([orderItem isClosed]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+        if ([orderItem allowEdit]) {
+            cell.multiEditing = self.multiEditMode;
+            cell.deleteChecked = orderItem.shouldDelete;
+            cell.closeChecked = orderItem.shouldClose = [orderItem isClosed];
+            cell.disabledLook = NO;
+            if (self.multiEditMode == NO) {
+                cell.accessoryType = ([orderItem isClosed]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+            } else {
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }    
         } else {
+            cell.multiEditing = NO;
+            cell.deleteChecked = NO;
+            cell.closeChecked = NO;
             cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.disabledLook = YES;
         }
+        
     }
     
 	return cell;
@@ -848,7 +866,10 @@
 	
 	[orderTable reloadData];
     
-    logoutButton.enabled = YES;
+    Order *order = [orderCart getOrder];
+    if ([order canCancel]) {
+        logoutButton.enabled = YES;
+    }
     
 	[self calculateOrder];
     
@@ -857,7 +878,10 @@
 - (void) cancelAddItem:(AddItemView *)addItemView {
 	[addItemView removeFromSuperview];
     
-    logoutButton.enabled = YES;
+    Order *order = [orderCart getOrder];
+    if ([order canCancel]) {
+        logoutButton.enabled = YES;
+    }
     
 	[linea addDelegate:self];
 }

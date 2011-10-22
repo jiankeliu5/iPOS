@@ -31,7 +31,8 @@
 	BOOL deleteChecked;
 	BOOL closeChecked;
 	BOOL multiEditing;
-	
+	BOOL disabledLook;
+    
 	UIButton *deleteCheckButton;
 	UIButton *closeCheckButton;
 }
@@ -44,6 +45,7 @@
 @property (nonatomic, assign) BOOL deleteChecked;
 @property (nonatomic, assign) BOOL closeChecked;
 @property (nonatomic, assign) BOOL multiEditing;
+@property (nonatomic, assign) BOOL disabledLook;
 
 - (void) checkDeleteAction:(id)sender;
 - (void) checkCloseAction:(id)sender;

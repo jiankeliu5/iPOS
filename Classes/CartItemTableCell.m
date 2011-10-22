@@ -130,6 +130,15 @@
 	
 }
 
+- (BOOL) disabledLook {
+    return disabledLook;
+}
+
+- (void) setDisabledLook:(BOOL)lookDisabled {
+    disabledLook = lookDisabled;
+    self.contentView.backgroundColor = (disabledLook) ? [UIColor colorWithWhite:0.90f alpha:1.0f] : [UIColor colorWithWhite:1.0f alpha:1.0f];
+}
+
 #pragma mark -
 #pragma mark Methods
 

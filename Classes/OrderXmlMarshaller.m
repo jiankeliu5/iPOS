@@ -423,9 +423,20 @@ static NSString * const ORDER_LINEITEM_XML = @""
                     urrf = orderItem.urrf;
                 }
                 
-                if (orderItem.item.lineState)
-                {
-                    lineState = orderItem.item.lineState;
+                switch (orderItem.lineStatus) {
+                    case LineStatusAdd:
+                        lineState = @"add";
+                        break;
+                    case LineStatusModify:
+                        lineState = @"modify";
+                        break;
+                    case LineStatusCancel:
+                        lineState = @"cancel";
+                        break;
+                    case LineStatusNone:
+                    default:
+                        lineState = @"";
+                        break;
                 }
                 
                 if(orderItem.spiff)
