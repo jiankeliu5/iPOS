@@ -50,7 +50,7 @@ typedef enum { SessionOk = 0,
 #pragma mark iPOS Order Management
 -(void) newQuote: (Order *) order;
 -(void) newOrder: (Order *) order;
-// -(void) updateOrder: (Order *) order;
+-(void) updateOrder: (Order *) order;
 
 - (BOOL) emailReceipt: (Order *) order;
 
