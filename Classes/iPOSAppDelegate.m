@@ -244,9 +244,9 @@
     BOOL demoEnabled = [defaults boolForKey:@"enableDemoMode"];
     
     if (demoEnabled) {
-        hostName = [bundle objectForInfoDictionaryKey:@"ipos.service.demo.baseurl"];
+        hostName = [bundle objectForInfoDictionaryKey:@"ipos.service.demo.host"];
     } else {
-        hostName = [bundle objectForInfoDictionaryKey:@"ipos.service.baseurl"];
+        hostName = [bundle objectForInfoDictionaryKey:@"ipos.service.host"];
     }
     
     return hostName;

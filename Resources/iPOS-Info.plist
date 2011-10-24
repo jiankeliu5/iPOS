@@ -33,5 +33,7 @@
 	</array>
 	<key>ipos.service.baseurl</key>
 	<string>https://tsipos01/webservices/ipos</string>
+	<key>ipos.service.host</key>
+	<string>tsipos01</string>
 </dict>
 </plist>

@@ -14,8 +14,10 @@
 #import "AlertUtils.h"
 #import "OrderItemsViewController.h"
 
+#import "UIScreen+Helpers.h"
+
 @interface OrderListViewController()
-- (void)layoutView;
+- (void)layoutView: (UIInterfaceOrientation) interfaceOrientation;
 - (void)handleClose:(id)sender;
 @end
 
@@ -66,7 +68,7 @@
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    [self layoutView];
+    [self layoutView:toInterfaceOrientation];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -92,8 +94,11 @@
     [[self navigationItem] setRightBarButtonItem:closeBarButton];
 }
 
-- (void)layoutView {
-    CGRect viewBounds = self.view.bounds;
+- (void) layoutView:(UIInterfaceOrientation)interfaceOrientation {
+    CGRect viewBounds = [UIScreen rectForScreenView:interfaceOrientation isNavBarVisible:YES];
+    
+    self.view.frame = viewBounds;
+    
     // orderListTableView.frame = CGRectInset(viewBounds, 10.0f, 10.0f);
     orderListTableView.frame = viewBounds;
     [orderListTableView reloadData];
@@ -125,7 +130,7 @@
 		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Order List" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
 	}
     
-    [self layoutView];
+    [self layoutView: [UIApplication sharedApplication].statusBarOrientation];
     
     [super viewWillAppear:animated];
 }

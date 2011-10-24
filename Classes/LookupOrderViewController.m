@@ -13,10 +13,12 @@
 #import "OrderListViewController.h"
 #import "OrderItemsViewController.h"
 
+#import "UIScreen+Helpers.h"
+
 #define TEXT_FIELD_HEIGHT 40.0f
 
 @interface LookupOrderViewController()
-- (void)layoutView;
+- (void)layoutView: (UIInterfaceOrientation) interfaceOrientation;
 - (void)performSearch:(ExtUITextField *) textField;
 - (void)handleClose:(id)sender;
 @end
@@ -79,7 +81,7 @@
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    [self layoutView];
+    [self layoutView:toInterfaceOrientation];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -129,10 +131,12 @@
     [[self navigationItem] setRightBarButtonItem:self.closeBarButton];
 }
 
-- (void)layoutView {
-    CGRect viewBounds = self.view.bounds;
+- (void)layoutView: (UIInterfaceOrientation) interfaceOrientation {
+    CGRect viewBounds = [UIScreen rectForScreenView: interfaceOrientation isNavBarVisible:YES];
     CGFloat textFieldWidth = viewBounds.size.width * 0.60f;
 	CGFloat	textFieldSpacing = viewBounds.size.height * 0.10f;
+    
+    self.view.frame = viewBounds;
 	
 	lookupOrderIdField.frame = CGRectMake(0.0f, 0.0f, textFieldWidth, TEXT_FIELD_HEIGHT);
 	lookupOrderIdField.center = CGPointMake((viewBounds.size.width / 2.0f), textFieldSpacing);
@@ -175,7 +179,7 @@
 		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Lookup Order" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
 	}
     
-    [self layoutView];
+    [self layoutView: [UIApplication sharedApplication].statusBarOrientation];
     
     [super viewWillAppear:animated];
 }
