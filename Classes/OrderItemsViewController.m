@@ -8,6 +8,8 @@
 
 #import "OrderItemsViewController.h"
 #import "UIViewController+ViewControllerLayout.h"
+#import "UIScreen+Helpers.h"
+
 #import "NSString+StringFormatters.h"
 #import "AlertUtils.h"
 #import "LayoutUtils.h"
@@ -37,6 +39,7 @@
 #define ORDER_VALUE_WIDTH 80.0f
 #define ORDER_VALUE_HEIGHT 16.0f
 #define ORDER_TOOLBAR_HEIGHT 44.0f
+#define LABEL_SPACING 20.0f
 
 #define LOOKUP_SKU_X 2.0f
 #define LOOKUP_SKU_Y 7.0f
@@ -55,6 +58,9 @@
 #define EDIT_HEADER_FONT_SIZE 11.0f
 
 @interface OrderItemsViewController()
+
+- (void) layoutView: (UIInterfaceOrientation) orientation;
+
 - (UILabel *) createOrderLabel:(NSString *)text withRect:(CGRect)rect andAlignment:(int)alignment;
 - (void) calculateOrder;
 - (void) sendOrderAsQuote:(id)sender;
@@ -334,6 +340,9 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    
+    [self layoutView:[UIApplication sharedApplication].statusBarOrientation];
+    
     // Add this controller as a Linea Device Delegate
     [linea addDelegate:self];
    
@@ -419,11 +428,66 @@
     return YES;
 }
 
+- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [self layoutView:toInterfaceOrientation];
+}
+
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc. that aren't in use.
+}
+
+#pragma mark -
+#pragma mark Layout View
+- (void) layoutView:(UIInterfaceOrientation)orientation {
+    CGRect viewBounds = [UIScreen rectForScreenView:orientation isNavBarVisible:YES];
+    self.view.frame = viewBounds;
+    
+    
+    CGRect custInfoRect = CGRectZero;
+    CGRect orderTableRect = CGRectZero;
+    CGRect subTotalRect = CGRectZero;
+    CGRect taxRect = CGRectZero;
+    CGRect totalRect = CGRectZero;
+    CGRect toolbarRect = CGRectZero;
+    
+    CGRect custPhoneRect = CGRectZero;
+    CGRect custNameRect = CGRectZero;
+    CGRect custZipRect = CGRectZero;
+    
+    // Calculate the layout rects (rows and cols)
+    CGRectDivide(viewBounds, &custInfoRect, &orderTableRect, CUST_LABEL_HEIGHT, CGRectMinYEdge);
+    
+    CGRectDivide(custInfoRect, &custPhoneRect, &custNameRect, custInfoRect.size.width * 0.3, CGRectMinXEdge);
+    CGRectDivide(custNameRect, &custNameRect, &custZipRect, custNameRect.size.width * 0.5, CGRectMinXEdge);
+    
+    CGRectDivide(orderTableRect, &orderTableRect, &subTotalRect, orderTableRect.size.height - ORDER_LABEL_HEIGHT*3 - ORDER_TOOLBAR_HEIGHT, CGRectMinYEdge);
+    CGRectDivide(subTotalRect, &subTotalRect, &taxRect, ORDER_LABEL_HEIGHT, CGRectMinYEdge);
+    CGRectDivide(taxRect, &taxRect, &totalRect, ORDER_LABEL_HEIGHT, CGRectMinYEdge);
+    CGRectDivide(totalRect, &totalRect, &toolbarRect, ORDER_LABEL_HEIGHT, CGRectMinYEdge);
+    
+    // Set the layout frames for customer, order table, totals, and toolbar
+    custPhoneLabel.frame = custPhoneRect;
+    custNameLabel.frame = custNameRect;
+    custZipLabel.frame = custZipRect;
+    
+    orderTable.frame = orderTableRect;
+    
+    subTotalLabel.frame = CGRectMake(0, subTotalRect.origin.y, subTotalRect.size.width - LABEL_SPACING - ORDER_VALUE_WIDTH, ORDER_LABEL_HEIGHT);
+	subTotalValue.frame = CGRectMake(subTotalRect.size.width - ORDER_VALUE_WIDTH, subTotalRect.origin.y, ORDER_VALUE_WIDTH, ORDER_LABEL_HEIGHT);
+	taxLabel.frame = CGRectMake(0, taxRect.origin.y, taxRect.size.width - LABEL_SPACING - ORDER_VALUE_WIDTH, ORDER_LABEL_HEIGHT);
+	taxValue.frame = CGRectMake(taxRect.size.width - ORDER_VALUE_WIDTH, taxRect.origin.y, ORDER_VALUE_WIDTH, ORDER_LABEL_HEIGHT);
+	totalLabel.frame = CGRectMake(0, totalRect.origin.y, totalRect.size.width - LABEL_SPACING - ORDER_VALUE_WIDTH, ORDER_LABEL_HEIGHT);
+	totalValue.frame = CGRectMake(totalRect.size.width - ORDER_VALUE_WIDTH, totalRect.origin.y, ORDER_VALUE_WIDTH, ORDER_LABEL_HEIGHT);
+    
+    orderToolBar.frame = toolbarRect;
+    
+    if (searchOverlay) {
+        searchOverlay.frame = self.view.bounds;
+    }
+
 }
 
 #pragma mark -

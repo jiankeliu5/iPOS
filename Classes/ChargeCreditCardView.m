@@ -132,20 +132,20 @@
     [self layoutSwipeMsgView:mainRoundedView];
        
     // Add a cancel button
-    cancelButton = [[[MOGlassButton alloc] 
-                     initWithFrame:CGRectMake(floorf((mainRoundedView.bounds.size.width - BUTTON_WIDTH) / 2.0f), 
-                                                    mainRoundedView.bounds.size.height - BUTTON_HEIGHT - MARGIN_BOTTOM, BUTTON_WIDTH, BUTTON_HEIGHT)] 
-                    autorelease];
-	[cancelButton setupAsSmallRedButton];
-	cancelButton.titleLabel.textAlignment = UITextAlignmentCenter;
-	[cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
-    [cancelButton addTarget:self action:@selector(handleCancelButton:) forControlEvents:UIControlEventTouchUpInside];
-    
-        
-    [mainRoundedView addSubview:ccChargeAmountView];
-	[mainRoundedView addSubview:ccSwipeMsgView];
-    [mainRoundedView addSubview:cancelButton];    
-    
+    if (!cancelButton) {
+        cancelButton = [[[MOGlassButton alloc] 
+                         initWithFrame:CGRectMake(floorf((mainRoundedView.bounds.size.width - BUTTON_WIDTH) / 2.0f), 
+                                                        mainRoundedView.bounds.size.height - BUTTON_HEIGHT - MARGIN_BOTTOM, BUTTON_WIDTH, BUTTON_HEIGHT)] 
+                        autorelease];
+        [cancelButton setupAsSmallRedButton];
+        [mainRoundedView addSubview:cancelButton];
+        cancelButton.titleLabel.textAlignment = UITextAlignmentCenter;
+        [cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
+        [cancelButton addTarget:self action:@selector(handleCancelButton:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    cancelButton.frame = CGRectMake(floorf((mainRoundedView.bounds.size.width - BUTTON_WIDTH) / 2.0f), 
+                                    mainRoundedView.bounds.size.height - BUTTON_HEIGHT - MARGIN_BOTTOM, BUTTON_WIDTH, BUTTON_HEIGHT);
+	
     // Setup keyboard support
     if (viewDelegate) {
         [viewDelegate setupKeyboardSupport:self];
@@ -155,119 +155,129 @@
 #pragma mark -
 #pragma mark Private Interface
 - (void) layoutBalanceDueLabels: (UIView *) parentView {
-    balanceDueTitle = [[[UILabel alloc] initWithFrame:CGRectMake(MARGIN_LEFT, MARGIN_TOP, LABEL_WIDTH, LABEL_HEIGHT)] autorelease];
-    balanceDueLabel = [[[UILabel alloc] initWithFrame:CGRectMake(MARGIN_LEFT+LABEL_WIDTH, MARGIN_TOP, LABEL_WIDTH, LABEL_HEIGHT)] autorelease];
+    if (!balanceDueTitle) {
+        balanceDueTitle = [[[UILabel alloc] initWithFrame:CGRectMake(MARGIN_LEFT, MARGIN_TOP, LABEL_WIDTH, LABEL_HEIGHT)] autorelease];
+        balanceDueLabel = [[[UILabel alloc] initWithFrame:CGRectMake(MARGIN_LEFT+LABEL_WIDTH, MARGIN_TOP, LABEL_WIDTH, LABEL_HEIGHT)] autorelease];
+        
+        balanceDueTitle.textAlignment = UITextAlignmentLeft;
+        balanceDueTitle.text = @"Balance Due";
+        balanceDueTitle.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];    
+        
+        balanceDueLabel.textAlignment = UITextAlignmentRight;
+        balanceDueLabel.textColor = [UIColor blueColor];
+        balanceDueLabel.text = self.balanceDue;
+        balanceDueLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];    
+        
+        [parentView addSubview:balanceDueTitle];
+        [parentView addSubview:balanceDueLabel];
+    }
     
-    balanceDueTitle.textAlignment = UITextAlignmentLeft;
-    balanceDueTitle.text = @"Balance Due";
-    balanceDueTitle.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];    
-    
-    balanceDueLabel.textAlignment = UITextAlignmentRight;
-    balanceDueLabel.textColor = [UIColor blueColor];
-    balanceDueLabel.text = self.balanceDue;
-    balanceDueLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];    
-    
-    [parentView addSubview:balanceDueTitle];
-    [parentView addSubview:balanceDueLabel];
+    balanceDueTitle.frame = CGRectMake(MARGIN_LEFT, MARGIN_TOP, LABEL_WIDTH, LABEL_HEIGHT);
+    balanceDueLabel.frame = CGRectMake(MARGIN_LEFT+LABEL_WIDTH, MARGIN_TOP, LABEL_WIDTH, LABEL_HEIGHT);
 }
 
 - (void) layoutChargeAmountView: (UIView *) parentView {
-    ccChargeAmountView = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, MARGIN_TOP+MARGIN_BOTTOM+LABEL_HEIGHT, OVERLAY_VIEW_WIDTH, CHARGE_AMOUNT_VIEW_HEIGHT)] autorelease];
-   
-    // Add the strip message
-    UIView *stripView = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0, OVERLAY_VIEW_WIDTH, STRIP_HEIGHT)] autorelease];
-    stripView.backgroundColor = STRIP_COLOR;
-	[stripView.layer setBorderWidth:1.0f];
-	[stripView.layer setBorderColor:[[UIColor blackColor] CGColor]];
-    UILabel *enterAmountText = [[[UILabel alloc] initWithFrame:CGRectMake(0, MARGIN_TOP, OVERLAY_VIEW_WIDTH, LABEL_SMALL_FONT_SIZE)] autorelease];
-    UILabel *creditCardText = [[[UILabel alloc] 
-                                initWithFrame:CGRectMake(0, STRIP_HEIGHT - LABEL_LARGE_FONT_SIZE - MARGIN_BOTTOM, OVERLAY_VIEW_WIDTH, LABEL_LARGE_FONT_SIZE)] 
-                                autorelease];
+    if (!ccChargeAmountView) {
+        ccChargeAmountView = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, MARGIN_TOP+MARGIN_BOTTOM+LABEL_HEIGHT, OVERLAY_VIEW_WIDTH, CHARGE_AMOUNT_VIEW_HEIGHT)] autorelease];
     
-    enterAmountText.backgroundColor = [UIColor clearColor];
-    enterAmountText.textColor = [UIColor blackColor];
-    enterAmountText.textAlignment = UITextAlignmentCenter;
-    enterAmountText.font = [UIFont systemFontOfSize:LABEL_SMALL_FONT_SIZE];
-    enterAmountText.text = @"ENTER AMOUNT TO BE CHARGED VIA";
-    creditCardText.backgroundColor = [UIColor clearColor];
-    creditCardText.textColor = [UIColor blackColor];
-    creditCardText.textAlignment = UITextAlignmentCenter;
-    creditCardText.font = [UIFont boldSystemFontOfSize:LABEL_LARGE_FONT_SIZE];
-    creditCardText.text = @"CREDIT CARD";
-    
-    [stripView addSubview:enterAmountText];
-    [stripView addSubview:creditCardText];
-    [ccChargeAmountView addSubview:stripView];
-   
-    // Add the text field
-    UIView *enterChargeAmountView = [[[UIView alloc] 
-                                     initWithFrame:CGRectMake(MARGIN_LEFT, MARGIN_TOP+STRIP_HEIGHT, ENTER_CHARGE_AMT_WIDTH, ENTER_CHARGE_AMT_HEIGHT)]
+        // Add the strip message
+        UIView *stripView = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0, OVERLAY_VIEW_WIDTH, STRIP_HEIGHT)] autorelease];
+        stripView.backgroundColor = STRIP_COLOR;
+        [stripView.layer setBorderWidth:1.0f];
+        [stripView.layer setBorderColor:[[UIColor blackColor] CGColor]];
+        UILabel *enterAmountText = [[[UILabel alloc] initWithFrame:CGRectMake(0, MARGIN_TOP, OVERLAY_VIEW_WIDTH, LABEL_SMALL_FONT_SIZE)] autorelease];
+        UILabel *creditCardText = [[[UILabel alloc] 
+                                    initWithFrame:CGRectMake(0, STRIP_HEIGHT - LABEL_LARGE_FONT_SIZE - MARGIN_BOTTOM, OVERLAY_VIEW_WIDTH, LABEL_LARGE_FONT_SIZE)] 
+                                    autorelease];
+        
+        enterAmountText.backgroundColor = [UIColor clearColor];
+        enterAmountText.textColor = [UIColor blackColor];
+        enterAmountText.textAlignment = UITextAlignmentCenter;
+        enterAmountText.font = [UIFont systemFontOfSize:LABEL_SMALL_FONT_SIZE];
+        enterAmountText.text = @"ENTER AMOUNT TO BE CHARGED VIA";
+        creditCardText.backgroundColor = [UIColor clearColor];
+        creditCardText.textColor = [UIColor blackColor];
+        creditCardText.textAlignment = UITextAlignmentCenter;
+        creditCardText.font = [UIFont boldSystemFontOfSize:LABEL_LARGE_FONT_SIZE];
+        creditCardText.text = @"CREDIT CARD";
+        
+        [stripView addSubview:enterAmountText];
+        [stripView addSubview:creditCardText];
+        [ccChargeAmountView addSubview:stripView];
+       
+        // Add the text field
+        UIView *enterChargeAmountView = [[[UIView alloc] 
+                                         initWithFrame:CGRectMake(MARGIN_LEFT, MARGIN_TOP+STRIP_HEIGHT, ENTER_CHARGE_AMT_WIDTH, ENTER_CHARGE_AMT_HEIGHT)]
+                                         autorelease];
+                                         
+        [enterChargeAmountView applyRoundedStyle:[UIColor blackColor] withShadow:NO];
+        [enterChargeAmountView applyGradientToBackgroundWithStartColor:[UIColor colorWithRed:96.0/255.0 green:96.0/255.0 blue:96.0/255.0 alpha:1.0] 
+                                                              endColor:[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f]];
+        
+        UILabel *dollarSignLabel = [[[UILabel alloc] 
+                                     initWithFrame:CGRectMake(floorf(MARGIN_LEFT/2), MARGIN_TOP, AMOUNT_LABEL_WIDTH, AMOUNT_LABEL_HEIGHT)] 
                                      autorelease];
-                                     
-    [enterChargeAmountView applyRoundedStyle:[UIColor blackColor] withShadow:NO];
-    [enterChargeAmountView applyGradientToBackgroundWithStartColor:[UIColor colorWithRed:96.0/255.0 green:96.0/255.0 blue:96.0/255.0 alpha:1.0] 
-                                                          endColor:[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f]];
-    
-    UILabel *dollarSignLabel = [[[UILabel alloc] 
-                                 initWithFrame:CGRectMake(floorf(MARGIN_LEFT/2), MARGIN_TOP, AMOUNT_LABEL_WIDTH, AMOUNT_LABEL_HEIGHT)] 
-                                 autorelease];
-    
-    dollarSignLabel.backgroundColor = [UIColor clearColor];
-    dollarSignLabel.textColor = [UIColor whiteColor];
-    dollarSignLabel.textAlignment = UITextAlignmentCenter;
-    dollarSignLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
-    dollarSignLabel.text = @"$";
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
-    chargeAmountTextField = [[[ExtUITextField alloc] 
-                              initWithFrame:CGRectMake(floorf(MARGIN_LEFT/2)+AMOUNT_LABEL_WIDTH, MARGIN_TOP, AMOUNT_TEXT_FIELD_WIDTH, AMOUNT_TEXT_FIELD_HEIGHT)] 
-                              autorelease];
-	chargeAmountTextField.textColor = [UIColor blackColor];
-	chargeAmountTextField.borderStyle = UITextBorderStyleRoundedRect;
-	chargeAmountTextField.textAlignment = UITextAlignmentLeft;
-    chargeAmountTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-	chargeAmountTextField.clearsOnBeginEditing = YES;
-	//chargeAmountTextField.tagName = @"ChargeAmount";
-    chargeAmountTextField.tagName = @"credit";
-    
-    [enterChargeAmountView addSubview:dollarSignLabel];
-    [enterChargeAmountView addSubview:chargeAmountTextField];
-    [ccChargeAmountView addSubview:enterChargeAmountView];
-   
-    [parentView addSubview:ccChargeAmountView];
+        
+        dollarSignLabel.backgroundColor = [UIColor clearColor];
+        dollarSignLabel.textColor = [UIColor whiteColor];
+        dollarSignLabel.textAlignment = UITextAlignmentCenter;
+        dollarSignLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
+        dollarSignLabel.text = @"$";
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+        chargeAmountTextField = [[[ExtUITextField alloc] 
+                                  initWithFrame:CGRectMake(floorf(MARGIN_LEFT/2)+AMOUNT_LABEL_WIDTH, MARGIN_TOP, AMOUNT_TEXT_FIELD_WIDTH, AMOUNT_TEXT_FIELD_HEIGHT)] 
+                                  autorelease];
+        chargeAmountTextField.textColor = [UIColor blackColor];
+        chargeAmountTextField.borderStyle = UITextBorderStyleRoundedRect;
+        chargeAmountTextField.textAlignment = UITextAlignmentLeft;
+        chargeAmountTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        chargeAmountTextField.clearsOnBeginEditing = YES;
+        //chargeAmountTextField.tagName = @"ChargeAmount";
+        chargeAmountTextField.tagName = @"credit";
+        
+        [enterChargeAmountView addSubview:dollarSignLabel];
+        [enterChargeAmountView addSubview:chargeAmountTextField];
+        [ccChargeAmountView addSubview:enterChargeAmountView];
+        
+        [parentView addSubview:ccChargeAmountView];
+    }
 }
 
 - (void) layoutSwipeMsgView: (UIView *) parentView {
-     ccSwipeMsgView = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, MARGIN_TOP+MARGIN_BOTTOM+LABEL_HEIGHT, OVERLAY_VIEW_WIDTH, SWIPE_MSG_VIEW_HEIGHT)] autorelease]; 
-    UILabel *swipeText1 = [[[UILabel alloc] initWithFrame:CGRectMake(0, 5*MARGIN_TOP, OVERLAY_VIEW_WIDTH, LABEL_LARGE_FONT_SIZE)] autorelease];
-    UILabel *swipeText2 = [[[UILabel alloc] 
-                                initWithFrame:CGRectMake(0, 6*MARGIN_TOP + LABEL_LARGE_FONT_SIZE, OVERLAY_VIEW_WIDTH, LABEL_LARGE_FONT_SIZE)] 
-                               autorelease];
-    amountToChargeLabel = [[[UILabel alloc] 
-                            initWithFrame:CGRectMake(0, 7*MARGIN_TOP + 2*LABEL_LARGE_FONT_SIZE, OVERLAY_VIEW_WIDTH, LABEL_LARGE_FONT_SIZE)]
-                            autorelease];
-                               
-    ccSwipeMsgView.hidden = YES;
-    swipeText1.backgroundColor = [UIColor clearColor];
-    swipeText1.textColor = [UIColor blackColor];
-    swipeText1.textAlignment = UITextAlignmentCenter;
-    swipeText1.font = [UIFont boldSystemFontOfSize:LABEL_LARGE_FONT_SIZE];
-    swipeText1.text = @"SWIPE CREDIT CARD";
-    swipeText2.backgroundColor = [UIColor clearColor];
-    swipeText2.textColor = [UIColor blackColor];
-    swipeText2.textAlignment = UITextAlignmentCenter;
-    swipeText2.font = [UIFont boldSystemFontOfSize:LABEL_LARGE_FONT_SIZE];
-    swipeText2.text = @"TO CHARGE AMOUNT";
-    amountToChargeLabel.backgroundColor = [UIColor clearColor];
-    amountToChargeLabel.textColor = [UIColor blueColor];
-    amountToChargeLabel.textAlignment = UITextAlignmentCenter;
-    amountToChargeLabel.font = [UIFont boldSystemFontOfSize:LABEL_LARGE_FONT_SIZE];
-    amountToChargeLabel.text = @"$0.00";
-    
-    [ccSwipeMsgView addSubview:swipeText1];
-    [ccSwipeMsgView addSubview:swipeText2];
-    [ccSwipeMsgView addSubview:amountToChargeLabel];
-    
-    [parentView addSubview:ccSwipeMsgView];
+    if (!ccSwipeMsgView) {
+        ccSwipeMsgView = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, MARGIN_TOP+MARGIN_BOTTOM+LABEL_HEIGHT, OVERLAY_VIEW_WIDTH, SWIPE_MSG_VIEW_HEIGHT)] autorelease]; 
+        ccSwipeMsgView.hidden = YES;
+        
+        UILabel *swipeText1 = [[[UILabel alloc] initWithFrame:CGRectMake(0, 5*MARGIN_TOP, OVERLAY_VIEW_WIDTH, LABEL_LARGE_FONT_SIZE)] autorelease];
+        UILabel *swipeText2 = [[[UILabel alloc] 
+                                    initWithFrame:CGRectMake(0, 6*MARGIN_TOP + LABEL_LARGE_FONT_SIZE, OVERLAY_VIEW_WIDTH, LABEL_LARGE_FONT_SIZE)] 
+                                   autorelease];
+        amountToChargeLabel = [[[UILabel alloc] 
+                                initWithFrame:CGRectMake(0, 7*MARGIN_TOP + 2*LABEL_LARGE_FONT_SIZE, OVERLAY_VIEW_WIDTH, LABEL_LARGE_FONT_SIZE)]
+                                autorelease];
+                                   
+        swipeText1.backgroundColor = [UIColor clearColor];
+        swipeText1.textColor = [UIColor blackColor];
+        swipeText1.textAlignment = UITextAlignmentCenter;
+        swipeText1.font = [UIFont boldSystemFontOfSize:LABEL_LARGE_FONT_SIZE];
+        swipeText1.text = @"SWIPE CREDIT CARD";
+        swipeText2.backgroundColor = [UIColor clearColor];
+        swipeText2.textColor = [UIColor blackColor];
+        swipeText2.textAlignment = UITextAlignmentCenter;
+        swipeText2.font = [UIFont boldSystemFontOfSize:LABEL_LARGE_FONT_SIZE];
+        swipeText2.text = @"TO CHARGE AMOUNT";
+        amountToChargeLabel.backgroundColor = [UIColor clearColor];
+        amountToChargeLabel.textColor = [UIColor blueColor];
+        amountToChargeLabel.textAlignment = UITextAlignmentCenter;
+        amountToChargeLabel.font = [UIFont boldSystemFontOfSize:LABEL_LARGE_FONT_SIZE];
+        amountToChargeLabel.text = @"$0.00";
+        
+        [ccSwipeMsgView addSubview:swipeText1];
+        [ccSwipeMsgView addSubview:swipeText2];
+        [ccSwipeMsgView addSubview:amountToChargeLabel];
+        
+        [parentView addSubview:ccSwipeMsgView];
+    }
 }
 
 - (void) handleCancelButton: (id) sender {

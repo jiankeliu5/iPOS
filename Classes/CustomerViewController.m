@@ -279,6 +279,10 @@
 			CustomerFormDataSource *customerFormDataSource = [[[CustomerFormDataSource alloc] initWithModel:customerFormModel] autorelease];
 			CustomerEditViewController *customerEditViewController = [[[CustomerEditViewController alloc] initWithNibName:nil bundle:nil formDataSource:customerFormDataSource] autorelease];
 			[customerEditViewController setTitle:@"Customer Edit"];
+            
+            custDetailsOpen = NO;
+            [self updateDisplayValues];
+            
 			[[self navigationController] pushViewController:customerEditViewController animated:TRUE];
 		} else {
 			if (custDetailsOpen == NO) {
@@ -421,6 +425,7 @@
     } else {
         custSearchButton.frame = CGRectMake(0, cy, BUTTON_WIDTH, BUTTON_HEIGHT);
         custSearchButton.center = [self.view centerAt:cy];
+        confirmButton.hidden = YES;
 
     }
 }
@@ -434,7 +439,9 @@
 		email.text = customer.emailAddress;
 		zip.text = customer.address.zipPostalCode;
         holdStatus.text = customer.holdStatusText;
-	}
+	} else {
+        detailView.hidden = TRUE;
+    }
 	
 	[self layoutButtons];
 }
