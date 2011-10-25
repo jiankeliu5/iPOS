@@ -92,7 +92,7 @@
     item.amount = [NSDecimalNumber decimalNumberWithString:@"20.00"];
     item.orderPaymentTypeID = [NSNumber numberWithInt:7];
     
-    AccountPayment *payment = [[AccountPayment alloc] init];
+   // AccountPayment *payment = [[AccountPayment alloc] init];
         
     PaymentSignature *signature = [[PaymentSignature alloc] init];
     signature.signatureAsBase64 = @"signature";
@@ -108,6 +108,44 @@
     NSString *result = [xmlResult toXml:refund];
     
     STAssertTrue([expected isEqualToString: result], @"");
+}
+
+-(void) testRefundXMLConversionMultipleTypes{
+    
+    Refund *refund = [[Refund alloc] init];
+    refund.orderId = [NSNumber numberWithInt:345];
+    refund.customerId = [NSNumber numberWithInt:1234];
+    refund.storeId = [NSNumber numberWithInt:1200];
+    refund.salesPersonId = [NSNumber numberWithInt:1924];
+    refund.refundDate = @"date";
+    
+    RefundItem *item = [[RefundItem alloc] init];
+    
+    item.amount = [NSDecimalNumber decimalNumberWithString:@"20.00"];
+    item.orderPaymentTypeID = [NSNumber numberWithInt:7];
+    
+    RefundItem *itemTwo = [[RefundItem alloc] init];
+    
+    itemTwo.amount = [NSDecimalNumber decimalNumberWithString:@"20.00"];
+    itemTwo.orderPaymentTypeID = [NSNumber numberWithInt:7];
+    
+    PaymentSignature *signature = [[PaymentSignature alloc] init];
+    signature.signatureAsBase64 = @"signature";
+    
+    [refund addRefundItem:item];
+    [refund addRefundItem:itemTwo];
+    refund.signature = signature;
+    
+    RefundXmlMarshaller *xmlResult = [[RefundXmlMarshaller alloc] init];
+
+    NSString *result = [xmlResult toXml:refund];
+    
+    NSString *expected = @"""<RefundRequest><CustomerID>1234</CustomerID><OrderID>345</OrderID><StoreID>1200</StoreID><SalesPersonID>1924</SalesPersonID><RefundDate>date</RefundDate><ListOfRefunds><Refund><Amount>20</Amount><OrderPaymentTypeID>7</OrderPaymentTypeID></Refund><Refund><Amount>20</Amount><OrderPaymentTypeID>7</OrderPaymentTypeID></Refund></ListOfRefunds><PaymentSignature><OnAccount>false</OnAccount><SignatureAsBase64>signature</SignatureAsBase64><TroutD></TroutD></PaymentSignature></RefundRequest>";
+
+    
+    STAssertTrue([expected isEqualToString: result], @"");
+    
+    
 }
 
 @end

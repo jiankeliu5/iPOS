@@ -21,5 +21,6 @@
 - (void) testRefundXMLConversionWithCreditCard;
 - (void) testRefundXMLConversionWithCash;
 - (void) testRefundXMLConversionWithAccount;
+-(void) testRefundXMLConversionMultipleTypes;
 
 @end
