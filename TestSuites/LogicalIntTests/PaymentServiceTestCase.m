@@ -13,6 +13,7 @@
 @interface PaymentServiceTestCase : SenTestCase
 
 - (void) testPosCCPaymentAndSignature;
+-(void) testRefundService;
 
 @end
 
@@ -156,6 +157,34 @@
         "MhIEwUIOB/wL9eD3zEFjnpQAAAABJRU5ErkJggg=="];
     BOOL acceptedSignature = [facade acceptSignatureFor:ccPayment];
     STAssertTrue(acceptedSignature, @"Expected the signature to be accepted");
+}
+
+-(void) testRefundService{
+    
+    iPOSFacade *facade = [iPOSFacade sharedInstance];
+    
+    Refund *refund = [[Refund alloc] init];
+    refund.orderId = [NSNumber numberWithInt:1];
+    refund.customerId = [NSNumber numberWithInt:2];
+    refund.storeId = [NSNumber numberWithInt:1200];
+    refund.salesPersonId = [NSNumber numberWithInt:20];
+    refund.refundDate = @"2011-07-02T00:00:00";
+    
+    RefundItem *item = [[RefundItem alloc] init];
+    item.amount = [NSDecimalNumber decimalNumberWithString:@"6.00"];
+    item.orderPaymentTypeID = [NSNumber numberWithInt:1];
+    
+    [refund addRefundItem:item];
+    
+    // We are setting to demo mode
+    [((iPOSServiceImpl *) facade.posService) setToDemoMode];
+    [((iPOSServiceImpl *) facade.paymentService) setToDemoMode];
+    
+    BOOL loginResult = [facade login:@"123" password:@"456"];
+    STAssertTrue(loginResult, @"I expected the login result to be true :-(");
+    
+    [facade sendRefundRequest:refund];
+    
 }
 
 @end

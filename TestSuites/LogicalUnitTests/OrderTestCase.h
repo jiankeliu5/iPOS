@@ -22,6 +22,7 @@
 - (void) testProfitMarginCalculation;
 -(void) testPreviousOrderCalcBalanceDueRefund;
 -(void) testPreviousOrderCalcBalanceDuePayMore;
+-(void) calculateBalanceDueWithoutPreviousPayments;
 #endif
 
 @end

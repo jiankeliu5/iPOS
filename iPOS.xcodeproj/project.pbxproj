@@ -18,6 +18,11 @@
 		3606E5E514333FCF00FBB02A /* OrderHistoryService.m in Sources */ = {isa = PBXBuildFile; fileRef = 3606E5E314333FCF00FBB02A /* OrderHistoryService.m */; };
 		360C1288143383E000235580 /* PreviousOrder.h in Headers */ = {isa = PBXBuildFile; fileRef = 360C1286143383E000235580 /* PreviousOrder.h */; };
 		360C1289143383E000235580 /* PreviousOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 360C1287143383E000235580 /* PreviousOrder.m */; };
+		36444E171455B78F0024C24F /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6902349144F222700174E59 /* libz.1.2.5.dylib */; };
+		36444E181455B7A30024C24F /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6902349144F222700174E59 /* libz.1.2.5.dylib */; };
+		36444E1C145706AD0024C24F /* iPOSServiceIntTestCase.h in Sources */ = {isa = PBXBuildFile; fileRef = D64B7EBF12F9DFF5006AB141 /* iPOSServiceIntTestCase.h */; };
+		36444E1D145706AD0024C24F /* iPOSServiceIntTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */; };
+		36444E1E145706AD0024C24F /* PaymentServiceTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C7770513574A7900D41AD9 /* PaymentServiceTestCase.m */; };
 		364B56C61430D02D0028FE09 /* libIBAForms.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 364B56BF1430CF5D0028FE09 /* libIBAForms.a */; };
 		365B593F1407DBAE000B0277 /* ProfitMarginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C6B44E14057BBD009A455F /* ProfitMarginViewController.m */; };
 		365B5947140C0E23000B0277 /* OrderTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 365B5945140C092E000B0277 /* OrderTestCase.m */; };
@@ -245,7 +250,6 @@
 		D65B25D71331C8B60052AEE2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
 		D65EB2BF132AE30C0066E1FA /* NSString+Base64Encode.m in Sources */ = {isa = PBXBuildFile; fileRef = D65EB2A1132AE1C10066E1FA /* NSString+Base64Encode.m */; };
 		D65EB2C0132AE30E0066E1FA /* NSString+Base64Encode.h in Headers */ = {isa = PBXBuildFile; fileRef = D65EB2A0132AE1C10066E1FA /* NSString+Base64Encode.h */; };
-		D67943A313160884004B8254 /* iPOSServiceIntTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */; };
 		D67943B2131608C1004B8254 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FC1302586800B77769 /* CFNetwork.framework */; };
 		D67943B3131608C1004B8254 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		D67943B4131608C1004B8254 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
@@ -253,7 +257,6 @@
 		D67943B6131608C1004B8254 /* libiPOSFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */; };
 		D67943B7131608C1004B8254 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 		D67943B8131608C1004B8254 /* libOPIFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B435B213159F72000C0AA8 /* libOPIFoundation.a */; };
-		D67943B9131608C1004B8254 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08021302586800B77769 /* libz.1.2.3.dylib */; };
 		D67943BA131608C1004B8254 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FE1302586800B77769 /* MobileCoreServices.framework */; };
 		D67943BB131608C1004B8254 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
 		D67943BC131608C1004B8254 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
@@ -262,7 +265,6 @@
 		D679459613160D05004B8254 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		D679459713160D05004B8254 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
 		D679459813160D05004B8254 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
-		D679459913160D05004B8254 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08021302586800B77769 /* libz.1.2.3.dylib */; };
 		D679459A13160D05004B8254 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FE1302586800B77769 /* MobileCoreServices.framework */; };
 		D679459B13160D05004B8254 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
 		D679459C13160D05004B8254 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
@@ -369,7 +371,6 @@
 		D6BA07FF1302586800B77769 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FE1302586800B77769 /* MobileCoreServices.framework */; };
 		D6BA08011302586800B77769 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
 		D6C6E8D61365CA7C00560DCF /* StringFormattersTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C6E8D51365CA7C00560DCF /* StringFormattersTestCase.m */; };
-		D6C7770613574A7900D41AD9 /* PaymentServiceTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C7770513574A7900D41AD9 /* PaymentServiceTestCase.m */; };
 		D6CB6140137321C200E024B6 /* ProductItemListXmlMarshaller.h in Headers */ = {isa = PBXBuildFile; fileRef = D6CB613E137321C200E024B6 /* ProductItemListXmlMarshaller.h */; };
 		D6CB6141137321C200E024B6 /* ProductItemListXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = D6CB613F137321C200E024B6 /* ProductItemListXmlMarshaller.m */; };
 		D6CC18DB1331D1690042745E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FC1302586800B77769 /* CFNetwork.framework */; };
@@ -1001,6 +1002,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36444E171455B78F0024C24F /* libz.1.2.5.dylib in Frameworks */,
 				36F3E9951434BA22004376B8 /* libiPOSFoundation.a in Frameworks */,
 				36F3E9961434BA22004376B8 /* libOPIFoundation.a in Frameworks */,
 				36F3E9941434B9B6004376B8 /* libIBAForms.a in Frameworks */,
@@ -1009,7 +1011,6 @@
 				D679459713160D05004B8254 /* ExternalAccessory.framework in Frameworks */,
 				D6B43A3A1315B343000C0AA8 /* Foundation.framework in Frameworks */,
 				D679459813160D05004B8254 /* libLineaSDK.a in Frameworks */,
-				D679459913160D05004B8254 /* libz.1.2.3.dylib in Frameworks */,
 				D679459A13160D05004B8254 /* MobileCoreServices.framework in Frameworks */,
 				D679459B13160D05004B8254 /* QuartzCore.framework in Frameworks */,
 				D679459C13160D05004B8254 /* SystemConfiguration.framework in Frameworks */,
@@ -1043,6 +1044,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36444E181455B7A30024C24F /* libz.1.2.5.dylib in Frameworks */,
 				36F3E9991434BA4E004376B8 /* libIBAForms.a in Frameworks */,
 				D67943B2131608C1004B8254 /* CFNetwork.framework in Frameworks */,
 				D67943B3131608C1004B8254 /* CoreGraphics.framework in Frameworks */,
@@ -1051,7 +1053,6 @@
 				D67943B6131608C1004B8254 /* libiPOSFoundation.a in Frameworks */,
 				D67943B7131608C1004B8254 /* libLineaSDK.a in Frameworks */,
 				D67943B8131608C1004B8254 /* libOPIFoundation.a in Frameworks */,
-				D67943B9131608C1004B8254 /* libz.1.2.3.dylib in Frameworks */,
 				D67943BA131608C1004B8254 /* MobileCoreServices.framework in Frameworks */,
 				D67943BB131608C1004B8254 /* QuartzCore.framework in Frameworks */,
 				D67943BC131608C1004B8254 /* SystemConfiguration.framework in Frameworks */,
@@ -2502,9 +2503,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36444E1C145706AD0024C24F /* iPOSServiceIntTestCase.h in Sources */,
+				36444E1D145706AD0024C24F /* iPOSServiceIntTestCase.m in Sources */,
+				36444E1E145706AD0024C24F /* PaymentServiceTestCase.m in Sources */,
 				368B10921434F675001AAD73 /* OrderHistoryTestCase.m in Sources */,
-				D67943A313160884004B8254 /* iPOSServiceIntTestCase.m in Sources */,
-				D6C7770613574A7900D41AD9 /* PaymentServiceTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

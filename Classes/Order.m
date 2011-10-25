@@ -10,6 +10,11 @@
 #import "OrderXmlMarshaller.h"
 #import "iPOSFacade.h"
 
+@interface Order()
+-(NSDecimalNumber *) calculateBalanceDueWithPreviousPayments:(NSDecimalNumber *) balance;
+-(void) getPreviousPayments;
+@end
+
 @implementation Order
 
 @synthesize orderId, orderTypeId, salesPersonEmployeeId, store, customer, notes, purchaseOrderId, partialPaymentOnAccount;
@@ -300,6 +305,11 @@
                     balanceDue = [balanceDue decimalNumberBySubtracting:customer.amountAppliedOnAccount];
                 }
         }
+        
+        if (orderId)
+        {
+            balanceDue = [self calculateBalanceDueWithPreviousPayments:balanceDue];
+        }
     }
     
     return balanceDue;
@@ -350,27 +360,31 @@
 
 #pragma mark -
 #pragma mark Refund methods
-
--(TenderDecision) isRefundEligble{
-    
-    if (!previousPayments)
-    {
-        previousPayments = (NSMutableArray *)[[iPOSFacade sharedInstance] getPaymentHistoryForOrderid:self.orderId];
-    }
+-(NSDecimalNumber *) calculateBalanceDueWithPreviousPayments:(NSDecimalNumber *) balance{
     
     NSDecimalNumber *previousBalancePaid = [NSDecimalNumber zero];
+    
     NSDecimalNumberHandler *roundUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:2 
                                                                                   raiseOnExactness:NO raiseOnOverflow:NO 
                                                                                   raiseOnUnderflow:NO raiseOnDivideByZero:NO];
-
+    [self getPreviousPayments];
+    
     for(Payment *currentPayment in previousPayments)
     {
         previousBalancePaid = [previousBalancePaid decimalNumberByAdding:currentPayment.paymentAmount];
     }
     
-    NSDecimalNumber *currentBalanceDue = [[self calcBalanceDue]  decimalNumberByRoundingAccordingToBehavior:roundUp];
-  
-    NSComparisonResult comparisonresult = [previousBalancePaid compare:currentBalanceDue];
+    balance = [balance decimalNumberByRoundingAccordingToBehavior:roundUp];
+    
+    return [balance decimalNumberBySubtracting:previousBalancePaid];
+    
+}
+
+-(TenderDecision) isRefundEligble{
+        
+    NSDecimalNumber *currentBalanceDue = [self calcBalanceDue];
+    
+    NSComparisonResult comparisonresult = [[NSDecimalNumber zero] compare:currentBalanceDue ];
     
     if (comparisonresult == NSOrderedSame)
     {
@@ -383,6 +397,13 @@
     else
     {
         return REFUND;
+    }
+}
+
+-(void) getPreviousPayments{
+    if (!previousPayments)
+    {
+        previousPayments = (NSMutableArray *)[[iPOSFacade sharedInstance] getPaymentHistoryForOrderid:self.orderId];
     }
 }
 

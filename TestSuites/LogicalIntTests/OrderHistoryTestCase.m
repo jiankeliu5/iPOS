@@ -43,7 +43,7 @@
     BOOL loginResult = [facade login:@"123" password:@"456"];
     STAssertTrue(loginResult, @"I expected the login result to be true :-(");
     
-    NSMutableArray *paymentHistory = [facade getPaymentHistoryForOrderid:[NSNumber numberWithInt:3084228]];
+    NSArray *paymentHistory = [facade getPaymentHistoryForOrderid:[NSNumber numberWithInt:3084229]];
     
     STAssertNotNil(paymentHistory, @"Didn't get any payment history");
     
@@ -54,8 +54,22 @@
     CreditCardPayment *cc = [paymentHistory objectAtIndex:0];
     
     STAssertNotNil(cc.tRouteD, @"tRouteD should not be nil");
-    
    
+}
+
+-(void) testOrderPaymentHistoryMutiplePayments
+{
+    iPOSFacade *facade = [iPOSFacade sharedInstance];
+    [((iPOSServiceImpl *) facade.posService) setToDemoMode];
+    [((iPOSServiceImpl *) facade.orderHistoryService) setToDemoMode];
+    BOOL loginResult = [facade login:@"123" password:@"456"];
+    STAssertTrue(loginResult, @"I expected the login result to be true :-(");
+    
+    NSArray *paymentHistory = [facade getPaymentHistoryForOrderid:[NSNumber numberWithInt:3074226]];
+    
+    STAssertNotNil(paymentHistory, @"Didn't get any payment history");
+    
+    STAssertTrue([[NSNumber numberWithUnsignedInt:[paymentHistory count]] compare: [NSNumber numberWithInt: 2 ]]  == NSOrderedSame, @"Expected two payments");
 }
 
 -(void) testOrderHistoryByOrderID {
@@ -68,18 +82,20 @@
     
     Order *result = [facade lookupOrderByOrderId:[NSNumber numberWithInt:3084226]];
     
-    STAssertNotNil(result, @"Didn't get any payment history");
+    STAssertNotNil(result, @"Didn't get an order");
     
-    STAssertTrue([result.orderId compare: [NSNumber numberWithInt: 3084232]] == NSOrderedSame,@"Wrong order id");
+    STAssertTrue([result.orderId compare: [NSNumber numberWithInt: 3084226]] == NSOrderedSame,@"Wrong order id");
     
     Customer *customer = result.customer;
     
     STAssertNotNil(customer, @"Customer should not be empty");
     
+    STAssertFalse(result.isNewOrder, @"The order should not be new");
+    
     
     STAssertNotNil(customer.address.zipPostalCode, @"Zip code required");
     
-    
+    STAssertTrue([facade logout], @"I expected the logout result to be true :-(");
 }
 
 

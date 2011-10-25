@@ -57,6 +57,7 @@
     order.selectionId = [headerNode elementNumberValue:@"SelectionID"];
     //order.storeId = [root elementStringValue:@"StoreID"];
     order.taxExempt = [headerNode elementBoolValue:@"TaxExempt"];
+    order.isNewOrder = NO;
 
     OrderItem *orderHistoryItem = nil;
     ProductItem *productItem = nil;

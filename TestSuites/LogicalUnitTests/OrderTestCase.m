@@ -73,7 +73,7 @@
 -(void) testPreviousOrderCalcBalanceDueNoChange 
 {
    Order *order = [[Order alloc] init];
-    
+    order.orderId = [NSNumber numberWithInt:1];
     ProductItem *item = [[ProductItem alloc] init];
     item.itemId = [NSNumber numberWithInt:283186];
     item.sku = @"440915";
@@ -120,21 +120,18 @@
     
     [order addItemToOrder:itemTwo withQuantity:[NSDecimalNumber decimalNumberWithString:@"1.0"]];
     
-    NSMutableArray *orderItems = [order getOrderItems];
+    NSArray *orderItems = [order getOrderItems];
     
     OrderItem *orderItem = [orderItems objectAtIndex:0];
-    orderItem.setStatusToClosed;
+    [orderItem setStatusToClosed];
     
     OrderItem *orderItemTwo = [orderItems objectAtIndex:1];
-    orderItemTwo.setStatusToClosed;
+    [orderItemTwo setStatusToClosed ];
     
     Customer *customer = [[Customer alloc] init];
     customer.customerTypeId = [NSNumber numberWithInt:2];
     
     order.customer = customer;
-    
-    NSLog([[order calcBalanceDue] stringValue]);
-    
     
     CreditCardPayment *ccPayment = [[CreditCardPayment alloc] init];
     ccPayment.paymentAmount = [NSDecimalNumber decimalNumberWithString:@"49.25"];
@@ -154,7 +151,7 @@
 -(void) testPreviousOrderCalcBalanceDueRefund   
 {
     Order *order = [[Order alloc] init];
-    
+    order.orderId = [NSNumber numberWithInt:1];
     ProductItem *item = [[ProductItem alloc] init];
     item.itemId = [NSNumber numberWithInt:283186];
     item.sku = @"440915";
@@ -201,18 +198,15 @@
     
     [order addItemToOrder:itemTwo withQuantity:[NSDecimalNumber decimalNumberWithString:@"1.0"]];
     
-    NSMutableArray *orderItems = [order getOrderItems];
+    NSArray *orderItems = [order getOrderItems];
     
     OrderItem *orderItem = [orderItems objectAtIndex:0];
-    orderItem.setStatusToClosed;
+    [orderItem setStatusToClosed];
     
     Customer *customer = [[Customer alloc] init];
     customer.customerTypeId = [NSNumber numberWithInt:2];
     
     order.customer = customer;
-    
-    NSLog([[order calcBalanceDue] stringValue]);
-    
     
     CreditCardPayment *ccPayment = [[CreditCardPayment alloc] init];
     ccPayment.paymentAmount = [NSDecimalNumber decimalNumberWithString:@"49.25"];
@@ -232,7 +226,7 @@
 -(void) testPreviousOrderCalcBalanceDuePayMore   
 {
     Order *order = [[Order alloc] init];
-    
+    order.orderId = [NSNumber numberWithInt:1];
     ProductItem *item = [[ProductItem alloc] init];
     item.itemId = [NSNumber numberWithInt:283186];
     item.sku = @"440915";
@@ -279,22 +273,19 @@
     
     [order addItemToOrder:itemTwo withQuantity:[NSDecimalNumber decimalNumberWithString:@"1.0"]];
     
-    NSMutableArray *orderItems = [order getOrderItems];
+    NSArray *orderItems = [order getOrderItems];
     
     OrderItem *orderItem = [orderItems objectAtIndex:0];
-    orderItem.setStatusToClosed;
+    [orderItem setStatusToClosed];
     
     OrderItem *orderItemTwo = [orderItems objectAtIndex:1];
-    orderItemTwo.setStatusToClosed;
+    [orderItemTwo setStatusToClosed ];
 
     
     Customer *customer = [[Customer alloc] init];
     customer.customerTypeId = [NSNumber numberWithInt:2];
     
     order.customer = customer;
-    
-    NSLog([[order calcBalanceDue] stringValue]);
-    
     
     CreditCardPayment *ccPayment = [[CreditCardPayment alloc] init];
     ccPayment.paymentAmount = [NSDecimalNumber decimalNumberWithString:@"38.25"];
@@ -309,6 +300,158 @@
     TenderDecision decision = [order isRefundEligble];
     
     STAssertTrue(decision == TENDER, @"Payment was expected");
+}
+
+-(void) testcalculateBalanceDueWithoutPreviousPayments{
+    
+    Order *order = [[Order alloc] init];
+    //order.orderId = [NSNumber numberWithInt:1];
+    ProductItem *item = [[ProductItem alloc] init];
+    item.itemId = [NSNumber numberWithInt:283186];
+    item.sku = @"440915";
+    item.description = @"Driftwood Hon. Martel";
+    item.vendorName = @"SHAO LIN STONE/CHINA METALLURGICAL";
+    item.statusCode = @"S";
+    item.type = @"Travertine";
+    item.typeId = [NSNumber numberWithInt: 26];
+    item.binLocation = @"TR0520";
+    item.stockingCode = @"S";
+    item.defaultToBox = NO;
+    item.primaryUnitOfMeasure = @"EA";
+    item.secondaryUnitOfMeasure = @"EA";
+    item.conversion = [NSDecimalNumber decimalNumberWithString:@"1.00"];
+    item.priceGroupId = [NSNumber numberWithInt:123];
+    item.retailPricePrimary = [NSDecimalNumber decimalNumberWithString:@"8.99"];
+    item.retailPriceSecondary = [NSDecimalNumber decimalNumberWithString:@"10.99"];
+    item.standardCost = [NSDecimalNumber decimalNumberWithString:@"1.90"];
+    item.taxRate = [NSDecimalNumber decimalNumberWithString:@"0.7"];
+    item.taxExempt = NO;
+    [order addItemToOrder:item withQuantity:[NSDecimalNumber decimalNumberWithString:@"2.0"]];
+    
+    
+    ProductItem *itemTwo = [[ProductItem alloc] init];
+    itemTwo.itemId = [NSNumber numberWithInt:283186];
+    itemTwo.sku = @"440915";
+    itemTwo.description = @"Driftwood Hon. Martel";
+    itemTwo.vendorName = @"SHAO LIN STONE/CHINA METALLURGICAL";
+    itemTwo.statusCode = @"S";
+    itemTwo.type = @"Travertine";
+    itemTwo.typeId = [NSNumber numberWithInt: 26];
+    itemTwo.binLocation = @"TR0520";
+    itemTwo.stockingCode = @"S";
+    itemTwo.defaultToBox = NO;
+    itemTwo.primaryUnitOfMeasure = @"EA";
+    itemTwo.secondaryUnitOfMeasure = @"EA";
+    itemTwo.conversion = [NSDecimalNumber decimalNumberWithString:@"1.00"];
+    itemTwo.priceGroupId = [NSNumber numberWithInt:123];
+    itemTwo.retailPricePrimary = [NSDecimalNumber decimalNumberWithString:@"10.99"];
+    itemTwo.retailPriceSecondary = [NSDecimalNumber decimalNumberWithString:@"12.99"]; 
+    itemTwo.standardCost = [NSDecimalNumber decimalNumberWithString:@"1.80"];
+    itemTwo.taxRate = [NSDecimalNumber decimalNumberWithString:@"0.7"];
+    itemTwo.taxExempt = NO;
+    
+    [order addItemToOrder:itemTwo withQuantity:[NSDecimalNumber decimalNumberWithString:@"1.0"]];
+    
+    NSArray *orderItems = [order getOrderItems];
+    
+    OrderItem *orderItem = [orderItems objectAtIndex:0];
+    [orderItem setStatusToClosed];
+    
+    OrderItem *orderItemTwo = [orderItems objectAtIndex:1];
+    [orderItemTwo setStatusToClosed ];
+    
+    
+    Customer *customer = [[Customer alloc] init];
+    customer.customerTypeId = [NSNumber numberWithInt:2];
+    
+    order.customer = customer;
+    
+    NSDecimalNumber *balance = [order calcBalanceDue];
+
+    STAssertNotNil(balance, @"balance should not be nil");
+    STAssertTrue([balance compare: [NSDecimalNumber decimalNumberWithString: @"49.249"]] == NSOrderedSame, @"Balance due should be the same");
+    
+}
+
+-(void) testcalculateBalanceDueWithPreviousPayments{
+    
+    Order *order = [[Order alloc] init];
+    order.orderId = [NSNumber numberWithInt:1];
+    ProductItem *item = [[ProductItem alloc] init];
+    item.itemId = [NSNumber numberWithInt:283186];
+    item.sku = @"440915";
+    item.description = @"Driftwood Hon. Martel";
+    item.vendorName = @"SHAO LIN STONE/CHINA METALLURGICAL";
+    item.statusCode = @"S";
+    item.type = @"Travertine";
+    item.typeId = [NSNumber numberWithInt: 26];
+    item.binLocation = @"TR0520";
+    item.stockingCode = @"S";
+    item.defaultToBox = NO;
+    item.primaryUnitOfMeasure = @"EA";
+    item.secondaryUnitOfMeasure = @"EA";
+    item.conversion = [NSDecimalNumber decimalNumberWithString:@"1.00"];
+    item.priceGroupId = [NSNumber numberWithInt:123];
+    item.retailPricePrimary = [NSDecimalNumber decimalNumberWithString:@"8.99"];
+    item.retailPriceSecondary = [NSDecimalNumber decimalNumberWithString:@"10.99"];
+    item.standardCost = [NSDecimalNumber decimalNumberWithString:@"1.90"];
+    item.taxRate = [NSDecimalNumber decimalNumberWithString:@"0.7"];
+    item.taxExempt = NO;
+    [order addItemToOrder:item withQuantity:[NSDecimalNumber decimalNumberWithString:@"2.0"]];
+    
+    
+    ProductItem *itemTwo = [[ProductItem alloc] init];
+    itemTwo.itemId = [NSNumber numberWithInt:283186];
+    itemTwo.sku = @"440915";
+    itemTwo.description = @"Driftwood Hon. Martel";
+    itemTwo.vendorName = @"SHAO LIN STONE/CHINA METALLURGICAL";
+    itemTwo.statusCode = @"S";
+    itemTwo.type = @"Travertine";
+    itemTwo.typeId = [NSNumber numberWithInt: 26];
+    itemTwo.binLocation = @"TR0520";
+    itemTwo.stockingCode = @"S";
+    itemTwo.defaultToBox = NO;
+    itemTwo.primaryUnitOfMeasure = @"EA";
+    itemTwo.secondaryUnitOfMeasure = @"EA";
+    itemTwo.conversion = [NSDecimalNumber decimalNumberWithString:@"1.00"];
+    itemTwo.priceGroupId = [NSNumber numberWithInt:123];
+    itemTwo.retailPricePrimary = [NSDecimalNumber decimalNumberWithString:@"10.99"];
+    itemTwo.retailPriceSecondary = [NSDecimalNumber decimalNumberWithString:@"12.99"]; 
+    itemTwo.standardCost = [NSDecimalNumber decimalNumberWithString:@"1.80"];
+    itemTwo.taxRate = [NSDecimalNumber decimalNumberWithString:@"0.7"];
+    itemTwo.taxExempt = NO;
+    
+    [order addItemToOrder:itemTwo withQuantity:[NSDecimalNumber decimalNumberWithString:@"1.0"]];
+    
+    NSArray *orderItems = [order getOrderItems];
+    
+    OrderItem *orderItem = [orderItems objectAtIndex:0];
+    [orderItem setStatusToClosed];
+    
+    OrderItem *orderItemTwo = [orderItems objectAtIndex:1];
+    [orderItemTwo setStatusToClosed ];
+    
+    
+    Customer *customer = [[Customer alloc] init];
+    customer.customerTypeId = [NSNumber numberWithInt:2];
+    
+    order.customer = customer;
+    
+    CreditCardPayment *ccPayment = [[CreditCardPayment alloc] init];
+    ccPayment.paymentAmount = [NSDecimalNumber decimalNumberWithString:@"38.25"];
+    ccPayment.cardNumber = @"1234567890000";
+    ccPayment.lpToken = @"lpToken1";
+    ccPayment.tRouteD = @"tRouteD1";
+    
+    NSMutableArray *previousPayments = [NSArray arrayWithObject:ccPayment];
+    
+    order.previousPayments = previousPayments;
+    
+    
+    NSDecimalNumber *balanceDue = [order calcBalanceDue];
+    
+    
+    STAssertTrue([balanceDue compare: [NSDecimalNumber zero]] == NSOrderedDescending, @"Balance Due should be greater than zero");
 }
 
 @end
