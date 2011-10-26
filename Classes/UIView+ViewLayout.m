@@ -24,10 +24,14 @@
 }
 
 - (void) applyRoundedStyle: (UIColor *)borderColor withShadow: (BOOL) doApplyShadow {
+    NSString *layerName = @"rounded";
     self.clipsToBounds = NO;
     
+    // Remove any previous layer
+    [self removeLayerNamed:layerName];
+    
     CALayer *round = [CALayer layer];
-	round.name = @"rounded";
+	round.name = layerName;
     round.frame = self.bounds;
     // Round the corners
     round.masksToBounds = YES;
@@ -35,10 +39,12 @@
     // Set the borders
     round.borderWidth = 1.0f;
     round.borderColor = [borderColor CGColor];
+    
     [self.layer insertSublayer:round atIndex:0];
     
     // Add the drop shadow
     if (doApplyShadow) {
+        self.layer.cornerRadius = 5.0f;
         self.layer.shadowColor = [[UIColor blackColor] CGColor];
         self.layer.shadowOffset = CGSizeMake(0.0f, 3.0f);
         self.layer.shadowOpacity = 0.80f;
@@ -111,6 +117,19 @@
 	} else {
 		[self.layer insertSublayer:gradient atIndex:0];
 	}
+}
+
+- (void) removeLayerNamed: (NSString *) layerName {
+    NSArray *sublayers = self.layer.sublayers; 
+    
+    if (sublayers && [sublayers count] > 0) {
+        for (CALayer *layer in sublayers) {
+            if ([layer.name isEqualToString:layerName]) {
+                [layer removeFromSuperlayer];
+                break;
+            }
+        }
+    }
 }
 
 #pragma mark -

@@ -8,10 +8,21 @@
 
 #import <UIKit/UIKit.h>
 #import "OrderCart.h"
+#import "MOGlassButton.h"
 
 @interface ReceiptViewController : UIViewController {
     OrderCart *orderCart;
 	iPOSFacade *facade;
+    
+    // Handle to the views for layout
+    UIView *overlayView;
+    UIView *roundedView;
+    
+    MOGlassButton *emailReceiptButton;
+    MOGlassButton *printReceiptButton;
+    MOGlassButton *printEmailReceiptButton;
+    MOGlassButton *exitWithoutReceiptButton;
+
 }
 
 @end

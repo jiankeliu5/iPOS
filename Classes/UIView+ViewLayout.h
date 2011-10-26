@@ -20,6 +20,8 @@
 - (void) applyShineGradientToBackgroundWithColor:(UIColor *)color;
 - (void) applyGradientToBackgroundWithStartColor:(UIColor *)startColor endColor:(UIColor *)endColor;
 
+- (void) removeLayerNamed: (NSString *) layerName;
+
 #pragma mark Transformation Functions
 - (void) rotateView:(NSInteger) degrees animated:(BOOL) isAnimated;
 

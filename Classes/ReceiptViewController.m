@@ -10,18 +10,20 @@
 #import "ReceiptViewController.h"
 #import "UIViewController+ViewControllerLayout.h"
 #import "UIView+ViewLayout.h"
+#import "UIScreen+Helpers.h"
 
-#import "MOGlassButton.h"
-
-#define OVERLAY_MARGIN_TOP 75.0f
+#define OVERLAY_MARGIN_TOP 10.0f
 #define OVERLAY_MARGIN_LEFT 40.0f
 #define OVERLAY_MARGIN_RIGHT 40.0f
-#define OVERLAY_MARGIN_BOTTOM 80.0f
+#define OVERLAY_MARGIN_BOTTOM 100.0f
+#define OVERLAY_MARGIN_BOTTOM_LANDSCAPE 10.0f
 #define BUTTON_SPACE 20.0f
 #define BUTTON_WIDTH  200.0f
 #define BUTTON_HEIGHT 40.0f
 
 @interface ReceiptViewController()
+
+- (void) layoutView: (UIInterfaceOrientation) interfaceOrientation;
 
 - (void) handleEmailReceiptButton: (id) sender;
 
@@ -30,8 +32,7 @@
 @implementation ReceiptViewController
 
 #pragma mark Constructors
-- (id)init
-{
+- (id)init {
     self = [super init];
     if (self == nil)
         return nil;
@@ -56,7 +57,7 @@
 
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView {
-    CGRect rectForView = [self rectForNavAndStatus];
+    CGRect rectForView = [UIScreen rectForScreenView:[UIApplication sharedApplication].statusBarOrientation isNavBarVisible:YES];
     
     // Create the background view
     UIView *bgView = [[UIView alloc] initWithFrame:rectForView];
@@ -65,35 +66,17 @@
 	[bgView release];
     
     // Create the overlay view
-    UIView *overlay = [[[UIView alloc] initWithFrame:self.view.bounds] autorelease];
-    
-    overlay.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    overlayView = [[UIView alloc] initWithFrame:CGRectZero];
+    overlayView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
     
     // Add the rounded view
-    UIView *receiptRoundedView = [[[UIView alloc] 
-                                    initWithFrame:CGRectMake(OVERLAY_MARGIN_LEFT, OVERLAY_MARGIN_TOP, rectForView.size.width-OVERLAY_MARGIN_LEFT-OVERLAY_MARGIN_RIGHT, 
-                                                             rectForView.size.height-OVERLAY_MARGIN_TOP-OVERLAY_MARGIN_BOTTOM)] 
-                                    autorelease];
-    
-    [receiptRoundedView applyRoundedStyle:[UIColor blackColor] withShadow:YES];
-	[receiptRoundedView applyGradientToBackgroundWithStartColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0] 
-                                                    endColor:[UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1.0]];
-                                                    
-   
-    MOGlassButton *emailReceiptButton = [[[MOGlassButton alloc] 
-                                          initWithFrame:CGRectMake(floorf((receiptRoundedView.bounds.size.width - BUTTON_WIDTH) / 2.0f), BUTTON_SPACE, BUTTON_WIDTH, BUTTON_HEIGHT)] 
-                                          autorelease];
-    MOGlassButton *printReceiptButton = [[[MOGlassButton alloc] 
-                                          initWithFrame:CGRectMake(floorf((receiptRoundedView.bounds.size.width - BUTTON_WIDTH) / 2.0f), BUTTON_HEIGHT+2*BUTTON_SPACE, BUTTON_WIDTH, BUTTON_HEIGHT)] 
-                                         autorelease];
-    MOGlassButton *printEmailReceiptButton = [[[MOGlassButton alloc] 
-                                          initWithFrame:CGRectMake(floorf((receiptRoundedView.bounds.size.width - BUTTON_WIDTH) / 2.0f), 2*BUTTON_HEIGHT+3*BUTTON_SPACE, BUTTON_WIDTH, BUTTON_HEIGHT)] 
-                                         autorelease];
-    MOGlassButton *exitWithoutReceiptButton = [[[MOGlassButton alloc] 
-                                               initWithFrame:CGRectMake(floorf((receiptRoundedView.bounds.size.width - BUTTON_WIDTH) / 2.0f), 3*BUTTON_HEIGHT+4*BUTTON_SPACE, BUTTON_WIDTH, BUTTON_HEIGHT)] 
-                                              autorelease];
+    roundedView = [[UIView alloc] initWithFrame:CGRectZero];
+                                                        
+    emailReceiptButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
+    printReceiptButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
+    printEmailReceiptButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
+    exitWithoutReceiptButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
 
-    
     [emailReceiptButton setupAsSmallBlackButton];
     [emailReceiptButton setTitle:@"E-Mail Receipt" forState:UIControlStateNormal];
     [emailReceiptButton addTarget:self action:@selector(handleEmailReceiptButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -114,12 +97,20 @@
     [exitWithoutReceiptButton addTarget:self action:@selector(handleExitWithoutReceiptButton:) forControlEvents:UIControlEventTouchUpInside];
     exitWithoutReceiptButton.titleLabel.textAlignment = UITextAlignmentCenter;
     
-    [receiptRoundedView addSubview:emailReceiptButton];  
-    [receiptRoundedView addSubview:printReceiptButton];
-    [receiptRoundedView addSubview:printEmailReceiptButton]; 
-     [receiptRoundedView addSubview:exitWithoutReceiptButton]; 
-    [overlay addSubview:receiptRoundedView];
-    [self.view addSubview:overlay];
+    [roundedView addSubview:emailReceiptButton];  
+    [roundedView addSubview:printReceiptButton];
+    [roundedView addSubview:printEmailReceiptButton]; 
+     [roundedView addSubview:exitWithoutReceiptButton]; 
+    [overlayView addSubview:roundedView];
+    
+    [self.view addSubview:overlayView];
+    
+    [exitWithoutReceiptButton release];
+    [printReceiptButton release];
+    [printEmailReceiptButton release];
+    [emailReceiptButton release];
+    [roundedView release];
+    [overlayView release];
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -135,6 +126,8 @@
 
 
 - (void) viewWillAppear:(BOOL)animated {
+    [self layoutView:[UIApplication sharedApplication].statusBarOrientation];
+    
     [super viewWillAppear:animated];
 }
 
@@ -156,7 +149,12 @@
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations.
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
+}
+
+- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    // Receipt Rounded View placement
+    [self layoutView:toInterfaceOrientation];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -174,6 +172,34 @@
 
 #pragma mark -
 #pragma mark Private Methods
+- (void) layoutView:(UIInterfaceOrientation)interfaceOrientation {
+    CGRect viewBounds = [UIScreen rectForScreenView:interfaceOrientation isNavBarVisible:YES];
+    
+    self.view.frame = viewBounds;
+    overlayView.frame = viewBounds;
+    
+    // Size the rounded view
+    CGFloat bottomMargin = OVERLAY_MARGIN_BOTTOM;
+    
+    if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
+        bottomMargin = OVERLAY_MARGIN_BOTTOM_LANDSCAPE;
+    }
+    
+    roundedView.frame = CGRectMake(OVERLAY_MARGIN_LEFT, OVERLAY_MARGIN_TOP, 
+                                   viewBounds.size.width-OVERLAY_MARGIN_LEFT-OVERLAY_MARGIN_RIGHT, 
+                                   viewBounds.size.height-OVERLAY_MARGIN_TOP-bottomMargin);
+    
+    [roundedView applyRoundedStyle:[UIColor blackColor] withShadow:YES];
+	[roundedView applyGradientToBackgroundWithStartColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0] 
+                                                       endColor:[UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1.0]];
+    
+    // Resize the buttons
+    emailReceiptButton.frame = CGRectMake(floorf((roundedView.frame.size.width - BUTTON_WIDTH) / 2.0f), OVERLAY_MARGIN_TOP, BUTTON_WIDTH, BUTTON_HEIGHT);
+    printReceiptButton.frame = CGRectMake(floorf((roundedView.frame.size.width - BUTTON_WIDTH) / 2.0f), BUTTON_HEIGHT+OVERLAY_MARGIN_TOP+BUTTON_SPACE, BUTTON_WIDTH, BUTTON_HEIGHT); 
+    printEmailReceiptButton.frame = CGRectMake(floorf((roundedView.frame.size.width - BUTTON_WIDTH) / 2.0f), 2*BUTTON_HEIGHT+OVERLAY_MARGIN_TOP+2*BUTTON_SPACE, BUTTON_WIDTH, BUTTON_HEIGHT);
+    exitWithoutReceiptButton.frame = CGRectMake(floorf((roundedView.bounds.size.width - BUTTON_WIDTH) / 2.0f), 3*BUTTON_HEIGHT+OVERLAY_MARGIN_TOP+3*BUTTON_SPACE, BUTTON_WIDTH, BUTTON_HEIGHT);
+}
+
 - (void) handleEmailReceiptButton:(id)sender {
     Order *order = [orderCart getOrder];
     
@@ -193,7 +219,7 @@
     }
     
     // Logoff
-    [self. navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 -(void)handleExitWithoutReceiptButton:(id)sender {

@@ -814,7 +814,7 @@ static NSString * const CREDIT = @"credit";
     notesOverlay.notesDelegate = self;
     notesOverlay.notesData = [orderCart getOrder].notes;
     notesOverlay.purchaseOrderData = [orderCart getOrder].purchaseOrderId;
-    [self.navigationController pushViewController:notesOverlay animated:NO];
+    [self.navigationController pushViewController:notesOverlay animated:YES];
 }
 
 - (void) handleSuspendOrder:(id) sender {
