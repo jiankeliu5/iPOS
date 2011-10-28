@@ -204,7 +204,7 @@
             [[self navigationController] pushViewController:orderItemsViewController animated:TRUE];
             [orderItemsViewController release];
         } else {
-            [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Could not retrieve previous order.  Order Id: %@", pOrder.orderId]];
+            [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Could not retrieve previous order.  Order Id: %@", pOrder.orderId] withTitle:@"iPOS"];
         }
 	}
 }

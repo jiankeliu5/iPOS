@@ -205,17 +205,17 @@
     
     if (order && order.customer) {
         if (order.customer.emailAddress == nil || [order.customer.emailAddress isEqualToString:@""]) {
-            [AlertUtils showModalAlertMessage:@"Customer does not have e-mail address"];
+            [AlertUtils showModalAlertMessage:@"Customer does not have e-mail address" withTitle:@"iPOS"];
         }
         
         // Trigger the email
         if ([facade emailReceipt:order]) {
-            [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Receipt e-mailed to customer at %@", order.customer.emailAddress]];
+            [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Receipt e-mailed to customer at %@", order.customer.emailAddress] withTitle:@"iPOS"];
         } else {
-            [AlertUtils showModalAlertMessage:@"Sending e-mail to customer failed."];
+            [AlertUtils showModalAlertMessage:@"Sending e-mail to customer failed." withTitle:@"iPOS"];
         }
     } else {
-        [AlertUtils showModalAlertMessage:@"Order or Customer not available to send receipt."];
+        [AlertUtils showModalAlertMessage:@"Order or Customer not available to send receipt." withTitle:@"iPOS"];
     }
     
     // Logoff

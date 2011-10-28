@@ -360,6 +360,55 @@
 
 #pragma mark -
 #pragma mark Refund methods
+- (Refund *) getRefundInfo {
+    // TODO: Replace with actual building of a Refund object
+    Refund *refund = [[[Refund alloc] init] autorelease];
+    
+    // Add 4 refund items
+    RefundItem *refundItem1 = [[[RefundItem alloc] init] autorelease];
+    RefundItem *refundItem2 = [[[RefundItem alloc] init] autorelease];
+    RefundItem *refundItem3 = [[[RefundItem alloc] init] autorelease];
+    RefundItem *refundItem4 = [[[RefundItem alloc] init] autorelease];
+    RefundItem *refundItem5 = [[[RefundItem alloc] init] autorelease];
+    
+    CreditCardPayment *ccPay1 = [[[CreditCardPayment alloc] init] autorelease];
+    CreditCardPayment *ccPay2 = [[[CreditCardPayment alloc] init] autorelease];
+    CreditCardPayment *ccPay3 = [[[CreditCardPayment alloc] init] autorelease];
+    
+    refundItem1.orderPaymentTypeID = [NSNumber numberWithInt:ONACCT];
+    refundItem1.amount = [NSDecimalNumber decimalNumberWithString:@"40.00"];
+    
+    refundItem2.orderPaymentTypeID = [NSNumber numberWithInt:CREDITCARD_VISA];
+    refundItem2.amount = [NSDecimalNumber decimalNumberWithString:@"50.00"];
+    ccPay1.paymentRefId = @"ref1";
+    ccPay1.cardNumber = @"1234";
+    refundItem2.creditCard = ccPay1;
+    
+    refundItem3.orderPaymentTypeID = [NSNumber numberWithInt:CREDITCARD_VISA];
+    refundItem3.amount = [NSDecimalNumber decimalNumberWithString:@"30.00"];
+    ccPay2.paymentRefId = @"ref2";
+    ccPay2.cardNumber = @"4567";
+    refundItem3.isSignatureRequired = YES;
+    refundItem3.creditCard = ccPay2;
+    
+    refundItem4.orderPaymentTypeID = [NSNumber numberWithInt:CREDITCARD_VISA];
+    refundItem4.amount = [NSDecimalNumber decimalNumberWithString:@"25.00"];
+    refundItem4.creditCard = ccPay3;
+    
+    refundItem5.orderPaymentTypeID = [NSNumber numberWithInt:CASH];
+    refundItem5.amount = [NSDecimalNumber decimalNumberWithString:@"20.00"];
+    
+    refund.refundItems = [NSArray arrayWithObjects:refundItem1, refundItem2, refundItem3, refundItem4, refundItem5, nil];
+    
+    return refund;
+}
+
+- (NSDecimalNumber *) calcRefundTotal {
+    //TODO: Implement this method
+    return [NSDecimalNumber decimalNumberWithString:@"150.00"];
+}
+
+// TODO:  Move this to calcBalanceOwing method
 -(NSDecimalNumber *) calculateBalanceDueWithPreviousPayments:(NSDecimalNumber *) balance{
     
     NSDecimalNumber *previousBalancePaid = [NSDecimalNumber zero];
@@ -381,25 +430,27 @@
 }
 
 -(TenderDecision) isRefundEligble{
-        
-    NSDecimalNumber *currentBalanceDue = [self calcBalanceDue];
-    
-    NSComparisonResult comparisonresult = [[NSDecimalNumber zero] compare:currentBalanceDue ];
-    
-    if (comparisonresult == NSOrderedSame)
-    {
-        return NOCHANGE;
-    }
-    else if (comparisonresult == NSOrderedAscending)
-    {
-        return TENDER;
-    }
-    else
-    {
-        return REFUND;
-    }
+    // TODO: Implement this method
+    return REFUND;
+//    NSDecimalNumber *currentBalanceDue = [self calcBalanceDue];
+//    
+//    NSComparisonResult comparisonresult = [[NSDecimalNumber zero] compare:currentBalanceDue ];
+//    
+//    if (comparisonresult == NSOrderedSame)
+//    {
+//        return NOCHANGE;
+//    }
+//    else if (comparisonresult == NSOrderedAscending)
+//    {
+//        return TENDER;
+//    }
+//    else
+//    {
+//        return REFUND;
+//    }
 }
 
+//TODO:  Move the facade calls out of the object
 -(void) getPreviousPayments{
     if (!previousPayments)
     {

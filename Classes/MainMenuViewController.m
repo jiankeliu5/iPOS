@@ -258,7 +258,7 @@
     
     [orderCart addItem:item withQuantity:quantity];
     if ([orderCart getOrder].errorList && [[orderCart getOrder].errorList count] > 0) {
-        [AlertUtils showModalAlertForErrors:[orderCart getOrder].errorList];
+        [AlertUtils showModalAlertForErrors:[orderCart getOrder].errorList withTitle:@"iPOS"];
         return;
     }
     
@@ -357,7 +357,7 @@
         
         [addItemOverlay release];
     } else {
-        [AlertUtils showModalAlertMessage:@"No item(s) found"];
+        [AlertUtils showModalAlertMessage:@"No item(s) found" withTitle:@"iPOS"];
     }
 }
 

@@ -23,6 +23,7 @@
     Linea *linea;
     
     SearchItemView *searchOverlay;
+    AddItemView *addItemOverlay;
 	
 	UILabel *custPhoneLabel;
 	UILabel *custNameLabel;

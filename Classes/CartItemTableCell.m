@@ -269,7 +269,7 @@
 {
 	// note: we don't use 'sender' because this action method can be called separate from the button (i.e. from table selection)
 	if (self.closeChecked == NO && [self.orderItem allowClose] == NO) {
-		[AlertUtils showModalAlertMessage:@"Cannot close line.  Stock not available."];
+		[AlertUtils showModalAlertMessage:@"Cannot close line.  Stock not available." withTitle:@"iPOS"];
 	} else {
 		self.closeChecked = !self.closeChecked;
 		[self updateCloseButtonState];

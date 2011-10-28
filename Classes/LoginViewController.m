@@ -286,7 +286,7 @@
 				
 			} else {
 				[AlertUtils dismissAlertMessage:alert];
-				[AlertUtils showModalAlertMessage:@"Login failure.  Please try again."];
+				[AlertUtils showModalAlertMessage:@"Login failure.  Please try again." withTitle:@"iPOS"];
 			}
 			
 			[self setEmpId:nil];

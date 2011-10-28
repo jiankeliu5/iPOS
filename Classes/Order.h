@@ -25,6 +25,7 @@ typedef enum{
     NOCHANGE
 } TenderDecision;
 
+@class Refund;
 @interface Order : AbstractModel {
     NSNumber *orderId;
     NSNumber *orderTypeId;
@@ -109,6 +110,7 @@ typedef enum{
 - (NSDecimalNumber *) calcOrderSubTotal;
 - (NSDecimalNumber *) calcOrderTax;
 - (NSDecimalNumber *) calcOrderDiscountTotal;
+- (NSDecimalNumber *) calcBalanceOwing;
 - (NSDecimalNumber *) calcBalanceDue;
 - (NSDecimalNumber *) calcClosedItemsBalance;
 - (NSDecimalNumber *) calculateProfitMargin;
@@ -116,5 +118,8 @@ typedef enum{
 #pragma mark -
 #pragma mark Refund methods
 -(TenderDecision) isRefundEligble;
+
+- (Refund *) getRefundInfo;
+- (NSDecimalNumber *) calcRefundTotal;
 
 @end

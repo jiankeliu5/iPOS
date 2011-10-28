@@ -10,7 +10,7 @@
 
 @implementation RefundItem
 
-@synthesize creditCard, amount, orderPaymentTypeID;
+@synthesize creditCard, amount, orderPaymentTypeID, isSignatureRequired;
 
 - (id)init
 {
@@ -30,6 +30,10 @@
     return (id == 3 || id == 4 | id == 5 || id == 6);
     
     
+}
+
+- (PaymentType) getPaymentType {
+    return [orderPaymentTypeID intValue];
 }
 
 @end

@@ -244,10 +244,10 @@
                     [[self navigationController] pushViewController:orderItemsViewController animated:TRUE];
                     [orderItemsViewController release];
                 } else {
-                    [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Could not retrieve previous order.  Order Id: %@", orderIdInput]];
+                    [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Could not retrieve previous order.  Order Id: %@", orderIdInput] withTitle:@"iPOS"];
                 }
             } else {
-                [AlertUtils showModalAlertMessage:@"Please input a numeric order id."];
+                [AlertUtils showModalAlertMessage:@"Please input a numeric order id." withTitle:@"iPOS"];
             }
     
         } else if ([textField.tagName isEqualToString:@"LookupOrderPhone"] && [textField.text length] > 0) {
@@ -273,7 +273,7 @@
                             [[self navigationController] pushViewController:orderItemsViewController animated:TRUE];
                             [orderItemsViewController release];
                         } else {
-                            [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Could not retrieve previous order.  Order Id: %@", p.orderId]];
+                            [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Could not retrieve previous order.  Order Id: %@", p.orderId] withTitle:@"iPOS"];
                         }
                     } else {
                         NSLog(@"Found %d previous orders.", [foundOrderList count]);
@@ -300,7 +300,7 @@
                     textField.text = nil;
                 }
             } else {
-                [AlertUtils showModalAlertMessage:@"Please enter a 10 digit phone number"];
+                [AlertUtils showModalAlertMessage:@"Please enter a 10 digit phone number" withTitle:@"iPOS"];
             }
         }
     }

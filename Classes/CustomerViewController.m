@@ -299,7 +299,7 @@
 			[self updateDisplayValues];
 		}
 	} else {
-		[AlertUtils showModalAlertMessage:@"Please enter a 10 digit phone number"];
+		[AlertUtils showModalAlertMessage:@"Please enter a 10 digit phone number" withTitle:@"iPOS"];
 	}
 }
 
@@ -328,7 +328,7 @@
         
         // There may have been issues binding the customer
         if (custCpy.errorList && [custCpy.errorList count] > 0) {
-            [AlertUtils showModalAlertForErrors:custCpy.errorList];
+            [AlertUtils showModalAlertForErrors:custCpy.errorList withTitle:@"iPOS"];
             return;
         }
         

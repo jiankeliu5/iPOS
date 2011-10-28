@@ -160,7 +160,7 @@
 
 - (void) verificationView:(SessionVerificationView *)aVerificationView submitPassword:(NSString *)password {
 	if ([password length] == 0) {
-		[AlertUtils showModalAlertMessage:@"Please input a password."];
+		[AlertUtils showModalAlertMessage:@"Please input a password." withTitle:@"iPOS"];
 		[aVerificationView makePasswordFieldFirstResponder];
 	} else {
 		SessionStatus sessionValid = [facade verifySession:password];
@@ -172,17 +172,17 @@
 			case SessionBadPassword:
 				self.verifyPasswordTries++;
 				if (self.verifyPasswordTries >= MAX_PASSWORD_RETRIES) {
-					[AlertUtils showModalAlertMessage:@"Password retry limit exceeded.  Logging out."];
+					[AlertUtils showModalAlertMessage:@"Password retry limit exceeded.  Logging out." withTitle:@"iPOS"];
 					self.verifyPasswordTries = 0;
 					[aVerificationView removeFromSuperview];
 					[navigationController popToRootViewControllerAnimated:YES];
 				} else {
-					[AlertUtils showModalAlertMessage:@"Invalid Password.  Please try again."];
+					[AlertUtils showModalAlertMessage:@"Invalid Password.  Please try again." withTitle:@"iPOS"];
 					[aVerificationView makePasswordFieldFirstResponder];
 				}
 				break;
 			case SessionExpired:
-				[AlertUtils showModalAlertMessage:@"Session expired, please login again."];
+				[AlertUtils showModalAlertMessage:@"Session expired, please login again." withTitle:@"iPOS"];
 				self.verifyPasswordTries = 0;
 				[aVerificationView removeFromSuperview];
 				[navigationController popToRootViewControllerAnimated:YES];

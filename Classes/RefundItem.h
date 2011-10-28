@@ -15,12 +15,16 @@
     NSDecimalNumber *amount;
     NSNumber *orderPaymentTypeID;
     CreditCardPayment *creditCard;
+    
+    BOOL isSignatureRequired;
 }
 
 @property (nonatomic, retain) NSDecimalNumber *amount;
 @property (nonatomic, retain) NSNumber *orderPaymentTypeID;
 @property (nonatomic, retain) CreditCardPayment *creditCard;
+@property (nonatomic, assign, getter=isSignatureRequired) BOOL isSignatureRequired;
 
 -(BOOL) isCreditCard;
+- (PaymentType) getPaymentType;
 
 @end

@@ -117,7 +117,7 @@
 			NSLog(@"Error Id: %@ %@", [e errorId], [e message]);
 			[errMsg appendFormat:@"\nError (%d): %@", [e errorId], [e message]];
 		}
-		[AlertUtils showModalAlertMessage:errMsg];
+		[AlertUtils showModalAlertMessage:errMsg withTitle:@"iPOS"];
 	} else {
 		NSLog(@"No errors from new customer call");
 		NSMutableDictionary *updatedModel = [editedCust modelFromCustomer];
@@ -175,7 +175,7 @@
 			NSLog(@"Error Id: %@ %@", [e errorId], [e message]);
 			[errMsg appendFormat:@"\nError (%d): %@", [e errorId], [e message]];
 		}
-		[AlertUtils showModalAlertMessage:errMsg];
+		[AlertUtils showModalAlertMessage:errMsg withTitle:@"iPOS"];
 	} else {
 		NSLog(@"No errors in customer");
 		NSMutableDictionary *updatedModel = [editedCust modelFromCustomer];
@@ -191,7 +191,7 @@
 		}
         
         if (custCopy.errorList && [custCopy.errorList count] > 0) {
-            [AlertUtils showModalAlertForErrors:custCopy.errorList];
+            [AlertUtils showModalAlertForErrors:custCopy.errorList withTitle:@"iPOS"];
             return;
         }
 		

@@ -356,7 +356,7 @@
 
 - (void) handleCloseButton:(id)sender {
     if (![orderCart closeItem:orderItem]) {
-        [AlertUtils showModalAlertMessage:@"Cannot close line.  Stock not available."];
+        [AlertUtils showModalAlertMessage:@"Cannot close line.  Stock not available." withTitle:@"iPOS"];
     } else {
         [self.navigationController popViewControllerAnimated:YES];
     }

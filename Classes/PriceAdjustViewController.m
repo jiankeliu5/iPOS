@@ -246,17 +246,17 @@
 	[self resignFirstResponderIfPossible];
 	
 	if ([discountField.text length] == 0) {
-		[AlertUtils showModalAlertMessage:@"Please enter discount amount."];
+		[AlertUtils showModalAlertMessage:@"Please enter discount amount." withTitle:@"iPOS"];
 		return;
 	} else {
 		discount = (NSDecimalNumber *)[discountFormatter numberFromString:discountField.text];
 		if (discount == nil) {
-			[AlertUtils showModalAlertMessage:@"Incorrect format entered for discount."];
+			[AlertUtils showModalAlertMessage:@"Incorrect format entered for discount." withTitle:@"iPOS"];
 			return;
 		}
 		if ([mgrIdField.text length] > 0) {
 			if ([mgrPasswordField.text length] == 0) {
-				[AlertUtils showModalAlertMessage:@"Password must be entered with Id."];
+				[AlertUtils showModalAlertMessage:@"Password must be entered with Id." withTitle:@"iPOS"];
 				return;
 			} else {
 				mgr = [[ManagerInfo alloc] init];
@@ -267,7 +267,7 @@
 	}
 
 	if ([facade adjustSellingPriceFor:self.orderItem withDiscountAmount:discount managerApproval:mgr] == NO) {
-		[AlertUtils showModalAlertMessage:@"Discount adjustment was rejected.  Please enter a different value or manager credentials."];
+		[AlertUtils showModalAlertMessage:@"Discount adjustment was rejected.  Please enter a different value or manager credentials." withTitle:@"iPOS"];
 	} else {
 		[self.navigationController popViewControllerAnimated:YES];
 	}

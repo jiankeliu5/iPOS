@@ -457,6 +457,11 @@
     if (searchOverlay) {
         searchOverlay.frame = self.view.bounds;
     }
+    
+    // Layout add item overlay (adjusting frame triggers a layoutSubviews of add item overlay)
+    if (addItemOverlay) {
+        addItemOverlay.frame = viewBounds;
+    }
 }
 
 #pragma mark -
@@ -601,7 +606,7 @@
 		}
 		if (orderItem.shouldClose && [orderItem isClosed] == NO) {
 			if (![orderCart closeItem:orderItem]) {
-				[AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Cannot close line for sku %@.  Stock not available.", orderItem.item.sku]];
+				[AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Cannot close line for sku %@.  Stock not available.", orderItem.item.sku] withTitle:@"iPOS"];
 			}
 		} else if ([orderItem isClosed] && orderItem.shouldClose == NO) {
 			[orderItem setStatusToOpen];
@@ -656,10 +661,10 @@
 			// Send off the order as a quote.
 			[facade newQuote:order];
 			if (order.errorList != nil && [order.errorList count] > 0) {
-                [AlertUtils showModalAlertForErrors:order.errorList];
+                [AlertUtils showModalAlertForErrors:order.errorList withTitle:@"iPOS"];
 			} else {
 				// Go clear back to the login screen.
-                [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Quote %@ was successfully created.", order.orderId]];
+                [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Quote %@ was successfully created.", order.orderId] withTitle:@"iPOS"];
 				[self.navigationController popToRootViewControllerAnimated:YES];
 			}
 		}
@@ -835,11 +840,12 @@
 	
     [orderCart addItem:item withQuantity:quantity];
     if ([orderCart getOrder].errorList && [[orderCart getOrder].errorList count] > 0) {
-        [AlertUtils showModalAlertForErrors:[orderCart getOrder].errorList];
+        [AlertUtils showModalAlertForErrors:[orderCart getOrder].errorList withTitle:@"iPOS"];
         return;
     }
 	
 	[addItemView removeFromSuperview];
+    addItemOverlay = nil;
 	
 	[linea addDelegate:self];
 	
@@ -853,6 +859,7 @@
 
 - (void) cancelAddItem:(AddItemView *)addItemView {
 	[addItemView removeFromSuperview];
+    addItemOverlay = nil;
     
     logoutButton.enabled = YES;
     
@@ -888,23 +895,23 @@
     if (foundItems && [foundItems count] > 0) {
         [linea removeDelegate:self];
         
-        AddItemView *overlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
-        [overlay setViewDelegate:self];
+        addItemOverlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
+        [addItemOverlay setViewDelegate:self];
         
-        [self.view addSubview:overlay];
+        [self.view addSubview:addItemOverlay];
         
         if ([foundItems count] == 1) {
-            [overlay setItemToAdd:(ProductItem *) [foundItems objectAtIndex:0]];
+            [addItemOverlay setItemToAdd:(ProductItem *) [foundItems objectAtIndex:0]];
         } else {
-            [overlay setProductItemList:foundItems];
+            [addItemOverlay setProductItemList:foundItems];
         }
         
         // Disable the suspend button
         logoutButton.enabled = NO;
         
-        [overlay release];
+        [addItemOverlay release];
     } else {
-        [AlertUtils showModalAlertMessage:@"No item(s) found"];
+        [AlertUtils showModalAlertMessage:@"No item(s) found" withTitle:@"iPOS"];
     }
     
 }

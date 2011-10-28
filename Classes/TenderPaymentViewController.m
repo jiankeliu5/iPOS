@@ -405,11 +405,11 @@ static NSString * const CREDIT = @"credit";
         //If the amount is greater than our credit available then display a warning
         if([amount compare:[[orderCart getCustomerForOrder] calculateAccountBalance]] == NSOrderedDescending)
         {
-            [AlertUtils showModalAlertMessage:@"Cannot charge more than the account balance."];
+            [AlertUtils showModalAlertMessage:@"Cannot charge more than the account balance." withTitle:@"iPOS"];
             return; 
         }
         else if ([amount compare:orderAmount] == NSOrderedDescending) {
-            [AlertUtils showModalAlertMessage:@"Cannot charge more than the order total balance."];
+            [AlertUtils showModalAlertMessage:@"Cannot charge more than the order total balance." withTitle:@"iPOS"];
             return;        
         }
         else
@@ -435,10 +435,10 @@ static NSString * const CREDIT = @"credit";
     else if (textField.tagName == CREDIT)
     {
         if ([amount compare:balanceDue] == NSOrderedAscending) {
-            [AlertUtils showModalAlertMessage:@"Cannot charge less than the balance due."];
+            [AlertUtils showModalAlertMessage:@"Cannot charge less than the balance due." withTitle:@"iPOS"];
             return;
         } else if ([amount compare:orderAmount] == NSOrderedDescending) {
-            [AlertUtils showModalAlertMessage:@"Cannot charge more than the order total balance."];
+            [AlertUtils showModalAlertMessage:@"Cannot charge more than the order total balance." withTitle:@"iPOS"];
             return;
         }
         
@@ -516,7 +516,7 @@ static NSString * const CREDIT = @"credit";
             [self.ccPayment attachSignature:signature];
             
             if (![facade acceptSignatureFor:self.ccPayment]) {
-                [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Problem accepting signature for payment with ref #%@.", [ccPayment paymentRefId]]];
+                [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Problem accepting signature for payment with ref #%@.", [ccPayment paymentRefId]] withTitle:@"iPOS"];
                 //isSignatureAccepted = NO;
             }
             else {
@@ -529,7 +529,7 @@ static NSString * const CREDIT = @"credit";
             [self.ccPayment attachSignature:signature];
 
             if (![facade acceptSignatureOnAccount:self.ccPayment]) {
-                [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Problem accepting signature for payment with ref #%@.", [ccPayment paymentRefId]]];
+                [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Problem accepting signature for payment with ref #%@.", [ccPayment paymentRefId]] withTitle:@"iPOS"];
             }
             else {
                 
@@ -548,7 +548,7 @@ static NSString * const CREDIT = @"credit";
     }
     else
     {
-      [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"A Signature was not provided for payment with ref #%@.", [ccPayment paymentRefId]]];
+      [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"A Signature was not provided for payment with ref #%@.", [ccPayment paymentRefId]] withTitle:@"iPOS"];
        
     }
 }
@@ -831,7 +831,7 @@ static NSString * const CREDIT = @"credit";
         return YES;
     }
     
-    [AlertUtils showModalAlertForErrors:cartOrder.errorList];
+    [AlertUtils showModalAlertForErrors:cartOrder.errorList withTitle:@"iPOS"];
     return NO;    
 }
 
@@ -907,7 +907,7 @@ static NSString * const CREDIT = @"credit";
     
     // For now dismiss and logout
     [self dismissModalViewControllerAnimated:YES];
-    [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Order %@ was successfully processed.", [orderCart getOrder].orderId]];
+    [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Order %@ was successfully processed.", [orderCart getOrder].orderId] withTitle:@"iPOS"];
     
     // Navigate to the Send Receipt View Controller
     [[self navigationController] pushViewController:[[[ReceiptViewController alloc]init]autorelease] animated:YES];
@@ -927,7 +927,7 @@ static NSString * const CREDIT = @"credit";
 - (void) cancelTenderAndLogout {
     Order *order = [orderCart getOrder];
     
-    [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Order %@ was created, but no payment received.", order.orderId]];
+    [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Order %@ was created, but no payment received.", order.orderId] withTitle:@"iPOS"];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 

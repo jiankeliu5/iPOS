@@ -497,7 +497,7 @@
         self.itemToAdd = [[iPOSFacade sharedInstance] lookupProductItem:sku];
         
         if (itemToAdd == nil) {
-            [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Problem getting item details with sku '%@'", sku]]; 
+            [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Problem getting item details with sku '%@'", sku] withTitle:@"iPOS"]; 
         } else {
             [self slideToItemDetails];
         }

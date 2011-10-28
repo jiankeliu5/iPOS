@@ -11,6 +11,17 @@
 #import "AbstractModel.h"
 #import "Order.h"
 
+typedef enum {
+    UNKNOWN,
+    CASH,
+    CHECK,
+    CREDITCARD_VISA,
+    CREDITCARD_MC,
+    CREDITCARD_DISCOVER,
+    CREDITCARD_AX,
+    ONACCT
+} PaymentType;
+
 @interface Payment : AbstractModel {
     NSNumber *orderId;
     NSNumber *customerId;
