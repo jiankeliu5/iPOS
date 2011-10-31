@@ -92,6 +92,34 @@
 
 #pragma mark -
 #pragma mark Customer Mgmt Tests
+- (void) testPosFacadeLookupCustomerByName {
+    iPOSFacade *facade = [iPOSFacade sharedInstance];
+    
+    // We are setting to demo mode
+    [((iPOSServiceImpl *) facade.posService) setToDemoMode];
+    
+    // We have to login first
+    [facade login:@"123" password:@"456"];
+    
+    NSArray *custList = [facade lookupCustomerByName:@"match"];
+    
+    STAssertTrue([custList count] == 2, @"Expected 2 matches not %d", [custList count]);
+}
+
+- (void) testPosFacadeLookupCustomerByNameNotFound {
+    iPOSFacade *facade = [iPOSFacade sharedInstance];
+    
+    // We are setting to demo mode
+    [((iPOSServiceImpl *) facade.posService) setToDemoMode];
+    
+    // We have to login first
+    [facade login:@"123" password:@"456"];
+    
+    NSArray *custList = [facade lookupCustomerByName:@"nomatch"];
+    
+    STAssertTrue([custList count] == 0, @"Expected 0 matches not %d", [custList count]);
+}
+
 - (void) testPosFacadeLookupCustomer {
     iPOSFacade *facade = [iPOSFacade sharedInstance];
     

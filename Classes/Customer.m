@@ -8,6 +8,7 @@
 
 #import "Customer.h"
 #import "CustomerXmlMarshaller.h"
+#import "CustomerListXmlMarshaller.h"
 
 
 @implementation Customer
@@ -395,6 +396,11 @@
 
 #pragma mark -
 #pragma mark Customer XML Marshalling
++ (NSArray *) listFromXml:(NSString *)xmlString {
+    CustomerListXmlMarshaller *marshaller = [[[CustomerListXmlMarshaller alloc] init] autorelease];
+    return (NSArray *) [marshaller toObject:xmlString];    
+}
+
 + (Customer *) fromXml:(NSString *)xmlString {
     CustomerXmlMarshaller *marshaller = [[[CustomerXmlMarshaller alloc] init] autorelease];
     return (Customer *) [marshaller toObject:xmlString]; 

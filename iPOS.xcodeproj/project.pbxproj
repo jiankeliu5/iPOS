@@ -238,6 +238,14 @@
 		D65B25D31331C8B60052AEE2 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
 		D65B25D61331C8B60052AEE2 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
 		D65B25D71331C8B60052AEE2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
+		D65C9767145EF84700600034 /* CustomerListXmlMarshaller.h in Headers */ = {isa = PBXBuildFile; fileRef = D65C9765145EF84700600034 /* CustomerListXmlMarshaller.h */; };
+		D65C9768145EF84700600034 /* CustomerListXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = D65C9766145EF84700600034 /* CustomerListXmlMarshaller.m */; };
+		D65C976B145EFF9C00600034 /* CustomerListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D65C9769145EFF9C00600034 /* CustomerListViewController.h */; };
+		D65C976C145EFF9C00600034 /* CustomerListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D65C976A145EFF9C00600034 /* CustomerListViewController.m */; };
+		D65C976F145F000000600034 /* CustomerListTableCell.h in Headers */ = {isa = PBXBuildFile; fileRef = D65C976D145F000000600034 /* CustomerListTableCell.h */; };
+		D65C9770145F000000600034 /* CustomerListTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D65C976E145F000000600034 /* CustomerListTableCell.m */; };
+		D65C9773145F2AFE00600034 /* LookupOrderUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = D65C9771145F2AFD00600034 /* LookupOrderUtil.h */; };
+		D65C9774145F2AFE00600034 /* LookupOrderUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D65C9772145F2AFD00600034 /* LookupOrderUtil.m */; };
 		D67943B2131608C1004B8254 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FC1302586800B77769 /* CFNetwork.framework */; };
 		D67943B3131608C1004B8254 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		D67943B4131608C1004B8254 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
@@ -812,6 +820,14 @@
 		D656013D130B71B4000968BA /* iPosFacadeWithMocksTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPosFacadeWithMocksTestCase.m; sourceTree = "<group>"; };
 		D65B25DE1331C8B60052AEE2 /* iPOSTesting.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iPOSTesting.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D65B25E31331C8B60052AEE2 /* iPOSTesting-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iPOSTesting-Info.plist"; sourceTree = "<group>"; };
+		D65C9765145EF84700600034 /* CustomerListXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerListXmlMarshaller.h; sourceTree = "<group>"; };
+		D65C9766145EF84700600034 /* CustomerListXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerListXmlMarshaller.m; sourceTree = "<group>"; };
+		D65C9769145EFF9C00600034 /* CustomerListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerListViewController.h; sourceTree = "<group>"; };
+		D65C976A145EFF9C00600034 /* CustomerListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerListViewController.m; sourceTree = "<group>"; };
+		D65C976D145F000000600034 /* CustomerListTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerListTableCell.h; sourceTree = "<group>"; };
+		D65C976E145F000000600034 /* CustomerListTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerListTableCell.m; sourceTree = "<group>"; };
+		D65C9771145F2AFD00600034 /* LookupOrderUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookupOrderUtil.h; sourceTree = "<group>"; };
+		D65C9772145F2AFD00600034 /* LookupOrderUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookupOrderUtil.m; sourceTree = "<group>"; };
 		D679438C131607A8004B8254 /* IntTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D683BE0C1321437A008D923F /* Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Store.h; sourceTree = "<group>"; };
 		D683BE0D1321437A008D923F /* Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Store.m; sourceTree = "<group>"; };
@@ -1430,8 +1446,14 @@
 		B40D9304143D457600F9D89C /* LookupOrder */ = {
 			isa = PBXGroup;
 			children = (
+				D65C9771145F2AFD00600034 /* LookupOrderUtil.h */,
+				D65C9772145F2AFD00600034 /* LookupOrderUtil.m */,
 				B40D9305143D45F900F9D89C /* LookupOrderViewController.h */,
 				B40D9306143D45F900F9D89C /* LookupOrderViewController.m */,
+				D65C9769145EFF9C00600034 /* CustomerListViewController.h */,
+				D65C976A145EFF9C00600034 /* CustomerListViewController.m */,
+				D65C976D145F000000600034 /* CustomerListTableCell.h */,
+				D65C976E145F000000600034 /* CustomerListTableCell.m */,
 				B46240BA143EA6BE0094C485 /* OrderListViewController.h */,
 				B46240BB143EA6BE0094C485 /* OrderListViewController.m */,
 				B44BB2B514411C2F00E383CB /* OrderListTableCell.h */,
@@ -1956,6 +1978,8 @@
 				D6B1935B133BEF22004C4FD1 /* XmlMarshaller.h */,
 				D6B19361133C02B7004C4FD1 /* CustomerXmlMarshaller.h */,
 				D6B19362133C02B7004C4FD1 /* CustomerXmlMarshaller.m */,
+				D65C9765145EF84700600034 /* CustomerListXmlMarshaller.h */,
+				D65C9766145EF84700600034 /* CustomerListXmlMarshaller.m */,
 				D6B1936D133C02E7004C4FD1 /* LoginXmlMarshaller.h */,
 				D6B1936E133C02E7004C4FD1 /* LoginXmlMarshaller.m */,
 				D6B19371133C02F7004C4FD1 /* OrderXmlMarshaller.h */,
@@ -2078,6 +2102,10 @@
 				D6E0C8311458522300A97D2B /* RefundViewController.h in Headers */,
 				D6E0C8351458524800A97D2B /* RefundView.h in Headers */,
 				D6E0C84814588E9100A97D2B /* RefundItemTableCell.h in Headers */,
+				D65C9767145EF84700600034 /* CustomerListXmlMarshaller.h in Headers */,
+				D65C976B145EFF9C00600034 /* CustomerListViewController.h in Headers */,
+				D65C976F145F000000600034 /* CustomerListTableCell.h in Headers */,
+				D65C9773145F2AFE00600034 /* LookupOrderUtil.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2669,6 +2697,10 @@
 				D6E0C8321458522300A97D2B /* RefundViewController.m in Sources */,
 				D6E0C8361458524800A97D2B /* RefundView.m in Sources */,
 				D6E0C84914588E9100A97D2B /* RefundItemTableCell.m in Sources */,
+				D65C9768145EF84700600034 /* CustomerListXmlMarshaller.m in Sources */,
+				D65C976C145EFF9C00600034 /* CustomerListViewController.m in Sources */,
+				D65C9770145F000000600034 /* CustomerListTableCell.m in Sources */,
+				D65C9774145F2AFE00600034 /* LookupOrderUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

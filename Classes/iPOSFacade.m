@@ -84,6 +84,10 @@ static iPOSFacade *facade = nil;
 
 #pragma mark -
 #pragma mark Customer Management
+- (NSArray *) lookupCustomerByName:(NSString *)customerName {
+    return [self.posService lookupCustomerByName:customerName withSession:sessionInfo];
+}
+
 -(Customer *) lookupCustomerByPhone:(NSString *)phoneNumber {
     return [self.posService lookupCustomerByPhone:phoneNumber withSession:sessionInfo];
 }

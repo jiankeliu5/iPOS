@@ -169,6 +169,32 @@
 
 #pragma mark -
 #pragma mark Customer Mgmt APIs
+- (NSArray *) lookupCustomerByName:(NSString *) customerName withSession:(SessionInfo *) sessionInfo {
+    if (sessionInfo == nil) {
+        return nil;
+    }
+    
+    // Fetch the list
+    NSString *customerlookupUri = @"customerlookup";
+    ASIHTTPRequest *request = [self getRequestForSession:sessionInfo serviceDomainUri:posCustomerMgmtUri serviceUri:customerlookupUri];
+    
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    
+    NSString *requestXml = [NSString stringWithFormat:@"<CustomerSearch>%@</CustomerSearch>", customerName];    
+    [request appendPostData:[requestXml dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [request startSynchronous];
+    
+    NSArray *requestErrors = [request validateAsXmlContent];
+    if ([requestErrors count] > 0) {
+        return nil;   
+    } 
+    
+    NSArray *items = [Customer listFromXml:[request responseString]];
+    
+    return items;
+}
+
 -(Customer *) lookupCustomerByPhone:(NSString *)phoneNumber withSession:(SessionInfo *)sessionInfo {
     if (sessionInfo == nil) {
         return nil;
@@ -300,7 +326,7 @@
         order.salesPersonEmployeeId = sessionInfo.employeeId;
     }
     // Send the new order request
-    ASIHTTPRequest *request = [self getRequestForSession:sessionInfo serviceDomainUri:posOrderMgmtUri serviceUri:@"new"];
+    ASIHTTPRequest *request = [self getRequestForSession:sessionInfo serviceDomainUri:posOrderMgmtUri serviceUri:@"save"];
     
     // Post data for order
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];

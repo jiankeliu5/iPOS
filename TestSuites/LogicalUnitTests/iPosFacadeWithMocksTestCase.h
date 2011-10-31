@@ -31,6 +31,7 @@
 
 #pragma mark -
 #pragma mark Customer Management Services Tests
+- (void) testLookupCustomerByName;
 -(void) testLookupCustomerFound;
 -(void) testLookupCustomerNotFound;
 

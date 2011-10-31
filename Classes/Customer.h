@@ -73,6 +73,7 @@
 
 #pragma mark -
 #pragma mark Marshalling methods
++ (NSArray *) listFromXml: (NSString *) xmlString;
 + (Customer *) fromXml: (NSString *) xmlString;
 - (NSString *) toXml;
 

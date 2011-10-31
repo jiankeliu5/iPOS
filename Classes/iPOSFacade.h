@@ -43,6 +43,7 @@ typedef enum { SessionOk = 0,
 - (BOOL) logout;
 
 #pragma mark iPOS Customer Management
+- (NSArray *) lookupCustomerByName: (NSString *) customerName;
 -(Customer *) lookupCustomerByPhone: (NSString *) phoneNumber;
 -(void) newCustomer: (Customer *) customer;
 -(void) updateCustomer: (Customer *) customer;

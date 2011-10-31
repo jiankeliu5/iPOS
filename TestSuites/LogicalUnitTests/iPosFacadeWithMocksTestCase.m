@@ -43,6 +43,12 @@
 
 #pragma mark -
 #pragma mark Customer Service Mock Tests
+- (void) testLookupCustomerByName {
+    NSArray *custList = [facade lookupCustomerByName:@"test"];
+                         
+    STAssertTrue([custList count] == 2, @"Expected the count list to be 2 but was %d", [custList count]);
+}
+                         
 -(void) testLookupCustomerFound {
     Customer *customer = [facade lookupCustomerByPhone:@"612-807-6120"];
     

@@ -34,8 +34,8 @@
     
 	// Set up the items that will appear in a navigation controller bar if
 	// this view controller is added to a UINavigationController.
-	[[self navigationItem] setTitle:@"Order List"];
-	[self setTitle:@"Order List"];
+	[[self navigationItem] setTitle:@"Orders"];
+	[self setTitle:@"Orders"];
     
 	facade = [iPOSFacade sharedInstance];
 	orderCart = [OrderCart sharedInstance];
@@ -127,7 +127,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     if (self.navigationController != nil) {
 		[self.navigationController setNavigationBarHidden:NO];
-		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Order List" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
+		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Orders" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
 	}
     
     [self layoutView: [UIApplication sharedApplication].statusBarOrientation];

@@ -47,6 +47,25 @@
 
 #pragma mark -
 #pragma mark Customer Mgmt APIs
+- (NSArray *) lookupCustomerByName:(NSString *)nameSearch withSession:(SessionInfo *)sessionInfo {
+    Customer *cust1 = [[[Customer alloc] init] autorelease];
+    Customer *cust2 = [[[Customer alloc] init] autorelease];
+    
+    cust1.customerId = [NSNumber numberWithInt:1414];
+    cust1.customerType = @"Retail";
+    cust1.firstName = @"Torey";
+    cust1.lastName = @"Lomenda";
+    cust1.phoneNumber = @"612-807-6120";
+    
+    cust2.customerId = [NSNumber numberWithInt:1415];
+    cust2.customerType = @"Contractor1";
+    cust2.firstName = @"Jimmy";
+    cust2.lastName = @"Lomenda";
+    cust2.phoneNumber = @"612-807-6121";
+    
+    return [NSArray arrayWithObjects:cust1, cust2, nil];
+    
+}
 -(Customer *) lookupCustomerByPhone:(NSString *)phoneNumber withSession:(SessionInfo *)sessionInfo {
     if ([phoneNumber isEqualToString:@"612-807-6120"]) {
         Customer *customer = [[[Customer alloc] init] autorelease];

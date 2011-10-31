@@ -21,6 +21,7 @@
 
 #pragma mark iPOS Customer Management
 @required
+-(NSArray *) lookupCustomerByName: (NSString *) customerName withSession: (SessionInfo *) sessionInfo;
 -(Customer *) lookupCustomerByPhone: (NSString *) phoneNumber withSession: (SessionInfo *) sessionInfo;
 -(void) newCustomer: (Customer *) customer withSession: (SessionInfo *) sessionInfo;
 -(void) updateCustomer: (Customer *) customer withSession: (SessionInfo *) sessionInfo;

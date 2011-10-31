@@ -16,8 +16,9 @@
     iPOSFacade *facade;
     OrderCart *orderCart;
     
-    ExtUITextField *lookupOrderIdField;
+    ExtUITextField *lookupCustomerField;
     ExtUITextField *lookupOrderPhoneField;
+    ExtUITextField *lookupOrderIdField;
     
     UIBarButtonItem *closeBarButton;
     

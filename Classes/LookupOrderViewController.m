@@ -9,9 +9,13 @@
 #import "LookupOrderViewController.h"
 #import "Order.h"
 #import "PreviousOrder.h"
+
 #import "AlertUtils.h"
+#import "LookupOrderUtil.h"
+
 #import "OrderListViewController.h"
 #import "OrderItemsViewController.h"
+#import "CustomerListViewController.h"
 
 #import "UIScreen+Helpers.h"
 
@@ -36,7 +40,7 @@
     
     // Set up the items that will appear in a navigation controller bar if
 	// this view controller is added to a UINavigationController.
-	[[self navigationItem] setTitle:@"Lookup Order"];
+	[[self navigationItem] setTitle:@"Lookup"];
 	[self setTitle:@"Lookup Order"];
 	
     facade = [iPOSFacade sharedInstance];
@@ -98,19 +102,19 @@
 	[self setView:bgView];
 	[bgView release];
     
-    lookupOrderIdField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
-	lookupOrderIdField.textColor = [UIColor blackColor];
-	lookupOrderIdField.borderStyle = UITextBorderStyleRoundedRect;
-	lookupOrderIdField.textAlignment = UITextAlignmentCenter;
-	lookupOrderIdField.clearsOnBeginEditing = NO;
-	lookupOrderIdField.placeholder = @"Order By Id";
-	lookupOrderIdField.tagName = @"LookupOrderId";
-	lookupOrderIdField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-	
-	lookupOrderIdField.keyboardType = UIKeyboardTypeNumberPad;
-	[super addSearchAndCancelToolbarForTextField:lookupOrderIdField];
-	[self.view addSubview:lookupOrderIdField];
-	[lookupOrderIdField release];
+    lookupCustomerField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
+	lookupCustomerField.textColor = [UIColor blackColor];
+	lookupCustomerField.borderStyle = UITextBorderStyleRoundedRect;
+	lookupCustomerField.textAlignment = UITextAlignmentCenter;
+	lookupCustomerField.clearsOnBeginEditing = NO;
+	lookupCustomerField.placeholder = @"Customer By Name";
+	lookupCustomerField.tagName = @"LookupCustomerName";
+    lookupCustomerField.autocorrectionType = UITextAutocorrectionTypeNo;
+    lookupCustomerField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+	lookupCustomerField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+	[super addSearchAndCancelToolbarForTextField:lookupCustomerField];
+	[self.view addSubview:lookupCustomerField];
+	[lookupCustomerField release];
     
     lookupOrderPhoneField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
 	lookupOrderPhoneField.textColor = [UIColor blackColor];
@@ -120,13 +124,25 @@
 	lookupOrderPhoneField.placeholder = @"Order By Phone #";
 	lookupOrderPhoneField.tagName = @"LookupOrderPhone";
 	lookupOrderPhoneField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-	
-	lookupOrderPhoneField.keyboardType = UIKeyboardTypeNumberPad;
+    lookupOrderPhoneField.keyboardType = UIKeyboardTypeNumberPad;
     lookupOrderPhoneField.mask = @"999-999-9999";
 	[super addSearchAndCancelToolbarForTextField:lookupOrderPhoneField];
 	[self.view addSubview:lookupOrderPhoneField];
 	[lookupOrderPhoneField release];
     
+    lookupOrderIdField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
+	lookupOrderIdField.textColor = [UIColor blackColor];
+	lookupOrderIdField.borderStyle = UITextBorderStyleRoundedRect;
+	lookupOrderIdField.textAlignment = UITextAlignmentCenter;
+	lookupOrderIdField.clearsOnBeginEditing = NO;
+	lookupOrderIdField.placeholder = @"Order By Id";
+	lookupOrderIdField.tagName = @"LookupOrderId";
+	lookupOrderIdField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    lookupOrderIdField.keyboardType = UIKeyboardTypeNumberPad;
+	[super addSearchAndCancelToolbarForTextField:lookupOrderIdField];
+	[self.view addSubview:lookupOrderIdField];
+	[lookupOrderIdField release];
+	
     self.closeBarButton = [[[UIBarButtonItem alloc] initWithTitle:@"Close" style:UIBarButtonItemStyleBordered target:self action:@selector(handleClose:)] autorelease];
     [[self navigationItem] setRightBarButtonItem:self.closeBarButton];
 }
@@ -138,10 +154,12 @@
     
     self.view.frame = viewBounds;
 	
-	lookupOrderIdField.frame = CGRectMake(0.0f, 0.0f, textFieldWidth, TEXT_FIELD_HEIGHT);
-	lookupOrderIdField.center = CGPointMake((viewBounds.size.width / 2.0f), textFieldSpacing);
+    lookupCustomerField.frame = CGRectMake(0.0f, 0.0f, textFieldWidth, TEXT_FIELD_HEIGHT);
+	lookupCustomerField.center = CGPointMake((viewBounds.size.width / 2.0f), textFieldSpacing);
+    
+	lookupOrderPhoneField.frame = CGRectOffset(lookupCustomerField.frame, 0.0f, textFieldSpacing + (TEXT_FIELD_HEIGHT / 2.0f));
 	
-	lookupOrderPhoneField.frame = CGRectOffset(lookupOrderIdField.frame, 0.0f, textFieldSpacing + (TEXT_FIELD_HEIGHT / 2.0f));
+	lookupOrderIdField.frame = CGRectOffset(lookupOrderPhoneField.frame, 0.0f, textFieldSpacing + (TEXT_FIELD_HEIGHT / 2.0f));
     
     // UIKit bug.  Need to do this to re-center the placeholder text.
     lookupOrderIdField.textAlignment = UITextAlignmentLeft;
@@ -150,6 +168,10 @@
     // UIKit bug.  Need to do this to re-center the placeholder text.
     lookupOrderPhoneField.textAlignment = UITextAlignmentLeft;
     lookupOrderPhoneField.textAlignment = UITextAlignmentCenter;
+    
+    // UIKit bug.  Need to do this to re-center the placeholder text.
+    lookupCustomerField.textAlignment = UITextAlignmentLeft;
+    lookupCustomerField.textAlignment = UITextAlignmentCenter;
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -164,6 +186,7 @@
 	self.delegate = self;
 	lookupOrderIdField.delegate = self;
     lookupOrderPhoneField.delegate = self;
+    lookupCustomerField.delegate = self;
     
 }
 
@@ -218,10 +241,15 @@
 }
 
 - (void)textFieldDidBeginEditing:(ExtUITextField *)textField {
-    if ([textField.tagName isEqualToString:@"LookupOrderId"]) {
+    if ([textField.tagName isEqualToString:@"LookupCustomerName"]) {
         lookupOrderPhoneField.text = nil;
+        lookupOrderIdField.text = nil;
     } else if ([textField.tagName isEqualToString:@"LookupOrderPhone"]) {
         lookupOrderIdField.text = nil;
+        lookupCustomerField.text = nil;
+    } else if ([textField.tagName isEqualToString:@"LookupOrderId"]) {
+        lookupOrderPhoneField.text = nil;
+        lookupCustomerField.text = nil;
     }
 }
 
@@ -230,7 +258,24 @@
         NSArray *foundOrderList = nil;
         NSLog(@"Incoming text: %@", textField.text);
         
-        if ([textField.tagName isEqualToString:@"LookupOrderId"] && [textField.text length] > 0) {
+        if ([textField.tagName isEqualToString:@"LookupCustomerName"] && [textField.text length] > 0) {
+            if (textField.text.length < 3) {
+                [AlertUtils showModalAlertMessage:@"You must enter at least 3 characters for the search." withTitle:@"iPOS"];
+            } else {
+                NSArray *customerList = [facade lookupCustomerByName:textField.text];
+                
+                if (customerList == nil || [customerList count] == 0) {
+                    [AlertUtils showModalAlertMessage:@"No customer matches found." withTitle:@"iPOS"];
+                } else {
+                    CustomerListViewController *custListViewController = [[CustomerListViewController alloc] init];
+                    
+                    custListViewController.customerList = customerList;
+                    custListViewController.searchString = textField.text;
+                    [[self navigationController] pushViewController:custListViewController animated:TRUE];
+                    [custListViewController release];
+                }
+            }
+        } else if ([textField.tagName isEqualToString:@"LookupOrderId"] && [textField.text length] > 0) {
             NSNumber *orderIdInput = [orderIdFormatter numberFromString:textField.text];
             if (orderIdInput != nil) {
                 // order comes back autoreleased
@@ -251,57 +296,10 @@
             }
     
         } else if ([textField.tagName isEqualToString:@"LookupOrderPhone"] && [textField.text length] > 0) {
-            // Clean the dashes out of the phone number
-            NSString *searchString = [textField.text stringByReplacingOccurrencesOfString:@"-" withString:@""];
+            [LookupOrderUtil showOrdersFrom:self withPhone:textField.text];
             
-            // See if we are at least a 10 digit number
-            NSString *regex = @"[0-9]{10}";
-            NSPredicate *regextest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-            if ([regextest evaluateWithObject:searchString] == YES) {
-                foundOrderList = [facade lookupOrderByPhoneNumber:searchString];
-                if (foundOrderList && [foundOrderList count] > 0) {
-                    if ([foundOrderList count] == 1) {
-                        // Found one previous order, prep and go to order edit view controller
-                        PreviousOrder *p = (PreviousOrder *)[foundOrderList objectAtIndex:0];
-                        NSLog(@"Found one previous order: %@", p.orderId);
-                        Order *order = [facade lookupOrderByOrderId:p.orderId];
-                        if (order != nil) {
-                            // Prep and go to the order edit view controller
-                            NSLog(@"Single return from search by phone.  Found Order: %@", order.orderId);
-                            [orderCart setPreviousOrder:order];
-                            OrderItemsViewController *orderItemsViewController = [[OrderItemsViewController alloc] init];
-                            [[self navigationController] pushViewController:orderItemsViewController animated:TRUE];
-                            [orderItemsViewController release];
-                        } else {
-                            [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Could not retrieve previous order.  Order Id: %@", p.orderId] withTitle:@"iPOS"];
-                        }
-                    } else {
-                        NSLog(@"Found %d previous orders.", [foundOrderList count]);
-                        // Sort the list of orders by order type and then date newest first.
-                        NSArray *sortedOrderList = [foundOrderList sortedArrayUsingComparator:^(id a, id b)
-                                                    {
-                                                        NSComparisonResult statusSort = [((PreviousOrder *)a).orderTypeId compare:((PreviousOrder *)b).orderTypeId];
-                                                        if (statusSort == NSOrderedSame) {
-                                                            NSDate *dateA = [dateFormatter dateFromString:((PreviousOrder *)a).orderDate];
-                                                            NSDate *dateB = [dateFormatter dateFromString:((PreviousOrder *)b).orderDate];
-                                                            return [dateB compare:dateA];
-                                                        } 
-                                                        return statusSort;
-                                                    }];
-                        // Set the previous order list on the order cart singleton
-                        [orderCart setPreviousOrderList:sortedOrderList];
-                        
-                        OrderListViewController *orderListController = [[OrderListViewController alloc] init];
-                        [orderListController setSearchPhone:textField.text];
-                        [[self navigationController] pushViewController:orderListController animated:TRUE];
-                        [orderListController release];
-                    }
-                    // Clear the text field here because we will send the number to the list view controller above.
-                    textField.text = nil;
-                }
-            } else {
-                [AlertUtils showModalAlertMessage:@"Please enter a 10 digit phone number" withTitle:@"iPOS"];
-            }
+            // Clear the text field here because we will send the number to the list view controller above.
+            textField.text = nil;
         }
     }
     
