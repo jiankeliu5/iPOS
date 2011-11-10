@@ -290,10 +290,10 @@
     
      STAssertNil(newOrder.orderId, @"Expected the order id to be nil");
      
-    [facade newQuote:newOrder];
+    [facade saveOrder:newOrder];
     
     // Verify that it now has a customer ID
-    STAssertNil(newOrder.errorList, @"Expected no errors");
+    STAssertNil(newOrder.errorList, @"Expected no errors.");
     STAssertEquals([newOrder.orderId intValue], 1234, @"Expected value of 1234");
     
 }
@@ -308,12 +308,11 @@
     [facade login:@"123" password:@"456"];
     
     // Set the order type to an invalid order type (for testing)
-    newOrder.orderTypeId = [NSNumber numberWithInt:10];
+    newOrder.orderTypeId = [NSNumber numberWithInt:1];
     
     STAssertNil(newOrder.orderId, @"Expected the order id to be nil");
     
-    newOrder.orderTypeId = [NSNumber numberWithInt:5];
-    [facade newOrder:newOrder];
+    [facade saveOrder:newOrder];
     
     // Verify that it now has a customer ID
     STAssertTrue([newOrder.errorList count] == 0, @"Expected an error");

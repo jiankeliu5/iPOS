@@ -17,9 +17,9 @@
 
 
 @interface PriceAdjustViewController : ExtUIViewController <ExtUIViewControllerDelegate> {
-	OrderCart *orderCart;
+    iPOSFacade *facade;
+    OrderCart *orderCart;
 	OrderItem *orderItem;
-	iPOSFacade *facade;
 	
 	NSNumberFormatter *discountFormatter;
 	
@@ -39,8 +39,11 @@
 	
 }
 // Use assign instead of retain since order items are kept in a singleton.
+@property (nonatomic, assign) Order *order;
 @property (nonatomic, assign) OrderItem *orderItem;
 
+// The price adjustment is either going to be for a single item or the full order
 - (id)initWithOrderItem:(OrderItem *)adjustOrderItem;
+- (id) initWithOrder: (Order *) order;
 
 @end

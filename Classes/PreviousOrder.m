@@ -14,14 +14,16 @@
 #import "PreviousOrder.h"
 
 @implementation PreviousOrder
-@synthesize orderDate, orderId, orderType, orderTotal, orderTypeId;
+@synthesize orderDate;
+@synthesize orderId;
+@synthesize orderTotal;
+@synthesize orderType;
+@synthesize orderTypeId;
 
 - (id)init
 {
     self = [super init];
     if (self) {
-        facade = [iPOSFacade sharedInstance];
-        paymentHistory = nil;
         // Initialization code here.
     }
     
@@ -29,37 +31,23 @@
 }
 
 -(void) dealloc{
-    if (paymentHistory)
-    {
-        [paymentHistory release];    
-    }
+    
+    [orderDate release];
+    orderDate = nil;
+    [orderId release];
+    orderId = nil;
+    [orderTotal release];
+    orderTotal = nil;
+    [orderType release];
+    orderType = nil;
+    [orderTypeId release];
+    orderTypeId = nil;
     
     [super dealloc];
 }
 
-//Needs to call out to the server every time the method is invoked
--(Order *) getItemsForOrder
-{
-    return [facade lookupOrderByOrderId:orderId];
-    
-}
-
 - (BOOL) canViewDetails {
     return ([self.orderTypeId intValue] != ORDER_TYPE_CANCELLED);
-}
-
-- (NSArray *) getPaymentHistory {
-    
-    if (paymentHistory){
-        return paymentHistory;
-    }
-        
-    else
-    {
-        // call out to the server and get payment history
-        paymentHistory = [facade getPaymentHistoryForOrderid:self.orderId];
-        return paymentHistory;
-    }
 }
 
 @end

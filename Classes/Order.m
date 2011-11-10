@@ -11,21 +11,34 @@
 #import "iPOSFacade.h"
 
 @interface Order()
--(NSDecimalNumber *) calculateBalanceDueWithPreviousPayments:(NSDecimalNumber *) balance;
--(void) getPreviousPayments;
+
 @end
 
 @implementation Order
 
-@synthesize orderId, orderTypeId, salesPersonEmployeeId, store, customer, notes, purchaseOrderId, partialPaymentOnAccount;
-@synthesize depositAuthorizationID, followUpdate,orderDCTO, promiseDate, requestDate, selectionId, taxExempt, isNewOrder, previousPayments;
+@synthesize orderId;
+@synthesize orderTypeId;
+@synthesize salesPersonEmployeeId;
+@synthesize notes;
+@synthesize purchaseOrderId;
+@synthesize depositAuthorizationID;
+@synthesize followUpDate;
+@synthesize orderDCTO;
+@synthesize promiseDate;
+@synthesize requestDate;
+@synthesize selectionId;
+@synthesize taxExempt;
+@synthesize isNewOrder;
+@synthesize store;
+@synthesize customer;
+@synthesize previousPayments;
+
 #pragma mark Constructor/Deconstructor
 -(id) init {
     self = [super init];
             
     if (self == nil) {
         return self;
-        self.partialPaymentOnAccount = NO;
     }
     
     orderItemList = [[NSMutableArray arrayWithCapacity:0] retain];
@@ -35,14 +48,38 @@
 }
 
 -(void) dealloc {
-    [orderId release];
-    [orderTypeId release];
-    [salesPersonEmployeeId release];
     
+    [orderId release];
+    orderId = nil;
+    [orderTypeId release];
+    orderTypeId = nil;
+    [salesPersonEmployeeId release];
+    salesPersonEmployeeId = nil;
+    [notes release];
+    notes = nil;
+    [purchaseOrderId release];
+    purchaseOrderId = nil;
+    [depositAuthorizationID release];
+    depositAuthorizationID = nil;
+    [followUpDate release];
+    followUpDate = nil;
+    [orderDCTO release];
+    orderDCTO = nil;
+    [promiseDate release];
+    promiseDate = nil;
+    [requestDate release];
+    requestDate = nil;
+    [selectionId release];
+    selectionId = nil;
     [store release];
+    store = nil;
     [customer release];
+    customer = nil;
+    [previousPayments release];
+    previousPayments = nil;
     
     [orderItemList release];
+    orderItemList = nil;
     
     [super dealloc];
 }
@@ -60,18 +97,41 @@
     }
 }
 
+- (void) setAsNewOrder {
+    self.orderTypeId = nil;
+    
+    self.isNewOrder = YES;
+    
+    // Set the new order type
+    if ([self isClosed]) {
+        self.orderTypeId = [NSNumber numberWithInt:ORDER_TYPE_CLOSED];
+    } else {
+        self.orderTypeId = [NSNumber numberWithInt:ORDER_TYPE_OPEN];
+    }
+}
+
 - (NSNumber *) getOrderTypeId {
     // Determine if all items are closed or some are open.  Do this check for safety.
-    if ([self isClosed]) {
-        self.orderTypeId = [NSNumber numberWithInt:ORDER_TYPE_CLOSED]; 
-    } else {
+    if (isNewOrder && ![self isQuote] && ![self isClosed]) {
         self.orderTypeId = [NSNumber numberWithInt:ORDER_TYPE_OPEN];
     }
     
     return self.orderTypeId;
 }
 
+- (BOOL) isQuote {
+    if (orderTypeId && [orderTypeId intValue]  == ORDER_TYPE_QUOTE) {
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (BOOL) isClosed {
+    if (orderTypeId && [orderTypeId intValue]  == ORDER_TYPE_CLOSED) {
+        return YES;
+    }
+    
     // Determine if all items are closed or some are open
     for (OrderItem *orderItem in orderItemList) {
         if (![orderItem isClosed]) {
@@ -82,6 +142,8 @@
     return YES;
 }
 
+#pragma mark -
+#pragma mark Existing Orders Methods
 - (BOOL) canViewDetails {
     return ([self.orderTypeId intValue] != ORDER_TYPE_CANCELLED);
 }
@@ -94,6 +156,7 @@
 }
 
 - (BOOL) canCancel {
+    // TODO:  Does it make sense to cancel a quote ??
     // Can only cancel an order if it is in quote or open status and all items in it are in open status
     if ([self.orderTypeId intValue] == ORDER_TYPE_OPEN || [self.orderTypeId intValue] == ORDER_TYPE_QUOTE) {
         for (OrderItem *orderItem in orderItemList) {
@@ -103,6 +166,18 @@
         }
         return YES;
     }
+    return NO;
+}
+
+- (BOOL) isModified {
+    if (orderItemList && [orderItemList count] > 0) {
+        for (OrderItem *item in orderItemList) {
+            if (item.isModified) {
+                return YES;
+            }
+        }
+    }
+    
     return NO;
 }
 
@@ -156,8 +231,40 @@
 }
 
 #pragma mark -
+#pragma mark OrderItems Get Accessors
 -(NSArray *) getOrderItems {
     return orderItemList;
+}
+
+- (NSArray *) getOrderItemsSortedByStatus {
+    // Sort the items by description
+    NSArray *sortedOrderItemsList = nil;
+    
+    if ([orderItemList count] > 0) {
+        NSSortDescriptor *itemDetailStatusDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"statusId"
+                                                                            ascending:YES] autorelease];
+        NSArray *sortDescriptors = [NSArray arrayWithObjects:itemDetailStatusDescriptor, nil];
+        sortedOrderItemsList = [[NSArray arrayWithArray: orderItemList] sortedArrayUsingDescriptors:sortDescriptors];
+        
+        return sortedOrderItemsList;
+    } 
+    
+    return orderItemList;
+}
+
+- (NSArray *) getOrderItemsSortedByStatusFilterCanceled {
+    NSArray *sorted = [self getOrderItemsSortedByStatus];
+    NSMutableArray *filtered = [NSMutableArray arrayWithCapacity:0];
+    
+    if (sorted && [sorted count] > 0) {
+        for (OrderItem *item in sorted) {
+            if (![item isCanceled]) {
+                [filtered addObject:item];
+            }
+        }
+    }
+    
+    return filtered;
 }
 
 -(void) addItemToOrder:(ProductItem *)item withQuantity: (NSDecimalNumber *) quantity {
@@ -176,11 +283,16 @@
         [orderItem setStatusToOpen];
         
         // Set the order item to be a newly added
-        orderItem.isNewLineItem = YES;
+        orderItem.isNew = YES;
     }
 }
 
 - (void) addOrderItemToOrder:(OrderItem *)orderItem {
+    
+    // set the sales person id for the order item
+    if (!orderItem.salesPersonEmployeeId) {
+        orderItem.salesPersonEmployeeId = [iPOSFacade sharedInstance].sessionInfo.employeeId;
+    }
     
     [orderItemList addObject:orderItem];
 }
@@ -191,7 +303,13 @@
         // Remove the instance of order item
         for (OrderItem *orderItem in orderItemList) {
             if (orderItem == item) {
-                [orderItemList removeObject:orderItem];
+                
+                // Set the item to canceled if it is an existing item
+                if (isNewOrder || orderItem.isNew) {
+                    [orderItemList removeObject:orderItem];
+                } else {
+                    [orderItem setStatusToCancel]; 
+                }
                 break;
             }
         }   
@@ -220,6 +338,26 @@
 
     if (mergeOrder.orderId && ![mergeOrder.orderId isEqualToNumber:[NSNumber numberWithInt:0]]) {
         self.orderId = mergeOrder.orderId;
+        
+        // Set the items to unmodified
+        self.isNewOrder = NO;
+        
+        for (OrderItem *item in orderItemList) {
+            item.isModified = NO;
+            item.isNew = NO;
+        }
+    }
+}
+
+- (void) cancelOrder {
+    // Make sure all open items are canceled
+    if (orderItemList && [orderItemList count] > 0) {
+        for (OrderItem *item in orderItemList) {
+            if ([item.statusId intValue] == LINE_ORDERSTATUS_OPEN) {
+                item.isModified = YES;
+                item.statusId = [NSNumber numberWithInt: LINE_ORDERSTATUS_CANCEL];
+            }
+        }
     }
 }
 
@@ -229,7 +367,9 @@
     NSDecimalNumber *retailTotal = [NSDecimalNumber zero];
     
     for (OrderItem *item in orderItemList) {
-        retailTotal = [[item calcLineRetailSubTotal] decimalNumberByAdding:retailTotal];
+        if ([item isOpen] || [item isClosed]) {
+            retailTotal = [[item calcLineRetailSubTotal] decimalNumberByAdding:retailTotal];
+        }
     }
     
     return retailTotal;
@@ -239,7 +379,9 @@
     NSDecimalNumber *subTotal = [NSDecimalNumber zero];
     
     for (OrderItem *item in orderItemList) {
-        subTotal = [[item calcLineSubTotal] decimalNumberByAdding:subTotal];
+        if ([item isOpen] || [item isClosed]) {
+            subTotal = [[item calcLineSubTotal] decimalNumberByAdding:subTotal];
+        }
     }
     
     return subTotal;
@@ -258,19 +400,27 @@
         // If the customer is tax exempt we won't bother with checking further or calculating the tax amount for the line item
         // If the customer is not tax exempt we also need to see if the line item itself is tax exempt or not.
         // Possible concern:  We are allocating a lot of autoreleased NSDecimalNumber objects here.  Performance issue?
-        if (custTaxExempt == NO && ![item isTaxExempt]) {
-            taxTotal = [[item calcLineTax] decimalNumberByAdding:taxTotal];
+        if ([item isOpen] || [item isClosed]) {
+            if (custTaxExempt == NO && ![item isTaxExempt]) {
+                taxTotal = [[item calcLineTax] decimalNumberByAdding:taxTotal];
+            }
         }
     }
     
     return taxTotal;        
 }
 
+- (NSDecimalNumber *) calcOrderTotal {
+    return [[self calcOrderSubTotal] decimalNumberByAdding:[self calcOrderTax]];
+}
+
 - (NSDecimalNumber *) calcOrderDiscountTotal {
     NSDecimalNumber *discountTotal = [NSDecimalNumber zero];
     
     for (OrderItem *item in orderItemList) {
-        discountTotal = [[item calcLineDiscount] decimalNumberByAdding:discountTotal];
+        if ([item isOpen] || [item isClosed]) {
+            discountTotal = [[item calcLineDiscount] decimalNumberByAdding:discountTotal];
+        }
     }
     
     return discountTotal;
@@ -279,6 +429,8 @@
 - (NSDecimalNumber *) calcBalanceDue {
     
     NSDecimalNumber *balanceDue = [NSDecimalNumber zero];
+    NSDecimalNumber *balancePaid = [self calcBalancePaid];
+    
     if (customer) {
         NSDecimalNumber *balanceClosedItems = [self calcClosedItemsBalance];
         
@@ -292,27 +444,38 @@
             } else {
                 balanceDue = [balanceDue decimalNumberByAdding:balance50Percent];
             }
-
-                                                  
         } else {
             // Assume the customer is a Contractor and only pays for closed items
-            
-                balanceDue = [balanceDue decimalNumberByAdding:balanceClosedItems];
-                
-                if (partialPaymentOnAccount && [customer isPaymentOnAccountEligable])
-                {
-                    //If there was payment on the account, set the balance due as the payment on account - balanceDue
-                    balanceDue = [balanceDue decimalNumberBySubtracting:customer.amountAppliedOnAccount];
-                }
+            balanceDue = [balanceDue decimalNumberByAdding:balanceClosedItems];
         }
         
-        if (orderId)
-        {
-            balanceDue = [self calculateBalanceDueWithPreviousPayments:balanceDue];
+        balanceDue = [balanceDue decimalNumberBySubtracting:balancePaid];
+        
+        if ([balanceDue intValue] < 0) {
+            return [NSDecimalNumber zero];
         }
     }
     
     return balanceDue;
+}
+
+- (NSDecimalNumber *) calcBalanceOwing {
+    NSDecimalNumber *total = [self calcOrderTotal];
+    NSDecimalNumber *balancePaid = [self calcBalancePaid];
+    
+    return [total decimalNumberBySubtracting:balancePaid];
+}
+
+- (NSDecimalNumber *) calcBalancePaid {
+    NSDecimalNumber *balancePaid = [NSDecimalNumber zero];
+
+    if (previousPayments && [previousPayments count] > 0) {
+        for (Payment *payment in previousPayments) {
+            balancePaid = [balancePaid decimalNumberByAdding:payment.paymentAmount];
+        }
+    }
+    
+    return balancePaid;
 }
 
 /* Calculates the profit margin for a given order 
@@ -324,10 +487,11 @@
                                                                                   raiseOnExactness:NO raiseOnOverflow:NO 
                                                                                   raiseOnUnderflow:NO raiseOnDivideByZero:NO];
     
-    for (OrderItem *item in orderItemList)
-    {
-        totalExtendedCost = [totalExtendedCost decimalNumberByAdding:item.calculateExtendedCost];
-        totalExtendedPrice = [totalExtendedPrice decimalNumberByAdding:item.calculateExtendedPrice];
+    for (OrderItem *item in orderItemList) {
+        if ([item isOpen] || [item isClosed]) {
+            totalExtendedCost = [totalExtendedCost decimalNumberByAdding:item.calculateExtendedCost];
+            totalExtendedPrice = [totalExtendedPrice decimalNumberByAdding:item.calculateExtendedPrice];
+        }
     }
     
     
@@ -408,54 +572,20 @@
     return [NSDecimalNumber decimalNumberWithString:@"150.00"];
 }
 
-// TODO:  Move this to calcBalanceOwing method
--(NSDecimalNumber *) calculateBalanceDueWithPreviousPayments:(NSDecimalNumber *) balance{
-    
-    NSDecimalNumber *previousBalancePaid = [NSDecimalNumber zero];
-    
-    NSDecimalNumberHandler *roundUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:2 
-                                                                                  raiseOnExactness:NO raiseOnOverflow:NO 
-                                                                                  raiseOnUnderflow:NO raiseOnDivideByZero:NO];
-    [self getPreviousPayments];
-    
-    for(Payment *currentPayment in previousPayments)
-    {
-        previousBalancePaid = [previousBalancePaid decimalNumberByAdding:currentPayment.paymentAmount];
-    }
-    
-    balance = [balance decimalNumberByRoundingAccordingToBehavior:roundUp];
-    
-    return [balance decimalNumberBySubtracting:previousBalancePaid];
-    
-}
-
 -(TenderDecision) isRefundEligble{
-    // TODO: Implement this method
-    return REFUND;
-//    NSDecimalNumber *currentBalanceDue = [self calcBalanceDue];
-//    
-//    NSComparisonResult comparisonresult = [[NSDecimalNumber zero] compare:currentBalanceDue ];
-//    
-//    if (comparisonresult == NSOrderedSame)
-//    {
-//        return NOCHANGE;
-//    }
-//    else if (comparisonresult == NSOrderedAscending)
-//    {
-//        return TENDER;
-//    }
-//    else
-//    {
-//        return REFUND;
-//    }
-}
+    NSDecimalNumber *balanceOwing = [self calcBalanceOwing];
 
-//TODO:  Move the facade calls out of the object
--(void) getPreviousPayments{
-    if (!previousPayments)
-    {
-        previousPayments = (NSMutableArray *)[[iPOSFacade sharedInstance] getPaymentHistoryForOrderid:self.orderId];
+    NSComparisonResult comparisonresult = [[NSDecimalNumber zero] compare:balanceOwing];
+    
+    if (comparisonresult == NSOrderedSame) {
+        return NOCHANGE;
+    } else if (comparisonresult == NSOrderedAscending) {
+        return TENDER;
+    }
+    else {
+        return REFUND;
     }
 }
+
 
 @end

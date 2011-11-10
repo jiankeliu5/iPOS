@@ -13,8 +13,23 @@
 
 @implementation Customer
 
-@synthesize customerId, customerType, customerTypeId, priceLevelId, firstName, lastName, phoneNumber, emailAddress, store, address, taxExempt, holdStatus,holdStatusText, creditLimit, creditBalance;
-@synthesize termsTypeId, amountAppliedOnAccount, eOneCustoemrId;
+@synthesize customerId;
+@synthesize customerType;
+@synthesize customerTypeId;
+@synthesize e1CustomerId;
+@synthesize priceLevelId;
+@synthesize holdStatus;
+@synthesize holdStatusText;
+@synthesize creditBalance;
+@synthesize creditLimit;
+@synthesize termsTypeId;
+@synthesize firstName;
+@synthesize lastName;
+@synthesize phoneNumber;
+@synthesize emailAddress;
+@synthesize store;
+@synthesize address;
+@synthesize taxExempt;
 
 #pragma mark Initializer and Memory Mgmt
 -(id) init {
@@ -121,20 +136,38 @@
 }
 
 - (void) dealloc {
-    [customerType release];
-    [customerTypeId release];
-    [priceLevelId release];
-    [firstName release];
-    [lastName release];
-    [phoneNumber release];
-    [emailAddress release];
-    [holdStatus release];
-    [holdStatusText release];
-    [creditBalance release];
-    [creditLimit release];
-    
-    [store release];
-    [address release];
+     [customerId release];
+     customerId = nil;
+     [customerType release];
+     customerType = nil;
+     [customerTypeId release];
+     customerTypeId = nil;
+     [e1CustomerId release];
+     e1CustomerId = nil;
+     [priceLevelId release];
+     priceLevelId = nil;
+     [holdStatus release];
+     holdStatus = nil;
+     [holdStatusText release];
+     holdStatusText = nil;
+     [creditBalance release];
+     creditBalance = nil;
+     [creditLimit release];
+     creditLimit = nil;
+     [termsTypeId release];
+     termsTypeId = nil;
+     [firstName release];
+     firstName = nil;
+     [lastName release];
+     lastName = nil;
+     [phoneNumber release];
+     phoneNumber = nil;
+     [emailAddress release];
+     emailAddress = nil;
+     [store release];
+     store = nil;
+     [address release];
+     address = nil;
     
     if (customerId != nil) {
         [customerId release];

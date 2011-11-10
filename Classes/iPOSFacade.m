@@ -102,16 +102,8 @@ static iPOSFacade *facade = nil;
 
 #pragma mark -
 #pragma mark Order Management
--(void) newQuote:(Order *)order {
-    [self.posService newQuote:order withSession:sessionInfo];
-}
-
--(void) newOrder:(Order *)order {
-    [self.posService newOrder:order withSession:sessionInfo];
-}
-
-- (void) updateOrder:(Order *)order {
-    [self.posService newOrder:order withSession:sessionInfo];
+-(void) saveOrder:(Order *)order {
+    [self.posService save:order withSession:sessionInfo];
 }
 
 - (BOOL) emailReceipt:(Order *)order {

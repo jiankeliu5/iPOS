@@ -9,9 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CreditCardPayment.h"
 
-@interface RefundItem : NSObject
-{
-    
+@interface RefundItem : NSObject{
     NSDecimalNumber *amount;
     NSNumber *orderPaymentTypeID;
     CreditCardPayment *creditCard;

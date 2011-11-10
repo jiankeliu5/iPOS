@@ -174,6 +174,15 @@
 	[self.view addSubview:orderTable];
 	[orderTable release];
 	
+    // Add discount button
+    discountButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
+    [discountButton setupAsSmallBlackButton];
+    discountButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    [discountButton setTitle:@"Discount" forState:UIControlStateNormal];
+    
+    [self.view addSubview:discountButton];
+    [discountButton release];
+    
     // Add the labels
 	subTotalLabel = [self createOrderLabel:@"Subtotal:" withRect:CGRectZero andAlignment:UITextAlignmentRight];
 	[self.view addSubview:subTotalLabel];
@@ -452,6 +461,8 @@
 	totalLabel.frame = CGRectMake(0, totalRect.origin.y, totalRect.size.width - LABEL_SPACING - ORDER_VALUE_WIDTH, ORDER_LABEL_HEIGHT);
 	totalValue.frame = CGRectMake(totalRect.size.width - ORDER_VALUE_WIDTH, totalRect.origin.y, ORDER_VALUE_WIDTH, ORDER_LABEL_HEIGHT);
     
+    discountButton.frame = CGRectMake(20, subTotalRect.origin.y, 80, 26);
+    
     orderToolBar.frame = toolbarRect;
     
     if (searchOverlay) {
@@ -483,10 +494,11 @@
     if (order != nil) {
         NSDecimalNumber *subTotal = [order calcOrderSubTotal];
         NSDecimalNumber *taxTotal = [order calcOrderTax];
+        NSDecimalNumber *total = [order calcOrderTotal];
         
         subTotalValue.text = [NSString formatDecimalNumberAsMoney:subTotal];
         taxValue.text = [NSString formatDecimalNumberAsMoney:taxTotal];
-        totalValue.text = [NSString formatDecimalNumberAsMoney:[subTotal decimalNumberByAdding:taxTotal]];
+        totalValue.text = [NSString formatDecimalNumberAsMoney:total];
 		
         [self restoreDefaultToolbar];        
     }
@@ -659,7 +671,9 @@
 			Order *order = [orderCart getOrder];
             
 			// Send off the order as a quote.
-			[facade newQuote:order];
+            [order setAsQuote];
+			[facade saveOrder:order];
+            
 			if (order.errorList != nil && [order.errorList count] > 0) {
                 [AlertUtils showModalAlertForErrors:order.errorList withTitle:@"iPOS"];
 			} else {
@@ -709,7 +723,7 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-	OrderItem *orderItem = [[[orderCart getOrder] getOrderItems] objectAtIndex:indexPath.row];
+	OrderItem *orderItem = [[[orderCart getOrder] getOrderItemsSortedByStatus] objectAtIndex:indexPath.row];
 	NSString *orderCellIdentifier = orderItem.item.sku;
 	
 	CartItemTableCell *cell = (CartItemTableCell *)[tableView dequeueReusableCellWithIdentifier:orderCellIdentifier];
@@ -722,11 +736,8 @@
 	cell.deleteChecked = orderItem.shouldDelete;
 	cell.closeChecked = orderItem.shouldClose = [orderItem isClosed];
 	cell.cellDelegate = self;
-	if (self.multiEditMode == NO) {
-		cell.accessoryType = ([orderItem isClosed]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-	} else {
-		cell.accessoryType = UITableViewCellAccessoryNone;
-	}
+	
+    cell.accessoryType = UITableViewCellAccessoryNone;
 
 	return cell;
 }
@@ -741,7 +752,7 @@
 	
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Remove the item from the order
-		OrderItem *item = [[[orderCart getOrder] getOrderItems] objectAtIndex:indexPath.row];
+		OrderItem *item = [[[orderCart getOrder] getOrderItemsSortedByStatus] objectAtIndex:indexPath.row];
         [orderCart removeItem:item];
         
         [theTableView deleteRowsAtIndexPaths: [NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -752,7 +763,7 @@
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	OrderItem *orderItem = [[[orderCart getOrder] getOrderItems] objectAtIndex:indexPath.row];
+	OrderItem *orderItem = [[[orderCart getOrder] getOrderItemsSortedByStatus] objectAtIndex:indexPath.row];
 	if (orderItem != nil) {
 		CartItemDetailViewController *cartDetail = [[CartItemDetailViewController alloc] init];
 		[cartDetail setOrderItem:orderItem];

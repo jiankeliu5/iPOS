@@ -32,7 +32,7 @@
     
     CreditCardPayment *payment = [[CreditCardPayment alloc] init];
     payment.cardNumber = @"444";
-    payment.tRouteD = @"troutd1";
+    payment.paymentRefId = @"troutd1";
     payment.lpToken = @"lpToken1";
     payment.nameOnCard = @"D C";
     

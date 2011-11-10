@@ -31,9 +31,6 @@ typedef enum {
     NSDecimalNumber *paymentAmount;
     
     NSString *paymentRefId;
-
-    //NSString *lpToken;
-    //NSString *tRouteD;
     
     NSNumber *orderPaymentId;
     NSString *paymentDate;
@@ -47,9 +44,6 @@ typedef enum {
 
 @property (nonatomic, retain) NSDecimalNumber *paymentAmount;
 @property (nonatomic, retain) NSString *paymentRefId;
-
-@property (nonatomic, retain) NSString *cardNumber;
-
 
 @property (nonatomic, retain) NSNumber *orderPaymentId;
 @property (nonatomic, retain) NSString *paymentDate;

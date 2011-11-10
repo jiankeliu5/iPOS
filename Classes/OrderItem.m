@@ -17,16 +17,40 @@
 - (NSDecimalNumber *) convertToPieces: (NSDecimalNumber *) quantityToConvert;
 - (NSDecimalNumber *) convertToBoxesWithPieces: (NSDecimalNumber *) quantityToConvert;
 - (NSDecimalNumber *) convertToSquareFeet: (NSDecimalNumber *) quantityInPieces;
+
+- (void) markAsModified;
+
 @end
 
 @implementation OrderItem
 
-@synthesize sellingPricePrimary, sellingPriceSecondary, quantityPrimary, quantitySecondary;
-@synthesize lineNumber, statusId, priceAuthorizationId, managerApprover, item;
-@synthesize doConversionToFullBoxes, shouldDelete, shouldClose, isNewLineItem;
-@synthesize requestDate, returnReferenceId, split, orderId;
-@synthesize locn, lotn, lttr, mcu, nxtr, urrf, openItemStatus, spiff;
-@synthesize lineStatus;
+@synthesize lineNumber;
+@synthesize statusId;
+@synthesize salesPersonEmployeeId;
+@synthesize priceAuthorizationId;
+@synthesize sellingPricePrimary;
+@synthesize sellingPriceSecondary;
+@synthesize quantityPrimary;
+@synthesize quantitySecondary;
+@synthesize requestDate;
+@synthesize returnReferenceId;
+@synthesize orderId;
+@synthesize split;
+@synthesize spiff;
+@synthesize locn;
+@synthesize lotn;
+@synthesize lttr;
+@synthesize mcu;
+@synthesize nxtr;
+@synthesize urrf;
+@synthesize openItemStatus;
+@synthesize managerApprover;
+@synthesize item;
+@synthesize doConversionToFullBoxes;
+@synthesize shouldDelete;
+@synthesize shouldClose;
+@synthesize isNew;
+@synthesize isModified;
 
 #pragma mark Constructor/Deconstructor
 -(id) init {
@@ -34,7 +58,6 @@
     
     if (self) {
         doConversionToFullBoxes = YES;
-        lineStatus = LineStatusNone;
     }
     
     return self;
@@ -51,7 +74,7 @@
     doConversionToFullBoxes = productItem.defaultToBox;
     
     // Default the status to open
-    statusId = [[NSNumber numberWithInt:ORDER_ITEM_STATUS_OPEN] retain];
+    statusId = [[NSNumber numberWithInt:LINE_ORDERSTATUS_OPEN] retain];
     
     // Default selling price to retail price
     sellingPricePrimary = [productItem.retailPricePrimary copy];
@@ -67,18 +90,47 @@
 
 -(void) dealloc {
     [lineNumber release];
+    lineNumber = nil;
     [statusId release];
+    statusId = nil;
+    [salesPersonEmployeeId release];
+    salesPersonEmployeeId = nil;
     [priceAuthorizationId release];
+    priceAuthorizationId = nil;
     [sellingPricePrimary release];
+    sellingPricePrimary = nil;
     [sellingPriceSecondary release];
-    
-    if (managerApprover != nil) {
-        [managerApprover release];
-    }
-    
-    [item release];
+    sellingPriceSecondary = nil;
     [quantityPrimary release];
+    quantityPrimary = nil;
     [quantitySecondary release];
+    quantitySecondary = nil;
+    [requestDate release];
+    requestDate = nil;
+    [returnReferenceId release];
+    returnReferenceId = nil;
+    [orderId release];
+    orderId = nil;
+    [spiff release];
+    spiff = nil;
+    [locn release];
+    locn = nil;
+    [lotn release];
+    lotn = nil;
+    [lttr release];
+    lttr = nil;
+    [mcu release];
+    mcu = nil;
+    [nxtr release];
+    nxtr = nil;
+    [urrf release];
+    urrf = nil;
+    [openItemStatus release];
+    openItemStatus = nil;
+    [managerApprover release];
+    managerApprover = nil;
+    [item release];
+    item = nil;
     
     [super dealloc];
 }
@@ -116,6 +168,22 @@
     }
 }
 
+- (LineStatus) getLineStatus {
+    if (isNew) {
+        return LineStatusAdd;
+    }
+    
+    if (isModified && [self.statusId intValue] == LINE_ORDERSTATUS_CANCEL) {
+        return LineStatusCancel;
+    }
+    
+    if (isModified) {
+        return LineStatusModify;
+    }
+    
+    return LineStatusNone;
+}
+
 #pragma mark -
 #pragma mark Custom Accessors
 - (BOOL) isConversionNeeded {
@@ -147,6 +215,8 @@
         } else {
             self.sellingPriceSecondary = [self calcSellingPriceSecondaryFrom:discount];
         }
+        
+        [self markAsModified];
     }
 }
 
@@ -186,21 +256,30 @@
 #pragma mark -
 #pragma mark Method implementations
 - (void) setStatusToOpen {
-    self.statusId = [NSNumber numberWithInt:ORDER_ITEM_STATUS_OPEN];
+    self.statusId = [NSNumber numberWithInt: LINE_ORDERSTATUS_OPEN];
+    
+    // Mark as modified
+    [self markAsModified];
 }
 
 - (void) setStatusToClosed {
-    self.statusId = [NSNumber numberWithInt:ORDER_ITEM_STATUS_CLOSE];
+    self.statusId = [NSNumber numberWithInt: LINE_ORDERSTATUS_CLOSED];
+    
+    // Mark as modified
+    [self markAsModified];
 }
 
 - (void) setStatusToCancel {
-    self.statusId = [NSNumber numberWithInt:ORDER_ITEM_STATUS_CANCEL];
+    self.statusId = [NSNumber numberWithInt: LINE_ORDERSTATUS_CANCEL];
+    
+    // Mark as modified
+    [self markAsModified];
 }
 
 - (BOOL) allowClose {
     BOOL canClose = NO;
     
-    if (isNewLineItem) {
+    if (isNew) {
         // For a newly added line item, it can be closed if the store shows availability
         NSDecimalNumber *numberAvailableInStore = item.store.availability.availablePrimary;
         // If quantity is greater do not allow a close
@@ -220,11 +299,11 @@
 }
 
 - (BOOL) allowEdit {
-    return ([self.statusId intValue] == ORDER_ITEM_STATUS_OPEN);
+    return ([self.statusId intValue] == LINE_ORDERSTATUS_OPEN || isModified);
 }
 
 - (BOOL) allowQuantityChange {
-    return ([self.statusId intValue] == ORDER_ITEM_STATUS_OPEN && self.isNewLineItem);
+    return ([self.statusId intValue] == LINE_ORDERSTATUS_OPEN && isNew);
 }
 
 - (BOOL) isTaxExempt {
@@ -236,11 +315,15 @@
 }
 
 - (BOOL) isClosed {
-    return [self.statusId isEqualToNumber: [NSNumber numberWithInt:ORDER_ITEM_STATUS_CLOSE]];
+    return [self.statusId isEqualToNumber: [NSNumber numberWithInt: LINE_ORDERSTATUS_CLOSED]];
 }
 
 - (BOOL) isOpen {
-    return ([self.statusId intValue] == ORDER_ITEM_STATUS_OPEN);
+    return ([self.statusId intValue] == LINE_ORDERSTATUS_OPEN);
+}
+
+- (BOOL) isCanceled {
+    return ([self.statusId intValue] == LINE_ORDERSTATUS_CANCEL);
 }
 
 #pragma mark -
@@ -476,6 +559,13 @@
     NSDecimalNumber *piecesNeeded = [quantityInPieces decimalNumberByRoundingAccordingToBehavior:roundUp];
     NSDecimalNumber *boxesNeeded = [[piecesNeeded decimalNumberByDividingBy:piecesPerBox] decimalNumberByRoundingAccordingToBehavior:roundUp];
     return [[boxesNeeded decimalNumberByMultiplyingBy:piecesPerBox] decimalNumberByMultiplyingBy:item.conversion];
+}
+
+- (void) markAsModified {
+    // Mark as modified
+    if (!isNew && !isModified) {
+        isModified = YES;
+    }
 }
 
 @end

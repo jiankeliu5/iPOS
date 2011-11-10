@@ -218,7 +218,7 @@
         [AlertUtils showModalAlertMessage:@"Order or Customer not available to send receipt." withTitle:@"iPOS"];
     }
     
-    // Logoff
+    // Logoff or back to root Order Lookup view
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 

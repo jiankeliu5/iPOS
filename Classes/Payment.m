@@ -11,8 +11,16 @@
 
 @implementation Payment
 
-@synthesize customerId, orderId, salesPersonId, storeId, paymentAmount, paymentRefId, cardNumber;
-@synthesize orderPaymentId, paymentDate, paymentTypeId;
+@synthesize orderId;
+@synthesize customerId;
+@synthesize storeId;
+@synthesize salesPersonId;
+@synthesize paymentAmount;
+@synthesize paymentRefId;
+@synthesize orderPaymentId;
+@synthesize paymentDate;
+@synthesize paymentTypeId;
+
 
 #pragma mark -
 #pragma mark Constructor/Deconstructor
@@ -37,13 +45,23 @@
 
 - (void) dealloc {
     [orderId release];
+    orderId = nil;
     [customerId release];
-    [salesPersonId release];
+    customerId = nil;
     [storeId release];
-    
+    storeId = nil;
+    [salesPersonId release];
+    salesPersonId = nil;
     [paymentAmount release];
+    paymentAmount = nil;
     [paymentRefId release];
-
+    paymentRefId = nil;
+    [orderPaymentId release];
+    orderPaymentId = nil;
+    [paymentDate release];
+    paymentDate = nil;
+    [paymentTypeId release];
+    paymentTypeId = nil;
     
     [super dealloc];
 }

@@ -9,15 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "iPOSFacade.h"
 
-@interface PreviousOrder : NSObject
-{
+@interface PreviousOrder : NSObject {
     NSString *orderDate;
     NSNumber *orderId;
     NSDecimalNumber *orderTotal;
     NSString *orderType;
-    NSArray *paymentHistory;
     NSNumber *orderTypeId;
-    iPOSFacade *facade;
 }
 
 @property (nonatomic, retain) NSString *orderDate;
@@ -26,7 +23,6 @@
 @property (nonatomic, retain) NSString *orderType;
 @property (nonatomic, retain) NSNumber *orderTypeId;
 
-- (Order *) getItemsForOrder;
 - (BOOL) canViewDetails;
 
 @end

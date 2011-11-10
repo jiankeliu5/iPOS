@@ -34,7 +34,7 @@ typedef enum{
     NSString *purchaseOrderId;
     
     NSNumber *depositAuthorizationID;
-    NSString *followUpdate;
+    NSString *followUpDate;
     NSString *orderDCTO;
     NSString *promiseDate;
     NSString *requestDate;
@@ -42,14 +42,11 @@ typedef enum{
     BOOL taxExempt;
     BOOL isNewOrder;
     
-    BOOL partialPaymentOnAccount;
-    
     Store *store;
     Customer *customer;
     
-    NSMutableArray *previousPayments;
+    NSArray*previousPayments;
     
-        
     @private NSMutableArray *orderItemList;
 }
 
@@ -60,7 +57,7 @@ typedef enum{
 @property (nonatomic, retain) NSString *purchaseOrderId;
 
 @property (nonatomic, retain) NSNumber *depositAuthorizationID;
-@property (nonatomic, retain) NSString *followUpdate;
+@property (nonatomic, retain) NSString *followUpDate;
 @property (nonatomic, retain) NSString *orderDCTO;
 @property (nonatomic, retain) NSString *promiseDate;
 @property (nonatomic, retain) NSString *requestDate;
@@ -69,11 +66,14 @@ typedef enum{
 @property (nonatomic, assign) BOOL isNewOrder;
 @property (nonatomic, retain) Store *store;
 @property (nonatomic, retain) Customer *customer;
-@property (nonatomic, assign) BOOL partialPaymentOnAccount;
-@property (nonatomic, assign) NSMutableArray *previousPayments;
+
+@property (nonatomic, retain) NSArray *previousPayments;
 
 
 - (NSArray *) getOrderItems;
+- (NSArray *) getOrderItemsSortedByStatus;
+- (NSArray *) getOrderItemsSortedByStatusFilterCanceled;
+
 - (void) addItemToOrder: (ProductItem *) item withQuantity: (NSDecimalNumber *) quantity;
 - (void) addOrderItemToOrder:(OrderItem *)orderItem;
 - (void) removeItemFromOrder: (OrderItem *) item;
@@ -82,16 +82,21 @@ typedef enum{
 #pragma mark -
 #pragma mark Order Type methods
 - (void) setAsQuote;
+- (void) setAsNewOrder;
 
-- (NSNumber *) getOrderTypeId;
+- (BOOL) isQuote;
 - (BOOL) isClosed;
 
 - (void) mergeWith: (Order *) mergeOrder;
+
+- (void) cancelOrder;
 
 // These routines are more for determining what can be done with existing orders
 - (BOOL) canViewDetails;
 - (BOOL) canEditDetails;
 - (BOOL) canCancel;
+
+- (BOOL) isModified;
 
 #pragma mark -
 #pragma mark Validation methods
@@ -109,9 +114,15 @@ typedef enum{
 - (NSDecimalNumber *) calcOrderRetailSubTotal;
 - (NSDecimalNumber *) calcOrderSubTotal;
 - (NSDecimalNumber *) calcOrderTax;
+
+- (NSDecimalNumber *) calcOrderTotal;
 - (NSDecimalNumber *) calcOrderDiscountTotal;
-- (NSDecimalNumber *) calcBalanceOwing;
+
 - (NSDecimalNumber *) calcBalanceDue;
+- (NSDecimalNumber *) calcBalanceOwing;
+- (NSDecimalNumber *) calcBalancePaid;
+
+
 - (NSDecimalNumber *) calcClosedItemsBalance;
 - (NSDecimalNumber *) calculateProfitMargin;
 

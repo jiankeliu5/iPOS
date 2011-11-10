@@ -8,7 +8,10 @@
 
 #import "PriceAdjustViewController.h"
 #import "UIView+ViewLayout.h"
+
 #import "NSString+StringFormatters.h"
+#import "UIScreen+Helpers.h"
+
 #import "AlertUtils.h"
 #import "ManagerInfo.h"
 
@@ -27,6 +30,7 @@
 #define BUTTON_WIDTH 80.0f
 
 @interface PriceAdjustViewController()
+- (void) layoutView: (UIInterfaceOrientation) interfaceOrientation;
 - (void) updateViewLayout;
 - (void) submitPriceAdjustment:(id)sender;
 @end
@@ -204,6 +208,8 @@
 
 - (void) viewWillAppear:(BOOL)animated {
 	[self updateViewLayout];
+    
+    [self layoutView:[UIApplication sharedApplication].statusBarOrientation];
 	
 	// Call super last
 	[super viewWillAppear:animated];
@@ -217,8 +223,27 @@
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations.
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
 }
+
+- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [self layoutView:toInterfaceOrientation];
+}
+
+#pragma mark -
+#pragma mark Layout View
+- (void) layoutView:(UIInterfaceOrientation) orientation {
+    
+    CGRect viewBounds = [UIScreen rectForScreenView:orientation isNavBarVisible:YES];
+    
+    roundView.frame = CGRectMake((viewBounds.size.width - ROUND_VIEW_WIDTH)/2, 
+                                 (viewBounds.size.height - ROUND_VIEW_HEIGHT)/2, 
+                                 ROUND_VIEW_WIDTH, ROUND_VIEW_HEIGHT);
+	[roundView applyDefaultRoundedStyle];
+	[roundView applyGradientToBackgroundWithStartColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0] 
+											  endColor:[UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1.0]];
+}
+
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.

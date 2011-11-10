@@ -20,7 +20,7 @@
 
 @interface TenderPaymentViewController : ExtUIViewController<ExtUIViewControllerDelegate, ChargeCreditCardViewDelegate, LineaDelegate, SignatureDelegate, NotesControllerDelegate, AccountPaymentViewDelegate> {
 	NSDecimalNumber *paymentAmount;
-    id ccPayment;
+    id payment;
     
     iPOSFacade *facade;
     OrderCart *orderCart;
@@ -32,17 +32,25 @@
     UILabel *taxTotalLabel;
     UILabel *totalLabel;
     
+    
+    UILabel *balancePaidTitleLabel;
+    UILabel *balancePaidLabel;
+    UILabel *balanceOwingTitleLabel;
+    UILabel *balanceOwingLabel;
     UILabel *balanceDueTitleLabel;
     UILabel *balanceDueLabel;
+    
     ChargeCreditCardView *chargeCCView;
     AccountPaymentView *accountPaymentView;
     
     GradientView *separatorView;
     GradientView *tenderTotalView;
     Linea *linea;
+    
+    BOOL orderIsSaved;
 }
 
 @property (nonatomic, retain) NSDecimalNumber *paymentAmount;
-@property (nonatomic, retain) id ccPayment;
+@property (nonatomic, retain) id payment;
 
 @end

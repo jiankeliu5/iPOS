@@ -9,8 +9,7 @@
 #import "Payment.h"
 #import "PaymentSignature.h"
 
-@interface AccountPayment : Payment
-{
+@interface AccountPayment : Payment {
     PaymentSignature *signature;
 }
 

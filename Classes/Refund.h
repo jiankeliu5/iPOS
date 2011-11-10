@@ -9,8 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "RefundItem.h"
 
-@interface Refund : AbstractModel   
-{
+@interface Refund : AbstractModel {
     NSNumber *orderId;
     NSNumber *customerId;
     NSNumber *storeId;
@@ -22,14 +21,15 @@
     PaymentSignature *signature;
 }
 
-@property (nonatomic, retain) NSArray *refundItems;
-
 @property (nonatomic, retain) NSNumber *orderId;
 @property (nonatomic, retain) NSNumber *customerId;
 @property (nonatomic, retain) NSNumber *storeId;
 @property (nonatomic, retain) NSNumber *salesPersonId;
 @property (nonatomic, retain) NSString *refundDate;
+
 @property (nonatomic, retain) PaymentSignature *signature;
+
+@property (nonatomic, retain) NSArray *refundItems;
 
 - (void) addRefundItem:(RefundItem *)item;
 - (NSArray *) getRefundItems;

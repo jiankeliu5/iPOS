@@ -137,7 +137,7 @@
     ccPayment.paymentAmount = [NSDecimalNumber decimalNumberWithString:@"49.25"];
     ccPayment.cardNumber = @"1234567890000";
     ccPayment.lpToken = @"lpToken1";
-    ccPayment.tRouteD = @"tRouteD1";
+    ccPayment.paymentRefId = @"tRouteD1";
     
     NSMutableArray *previousPayments = [NSArray arrayWithObject:ccPayment];
     
@@ -212,7 +212,7 @@
     ccPayment.paymentAmount = [NSDecimalNumber decimalNumberWithString:@"49.25"];
     ccPayment.cardNumber = @"1234567890000";
     ccPayment.lpToken = @"lpToken1";
-    ccPayment.tRouteD = @"tRouteD1";
+    ccPayment.paymentRefId = @"tRouteD1";
     
     NSMutableArray *previousPayments = [NSArray arrayWithObject:ccPayment];
     
@@ -291,7 +291,7 @@
     ccPayment.paymentAmount = [NSDecimalNumber decimalNumberWithString:@"38.25"];
     ccPayment.cardNumber = @"1234567890000";
     ccPayment.lpToken = @"lpToken1";
-    ccPayment.tRouteD = @"tRouteD1";
+    ccPayment.paymentRefId = @"tRouteD1";
     
     NSMutableArray *previousPayments = [NSArray arrayWithObject:ccPayment];
     
@@ -441,7 +441,7 @@
     ccPayment.paymentAmount = [NSDecimalNumber decimalNumberWithString:@"38.25"];
     ccPayment.cardNumber = @"1234567890000";
     ccPayment.lpToken = @"lpToken1";
-    ccPayment.tRouteD = @"tRouteD1";
+    ccPayment.paymentRefId = @"tRouteD1";
     
     NSMutableArray *previousPayments = [NSArray arrayWithObject:ccPayment];
     

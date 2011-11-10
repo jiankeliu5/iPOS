@@ -196,9 +196,9 @@ static NSString *CREDIT_CARD_XML = @""
             lpToken = ccPayment.lpToken;
         }
         
-        if (ccPayment.tRouteD)
+        if (ccPayment.paymentRefId)
         {
-            troutD = ccPayment.tRouteD;
+            troutD = ccPayment.paymentRefId;
         }
         
         if (ccPayment.cardNumber)

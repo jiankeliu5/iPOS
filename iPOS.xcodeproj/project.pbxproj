@@ -40,8 +40,6 @@
 		367B7FF9144CB11D008DB0B1 /* RefundItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 367B7FF7144CB11C008DB0B1 /* RefundItem.m */; };
 		367B7FFF144DEFD6008DB0B1 /* RefundOxmTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 367B7FFE144DEFD6008DB0B1 /* RefundOxmTestCase.m */; };
 		368B10921434F675001AAD73 /* OrderHistoryTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F3E99F1434C1A2004376B8 /* OrderHistoryTestCase.m */; };
-		368B1095143531C3001AAD73 /* OrderHistoryXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 368B1094143531C3001AAD73 /* OrderHistoryXmlMarshaller.m */; };
-		368B109614364857001AAD73 /* OrderHistoryXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 368B1094143531C3001AAD73 /* OrderHistoryXmlMarshaller.m */; };
 		36BB91B814168510003E5386 /* NotesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BB91B6141671A6003E5386 /* NotesController.m */; };
 		36E722371418F2720009D71A /* AccountPaymentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E722351417E8640009D71A /* AccountPaymentView.m */; };
 		36E7223F14193AC20009D71A /* PaymentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 36E7223C141939090009D71A /* PaymentView.h */; };
@@ -590,8 +588,6 @@
 		367B7FF7144CB11C008DB0B1 /* RefundItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefundItem.m; sourceTree = "<group>"; };
 		367B7FFD144DEFD6008DB0B1 /* RefundOxmTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefundOxmTestCase.h; sourceTree = "<group>"; };
 		367B7FFE144DEFD6008DB0B1 /* RefundOxmTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefundOxmTestCase.m; sourceTree = "<group>"; };
-		368B1093143531C3001AAD73 /* OrderHistoryXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderHistoryXmlMarshaller.h; sourceTree = "<group>"; };
-		368B1094143531C3001AAD73 /* OrderHistoryXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderHistoryXmlMarshaller.m; sourceTree = "<group>"; };
 		369C9A8B142400AB0094C17B /* TenderPaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TenderPaymentViewController.m; sourceTree = "<group>"; };
 		369E4CE51430D23300289F83 /* IBABooleanFormField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IBABooleanFormField.h; path = ../ThirdParty/IBAForms/headers/IBAForms/IBABooleanFormField.h; sourceTree = "<group>"; };
 		369E4CE61430D23300289F83 /* IBABooleanSwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IBABooleanSwitchCell.h; path = ../ThirdParty/IBAForms/headers/IBAForms/IBABooleanSwitchCell.h; sourceTree = "<group>"; };
@@ -1165,7 +1161,6 @@
 				B4C469E613070C3A001EADE4 /* TenderPayment */,
 				D6E0C82E145851EF00A97D2B /* Refund */,
 				B4C469DA13070471001EADE4 /* CartItems */,
-				B4C8E93514466B230019A640 /* OrderItems */,
 				B40D9304143D457600F9D89C /* LookupOrder */,
 				B4C469C1130702E0001EADE4 /* Customer */,
 				B4C469BB1307011B001EADE4 /* AddItem */,
@@ -1446,6 +1441,7 @@
 		B40D9304143D457600F9D89C /* LookupOrder */ = {
 			isa = PBXGroup;
 			children = (
+				B4C8E93514466B230019A640 /* OrderItems */,
 				D65C9771145F2AFD00600034 /* LookupOrderUtil.h */,
 				D65C9772145F2AFD00600034 /* LookupOrderUtil.m */,
 				B40D9305143D45F900F9D89C /* LookupOrderViewController.h */,
@@ -1913,6 +1909,8 @@
 				D61C3C3112FCA530003C3A47 /* Customer.m */,
 				D6DCA823134DFA8E00ACBDD9 /* OrderCart.h */,
 				D6DCA824134DFA8E00ACBDD9 /* OrderCart.m */,
+				360C1286143383E000235580 /* PreviousOrder.h */,
+				360C1287143383E000235580 /* PreviousOrder.m */,
 				D61C3C3312FCA535003C3A47 /* Order.h */,
 				D61C3C3412FCA535003C3A47 /* Order.m */,
 				D61C3C6812FCA9C0003C3A47 /* OrderItem.h */,
@@ -1943,8 +1941,6 @@
 				D6412B9413563216002AC1AC /* PaymentSignature.m */,
 				36E72240141A37370009D71A /* AccountPayment.h */,
 				36E72241141A37370009D71A /* AccountPayment.m */,
-				360C1286143383E000235580 /* PreviousOrder.h */,
-				360C1287143383E000235580 /* PreviousOrder.m */,
 				367B7FE6144C8248008DB0B1 /* CashPayment.h */,
 				367B7FE7144C8248008DB0B1 /* CashPayment.m */,
 				367B7FEA144CA1D1008DB0B1 /* CheckPayment.h */,
@@ -1967,8 +1963,8 @@
 		D6B1935A133BEEC9004C4FD1 /* Oxm */ = {
 			isa = PBXGroup;
 			children = (
-				368B1093143531C3001AAD73 /* OrderHistoryXmlMarshaller.h */,
-				368B1094143531C3001AAD73 /* OrderHistoryXmlMarshaller.m */,
+				D6B19371133C02F7004C4FD1 /* OrderXmlMarshaller.h */,
+				D6B19372133C02F7004C4FD1 /* OrderXmlMarshaller.m */,
 				3606E5D814333FAD00FBB02A /* OrderSummaryXmlMarshaller.h */,
 				3606E5D914333FAD00FBB02A /* OrderSummaryXmlMarshaller.m */,
 				3606E5DA14333FAD00FBB02A /* PaymentHistoryXMLMarshaller.h */,
@@ -1982,8 +1978,6 @@
 				D65C9766145EF84700600034 /* CustomerListXmlMarshaller.m */,
 				D6B1936D133C02E7004C4FD1 /* LoginXmlMarshaller.h */,
 				D6B1936E133C02E7004C4FD1 /* LoginXmlMarshaller.m */,
-				D6B19371133C02F7004C4FD1 /* OrderXmlMarshaller.h */,
-				D6B19372133C02F7004C4FD1 /* OrderXmlMarshaller.m */,
 				D6B19377133C0314004C4FD1 /* ProductItemXmlMarshaller.h */,
 				D6B19378133C0314004C4FD1 /* ProductItemXmlMarshaller.m */,
 				D6CB613E137321C200E024B6 /* ProductItemListXmlMarshaller.h */,
@@ -2553,7 +2547,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6B4359F13159ECD000C0AA8 /* main.m in Sources */,
-				368B1095143531C3001AAD73 /* OrderHistoryXmlMarshaller.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2620,7 +2613,6 @@
 				D654C1C9145B04F9008CCAA7 /* ExtUITextField.m in Sources */,
 				D654C1CA145B04F9008CCAA7 /* GradientView.m in Sources */,
 				D654C1CB145B04FA008CCAA7 /* ExtUIViewController.m in Sources */,
-				368B109614364857001AAD73 /* OrderHistoryXmlMarshaller.m in Sources */,
 				36F3E98B1434ACA3004376B8 /* TenderPaymentViewController.m in Sources */,
 				36E72247141A4E2D0009D71A /* AccountPaymentXmlMarshaller.m in Sources */,
 				36E72246141A4E240009D71A /* AccountPayment.m in Sources */,

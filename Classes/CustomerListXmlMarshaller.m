@@ -53,9 +53,9 @@
     
     if ([custList count] > 0) {
         NSSortDescriptor *lastNameDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"lastName"
-                                                      ascending:NO] autorelease];
+                                                      ascending:YES] autorelease];
         NSSortDescriptor *firstNameDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"firstName"
-                                                                            ascending:NO] autorelease];
+                                                                            ascending:YES] autorelease];
         NSArray *sortDescriptors = [NSArray arrayWithObjects:lastNameDescriptor, firstNameDescriptor, nil];
         returnList = [[NSArray arrayWithArray: custList] sortedArrayUsingDescriptors:sortDescriptors];
     } else {

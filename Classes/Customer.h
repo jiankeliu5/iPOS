@@ -17,19 +17,18 @@
     NSNumber *customerId;
     NSString *customerType;
     NSNumber *customerTypeId;
+    NSString *e1CustomerId;
     NSNumber *priceLevelId;
     NSNumber *holdStatus;
     NSString *holdStatusText;
     NSDecimalNumber *creditBalance;
     NSDecimalNumber *creditLimit;
     NSNumber *termsTypeId;
-    NSDecimalNumber *amountAppliedOnAccount;
     
     NSString *firstName;
     NSString *lastName;
     NSString *phoneNumber;
     NSString *emailAddress;
-    NSNumber *eOneCustoemrId;
     
     Store   *store;
     Address *address; 
@@ -40,13 +39,13 @@
 @property (nonatomic, retain) NSNumber *customerId;
 @property (nonatomic, retain) NSString *customerType;
 @property (nonatomic, retain) NSNumber *customerTypeId;
+@property (nonatomic, retain) NSString *e1CustomerId;
 @property (nonatomic, retain) NSNumber *priceLevelId;
 @property (nonatomic, retain) NSNumber *holdStatus;
 @property (nonatomic, retain) NSString *holdStatusText;
 @property (nonatomic, retain) NSDecimalNumber *creditBalance;
 @property (nonatomic, retain) NSDecimalNumber *creditLimit;
 @property (nonatomic, retain) NSNumber *termsTypeId;
-@property (nonatomic, retain) NSDecimalNumber *amountAppliedOnAccount;
 
 @property (nonatomic, retain) NSString *firstName;
 @property (nonatomic, retain) NSString *lastName;
@@ -55,7 +54,6 @@
 
 @property (nonatomic, retain) Store *store;
 @property (nonatomic, retain) Address *address;
-@property (nonatomic, retain) NSNumber *eOneCustoemrId;
 
 @property                     BOOL taxExempt;
 

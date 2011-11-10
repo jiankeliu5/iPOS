@@ -15,6 +15,7 @@
 #import "SearchItemView.h"
 #import "CartItemTableCell.h"
 #import "SearchItemView.h"
+#import "MOGlassButton.h"
 
 
 @interface OrderItemsViewController : UIViewController <LineaDelegate, AddItemViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, SearchItemViewDelegate, CartItemCellDelegate, ProfitMarginViewDelegate> {
@@ -40,6 +41,8 @@
 	UILabel *totalValue;
 	
 	UIToolbar *orderToolBar;
+    
+    MOGlassButton *discountButton;
 	
 	NSArray *toolbarBasic;
 	NSArray *toolbarWithQuoteAndOrder;
@@ -49,7 +52,7 @@
     UIBarButtonItem *quoteButton;
     UIBarButtonItem *orderButton;
     UIBarButtonItem *marginButton;
-    UIBarButtonItem *logoutButton;
+    UIBarButtonItem *cancelOrderButton;
     UIBarButtonItem *editButton;
     UIBarButtonItem *cancelEditButton;
     

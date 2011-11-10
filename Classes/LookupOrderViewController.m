@@ -197,12 +197,19 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    // Clear out all sections of the order cart
+    [orderCart clearPreviousCart];
+    
     if (self.navigationController != nil) {
 		[self.navigationController setNavigationBarHidden:NO];
 		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Lookup Order" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
 	}
     
     [self layoutView: [UIApplication sharedApplication].statusBarOrientation];
+    
+    lookupCustomerField.text = @"";;
+    lookupOrderPhoneField.text = @"";
+    lookupOrderIdField.text = @"";
     
     [super viewWillAppear:animated];
 }
@@ -255,7 +262,6 @@
 
 - (void) performSearch:(ExtUITextField *)textField {
     if (textField && [textField.text length] > 0) {
-        NSArray *foundOrderList = nil;
         NSLog(@"Incoming text: %@", textField.text);
         
         if ([textField.tagName isEqualToString:@"LookupCustomerName"] && [textField.text length] > 0) {

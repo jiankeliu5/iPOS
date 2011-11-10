@@ -21,7 +21,7 @@
     - (ASIHTTPRequest *) getRequestForSession:(SessionInfo *) sessionInfo serviceDomainUri: (NSString *) serviceDomainUri serviceUri: (NSString *) serviceUri;
     - (ASIHTTPRequest *) getRequestForSession:(SessionInfo *) sessionInfo url: (NSString *) urlString;
 
-    - (void) createOrder: (Order *) order withSession: (SessionInfo *) sessionInfo;
+    - (void) saveOrder: (Order *) order withSession: (SessionInfo *) sessionInfo;
 @end
 
 @implementation iPOSServiceImpl
@@ -291,25 +291,31 @@
 
 #pragma mark -
 #pragma mark Order Mgmt APIs
--(void) newQuote:(Order *)order withSession:(SessionInfo *)sessionInfo {
-    if (order == nil || ![order validateAsNewQuote]) {
+- (void) save:(Order *)order withSession:(SessionInfo *)sessionInfo {
+    if (order == nil) {
+        NSLog(@"No order to save.");
         return;
     }
     
-    [order setAsQuote];
-    [self createOrder:order withSession:sessionInfo];
-}
-
--(void) newOrder:(Order *)order withSession:(SessionInfo *)sessionInfo {
-    if (order == nil || ![order validateAsNewOrder]) {
-        return;
-    }
+    // Basic Validation
+    if (order.isNewOrder) {
+        NSLog(@"Saving order as new quote");
+        
+        // Wipe out the order id for new
+        order.orderId = nil;
+        
+        if ([order isQuote] && ![order validateAsNewQuote]) {
+            return;
+        } else if (![order validateAsNewOrder]) {
+            return;
+        }
+    } 
     
-    [order getOrderTypeId];
-    [self createOrder:order withSession:sessionInfo];
+    // Save the order or quote
+    [self saveOrder:order withSession:sessionInfo];
 }
 
--(void) createOrder:(Order *)order withSession:(SessionInfo *)sessionInfo {
+-(void) saveOrder:(Order *)order withSession:(SessionInfo *)sessionInfo {
 	// Make sure that we have a valid session and order
     if (sessionInfo == nil || order == nil) {
         return;
@@ -354,6 +360,8 @@
     
     // Parse the XML response for the order details
     Order *orderReturned =  [Order fromXml:[request responseString]];
+    
+    // Merge the order from the result and mark the order as current (not modified)
     [order mergeWith:orderReturned];
 }
 

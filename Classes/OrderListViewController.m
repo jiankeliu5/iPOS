@@ -18,7 +18,9 @@
 
 @interface OrderListViewController()
 - (void)layoutView: (UIInterfaceOrientation) interfaceOrientation;
+
 - (void)handleClose:(id)sender;
+
 @end
 
 @implementation OrderListViewController
@@ -125,10 +127,12 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    // Clear out all sections of the order cart
+    [orderCart clearPreviousOrder];
+    
     if (self.navigationController != nil) {
 		[self.navigationController setNavigationBarHidden:NO];
-		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Orders" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
-	}
+    }
     
     [self layoutView: [UIApplication sharedApplication].statusBarOrientation];
     
@@ -200,8 +204,11 @@
         Order *order = [facade lookupOrderByOrderId:pOrder.orderId];
         if (order != nil) {
             [orderCart setPreviousOrder:order];
+            
             OrderItemsViewController *orderItemsViewController = [[OrderItemsViewController alloc] init];
-            [[self navigationController] pushViewController:orderItemsViewController animated:TRUE];
+
+            [[self navigationController] pushViewController:orderItemsViewController animated:YES];
+            
             [orderItemsViewController release];
         } else {
             [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Could not retrieve previous order.  Order Id: %@", pOrder.orderId] withTitle:@"iPOS"];
@@ -217,5 +224,8 @@
 	}
     return indexPath;
 }
+
+#pragma mark -
+#pragma mark Private Methods
 
 @end

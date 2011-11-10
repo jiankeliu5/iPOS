@@ -29,6 +29,7 @@
 #pragma mark Accessors
 - (void) clearCart;
 - (void) clearPreviousCart;
+- (void) clearPreviousOrder;
 - (void) clearAllCart;
 
 - (Order *) getOrder;

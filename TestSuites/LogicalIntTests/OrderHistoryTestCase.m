@@ -53,7 +53,7 @@
     
     CreditCardPayment *cc = [paymentHistory objectAtIndex:0];
     
-    STAssertNotNil(cc.tRouteD, @"tRouteD should not be nil");
+    STAssertNotNil(cc.paymentRefId, @"tRouteD should not be nil");
    
 }
 
@@ -94,8 +94,6 @@
     
     
     STAssertNotNil(customer.address.zipPostalCode, @"Zip code required");
-    
-    STAssertTrue([facade logout], @"I expected the logout result to be true :-(");
 }
 
 

@@ -21,7 +21,7 @@
 	<key>ipos.service.baseurl</key>
 	<string>https://tsipos01/webservices/ipostest</string>
 	<key>ipos.service.demo.baseurl</key>
-	<string>http://ipad.demo.objectpartners.com:8080/ipos-demo-services-0.1/webservices/ipos</string>
+	<string>http://localhost:8080/ipos-demo-services/webservices/ipos</string>
 	<key>ipos.service.demo.local.baseurl</key>
 	<string>http://localhost:8080/ipos-demo-services/webservices/ipos</string>
 </dict>

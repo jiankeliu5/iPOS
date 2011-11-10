@@ -22,10 +22,15 @@
 
 -(void) dealloc {
     [availablePrimary release];
+    availablePrimary = nil;
     [availableSecondary release];
+    availableSecondary = nil;
     [onHandPrimary release];
+    onHandPrimary = nil;
     [onHandSecondary release];
+    onHandSecondary = nil;
     [etaDateAsString release];
+    etaDateAsString = nil;
     
     // no need to release item as it is not retained it is just assigned.
     [super dealloc];

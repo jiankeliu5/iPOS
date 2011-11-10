@@ -22,7 +22,9 @@
 
 -(void) dealloc {
     [storeId release];
+    storeId = nil;
     [availability release];
+    availability = nil;
     
     [super dealloc];
 }

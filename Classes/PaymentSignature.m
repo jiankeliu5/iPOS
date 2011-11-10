@@ -12,7 +12,9 @@
 
 @implementation PaymentSignature
 
-@synthesize signatureAsBase64, paymentRefId, isPayOnAccount;
+@synthesize signatureAsBase64;
+@synthesize paymentRefId;
+@synthesize isPayOnAccount;
 
 #pragma mark -
 #pragma mark Constructor/Deconstructor
@@ -44,7 +46,9 @@
 
 - (void) dealloc {
     [signatureAsBase64 release];
+    signatureAsBase64 = nil;
     [paymentRefId release];
+    paymentRefId = nil;
     
     [super dealloc];
 }

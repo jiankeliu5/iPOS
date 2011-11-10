@@ -69,18 +69,19 @@
 - (void) cancelEditMode:(id)sender;
 - (void) commitEdits:(id)sender;
 - (void) tenderOrder:(id)sender;
+- (void) cancelOrder:(id) sender;
 
-- (void) handleLogout:(id) sender;
 - (void) previousOrderChangeAlert;
 
 - (void) searchforItem:(id)sender;
 - (void) restoreDefaultToolbar;
+- (void) enableToolbarItems;
 - (void) updateSelectionCount;
 
 - (void) showAddItemOverlay: (NSArray *) foundItems;
 - (void) displayProfitMarginOverlay;
 
-- (void)handleCloseLookupOrder:(id)sender;
+- (void) handleCloseLookupOrder:(id)sender;
 @end
 
 @implementation OrderItemsViewController
@@ -110,10 +111,8 @@
     // are defaults, values are set from the order we are currently working
     // on when the view appears.
 	[[self navigationItem] setTitle:@"Order Item"];
+    
 	[self setTitle:@"Order Item"];
-
-	// Set up the right side button if desired, edit button for example.
-	//[[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
     
 	facade = [iPOSFacade sharedInstance];
 	orderCart = [OrderCart sharedInstance];
@@ -183,6 +182,15 @@
 	[orderTable release];
 	
 	cy += ORDER_TABLE_HEIGHT;
+    
+    // Add discount button
+    discountButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
+    [discountButton setupAsSmallBlackButton];
+    discountButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    [discountButton setTitle:@"Discount" forState:UIControlStateNormal];
+    
+    [self.view addSubview:discountButton];
+    [discountButton release];
 	
 	subTotalLabel = [self createOrderLabel:@"Subtotal:" withRect:CGRectMake(0.0f, cy, ORDER_LABEL_WIDTH, ORDER_LABEL_HEIGHT) andAlignment:UITextAlignmentRight];
 	[self.view addSubview:subTotalLabel];
@@ -238,10 +246,10 @@
 																	target:self 
 																	action:@selector(calculateProfitMargin:)] autorelease];
     
-    logoutButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stop_hand.png"]
+    cancelOrderButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"stop_hand.png"]
                                                      style:UIBarButtonItemStylePlain 
                                                     target:self 
-                                                    action:@selector(handleLogout:)] autorelease];
+                                                    action:@selector(cancelOrder:)] autorelease];
     
     editButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"pencil.png"]
                                                      style:UIBarButtonItemStylePlain 
@@ -254,7 +262,7 @@
                                                   action:@selector(cancelEditMode:)] autorelease];
     
 	// Basic toolbar
-    self.toolbarBasic = [[[NSArray alloc] initWithObjects:searchButton, tbFlex, editButton, tbFixed, logoutButton, nil] autorelease];
+    self.toolbarBasic = [[[NSArray alloc] initWithObjects:searchButton, tbFlex, editButton, tbFixed, cancelOrderButton, nil] autorelease];
 	self.toolbarWithQuoteAndOrder = [[[NSArray alloc] initWithObjects:
                                       searchButton,  
                                       tbFlex,
@@ -266,7 +274,7 @@
                                       tbFixed,
                                       editButton,
                                       tbFixed,
-                                      logoutButton,
+                                      cancelOrderButton,
                                       nil] autorelease];
 	
 	// Edit mode toolbar
@@ -355,19 +363,7 @@
     Order *order = [orderCart getOrder];
 	NSString *controllerTitle = (order != nil && order.orderId != nil) ? [order.orderId stringValue] : @"Order Item";
     
-    // Cannot edit an order if it is returned or closed status.
-    // This means no adding items, quoting, or tendering either.
-    if ([order canEditDetails] == NO) {
-        editButton.enabled = NO;
-        searchButton.enabled = NO;
-        quoteButton.enabled = NO;
-        orderButton.enabled = NO;
-        marginButton.enabled = NO;
-    }
-    
-    if ([order canCancel] == NO) {
-        logoutButton.enabled = NO;
-    }
+    [self enableToolbarItems];
     
 	if (self.navigationController != nil) {
 		[self.navigationController setNavigationBarHidden:NO];
@@ -407,6 +403,7 @@
 - (void) viewDidAppear:(BOOL)animated {
 	// Call super at the beginning
 	[super viewDidAppear:animated];
+    
 	NSIndexPath* selection = [orderTable indexPathForSelectedRow];
 	if (selection) {
 		[orderTable deselectRowAtIndexPath:selection animated:YES];
@@ -483,6 +480,8 @@
 	totalLabel.frame = CGRectMake(0, totalRect.origin.y, totalRect.size.width - LABEL_SPACING - ORDER_VALUE_WIDTH, ORDER_LABEL_HEIGHT);
 	totalValue.frame = CGRectMake(totalRect.size.width - ORDER_VALUE_WIDTH, totalRect.origin.y, ORDER_VALUE_WIDTH, ORDER_LABEL_HEIGHT);
     
+    discountButton.frame = CGRectMake(20, subTotalRect.origin.y, 80, 26);
+    
     orderToolBar.frame = toolbarRect;
     
     if (searchOverlay) {
@@ -511,10 +510,11 @@
     if (order != nil) {
         NSDecimalNumber *subTotal = [order calcOrderSubTotal];
         NSDecimalNumber *taxTotal = [order calcOrderTax];
+        NSDecimalNumber *total = [order calcOrderTotal];
         
         subTotalValue.text = [NSString formatDecimalNumberAsMoney:subTotal];
         taxValue.text = [NSString formatDecimalNumberAsMoney:taxTotal];
-        totalValue.text = [NSString formatDecimalNumberAsMoney:[subTotal decimalNumberByAdding:taxTotal]];
+        totalValue.text = [NSString formatDecimalNumberAsMoney:total];
 		
         [self restoreDefaultToolbar];        
     }
@@ -522,18 +522,55 @@
 
 - (void) restoreDefaultToolbar {
 	// Put up the Tender or Quote button if we have a customer and an order with at least one item.
-	if ([orderCart getCustomerForOrder] != nil && [[[orderCart getOrder] getOrderItems] count] > 0) {
+	if ([orderCart getCustomerForOrder] != nil && [[[orderCart getOrder] getOrderItemsSortedByStatusFilterCanceled] count] > 0) {
 		[orderToolBar setItems:self.toolbarWithQuoteAndOrder];
 	} else {
 		[orderToolBar setItems:self.toolbarBasic];
 	}
+    
+    [self enableToolbarItems];
+}
+
+- (void) enableToolbarItems {
+    Order *order = [orderCart getOrder];
+    
+    editButton.enabled = YES;
+    searchButton.enabled = YES;
+    quoteButton.enabled = YES;
+    orderButton.enabled = YES;
+    marginButton.enabled = YES;
+    
+    // Cannot edit an order if it is returned or closed status.
+    // This means no adding items, quoting, or tendering either.
+    if ([order canEditDetails] == NO) {
+        editButton.enabled = NO;
+        searchButton.enabled = NO;
+        quoteButton.enabled = NO;
+        orderButton.enabled = NO;
+        marginButton.enabled = NO;
+    }  
+    
+    if ([order canCancel] == NO) {
+        cancelOrderButton.enabled = NO;
+    }  
+    
+    // Cannot change an order to a quote
+    if (![order isQuote]) {
+        quoteButton.enabled = NO;
+    }
 }
 
 - (void) tenderOrder:(id)sender {
-    //decision point to decide if we need to do a refund, make a peyment, or do nothing
-    
     Order *order = [orderCart getOrder];
-  
+    
+    // Let us get existing payments for the order
+    NSArray *payments = [facade getPaymentHistoryForOrderid:order.orderId];
+    
+    NSLog(@"Found %u payments for order Id '%@'", [payments count], order.orderId);
+    
+    order.previousPayments = payments;
+    
+    // decision point to decide if we need to do a refund, make a payment, or just save changes to the order
     TenderDecision decision = [order isRefundEligble];
     
     if (decision == REFUND) {
@@ -543,16 +580,14 @@
 		
         [navController pushViewController:refundViewController animated:YES];
     }
-    else if (decision == TENDER)
-    {
+    else if (decision == TENDER) {
         //go to the tender screen
         TenderPaymentViewController *tenderViewController = [[[TenderPaymentViewController alloc] init] autorelease];
         UINavigationController *navController = self.navigationController;
 		
         [navController pushViewController:tenderViewController animated:YES];
     }
-    else
-    {
+    else {
         //display prompt and exit
         [self previousOrderChangeAlert];
     }
@@ -561,10 +596,11 @@
 - (void) previousOrderChangeAlert{
     
     UIAlertView *quoteAlert = [[UIAlertView alloc] init];
-	quoteAlert.title = @"Order Modification";
-	quoteAlert.message = [NSString stringWithFormat: @"No Changes made to previous order #%@", [orderCart getOrder].orderId];
+	quoteAlert.title = @"Save Order?";
+	quoteAlert.message = [NSString stringWithFormat: @"No tender required.  Save changes to order #%@?", [orderCart getOrder].orderId];
 	quoteAlert.delegate = self;
-	[quoteAlert addButtonWithTitle:@"OK"];
+    [quoteAlert addButtonWithTitle:@"Cancel"];
+	[quoteAlert addButtonWithTitle:@"Save"];
 	[quoteAlert show];
 	[quoteAlert release];
 }
@@ -585,13 +621,13 @@
 	[quoteAlert release];
 }
 
-- (void) handleLogout: (id) sender {
+- (void) cancelOrder:(id)sender {
     UIAlertView *logoutAlert = [[UIAlertView alloc] init];
-	logoutAlert.title = @"Cancel and Logout?";
-	logoutAlert.message = @"This will cancel the order and return to the login screen.  Are you sure you wish to do this?";
+	logoutAlert.title = @"Cancel Order?";
+	logoutAlert.message = @"This will cancel all items in the order.  Are you sure you wish to do this?";
 	logoutAlert.delegate = self;
-	[logoutAlert addButtonWithTitle:@"Cancel"];
-	[logoutAlert addButtonWithTitle:@"Logout"];
+	[logoutAlert addButtonWithTitle:@"No"];
+	[logoutAlert addButtonWithTitle:@"Yes"];
 	[logoutAlert show];
 	[logoutAlert release];
 }
@@ -608,7 +644,7 @@
 
 - (void) cancelEditMode:(id)sender {
 	// Clear the flags on the order items.
-	for (OrderItem *orderItem in [[orderCart getOrder] getOrderItems]) {
+	for (OrderItem *orderItem in [[orderCart getOrder] getOrderItemsSortedByStatusFilterCanceled]) {
 		orderItem.shouldClose = NO;
 		orderItem.shouldDelete = NO;
 	}
@@ -624,7 +660,7 @@
 	NSMutableArray *orderItemsToDelete = [NSMutableArray arrayWithCapacity:5];
 	// Iterate over the items in the order first to see which ones need to be deleted and closed.
 	// Must do this for delete because we cannot change the array while iterating over it.
-    for (OrderItem *orderItem in [[orderCart getOrder] getOrderItems]) {
+    for (OrderItem *orderItem in [[orderCart getOrder] getOrderItemsSortedByStatusFilterCanceled]) {
         if ([orderItem allowEdit]) {
             if (orderItem.shouldDelete) {
                 [orderItemsToDelete addObject:orderItem];
@@ -640,7 +676,7 @@
 	}
 
 	for (OrderItem *item in orderItemsToDelete) {
-        if (item.isNewLineItem) {
+        if (item.isNew) {
             [orderCart removeItem:item];
         } else {
             [item setStatusToCancel];
@@ -690,7 +726,9 @@
 			Order *order = [orderCart getOrder];
             
 			// Send off the order as a quote.
-			[facade newQuote:order];
+            [order setAsQuote];
+			[facade saveOrder:order];
+            
 			if (order.errorList != nil && [order.errorList count] > 0) {
                 [AlertUtils showModalAlertForErrors:order.errorList withTitle:@"iPOS"];
 			} else {
@@ -702,18 +740,31 @@
 	}
 
     // Cancel and logout modal.
-    if ([anAlertView.title isEqualToString:@"Cancel and Logout?"]) {
+    if ([anAlertView.title isEqualToString:@"Cancel Order?"]) {
 		NSString *clickedButtonTitle = [anAlertView buttonTitleAtIndex:aButtonIndex];
-		if ([clickedButtonTitle isEqualToString:@"Logout"]) {
-            [self.navigationController popToRootViewControllerAnimated:YES];
+		if ([clickedButtonTitle isEqualToString:@"Yes"]) {
+            Order *order = [orderCart getOrder];
+            [order cancelOrder];
+            
+            [orderTable reloadData];
 		}
 	}
     
     // No order changes.
-    if ([anAlertView.title isEqualToString:@"Order Modification"]) {
+    if ([anAlertView.title isEqualToString:@"Save Order?"]) {
 		NSString *clickedButtonTitle = [anAlertView buttonTitleAtIndex:aButtonIndex];
-		if ([clickedButtonTitle isEqualToString:@"OK"]) {
-            [self.navigationController popToRootViewControllerAnimated:YES];
+		if ([clickedButtonTitle isEqualToString:@"Save"]) {
+            
+            Order *order = [orderCart getOrder];
+            [facade saveOrder:order];
+            
+            if (order.errorList != nil && [order.errorList count] > 0) {
+                [AlertUtils showModalAlertForErrors:order.errorList withTitle:@"iPOS"];
+			} else {
+				// Go clear back to the login screen.
+                [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Order %@ was successfully saved.", order.orderId] withTitle:@"iPOS"];
+				[self.navigationController popToRootViewControllerAnimated:YES];
+			}
 		}
 	}
 
@@ -728,7 +779,21 @@
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return ([orderCart getOrder] == nil) ? 0 : [[[orderCart getOrder] getOrderItems] count];
+    
+    int count=0;
+    NSArray *items = [[orderCart getOrder] getOrderItemsSortedByStatusFilterCanceled];
+    
+    if (items && [items count] > 0) {
+        // Filter canceled items
+        for (OrderItem *item in items) {
+            if (![item isCanceled]) {
+                count++;
+            }
+        }
+    }
+    
+    
+	return count;
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -749,7 +814,7 @@
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
     Order *order = [orderCart getOrder];
-	OrderItem *orderItem = [[order getOrderItems] objectAtIndex:indexPath.row];
+	OrderItem *orderItem = [[order getOrderItemsSortedByStatusFilterCanceled] objectAtIndex:indexPath.row];
 	NSString *orderCellIdentifier = orderItem.item.sku;
 	
 	CartItemTableCell *cell = (CartItemTableCell *)[tableView dequeueReusableCellWithIdentifier:orderCellIdentifier];
@@ -772,19 +837,14 @@
             cell.deleteChecked = orderItem.shouldDelete;
             cell.closeChecked = orderItem.shouldClose = [orderItem isClosed];
             cell.disabledLook = NO;
-            if (self.multiEditMode == NO) {
-                cell.accessoryType = ([orderItem isClosed]) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-            } else {
-                cell.accessoryType = UITableViewCellAccessoryNone;
-            }    
         } else {
             cell.multiEditing = NO;
             cell.deleteChecked = NO;
             cell.closeChecked = NO;
-            cell.accessoryType = UITableViewCellAccessoryNone;
             cell.disabledLook = YES;
         }
         
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
 	return cell;
@@ -799,7 +859,7 @@
         return UITableViewCellEditingStyleNone;
     }
 
-    OrderItem *orderItem = [[[orderCart getOrder] getOrderItems] objectAtIndex:indexPath.row];
+    OrderItem *orderItem = [[[orderCart getOrder] getOrderItemsSortedByStatusFilterCanceled] objectAtIndex:indexPath.row];
     // Prevent swipe delete for cancelled, closed or returned line items
     if ([orderItem allowEdit] == NO) {
         return UITableViewCellEditingStyleNone;
@@ -813,7 +873,7 @@
 	
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Remove the item from the order
-		OrderItem *item = [[[orderCart getOrder] getOrderItems] objectAtIndex:indexPath.row];
+		OrderItem *item = [[[orderCart getOrder] getOrderItemsSortedByStatusFilterCanceled] objectAtIndex:indexPath.row];
         [orderCart removeItem:item];
         
         [theTableView deleteRowsAtIndexPaths: [NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -830,7 +890,7 @@
         return nil;
     }
     
-    OrderItem *orderItem = [[[orderCart getOrder] getOrderItems] objectAtIndex:indexPath.row];
+    OrderItem *orderItem = [[[orderCart getOrder] getOrderItemsSortedByStatusFilterCanceled] objectAtIndex:indexPath.row];
     // Prevent didSelectRowAtIndexPath from being called for cancelled, closed or returned line items
     if ([orderItem allowEdit] == NO) {
         return nil;
@@ -840,11 +900,12 @@
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	OrderItem *orderItem = [[[orderCart getOrder] getOrderItems] objectAtIndex:indexPath.row];
+	OrderItem *orderItem = [[[orderCart getOrder] getOrderItemsSortedByStatusFilterCanceled] objectAtIndex:indexPath.row];
 	if (orderItem != nil) {
 		CartItemDetailViewController *cartDetail = [[CartItemDetailViewController alloc] init];
 		[cartDetail setOrderItem:orderItem];
 		[[self navigationController] pushViewController:cartDetail animated:YES];
+        
 		[cartDetail release];
 	}
 }
@@ -941,7 +1002,7 @@
     
     Order *order = [orderCart getOrder];
     if ([order canCancel]) {
-        logoutButton.enabled = YES;
+        cancelOrderButton.enabled = YES;
     }
     
 	[self calculateOrder];
@@ -954,7 +1015,7 @@
     
     Order *order = [orderCart getOrder];
     if ([order canCancel]) {
-        logoutButton.enabled = YES;
+        cancelOrderButton.enabled = YES;
     }
     
 	[linea addDelegate:self];
@@ -1001,7 +1062,7 @@
         }
         
         // Disable the suspend button
-        logoutButton.enabled = NO;
+        cancelOrderButton.enabled = NO;
         
         [addItemOverlay release];
     } else {

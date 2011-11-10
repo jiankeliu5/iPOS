@@ -21,12 +21,30 @@ NSString * const UOM_QYARD = @"QY";
 NSString * const UOM_SET = @"SE";
 NSString * const UOM_SQFT = @"SF";
 
-@synthesize itemId, sku, description, vendorName, statusCode, type, typeId;
-@synthesize binLocation, stockingCode;
-@synthesize selectedUOM, defaultToBox, piecesPerBox, primaryUnitOfMeasure, secondaryUnitOfMeasure, conversion;
-@synthesize priceGroupId, retailPricePrimary, retailPriceSecondary, standardCost, taxRate, taxExempt;
-@synthesize store, distributionCenterList;
+@synthesize itemId;
+@synthesize sku;
+@synthesize description;
+@synthesize vendorName;
+@synthesize statusCode;
+@synthesize type;
+@synthesize typeId;
 @synthesize openItemStatus;
+@synthesize binLocation;
+@synthesize stockingCode;
+@synthesize selectedUOM;
+@synthesize defaultToBox;
+@synthesize piecesPerBox;
+@synthesize primaryUnitOfMeasure;
+@synthesize secondaryUnitOfMeasure;
+@synthesize conversion;
+@synthesize priceGroupId;
+@synthesize retailPricePrimary;
+@synthesize retailPriceSecondary;
+@synthesize standardCost;
+@synthesize taxRate;
+@synthesize taxExempt;
+@synthesize store;
+@synthesize distributionCenterList;
 
 #pragma mark Constuctor/Deconstructor
 -(id) init {
@@ -59,31 +77,49 @@ NSString * const UOM_SQFT = @"SF";
 }
 
 -(void) dealloc {
-	[unitOfMeasureLookup release];
 	
     [itemId release];
+    itemId = nil;
     [sku release];
+    sku = nil;
     [description release];
+    description = nil;
     [vendorName release];
+    vendorName = nil;
     [statusCode release];
+    statusCode = nil;
     [type release];
+    type = nil;
     [typeId release];
-    
+    typeId = nil;
+    [openItemStatus release];
+    openItemStatus = nil;
     [binLocation release];
-    [stockingCode release];    
+    binLocation = nil;
+    [stockingCode release];
+    stockingCode = nil;
     [piecesPerBox release];
+    piecesPerBox = nil;
     [primaryUnitOfMeasure release];
+    primaryUnitOfMeasure = nil;
     [secondaryUnitOfMeasure release];
+    secondaryUnitOfMeasure = nil;
     [conversion release];
-    
+    conversion = nil;
     [priceGroupId release];
+    priceGroupId = nil;
     [retailPricePrimary release];
+    retailPricePrimary = nil;
     [retailPriceSecondary release];
+    retailPriceSecondary = nil;
     [standardCost release];
+    standardCost = nil;
     [taxRate release];
-    
+    taxRate = nil;
     [store release];
+    store = nil;
     [distributionCenterList release];
+    distributionCenterList = nil;
     
     [super dealloc];
 }

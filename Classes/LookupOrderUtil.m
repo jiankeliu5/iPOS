@@ -36,6 +36,7 @@
                 // Found one previous order, prep and go to order edit view controller
                 PreviousOrder *p = (PreviousOrder *)[foundOrderList objectAtIndex:0];
                 NSLog(@"Found one previous order: %@", p.orderId);
+                
                 Order *order = [facade lookupOrderByOrderId:p.orderId];
                 if (order != nil) {
                     // Prep and go to the order edit view controller
@@ -49,32 +50,14 @@
                 }
             } else {
                 NSLog(@"Found %d previous orders.", [foundOrderList count]);
-                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                 
-                // The T literal needs to be escaped as 'T' or the match will not work.
-                [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
-                
-                // Sort the list of orders by order type and then date newest first.
-                NSArray *sortedOrderList = [foundOrderList sortedArrayUsingComparator:^(id a, id b)
-                                            {
-                                                NSComparisonResult statusSort = [((PreviousOrder *)a).orderTypeId compare:((PreviousOrder *)b).orderTypeId];
-                                                if (statusSort == NSOrderedSame) {
-                                                    NSDate *dateA = [dateFormatter dateFromString:((PreviousOrder *)a).orderDate];
-                                                    NSDate *dateB = [dateFormatter dateFromString:((PreviousOrder *)b).orderDate];
-                                                    return [dateB compare:dateA];
-                                                } 
-                                                return statusSort;
-                                            }];
                 // Set the previous order list on the order cart singleton
-                [orderCart setPreviousOrderList:sortedOrderList];
+                [orderCart setPreviousOrderList:foundOrderList];
                 
                 OrderListViewController *orderListController = [[OrderListViewController alloc] init];
                 [orderListController setSearchPhone:phoneNumber];
                 [[parentController navigationController] pushViewController:orderListController animated:TRUE];
                 [orderListController release];
-                
-                [dateFormatter release];
-                dateFormatter = nil;
             }
         } else {
             [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"No orders found for %@", phoneNumber] withTitle:@"iPOS"]; 

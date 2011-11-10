@@ -13,20 +13,20 @@
 
 static NSString * const CUSTOMER_XML = @""
 "<CustomerClass>"
-"<Address>"
-"<CustomerAddress>"
-"<Address1>%@</Address1>"
-"<Address2>%@</Address2>"
-"<City>%@</City>"
-"<State>%@</State>"
-"<Zip>%@</Zip>"
-"</CustomerAddress>"
-"</Address>"
-"${customerIdXml}"
-"<CustomerName>%@</CustomerName>"
-"<Email>%@</Email>"
-"${phoneXml}"
-"${storeXml}"
+    "<Address>"
+    "<CustomerAddress>"
+    "<Address1>%@</Address1>"
+    "<Address2>%@</Address2>"
+    "<City>%@</City>"
+    "<State>%@</State>"
+    "<Zip>%@</Zip>"
+    "</CustomerAddress>"
+    "</Address>"
+    "${customerIdXml}"
+    "<CustomerName>%@</CustomerName>"
+    "<Email>%@</Email>"
+    "${phoneXml}"
+    "${storeXml}"
 "</CustomerClass>";
 
 @implementation CustomerXmlMarshaller
@@ -174,7 +174,7 @@ static NSString * const CUSTOMER_XML = @""
      customer.customerTypeId = [root elementNumberValue:@"CustomerTypeID"];
     [self addCustomerName:[root elementStringValue:@"CustomerName"] toCustomer:customer];
     customer.taxExempt = [root elementBoolValue:@"TaxExempt"];
-    customer.eOneCustoemrId = [root elementNumberValue:@"E1CustomerID"];
+    customer.e1CustomerId = [root elementStringValue:@"E1CustomerID"];
     customer.phoneNumber = [root elementStringValue:@"CustomerPhone"];
     Address *address = [[Address alloc] init];
     address.zipPostalCode = [root elementStringValue:@"Zip"];

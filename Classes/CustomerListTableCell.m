@@ -18,6 +18,7 @@
 @end
 
 @implementation CustomerListTableCell
+@synthesize customer;
 @synthesize customerNameLabel;
 @synthesize customerPhoneLabel;
 @synthesize customerTypeLabel;

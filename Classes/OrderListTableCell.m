@@ -68,10 +68,6 @@
     self.contentView.backgroundColor = (disabledLook) ? [UIColor colorWithWhite:0.90f alpha:1.0f] : [UIColor colorWithWhite:1.0f alpha:1.0f];
 }
 
-- (PreviousOrder *) previousOrder {
-    return previousOrder;
-}
-
 - (void) setPreviousOrder:(PreviousOrder *)pOrder {
     previousOrder = pOrder;
     

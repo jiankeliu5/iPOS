@@ -47,7 +47,7 @@
             CreditCardPayment *history = [[CreditCardPayment alloc] init ];
             history.cardNumber = [node elementStringValue:@"CardNum"];
             history.lpToken = [node elementStringValue:@"LPToken"];
-            history.tRouteD = [node elementStringValue:@"TroutD"];
+            history.paymentRefId = [node elementStringValue:@"TroutD"];
             
             [self appendPaymentInfo:history withXML: node];
             [paymentList addObject:history];

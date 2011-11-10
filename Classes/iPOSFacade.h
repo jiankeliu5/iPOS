@@ -49,11 +49,10 @@ typedef enum { SessionOk = 0,
 -(void) updateCustomer: (Customer *) customer;
 
 #pragma mark iPOS Order Management
--(void) newQuote: (Order *) order;
--(void) newOrder: (Order *) order;
--(void) updateOrder: (Order *) order;
-
+-(void) saveOrder: (Order *) order;
 - (BOOL) emailReceipt: (Order *) order;
+
+- (BOOL) orderDiscountFor: (Order *) order withDiscountAmount: (NSDecimalNumber *) discountAmount managerApproval: (ManagerInfo *) managerApprover;
 
 
 #pragma mark Inventory Management

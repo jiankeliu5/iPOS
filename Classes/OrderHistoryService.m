@@ -10,8 +10,9 @@
 #import "ASIHTTPRequest.h"
 
 #import "ASIHTTPRequest+Validate.h"
-#import "OrderHistoryXmlMarshaller.h"
+
 #import "OrderSummaryXmlMarshaller.h"
+#import "OrderXmlMarshaller.h"
 #import "PaymentHistoryXMLMarshaller.h"
 
 @interface OrderHistoryService()
@@ -89,7 +90,7 @@
     
     // NSLog(@"response string: %@", [request responseString]);
     
-    Order * order = [[[OrderHistoryXmlMarshaller alloc] init]toObject:[request responseString]];
+    Order * order = [[[OrderXmlMarshaller alloc] init]toObject:[request responseString]];
     
     return order;
 }

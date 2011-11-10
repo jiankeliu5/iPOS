@@ -10,7 +10,10 @@
 
 @implementation RefundItem
 
-@synthesize creditCard, amount, orderPaymentTypeID, isSignatureRequired;
+@synthesize amount;
+@synthesize orderPaymentTypeID;
+@synthesize creditCard;
+@synthesize isSignatureRequired;
 
 - (id)init
 {
@@ -20,6 +23,17 @@
     }
     
     return self;
+}
+
+- (void) dealloc {
+    [amount release];
+    amount = nil;
+    [orderPaymentTypeID release];
+    orderPaymentTypeID = nil;
+    [creditCard release];
+    creditCard = nil;
+    
+    [super dealloc];
 }
 
 

@@ -8,6 +8,8 @@
 
 #import "CartItemTableCell.h"
 #import "NSString+StringFormatters.h"
+#import "UIColor+Chooser.h"
+
 #import "AlertUtils.h"
 
 #define LABEL_FONT_SIZE 14.0f
@@ -49,7 +51,7 @@
         itemStatusLabel = [[[UILabel alloc] init] autorelease];
 		itemStatusLabel.backgroundColor = [UIColor clearColor];
 		itemStatusLabel.textColor = [UIColor blackColor];
-		itemStatusLabel.textAlignment = UITextAlignmentCenter;
+		itemStatusLabel.textAlignment = UITextAlignmentLeft;
 		itemStatusLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
 		itemStatusLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:itemStatusLabel];
@@ -117,8 +119,6 @@
 						  [orderItem getSellingPriceForDisplay],
 						  [orderItem getUOMForDisplay]];
 	descriptionLabel.text = descText;
-	
-    itemStatusLabel.text = [orderItem openItemStatus];
     
 	NSString *quantityText = [NSString stringWithFormat:@"%@ %@", [orderItem getQuantityForDisplay], [orderItem getUOMForDisplay]];
 	quantityLabel.text = quantityText;
@@ -127,7 +127,21 @@
 	
 	self.deleteChecked = orderItem.shouldDelete;
 	self.closeChecked = orderItem.shouldClose || [orderItem isClosed];
-	
+    
+    // Color code the content view background
+    if ([orderItem.statusId intValue] == LINE_ORDERSTATUS_OPEN) {
+        self.contentView.backgroundColor = [UIColor whiteColor];
+        itemStatusLabel.text = [orderItem openItemStatus];
+    } else if ([orderItem.statusId intValue] == LINE_ORDERSTATUS_CLOSED) {
+        self.contentView.backgroundColor = [UIColor colorFromRGB:0xEB8E89];
+        itemStatusLabel.text = @"Closed";
+    } else if ([orderItem.statusId intValue] == LINE_ORDERSTATUS_RETURN) {
+        self.contentView.backgroundColor = [UIColor colorFromRGB:0x84CFEF];
+        itemStatusLabel.text = @"Returned";
+    } else if ([orderItem.statusId intValue] == LINE_ORDERSTATUS_CANCEL) {
+        self.contentView.backgroundColor = [UIColor colorWithWhite:0.90f alpha:1.0f];
+        itemStatusLabel.text = @"Canceled";
+    }
 }
 
 - (BOOL) disabledLook {
@@ -136,7 +150,9 @@
 
 - (void) setDisabledLook:(BOOL)lookDisabled {
     disabledLook = lookDisabled;
-    self.contentView.backgroundColor = (disabledLook) ? [UIColor colorWithWhite:0.90f alpha:1.0f] : [UIColor colorWithWhite:1.0f alpha:1.0f];
+    
+    // This will be handled by color coding requirements above on setOrderItem method
+    // self.contentView.backgroundColor = (disabledLook) ? [UIColor colorWithWhite:0.90f alpha:1.0f] : [UIColor colorWithWhite:1.0f alpha:1.0f];
 }
 
 #pragma mark -

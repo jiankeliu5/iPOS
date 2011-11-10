@@ -59,33 +59,34 @@ static NSString * const CREDIT = @"credit";
 
 - (void) handleCreditCardPayment:(id)sender;
 - (void) handleSuspendOrder: (id) sender;
--(void) sendPaymentOnAccount:(NSDecimalNumber *) amount;
 
 - (void) layoutView: (UIInterfaceOrientation) orientation;
 - (void) updateDisplayValues;
 
-- (BOOL) createOrder;
+- (BOOL) saveOrder;
 - (BOOL) tenderPaymentFromCardData: (NSString *)track1 track2:(NSString *)track2 track3:(NSString *)track3;
+- (BOOL) sendPaymentOnAccount:(NSDecimalNumber *) amount;
 - (BOOL) isOrderCreated;
 
-- (void) showPaymentRetryAlert:(Payment *) aCCPayment;
+- (void) showPaymentRetryAlert:(Payment *) aPayment;
 - (void) cancelTenderAndLogout;
--(NSDecimalNumber *) getOrderBalanceDue;
 
 - (void) navToReceipt;
-- (void) displayPayOnAccountSuccesfulView;
+- (void) displayPayOnAccountSuccessfulView;
 @end
 
 @implementation TenderPaymentViewController
 
-@synthesize paymentAmount, ccPayment;//, accountPayment;
+@synthesize paymentAmount, payment;
 
 #pragma mark Constructors
 - (id)init
 {
     self = [super init];
-    if (self == nil)
+    
+    if (self == nil) {
         return nil;
+    }
     
 	// Set up the items that will appear in a navigation controller bar if
 	// this view controller is added to a UINavigationController.
@@ -97,12 +98,13 @@ static NSString * const CREDIT = @"credit";
 	facade = [iPOSFacade sharedInstance];
     orderCart = [OrderCart sharedInstance];
 	
+    orderIsSaved = NO;
     return self;
 }
 
 - (void)dealloc {
     [paymentAmount release];
-    [ccPayment release];
+    [payment release];
     
     [super dealloc];
 }
@@ -129,6 +131,28 @@ static NSString * const CREDIT = @"credit";
     
     // Add Balance Due
     CGFloat balanceDueY = rectForView.size.height - [self navBarHeight] - LABEL_SPACING - LABEL_HEIGHT;
+    balancePaidTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(LABEL_BALDUE_STARTX, balanceDueY, LABEL_BALDUE_WIDTH, LABEL_HEIGHT)];
+    balancePaidTitleLabel.text = @"Paid";
+    balancePaidTitleLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
+    balancePaidTitleLabel.textAlignment = UITextAlignmentLeft;
+    
+    balancePaidLabel = [[UILabel alloc] initWithFrame:CGRectMake(LABEL_STARTX + LABEL_TITLE_WIDTH, balanceDueY, LABEL_WIDTH, LABEL_HEIGHT)];
+    balancePaidLabel.textColor = [UIColor blueColor];
+    balancePaidLabel.text = @"$0.00";
+    balancePaidLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
+    balancePaidLabel.textAlignment = UITextAlignmentRight;
+    
+    balanceOwingTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(LABEL_BALDUE_STARTX, balanceDueY, LABEL_BALDUE_WIDTH, LABEL_HEIGHT)];
+    balanceOwingTitleLabel.text = @"Owing";
+    balanceOwingTitleLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
+    balanceOwingTitleLabel.textAlignment = UITextAlignmentLeft;
+    
+    balanceOwingLabel = [[UILabel alloc] initWithFrame:CGRectMake(LABEL_STARTX + LABEL_TITLE_WIDTH, balanceDueY, LABEL_WIDTH, LABEL_HEIGHT)];
+    balanceOwingLabel.textColor = [UIColor blueColor];
+    balanceOwingLabel.text = @"$0.00";
+    balanceOwingLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
+    balanceOwingLabel.textAlignment = UITextAlignmentRight;
+    
     balanceDueTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(LABEL_BALDUE_STARTX, balanceDueY, LABEL_BALDUE_WIDTH, LABEL_HEIGHT)];
     balanceDueTitleLabel.text = @"Balance Due";
     balanceDueTitleLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
@@ -140,6 +164,10 @@ static NSString * const CREDIT = @"credit";
     balanceDueLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
     balanceDueLabel.textAlignment = UITextAlignmentRight;
     
+    [self.view addSubview:balancePaidTitleLabel];
+    [self.view addSubview:balancePaidLabel];
+    [self.view addSubview:balanceOwingTitleLabel];
+    [self.view addSubview:balanceOwingLabel];
     [self.view addSubview:balanceDueTitleLabel];
     [self.view addSubview:balanceDueLabel];
     
@@ -270,8 +298,14 @@ static NSString * const CREDIT = @"credit";
     tenderTotalFrame.size.width = viewBounds.size.width;
     tenderTotalView.frame = tenderTotalFrame;
     
+    CGFloat balancePaidY = viewBounds.size.height - 3*LABEL_SPACING - 3*LABEL_HEIGHT - TOOLBAR_HEIGHT;
+    CGFloat balanceOwingY = viewBounds.size.height - 2*LABEL_SPACING - 2*LABEL_HEIGHT - TOOLBAR_HEIGHT;
     CGFloat balanceDueY = viewBounds.size.height - LABEL_SPACING - LABEL_HEIGHT - TOOLBAR_HEIGHT;
     
+    balancePaidTitleLabel.frame = CGRectMake(LABEL_BALDUE_STARTX, balancePaidY, LABEL_BALDUE_WIDTH, LABEL_HEIGHT);        
+    balancePaidLabel.frame = CGRectMake(LABEL_STARTX + LABEL_TITLE_WIDTH, balancePaidY, LABEL_WIDTH, LABEL_HEIGHT);
+    balanceOwingTitleLabel.frame = CGRectMake(LABEL_BALDUE_STARTX, balanceOwingY, LABEL_BALDUE_WIDTH, LABEL_HEIGHT);        
+    balanceOwingLabel.frame = CGRectMake(LABEL_STARTX + LABEL_TITLE_WIDTH, balanceOwingY, LABEL_WIDTH, LABEL_HEIGHT);
     balanceDueTitleLabel.frame = CGRectMake(LABEL_BALDUE_STARTX, balanceDueY, LABEL_BALDUE_WIDTH, LABEL_HEIGHT);        
     balanceDueLabel.frame = CGRectMake(LABEL_STARTX + LABEL_TITLE_WIDTH, balanceDueY, LABEL_WIDTH, LABEL_HEIGHT);
     
@@ -354,7 +388,7 @@ static NSString * const CREDIT = @"credit";
     
     // Only create the order if it is not created at this point
     if (!isOrderCreated) {
-        isOrderCreated = [self createOrder];
+        isOrderCreated = [self saveOrder];
     }
     
     if (isOrderCreated) {
@@ -376,17 +410,6 @@ static NSString * const CREDIT = @"credit";
     }
 }
 
--(NSDecimalNumber *) getOrderBalanceDue {
-    
-    NSDecimalNumberHandler *bankersRoundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:2 
-                                                                                                  raiseOnExactness:NO raiseOnOverflow:NO 
-                                                                                                  raiseOnUnderflow:NO raiseOnDivideByZero:NO];
-    NSDecimalNumber *balanceDue = [[[orderCart getOrder] calcBalanceDue] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
-    
-    return balanceDue;
-}
-
-
 #pragma mark -
 #pragma mark ExtUIViewController delegates
 - (void) extTextFieldFinishedEditing:(ExtUITextField *) textField {
@@ -397,7 +420,7 @@ static NSString * const CREDIT = @"credit";
                                                                                                   raiseOnExactness:NO raiseOnOverflow:NO 
                                                                                                   raiseOnUnderflow:NO raiseOnDivideByZero:NO];
     NSDecimalNumber *amount = [[NSDecimalNumber decimalNumberWithString:textField.text] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
-    NSDecimalNumber *balanceDue = [self getOrderBalanceDue];//[[self getOrderBalanceDue] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
+    NSDecimalNumber *balanceDue = [order calcBalanceDue];
     NSDecimalNumber *orderAmount = [[[order calcOrderSubTotal] decimalNumberByAdding:[order calcOrderTax]] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
     
     if (textField.tagName == ACCOUNT)
@@ -412,28 +435,21 @@ static NSString * const CREDIT = @"credit";
             [AlertUtils showModalAlertMessage:@"Cannot charge more than the order total balance." withTitle:@"iPOS"];
             return;        
         }
-        else
-        {
-            if([amount compare:balanceDue] == NSOrderedSame)
-            {
-                if ([self createOrder])
-                {
+        else {
+            if([amount compare:balanceDue] == NSOrderedSame){
+                if ([self saveOrder]) {
                     [self sendPaymentOnAccount:amount];
                 }
             }
-            else
-            {
-                [orderCart getCustomerForOrder].amountAppliedOnAccount = amount;
-                [orderCart getOrder].partialPaymentOnAccount = YES;
-                [self createOrder];
-                [self sendPaymentOnAccount:amount];
+            else {
+                [self saveOrder];
+                if ([self sendPaymentOnAccount:amount]) {
+                    // Fetch the payments for the order (to reflect current order state with payments)
+                    order.previousPayments = [facade getPaymentHistoryForOrderid:order.orderId];
+                };
             }
-            
         }
-        
-    }
-    else if (textField.tagName == CREDIT)
-    {
+    } else if (textField.tagName == CREDIT) {
         if ([amount compare:balanceDue] == NSOrderedAscending) {
             [AlertUtils showModalAlertMessage:@"Cannot charge less than the balance due." withTitle:@"iPOS"];
             return;
@@ -444,7 +460,7 @@ static NSString * const CREDIT = @"credit";
         
         // If the amount was $0.00 at this point, it is a fully open order.  Create the open order and we are done.
         if ([amount compare:[NSDecimalNumber zero]] == NSOrderedSame) {
-            BOOL isOrderCreated = [self createOrder];
+            BOOL isOrderCreated = [self saveOrder];
             
             if (isOrderCreated) {
                 [self navToReceipt];
@@ -460,27 +476,28 @@ static NSString * const CREDIT = @"credit";
 
 #pragma mark -
 #pragma mark Send payment on account method.
--(void) sendPaymentOnAccount:(NSDecimalNumber *) amount {
-    self.ccPayment = [[[AccountPayment alloc] initWithOrder:[orderCart getOrder]] autorelease];
-    [ccPayment setPaymentAmount:amount];
-    [facade tenderPaymentOnAccount:ccPayment];
+- (BOOL) sendPaymentOnAccount:(NSDecimalNumber *) amount {
+    self.payment = [[[AccountPayment alloc] initWithOrder:[orderCart getOrder]] autorelease];
+    [payment setPaymentAmount:amount];
+    [facade tenderPaymentOnAccount:payment];
     
-    if ([[ccPayment errorList] count] == 0) {
+    if ([[payment errorList] count] == 0) {
         SignatureViewController *signatureViewController = [[[SignatureViewController alloc] init] autorelease];
         signatureViewController.delegate = self;
         
         [self presentModalViewController:signatureViewController animated:YES];
         signatureViewController.payAmountLabel.text = [NSString formatDecimalNumberAsMoney:amount];
-        
     } else {
-        [self showPaymentRetryAlert:ccPayment];
+        [self showPaymentRetryAlert:payment];
+        return NO;
     }
     
+    return YES;
 }
 
 #pragma mark -
 
--(void)displayPayOnAccountSuccesfulView
+-(void)displayPayOnAccountSuccessfulView
 {
     
     UILabel *textLabel = [[UILabel alloc ]initWithFrame:CGRectMake(self.view.frame.size.width / 6, self.view.frame.size.height / 4, 225.0f, 100.0f)];
@@ -506,49 +523,40 @@ static NSString * const CREDIT = @"credit";
 #pragma mark SignatureDelegate methods
 
 - (void) signatureController:(SignatureViewController *)signatureController signatureAsBase64:(NSString *)signature savePressed:(id)sender {
-   // BOOL isSignatureAccepted = YES;
 
-    if (ccPayment && signature)
-    {
-        if([ccPayment isKindOfClass:[CreditCardPayment class]])
-        {
+    if (payment && signature) {
+        if([payment isKindOfClass:[CreditCardPayment class]]) {
             NSLog(@"It is a credit card!");
-            [self.ccPayment attachSignature:signature];
+            [self.payment attachSignature:signature];
             
-            if (![facade acceptSignatureFor:self.ccPayment]) {
-                [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Problem accepting signature for payment with ref #%@.", [ccPayment paymentRefId]] withTitle:@"iPOS"];
+            if (![facade acceptSignatureFor:self.payment]) {
+                [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Problem accepting signature for payment with ref #%@.", [payment paymentRefId]] withTitle:@"iPOS"];
                 //isSignatureAccepted = NO;
-            }
-            else {
+            } else {
                 [self navToReceipt];
             }
             
-        }
-        else if ([ccPayment isKindOfClass:[AccountPayment class]])
+        } else if ([payment isKindOfClass:[AccountPayment class]])
         {
-            [self.ccPayment attachSignature:signature];
+            [self.payment attachSignature:signature];
 
-            if (![facade acceptSignatureOnAccount:self.ccPayment]) {
-                [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Problem accepting signature for payment with ref #%@.", [ccPayment paymentRefId]] withTitle:@"iPOS"];
-            }
-            else {
-                
-                if([[ccPayment paymentAmount] compare:[self getOrderBalanceDue]] == NSOrderedSame) {
+            if (![facade acceptSignatureOnAccount:self.payment]) {
+                [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Problem accepting signature for payment with ref #%@.", [payment paymentRefId]] withTitle:@"iPOS"];
+            } else {
+                if([[payment paymentAmount] compare:[[orderCart getOrder] calcBalanceDue]] == NSOrderedSame) {
                      [self navToReceipt];
-
-                }
-                else {
+                } else {
                     [self dismissModalViewControllerAnimated:YES];
                     [accountPaymentView removeFromSuperview];
                     [self updateDisplayValues];
-                    [self displayPayOnAccountSuccesfulView];
+                    [self displayPayOnAccountSuccessfulView];
                 }
             }
         }
     }
     else
     {
-      [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"A Signature was not provided for payment with ref #%@.", [ccPayment paymentRefId]] withTitle:@"iPOS"];
+      [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"A Signature was not provided for payment with ref #%@.", [payment paymentRefId]] withTitle:@"iPOS"];
        
     }
 }
@@ -580,7 +588,7 @@ static NSString * const CREDIT = @"credit";
     // 3.  Prompt for signature
     
     if (!isOrderCreated) {
-        isOrderCreated = [self createOrder];
+        isOrderCreated = [self saveOrder];
     }
     
     if (isOrderCreated) {
@@ -607,19 +615,19 @@ static NSString * const CREDIT = @"credit";
     NSDecimalNumberHandler *bankersRoundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:2 
                                                                                                   raiseOnExactness:NO raiseOnOverflow:NO 
                                                                                                   raiseOnUnderflow:NO raiseOnDivideByZero:NO];
-    self.ccPayment = [[[CreditCardPayment alloc] initWithOrder:[orderCart getOrder]] autorelease];
+    self.payment = [[[CreditCardPayment alloc] initWithOrder:[orderCart getOrder]] autorelease];
     
-    [ccPayment setNameOnCard:@"Joe Testing"];
-    [ccPayment setCardNumber:@"1111222233334444"];
-    [ccPayment setExpireDateMonthYear:@"11" year:@"14"] ;
-    [ccPayment setPaymentAmount:[[self paymentAmount] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior]];
+    [payment setNameOnCard:@"Joe Testing"];
+    [payment setCardNumber:@"1111222233334444"];
+    [payment setExpireDateMonthYear:@"11" year:@"14"] ;
+    [payment setPaymentAmount:[[self paymentAmount] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior]];
     
-    [facade tenderPaymentWithCC:ccPayment];
+    [facade tenderPaymentWithCC:payment];
     
-    if ([[ccPayment errorList] count] == 0) {
+    if ([[payment errorList] count] == 0) {
         isPaymentTendered = YES;
     } else {
-        [self showPaymentRetryAlert:ccPayment];
+        [self showPaymentRetryAlert:payment];
     }    
     return isPaymentTendered;
 }
@@ -766,13 +774,29 @@ static NSString * const CREDIT = @"credit";
         subTotalLabel.text = [NSString formatDecimalNumberAsMoney:subTotal];
         taxTotalLabel.text = [NSString formatDecimalNumberAsMoney:tax];
         totalLabel.text = [NSString formatDecimalNumberAsMoney: [subTotal decimalNumberByAdding:tax]];
-        balanceDueLabel.text = [NSString formatDecimalNumberAsMoney:[self getOrderBalanceDue]];
+        balancePaidLabel.text = [NSString formatDecimalNumberAsMoney:[order calcBalancePaid]];
+        balanceOwingLabel.text = [NSString formatDecimalNumberAsMoney:[order calcBalanceOwing]];
+        balanceDueLabel.text = [NSString formatDecimalNumberAsMoney:[order calcBalanceDue]];
     } else {
         retailTotalLabel.text = @"0.00";
         discountTotalLabel.text =  @"(0.00)";
         subTotalLabel.text = @"0.00";
         taxTotalLabel.text = @"0.00";
+        balancePaidLabel.text = @"0.00";
+        balanceOwingLabel.text = @"0.00";
         balanceDueLabel.text = @"0.00";
+    }
+    
+    if (order.isNewOrder || order.previousPayments  == nil || [order.previousPayments count] == 0) {
+        balancePaidTitleLabel.hidden = YES;
+        balancePaidLabel.hidden = YES;
+        balanceOwingTitleLabel.hidden = YES;
+        balanceOwingLabel.hidden = YES;
+    } else {
+        balancePaidTitleLabel.hidden = NO;
+        balancePaidLabel.hidden = NO;
+        balanceOwingTitleLabel.hidden = NO;
+        balanceOwingLabel.hidden = NO;
     }
 }
 
@@ -822,12 +846,24 @@ static NSString * const CREDIT = @"credit";
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
-- (BOOL) createOrder {
+- (BOOL) saveOrder {
+    
+    if (orderIsSaved) {
+        return YES;
+    }
+
     Order *cartOrder = [orderCart getOrder];
     
-    [facade newOrder:cartOrder];
+    // if this is not a new order and it is an order quote, switch it to a new order
+    if (!cartOrder.isNewOrder && [cartOrder isQuote]) {
+        [cartOrder setAsNewOrder];
+    }
+    
+    // Save the order
+    [facade saveOrder:cartOrder];
     
     if ([cartOrder.errorList count] == 0 && cartOrder.orderId != nil) {
+        orderIsSaved = YES;
         return YES;
     }
     
@@ -843,19 +879,19 @@ static NSString * const CREDIT = @"credit";
         NSDecimalNumberHandler *bankersRoundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:2 
                                                                                                       raiseOnExactness:NO raiseOnOverflow:NO 
                                                                                                       raiseOnUnderflow:NO raiseOnDivideByZero:NO];
-		self.ccPayment = [[[CreditCardPayment alloc] initWithOrder:[orderCart getOrder]] autorelease];
-        [ccPayment setNameOnCard:[[card.cardholderName copy] autorelease]];
-        [ccPayment setCardNumber:[[card.accountNumber copy] autorelease]];
-        [ccPayment setPaymentAmount:[[self paymentAmount] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior]];
-        [ccPayment setExpireDateMonthYear:[NSString stringWithFormat:@"%d",card.exirationMonth] 
+		self.payment = [[[CreditCardPayment alloc] initWithOrder:[orderCart getOrder]] autorelease];
+        [payment setNameOnCard:[[card.cardholderName copy] autorelease]];
+        [payment setCardNumber:[[card.accountNumber copy] autorelease]];
+        [payment setPaymentAmount:[[self paymentAmount] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior]];
+        [payment setExpireDateMonthYear:[NSString stringWithFormat:@"%d",card.exirationMonth] 
                                      year:[NSString stringWithFormat:@"%d",card.exirationYear]] ;
         
-        [facade tenderPaymentWithCC:ccPayment];
+        [facade tenderPaymentWithCC:payment];
         
-        if ([[ccPayment errorList] count] == 0) {
+        if ([[payment errorList] count] == 0) {
             isPaymentTendered = YES;
         } else {
-            [self showPaymentRetryAlert:ccPayment];
+            [self showPaymentRetryAlert:payment];
         }
     }
     
@@ -864,7 +900,7 @@ static NSString * const CREDIT = @"credit";
 
 - (void) showPaymentRetryAlert:(Payment *) aCCPayment {
     
-    if (ccPayment) {
+    if (payment) {
         UIAlertView *paymentAlert = [[UIAlertView alloc] init];
         NSMutableString *errMsg = [[[NSMutableString alloc] init] autorelease];
         
@@ -903,9 +939,8 @@ static NSString * const CREDIT = @"credit";
 
 -(void) navToReceipt {
     // Make sure we clear out the payment at this point
-    self.ccPayment = nil;
+    self.payment = nil;
     
-    // For now dismiss and logout
     [self dismissModalViewControllerAnimated:YES];
     [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Order %@ was successfully processed.", [orderCart getOrder].orderId] withTitle:@"iPOS"];
     

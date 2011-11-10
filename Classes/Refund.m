@@ -13,10 +13,15 @@
 
 @implementation Refund
 
-@synthesize refundItems, orderId, customerId, storeId, salesPersonId, refundDate, signature;
+@synthesize orderId;
+@synthesize customerId;
+@synthesize storeId;
+@synthesize salesPersonId;
+@synthesize refundDate;
+@synthesize refundItems;
+@synthesize signature;
 
-- (id)init
-{
+- (id)init {
     self = [super init];
     if (self) {
         refundItems = [[NSMutableArray alloc] init];
@@ -25,7 +30,25 @@
     return self;
 }
 
-- (void) addRefundItem:(RefundItem *)item{
+- (void) dealloc {
+    [orderId release];
+    orderId = nil;
+    [customerId release];
+    customerId = nil;
+    [storeId release];
+    storeId = nil;
+    [salesPersonId release];
+    salesPersonId = nil;
+    [refundDate release];
+    refundDate = nil;
+    [refundItems release];
+    refundItems = nil;
+    [signature release];
+    signature = nil;
+    
+    [super dealloc];
+}
+- (void) addRefundItem:(RefundItem *)item {
     
     [refundItems addObject:item];
 }
@@ -34,7 +57,7 @@
     return refundItems;
 }
 
-- (NSString *) toXml{
+- (NSString *) toXml {
     
     RefundXmlMarshaller *xmlMarshaller = [[[RefundXmlMarshaller alloc] init ] autorelease];
     

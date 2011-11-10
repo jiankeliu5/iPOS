@@ -14,8 +14,11 @@
 
 @implementation CreditCardPayment
 
-@synthesize expireDate, cardNumber, nameOnCard, signature, lpToken, tRouteD;
-
+@synthesize expireDate;
+@synthesize cardNumber;
+@synthesize nameOnCard;
+@synthesize lpToken;
+@synthesize signature;
 
 #pragma mark -
 #pragma mark Constructor/Deconstructor
@@ -26,9 +29,15 @@
 
 - (void) dealloc {
     [expireDate release];
+    expireDate = nil;
     [cardNumber release];
+    cardNumber = nil;
     [nameOnCard release];
+    nameOnCard = nil;
+    [lpToken release];
+    lpToken = nil;
     [signature release];
+    signature = nil;
     
     [super dealloc];
 }

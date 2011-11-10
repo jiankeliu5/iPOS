@@ -6,6 +6,15 @@
 //  Copyright 2011 Object Partners Inc. All rights reserved.
 //
 #import "OrderCart.h"
+#import"PreviousOrder.h"
+
+#import "AlertUtils.h"
+
+@interface OrderCart() 
+
+- (NSArray *) sortByTypeAndDate: (NSArray *) unSortedArray;
+
+@end
 
 @implementation OrderCart
 
@@ -52,6 +61,7 @@ static OrderCart *cart = nil;
 
 -(void) dealloc {
     [orderInCart release];
+    orderInCart = nil;
     [self setPreviousOrderList:nil];
     [self setPreviousOrder:nil];
     [super dealloc];
@@ -59,6 +69,20 @@ static OrderCart *cart = nil;
 
 #pragma mark -
 #pragma mark Accessor Methods
+//=========================================================== 
+// - setPreviousOrderList:
+//=========================================================== 
+- (void)setPreviousOrderList:(NSArray *)aPreviousOrderList {
+    if (previousOrderList != aPreviousOrderList) {
+        [aPreviousOrderList retain];
+        [previousOrderList release];
+        
+        // Make sure the list is sorted
+        previousOrderList = [[self sortByTypeAndDate: aPreviousOrderList] retain];
+    }
+}
+
+
 -(void) clearCart {
     if (orderInCart != nil) {
         [orderInCart release];
@@ -70,17 +94,28 @@ static OrderCart *cart = nil;
 }
 
 - (void) clearPreviousCart {
+    
+    [self clearPreviousOrder];
+    
+    if (previousOrderList != nil) {
+        [previousOrderList release];
+        previousOrderList = nil;
+    }
+}
+
+- (void) clearPreviousOrder {
+    
+    // Notify the user of lost changes to a modified order
+    if (previousOrder && [previousOrder isModified]) {
+        [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Changes to order %@ were not saved.", previousOrder.orderId] withTitle:@"iPOS"];
+    }
+    
     // Since the previous order and previous order list can
     // change we will let their unset state be nil instead of
     // an unfilled instance like orderInCart.
     if (previousOrder != nil) {
         [previousOrder release];
         previousOrder = nil;
-    }
-    
-    if (previousOrderList != nil) {
-        [previousOrderList release];
-        previousOrderList = nil;
     }
 }
 
@@ -200,11 +235,11 @@ static OrderCart *cart = nil;
 - (BOOL) closeItem:(OrderItem *)orderItem {
     BOOL itemClosed = NO;
     
-    if (orderItem == nil || [orderItem.statusId intValue] != ORDER_ITEM_STATUS_OPEN) {
+    if (orderItem == nil || [orderItem.statusId intValue] != LINE_ORDERSTATUS_OPEN) {
         return itemClosed;
     }
     
-    if (orderItem.isNewLineItem) {
+    if (orderItem.isNew) {
         // Don't use [orderItem allowClose] here because we want to check the store availability right now
         // rather than using the previous value we found when we looked up the item.
         itemClosed = [facade isProductItemAvailable: orderItem.item.itemId forQuantity:orderItem.quantityPrimary];
@@ -218,6 +253,35 @@ static OrderCart *cart = nil;
     }
     
     return itemClosed;
+}
+
+#pragma mark -
+#pragma mark Private Methods
+- (NSArray *) sortByTypeAndDate:(NSArray *)unSortedArray {
+    
+    if (unSortedArray) {
+    
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        
+        // The T literal needs to be escaped as 'T' or the match will not work.
+        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+        // Sort the list of orders by order type and then date newest first.
+        NSArray *sortedOrderList = [unSortedArray sortedArrayUsingComparator:^(id a, id b) {
+                                        NSComparisonResult statusSort = [((PreviousOrder *)a).orderTypeId compare:((PreviousOrder *)b).orderTypeId];
+                                        if (statusSort == NSOrderedSame) {
+                                            NSDate *dateA = [dateFormatter dateFromString:((PreviousOrder *)a).orderDate];
+                                            NSDate *dateB = [dateFormatter dateFromString:((PreviousOrder *)b).orderDate];
+                                            return [dateB compare:dateA];
+                                        } 
+                                        return statusSort;
+                                    }];
+        
+        [dateFormatter release];
+        return sortedOrderList;
+    }
+    
+    return unSortedArray;
+
 }
 
 @end

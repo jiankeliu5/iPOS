@@ -11,11 +11,6 @@
 #import "ManagerInfo.h"
 #import "ProductItem.h"
 
-static int const ORDER_ITEM_STATUS_OPEN = 1;
-static int const ORDER_ITEM_STATUS_CLOSE = 2;
-static int const ORDER_ITEM_STATUS_RETURN = 3;
-static int const ORDER_ITEM_STATUS_CANCEL = 4;
-
 static NSString * const OPEN_STATUS_BACK_ORDERED = @"Back Ordered";
 static NSString * const OPEN_STATUS_ZERO_SHIPPED = @"Zero Shipped";
 static NSString * const OPEN_STATUS_TO_BE_PICKED = @"To Be Picked";
@@ -34,10 +29,18 @@ typedef enum {
     LineStatusCancel = 3
 } LineStatus;
 
+typedef enum {
+    LINE_ORDERSTATUS_OPEN = 1,
+    LINE_ORDERSTATUS_CLOSED = 2,
+    LINE_ORDERSTATUS_RETURN = 3,
+    LINE_ORDERSTATUS_CANCEL = 4
+} LineOrderStatus;
+
 @interface OrderItem : NSObject {
     NSNumber *lineNumber;
     NSNumber *statusId;
     
+    NSNumber *salesPersonEmployeeId;
     NSNumber *priceAuthorizationId;
     
     NSDecimalNumber *sellingPricePrimary;
@@ -56,10 +59,8 @@ typedef enum {
     NSString *lttr;
     NSString *mcu;
     NSString *nxtr;
+    NSString *urrf;
     NSString *openItemStatus;
-    
-    // Is the line newly added, modified or cancelled?
-    LineStatus lineStatus;
     
     ManagerInfo *managerApprover;
     ProductItem *item;
@@ -71,17 +72,19 @@ typedef enum {
 	BOOL shouldDelete;
 	BOOL shouldClose;
     
-    // Tells whether the line item is newly added or not.  This 
+    // Tells whether the line item is newly added or not and is modified or not.  This 
     // lets us know what operations we can do on it compared to 
     // line items that come from a previous order that has already
     // been submitted.  This should always be set when adding a new
     // line item.
-    BOOL isNewLineItem;
+    BOOL isNew;
+    BOOL isModified;
 }
 
 @property (nonatomic, retain) NSNumber *lineNumber;
 @property (nonatomic, retain) NSNumber *statusId;
 @property (nonatomic, retain) NSNumber *priceAuthorizationId;
+@property (nonatomic, retain) NSNumber *salesPersonEmployeeId;
 
 @property (nonatomic, retain) NSDecimalNumber *sellingPricePrimary;
 @property (nonatomic, retain) NSDecimalNumber *sellingPriceSecondary;
@@ -94,7 +97,8 @@ typedef enum {
 @property (nonatomic, assign) BOOL doConversionToFullBoxes;
 @property (nonatomic, assign) BOOL shouldDelete;
 @property (nonatomic, assign) BOOL shouldClose;
-@property (nonatomic, assign) BOOL isNewLineItem;
+@property (nonatomic, assign) BOOL isNew;
+@property (nonatomic, assign) BOOL isModified;
 
 @property (nonatomic, retain) NSString *requestDate;
 @property (nonatomic, retain) NSNumber *returnReferenceId;
@@ -111,8 +115,6 @@ typedef enum {
 @property(nonatomic, retain) NSString *urrf;
 @property(nonatomic, retain) NSString *openItemStatus;
 
-@property (nonatomic, assign) LineStatus lineStatus;
-
 -(id) initWithItem: (ProductItem *) productItem AndQuantity: (NSDecimalNumber *) productQuantity;
 
 - (void) setStatusToClosed;
@@ -122,6 +124,7 @@ typedef enum {
 - (BOOL) isTaxExempt;
 - (BOOL) isClosed;
 - (BOOL) isOpen;
+- (BOOL) isCanceled;
 - (BOOL) allowClose;
 - (BOOL) allowEdit;
 - (BOOL) allowQuantityChange;
@@ -132,6 +135,9 @@ typedef enum {
 - (NSNumber *) getPiecesPerBox;
 - (void) setQuantity: (NSDecimalNumber *) newQuantity;
 - (void) setSellingPriceFrom: (NSDecimalNumber *) discount;
+
+// Is the line newly added, modified or cancelled?
+- (LineStatus) getLineStatus;
 
 #pragma mark -
 #pragma mark Order Item Calculations

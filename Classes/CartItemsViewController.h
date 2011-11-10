@@ -15,6 +15,8 @@
 #import "SearchItemView.h"
 #import "CartItemTableCell.h"
 
+#import "MOGlassButton.h"
+
 
 @interface CartItemsViewController : UIViewController <LineaDelegate, AddItemViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, SearchItemViewDelegate, CartItemCellDelegate, ProfitMarginViewDelegate> {
 	iPOSFacade *facade;
@@ -39,6 +41,8 @@
 	UILabel *totalValue;
 	
 	UIToolbar *orderToolBar;
+    
+    MOGlassButton *discountButton;
 	
 	NSArray *toolbarBasic;
 	NSArray *toolbarWithQuoteAndOrder;

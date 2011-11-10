@@ -27,6 +27,8 @@ typedef enum {
     NSString *type;
     NSNumber *typeId;
     
+    NSString *openItemStatus;
+    
     // Stocking Information
     NSString *binLocation;
     NSString *stockingCode;
