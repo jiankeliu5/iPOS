@@ -45,7 +45,7 @@ typedef enum{
     Store *store;
     Customer *customer;
     
-    NSArray*previousPayments;
+    NSMutableArray *previousPayments;
     
     @private NSMutableArray *orderItemList;
 }
@@ -67,7 +67,7 @@ typedef enum{
 @property (nonatomic, retain) Store *store;
 @property (nonatomic, retain) Customer *customer;
 
-@property (nonatomic, retain) NSArray *previousPayments;
+@property (nonatomic, retain) NSMutableArray *previousPayments;
 
 
 - (NSArray *) getOrderItems;

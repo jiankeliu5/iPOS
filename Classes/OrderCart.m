@@ -255,6 +255,26 @@ static OrderCart *cart = nil;
     return itemClosed;
 }
 
+- (BOOL) saveOrder {
+    Order *cartOrder = [self getOrder];
+    
+    // if this is not a new order and it is an order quote, switch it to a new order
+    if (!cartOrder.isNewOrder && [cartOrder isQuote]) {
+        [cartOrder setAsNewOrder];
+    }
+    
+    // Save the order
+    [facade saveOrder:cartOrder];
+    
+    if ([cartOrder.errorList count] == 0 && cartOrder.orderId != nil) {
+        return YES;
+    }
+    
+    [AlertUtils showModalAlertForErrors:cartOrder.errorList withTitle:@"iPOS"];
+    return NO;    
+}
+
+
 #pragma mark -
 #pragma mark Private Methods
 - (NSArray *) sortByTypeAndDate:(NSArray *)unSortedArray {

@@ -276,8 +276,11 @@
 }
 
 
--(BOOL) validateString:(NSString *)text
-{    
+-(BOOL) validateString:(NSString *)text {
+    if (!text || [text isEqualToString:@""]) {
+        return YES;
+    }
+    
     BOOL shouldAllow = NO;
     NSError *error = NULL;
     NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:@"[a-zA-Z0-9]" options:NSRegularExpressionCaseInsensitive error:&error];
@@ -285,10 +288,9 @@
     NSUInteger numOfMatches = [expression numberOfMatchesInString:text options:0 range:NSMakeRange(0, [text length])];
     
     if (numOfMatches > 0) {
-        
         shouldAllow = YES;
     }
-    else{
+    else {
         shouldAllow = NO;
         [self displayAlert: @"Only Letters and Digits are allowed."];
     }

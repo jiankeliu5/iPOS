@@ -10,13 +10,18 @@
 
 @implementation CashPayment
 
-- (id)init {
-    self = [super init];
+- (id) initWithOrder:(Order *)order {
+    self = [super initWithOrder:order];
     if (self) {
         // Initialization code here.
+        self.paymentTypeId = [NSNumber numberWithInt:CASH];
     }
     
     return self;
+}
+
+- (void) dealloc {
+    [super dealloc];
 }
 
 @end

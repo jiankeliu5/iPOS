@@ -24,6 +24,7 @@
 #pragma mark Constructor/Deconstructor
 -(id) initWithOrder: (Order *) order {
     self = [super initWithOrder:order];
+    
     return self;
 }
 

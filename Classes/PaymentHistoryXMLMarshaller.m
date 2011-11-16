@@ -7,10 +7,7 @@
 //
 
 #import "PaymentHistoryXMLMarshaller.h"
-#import "CreditCardPayment.h"
-#import "AccountPayment.h"
-#import "CashPayment.h"
-#import "CheckPayment.h"
+#import "PaymentService.h"
 
 
 @interface PaymentHistoryXMLMarshaller()
@@ -36,49 +33,71 @@
     
     CXMLDocument *xmlParser = [[[CXMLDocument alloc] initWithXMLString:xmlString options:0 error:nil] autorelease];
     CXMLElement *root = [xmlParser rootElement];
+    Payment *previousPayment = nil;
     
     for (CXMLElement *node in [root elementsForName:@"OrderPaymentStruct"]) {
               
         NSNumber *paymentTypeID = [node elementNumberValue:@"PaymentTypeID"]; 
         int paymentTypeIDIntVal = [paymentTypeID intValue];
         
-        if (paymentTypeIDIntVal == 3 || paymentTypeIDIntVal == 4 || paymentTypeIDIntVal == 5 || paymentTypeIDIntVal == 6)
-        {
-            CreditCardPayment *history = [[CreditCardPayment alloc] init ];
-            history.cardNumber = [node elementStringValue:@"CardNum"];
-            history.lpToken = [node elementStringValue:@"LPToken"];
-            history.paymentRefId = [node elementStringValue:@"TroutD"];
+        switch (paymentTypeIDIntVal) {
+            case ONACCT: {
+                previousPayment = [[AccountPayment alloc] initWithOrder:nil];
+                break;
+            }
+            case CREDITCARD_VISA: 
+            case CREDITCARD_MC: 
+            case CREDITCARD_AX: 
+            case CREDITCARD_DISCOVER: {
+                previousPayment = [[CreditCardPayment alloc] initWithOrder:nil];
             
-            [self appendPaymentInfo:history withXML: node];
-            [paymentList addObject:history];
-            [history release];
-            history = nil;
-    
+                ((CreditCardPayment *) previousPayment).cardNumber = [node elementStringValue:@"CardNum"];
+                ((CreditCardPayment *) previousPayment).lpToken = [node elementStringValue:@"LPToken"];
+                ((CreditCardPayment *) previousPayment).paymentRefId = [node elementStringValue:@"TroutD"];
+                
+                break;
+            }
+            case CASH: {
+                previousPayment = [[CashPayment alloc] initWithOrder:nil];
+                break;
+            }
+            case CHECK: {
+                previousPayment = [[CheckPayment alloc] initWithOrder:nil];
+                break;
+            }
+            case INSTORE_CREDIT: {
+                previousPayment = [[InStoreCreditPayment alloc] initWithOrder:nil];
+                break;
+            }
+            case GIFT_CARD: {
+                previousPayment = [[GiftCardPayment alloc] initWithOrder:nil];
+                break;
+            }
+            case GOOGLE: {
+                previousPayment = [[GooglePayment alloc] initWithOrder:nil];
+                break;
+            }
+            case HOMEDESIGN: {
+                previousPayment = [[HomeDesignPayment alloc] initWithOrder:nil];
+                break;
+            }
+            case PAYPAL: {
+                previousPayment = [[PayPalPayment alloc] initWithOrder:nil];
+                break;
+            }
+            default: {
+                previousPayment = [[Payment alloc] initWithOrder:nil];
+                break;
+            }
         }
-        else if (paymentTypeIDIntVal == 7)
-        {
-           AccountPayment *history = [[AccountPayment alloc] init];
-            [self appendPaymentInfo:history withXML: node];
-            [paymentList addObject:history];
-            [history release];
-            history = nil;
-        }
-        else if (paymentTypeIDIntVal == 1)
-        {
-            CashPayment *history = [[CashPayment alloc] init];
-            [self appendPaymentInfo:history withXML: node];
-            [paymentList addObject:history];
-            [history release];
-            history = nil;
 
+        if (previousPayment) {
+            [self appendPaymentInfo:previousPayment withXML: node];
+            [paymentList addObject:previousPayment];
+            [previousPayment release];
+            previousPayment = nil;
         }
-        else if (paymentTypeIDIntVal == 2)
-        {
-            CheckPayment *history = [[CheckPayment alloc] init];
-            [paymentList addObject:history];
-            [history release];
-            history = nil;
-        }
+        
     }
     
     return paymentList;

@@ -17,12 +17,14 @@
     id delegate;
     
     SignaturePad *signaturePad;
+    UILabel *signingLabel;
     UILabel *payAmountLabel;
 }
 
-@property(nonatomic, retain) id delegate;
+@property(nonatomic, assign) id delegate;
 
 @property (nonatomic, retain) SignaturePad *signaturePad;
+@property (nonatomic, retain) UILabel *signingLabel;
 @property (nonatomic, retain) UILabel *payAmountLabel;
 
 @end

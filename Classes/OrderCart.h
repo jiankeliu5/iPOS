@@ -45,4 +45,6 @@
 - (void) openItem: (OrderItem *) orderItem;
 - (BOOL) closeItem: (OrderItem *) orderItem;
 
+- (BOOL) saveOrder;
+
 @end

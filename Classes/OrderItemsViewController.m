@@ -521,8 +521,11 @@
 }
 
 - (void) restoreDefaultToolbar {
+    Order *order = [orderCart getOrder];
+    
 	// Put up the Tender or Quote button if we have a customer and an order with at least one item.
-	if ([orderCart getCustomerForOrder] != nil && [[[orderCart getOrder] getOrderItemsSortedByStatusFilterCanceled] count] > 0) {
+	if (![order isNewOrder] 
+        || ([orderCart getCustomerForOrder] != nil && [[[orderCart getOrder] getOrderItemsSortedByStatusFilterCanceled] count] > 0)) {
 		[orderToolBar setItems:self.toolbarWithQuoteAndOrder];
 	} else {
 		[orderToolBar setItems:self.toolbarBasic];
@@ -568,7 +571,7 @@
     
     NSLog(@"Found %u payments for order Id '%@'", [payments count], order.orderId);
     
-    order.previousPayments = payments;
+    order.previousPayments = [NSMutableArray arrayWithArray: payments];
     
     // decision point to decide if we need to do a refund, make a payment, or just save changes to the order
     TenderDecision decision = [order isRefundEligble];
@@ -747,6 +750,9 @@
             [order cancelOrder];
             
             [orderTable reloadData];
+            
+            [self calculateOrder];
+            
 		}
 	}
     

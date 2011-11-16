@@ -25,9 +25,6 @@
 #pragma mark -
 #pragma mark Constructor/Deconstructor
 -(id) initWithOrder: (Order *) order {
-    if (order == nil || order.store == nil || order.customer == nil || order.salesPersonEmployeeId == nil) {
-        return nil;
-    }
     
     self = [super init];
     
@@ -35,10 +32,20 @@
         return nil;
     }
     
-    orderId = [order.orderId retain];
-    customerId = [order.customer.customerId retain];
-    storeId = [order.store.storeId retain];
-    salesPersonId = [order.salesPersonEmployeeId retain];
+    if (order) {
+        orderId = [order.orderId retain];
+        salesPersonId = [order.salesPersonEmployeeId retain];
+        
+        if (order.customer) {
+           customerId = [order.customer.customerId retain];
+        }
+        
+        if (order.store) {
+            storeId = [order.store.storeId retain];
+        }
+    }
+   
+    
     
     return self;
 }

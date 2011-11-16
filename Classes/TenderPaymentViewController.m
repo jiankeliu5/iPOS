@@ -63,10 +63,9 @@ static NSString * const CREDIT = @"credit";
 - (void) layoutView: (UIInterfaceOrientation) orientation;
 - (void) updateDisplayValues;
 
-- (BOOL) saveOrder;
 - (BOOL) tenderPaymentFromCardData: (NSString *)track1 track2:(NSString *)track2 track3:(NSString *)track3;
 - (BOOL) sendPaymentOnAccount:(NSDecimalNumber *) amount;
-- (BOOL) isOrderCreated;
+- (BOOL) isOrderSaved;
 
 - (void) showPaymentRetryAlert:(Payment *) aPayment;
 - (void) cancelTenderAndLogout;
@@ -315,6 +314,10 @@ static NSString * const CREDIT = @"credit";
     if (chargeCCView) {
         chargeCCView.frame = self.view.bounds;
     }
+    
+    if (accountPaymentView) {
+        accountPaymentView.frame = self.view.bounds;
+    }
 
 }
 
@@ -344,17 +347,14 @@ static NSString * const CREDIT = @"credit";
     frame.origin.y = 480;
     theChargeCCView.frame = frame;
     
-    // If the order is already created, logout and prompt user to process payment on POS
-    if ([self isOrderCreated]) { 
-        [self cancelTenderAndLogout];
-    } else {
-        self.navigationItem.hidesBackButton = NO;
-        [self.navigationItem.leftBarButtonItem setEnabled:YES];
-        [self.navigationItem.rightBarButtonItem setEnabled:YES];
-        
-        if (chargeCCView) {
-            [chargeCCView removeFromSuperview];
-        }
+    // Just remove the view
+    self.navigationItem.hidesBackButton = NO;
+    [self.navigationItem.leftBarButtonItem setEnabled:YES];
+    [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    
+    if (chargeCCView) {
+        [chargeCCView removeFromSuperview];
+        chargeCCView = nil;
     }
 }
 
@@ -375,7 +375,7 @@ static NSString * const CREDIT = @"credit";
 #pragma mark -
 #pragma mark Linea Delegate Methods
 - (void) magneticCardData:(NSString *)track1 track2:(NSString *)track2 track3:(NSString *)track3 {
-    BOOL isOrderCreated = [self isOrderCreated];
+    BOOL isOrderSaved = [self isOrderSaved];
     BOOL isPaymentTendered = NO;
     
     int sound[]={2730,150,0,30,2730,150};
@@ -387,11 +387,13 @@ static NSString * const CREDIT = @"credit";
     // 3.  Prompt for signature
     
     // Only create the order if it is not created at this point
-    if (!isOrderCreated) {
-        isOrderCreated = [self saveOrder];
+    if (!isOrderSaved) {
+        isOrderSaved = [orderCart saveOrder];
+        
+        orderIsSaved = isOrderSaved;
     }
     
-    if (isOrderCreated) {
+    if (isOrderSaved) {
         isPaymentTendered = [self tenderPaymentFromCardData:track1 track2:track2 track3:track3];
     }
     
@@ -406,6 +408,10 @@ static NSString * const CREDIT = @"credit";
         // Remove the credit card view
         if (chargeCCView) {
             [chargeCCView removeFromSuperview];
+            chargeCCView = nil;
+            
+            // Remove as a Linea Delegate
+            [linea removeDelegate:self];
         } 
     }
 }
@@ -437,15 +443,15 @@ static NSString * const CREDIT = @"credit";
         }
         else {
             if([amount compare:balanceDue] == NSOrderedSame){
-                if ([self saveOrder]) {
+                if ([orderCart saveOrder]) {
                     [self sendPaymentOnAccount:amount];
                 }
             }
             else {
-                [self saveOrder];
+                [orderCart saveOrder];
                 if ([self sendPaymentOnAccount:amount]) {
                     // Fetch the payments for the order (to reflect current order state with payments)
-                    order.previousPayments = [facade getPaymentHistoryForOrderid:order.orderId];
+                    order.previousPayments = [NSMutableArray arrayWithArray:[facade getPaymentHistoryForOrderid:order.orderId]];
                 };
             }
         }
@@ -460,9 +466,11 @@ static NSString * const CREDIT = @"credit";
         
         // If the amount was $0.00 at this point, it is a fully open order.  Create the open order and we are done.
         if ([amount compare:[NSDecimalNumber zero]] == NSOrderedSame) {
-            BOOL isOrderCreated = [self saveOrder];
+            BOOL isOrderSaved = [orderCart saveOrder];
             
-            if (isOrderCreated) {
+            orderIsSaved = isOrderSaved;
+            
+            if (isOrderSaved) {
                 [self navToReceipt];
             }
         } else {
@@ -521,7 +529,6 @@ static NSString * const CREDIT = @"credit";
 
 #pragma mark -
 #pragma mark SignatureDelegate methods
-
 - (void) signatureController:(SignatureViewController *)signatureController signatureAsBase64:(NSString *)signature savePressed:(id)sender {
 
     if (payment && signature) {
@@ -536,8 +543,7 @@ static NSString * const CREDIT = @"credit";
                 [self navToReceipt];
             }
             
-        } else if ([payment isKindOfClass:[AccountPayment class]])
-        {
+        } else if ([payment isKindOfClass:[AccountPayment class]]) {
             [self.payment attachSignature:signature];
 
             if (![facade acceptSignatureOnAccount:self.payment]) {
@@ -548,14 +554,14 @@ static NSString * const CREDIT = @"credit";
                 } else {
                     [self dismissModalViewControllerAnimated:YES];
                     [accountPaymentView removeFromSuperview];
+                    accountPaymentView = nil;
                     [self updateDisplayValues];
                     [self displayPayOnAccountSuccessfulView];
                 }
             }
         }
     }
-    else
-    {
+    else {
       [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"A Signature was not provided for payment with ref #%@.", [payment paymentRefId]] withTitle:@"iPOS"];
        
     }
@@ -579,7 +585,7 @@ static NSString * const CREDIT = @"credit";
 #pragma mark -
 #pragma mark Demo Methods
 - (void) processOrderAsDemo: (id) sender {
-    BOOL isOrderCreated = [self isOrderCreated];
+    BOOL isOrderSaved = [self isOrderSaved];
     BOOL isPaymentTendered = NO;
     
     // When the Credit Card is scanned we are going to:
@@ -587,11 +593,12 @@ static NSString * const CREDIT = @"credit";
     // 2.  Process the payment with indicated amount
     // 3.  Prompt for signature
     
-    if (!isOrderCreated) {
-        isOrderCreated = [self saveOrder];
+    if (!isOrderSaved) {
+        isOrderSaved = [orderCart saveOrder];
+        orderIsSaved = isOrderSaved;
     }
     
-    if (isOrderCreated) {
+    if (isOrderSaved) {
         isPaymentTendered = [self tenderDemoPayment];
     }
     
@@ -606,6 +613,7 @@ static NSString * const CREDIT = @"credit";
         // Remove the credit card view
         if (chargeCCView) {
             [chargeCCView removeFromSuperview];
+            chargeCCView = nil;
         } 
     }
 }
@@ -813,6 +821,8 @@ static NSString * const CREDIT = @"credit";
     chargeCCView.totalBalance = totalLabel.text;
     
     [self.view addSubview:chargeCCView];
+    
+    [chargeCCView release];
 }
 
 -(void)handleAccountPayment:(id)sender {
@@ -827,6 +837,8 @@ static NSString * const CREDIT = @"credit";
     accountPaymentView.totalAccountBalance =  [NSString formatDecimalNumberAsMoney:[[orderCart getCustomerForOrder] calculateAccountBalance]];
     
     [self.view addSubview:accountPaymentView];
+    
+    [accountPaymentView release];
     
 }
 
@@ -844,31 +856,6 @@ static NSString * const CREDIT = @"credit";
 - (void) handleSuspendOrder:(id) sender {
     // Cancel the order and completely Logoff
     [self.navigationController popToRootViewControllerAnimated:YES];
-}
-
-- (BOOL) saveOrder {
-    
-    if (orderIsSaved) {
-        return YES;
-    }
-
-    Order *cartOrder = [orderCart getOrder];
-    
-    // if this is not a new order and it is an order quote, switch it to a new order
-    if (!cartOrder.isNewOrder && [cartOrder isQuote]) {
-        [cartOrder setAsNewOrder];
-    }
-    
-    // Save the order
-    [facade saveOrder:cartOrder];
-    
-    if ([cartOrder.errorList count] == 0 && cartOrder.orderId != nil) {
-        orderIsSaved = YES;
-        return YES;
-    }
-    
-    [AlertUtils showModalAlertForErrors:cartOrder.errorList withTitle:@"iPOS"];
-    return NO;    
 }
 
 - (BOOL) tenderPaymentFromCardData:(NSString *)track1 track2:(NSString *)track2 track3:(NSString *)track3 {
@@ -948,11 +935,11 @@ static NSString * const CREDIT = @"credit";
     [[self navigationController] pushViewController:[[[ReceiptViewController alloc]init]autorelease] animated:YES];
 }
 
-- (BOOL) isOrderCreated {
+- (BOOL) isOrderSaved {
     // If the order is already created it will have a valid order id.
     Order *order = [orderCart getOrder];
     
-    if (order.orderId != nil && ![order.orderId isEqualToNumber:[NSNumber numberWithInt:0]]) { 
+    if (order.orderId != nil && ![order.orderId isEqualToNumber:[NSNumber numberWithInt:0]] && ![order isModified]) { 
         return YES;
     }
     
@@ -962,7 +949,7 @@ static NSString * const CREDIT = @"credit";
 - (void) cancelTenderAndLogout {
     Order *order = [orderCart getOrder];
     
-    [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Order %@ was created, but no payment received.", order.orderId] withTitle:@"iPOS"];
+    [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"No payment received for order %@.", order.orderId] withTitle:@"iPOS"];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
@@ -974,6 +961,7 @@ static NSString * const CREDIT = @"credit";
     
     if (accountPaymentView) {
         [accountPaymentView removeFromSuperview];
+        accountPaymentView = nil;
     }
 }
 

@@ -10,7 +10,6 @@
 
 #import "RefundXmlMarshaller.h"
 
-
 @implementation Refund
 
 @synthesize orderId;
@@ -48,6 +47,41 @@
     
     [super dealloc];
 }
+
+#pragma mark -
+#pragma mark Accessor Methods
+//=========================================================== 
+// - setSignature:
+//=========================================================== 
+- (void)setSignature:(NSString *)aSignature {
+    if (signature != aSignature) {
+        [aSignature retain];
+        [signature release];
+        signature = aSignature;
+        
+        // set all refund items that require signature to signature captured
+        if (aSignature && refundItems && [refundItems count] > 0) {
+            for (RefundItem *item in refundItems) {
+                if (item.isSignatureRequired) {
+                    item.isSignatureCaptured = YES;
+                }
+            }
+        }
+    }
+}
+
+- (NSDecimalNumber *) getTotalRefundAmount {
+    NSDecimalNumber *totalRefund = [NSDecimalNumber zero];
+    
+    if (refundItems && [refundItems count] > 0) {
+        for (RefundItem *item in refundItems) {
+            totalRefund = [totalRefund decimalNumberByAdding:item.amount];
+        }
+    }
+    
+    return totalRefund;
+}
+
 - (void) addRefundItem:(RefundItem *)item {
     
     [refundItems addObject:item];
@@ -57,8 +91,78 @@
     return refundItems;
 }
 
-- (NSString *) toXml {
+- (BOOL) isSignatureRequired {
+    if (refundItems && [refundItems count] > 0) {
+        for (RefundItem *item in refundItems) {
+            if (item.isSignatureRequired && !item.isSignatureCaptured) {
+                return YES;
+            }
+        }
+    }
     
+    return NO;
+}
+
+- (BOOL) isCardSwipeRequired {
+    if (refundItems && [refundItems count] > 0) {
+        for (RefundItem *item in refundItems) {
+            if (item.isSwipeRequired && !item.isSwipeCaptured) {
+                return YES;
+            }
+        }
+    }
+    
+    return NO;
+}
+
+- (RefundItem *) getCurrentRefundItemForSwipe {
+    if (refundItems && [refundItems count] > 0) {
+        for (RefundItem *item in refundItems) {
+            if (item.isSwipeRequired && !item.isSwipeCaptured) {
+                return item;
+            }
+        }
+    }
+    
+    return nil;
+}
+
+- (void) setCardData:(financialCard)cardData {
+    if (cardData.accountNumber) {
+        // Find the card with the matching last 4 numbers (would the same customer have 2 cards with the same 4 numbers used as payment??)
+        NSString *swipedNumber = cardData.accountNumber;
+        NSString *paymentCardNumber;
+        
+        if (swipedNumber.length > 4) {
+            swipedNumber = [swipedNumber substringFromIndex:swipedNumber.length-4];
+        }
+        
+        if (refundItems && [refundItems count] > 0) {
+            for (RefundItem *item in refundItems) {
+                if (item.isSwipeRequired && !item.isSwipeCaptured && item.creditCard) {
+                    paymentCardNumber = item.creditCard.cardNumber;
+                    if (paymentCardNumber.length > 4) {
+                        paymentCardNumber = [paymentCardNumber substringFromIndex:paymentCardNumber.length-4];
+                    }
+
+                    // Assumed to be the match
+                    if ([paymentCardNumber isEqualToString:swipedNumber]) {
+                        item.creditCard.cardNumber = cardData.accountNumber;
+                        item.creditCard.nameOnCard = cardData.cardholderName;
+                        [item.creditCard setExpireDateMonthYear:[NSString stringWithFormat:@"%d",cardData.exirationMonth] 
+                                                           year:[NSString stringWithFormat:@"%d",cardData.exirationYear]];
+                        item.isSwipeCaptured = YES;
+                    }
+                    
+                }
+            }
+        }
+    }
+}
+
+#pragma mark -
+#pragma mark OXM Marshalling
+- (NSString *) toXml {
     RefundXmlMarshaller *xmlMarshaller = [[[RefundXmlMarshaller alloc] init ] autorelease];
     
     return [xmlMarshaller toXml:self];

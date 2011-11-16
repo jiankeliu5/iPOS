@@ -76,6 +76,7 @@ typedef enum { SessionOk = 0,
 -(Order *) lookupOrderByOrderId:(NSNumber *) orderId;
 -(NSArray *) lookupOrderByPhoneNumber: (NSString *)phoneNumber;
 -(NSArray *) getPaymentHistoryForOrderid: (NSNumber *)orderId;
+
 -(BOOL) sendRefundRequest:(Refund *)refund;
 
 @end

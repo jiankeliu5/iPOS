@@ -10,6 +10,7 @@
 #import "ExtUITextField.h"
 #import "MOGlassButton.h"
 #import "PaymentView.h"
+#import "Refund.h"
 
 @class ChargeCreditCardView;
 @class PaymentView;
@@ -37,13 +38,18 @@
     MOGlassButton *cancelButton;
     
     NSObject <ChargeCreditCardViewDelegate>* viewDelegate;
+    
+    Refund *refundInfo;
 }
 
 @property (nonatomic, retain) NSString *balanceDue;
 @property (nonatomic, retain) NSString *totalBalance;
 
+@property (nonatomic, assign) Refund *refundInfo;
 @property (nonatomic, assign) NSObject<ChargeCreditCardViewDelegate>* viewDelegate;
 
+- (id) initWithFrame:(CGRect)frame;
+- (id) initWithFrame:(CGRect)frame andRefundInfo: (Refund *) refund;
 
 - (void) switchCardSwipeToReady;
 

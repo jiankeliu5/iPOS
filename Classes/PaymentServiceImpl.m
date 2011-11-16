@@ -274,6 +274,10 @@
         [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
     }
     
+    // Make sure the store id and sales person id are set
+    refund.storeId = sessionInfo.storeId;
+    refund.salesPersonId = sessionInfo.employeeId;
+    
     // Post data for payment
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     
@@ -288,7 +292,7 @@
         [refund removeAllErrors];
         
         for (Error *error in requestErrors) {
-            //[payment addError:error];
+            [refund addError:error];
         }
         
         return NO;   

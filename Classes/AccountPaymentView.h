@@ -29,6 +29,8 @@
     NSString *balanceDue;
     NSString *totalAccountBalance;
     
+    UIView *mainRoundedView;
+    
     UILabel *balanceDueTitle;
     UILabel *balanceDueLabel;
     UILabel *creditAvailableTitle;

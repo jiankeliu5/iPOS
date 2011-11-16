@@ -32,6 +32,8 @@
 
 @synthesize delegate;
 @synthesize order;
+@synthesize refundInfo;
+
 @synthesize refundTitle;
 @synthesize refundTotalLabel;
 @synthesize refundToolbar;
@@ -39,11 +41,12 @@
 
 #pragma mark - 
 #pragma mark init/dealloc Methods
-- (id)initWithFrame:(CGRect)frame andOrder:(Order *)anOrder {
+- (id)initWithFrame:(CGRect)frame andOrder:(Order *)anOrder andRefund:(Refund *) aRefundInfo {
     self = [self initWithFrame:frame];
     if (self) {
         // Initialization code
         [self setOrder:anOrder];
+        [self setRefundInfo:aRefundInfo];
     }
     
     return self;
@@ -80,7 +83,7 @@
         tbFixed.width = 10.0f;
         
         // Buttons
-        UIBarButtonItem *notesButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"notes.png"] 
+        UIBarButtonItem *notesButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"pencil.png"] 
                                                                         style:UIBarButtonItemStylePlain 
                                                                        target:self 
                                                                        action:@selector(handleNotesButton:)];
@@ -131,7 +134,17 @@
     }
 }
 
-
+//=========================================================== 
+// - setRefundInfo:
+//=========================================================== 
+- (void)setRefundInfo:(Refund *)aRefundInfo {
+    if (refundInfo != aRefundInfo) {
+        refundInfo = aRefundInfo;
+        
+        // Update values
+        [self updateDisplayValues];
+    }
+}
 
 #pragma mark - 
 #pragma mark Layout Subviews
@@ -175,9 +188,7 @@
         return 0;
     }
     
-    Refund *refund = [order getRefundInfo];
-    
-    return refund.refundItems == nil ? 0: [refund.refundItems count];
+    return refundInfo.refundItems == nil ? 0: [refundInfo.refundItems count];
 }
 
 - (NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -189,16 +200,15 @@
 	RefundItemTableCell *cell = (RefundItemTableCell *)[tableView dequeueReusableCellWithIdentifier:refundItemTableIdentifier];
     
     NSInteger row = indexPath.row;
-    Refund *refund = [order getRefundInfo];
     
-    if (refund && cell == nil) {
+    if (refundInfo && cell == nil) {
         cell = [[[RefundItemTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:refundItemTableIdentifier] autorelease];
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.userInteractionEnabled = NO;
     
-    cell.refundItem = [refund.refundItems objectAtIndex:row];
+    cell.refundItem = [refundInfo.refundItems objectAtIndex:row];
     
     return cell;
 }

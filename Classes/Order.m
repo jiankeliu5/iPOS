@@ -8,9 +8,21 @@
 
 #import "Order.h"
 #import "OrderXmlMarshaller.h"
+#import "NSString+StringFormatters.h"
+
 #import "iPOSFacade.h"
 
 @interface Order()
+
+// Refund Methods
+- (NSDecimalNumber *) refundForOnAccount:refund withAmount: refundAmount;
+- (NSDecimalNumber *) refundForCCWithSignature:refund withAmount: refundAmount;
+- (NSDecimalNumber *) refundForCCWithSwipeAndSignature:refund withAmount: refundAmount;
+- (NSDecimalNumber *) refundForToCCT:refund withAmount: refundAmount;
+- (NSDecimalNumber *) refundForToPOS:refund withAmount: refundAmount;
+
+- (NSArray *) groupCCPayments: (NSArray *) ccPayments;
+- (NSArray *) groupToPOSPayments: (NSArray *) paymentList;
 
 @end
 
@@ -524,58 +536,23 @@
 
 #pragma mark -
 #pragma mark Refund methods
-- (Refund *) getRefundInfo {
-    // TODO: Replace with actual building of a Refund object
-    Refund *refund = [[[Refund alloc] init] autorelease];
-    
-    // Add 4 refund items
-    RefundItem *refundItem1 = [[[RefundItem alloc] init] autorelease];
-    RefundItem *refundItem2 = [[[RefundItem alloc] init] autorelease];
-    RefundItem *refundItem3 = [[[RefundItem alloc] init] autorelease];
-    RefundItem *refundItem4 = [[[RefundItem alloc] init] autorelease];
-    RefundItem *refundItem5 = [[[RefundItem alloc] init] autorelease];
-    
-    CreditCardPayment *ccPay1 = [[[CreditCardPayment alloc] init] autorelease];
-    CreditCardPayment *ccPay2 = [[[CreditCardPayment alloc] init] autorelease];
-    CreditCardPayment *ccPay3 = [[[CreditCardPayment alloc] init] autorelease];
-    
-    refundItem1.orderPaymentTypeID = [NSNumber numberWithInt:ONACCT];
-    refundItem1.amount = [NSDecimalNumber decimalNumberWithString:@"40.00"];
-    
-    refundItem2.orderPaymentTypeID = [NSNumber numberWithInt:CREDITCARD_VISA];
-    refundItem2.amount = [NSDecimalNumber decimalNumberWithString:@"50.00"];
-    ccPay1.paymentRefId = @"ref1";
-    ccPay1.cardNumber = @"1234";
-    refundItem2.creditCard = ccPay1;
-    
-    refundItem3.orderPaymentTypeID = [NSNumber numberWithInt:CREDITCARD_VISA];
-    refundItem3.amount = [NSDecimalNumber decimalNumberWithString:@"30.00"];
-    ccPay2.paymentRefId = @"ref2";
-    ccPay2.cardNumber = @"4567";
-    refundItem3.isSignatureRequired = YES;
-    refundItem3.creditCard = ccPay2;
-    
-    refundItem4.orderPaymentTypeID = [NSNumber numberWithInt:CREDITCARD_VISA];
-    refundItem4.amount = [NSDecimalNumber decimalNumberWithString:@"25.00"];
-    refundItem4.creditCard = ccPay3;
-    
-    refundItem5.orderPaymentTypeID = [NSNumber numberWithInt:CASH];
-    refundItem5.amount = [NSDecimalNumber decimalNumberWithString:@"20.00"];
-    
-    refund.refundItems = [NSArray arrayWithObjects:refundItem1, refundItem2, refundItem3, refundItem4, refundItem5, nil];
-    
-    return refund;
-}
-
 - (NSDecimalNumber *) calcRefundTotal {
-    //TODO: Implement this method
-    return [NSDecimalNumber decimalNumberWithString:@"150.00"];
+    
+    NSDecimalNumber *refundAmount = [self calcBalanceOwing];
+    
+    if ([refundAmount intValue] < 0) {
+        return refundAmount;
+    }
+    
+    return [NSDecimalNumber zero];
 }
 
--(TenderDecision) isRefundEligble{
-    NSDecimalNumber *balanceOwing = [self calcBalanceOwing];
-
-    NSComparisonResult comparisonresult = [[NSDecimalNumber zero] compare:balanceOwing];
+-(TenderDecision) isRefundEligble {
+    NSDecimalNumberHandler *bankersRoundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:2 
+                                                                                                  raiseOnExactness:NO raiseOnOverflow:NO 
+                                                                                                  raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+    NSDecimalNumber *balanceOwingInMoney = [[self calcBalanceOwing] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
+    NSComparisonResult comparisonresult = [[NSDecimalNumber zero] compare:balanceOwingInMoney];
     
     if (comparisonresult == NSOrderedSame) {
         return NOCHANGE;
@@ -587,5 +564,451 @@
     }
 }
 
+- (Refund *) getRefundInfo {
+    NSDecimalNumber *refundAmount = [self calcBalanceOwing];
+    Refund *refund = [[[Refund alloc] init] autorelease];
+    
+    // Set info for the refund
+    refund.orderId = orderId;
+    
+    if (customer) {
+        refund.customerId = customer.customerId;
+    }
+    
+    refund.refundDate = [NSString formatDateAsTimestamp:[NSDate date]];
+    
+    if ([refundAmount compare:[NSDecimalNumber zero]] == NSOrderedAscending) {
+        NSDecimalNumber * negativeOne = [NSDecimalNumber decimalNumberWithMantissa:1
+                                                                          exponent:0
+                                                                        isNegative:YES];
+        refundAmount = [refundAmount decimalNumberByMultiplyingBy:negativeOne];
+    }
+    
+    if ([refundAmount intValue] > 0 && previousPayments && [previousPayments count] > 0) {
+        // Build the refund items, by order of precedence (on acct, credit card signature only, credit card swipe & signature, to CCT, to POS)
+        refundAmount = [self refundForOnAccount:refund withAmount:refundAmount];
+       
+        if ([refundAmount intValue] > 0) {
+            refundAmount = [self refundForCCWithSignature:refund withAmount:refundAmount];
+            
+            if ([refundAmount intValue] > 0) {
+                refundAmount = [self refundForCCWithSwipeAndSignature:refund withAmount:refundAmount];
+                
+                if ([refundAmount intValue] > 0) {
+                    refundAmount = [self refundForToCCT:refund withAmount:refundAmount];
+                    
+                    if ([refundAmount intValue] > 0) {
+                        refundAmount = [self refundForToPOS:refund withAmount:refundAmount];
+                    }
+                }
+            }
+        }
+        
+        // There should be no refund balance remaining at this point since we distributed accordingly above.  
+        //If there is, add another cash refund
+        if ([refundAmount intValue] > 0) {
+            NSLog(@"There is a refund amount left over of $%@.  Applying it as a cach refund.", refundAmount);
+            
+            RefundItem *cashItem = [[RefundItem alloc] init];
+            cashItem.orderPaymentTypeID = [NSNumber numberWithInt:CASH];
+            cashItem.amount = refundAmount;
+            cashItem.toPOS = YES;
+            
+            [refund addRefundItem:cashItem];
+            
+            [cashItem release];
+        }
+    }
+    
+    return refund;
+}
+
+- (NSDecimalNumber *) refundForOnAccount:(id)refund withAmount:(id)refundAmount {
+    NSDecimalNumber *refundLeft = refundAmount;
+    NSDecimalNumber *totalPaymentAmount = [NSDecimalNumber zero];
+    
+    RefundItem *onAcctItem = [[RefundItem alloc] init];
+    
+    onAcctItem.orderPaymentTypeID = [NSNumber numberWithInt:ONACCT];
+    
+    // Loop through payments, find on account payments to determine how much to apply for the refund
+    if (previousPayments && [previousPayments count] > 0) {
+        for (Payment *payment in previousPayments) {
+            if ([payment.paymentTypeId intValue] == ONACCT) {
+                totalPaymentAmount = [totalPaymentAmount decimalNumberByAdding:payment.paymentAmount];
+            }
+        }
+    }
+    
+    if ([totalPaymentAmount compare:[NSDecimalNumber zero]] == NSOrderedSame) {
+        return refundLeft;
+    }
+    
+    // Determine the refund amount to apply
+    if ([refundLeft compare:totalPaymentAmount] == NSOrderedAscending || [refundLeft compare:totalPaymentAmount] == NSOrderedSame) {
+        onAcctItem.amount = refundLeft;
+        refundLeft = [NSDecimalNumber zero];
+    } else {
+        onAcctItem.amount = totalPaymentAmount;
+        refundLeft = [refundLeft decimalNumberBySubtracting:totalPaymentAmount];
+    }    
+    
+    onAcctItem.isSignatureRequired = YES;
+    [refund addRefundItem:onAcctItem];
+    [onAcctItem release];
+    onAcctItem = nil;
+    return refundLeft;
+}
+
+- (NSDecimalNumber *) refundForCCWithSignature:(id)refund withAmount:(id)refundAmount {
+    NSMutableArray *sameStoreCCWithRefIdList = [[NSMutableArray alloc] initWithCapacity:0];
+    NSDecimalNumber *refundLeft = refundAmount;
+    
+    if ([refundLeft compare:[NSDecimalNumber zero]] == NSOrderedDescending && previousPayments && [previousPayments count] > 0) {
+        
+        // Pass 1, pullout matching payments
+        for (Payment *payment in previousPayments) {
+            if (payment.paymentTypeId && ([payment.paymentTypeId intValue] == CREDITCARD_VISA 
+                || [payment.paymentTypeId intValue] == CREDITCARD_MC
+                || [payment.paymentTypeId intValue] == CREDITCARD_DISCOVER
+                || [payment.paymentTypeId intValue] == CREDITCARD_AX)) {
+                
+                // Do I add the payment to the array or not (has ref id and store IDs match)
+                if (payment.paymentRefId 
+                    && ![payment.paymentRefId isEqualToString:@"0"]
+                    && ![payment.paymentRefId isEqualToString:@""]
+                    && payment.storeId 
+                    && [payment.storeId isEqualToNumber:[iPOSFacade sharedInstance].sessionInfo.storeId]) {
+                    [sameStoreCCWithRefIdList addObject:payment];
+                }
+            }
+        }
+        
+        // Build merged/grouped cc payment mapped by token, refId or toCCT
+        NSArray *groupedPayments =  [self groupCCPayments:sameStoreCCWithRefIdList];
+        
+        if (groupedPayments && [groupedPayments count] > 0) {
+            // Sort the array by payment amount descending
+            NSSortDescriptor *sortDescriptor;
+            sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"paymentAmount"
+                                                          ascending:NO] autorelease];
+            NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+            groupedPayments = [groupedPayments sortedArrayUsingDescriptors:sortDescriptors];
+            
+            // Apply refund amount from max cc payment amount to least
+            RefundItem *refundItem = nil;
+            
+            for (CreditCardPayment *ccPayment in groupedPayments) {
+                refundItem = [[RefundItem alloc] init];
+                refundItem.isSignatureRequired = YES;
+                refundItem.orderPaymentTypeID = ccPayment.paymentTypeId;
+                refundItem.creditCard = ccPayment;
+                
+                if ([refundLeft compare:ccPayment.paymentAmount] == NSOrderedAscending || [refundLeft compare:ccPayment.paymentAmount] == NSOrderedSame) {
+                    refundItem.amount = refundLeft;
+                    refundLeft = [NSDecimalNumber zero];
+                } else {
+                    refundItem.amount = ccPayment.paymentAmount;
+                    refundLeft = [refundLeft decimalNumberBySubtracting:ccPayment.paymentAmount];
+                }
+                
+                [refund addRefundItem:refundItem];
+                [refundItem release];
+                refundItem = nil;
+            }
+        }
+    }
+    
+    return refundLeft;
+}
+
+- (NSDecimalNumber *) refundForCCWithSwipeAndSignature:(id)refund withAmount:(id)refundAmount {
+    NSMutableArray *diffStoreCCWithRefIdList = [[NSMutableArray alloc] initWithCapacity:0];
+    NSDecimalNumber *refundLeft = refundAmount;
+    
+    if ([refundLeft intValue] > 0 && previousPayments && [previousPayments count] > 0) {
+        
+        // Pass 1, pullout matching payments
+        for (Payment *payment in previousPayments) {
+            if (payment.paymentTypeId && ([payment.paymentTypeId intValue] == CREDITCARD_VISA 
+                  || [payment.paymentTypeId intValue] == CREDITCARD_MC
+                  || [payment.paymentTypeId intValue] == CREDITCARD_DISCOVER
+                  || [payment.paymentTypeId intValue] == CREDITCARD_AX)) {
+                
+                // Do I add the payment to the array or not (has token and store IDs do not match)
+                if (((CreditCardPayment *) payment).lpToken 
+                    && ![((CreditCardPayment *) payment).lpToken isEqualToString:@""] 
+                    && ![((CreditCardPayment *) payment).lpToken isEqualToString:@"0"]
+                    && payment.storeId
+                    && ![payment.storeId isEqualToNumber:[iPOSFacade sharedInstance].sessionInfo.storeId]) {
+                    
+                    [diffStoreCCWithRefIdList addObject:payment];
+                }
+            }
+        }
+        
+        // Build merged/grouped cc payment mapped by token, refId or toCCT
+        NSArray *groupedPayments =  [self groupCCPayments:diffStoreCCWithRefIdList];
+        
+        if (groupedPayments && [groupedPayments count] > 0) {
+            // Sort the array by payment amount descending
+            NSSortDescriptor *sortDescriptor;
+            sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"paymentAmount"
+                                                          ascending:NO] autorelease];
+            NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+            groupedPayments = [groupedPayments sortedArrayUsingDescriptors:sortDescriptors];
+            
+            // Apply refund amount from max cc payment amount to least
+            RefundItem *refundItem = nil;
+            
+            for (CreditCardPayment *ccPayment in groupedPayments) {
+                refundItem = [[RefundItem alloc] init];
+                refundItem.isSignatureRequired = YES;
+                refundItem.isSwipeRequired = YES;
+                refundItem.orderPaymentTypeID = ccPayment.paymentTypeId;
+                refundItem.creditCard = ccPayment;
+                
+                if ([refundLeft compare:ccPayment.paymentAmount] == NSOrderedAscending || [refundLeft compare:ccPayment.paymentAmount] == NSOrderedSame) {
+                    refundItem.amount = refundLeft;
+                    refundLeft = [NSDecimalNumber zero];
+                } else {
+                    refundItem.amount = ccPayment.paymentAmount;
+                    refundLeft = [refundLeft decimalNumberBySubtracting:ccPayment.paymentAmount];
+                }
+                
+                [refund addRefundItem:refundItem];
+                [refundItem release];
+                refundItem = nil;
+            }
+        }
+
+    }
+    
+    return refundLeft;
+}
+
+- (NSDecimalNumber *) refundForToCCT:(id)refund withAmount:(id)refundAmount {
+    NSMutableArray *toCCTPaymentList = [[NSMutableArray alloc] initWithCapacity:0];
+    NSDecimalNumber *refundLeft = refundAmount;
+    
+    if ([refundLeft intValue] > 0 && previousPayments && [previousPayments count] > 0) {
+        
+        // Pass 1, pullout matching payments (to CCT)
+        for (Payment *payment in previousPayments) {
+            if (payment.paymentTypeId && ([payment.paymentTypeId intValue] == CREDITCARD_VISA 
+                  || [payment.paymentTypeId intValue] == CREDITCARD_MC
+                  || [payment.paymentTypeId intValue] == CREDITCARD_DISCOVER
+                  || [payment.paymentTypeId intValue] == CREDITCARD_AX)) {
+                
+                // To CCT:  Different store and no token, or same store no ref id
+                if ((((CreditCardPayment *) payment).lpToken == nil
+                    || [((CreditCardPayment *) payment).lpToken isEqualToString:@""] 
+                    || [((CreditCardPayment *) payment).lpToken isEqualToString:@"0"])
+                    && payment.storeId
+                    && ![payment.storeId isEqualToNumber:[iPOSFacade sharedInstance].sessionInfo.storeId]) {
+                    [toCCTPaymentList addObject:payment];
+                } else if ((payment.paymentRefId == nil
+                    || [payment.paymentRefId isEqualToString:@""] 
+                    || [payment.paymentRefId isEqualToString:@"0"])
+                    && payment.storeId
+                    && [payment.storeId isEqualToNumber:[iPOSFacade sharedInstance].sessionInfo.storeId]) {
+                    [toCCTPaymentList addObject:payment];
+                }
+            }
+        }
+        
+        // Build merged/grouped cc payment mapped by token, refId or toCCT
+        NSArray *groupedPayments =  [self groupCCPayments:toCCTPaymentList];
+        
+        if (groupedPayments && [groupedPayments count] > 0) {
+            // Sort the array by payment amount descending
+            NSSortDescriptor *sortDescriptor;
+            sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"paymentAmount"
+                                                          ascending:NO] autorelease];
+            NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+            groupedPayments = [groupedPayments sortedArrayUsingDescriptors:sortDescriptors];
+            
+            // Apply refund amount from max cc payment amount to least
+            RefundItem *refundItem = nil;
+            
+            for (CreditCardPayment *ccPayment in groupedPayments) {
+                refundItem = [[RefundItem alloc] init];
+                refundItem.orderPaymentTypeID = ccPayment.paymentTypeId;
+                refundItem.creditCard = ccPayment;
+                
+                if ([refundLeft compare:ccPayment.paymentAmount] == NSOrderedAscending || [refundLeft compare:ccPayment.paymentAmount] == NSOrderedSame) {
+                    refundItem.amount = refundLeft;
+                    refundLeft = [NSDecimalNumber zero];
+                } else {
+                    refundItem.amount = ccPayment.paymentAmount;
+                    refundLeft = [refundLeft decimalNumberBySubtracting:ccPayment.paymentAmount];
+                }
+                
+                refundItem.toCCT = YES;
+                [refund addRefundItem:refundItem];
+                [refundItem release];
+                refundItem = nil;
+            }
+        }
+        
+    }
+    
+    return refundLeft;
+}
+
+- (NSDecimalNumber *) refundForToPOS:(id)refund withAmount:(id)refundAmount {
+    NSMutableArray *toPOSPaymentList = [[NSMutableArray alloc] initWithCapacity:0];
+    NSDecimalNumber *refundLeft = refundAmount;
+    
+    if ([refundLeft intValue] > 0 && previousPayments && [previousPayments count] > 0) {
+        
+        // Pass 1, pullout matching payments (to CCT)
+        for (Payment *payment in previousPayments) {
+            if ([payment.paymentTypeId intValue] == CASH 
+                || [payment.paymentTypeId intValue] == CHECK
+                || [payment.paymentTypeId intValue] > ONACCT) {
+                // All other types
+                [toPOSPaymentList addObject:payment];
+            }
+        }
+        
+        // Build merged/grouped cc payment mapped by token, refId or toCCT
+        NSArray *groupedPayments =  [self groupToPOSPayments:toPOSPaymentList];
+        
+        if (groupedPayments && [groupedPayments count] > 0) {
+            // Sort the array by payment amount descending
+            NSSortDescriptor *sortDescriptor;
+            sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"paymentAmount"
+                                                          ascending:NO] autorelease];
+            NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+            groupedPayments = [groupedPayments sortedArrayUsingDescriptors:sortDescriptors];
+            
+            // Apply refund amount from max cc payment amount to least
+            RefundItem *refundItem = nil;
+            
+            for (Payment *payment in groupedPayments) {
+                refundItem = [[RefundItem alloc] init];
+                refundItem.isSignatureRequired = NO;
+                refundItem.isSwipeRequired = NO;
+                refundItem.orderPaymentTypeID = payment.paymentTypeId;
+                
+                if ([refundLeft compare:payment.paymentAmount] == NSOrderedAscending || [refundLeft compare:payment.paymentAmount] == NSOrderedSame) {
+                    refundItem.amount = refundLeft;
+                    refundLeft = [NSDecimalNumber zero];
+                } else {
+                    refundItem.amount = payment.paymentAmount;
+                    refundLeft = [refundLeft decimalNumberBySubtracting:payment.paymentAmount];
+                }
+                
+                refundItem.toPOS = YES;
+                [refund addRefundItem:refundItem];
+                [refundItem release];
+                refundItem = nil;
+            }
+        }
+    }
+    
+    return refundLeft;
+}
+
+- (NSArray *) groupCCPayments:(NSArray *) ccPayments {
+    NSMutableDictionary *ccDictByCardNumAndToken = [[NSMutableDictionary alloc] initWithCapacity:0];
+    CreditCardPayment *groupedPayment = nil;
+    NSString *key = nil;
+    
+    if (ccPayments && [ccPayments count] > 0) {
+        for (CreditCardPayment *payment in ccPayments) {
+            if (payment.lpToken) {
+                key = [NSString stringWithFormat:@"token-%@", payment.lpToken];
+            } else if (payment.paymentRefId) {
+                key = [NSString stringWithFormat:@"refId-%@", payment.paymentRefId];
+            } else {
+                key = [NSString stringWithFormat:@"toCCT-%@", payment.paymentTypeId];
+            }
+            
+            groupedPayment = [ccDictByCardNumAndToken objectForKey:key];
+            
+            if (!groupedPayment) {
+                groupedPayment = [[CreditCardPayment alloc] initWithOrder:nil];
+                groupedPayment.paymentRefId = payment.paymentRefId;
+                groupedPayment.paymentAmount = payment.paymentAmount;
+                groupedPayment.paymentTypeId = payment.paymentTypeId;
+                groupedPayment.cardNumber = payment.cardNumber;
+                groupedPayment.lpToken = payment.lpToken;
+                
+                [ccDictByCardNumAndToken setValue:groupedPayment forKey:key];
+                [groupedPayment release];
+            } else {
+                // Increase total amount
+                groupedPayment.paymentAmount = [groupedPayment.paymentAmount decimalNumberByAdding:payment.paymentAmount];
+            }
+        }
+    }
+    
+    return [ccDictByCardNumAndToken allValues];
+}
+
+- (NSArray *) groupToPOSPayments:(NSArray *)paymentList {
+    NSMutableDictionary *paymentDict = [[NSMutableDictionary alloc] initWithCapacity:0];
+    Payment *groupedPayment = nil;
+    
+    NSString *key = nil;
+    
+    if (paymentList && [paymentList count] > 0) {
+        for (Payment *payment in paymentList) {
+            key = [NSString stringWithFormat:@"%@", payment.paymentTypeId];
+            
+            groupedPayment = [paymentDict objectForKey:key];
+            
+            if (!groupedPayment) {
+                switch ([payment.paymentTypeId intValue]) {
+                    case CASH: {
+                        groupedPayment = [[CashPayment alloc] initWithOrder:nil];
+                        break;
+                    }
+                    case CHECK: {
+                        groupedPayment = [[CheckPayment alloc] initWithOrder:nil];
+                        break;
+                    }
+                    case INSTORE_CREDIT: {
+                        groupedPayment = [[InStoreCreditPayment alloc] initWithOrder:nil];
+                        break;
+                    }
+                    case GIFT_CARD: {
+                        groupedPayment = [[GiftCardPayment alloc] initWithOrder:nil];
+                        break;
+                    }
+                    case GOOGLE: {
+                        groupedPayment = [[GooglePayment alloc] initWithOrder:nil];
+                        break;
+                    }
+                    case HOMEDESIGN: {
+                        groupedPayment = [[HomeDesignPayment alloc] initWithOrder:nil];
+                        break;
+                    }
+                    case PAYPAL: {
+                        groupedPayment = [[PayPalPayment alloc] initWithOrder:nil];
+                        break;
+                    }
+                    default: {
+                        groupedPayment = [[Payment alloc] initWithOrder:nil];
+                        break;
+                    }
+                }
+                
+                groupedPayment.paymentAmount = payment.paymentAmount;
+                groupedPayment.paymentTypeId = payment.paymentTypeId;
+                [paymentDict setValue:groupedPayment forKey:key];
+
+            } else {
+                // Increase total amount
+                groupedPayment.paymentAmount = [groupedPayment.paymentAmount decimalNumberByAdding:payment.paymentAmount]; 
+            }
+            
+        }
+    }
+    
+    return [paymentDict allValues];
+}
 
 @end

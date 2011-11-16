@@ -7,17 +7,31 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LineaSDK.h"
 #import "iPOSFacade.h"
 #import "OrderCart.h"
+#import "NotesController.h"
+#import "SignatureViewController.h"
+#import "ChargeCreditCardView.h"
 
 #import "RefundView.h"
 
-@interface RefundViewController : UIViewController<RefundViewDelegate> {
+@interface RefundViewController : UIViewController<RefundViewDelegate, NotesControllerDelegate, SignatureDelegate, ChargeCreditCardViewDelegate, UIAlertViewDelegate> {
     iPOSFacade *facade;
     OrderCart *orderCart;
+    
+    RefundView *refundView;
+    ChargeCreditCardView *chargeCCView;
+    
+    Refund *refundInfo;
+    
+    BOOL orderIsSaved;
+    
+    Linea *linea;
 }
 
 @property (nonatomic, assign) iPOSFacade *facade;
 @property (nonatomic, assign) OrderCart *orderCart;
+@property (nonatomic, retain) Refund *refundInfo;
 
 @end

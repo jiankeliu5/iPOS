@@ -55,6 +55,7 @@
 @implementation ChargeCreditCardView
 
 @synthesize balanceDue, totalBalance, viewDelegate;
+@synthesize refundInfo;
 
 #pragma mark -
 #pragma mark Constructor/Deconstructor
@@ -64,6 +65,16 @@
     if (self) {
         balanceDue = @"$0.00";
         totalBalance = @"0.00";
+    }
+    
+    return self;
+}
+
+- (id) initWithFrame:(CGRect)frame andRefundInfo:(Refund *) refund {
+    self = [self initWithFrame:frame];
+    
+    if (self) {
+        refundInfo = refund;
     }
     
     return self;
@@ -82,28 +93,28 @@
 }
 
 - (void) switchCardSwipeToReady {
-
-    
-    amountToChargeLabel.text = [NSString formatDecimalNumberAsMoney:[NSDecimalNumber decimalNumberWithString:chargeAmountTextField.text]];
-    
-    balanceDueTitle.hidden = YES;
-    balanceDueLabel.hidden = YES;
-    ccChargeAmountView.hidden = YES;
-    ccSwipeMsgView.hidden = NO;
+    // Only valid for card charges.  There is no data entry for refunds.
+    if (refundInfo == nil) {
+        amountToChargeLabel.text = [NSString formatDecimalNumberAsMoney:[NSDecimalNumber decimalNumberWithString:chargeAmountTextField.text]];
+        
+        balanceDueTitle.hidden = YES;
+        balanceDueLabel.hidden = YES;
+        ccChargeAmountView.hidden = YES;
+        ccSwipeMsgView.hidden = NO;
+    }
     
     if (viewDelegate) {
-        [viewDelegate readyForCardSwipe:[NSDecimalNumber decimalNumberWithString:chargeAmountTextField.text] fromView:self];
+        NSString *chargeAmt = @"0.00";
+        
+        if (chargeAmountTextField) {
+            chargeAmt =  chargeAmountTextField.text;
+        }
+        
+        [viewDelegate readyForCardSwipe:[NSDecimalNumber decimalNumberWithString:chargeAmt] fromView:self];
     }
     
 }
 
-/*
- // Only override drawRect: if you perform custom drawing.
- // An empty implementation adversely affects performance during animation.
- - (void)drawRect:(CGRect)rect {
- // Drawing code.
- }
- */
  
 #pragma mark -
 - (void) layoutSubviews {
@@ -124,11 +135,12 @@
 	[mainRoundedView applyGradientToBackgroundWithStartColor:[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0] 
 											  endColor:[UIColor colorWithRed:230.0/255.0 green:230.0/255.0 blue:230.0/255.0 alpha:1.0]];
     
-    // Add balance due labels
-    [self layoutBalanceDueLabels:mainRoundedView];
-    
+    // Add balance due labels and charge amount if this is not for a refund
+    if ( refundInfo == nil) {
+        [self layoutBalanceDueLabels:mainRoundedView];
+        [self layoutChargeAmountView:mainRoundedView];
+    }
     // Add subviews
-    [self layoutChargeAmountView:mainRoundedView];
     [self layoutSwipeMsgView:mainRoundedView];
        
     // Add a cancel button
@@ -146,9 +158,13 @@
     cancelButton.frame = CGRectMake(floorf((mainRoundedView.bounds.size.width - BUTTON_WIDTH) / 2.0f), 
                                     mainRoundedView.bounds.size.height - BUTTON_HEIGHT - MARGIN_BOTTOM, BUTTON_WIDTH, BUTTON_HEIGHT);
 	
-    // Setup keyboard support
-    if (viewDelegate) {
-        [viewDelegate setupKeyboardSupport:self];
+    // Setup keyboard support or ready for swipe
+    if (refundInfo == nil) {
+        if (viewDelegate) {
+            [viewDelegate setupKeyboardSupport:self];
+        }
+    } else {
+        [self switchCardSwipeToReady];
     }
 }
 
@@ -275,6 +291,15 @@
         [ccSwipeMsgView addSubview:swipeText1];
         [ccSwipeMsgView addSubview:swipeText2];
         [ccSwipeMsgView addSubview:amountToChargeLabel];
+        
+        // Make sure the view is not hidden
+        if (refundInfo) {
+            ccSwipeMsgView.hidden = NO;
+            RefundItem *refundItem = [refundInfo getCurrentRefundItemForSwipe];
+            swipeText1.text = [NSString stringWithFormat:@"SWIPE %@", [refundItem getRefundDescription]];
+            swipeText2.text = @"FOR REFUND";
+            amountToChargeLabel.text = [NSString formatNumberAsMoney:refundItem.amount];
+        }
         
         [parentView addSubview:ccSwipeMsgView];
     }

@@ -208,7 +208,6 @@
 		D64784491355FBD90017178D /* Payment.m in Sources */ = {isa = PBXBuildFile; fileRef = D64784471355FBD90017178D /* Payment.m */; };
 		D647844C1355FC050017178D /* CreditCardPayment.h in Headers */ = {isa = PBXBuildFile; fileRef = D647844A1355FC050017178D /* CreditCardPayment.h */; };
 		D647844D1355FC050017178D /* CreditCardPayment.m in Sources */ = {isa = PBXBuildFile; fileRef = D647844B1355FC050017178D /* CreditCardPayment.m */; };
-		D64E5AE8130262B0002EAD70 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 		D64E5B8813026566002EAD70 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
 		D64F39B4135CBE050058BB04 /* CreditCard.png in Resources */ = {isa = PBXBuildFile; fileRef = D64F39B2135CBE050058BB04 /* CreditCard.png */; };
 		D64F39B5135CBE050058BB04 /* CreditCard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D64F39B3135CBE050058BB04 /* CreditCard@2x.png */; };
@@ -249,7 +248,6 @@
 		D67943B4131608C1004B8254 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
 		D67943B5131608C1004B8254 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		D67943B6131608C1004B8254 /* libiPOSFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */; };
-		D67943B7131608C1004B8254 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 		D67943BA131608C1004B8254 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FE1302586800B77769 /* MobileCoreServices.framework */; };
 		D67943BB131608C1004B8254 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
 		D67943BC131608C1004B8254 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
@@ -257,7 +255,6 @@
 		D679459513160D05004B8254 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FC1302586800B77769 /* CFNetwork.framework */; };
 		D679459613160D05004B8254 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		D679459713160D05004B8254 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
-		D679459813160D05004B8254 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 		D679459A13160D05004B8254 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FE1302586800B77769 /* MobileCoreServices.framework */; };
 		D679459B13160D05004B8254 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
 		D679459C13160D05004B8254 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
@@ -267,7 +264,6 @@
 		D690234B144F224800174E59 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6902349144F222700174E59 /* libz.1.2.5.dylib */; };
 		D690234C144F226100174E59 /* libiPOSFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */; };
 		D690234E144F226800174E59 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6902349144F222700174E59 /* libz.1.2.5.dylib */; };
-		D690234F144F22AC00174E59 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 		D697D15E1312D98D002C3EF6 /* iPosFacadeWithMocksTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D656013D130B71B4000968BA /* iPosFacadeWithMocksTestCase.m */; };
 		D697D15F1312D98F002C3EF6 /* SampleUnitTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D64B7E3512F9D8FD006AB141 /* SampleUnitTestCase.m */; };
 		D697D1981312DCD0002C3EF6 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D6A96658130F0C3C004D90C4 /* Settings.bundle */; };
@@ -280,7 +276,6 @@
 		D697D1D81312DCD0002C3EF6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA08001302586800B77769 /* SystemConfiguration.framework */; };
 		D697D1DB1312DCD0002C3EF6 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
 		D697D1DC1312DCD0002C3EF6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
-		D697D1EF1312DDE1002C3EF6 /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 		D698A40A1325DE7800371985 /* SignaturePad.m in Sources */ = {isa = PBXBuildFile; fileRef = D698A4081325DE7800371985 /* SignaturePad.m */; };
 		D698A4C31325E9D900371985 /* Particle.png in Resources */ = {isa = PBXBuildFile; fileRef = D698A4A91325E83300371985 /* Particle.png */; };
 		D6999508145B106B007752F1 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D654C1AC145B02E7008CCAA7 /* libOPIFoundationCore.a */; };
@@ -344,7 +339,6 @@
 		D6CC18DD1331D1690042745E /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5B8713026566002EAD70 /* ExternalAccessory.framework */; };
 		D6CC18DE1331D1690042745E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		D6CC18DF1331D1690042745E /* libiPOSFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */; };
-		D6CC18E01331D1690042745E /* libLineaSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D64E5AE7130262B0002EAD70 /* libLineaSDK.a */; };
 		D6CC18E31331D1690042745E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6BA07FE1302586800B77769 /* MobileCoreServices.framework */; };
 		D6CC18E41331D1690042745E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D698A47E1325E50E00371985 /* OpenGLES.framework */; };
 		D6CC18E51331D1690042745E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
@@ -353,6 +347,19 @@
 		D6D11CC114437ED100AC822F /* exchange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6D11CC014437ED100AC822F /* exchange@2x.png */; };
 		D6D11CC214437ED100AC822F /* exchange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6D11CC014437ED100AC822F /* exchange@2x.png */; };
 		D6D11CC314437ED100AC822F /* exchange@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D6D11CC014437ED100AC822F /* exchange@2x.png */; };
+		D6D952441471768F00FF26ED /* InStoreCreditPayment.h in Headers */ = {isa = PBXBuildFile; fileRef = D6D952421471768E00FF26ED /* InStoreCreditPayment.h */; };
+		D6D952451471768F00FF26ED /* InStoreCreditPayment.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D952431471768E00FF26ED /* InStoreCreditPayment.m */; };
+		D6D95248147176DA00FF26ED /* GiftCardPayment.h in Headers */ = {isa = PBXBuildFile; fileRef = D6D95246147176DA00FF26ED /* GiftCardPayment.h */; };
+		D6D95249147176DA00FF26ED /* GiftCardPayment.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D95247147176DA00FF26ED /* GiftCardPayment.m */; };
+		D6D9524C147176FA00FF26ED /* GooglePayment.h in Headers */ = {isa = PBXBuildFile; fileRef = D6D9524A147176FA00FF26ED /* GooglePayment.h */; };
+		D6D9524D147176FA00FF26ED /* GooglePayment.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D9524B147176FA00FF26ED /* GooglePayment.m */; };
+		D6D952501471771400FF26ED /* HomeDesignPayment.h in Headers */ = {isa = PBXBuildFile; fileRef = D6D9524E1471771400FF26ED /* HomeDesignPayment.h */; };
+		D6D952511471771400FF26ED /* HomeDesignPayment.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D9524F1471771400FF26ED /* HomeDesignPayment.m */; };
+		D6D952541471772400FF26ED /* PayPalPayment.h in Headers */ = {isa = PBXBuildFile; fileRef = D6D952521471772400FF26ED /* PayPalPayment.h */; };
+		D6D952551471772400FF26ED /* PayPalPayment.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D952531471772400FF26ED /* PayPalPayment.m */; };
+		D6D952581471B74800FF26ED /* libdtdev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6D952561471B73100FF26ED /* libdtdev.a */; };
+		D6D952591471B74F00FF26ED /* libdtdev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6D952561471B73100FF26ED /* libdtdev.a */; };
+		D6D9525A1471B75400FF26ED /* libdtdev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6D952561471B73100FF26ED /* libdtdev.a */; };
 		D6DB9256135F383A00877788 /* ItemSellingPriceApprovalRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D6DB9254135F383A00877788 /* ItemSellingPriceApprovalRequest.h */; };
 		D6DB9257135F383A00877788 /* ItemSellingPriceApprovalRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D6DB9255135F383A00877788 /* ItemSellingPriceApprovalRequest.m */; };
 		D6DB9279135F3DF700877788 /* ItemSellingPriceApprovalResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = D6DB9277135F3DF700877788 /* ItemSellingPriceApprovalResponse.h */; };
@@ -808,7 +815,6 @@
 		D64B7EB112F9DFA7006AB141 /* IntTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IntTests-Info.plist"; sourceTree = "<group>"; };
 		D64B7EBF12F9DFF5006AB141 /* iPOSServiceIntTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSServiceIntTestCase.h; sourceTree = "<group>"; };
 		D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPOSServiceIntTestCase.m; sourceTree = "<group>"; };
-		D64E5AE7130262B0002EAD70 /* libLineaSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libLineaSDK.a; sourceTree = "<group>"; };
 		D64E5B8713026566002EAD70 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		D64F39B2135CBE050058BB04 /* CreditCard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CreditCard.png; sourceTree = "<group>"; };
 		D64F39B3135CBE050058BB04 /* CreditCard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CreditCard@2x.png"; sourceTree = "<group>"; };
@@ -993,6 +999,17 @@
 		D6CB613E137321C200E024B6 /* ProductItemListXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductItemListXmlMarshaller.h; sourceTree = "<group>"; };
 		D6CB613F137321C200E024B6 /* ProductItemListXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductItemListXmlMarshaller.m; sourceTree = "<group>"; };
 		D6D11CC014437ED100AC822F /* exchange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exchange@2x.png"; sourceTree = "<group>"; };
+		D6D952421471768E00FF26ED /* InStoreCreditPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InStoreCreditPayment.h; sourceTree = "<group>"; };
+		D6D952431471768E00FF26ED /* InStoreCreditPayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InStoreCreditPayment.m; sourceTree = "<group>"; };
+		D6D95246147176DA00FF26ED /* GiftCardPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiftCardPayment.h; sourceTree = "<group>"; };
+		D6D95247147176DA00FF26ED /* GiftCardPayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GiftCardPayment.m; sourceTree = "<group>"; };
+		D6D9524A147176FA00FF26ED /* GooglePayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GooglePayment.h; sourceTree = "<group>"; };
+		D6D9524B147176FA00FF26ED /* GooglePayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GooglePayment.m; sourceTree = "<group>"; };
+		D6D9524E1471771400FF26ED /* HomeDesignPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeDesignPayment.h; sourceTree = "<group>"; };
+		D6D9524F1471771400FF26ED /* HomeDesignPayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeDesignPayment.m; sourceTree = "<group>"; };
+		D6D952521471772400FF26ED /* PayPalPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayPalPayment.h; sourceTree = "<group>"; };
+		D6D952531471772400FF26ED /* PayPalPayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayPalPayment.m; sourceTree = "<group>"; };
+		D6D952561471B73100FF26ED /* libdtdev.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdtdev.a; sourceTree = "<group>"; };
 		D6DB9254135F383A00877788 /* ItemSellingPriceApprovalRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemSellingPriceApprovalRequest.h; sourceTree = "<group>"; };
 		D6DB9255135F383A00877788 /* ItemSellingPriceApprovalRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemSellingPriceApprovalRequest.m; sourceTree = "<group>"; };
 		D6DB9277135F3DF700877788 /* ItemSellingPriceApprovalResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemSellingPriceApprovalResponse.h; sourceTree = "<group>"; };
@@ -1022,7 +1039,7 @@
 				36F3E99A1434BB38004376B8 /* libIBAForms.a in Frameworks */,
 				D6999508145B106B007752F1 /* libOPIFoundationCore.a in Frameworks */,
 				D6B438DB1315B00B000C0AA8 /* libiPOSFoundation.a in Frameworks */,
-				D64E5AE8130262B0002EAD70 /* libLineaSDK.a in Frameworks */,
+				D6D952581471B74800FF26ED /* libdtdev.a in Frameworks */,
 				D6DB96CF135FABE000877788 /* OpenGLES.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
@@ -1043,7 +1060,6 @@
 				D6999516145B1114007752F1 /* libIBAForms.a in Frameworks */,
 				D6CC18DF1331D1690042745E /* libiPOSFoundation.a in Frameworks */,
 				D6999514145B10EA007752F1 /* libOPIFoundationCore.a in Frameworks */,
-				D6CC18E01331D1690042745E /* libLineaSDK.a in Frameworks */,
 				D6CC18DB1331D1690042745E /* CFNetwork.framework in Frameworks */,
 				D6CC18DC1331D1690042745E /* CoreGraphics.framework in Frameworks */,
 				D6CC18DD1331D1690042745E /* ExternalAccessory.framework in Frameworks */,
@@ -1068,7 +1084,6 @@
 				D679459613160D05004B8254 /* CoreGraphics.framework in Frameworks */,
 				D679459713160D05004B8254 /* ExternalAccessory.framework in Frameworks */,
 				D6B43A3A1315B343000C0AA8 /* Foundation.framework in Frameworks */,
-				D679459813160D05004B8254 /* libLineaSDK.a in Frameworks */,
 				D679459A13160D05004B8254 /* MobileCoreServices.framework in Frameworks */,
 				D679459B13160D05004B8254 /* QuartzCore.framework in Frameworks */,
 				D679459C13160D05004B8254 /* SystemConfiguration.framework in Frameworks */,
@@ -1085,7 +1100,7 @@
 				36F3E99D1434BB6D004376B8 /* libIBAForms.a in Frameworks */,
 				D699950B145B1084007752F1 /* libOPIFoundationCore.a in Frameworks */,
 				D690234C144F226100174E59 /* libiPOSFoundation.a in Frameworks */,
-				D690234F144F22AC00174E59 /* libLineaSDK.a in Frameworks */,
+				D6D9525A1471B75400FF26ED /* libdtdev.a in Frameworks */,
 				D6DB96D0135FABF000877788 /* OpenGLES.framework in Frameworks */,
 				D65B25CE1331C8B60052AEE2 /* Foundation.framework in Frameworks */,
 				D65B25CF1331C8B60052AEE2 /* UIKit.framework in Frameworks */,
@@ -1110,7 +1125,6 @@
 				D67943B3131608C1004B8254 /* CoreGraphics.framework in Frameworks */,
 				D67943B4131608C1004B8254 /* ExternalAccessory.framework in Frameworks */,
 				D67943B5131608C1004B8254 /* Foundation.framework in Frameworks */,
-				D67943B7131608C1004B8254 /* libLineaSDK.a in Frameworks */,
 				D67943BA131608C1004B8254 /* MobileCoreServices.framework in Frameworks */,
 				D67943BB131608C1004B8254 /* QuartzCore.framework in Frameworks */,
 				D67943BC131608C1004B8254 /* SystemConfiguration.framework in Frameworks */,
@@ -1127,7 +1141,7 @@
 				364B56C61430D02D0028FE09 /* libIBAForms.a in Frameworks */,
 				D654C1B1145B0337008CCAA7 /* libOPIFoundationCore.a in Frameworks */,
 				D6E9E9D11316037900FF1498 /* libiPOSFoundation.a in Frameworks */,
-				D697D1EF1312DDE1002C3EF6 /* libLineaSDK.a in Frameworks */,
+				D6D952591471B74F00FF26ED /* libdtdev.a in Frameworks */,
 				D6DB9711135FAC0300877788 /* OpenGLES.framework in Frameworks */,
 				D697D1D31312DCD0002C3EF6 /* Foundation.framework in Frameworks */,
 				D697D1D41312DCD0002C3EF6 /* UIKit.framework in Frameworks */,
@@ -1565,9 +1579,9 @@
 			isa = PBXGroup;
 			children = (
 				36E722331417E7DD0009D71A /* AccountPayment */,
+				D6DB9350135F6B7300877788 /* CreditCardPayment */,
 				365B5973140E8676000B0277 /* Notes */,
 				B4C46A0C1307148B001EADE4 /* Signature */,
-				D6DB9350135F6B7300877788 /* CreditCardPayment */,
 				B4C469E713070C48001EADE4 /* TenderPaymentViewController.h */,
 				369C9A8B142400AB0094C17B /* TenderPaymentViewController.m */,
 				36E7223C141939090009D71A /* PaymentView.h */,
@@ -1903,52 +1917,17 @@
 			isa = PBXGroup;
 			children = (
 				D6B1935A133BEEC9004C4FD1 /* Oxm */,
+				D6D952411471762500FF26ED /* Customer */,
+				D6D952401471760400FF26ED /* Product */,
+				D6D9523F147175D900FF26ED /* Order */,
+				D6D9523D1471758600FF26ED /* Payment */,
+				D6D9523E147175B700FF26ED /* Refund */,
 				D6B19383133C2450004C4FD1 /* AbstractModel.h */,
 				D6B19384133C2450004C4FD1 /* AbstractModel.m */,
-				D61C3C3012FCA530003C3A47 /* Customer.h */,
-				D61C3C3112FCA530003C3A47 /* Customer.m */,
-				D6DCA823134DFA8E00ACBDD9 /* OrderCart.h */,
-				D6DCA824134DFA8E00ACBDD9 /* OrderCart.m */,
-				360C1286143383E000235580 /* PreviousOrder.h */,
-				360C1287143383E000235580 /* PreviousOrder.m */,
-				D61C3C3312FCA535003C3A47 /* Order.h */,
-				D61C3C3412FCA535003C3A47 /* Order.m */,
-				D61C3C6812FCA9C0003C3A47 /* OrderItem.h */,
-				D61C3C6912FCA9C0003C3A47 /* OrderItem.m */,
-				D61C3C6212FCA97F003C3A47 /* ProductItem.h */,
-				D61C3C6312FCA97F003C3A47 /* ProductItem.m */,
-				D618490313185C200051CEFF /* DistributionCenter.h */,
-				D618490413185C200051CEFF /* DistributionCenter.m */,
-				D683BE0C1321437A008D923F /* Store.h */,
-				D683BE0D1321437A008D923F /* Store.m */,
-				D683BE1013214391008D923F /* ItemAvailability.h */,
-				D683BE1113214391008D923F /* ItemAvailability.m */,
-				D6DB9254135F383A00877788 /* ItemSellingPriceApprovalRequest.h */,
-				D6DB9255135F383A00877788 /* ItemSellingPriceApprovalRequest.m */,
-				D6DB9277135F3DF700877788 /* ItemSellingPriceApprovalResponse.h */,
-				D6DB9278135F3DF700877788 /* ItemSellingPriceApprovalResponse.m */,
-				D692BBA212FDFF4C007EC03A /* Address.h */,
-				D692BBA312FDFF4C007EC03A /* Address.m */,
 				D61C3C3812FCA55D003C3A47 /* ManagerInfo.h */,
 				D61C3C3912FCA55D003C3A47 /* ManagerInfo.m */,
 				D6BCD40612FCB3F70029F4B2 /* SessionInfo.h */,
 				D6BCD40712FCB3F70029F4B2 /* SessionInfo.m */,
-				D64784461355FBD90017178D /* Payment.h */,
-				D64784471355FBD90017178D /* Payment.m */,
-				D647844A1355FC050017178D /* CreditCardPayment.h */,
-				D647844B1355FC050017178D /* CreditCardPayment.m */,
-				D6412B9313563216002AC1AC /* PaymentSignature.h */,
-				D6412B9413563216002AC1AC /* PaymentSignature.m */,
-				36E72240141A37370009D71A /* AccountPayment.h */,
-				36E72241141A37370009D71A /* AccountPayment.m */,
-				367B7FE6144C8248008DB0B1 /* CashPayment.h */,
-				367B7FE7144C8248008DB0B1 /* CashPayment.m */,
-				367B7FEA144CA1D1008DB0B1 /* CheckPayment.h */,
-				367B7FEB144CA1D1008DB0B1 /* CheckPayment.m */,
-				367B7FF2144CB10A008DB0B1 /* Refund.h */,
-				367B7FF3144CB10A008DB0B1 /* Refund.m */,
-				367B7FF6144CB11C008DB0B1 /* RefundItem.h */,
-				367B7FF7144CB11C008DB0B1 /* RefundItem.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2009,6 +1988,91 @@
 			name = OXM;
 			sourceTree = "<group>";
 		};
+		D6D9523D1471758600FF26ED /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				D64784461355FBD90017178D /* Payment.h */,
+				D64784471355FBD90017178D /* Payment.m */,
+				D647844A1355FC050017178D /* CreditCardPayment.h */,
+				D647844B1355FC050017178D /* CreditCardPayment.m */,
+				36E72240141A37370009D71A /* AccountPayment.h */,
+				36E72241141A37370009D71A /* AccountPayment.m */,
+				367B7FE6144C8248008DB0B1 /* CashPayment.h */,
+				367B7FE7144C8248008DB0B1 /* CashPayment.m */,
+				367B7FEA144CA1D1008DB0B1 /* CheckPayment.h */,
+				367B7FEB144CA1D1008DB0B1 /* CheckPayment.m */,
+				D6D952421471768E00FF26ED /* InStoreCreditPayment.h */,
+				D6D952431471768E00FF26ED /* InStoreCreditPayment.m */,
+				D6D95246147176DA00FF26ED /* GiftCardPayment.h */,
+				D6D95247147176DA00FF26ED /* GiftCardPayment.m */,
+				D6D9524A147176FA00FF26ED /* GooglePayment.h */,
+				D6D9524B147176FA00FF26ED /* GooglePayment.m */,
+				D6D9524E1471771400FF26ED /* HomeDesignPayment.h */,
+				D6D9524F1471771400FF26ED /* HomeDesignPayment.m */,
+				D6D952521471772400FF26ED /* PayPalPayment.h */,
+				D6D952531471772400FF26ED /* PayPalPayment.m */,
+				D6412B9313563216002AC1AC /* PaymentSignature.h */,
+				D6412B9413563216002AC1AC /* PaymentSignature.m */,
+			);
+			name = Payment;
+			sourceTree = "<group>";
+		};
+		D6D9523E147175B700FF26ED /* Refund */ = {
+			isa = PBXGroup;
+			children = (
+				367B7FF2144CB10A008DB0B1 /* Refund.h */,
+				367B7FF3144CB10A008DB0B1 /* Refund.m */,
+				367B7FF6144CB11C008DB0B1 /* RefundItem.h */,
+				367B7FF7144CB11C008DB0B1 /* RefundItem.m */,
+			);
+			name = Refund;
+			sourceTree = "<group>";
+		};
+		D6D9523F147175D900FF26ED /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				D6DCA823134DFA8E00ACBDD9 /* OrderCart.h */,
+				D6DCA824134DFA8E00ACBDD9 /* OrderCart.m */,
+				360C1286143383E000235580 /* PreviousOrder.h */,
+				360C1287143383E000235580 /* PreviousOrder.m */,
+				D61C3C3312FCA535003C3A47 /* Order.h */,
+				D61C3C3412FCA535003C3A47 /* Order.m */,
+				D61C3C6812FCA9C0003C3A47 /* OrderItem.h */,
+				D61C3C6912FCA9C0003C3A47 /* OrderItem.m */,
+			);
+			name = Order;
+			sourceTree = "<group>";
+		};
+		D6D952401471760400FF26ED /* Product */ = {
+			isa = PBXGroup;
+			children = (
+				D61C3C6212FCA97F003C3A47 /* ProductItem.h */,
+				D61C3C6312FCA97F003C3A47 /* ProductItem.m */,
+				D618490313185C200051CEFF /* DistributionCenter.h */,
+				D618490413185C200051CEFF /* DistributionCenter.m */,
+				D683BE0C1321437A008D923F /* Store.h */,
+				D683BE0D1321437A008D923F /* Store.m */,
+				D683BE1013214391008D923F /* ItemAvailability.h */,
+				D683BE1113214391008D923F /* ItemAvailability.m */,
+				D6DB9254135F383A00877788 /* ItemSellingPriceApprovalRequest.h */,
+				D6DB9255135F383A00877788 /* ItemSellingPriceApprovalRequest.m */,
+				D6DB9277135F3DF700877788 /* ItemSellingPriceApprovalResponse.h */,
+				D6DB9278135F3DF700877788 /* ItemSellingPriceApprovalResponse.m */,
+			);
+			name = Product;
+			sourceTree = "<group>";
+		};
+		D6D952411471762500FF26ED /* Customer */ = {
+			isa = PBXGroup;
+			children = (
+				D61C3C3012FCA530003C3A47 /* Customer.h */,
+				D61C3C3112FCA530003C3A47 /* Customer.m */,
+				D692BBA212FDFF4C007EC03A /* Address.h */,
+				D692BBA312FDFF4C007EC03A /* Address.m */,
+			);
+			name = Customer;
+			sourceTree = "<group>";
+		};
 		D6DB9350135F6B7300877788 /* CreditCardPayment */ = {
 			isa = PBXGroup;
 			children = (
@@ -2034,8 +2098,8 @@
 		D6F7963212F9FD6B00B467CA /* LineaSDK */ = {
 			isa = PBXGroup;
 			children = (
+				D6D952561471B73100FF26ED /* libdtdev.a */,
 				D6B0401213024FF6004D00CA /* LineaSDK.h */,
-				D64E5AE7130262B0002EAD70 /* libLineaSDK.a */,
 			);
 			name = LineaSDK;
 			sourceTree = "<group>";
@@ -2100,6 +2164,11 @@
 				D65C976B145EFF9C00600034 /* CustomerListViewController.h in Headers */,
 				D65C976F145F000000600034 /* CustomerListTableCell.h in Headers */,
 				D65C9773145F2AFE00600034 /* LookupOrderUtil.h in Headers */,
+				D6D952441471768F00FF26ED /* InStoreCreditPayment.h in Headers */,
+				D6D95248147176DA00FF26ED /* GiftCardPayment.h in Headers */,
+				D6D9524C147176FA00FF26ED /* GooglePayment.h in Headers */,
+				D6D952501471771400FF26ED /* HomeDesignPayment.h in Headers */,
+				D6D952541471772400FF26ED /* PayPalPayment.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2693,6 +2762,11 @@
 				D65C976C145EFF9C00600034 /* CustomerListViewController.m in Sources */,
 				D65C9770145F000000600034 /* CustomerListTableCell.m in Sources */,
 				D65C9774145F2AFE00600034 /* LookupOrderUtil.m in Sources */,
+				D6D952451471768F00FF26ED /* InStoreCreditPayment.m in Sources */,
+				D6D95249147176DA00FF26ED /* GiftCardPayment.m in Sources */,
+				D6D9524D147176FA00FF26ED /* GooglePayment.m in Sources */,
+				D6D952511471771400FF26ED /* HomeDesignPayment.m in Sources */,
+				D6D952551471772400FF26ED /* PayPalPayment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

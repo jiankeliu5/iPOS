@@ -13,6 +13,8 @@
 @implementation SignatureViewController
 
 @synthesize delegate, signaturePad, payAmountLabel;
+@synthesize signingLabel;
+
 
 #pragma mark Constructors
 - (id)init
@@ -33,14 +35,13 @@
     return self;
 }
 
-- (void)dealloc {
-    if (delegate) {
-        [delegate release];
-    }
-    
-    // NOTE:  Do not have explicitly release subviews (signaturePad, payAmountLabel)
-    // These are implicitely released with call to removeFromSuperView from the UIView
-    // Hierarchy.
+- (void)dealloc {    
+    [signaturePad release];
+    signaturePad = nil;
+    [signingLabel release];
+    signingLabel = nil;
+    [payAmountLabel release];
+    payAmountLabel = nil;
     
     [super dealloc];
 }
@@ -73,17 +74,17 @@
     [toolbar setItems:[NSArray arrayWithObjects:flex,saveButton,clearButton,nil]];
     
     // Add the labels and signature pad
-    UILabel *signingLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 54, 480, 20)] autorelease];
+    signingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 54, 480, 20)];
     signingLabel.font = [UIFont systemFontOfSize:14.0f];
     signingLabel.textAlignment = UITextAlignmentCenter;
     signingLabel.text = @"By signing below, I agree to pay a total credit card charge of";
     
-    payAmountLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 74, 480, 20)] autorelease];
+    payAmountLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 74, 480, 20)];
     payAmountLabel.textAlignment = UITextAlignmentCenter;
     payAmountLabel.font = [UIFont boldSystemFontOfSize:14.0f];
     payAmountLabel.text = @"0.00";
     
-    signaturePad = [[[SignaturePad alloc] initWithFrame:CGRectMake(10, 94, 460, 170) andTextureEnabled:YES] autorelease];
+    signaturePad = [[SignaturePad alloc] initWithFrame:CGRectMake(10, 94, 460, 170) andTextureEnabled:YES];
     
     // Add the the bg view
     [bgView addSubview:toolbar]; 

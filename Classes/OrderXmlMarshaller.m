@@ -539,7 +539,7 @@ static NSString * const PREVIOUSORDER_LINEITEM_XML = @""
                         break;
                     case LineStatusNone:
                     default:
-                        lineState = @"";
+                        lineState = @"nochange";
                         break;
                 }
                 

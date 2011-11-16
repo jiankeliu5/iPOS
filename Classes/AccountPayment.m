@@ -14,10 +14,11 @@
 
 @synthesize signature;
 
-- (id)init {
-    self = [super init];
+- (id) initWithOrder:(Order *)order {
+    self = [super initWithOrder:order];
     if (self) {
         // Initialization code here.
+        self.paymentTypeId = [NSNumber numberWithInt:ONACCT];
     }
     
     return self;

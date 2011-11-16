@@ -29,6 +29,10 @@ static NSString * const CUSTOMER_XML = @""
     "${storeXml}"
 "</CustomerClass>";
 
+@interface CustomerXmlMarshaller()
+- (void) addCustomerName:(NSString *) customerName toCustomer:(Customer *) customer;
+@end
+
 @implementation CustomerXmlMarshaller
 
 -(NSString *) toXml:(id) marshalObj {
@@ -154,28 +158,17 @@ static NSString * const CUSTOMER_XML = @""
     return customer;
 }
 
-- (void) addCustomerName:(NSString *) customerName toCustomer:(Customer *) customer
-{
-    NSArray *names = [customerName componentsSeparatedByString:@","];
-    
-    if ([names count] == 2) {
-        customer.lastName = [(NSString *) [names objectAtIndex:0] stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
-        customer.firstName = [(NSString *) [names objectAtIndex:1] stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
-    } else {
-        customer.firstName = [names objectAtIndex:0];
-    }
-}
-
 - (id) toObjectFromXmlElement: (CXMLElement *) root {
     
-     Customer *customer = [[Customer alloc] init];
+    Customer *customer = [[Customer alloc] init];
     
-     customer.customerId = [root elementNumberValue:@"CustomerID"];
-     customer.customerTypeId = [root elementNumberValue:@"CustomerTypeID"];
+    customer.customerId = [root elementNumberValue:@"CustomerID"];
+    customer.customerTypeId = [root elementNumberValue:@"CustomerTypeID"];
     [self addCustomerName:[root elementStringValue:@"CustomerName"] toCustomer:customer];
     customer.taxExempt = [root elementBoolValue:@"TaxExempt"];
     customer.e1CustomerId = [root elementStringValue:@"E1CustomerID"];
     customer.phoneNumber = [root elementStringValue:@"CustomerPhone"];
+    customer.emailAddress = [root elementStringValue:@"Email"];
     Address *address = [[Address alloc] init];
     address.zipPostalCode = [root elementStringValue:@"Zip"];
     
@@ -186,5 +179,15 @@ static NSString * const CUSTOMER_XML = @""
     return customer;
 }
 
+- (void) addCustomerName:(NSString *) customerName toCustomer:(Customer *) customer {
+    NSArray *names = [customerName componentsSeparatedByString:@","];
+    
+    if ([names count] == 2) {
+        customer.lastName = [(NSString *) [names objectAtIndex:0] stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
+        customer.firstName = [(NSString *) [names objectAtIndex:1] stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
+    } else {
+        customer.firstName = [names objectAtIndex:0];
+    }
+}
 
 @end

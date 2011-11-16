@@ -11,6 +11,14 @@
 #import "SessionInfo.h"
 #import "CreditCardPayment.h"
 #import "AccountPayment.h"
+#import "CashPayment.h"
+#import "CheckPayment.h"
+#import "InStoreCreditPayment.h"
+#import "GiftCardPayment.h"
+#import "GooglePayment.h"
+#import "HomeDesignPayment.h"
+#import "PayPalPayment.h"
+
 #import "Refund.h"
 
 @protocol PaymentService <NSObject>

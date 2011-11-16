@@ -21,7 +21,9 @@ static NSString *REFUND_XML = @""
     "<ListOfRefunds>"
         "${refundItem}"
     "</ListOfRefunds>"
-    "${signature}"
+    "<PaymentSignature>"
+        "<SignatureAsBase64>${signature}</SignatureAsBase64>"
+    "</PaymentSignature>"
 "</RefundRequest>";
 
 
@@ -35,8 +37,8 @@ static NSString *REFUND_ITEM_XML = @""
 static NSString *CREDIT_CARD_XML = @""
 "<CreditCard>" //Optional
     "<LPToken>%@</LPToken>"
-    "<TroutD>%@</TRoutD>"
-    //Optional Fields
+    "<TroutD>%@</TroutD>"
+    //Optional Fields For Swiping
     "<CardExpiration>%@</CardExpiration>"
     "<CardNum>%@</CardNum>"
     "<NameOnCard>%@</NameOnCard>"
@@ -68,9 +70,16 @@ static NSString *CREDIT_CARD_XML = @""
     CXMLElement *root = [xmlParser rootElement];
     
     // Attach any errors
+    BOOL isSuccessful = [root elementBoolValue:@"Success"];
+    
+    if (!isSuccessful) {
+        Error *error = [[Error alloc] init];
+        error.message = @"Refund failed.";
+        [refund addError:error];
+    }
+    
     [POSOxmUtils attachErrors: [root firstElementNamed:@"ErrorList"] toModel:refund];
-    
-    
+
     return refund;
     
 }
@@ -123,7 +132,7 @@ static NSString *CREDIT_CARD_XML = @""
         
         if (object.signature)
         {
-            xml = [POSOxmUtils replaceInXmlTemplate:xml parameter:@"signature" withValue:[object.signature toXml]];    
+            xml = [POSOxmUtils replaceInXmlTemplate:xml parameter:@"signature" withValue:object.signature];    
         }
         else 
         {
@@ -144,8 +153,7 @@ static NSString *CREDIT_CARD_XML = @""
     
     if ([refundItems count] > 0)
     {
-        for (RefundItem *item in refundItems)
-        {
+        for (RefundItem *item in refundItems) {
             if (item.amount)
             {
                 amount = [item.amount stringValue];
@@ -166,14 +174,14 @@ static NSString *CREDIT_CARD_XML = @""
             
             xml = [xml stringByAppendingFormat: REFUND_ITEM_XML, amount, type];
             
-            if (creditCardXml)
-            {
+            if (creditCardXml) {
                 xml = [POSOxmUtils replaceInXmlTemplate:xml parameter:@"creditCard" withValue:creditCardXml];
             }
-            else
-            {
+            else {
                 xml = [POSOxmUtils replaceInXmlTemplate:xml parameter:@"creditCard" withValue:@""];
             }
+            
+            creditCardXml = nil;
         }
     }
     
@@ -185,34 +193,29 @@ static NSString *CREDIT_CARD_XML = @""
     
     NSString *xml = @"";
     
-    NSString *lpToken = nil;
-    NSString *troutD = nil;
-    NSString *cardExpirationDate = nil;
-    NSString *cardNum = nil;
-    NSString *nameOnCard = nil;
+    NSString *lpToken = @"";
+    NSString *troutD = @"";
+    NSString *cardExpirationDate = @"";
+    NSString *cardNum = @"";
+    NSString *nameOnCard = @"";
             
-        if (ccPayment.lpToken)
-        {
+        if (ccPayment.lpToken) {
             lpToken = ccPayment.lpToken;
         }
         
-        if (ccPayment.paymentRefId)
-        {
+        if (ccPayment.paymentRefId) {
             troutD = ccPayment.paymentRefId;
         }
         
-        if (ccPayment.cardNumber)
-        {
+        if (ccPayment.cardNumber) {
             cardNum = ccPayment.cardNumber;
         }
         
-        if(ccPayment.nameOnCard)
-        {
+        if(ccPayment.nameOnCard) {
             nameOnCard = ccPayment.nameOnCard;
         }
         
-        if(ccPayment.expireDate)
-        {
+        if(ccPayment.expireDate) {
             cardExpirationDate = ccPayment.expireDate;
         }
     

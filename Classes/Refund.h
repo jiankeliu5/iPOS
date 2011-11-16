@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "RefundItem.h"
+#import "LineaSDK.h"
 
 @interface Refund : AbstractModel {
     NSNumber *orderId;
@@ -16,9 +17,9 @@
     NSNumber *salesPersonId;
     NSString *refundDate;
     
-    NSMutableArray *refundItems;
+    NSString *signature;
     
-    PaymentSignature *signature;
+    NSMutableArray *refundItems;
 }
 
 @property (nonatomic, retain) NSNumber *orderId;
@@ -27,11 +28,19 @@
 @property (nonatomic, retain) NSNumber *salesPersonId;
 @property (nonatomic, retain) NSString *refundDate;
 
-@property (nonatomic, retain) PaymentSignature *signature;
+@property (nonatomic, retain) NSString *signature;
 
 @property (nonatomic, retain) NSArray *refundItems;
 
 - (void) addRefundItem:(RefundItem *)item;
-- (NSArray *) getRefundItems;
+
+- (NSDecimalNumber *) getTotalRefundAmount;
+
 - (NSString *) toXml;
+
+- (BOOL) isCardSwipeRequired;
+- (BOOL) isSignatureRequired;
+
+- (RefundItem *) getCurrentRefundItemForSwipe;
+- (void) setCardData: (financialCard) cardData;
 @end

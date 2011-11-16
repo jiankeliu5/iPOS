@@ -16,6 +16,7 @@
 
     id<RefundViewDelegate> delegate;
     Order *order;
+    Refund *refundInfo;
     
     UILabel *refundTitle;
     UILabel *refundTotalLabel;
@@ -25,12 +26,13 @@
 @property (nonatomic, assign) id<RefundViewDelegate> delegate;
 
 @property (nonatomic, assign) Order *order;
+@property (nonatomic, assign) Refund *refundInfo;
 @property (nonatomic, retain) UILabel *refundTitle;
 @property (nonatomic, retain) UILabel *refundTotalLabel;
 @property (nonatomic, retain) UIToolbar *refundToolbar;
 @property (nonatomic, retain) UITableView *refundAmountsTableView;
 
-- (id) initWithFrame: (CGRect) frame andOrder: (Order *) anOrder;
+- (id) initWithFrame: (CGRect) frame andOrder: (Order *) anOrder andRefund: (Refund *) aRefundInfo;
 
 @end
 

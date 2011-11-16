@@ -9,6 +9,7 @@
 #import "RefundItemTableCell.h"
 
 #import "NSString+StringFormatters.h"
+#import "NSString+Extensions.h"
 
 #define LABEL_FONT_SIZE 14.0f
 #define LABEL_HEIGHT 16.0f
@@ -80,39 +81,44 @@
 - (void)setRefundItem:(RefundItem *)aRefundItem {
     if (refundItem != aRefundItem) {
         refundItem = aRefundItem;
+    }
+    
+    // update the labels
+    if (refundItem) {
+        refundInfoLabel.text = [refundItem getRefundDescription];
         
-        // update the labels
-        if (refundItem) {
-            if (refundItem.creditCard) {
-                if (refundItem.creditCard.paymentRefId) {
-                    refundInfoLabel.text = [NSString stringWithFormat:@"xxxxxxxx%@", refundItem.creditCard.cardNumber];
-                    refundAmountLabel.text = [NSString formatDecimalNumberAsMoney:refundItem.amount];
+        if (refundItem.toCCT) {
+            refundAmountLabel.text = @"To CCT";
+        } else if (refundItem.toPOS) {
+            refundAmountLabel.text = @"To POS";
+        } else {
+            refundAmountLabel.text = [NSString formatDecimalNumberAsMoney:refundItem.amount];
+        }
+        
+        if (refundItem.isSignatureRequired && refundItem.isSwipeRequired && !refundItem.isSwipeCaptured) {
+            signatureRequiredLabel.text = @"Card Swipe Required";
+            signatureRequiredLabel.hidden = NO;
+        } else if (refundItem.isSignatureRequired) {
+            if (!refundItem.isSignatureCaptured) {
+                if (refundItem.creditCard 
+                    && [refundItem.creditCard.paymentRefId isNotEmpty]) {
+                    signatureRequiredLabel.text = [NSString stringWithFormat:@"Signature Required (%@)", refundItem.creditCard.paymentRefId];
                 } else {
-                    refundInfoLabel.text = @"Credit Card";
-                    refundAmountLabel.text = @"To CCT";
+                    signatureRequiredLabel.text = @"Signature Required";
                 }
-                
-            } else if ([refundItem getPaymentType] == CASH) {
-                refundInfoLabel.text = @"Cash";
-                refundAmountLabel.text = @"To POS";
-            } else if ([refundItem getPaymentType] == CHECK) {
-                refundInfoLabel.text = @"Check";
-                refundAmountLabel.text = @"To POS";
-            } else if ([refundItem getPaymentType] == ONACCT) {
-                refundInfoLabel.text = @"On Account";
-                refundAmountLabel.text = [NSString formatDecimalNumberAsMoney:refundItem.amount];
+            } else {
+                signatureRequiredLabel.text = @"Signature Captured";
+                signatureRequiredLabel.textColor = [UIColor colorWithRed:170.0f/255.0f green:204.0f/255.0f blue:0.0f alpha:1.0f];
             }
             
-            if (refundItem.isSignatureRequired) {
-                signatureRequiredLabel.hidden = NO;
-            } else {
-                signatureRequiredLabel.hidden = YES;
-            }
+            signatureRequiredLabel.hidden = NO;
         } else {
-            refundInfoLabel.text = @"";
-            refundAmountLabel.text = @"";
             signatureRequiredLabel.hidden = YES;
         }
+    } else {
+        refundInfoLabel.text = @"";
+        refundAmountLabel.text = @"";
+        signatureRequiredLabel.hidden = YES;
     }
 }
 

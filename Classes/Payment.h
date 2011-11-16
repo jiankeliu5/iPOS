@@ -12,14 +12,19 @@
 #import "Order.h"
 
 typedef enum {
-    UNKNOWN,
-    CASH,
-    CHECK,
-    CREDITCARD_VISA,
-    CREDITCARD_MC,
-    CREDITCARD_DISCOVER,
-    CREDITCARD_AX,
-    ONACCT
+    UNKNOWN = 0,
+    CASH = 1,
+    CHECK = 2,
+    CREDITCARD_VISA = 3,
+    CREDITCARD_MC = 4,
+    CREDITCARD_DISCOVER = 5,
+    CREDITCARD_AX = 6,
+    ONACCT = 7,
+    INSTORE_CREDIT = 8,
+    GIFT_CARD = 12,
+    GOOGLE = 13,
+    HOMEDESIGN = 14,
+    PAYPAL = 16
 } PaymentType;
 
 @interface Payment : AbstractModel {
