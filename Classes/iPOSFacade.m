@@ -110,6 +110,10 @@ static iPOSFacade *facade = nil;
     return [self.posService emailReceipt:order withSession:sessionInfo];
 }
 
+- (BOOL) orderDiscountFor: (Order *) order withDiscountAmount: (NSDecimalNumber *) discountAmount managerApproval: (ManagerInfo *) managerApprover {
+    return [self.posService orderDiscountFor:order withDiscountAmount:discountAmount managerApproval:managerApprover withSession:sessionInfo];
+}
+
 #pragma mark -
 #pragma mark Inventory Management
 -(ProductItem *) lookupProductItem:(NSString *) itemSku {

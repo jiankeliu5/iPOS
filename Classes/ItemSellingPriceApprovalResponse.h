@@ -10,10 +10,12 @@
 
 
 @interface ItemSellingPriceApprovalResponse : NSObject {
+    NSNumber *itemId;
     BOOL isApproved;
     NSNumber *authorizationId;
 }
 
+@property (nonatomic, retain) NSNumber *itemId;
 @property                       BOOL isApproved;
 @property (nonatomic, retain)   NSNumber *authorizationId;
 

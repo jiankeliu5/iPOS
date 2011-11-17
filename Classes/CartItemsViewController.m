@@ -19,6 +19,7 @@
 #import "CustomerViewController.h"
 #import "TenderPaymentViewController.h"
 #import "ProfitMarginViewController.h"
+#import "PriceAdjustViewController.h"
 #import "iPOSAppDelegate.h"
 
 #import "UIScreen+Helpers.h"
@@ -77,6 +78,7 @@
 - (void) displayProfitMarginOverlay;
 
 - (void)handleLookupOrder:(id)sender;
+- (void) handleDiscountButton: (id) sender;
 @end
 
 @implementation CartItemsViewController
@@ -179,6 +181,7 @@
     [discountButton setupAsSmallBlackButton];
     discountButton.titleLabel.textAlignment = UITextAlignmentCenter;
     [discountButton setTitle:@"Discount" forState:UIControlStateNormal];
+    [discountButton addTarget:self action:@selector(handleDiscountButton:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:discountButton];
     [discountButton release];
@@ -476,7 +479,7 @@
 }
 
 #pragma mark -
-#pragma mark Switch To Order Lookup
+#pragma mark Button Event Methods
 - (void)handleLookupOrder:(id)sender {
     // Switch the order cart over to looking at existing orders rather than a new order.
     [orderCart setNewOrder:NO];
@@ -484,6 +487,11 @@
     UINavigationController *orderNav = [app orderNavigationController];
     [orderNav setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentModalViewController:orderNav animated:YES];
+}
+
+- (void) handleDiscountButton:(id)sender {
+    PriceAdjustViewController *priceAdjust = [[[PriceAdjustViewController alloc] initWithOrder:[orderCart getOrder]] autorelease];
+	[self.navigationController pushViewController:priceAdjust animated:YES];
 }
 
 #pragma mark -
@@ -500,7 +508,14 @@
         taxValue.text = [NSString formatDecimalNumberAsMoney:taxTotal];
         totalValue.text = [NSString formatDecimalNumberAsMoney:total];
 		
-        [self restoreDefaultToolbar];        
+        [self restoreDefaultToolbar];    
+        
+        // Is the discount button enabled or not:
+        if ([[order getOrderItems:LINE_ORDERSTATUS_OPEN] count] > 0) {
+            discountButton.enabled = YES;
+        } else {
+            discountButton.enabled = NO;
+        }
     }
 }
 

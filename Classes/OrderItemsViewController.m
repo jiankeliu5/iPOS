@@ -21,6 +21,8 @@
 #import "TenderPaymentViewController.h"
 #import "ProfitMarginViewController.h"
 #import "RefundViewController.h"
+#import "PriceAdjustViewController.h"
+
 #import "iPOSAppDelegate.h"
 
 #define CUST_SELECTED_COLOR [UIColor colorWithRed:170.0f/255.0f green:204.0f/255.0f blue:0.0f alpha:1.0f]
@@ -82,6 +84,7 @@
 - (void) displayProfitMarginOverlay;
 
 - (void) handleCloseLookupOrder:(id)sender;
+- (void) handleDiscountButton:(id)sender;
 @end
 
 @implementation OrderItemsViewController
@@ -188,6 +191,7 @@
     [discountButton setupAsSmallBlackButton];
     discountButton.titleLabel.textAlignment = UITextAlignmentCenter;
     [discountButton setTitle:@"Discount" forState:UIControlStateNormal];
+    [discountButton addTarget:self action:@selector(handleDiscountButton:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:discountButton];
     [discountButton release];
@@ -495,11 +499,16 @@
 }
 
 #pragma mark -
-#pragma mark Switch Back To New Order
+#pragma mark Button Event Methods
 - (void)handleCloseLookupOrder:(id)sender {
     // Switch the order cart back to working with a new order.
     [orderCart setNewOrder:YES];
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void) handleDiscountButton:(id)sender {
+    PriceAdjustViewController *priceAdjust = [[[PriceAdjustViewController alloc] initWithOrder:[orderCart getOrder]] autorelease];
+	[self.navigationController pushViewController:priceAdjust animated:YES];
 }
 
 #pragma mark -
@@ -516,7 +525,14 @@
         taxValue.text = [NSString formatDecimalNumberAsMoney:taxTotal];
         totalValue.text = [NSString formatDecimalNumberAsMoney:total];
 		
-        [self restoreDefaultToolbar];        
+        [self restoreDefaultToolbar];  
+        
+        // Is the discount button enabled or not:
+        if ([[order getOrderItems:LINE_ORDERSTATUS_OPEN] count] > 0) {
+            discountButton.enabled = YES;
+        } else {
+            discountButton.enabled = NO;
+        }
     }
 }
 

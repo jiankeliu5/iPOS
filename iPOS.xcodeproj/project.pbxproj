@@ -179,6 +179,12 @@
 		B4CEE06013527F330067DEBC /* EditConfirmDelete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4CEE05413527F330067DEBC /* EditConfirmDelete@2x.png */; };
 		B4D308281367B86400F26C5E /* SessionVerificationView.h in Headers */ = {isa = PBXBuildFile; fileRef = B4D308261367B86400F26C5E /* SessionVerificationView.h */; };
 		B4D308291367B86400F26C5E /* SessionVerificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4D308271367B86400F26C5E /* SessionVerificationView.m */; };
+		D60F74DB1475A53E0055CB15 /* OrderDiscountApprovalRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D60F74D91475A53E0055CB15 /* OrderDiscountApprovalRequest.h */; };
+		D60F74DC1475A53E0055CB15 /* OrderDiscountApprovalRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D60F74DA1475A53E0055CB15 /* OrderDiscountApprovalRequest.m */; };
+		D60F74DF1475AD820055CB15 /* OrderDiscountApprovalResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = D60F74DD1475AD820055CB15 /* OrderDiscountApprovalResponse.h */; };
+		D60F74E01475AD820055CB15 /* OrderDiscountApprovalResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D60F74DE1475AD820055CB15 /* OrderDiscountApprovalResponse.m */; };
+		D60F74E31475BD240055CB15 /* OrderDiscountApprovalXmlMarshaller.h in Headers */ = {isa = PBXBuildFile; fileRef = D60F74E11475BD240055CB15 /* OrderDiscountApprovalXmlMarshaller.h */; };
+		D60F74E41475BD240055CB15 /* OrderDiscountApprovalXmlMarshaller.m in Sources */ = {isa = PBXBuildFile; fileRef = D60F74E21475BD240055CB15 /* OrderDiscountApprovalXmlMarshaller.m */; };
 		D6179DF61317DBEE00ACAFDD /* iPOSServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6179DF21317DBEE00ACAFDD /* iPOSServiceMock.m */; };
 		D6179DF71317DBEE00ACAFDD /* InventoryServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = D6179DF41317DBEE00ACAFDD /* InventoryServiceMock.m */; };
 		D618490613185C200051CEFF /* DistributionCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = D618490413185C200051CEFF /* DistributionCenter.m */; };
@@ -738,6 +744,12 @@
 		B4CEE05413527F330067DEBC /* EditConfirmDelete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EditConfirmDelete@2x.png"; sourceTree = "<group>"; };
 		B4D308261367B86400F26C5E /* SessionVerificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionVerificationView.h; sourceTree = "<group>"; };
 		B4D308271367B86400F26C5E /* SessionVerificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionVerificationView.m; sourceTree = "<group>"; };
+		D60F74D91475A53E0055CB15 /* OrderDiscountApprovalRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDiscountApprovalRequest.h; sourceTree = "<group>"; };
+		D60F74DA1475A53E0055CB15 /* OrderDiscountApprovalRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDiscountApprovalRequest.m; sourceTree = "<group>"; };
+		D60F74DD1475AD820055CB15 /* OrderDiscountApprovalResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDiscountApprovalResponse.h; sourceTree = "<group>"; };
+		D60F74DE1475AD820055CB15 /* OrderDiscountApprovalResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDiscountApprovalResponse.m; sourceTree = "<group>"; };
+		D60F74E11475BD240055CB15 /* OrderDiscountApprovalXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDiscountApprovalXmlMarshaller.h; sourceTree = "<group>"; };
+		D60F74E21475BD240055CB15 /* OrderDiscountApprovalXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDiscountApprovalXmlMarshaller.m; sourceTree = "<group>"; };
 		D6179DF21317DBEE00ACAFDD /* iPOSServiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPOSServiceMock.m; sourceTree = "<group>"; };
 		D6179DF31317DBEE00ACAFDD /* iPOSServiceMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSServiceMock.h; sourceTree = "<group>"; };
 		D6179DF41317DBEE00ACAFDD /* InventoryServiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryServiceMock.m; sourceTree = "<group>"; };
@@ -1946,6 +1958,8 @@
 				D6B19372133C02F7004C4FD1 /* OrderXmlMarshaller.m */,
 				3606E5D814333FAD00FBB02A /* OrderSummaryXmlMarshaller.h */,
 				3606E5D914333FAD00FBB02A /* OrderSummaryXmlMarshaller.m */,
+				D60F74E11475BD240055CB15 /* OrderDiscountApprovalXmlMarshaller.h */,
+				D60F74E21475BD240055CB15 /* OrderDiscountApprovalXmlMarshaller.m */,
 				3606E5DA14333FAD00FBB02A /* PaymentHistoryXMLMarshaller.h */,
 				3606E5DB14333FAD00FBB02A /* PaymentHistoryXMLMarshaller.m */,
 				D6B194C0133CD0D1004C4FD1 /* POSOxmUtils.h */,
@@ -2039,6 +2053,10 @@
 				D61C3C3412FCA535003C3A47 /* Order.m */,
 				D61C3C6812FCA9C0003C3A47 /* OrderItem.h */,
 				D61C3C6912FCA9C0003C3A47 /* OrderItem.m */,
+				D60F74D91475A53E0055CB15 /* OrderDiscountApprovalRequest.h */,
+				D60F74DA1475A53E0055CB15 /* OrderDiscountApprovalRequest.m */,
+				D60F74DD1475AD820055CB15 /* OrderDiscountApprovalResponse.h */,
+				D60F74DE1475AD820055CB15 /* OrderDiscountApprovalResponse.m */,
 			);
 			name = Order;
 			sourceTree = "<group>";
@@ -2169,6 +2187,9 @@
 				D6D9524C147176FA00FF26ED /* GooglePayment.h in Headers */,
 				D6D952501471771400FF26ED /* HomeDesignPayment.h in Headers */,
 				D6D952541471772400FF26ED /* PayPalPayment.h in Headers */,
+				D60F74DB1475A53E0055CB15 /* OrderDiscountApprovalRequest.h in Headers */,
+				D60F74DF1475AD820055CB15 /* OrderDiscountApprovalResponse.h in Headers */,
+				D60F74E31475BD240055CB15 /* OrderDiscountApprovalXmlMarshaller.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2767,6 +2788,9 @@
 				D6D9524D147176FA00FF26ED /* GooglePayment.m in Sources */,
 				D6D952511471771400FF26ED /* HomeDesignPayment.m in Sources */,
 				D6D952551471772400FF26ED /* PayPalPayment.m in Sources */,
+				D60F74DC1475A53E0055CB15 /* OrderDiscountApprovalRequest.m in Sources */,
+				D60F74E01475AD820055CB15 /* OrderDiscountApprovalResponse.m in Sources */,
+				D60F74E41475BD240055CB15 /* OrderDiscountApprovalXmlMarshaller.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

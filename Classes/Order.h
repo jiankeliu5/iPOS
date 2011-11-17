@@ -74,6 +74,8 @@ typedef enum{
 - (NSArray *) getOrderItemsSortedByStatus;
 - (NSArray *) getOrderItemsSortedByStatusFilterCanceled;
 
+- (NSArray *) getOrderItems:(LineOrderStatus) lineItemStatus;
+
 - (void) addItemToOrder: (ProductItem *) item withQuantity: (NSDecimalNumber *) quantity;
 - (void) addOrderItemToOrder:(OrderItem *)orderItem;
 - (void) removeItemFromOrder: (OrderItem *) item;

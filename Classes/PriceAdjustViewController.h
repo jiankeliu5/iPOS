@@ -44,6 +44,7 @@
 
 // The price adjustment is either going to be for a single item or the full order
 - (id)initWithOrderItem:(OrderItem *)adjustOrderItem;
-- (id) initWithOrder: (Order *) order;
+
+- (id) initWithOrder: (Order *) adjustedOrder;
 
 @end

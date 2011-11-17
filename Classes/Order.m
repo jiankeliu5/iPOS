@@ -279,6 +279,20 @@
     return filtered;
 }
 
+- (NSArray *) getOrderItems:(LineOrderStatus)lineItemStatus {
+    NSMutableArray *itemsByStatus = [NSMutableArray arrayWithCapacity:0];
+    
+    if (orderItemList && [orderItemList count] > 0) {
+        for (OrderItem *item in orderItemList) {
+            if ([item isOpen]) {
+                [itemsByStatus addObject:item];
+            }
+        }
+    }
+    
+    return itemsByStatus;
+}
+
 -(void) addItemToOrder:(ProductItem *)item withQuantity: (NSDecimalNumber *) quantity {
     
     if (orderItemList != nil) {

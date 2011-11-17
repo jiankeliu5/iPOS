@@ -133,12 +133,14 @@
 
 #pragma mark -
 #pragma mark Order Mgmt
-- (void) newQuote:(Order *)order withSession:(SessionInfo *)sessionInfo {
-    // Do Nothing
+- (void) save:(Order *)order withSession:(SessionInfo *)sessionInfo {
+    
 }
-- (void) newOrder:(Order *)order withSession:(SessionInfo *)sessionInfo {
-    // Do Nothing
+
+- (BOOL) orderDiscountFor:(Order *)order withDiscountAmount:(NSDecimalNumber *)discountAmount managerApproval:(ManagerInfo *)managerApprover withSession:(SessionInfo *)sessionInfo {
+    return YES:
 }
+
 - (BOOL) emailReceipt:(Order *)order withSession:(SessionInfo *)sessionInfo {
     return YES;
 }

@@ -82,6 +82,7 @@ static NSString * const PREVIOUS_ORDER_XML = @""
         "<FollowUpDate>%@</FollowUpDate>"
         "<OrderDCTO>%@</OrderDCTO>"
         "${orderIdXml}"
+        "<OrderID>%@</OrderID>"
         "<OrderTypeID>%@</OrderTypeID>"
         "<PO>%@</PO>"
         "<PromisedDate>%@</PromisedDate>"
@@ -266,7 +267,7 @@ static NSString * const PREVIOUSORDER_LINEITEM_XML = @""
         if (orderId && !order.isNewOrder) {
              orderXml = [NSString stringWithFormat: PREVIOUS_ORDER_XML, 
                             commentNotes, customerId, customerTypeId, customerTaxExempt, customerZip,
-                            depositAuthorizationID, followUpDate, orderDCTO, orderTypeId, purchaseOrder,
+                            depositAuthorizationID, followUpDate, orderDCTO, orderId, orderTypeId, purchaseOrder,
                             promiseDate, requestDate, salespersonEmpId, selectionId, storeId];
         } else {
             orderXml = [NSString stringWithFormat: NEW_ORDER_XML, 

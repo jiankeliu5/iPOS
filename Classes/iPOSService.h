@@ -29,9 +29,8 @@
 #pragma mark iPOS Order Management
 @required
 - (void) save: (Order *) order withSession: (SessionInfo *) sessionInfo;
+- (BOOL) orderDiscountFor: (Order *) order withDiscountAmount: (NSDecimalNumber *) discountAmount managerApproval: (ManagerInfo *) managerApprover withSession: (SessionInfo *) sessionInfo;
 
-//-(void) newQuote: (Order *) order withSession: (SessionInfo *) sessionInfo;
-//-(void) newOrder: (Order *) order withSession: (SessionInfo *) sessionInfo;
 
 #pragma mark iPOS Report Management
 - (BOOL) emailReceipt: (Order *) order withSession: (SessionInfo *) sessionInfo;

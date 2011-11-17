@@ -143,7 +143,7 @@
 	[self.view addSubview:lookupOrderIdField];
 	[lookupOrderIdField release];
 	
-    self.closeBarButton = [[[UIBarButtonItem alloc] initWithTitle:@"Close" style:UIBarButtonItemStyleBordered target:self action:@selector(handleClose:)] autorelease];
+    self.closeBarButton = [[[UIBarButtonItem alloc] initWithTitle:@"New Order" style:UIBarButtonItemStyleBordered target:self action:@selector(handleClose:)] autorelease];
     [[self navigationItem] setRightBarButtonItem:self.closeBarButton];
 }
 

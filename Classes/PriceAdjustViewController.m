@@ -37,7 +37,7 @@
 
 @implementation PriceAdjustViewController
 
-@synthesize orderItem;
+@synthesize order, orderItem;
 
 #pragma mark Constructors
 - (id) init {
@@ -56,6 +56,17 @@
 	[discountFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
 	[discountFormatter setMaximumFractionDigits:2];
 	[discountFormatter setGeneratesDecimalNumbers:YES];
+	
+	return self;
+}
+
+- (id) initWithOrder:(Order *)adjustedOrder {
+    self = [self init];
+	if (self == nil) {
+		return nil;
+	}
+	
+	[self setOrder:adjustedOrder];
 	
 	return self;
 }
@@ -290,12 +301,22 @@
 			}
 		}
 	}
+    
+    // Do we do a full order discount or just item discount
+    if (order) {
+        if ([facade orderDiscountFor:order withDiscountAmount:discount managerApproval:mgr] == NO) {
+            [AlertUtils showModalAlertMessage:@"Order Discount was rejected.  Please enter a different value or manager credentials." withTitle:@"iPOS"];
+        } else {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    } else if (orderItem) {
+        if ([facade adjustSellingPriceFor:orderItem withDiscountAmount:discount managerApproval:mgr] == NO) {
+            [AlertUtils showModalAlertMessage:@"Discount adjustment was rejected.  Please enter a different value or manager credentials." withTitle:@"iPOS"];
+        } else {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
 
-	if ([facade adjustSellingPriceFor:self.orderItem withDiscountAmount:discount managerApproval:mgr] == NO) {
-		[AlertUtils showModalAlertMessage:@"Discount adjustment was rejected.  Please enter a different value or manager credentials." withTitle:@"iPOS"];
-	} else {
-		[self.navigationController popViewControllerAnimated:YES];
-	}
 	[mgr release];
 	mgr = nil;
 }

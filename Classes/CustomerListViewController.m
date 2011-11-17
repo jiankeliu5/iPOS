@@ -95,7 +95,7 @@
     [mainView addSubview:customerListTableView];
     [customerListTableView release];
     
-    closeBarButton = [[[UIBarButtonItem alloc] initWithTitle:@"Close" style:UIBarButtonItemStyleBordered target:self action:@selector(handleClose:)] autorelease];
+    closeBarButton = [[[UIBarButtonItem alloc] initWithTitle:@"New Order" style:UIBarButtonItemStyleBordered target:self action:@selector(handleClose:)] autorelease];
     [[self navigationItem] setRightBarButtonItem:closeBarButton];
     
     

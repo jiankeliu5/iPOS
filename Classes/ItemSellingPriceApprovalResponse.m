@@ -12,6 +12,7 @@
 
 @implementation ItemSellingPriceApprovalResponse
 
+@synthesize itemId;
 @synthesize authorizationId, isApproved;
 
 #pragma mark -
@@ -23,7 +24,11 @@
 }
 
 - (void) dealloc {
+    [itemId release];
+    itemId = nil;
+    
     [authorizationId release];
+    authorizationId = nil;
     
     [super dealloc];
 }
