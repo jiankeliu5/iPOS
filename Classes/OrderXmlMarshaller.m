@@ -471,7 +471,6 @@ static NSString * const PREVIOUSORDER_LINEITEM_XML = @""
                 itemStatusCode = @"0";
                 itemTypeId = @"0";
                 lineNumber = @"0";
-                lineState = @"add";
                 openItemStatus = @"";
                 orderDetailStatus = @"1";
                 piecesPerBox = @"0";

@@ -123,35 +123,30 @@
 	// Set up the detail view for showing customer summary information when fetched by the search.
 	detailView = [[UIView alloc] initWithFrame:CGRectZero];
 	
-	CGFloat dy = LABEL_SPACING;
 	firstLabel = [self createNormalLabel:@"First" withRect:CGRectZero];
 	[detailView addSubview:firstLabel];
 
 	firstName = [self createBoldLabel:nil withRect:CGRectZero];
 	[detailView addSubview:firstName];
 	
-	dy += LABEL_HEIGHT + LABEL_SPACING;
 	lastLabel = [self createNormalLabel:@"Last" withRect:CGRectZero];
 	[detailView addSubview:lastLabel];
 
 	lastName = [self createBoldLabel:nil withRect:CGRectZero];
 	[detailView addSubview:lastName];
 	
-	dy += LABEL_HEIGHT + LABEL_SPACING;
 	emailLabel = [self createNormalLabel:@"Email" withRect:CGRectZero];
 	[detailView addSubview:emailLabel];
 
 	email = [self createBoldLabel:nil withRect:CGRectZero];
 	[detailView addSubview:email];
 	
-	dy += LABEL_HEIGHT + LABEL_SPACING;
 	zipLabel = [self createNormalLabel:@"Zip" withRect:CGRectZero];
 	[detailView addSubview:zipLabel];
 
 	zip = [self createBoldLabel:nil withRect:CGRectZero];
 	[detailView addSubview:zip];
     
-    dy += LABEL_HEIGHT + LABEL_SPACING;
     holdStatusLabel = [self createNormalLabel:@"Status" withRect:CGRectZero];
     holdStatus = [self createBoldLabel:nil withRect:CGRectZero];
     

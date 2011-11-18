@@ -643,6 +643,7 @@
     
     RefundItem *onAcctItem = [[RefundItem alloc] init];
     
+    @try {
     onAcctItem.orderPaymentTypeID = [NSNumber numberWithInt:ONACCT];
     
     // Loop through payments, find on account payments to determine how much to apply for the refund
@@ -669,13 +670,16 @@
     
     onAcctItem.isSignatureRequired = YES;
     [refund addRefundItem:onAcctItem];
-    [onAcctItem release];
-    onAcctItem = nil;
+   
     return refundLeft;
+    } @finally {
+        [onAcctItem release];
+        onAcctItem = nil;
+    }
 }
 
 - (NSDecimalNumber *) refundForCCWithSignature:(id)refund withAmount:(id)refundAmount {
-    NSMutableArray *sameStoreCCWithRefIdList = [[NSMutableArray alloc] initWithCapacity:0];
+    NSMutableArray *sameStoreCCWithRefIdList = [NSMutableArray arrayWithCapacity:0];
     NSDecimalNumber *refundLeft = refundAmount;
     
     if ([refundLeft compare:[NSDecimalNumber zero]] == NSOrderedDescending && previousPayments && [previousPayments count] > 0) {
@@ -737,7 +741,7 @@
 }
 
 - (NSDecimalNumber *) refundForCCWithSwipeAndSignature:(id)refund withAmount:(id)refundAmount {
-    NSMutableArray *diffStoreCCWithRefIdList = [[NSMutableArray alloc] initWithCapacity:0];
+    NSMutableArray *diffStoreCCWithRefIdList = [NSMutableArray arrayWithCapacity:0];
     NSDecimalNumber *refundLeft = refundAmount;
     
     if ([refundLeft intValue] > 0 && previousPayments && [previousPayments count] > 0) {
@@ -802,7 +806,7 @@
 }
 
 - (NSDecimalNumber *) refundForToCCT:(id)refund withAmount:(id)refundAmount {
-    NSMutableArray *toCCTPaymentList = [[NSMutableArray alloc] initWithCapacity:0];
+    NSMutableArray *toCCTPaymentList = [NSMutableArray arrayWithCapacity:0];
     NSDecimalNumber *refundLeft = refundAmount;
     
     if ([refundLeft intValue] > 0 && previousPayments && [previousPayments count] > 0) {
@@ -871,7 +875,7 @@
 }
 
 - (NSDecimalNumber *) refundForToPOS:(id)refund withAmount:(id)refundAmount {
-    NSMutableArray *toPOSPaymentList = [[NSMutableArray alloc] initWithCapacity:0];
+    NSMutableArray *toPOSPaymentList = [NSMutableArray arrayWithCapacity:0];
     NSDecimalNumber *refundLeft = refundAmount;
     
     if ([refundLeft intValue] > 0 && previousPayments && [previousPayments count] > 0) {
@@ -926,7 +930,7 @@
 }
 
 - (NSArray *) groupCCPayments:(NSArray *) ccPayments {
-    NSMutableDictionary *ccDictByCardNumAndToken = [[NSMutableDictionary alloc] initWithCapacity:0];
+    NSMutableDictionary *ccDictByCardNumAndToken = [NSMutableDictionary dictionaryWithCapacity:0];
     CreditCardPayment *groupedPayment = nil;
     NSString *key = nil;
     
@@ -952,6 +956,7 @@
                 
                 [ccDictByCardNumAndToken setValue:groupedPayment forKey:key];
                 [groupedPayment release];
+                groupedPayment = nil;
             } else {
                 // Increase total amount
                 groupedPayment.paymentAmount = [groupedPayment.paymentAmount decimalNumberByAdding:payment.paymentAmount];
@@ -963,7 +968,7 @@
 }
 
 - (NSArray *) groupToPOSPayments:(NSArray *)paymentList {
-    NSMutableDictionary *paymentDict = [[NSMutableDictionary alloc] initWithCapacity:0];
+    NSMutableDictionary *paymentDict = [NSMutableDictionary dictionaryWithCapacity:0];
     Payment *groupedPayment = nil;
     
     NSString *key = nil;
@@ -1013,12 +1018,14 @@
                 groupedPayment.paymentAmount = payment.paymentAmount;
                 groupedPayment.paymentTypeId = payment.paymentTypeId;
                 [paymentDict setValue:groupedPayment forKey:key];
+                
+                [groupedPayment release];
+                groupedPayment = nil;
 
             } else {
                 // Increase total amount
                 groupedPayment.paymentAmount = [groupedPayment.paymentAmount decimalNumberByAdding:payment.paymentAmount]; 
             }
-            
         }
     }
     

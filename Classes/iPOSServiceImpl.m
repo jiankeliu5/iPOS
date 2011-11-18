@@ -389,35 +389,42 @@
     
     NSArray *requestErrors = [request validateAsXmlContent];
     if ([requestErrors count] > 0) {
-        return NO;   
+        allowAdjustment = NO;   
     } 
     
-    // Parse the response, set the authorizer ID and selling price
-    OrderDiscountApprovalResponse *approvalResponse = [OrderDiscountApprovalResponse fromXml:[request responseString]];
-    
-    // Need to loop through all the approvals and set the matching items selling price
-    if ([approvalResponse isApproved]) {
-        NSArray *openItems = [order getOrderItems:LINE_ORDERSTATUS_OPEN];
+    if (allowAdjustment) {
+        // Parse the response, set the authorizer ID and selling price
+        OrderDiscountApprovalResponse *approvalResponse = [OrderDiscountApprovalResponse fromXml:[request responseString]];
         
-        if (openItems && [openItems count] == [approvalResponse.itemSellingPriceApprovalList count]) {
-            ItemSellingPriceApprovalResponse *approval = nil;
-            OrderItem *item = nil;
-            for (int i=0; i < [openItems count]; i++) {
-                approval = [approvalResponse.itemSellingPriceApprovalList objectAtIndex:i];
-                item = [openItems objectAtIndex:i];
-                
-                if ([approval.authorizationId compare: [NSDecimalNumber zero]] != NSOrderedSame) {
-                    item.priceAuthorizationId = approval.authorizationId;
+        // Need to loop through all the approvals and set the matching items selling price
+        if ([approvalResponse isApproved]) {
+            NSArray *openItems = [order getOrderItems:LINE_ORDERSTATUS_OPEN];
+            
+            if (openItems && [openItems count] == [approvalResponse.itemSellingPriceApprovalList count]) {
+                ItemSellingPriceApprovalResponse *approval = nil;
+                OrderItem *item = nil;
+                for (int i=0; i < [openItems count]; i++) {
+                    approval = [approvalResponse.itemSellingPriceApprovalList objectAtIndex:i];
+                    item = [openItems objectAtIndex:i];
+                    
+                    if ([approval.authorizationId compare: [NSDecimalNumber zero]] != NSOrderedSame) {
+                        item.priceAuthorizationId = approval.authorizationId;
+                    }
+                    
+                    // Divide the discount amount evenly across order items
+                    [item setSellingPriceFrom:[discountApprovalRequest getDiscountPerItem]];
                 }
-                
-                // Divide the discount amount evenly across order items
-                [item setSellingPriceFrom:[discountApprovalRequest getDiscountPerItem]];
             }
+            
+            allowAdjustment = YES;
         }
         
-        allowAdjustment = YES;
+        [approvalResponse release];
+        approvalResponse = nil;
     }
 
+    [discountApprovalRequest release];
+    discountApprovalRequest = nil;
     return allowAdjustment;
 }
 

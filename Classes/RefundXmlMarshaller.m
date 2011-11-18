@@ -65,7 +65,7 @@ static NSString *CREDIT_CARD_XML = @""
 
 - (id) toObject:(NSString *) xmlString{
     
-    Refund *refund = [[Refund alloc] init];
+    Refund *refund = [[[Refund alloc] init] autorelease];
     CXMLDocument *xmlParser = [[[CXMLDocument alloc] initWithXMLString:xmlString options:0 error:nil] autorelease];
     CXMLElement *root = [xmlParser rootElement];
     
@@ -76,6 +76,8 @@ static NSString *CREDIT_CARD_XML = @""
         Error *error = [[Error alloc] init];
         error.message = @"Refund failed.";
         [refund addError:error];
+        
+        [error release];
     }
     
     [POSOxmUtils attachErrors: [root firstElementNamed:@"ErrorList"] toModel:refund];

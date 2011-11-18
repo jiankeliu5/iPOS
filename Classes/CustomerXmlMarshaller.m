@@ -160,7 +160,7 @@ static NSString * const CUSTOMER_XML = @""
 
 - (id) toObjectFromXmlElement: (CXMLElement *) root {
     
-    Customer *customer = [[Customer alloc] init];
+    Customer *customer = [[[Customer alloc] init] autorelease];
     
     customer.customerId = [root elementNumberValue:@"CustomerID"];
     customer.customerTypeId = [root elementNumberValue:@"CustomerTypeID"];

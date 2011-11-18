@@ -90,7 +90,7 @@
     
     // NSLog(@"response string: %@", [request responseString]);
     
-    Order * order = [[[OrderXmlMarshaller alloc] init]toObject:[request responseString]];
+    Order * order = [[[[OrderXmlMarshaller alloc] init] autorelease] toObject:[request responseString]];
     
     return order;
 }
@@ -119,7 +119,7 @@
         return nil;   
     } 
     
-    NSArray *orders = [[[OrderSummaryXmlMarshaller alloc] init]toObject:[request responseString]];
+    NSArray *orders = [[[[OrderSummaryXmlMarshaller alloc] init] autorelease] toObject:[request responseString]];
     
     return orders;
 }
@@ -146,7 +146,7 @@
         return nil;   
     } 
     
-    return [[[PaymentHistoryXMLMarshaller alloc] init] toObject:[request responseString]];
+    return [[[[PaymentHistoryXMLMarshaller alloc] init] autorelease] toObject:[request responseString]];
 }
 
 

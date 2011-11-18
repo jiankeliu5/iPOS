@@ -285,8 +285,9 @@
         // If quantity is greater do not allow a close
         if ([self.quantityPrimary compare:numberAvailableInStore] == NSOrderedDescending){
             canClose = NO;
+        } else {
+            canClose = YES;
         }
-        canClose = YES;
     } else {
         // For an existing line item, it can be closed if the status of the line item is 
         // store received
