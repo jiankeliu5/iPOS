@@ -426,7 +426,7 @@ static NSString * const CREDIT = @"credit";
                                                                                                   raiseOnExactness:NO raiseOnOverflow:NO 
                                                                                                   raiseOnUnderflow:NO raiseOnDivideByZero:NO];
     NSDecimalNumber *amount = [[NSDecimalNumber decimalNumberWithString:textField.text] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
-    NSDecimalNumber *balanceDue = [order calcBalanceDue];
+    NSDecimalNumber *balanceDue = [[order calcBalanceDue] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
     NSDecimalNumber *orderAmount = [[[order calcOrderSubTotal] decimalNumberByAdding:[order calcOrderTax]] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
     
     if (textField.tagName == ACCOUNT)

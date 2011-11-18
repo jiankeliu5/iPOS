@@ -372,60 +372,55 @@
                                             managerApproval:(ManagerInfo *)managerApprover withSession:(SessionInfo *)sessionInfo {
     
     BOOL allowAdjustment = NO;
-    
     OrderDiscountApprovalRequest *discountApprovalRequest = [[OrderDiscountApprovalRequest alloc] 
                                                                                             initWithOrder:order 
                                                                                             managerInfo:managerApprover 
                                                                                             withOrderDiscount:discountAmount]; 
     
+    @try {
     // Send the request
     ASIHTTPRequest *request = [self getRequestForSession:sessionInfo serviceDomainUri:posOrderMgmtUri serviceUri:@"changePriceApproval"];
     
     NSString *orderDiscountRequestXml = [discountApprovalRequest toXml];
     
     [request appendPostData:[orderDiscountRequestXml dataUsingEncoding:NSUTF8StringEncoding]];
-    
     [request startSynchronous];
     
     NSArray *requestErrors = [request validateAsXmlContent];
     if ([requestErrors count] > 0) {
-        allowAdjustment = NO;   
+        return NO;   
     } 
     
-    if (allowAdjustment) {
-        // Parse the response, set the authorizer ID and selling price
-        OrderDiscountApprovalResponse *approvalResponse = [OrderDiscountApprovalResponse fromXml:[request responseString]];
+    // Parse the response, set the authorizer ID and selling price
+    OrderDiscountApprovalResponse *approvalResponse = [OrderDiscountApprovalResponse fromXml:[request responseString]];
         
-        // Need to loop through all the approvals and set the matching items selling price
-        if ([approvalResponse isApproved]) {
-            NSArray *openItems = [order getOrderItems:LINE_ORDERSTATUS_OPEN];
-            
-            if (openItems && [openItems count] == [approvalResponse.itemSellingPriceApprovalList count]) {
-                ItemSellingPriceApprovalResponse *approval = nil;
-                OrderItem *item = nil;
-                for (int i=0; i < [openItems count]; i++) {
-                    approval = [approvalResponse.itemSellingPriceApprovalList objectAtIndex:i];
-                    item = [openItems objectAtIndex:i];
-                    
-                    if ([approval.authorizationId compare: [NSDecimalNumber zero]] != NSOrderedSame) {
-                        item.priceAuthorizationId = approval.authorizationId;
-                    }
-                    
-                    // Divide the discount amount evenly across order items
-                    [item setSellingPriceFrom:[discountApprovalRequest getDiscountPerItem]];
+    // Need to loop through all the approvals and set the matching items selling price
+    if ([approvalResponse isApproved]) {
+        NSArray *openItems = [order getOrderItems:LINE_ORDERSTATUS_OPEN];
+        
+        if (openItems && [openItems count] == [approvalResponse.itemSellingPriceApprovalList count]) {
+            ItemSellingPriceApprovalResponse *approval = nil;
+            OrderItem *item = nil;
+            for (int i=0; i < [openItems count]; i++) {
+                approval = [approvalResponse.itemSellingPriceApprovalList objectAtIndex:i];
+                item = [openItems objectAtIndex:i];
+                
+                if ([approval.authorizationId compare: [NSDecimalNumber zero]] != NSOrderedSame) {
+                    item.priceAuthorizationId = approval.authorizationId;
                 }
+                
+                // Divide the discount amount evenly across order items
+                [item setSellingPriceFrom:[discountApprovalRequest getDiscountPerItem]];
             }
-            
-            allowAdjustment = YES;
         }
         
-        [approvalResponse release];
-        approvalResponse = nil;
+        allowAdjustment = YES;
+        return allowAdjustment;
     }
-
-    [discountApprovalRequest release];
-    discountApprovalRequest = nil;
-    return allowAdjustment;
+    } @finally {
+        [discountApprovalRequest release];
+        discountApprovalRequest = nil;
+    }
 }
 
 #pragma mark -

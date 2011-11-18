@@ -261,6 +261,8 @@ static OrderCart *cart = nil;
     // if this is not a new order and it is an order quote, switch it to a new order
     if (!cartOrder.isNewOrder && [cartOrder isQuote]) {
         [cartOrder setAsNewOrder];
+    } if (cartOrder.isNewOrder) {
+        [cartOrder setAsNewOrder];
     }
     
     // Save the order

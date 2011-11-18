@@ -8,6 +8,7 @@
 
 #import "OrderXmlMarshaller.h"
 #import "NSString+StringFormatters.h"
+#import "NSString+Extensions.h"
 
 #import "POSOxmUtils.h"
 #import "CustomerXmlMarshaller.h"
@@ -27,7 +28,7 @@ static NSString * const NEW_ORDER_XML = @""
             "<TaxExempt>%@</TaxExempt>"
             "<Zip>%@</Zip>"
         "</Customer>"
-        "${orderIdXml}"
+        "<OrderID>%@</OrderID>"
         "<OrderTypeID>%@</OrderTypeID>"
         "<PO>%@</PO>"
         "<SalesPersonID>%@</SalesPersonID>"
@@ -81,7 +82,6 @@ static NSString * const PREVIOUS_ORDER_XML = @""
         "<DepositAuthorizationID>%@</DepositAuthorizationID>"
         "<FollowUpDate>%@</FollowUpDate>"
         "<OrderDCTO>%@</OrderDCTO>"
-        "${orderIdXml}"
         "<OrderID>%@</OrderID>"
         "<OrderTypeID>%@</OrderTypeID>"
         "<PO>%@</PO>"
@@ -180,7 +180,7 @@ static NSString * const PREVIOUSORDER_LINEITEM_XML = @""
         NSString *customerTaxExempt = @"false";
         NSString *customerZip = @"";
         
-        NSString *orderId = nil;
+        NSString *orderId = @"";
         NSString *orderTypeId = @"1"; // Default to Quote
         NSString *salespersonEmpId = @"";
         NSString *storeId = @"0";
@@ -231,12 +231,6 @@ static NSString * const PREVIOUSORDER_LINEITEM_XML = @""
             purchaseOrder = order.purchaseOrderId;
         }
         
-        // The existing/previous order elements (the order has an order id
-        if (order.isNewOrder) {
-            // Reset the order id since we are either changing a existing quote to an order OR it is a new order with no id.
-            orderId = nil;
-        }
-        
         if (orderId) {
             if(order.depositAuthorizationID) {
                 depositAuthorizationID = [order.depositAuthorizationID stringValue];
@@ -264,7 +258,7 @@ static NSString * const PREVIOUSORDER_LINEITEM_XML = @""
         }
         
         // Create the XML (new or previous)
-        if (orderId && !order.isNewOrder) {
+        if ([orderId isNotEmpty] && !order.isNewOrder) {
              orderXml = [NSString stringWithFormat: PREVIOUS_ORDER_XML, 
                             commentNotes, customerId, customerTypeId, customerTaxExempt, customerZip,
                             depositAuthorizationID, followUpDate, orderDCTO, orderId, orderTypeId, purchaseOrder,
@@ -272,8 +266,7 @@ static NSString * const PREVIOUSORDER_LINEITEM_XML = @""
         } else {
             orderXml = [NSString stringWithFormat: NEW_ORDER_XML, 
                             commentNotes, customerId, customerTypeId, customerTaxExempt, customerZip,
-                            orderTypeId, purchaseOrder, salespersonEmpId, storeId];
-            orderXml = [POSOxmUtils replaceInXmlTemplate:orderXml parameter:@"orderIdXml" withValue:@""];
+                            orderId, orderTypeId, purchaseOrder, salespersonEmpId, storeId];
         }
         
         // The Order items xml

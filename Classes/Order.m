@@ -56,6 +56,8 @@
     orderItemList = [[NSMutableArray arrayWithCapacity:0] retain];
     previousPayments = [[NSMutableArray arrayWithCapacity:0] retain];
     
+    isNewOrder = YES;
+    
     return self;
 }
 
