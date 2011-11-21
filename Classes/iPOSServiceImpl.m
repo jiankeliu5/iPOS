@@ -301,6 +301,8 @@
     }
     
     // Basic Validation
+    [order removeAllErrors];
+    
     if (order.isNewOrder) {
         NSLog(@"Saving order as new quote");
         

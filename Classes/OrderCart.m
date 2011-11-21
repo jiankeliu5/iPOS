@@ -179,6 +179,8 @@ static OrderCart *cart = nil;
             
             for (OrderItem *orderItem in orderItemList) {
                 if (![facade adjustSellingPriceFor:orderItem withCustomer:order.customer]) {
+                    [customer removeAllErrors];
+                    
                     // Attach error to customer
                     Error *error = [[[Error alloc] init] autorelease];
                     error.errorId = @"SRV_ERR_ADJ_PRICE";
@@ -206,6 +208,8 @@ static OrderCart *cart = nil;
     if (order.customer) {
         OrderItem *orderItem = [[order getOrderItems] lastObject];
         if (![facade adjustSellingPriceFor:orderItem withCustomer:order.customer]) {
+            [order removeAllErrors];
+            
             //attach error to order
             Error *error = [[[Error alloc] init] autorelease];
             error.errorId = @"SRV_ERR_ADJ_PRICE";

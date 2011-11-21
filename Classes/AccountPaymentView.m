@@ -121,7 +121,7 @@
     creditAvailableLabel = [[[UILabel alloc] initWithFrame:CGRectMake(MARGIN_LEFT+LABEL_WIDTH, MARGIN_TOP, LABEL_WIDTH, LABEL_HEIGHT)] autorelease];
     
     creditAvailableTitle.textAlignment = UITextAlignmentLeft;
-    creditAvailableTitle.text = @"Credit Available";
+    creditAvailableTitle.text = @"Credit Avail";
     creditAvailableTitle.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];    
     
     creditAvailableLabel.textAlignment = UITextAlignmentRight;

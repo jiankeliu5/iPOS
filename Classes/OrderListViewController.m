@@ -172,9 +172,10 @@
 	return [NSString stringWithFormat:@"Orders for: %@", (searchPhone == nil) ? @"unset" : searchPhone];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	static NSString *orderListTableIdentifier = @"OrderListTableIdentifier";
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+    NSString *orderListTableIdentifier = [NSString stringWithFormat:@"OrderListTableIdentifier-%d", indexPath.row];
+	
 	OrderListTableCell *cell = (OrderListTableCell *)[tableView dequeueReusableCellWithIdentifier:orderListTableIdentifier];
 	
 	NSInteger row = indexPath.row;

@@ -170,11 +170,10 @@
 }
 
 - (BOOL) canCancel {
-    // TODO:  Does it make sense to cancel a quote ??
-    // Can only cancel an order if it is in quote or open status and all items in it are in open status
+    // Can only cancel an order if it is in quote or open status and all items in it are in open or canceled status
     if ([self.orderTypeId intValue] == ORDER_TYPE_OPEN || [self.orderTypeId intValue] == ORDER_TYPE_QUOTE) {
         for (OrderItem *orderItem in orderItemList) {
-            if ([orderItem isOpen] == NO) {
+            if ([orderItem isOpen] == NO && [orderItem isCanceled] == NO) {
                 return NO;
             }
         }

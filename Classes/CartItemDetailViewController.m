@@ -209,6 +209,11 @@
     [convertToBoxesSwitch addTarget:self action:@selector(handleConvertToBoxesSwitch:) forControlEvents:UIControlEventValueChanged];
     convertToBoxesSwitch.on = YES;
     convertToBoxesSwitch.hidden = YES;
+    
+    if (orderItem && [orderItem allowQuantityChange] == NO) {
+        convertToBoxesSwitch.enabled = NO;
+    }
+    
     [orderItemView addSubview:convertToBoxesSwitch];
     [convertToBoxesSwitch release];
     

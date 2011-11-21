@@ -464,7 +464,7 @@ static NSString * const CREDIT = @"credit";
             return;
         }
         
-        // If the amount was $0.00 at this point, it is a fully open order.  Create the open order and we are done.
+        // If the amount was $0.00 at this point, Just save the order
         if ([amount compare:[NSDecimalNumber zero]] == NSOrderedSame) {
             BOOL isOrderSaved = [orderCart saveOrder];
             
@@ -540,6 +540,7 @@ static NSString * const CREDIT = @"credit";
                 [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Problem accepting signature for payment with ref #%@.", [payment paymentRefId]] withTitle:@"iPOS"];
                 //isSignatureAccepted = NO;
             } else {
+                [self dismissModalViewControllerAnimated:YES];
                 [self navToReceipt];
             }
             
@@ -550,6 +551,7 @@ static NSString * const CREDIT = @"credit";
                 [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Problem accepting signature for payment with ref #%@.", [payment paymentRefId]] withTitle:@"iPOS"];
             } else {
                 if([[payment paymentAmount] compare:[[orderCart getOrder] calcBalanceDue]] == NSOrderedSame) {
+                    [self dismissModalViewControllerAnimated:YES];
                      [self navToReceipt];
                 } else {
                     [self dismissModalViewControllerAnimated:YES];
@@ -928,7 +930,6 @@ static NSString * const CREDIT = @"credit";
     // Make sure we clear out the payment at this point
     self.payment = nil;
     
-    [self dismissModalViewControllerAnimated:YES];
     [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Order %@ was successfully processed.", [orderCart getOrder].orderId] withTitle:@"iPOS"];
     
     // Navigate to the Send Receipt View Controller
