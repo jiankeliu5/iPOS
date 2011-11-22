@@ -36,20 +36,19 @@
     payment.lpToken = @"lpToken1";
     payment.nameOnCard = @"D C";
     
-    PaymentSignature *signature = [[PaymentSignature alloc] init];
-    signature.signatureAsBase64 = @"signature";
+    NSString *signature = @"signature";
     
     [refund addRefundItem:item];
     refund.signature = signature;
     
-    NSString *expected = @"""<RefundRequest><CustomerID>1234</CustomerID><OrderID>345</OrderID><StoreID>1200</StoreID><SalesPersonID>1924</SalesPersonID><RefundDate>date</RefundDate><ListOfRefunds><Refund><Amount>20</Amount><OrderPaymentTypeID>3</OrderPaymentTypeID></Refund></ListOfRefunds><PaymentSignature><OnAccount>false</OnAccount><SignatureAsBase64>signature</SignatureAsBase64><TroutD></TroutD></PaymentSignature></RefundRequest>";
+    NSString *expected = @"<RefundRequest><CustomerID>1234</CustomerID><OrderID>345</OrderID><StoreID>1200</StoreID><SalesPersonID>1924</SalesPersonID><RefundDate>date</RefundDate><ListOfRefunds><Refund><Amount>20</Amount><OrderPaymentTypeID>3</OrderPaymentTypeID></Refund></ListOfRefunds><PaymentSignature><SignatureAsBase64>signature</SignatureAsBase64></PaymentSignature></RefundRequest>";
     
     
     RefundXmlMarshaller *xmlResult = [[RefundXmlMarshaller alloc] init];
     
     NSString *result = [xmlResult toXml:refund];
     
-    STAssertTrue([expected isEqualToString: result], @"");
+    STAssertTrue([expected isEqualToString: result], @"Result was %@", result);
 }
 
 - (void) testRefundXMLConversionWithCash{
@@ -68,14 +67,14 @@
         
     [refund addRefundItem:item];
     
-    NSString *expected = @"""<RefundRequest><CustomerID>1234</CustomerID><OrderID>345</OrderID><StoreID>1200</StoreID><SalesPersonID>1924</SalesPersonID><RefundDate>date</RefundDate><ListOfRefunds><Refund><Amount>20</Amount><OrderPaymentTypeID>1</OrderPaymentTypeID></Refund></ListOfRefunds></RefundRequest>";
+    NSString *expected = @"<RefundRequest><CustomerID>1234</CustomerID><OrderID>345</OrderID><StoreID>1200</StoreID><SalesPersonID>1924</SalesPersonID><RefundDate>date</RefundDate><ListOfRefunds><Refund><Amount>20</Amount><OrderPaymentTypeID>1</OrderPaymentTypeID></Refund></ListOfRefunds><PaymentSignature><SignatureAsBase64></SignatureAsBase64></PaymentSignature></RefundRequest>";
     
     
     RefundXmlMarshaller *xmlResult = [[RefundXmlMarshaller alloc] init];
     
     NSString *result = [xmlResult toXml:refund];
     
-    STAssertTrue([expected isEqualToString: result], @"");
+    STAssertTrue([expected isEqualToString: result], @"Result was %@", result);
 }
 
 - (void) testRefundXMLConversionWithAccount{
@@ -94,20 +93,19 @@
     
    // AccountPayment *payment = [[AccountPayment alloc] init];
         
-    PaymentSignature *signature = [[PaymentSignature alloc] init];
-    signature.signatureAsBase64 = @"signature";
+    NSString *signature = @"signature";
     
     [refund addRefundItem:item];
     refund.signature = signature;
     
-    NSString *expected = @"""<RefundRequest><CustomerID>1234</CustomerID><OrderID>345</OrderID><StoreID>1200</StoreID><SalesPersonID>1924</SalesPersonID><RefundDate>date</RefundDate><ListOfRefunds><Refund><Amount>20</Amount><OrderPaymentTypeID>7</OrderPaymentTypeID></Refund></ListOfRefunds><PaymentSignature><OnAccount>false</OnAccount><SignatureAsBase64>signature</SignatureAsBase64><TroutD></TroutD></PaymentSignature></RefundRequest>";
+    NSString *expected = @"<RefundRequest><CustomerID>1234</CustomerID><OrderID>345</OrderID><StoreID>1200</StoreID><SalesPersonID>1924</SalesPersonID><RefundDate>date</RefundDate><ListOfRefunds><Refund><Amount>20</Amount><OrderPaymentTypeID>7</OrderPaymentTypeID></Refund></ListOfRefunds><PaymentSignature><SignatureAsBase64>signature</SignatureAsBase64></PaymentSignature></RefundRequest>";
     
     
     RefundXmlMarshaller *xmlResult = [[RefundXmlMarshaller alloc] init];
     
     NSString *result = [xmlResult toXml:refund];
     
-    STAssertTrue([expected isEqualToString: result], @"");
+    STAssertTrue([expected isEqualToString: result], @"The result was %@", result);
 }
 
 -(void) testRefundXMLConversionMultipleTypes{
@@ -129,8 +127,7 @@
     itemTwo.amount = [NSDecimalNumber decimalNumberWithString:@"20.00"];
     itemTwo.orderPaymentTypeID = [NSNumber numberWithInt:7];
     
-    PaymentSignature *signature = [[PaymentSignature alloc] init];
-    signature.signatureAsBase64 = @"signature";
+    NSString *signature = @"signature";
     
     [refund addRefundItem:item];
     [refund addRefundItem:itemTwo];
@@ -140,10 +137,10 @@
 
     NSString *result = [xmlResult toXml:refund];
     
-    NSString *expected = @"""<RefundRequest><CustomerID>1234</CustomerID><OrderID>345</OrderID><StoreID>1200</StoreID><SalesPersonID>1924</SalesPersonID><RefundDate>date</RefundDate><ListOfRefunds><Refund><Amount>20</Amount><OrderPaymentTypeID>7</OrderPaymentTypeID></Refund><Refund><Amount>20</Amount><OrderPaymentTypeID>7</OrderPaymentTypeID></Refund></ListOfRefunds><PaymentSignature><OnAccount>false</OnAccount><SignatureAsBase64>signature</SignatureAsBase64><TroutD></TroutD></PaymentSignature></RefundRequest>";
+    NSString *expected = @"<RefundRequest><CustomerID>1234</CustomerID><OrderID>345</OrderID><StoreID>1200</StoreID><SalesPersonID>1924</SalesPersonID><RefundDate>date</RefundDate><ListOfRefunds><Refund><Amount>20</Amount><OrderPaymentTypeID>7</OrderPaymentTypeID></Refund><Refund><Amount>20</Amount><OrderPaymentTypeID>7</OrderPaymentTypeID></Refund></ListOfRefunds><PaymentSignature><SignatureAsBase64>signature</SignatureAsBase64></PaymentSignature></RefundRequest>";
 
     
-    STAssertTrue([expected isEqualToString: result], @"");
+    STAssertTrue([expected isEqualToString: result], @"Result was %@", result);
     
     
 }

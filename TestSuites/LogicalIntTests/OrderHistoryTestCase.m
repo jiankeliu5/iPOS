@@ -47,7 +47,7 @@
     
     STAssertNotNil(paymentHistory, @"Didn't get any payment history");
     
-    STAssertTrue([[NSNumber numberWithUnsignedInt:[paymentHistory count]] compare: [NSNumber numberWithInt: 1 ]]  == NSOrderedSame, @"Size of array is not correct");
+    STAssertTrue([[NSNumber numberWithUnsignedInt:[paymentHistory count]] compare: [NSNumber numberWithInt: 11 ]]  == NSOrderedSame, @"Size of array is %u", [paymentHistory count]);
     
     STAssertTrue([[paymentHistory objectAtIndex:0] isKindOfClass:[CreditCardPayment class]], @"Expected Payment of Type Credit Card");
     

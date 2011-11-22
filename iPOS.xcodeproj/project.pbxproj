@@ -20,14 +20,11 @@
 		360C1289143383E000235580 /* PreviousOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 360C1287143383E000235580 /* PreviousOrder.m */; };
 		36444E171455B78F0024C24F /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6902349144F222700174E59 /* libz.1.2.5.dylib */; };
 		36444E181455B7A30024C24F /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6902349144F222700174E59 /* libz.1.2.5.dylib */; };
-		36444E1C145706AD0024C24F /* iPOSServiceIntTestCase.h in Sources */ = {isa = PBXBuildFile; fileRef = D64B7EBF12F9DFF5006AB141 /* iPOSServiceIntTestCase.h */; };
 		36444E1D145706AD0024C24F /* iPOSServiceIntTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D64B7EC012F9DFF5006AB141 /* iPOSServiceIntTestCase.m */; };
 		36444E1E145706AD0024C24F /* PaymentServiceTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C7770513574A7900D41AD9 /* PaymentServiceTestCase.m */; };
 		364B56C61430D02D0028FE09 /* libIBAForms.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 364B56BF1430CF5D0028FE09 /* libIBAForms.a */; };
 		365B593F1407DBAE000B0277 /* ProfitMarginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36C6B44E14057BBD009A455F /* ProfitMarginViewController.m */; };
 		365B5947140C0E23000B0277 /* OrderTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 365B5945140C092E000B0277 /* OrderTestCase.m */; };
-		365B5952140D44CA000B0277 /* profitView.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B594E140D44C9000B0277 /* profitView.js */; };
-		365B5958140D4658000B0277 /* displayProfitMargin.js in Sources */ = {isa = PBXBuildFile; fileRef = 365B5954140D4658000B0277 /* displayProfitMargin.js */; };
 		367B7FE8144C8248008DB0B1 /* CashPayment.h in Headers */ = {isa = PBXBuildFile; fileRef = 367B7FE6144C8248008DB0B1 /* CashPayment.h */; };
 		367B7FE9144C8248008DB0B1 /* CashPayment.m in Sources */ = {isa = PBXBuildFile; fileRef = 367B7FE7144C8248008DB0B1 /* CashPayment.m */; };
 		367B7FEC144CA1D1008DB0B1 /* CheckPayment.h in Headers */ = {isa = PBXBuildFile; fileRef = 367B7FEA144CA1D1008DB0B1 /* CheckPayment.h */; };
@@ -196,6 +193,8 @@
 		D624BAA11373049E00ED6120 /* ItemListView.m in Sources */ = {isa = PBXBuildFile; fileRef = D624BA9F1373049E00ED6120 /* ItemListView.m */; };
 		D624BAA4137304B200ED6120 /* ItemDetailView.h in Headers */ = {isa = PBXBuildFile; fileRef = D624BAA2137304B200ED6120 /* ItemDetailView.h */; };
 		D624BAA5137304B200ED6120 /* ItemDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = D624BAA3137304B200ED6120 /* ItemDetailView.m */; };
+		D62AE4BA147C463400D4A625 /* libdtdev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6D952561471B73100FF26ED /* libdtdev.a */; };
+		D62AE4BB147C464B00D4A625 /* libdtdev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6D952561471B73100FF26ED /* libdtdev.a */; };
 		D62B8C0313A4484E00EC056F /* exchange.png in Resources */ = {isa = PBXBuildFile; fileRef = D62B8C0213A4484E00EC056F /* exchange.png */; };
 		D62B8C0413A4484E00EC056F /* exchange.png in Resources */ = {isa = PBXBuildFile; fileRef = D62B8C0213A4484E00EC056F /* exchange.png */; };
 		D62B8C0513A4484E00EC056F /* exchange.png in Resources */ = {isa = PBXBuildFile; fileRef = D62B8C0213A4484E00EC056F /* exchange.png */; };
@@ -418,13 +417,6 @@
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = IBAForms;
 		};
-		36F3E98D1434AF10004376B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D64B7E1212F9D7EA006AB141;
-			remoteInfo = UnitTests;
-		};
 		36F3E9921434B9AD004376B8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 364B56B71430CF5C0028FE09 /* IBAForms.xcodeproj */;
@@ -445,6 +437,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = IBAForms;
+		};
+		D62AE4BC147C495500D4A625 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D64B7E1212F9D7EA006AB141;
+			remoteInfo = UnitTests;
+		};
+		D62AE4BE147C495500D4A625 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D679438B131607A8004B8254;
+			remoteInfo = IntTests;
 		};
 		D642EEA8145AFE7500D64F0E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -543,13 +549,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = D6B4366E1315A7DD000C0AA8;
 			remoteInfo = iPOSFoundation;
-		};
-		D6C5F4A61382CB7700041D62 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D679438B131607A8004B8254;
-			remoteInfo = IntTests;
 		};
 		D6CC18BC1331D1150042745E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1089,6 +1088,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D62AE4BA147C463400D4A625 /* libdtdev.a in Frameworks */,
 				36444E171455B78F0024C24F /* libz.1.2.5.dylib in Frameworks */,
 				36F3E9941434B9B6004376B8 /* libIBAForms.a in Frameworks */,
 				D699950E145B10AB007752F1 /* libOPIFoundationCore.a in Frameworks */,
@@ -1130,6 +1130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D62AE4BB147C464B00D4A625 /* libdtdev.a in Frameworks */,
 				36444E181455B7A30024C24F /* libz.1.2.5.dylib in Frameworks */,
 				36F3E9991434BA4E004376B8 /* libIBAForms.a in Frameworks */,
 				D6999511145B10C3007752F1 /* libOPIFoundationCore.a in Frameworks */,
@@ -2209,11 +2210,11 @@
 			buildRules = (
 			);
 			dependencies = (
+				D62AE4BD147C495500D4A625 /* PBXTargetDependency */,
+				D62AE4BF147C495500D4A625 /* PBXTargetDependency */,
 				364B56C11430CFD80028FE09 /* PBXTargetDependency */,
 				D6999507145B105E007752F1 /* PBXTargetDependency */,
 				D6B4386F1315ABA8000C0AA8 /* PBXTargetDependency */,
-				36F3E98E1434AF10004376B8 /* PBXTargetDependency */,
-				D6C5F4A71382CB7700041D62 /* PBXTargetDependency */,
 			);
 			name = iPOS;
 			productName = iPOS;
@@ -2665,8 +2666,6 @@
 				D6B195BC133CEF1C004C4FD1 /* LoginOxmTestCase.m in Sources */,
 				D64783731354AE240017178D /* OrderItemCalculationTestCase.m in Sources */,
 				D6C6E8D61365CA7C00560DCF /* StringFormattersTestCase.m in Sources */,
-				365B5952140D44CA000B0277 /* profitView.js in Sources */,
-				365B5958140D4658000B0277 /* displayProfitMargin.js in Sources */,
 				367B7FFF144DEFD6008DB0B1 /* RefundOxmTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2683,7 +2682,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				36444E1C145706AD0024C24F /* iPOSServiceIntTestCase.h in Sources */,
 				36444E1D145706AD0024C24F /* iPOSServiceIntTestCase.m in Sources */,
 				36444E1E145706AD0024C24F /* PaymentServiceTestCase.m in Sources */,
 				368B10921434F675001AAD73 /* OrderHistoryTestCase.m in Sources */,
@@ -2809,11 +2807,6 @@
 			name = IBAForms;
 			targetProxy = 364B56C41430CFE10028FE09 /* PBXContainerItemProxy */;
 		};
-		36F3E98E1434AF10004376B8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D64B7E1212F9D7EA006AB141 /* UnitTests */;
-			targetProxy = 36F3E98D1434AF10004376B8 /* PBXContainerItemProxy */;
-		};
 		36F3E9931434B9AD004376B8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = IBAForms;
@@ -2828,6 +2821,16 @@
 			isa = PBXTargetDependency;
 			name = IBAForms;
 			targetProxy = 36F3E99B1434BB68004376B8 /* PBXContainerItemProxy */;
+		};
+		D62AE4BD147C495500D4A625 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D64B7E1212F9D7EA006AB141 /* UnitTests */;
+			targetProxy = D62AE4BC147C495500D4A625 /* PBXContainerItemProxy */;
+		};
+		D62AE4BF147C495500D4A625 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D679438B131607A8004B8254 /* IntTests */;
+			targetProxy = D62AE4BE147C495500D4A625 /* PBXContainerItemProxy */;
 		};
 		D654C1AF145B02FA008CCAA7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2884,11 +2887,6 @@
 			target = D6B4366E1315A7DD000C0AA8 /* iPOSFoundation */;
 			targetProxy = D6B439101315B242000C0AA8 /* PBXContainerItemProxy */;
 		};
-		D6C5F4A71382CB7700041D62 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D679438B131607A8004B8254 /* IntTests */;
-			targetProxy = D6C5F4A61382CB7700041D62 /* PBXContainerItemProxy */;
-		};
 		D6CC18BD1331D1150042745E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D6B4366E1315A7DD000C0AA8 /* iPOSFoundation */;
@@ -2907,7 +2905,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_ENTITLEMENTS = "~/Documents/ws/ios/iPOS/Entitlements.plist";
+				CODE_SIGN_ENTITLEMENTS = Resources/Entitlements.plist;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2943,7 +2941,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_ENTITLEMENTS = "~/Documents/ws/ios/iPOS/Entitlements.plist";
+				CODE_SIGN_ENTITLEMENTS = Resources/Entitlements.plist;
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
@@ -3059,7 +3057,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = Resources/Entitlements.plist;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Object Partners Incorporated";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: The Tile Shop LLC";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
@@ -3081,7 +3079,7 @@
 				);
 				PRIVATE_HEADERS_FOLDER_PATH = iPOSDemo.app/PrivateHeaders;
 				PRODUCT_NAME = iPOSDemo;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "01DFA51C-4D85-49EB-B5D3-7651D61A2348";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C4EBD5F7-4031-4666-98FA-7288F49636E7";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 			};

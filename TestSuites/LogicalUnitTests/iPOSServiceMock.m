@@ -7,7 +7,7 @@
 //
 
 #import "iPOSServiceMock.h"
-#import "Error.h";
+#import "Error.h"
 
 @implementation iPOSServiceMock
 
@@ -138,7 +138,7 @@
 }
 
 - (BOOL) orderDiscountFor:(Order *)order withDiscountAmount:(NSDecimalNumber *)discountAmount managerApproval:(ManagerInfo *)managerApprover withSession:(SessionInfo *)sessionInfo {
-    return YES:
+    return YES;
 }
 
 - (BOOL) emailReceipt:(Order *)order withSession:(SessionInfo *)sessionInfo {

@@ -559,7 +559,7 @@
     // same store no token
     // 1 of cash, check, paypal
     
-    STAssertTrue([[refundInfo getRefundItems] count] == 9, @"Expected 8 refund items");
+    STAssertTrue([refundInfo.refundItems count] == 9, @"Expected 8 refund items");
 }
 
 @end
