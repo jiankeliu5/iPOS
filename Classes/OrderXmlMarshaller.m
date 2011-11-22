@@ -352,6 +352,7 @@ static NSString * const PREVIOUSORDER_LINEITEM_XML = @""
         productItem.typeId = [node elementNumberValue:@"ItemTypeID"];
         productItem.piecesPerBox = [node elementNumberValue:@"PiecesPerBox"];
         productItem.primaryUnitOfMeasure = [node elementStringValue:@"PrimaryUOM"];
+        productItem.priceGroupId = [root elementNumberValue:@"PriceGroupID"];
         productItem.retailPricePrimary = [node elementDecimalValue:@"RetailPricePrimary"];
         productItem.secondaryUnitOfMeasure = [node elementStringValue:@"SecondaryUOM"];
         productItem.standardCost = [node elementDecimalValue:@"StdCost"];
@@ -636,7 +637,7 @@ static NSString * const PREVIOUSORDER_LINEITEM_XML = @""
                 } else {
                     lineItemXml = [lineItemXml stringByAppendingFormat:NEW_ORDER_LINEITEM_XML,
                                     conversion, defaultToBox, itemDescription, itemId, itemNumber, itemStatusCode, itemTypeId, 
-                                    lineNumber, lineState, orderDetailStatus, piecesPerBox, primaryUom, quantityPrimary, quantitySecondary,
+                                    lineNumber, orderDetailStatus, piecesPerBox, primaryUom, quantityPrimary, quantitySecondary,
                                     retailPrice, salepersonEmpId, secondaryUom, sellingPricePrimary, sellingPriceSecondary, 
                                     stdCost, stockingCode, storeId, taxExempt, taxRate];
                 }

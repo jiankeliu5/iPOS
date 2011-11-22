@@ -287,13 +287,17 @@
                 // order comes back autoreleased
                 Order *order = [facade lookupOrderByOrderId:orderIdInput];
                 if (order != nil) {
-                    // Prep and go to the order edit view controller
-                    NSLog(@"Found Order: %@", order.orderId);
-                    textField.text = nil;
-                    [orderCart setPreviousOrder:order];
-                    OrderItemsViewController *orderItemsViewController = [[OrderItemsViewController alloc] init];
-                    [[self navigationController] pushViewController:orderItemsViewController animated:TRUE];
-                    [orderItemsViewController release];
+                    if (![order isCanceled]) {
+                        // Prep and go to the order edit view controller
+                        NSLog(@"Found Order: %@", order.orderId);
+                        textField.text = nil;
+                        [orderCart setPreviousOrder:order];
+                        OrderItemsViewController *orderItemsViewController = [[OrderItemsViewController alloc] init];
+                        [[self navigationController] pushViewController:orderItemsViewController animated:TRUE];
+                        [orderItemsViewController release];
+                    } else {
+                        [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Order %@ is a canceled order.  Cannot display the details.", orderIdInput] withTitle:@"iPOS"];
+                    }
                 } else {
                     [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Could not retrieve previous order.  Order Id: %@", orderIdInput] withTitle:@"iPOS"];
                 }

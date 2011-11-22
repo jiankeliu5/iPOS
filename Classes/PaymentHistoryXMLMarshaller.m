@@ -108,13 +108,12 @@
     paymentObj.paymentAmount = [element elementDecimalValue:@"Amount"];
     paymentObj.customerId = [element elementNumberValue:@"CustomerID"];
     paymentObj.orderId = [element elementNumberValue:@"OrderID"];
-    paymentObj.paymentRefId = [element elementStringValue:@"OrderPaymentID"];
+
     paymentObj.paymentDate = [element elementStringValue:@"PaymentDate"];
     paymentObj.paymentTypeId = [element elementNumberValue:@"PaymentTypeID"];
     paymentObj.storeId = [element elementNumberValue:@"StoreID"];
     
     paymentObj.orderPaymentId = [element elementNumberValue:@"OrderPaymentID"];
-    paymentObj.paymentTypeId = [element elementNumberValue:@"PaymentTypeID"];
 }
 
 - (NSString *) toXml: (id) marshalObj

@@ -13,8 +13,9 @@
 #import "LookupOrderViewController.h"
 
 #import "Reachability.h"
+#import "InAppUpdater.h"
 
-@interface iPOSAppDelegate : NSObject <UIApplicationDelegate, SessionVerificationViewDelegate, UIAlertViewDelegate> 
+@interface iPOSAppDelegate : NSObject <UIApplicationDelegate, SessionVerificationViewDelegate, UIAlertViewDelegate, InAppUpdaterDelegate> 
 {
     UIWindow* window;
 	UINavigationController* navigationController;
@@ -31,6 +32,8 @@
     BOOL isNotReachableDetected;
     Reachability *reachability;
     UIAlertView *reachabilityAlert;
+    
+    InAppUpdater *appUpdater;
 }
 
 @property (nonatomic, retain) UIWindow* window;
@@ -42,6 +45,7 @@
 @property (nonatomic, assign) NSInteger verifyPasswordTries;
 
 @property (nonatomic, retain) Reachability *reachability;
+@property (nonatomic, retain) InAppUpdater *appUpdater;
 
 @end
 

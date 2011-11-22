@@ -1011,6 +1011,7 @@
 		D6CB613E137321C200E024B6 /* ProductItemListXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductItemListXmlMarshaller.h; sourceTree = "<group>"; };
 		D6CB613F137321C200E024B6 /* ProductItemListXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductItemListXmlMarshaller.m; sourceTree = "<group>"; };
 		D6D11CC014437ED100AC822F /* exchange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exchange@2x.png"; sourceTree = "<group>"; };
+		D6D6EFF3147BDEF40006A6FF /* InAppUpdater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InAppUpdater.h; path = ../OPIFoundation/OPIFoundation/InAppUpdater.h; sourceTree = "<group>"; };
 		D6D952421471768E00FF26ED /* InStoreCreditPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InStoreCreditPayment.h; sourceTree = "<group>"; };
 		D6D952431471768E00FF26ED /* InStoreCreditPayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InStoreCreditPayment.m; sourceTree = "<group>"; };
 		D6D95246147176DA00FF26ED /* GiftCardPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiftCardPayment.h; sourceTree = "<group>"; };
@@ -1775,6 +1776,7 @@
 		D654C1B8145B03D0008CCAA7 /* OPIFoundationRef */ = {
 			isa = PBXGroup;
 			children = (
+				D6D6EFF3147BDEF40006A6FF /* InAppUpdater.h */,
 				D6999491145B0FD4007752F1 /* Error.h */,
 				D6999492145B0FD4007752F1 /* PDColoredProgressView.h */,
 				D6999493145B0FD4007752F1 /* ASIAuthenticationDialog.h */,
@@ -2971,7 +2973,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -3230,7 +3232,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -3252,7 +3254,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

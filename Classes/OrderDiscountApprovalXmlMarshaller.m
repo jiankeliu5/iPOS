@@ -76,7 +76,7 @@ static NSString * const APPROVER_XML = @""
     
     NSMutableArray *approvalItems = [NSMutableArray arrayWithCapacity:0];
     
-    for (CXMLElement *node in [root elementsForName:@"Item"]) {
+    for (CXMLElement *node in [root elementsForName:@"PriceApproval"]) {
         itemApprovalResponse = [[ItemSellingPriceApprovalResponse alloc] init];
         
         itemApprovalResponse.itemId = [node elementNumberValue:@"ItemID"];

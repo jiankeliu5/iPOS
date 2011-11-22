@@ -23,7 +23,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>11</string>
+	<string>12</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UISupportedExternalAccessoryProtocols</key>
@@ -43,5 +43,7 @@
 	<string>ipad.demo.objectpartners.com</string>
 	<key>ipos.service.demo.local.baseurl</key>
 	<string>http://localhost:8080/ipos-demo-services/webservices/ipos</string>
+	<key>ipos.app.update.url</key>
+	<string>https://tsipos01/webservices/ipostest/install</string>
 </dict>
 </plist>

@@ -685,13 +685,8 @@
 		if ([clickedButtonTitle isEqualToString:@"Send Quote"]) {
 			Order *order = [orderCart getOrder];
             
-			// Send off the order as a quote.
-            [order setAsQuote];
-			[facade saveOrder:order];
-            
-			if (order.errorList != nil && [order.errorList count] > 0) {
-                [AlertUtils showModalAlertForErrors:order.errorList withTitle:@"iPOS"];
-			} else {
+            // Send off the order as a quote.
+			if ([orderCart saveOrderAsQuote]) {
 				// Go clear back to the login screen.
                 [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Quote %@ was successfully created.", order.orderId] withTitle:@"iPOS"];
 				[self.navigationController popToRootViewControllerAnimated:YES];

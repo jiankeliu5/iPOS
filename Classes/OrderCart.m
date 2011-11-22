@@ -262,13 +262,35 @@ static OrderCart *cart = nil;
 - (BOOL) saveOrder {
     Order *cartOrder = [self getOrder];
     
-    // if this is not a new order and it is an order quote, switch it to a new order
+    // Make sure the state of the order is updated properly
     if (!cartOrder.isNewOrder && [cartOrder isQuote]) {
         [cartOrder setAsNewOrder];
     } if (cartOrder.isNewOrder) {
         [cartOrder setAsNewOrder];
+    } else if ([cartOrder isClosed]) {
+        [cartOrder setAsClosed];
+    } else if ([cartOrder isCanceled]) {
+        [cartOrder setAsCanceled];
     }
     
+    // Save the order
+    [facade saveOrder:cartOrder];
+    
+    if ([cartOrder.errorList count] == 0 && cartOrder.orderId != nil) {
+        return YES;
+    }
+    
+    [AlertUtils showModalAlertForErrors:cartOrder.errorList withTitle:@"iPOS"];
+    return NO;    
+}
+
+- (BOOL) saveOrderAsQuote {
+    Order *cartOrder = [self getOrder];
+    
+    // Make sure I can change this to a quote
+    if ([cartOrder isNewOrder] || [cartOrder isQuote]) {
+        [cartOrder setAsQuote];
+    }
     // Save the order
     [facade saveOrder:cartOrder];
     

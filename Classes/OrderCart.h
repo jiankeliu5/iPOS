@@ -46,5 +46,6 @@
 - (BOOL) closeItem: (OrderItem *) orderItem;
 
 - (BOOL) saveOrder;
+- (BOOL) saveOrderAsQuote;
 
 @end

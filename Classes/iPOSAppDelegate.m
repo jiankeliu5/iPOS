@@ -19,6 +19,8 @@
 - (NSString *) reachabilityHost;
 - (void) dismissAlert;
 
+- (void) checkAppVersion: (id) sender;
+
 @end
 
 #pragma mark -
@@ -32,11 +34,11 @@
 @synthesize resignedActive;
 @synthesize verifyPasswordTries;
 @synthesize reachability;
+@synthesize appUpdater;
 
 
 #pragma mark Constructors
-- (void) applicationDidFinishLaunching:(UIApplication*)application 
-{   
+- (void) applicationDidFinishLaunching:(UIApplication*)application {   
     // Set the application setting defaults
     isNotReachableDetected = NO;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -78,6 +80,9 @@
     
     self.reachability = [Reachability reachabilityWithHostName:[self reachabilityHost]];
 	[reachability startNotifier];
+    
+    // Check for new app version
+    [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(checkAppVersion:) userInfo:nil repeats: NO];   
 }
 
 - (void) applicationDidBecomeActive:(UIApplication *)application {
@@ -155,6 +160,10 @@
     [reachability release];
     reachability = nil;
     
+    appUpdater.delegate = nil;
+    [appUpdater release];
+    appUpdater = nil;
+    
     [super dealloc];
 }
 
@@ -201,7 +210,37 @@
 #pragma mark -
 #pragma mark UIAlertViewDelegate
 -(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    reachabilityAlert = nil;
+    if (reachabilityAlert) {
+        reachabilityAlert = nil;
+    }
+    
+    if ([alertView.title isEqualToString:@"Update Available"]) {
+		// Check by titles rather than index since documentation suggests that different 
+		// devices can set the indexes differently.
+		NSString *clickedButtonTitle = [alertView buttonTitleAtIndex:buttonIndex];
+		if ([clickedButtonTitle isEqualToString:@"Yes"]) {
+			[appUpdater initiateAppDownload];
+		}
+	}
+}
+
+#pragma mark -
+#pragma mark InAppUpdaterDelegate Methods
+- (void) appUpdateStatus:(AppUpdateStatusType)updateStatus {
+    if (updateStatus == APP_UPDATE_AVAILABLE) {
+        UIAlertView *questionnaireAlert = [[UIAlertView alloc] init];
+        questionnaireAlert.title = @"Update Available";
+        questionnaireAlert.message = @"Would you like to install the update to iPOS?";
+        questionnaireAlert.delegate = self;
+        [questionnaireAlert addButtonWithTitle:@"Yes"];
+        [questionnaireAlert addButtonWithTitle:@"Later"];
+        [questionnaireAlert show];
+        [questionnaireAlert release];
+    }
+}
+
+- (void) appUpdateIsInitiated:(BOOL)isInitiated {
+    
 }
 
 #pragma mark -
@@ -257,6 +296,18 @@
         [reachabilityAlert dismissWithClickedButtonIndex:0 animated:NO];
         reachabilityAlert = nil;
     }
+}
+
+- (void) checkAppVersion:(id)sender {
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    
+    if (appUpdater == nil) {
+        appUpdater = [[InAppUpdater alloc] initWithAppInstallUrl:[bundle objectForInfoDictionaryKey:@"ipos.app.update.url"]];
+        appUpdater.delegate = self;
+    }
+    
+    [appUpdater checkForUpdate];
+
 }
 
 

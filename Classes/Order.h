@@ -85,9 +85,12 @@ typedef enum{
 #pragma mark Order Type methods
 - (void) setAsQuote;
 - (void) setAsNewOrder;
+- (void) setAsClosed;
+- (void) setAsCanceled;
 
 - (BOOL) isQuote;
 - (BOOL) isClosed;
+- (BOOL) isCanceled;
 
 - (void) mergeWith: (Order *) mergeOrder;
 

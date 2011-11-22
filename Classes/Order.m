@@ -124,6 +124,24 @@
     }
 }
 
+- (void) setAsCanceled {
+    self.orderTypeId = [NSNumber numberWithInt:ORDER_TYPE_CANCELLED];
+    if (orderItemList && [orderItemList count] > 0) {
+        for (OrderItem *item in orderItemList) {
+            [item setStatusToCancel];
+        }
+    }
+}
+
+- (void) setAsClosed {
+    self.orderTypeId = [NSNumber numberWithInt:ORDER_TYPE_CLOSED];
+    if (orderItemList && [orderItemList count] > 0) {
+        for (OrderItem *item in orderItemList) {
+            [item setStatusToClosed];
+        }
+    }
+}
+
 - (NSNumber *) getOrderTypeId {
     // Determine if all items are closed or some are open.  Do this check for safety.
     if (isNewOrder && ![self isQuote] && ![self isClosed]) {
@@ -155,6 +173,22 @@
     
     return YES;
 }
+
+- (BOOL) isCanceled {
+    if (orderTypeId && [orderTypeId intValue]  == ORDER_TYPE_CANCELLED) {
+        return YES;
+    }
+    
+    // Determine if all items are closed or some are open
+    for (OrderItem *orderItem in orderItemList) {
+        if (![orderItem isCanceled]) {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 
 #pragma mark -
 #pragma mark Existing Orders Methods

@@ -201,6 +201,7 @@ static NSString *CREDIT_CARD_XML = @""
     NSString *cardNum = @"";
     NSString *nameOnCard = @"";
             
+    if (ccPayment) {
         if (ccPayment.lpToken) {
             lpToken = ccPayment.lpToken;
         }
@@ -220,6 +221,7 @@ static NSString *CREDIT_CARD_XML = @""
         if(ccPayment.expireDate) {
             cardExpirationDate = ccPayment.expireDate;
         }
+    }
     
     xml = [NSString stringWithFormat:CREDIT_CARD_XML, lpToken, troutD,cardExpirationDate, cardNum, nameOnCard]; 
 
