@@ -1965,6 +1965,10 @@
 				D60F74E21475BD240055CB15 /* OrderDiscountApprovalXmlMarshaller.m */,
 				3606E5DA14333FAD00FBB02A /* PaymentHistoryXMLMarshaller.h */,
 				3606E5DB14333FAD00FBB02A /* PaymentHistoryXMLMarshaller.m */,
+				D6412B9713563229002AC1AC /* PaymentSignatureXmlMarshaller.h */,
+				D6412B9813563229002AC1AC /* PaymentSignatureXmlMarshaller.m */,
+				D6412B8F1356310E002AC1AC /* CCPaymentXmlMarshaller.h */,
+				D6412B901356310E002AC1AC /* CCPaymentXmlMarshaller.m */,
 				D6B194C0133CD0D1004C4FD1 /* POSOxmUtils.h */,
 				D6B194C1133CD0D1004C4FD1 /* POSOxmUtils.m */,
 				D6B1935B133BEF22004C4FD1 /* XmlMarshaller.h */,
@@ -1978,10 +1982,6 @@
 				D6B19378133C0314004C4FD1 /* ProductItemXmlMarshaller.m */,
 				D6CB613E137321C200E024B6 /* ProductItemListXmlMarshaller.h */,
 				D6CB613F137321C200E024B6 /* ProductItemListXmlMarshaller.m */,
-				D6412B8F1356310E002AC1AC /* CCPaymentXmlMarshaller.h */,
-				D6412B901356310E002AC1AC /* CCPaymentXmlMarshaller.m */,
-				D6412B9713563229002AC1AC /* PaymentSignatureXmlMarshaller.h */,
-				D6412B9813563229002AC1AC /* PaymentSignatureXmlMarshaller.m */,
 				D6DB9283135F40EF00877788 /* ItemSellingPriceApprovalMarshaller.h */,
 				D6DB9284135F40EF00877788 /* ItemSellingPriceApprovalMarshaller.m */,
 				36E72243141A3B980009D71A /* AccountPaymentXmlMarshaller.h */,
@@ -2971,7 +2971,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 14;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -3230,7 +3230,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 14;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -3252,7 +3252,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 14;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

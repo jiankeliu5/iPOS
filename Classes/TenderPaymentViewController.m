@@ -537,7 +537,12 @@ static NSString * const CREDIT = @"credit";
             [self.payment attachSignature:signature];
             
             if (![facade acceptSignatureFor:self.payment]) {
-                [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Problem accepting signature for payment with ref #%@.", [payment paymentRefId]] withTitle:@"iPOS"];
+                Error *error = [[[Error alloc] init] autorelease];
+                error.errorId = @"PMT_SIG";
+                error.message = [NSString stringWithFormat:@"Problem accepting signature for payment with ref #%@.", [payment paymentRefId]];
+                [payment addError:error];
+                
+                [AlertUtils showModalAlertForErrors:((Payment *)  payment).errorList withTitle: @"iPOS"];
                 //isSignatureAccepted = NO;
             } else {
                 [self dismissModalViewControllerAnimated:YES];
@@ -548,7 +553,12 @@ static NSString * const CREDIT = @"credit";
             [self.payment attachSignature:signature];
 
             if (![facade acceptSignatureOnAccount:self.payment]) {
-                [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"Problem accepting signature for payment with ref #%@.", [payment paymentRefId]] withTitle:@"iPOS"];
+                Error *error = [[[Error alloc] init] autorelease];
+                error.errorId = @"PMT_SIG";
+                error.message = [NSString stringWithFormat:@"Problem accepting signature for payment with ref #%@.", [payment paymentRefId]];
+                [payment addError:error];
+                
+                [AlertUtils showModalAlertForErrors:((Payment *)  payment).errorList withTitle: @"iPOS"];
             } else {
                 if([[payment paymentAmount] compare:[[orderCart getOrder] calcBalanceDue]] == NSOrderedSame) {
                     [self dismissModalViewControllerAnimated:YES];
