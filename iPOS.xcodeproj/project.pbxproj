@@ -176,6 +176,12 @@
 		B4CEE06013527F330067DEBC /* EditConfirmDelete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4CEE05413527F330067DEBC /* EditConfirmDelete@2x.png */; };
 		B4D308281367B86400F26C5E /* SessionVerificationView.h in Headers */ = {isa = PBXBuildFile; fileRef = B4D308261367B86400F26C5E /* SessionVerificationView.h */; };
 		B4D308291367B86400F26C5E /* SessionVerificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4D308271367B86400F26C5E /* SessionVerificationView.m */; };
+		D60AAFB0147DD79A00FBA576 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67B5889147DD6CD00C2ED5D /* libOPIFoundationCore.a */; };
+		D60AAFB1147DD7A800FBA576 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67B5889147DD6CD00C2ED5D /* libOPIFoundationCore.a */; };
+		D60AAFB2147DD7B400FBA576 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67B5889147DD6CD00C2ED5D /* libOPIFoundationCore.a */; };
+		D60AAFB9147DD80400FBA576 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67B5889147DD6CD00C2ED5D /* libOPIFoundationCore.a */; };
+		D60AAFBA147DD80C00FBA576 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67B5889147DD6CD00C2ED5D /* libOPIFoundationCore.a */; };
+		D60AAFBB147DD81300FBA576 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67B5889147DD6CD00C2ED5D /* libOPIFoundationCore.a */; };
 		D60F74DB1475A53E0055CB15 /* OrderDiscountApprovalRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D60F74D91475A53E0055CB15 /* OrderDiscountApprovalRequest.h */; };
 		D60F74DC1475A53E0055CB15 /* OrderDiscountApprovalRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D60F74DA1475A53E0055CB15 /* OrderDiscountApprovalRequest.m */; };
 		D60F74DF1475AD820055CB15 /* OrderDiscountApprovalResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = D60F74DD1475AD820055CB15 /* OrderDiscountApprovalResponse.h */; };
@@ -220,7 +226,6 @@
 		D64F39B7135CBE050058BB04 /* CreditCard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D64F39B3135CBE050058BB04 /* CreditCard@2x.png */; };
 		D64F39B8135CBE050058BB04 /* CreditCard.png in Resources */ = {isa = PBXBuildFile; fileRef = D64F39B2135CBE050058BB04 /* CreditCard.png */; };
 		D64F39B9135CBE050058BB04 /* CreditCard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D64F39B3135CBE050058BB04 /* CreditCard@2x.png */; };
-		D654C1B1145B0337008CCAA7 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D654C1AC145B02E7008CCAA7 /* libOPIFoundationCore.a */; };
 		D654C1C9145B04F9008CCAA7 /* ExtUITextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B4C46B971308BBE7001EADE4 /* ExtUITextField.m */; };
 		D654C1CA145B04F9008CCAA7 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = B48A7E0F13107EEE00F6412C /* GradientView.m */; };
 		D654C1CB145B04FA008CCAA7 /* ExtUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B404DD521345617500D85E1E /* ExtUIViewController.m */; };
@@ -283,11 +288,6 @@
 		D697D1DC1312DCD0002C3EF6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B40FC0F11311928600D7D79D /* QuartzCore.framework */; };
 		D698A40A1325DE7800371985 /* SignaturePad.m in Sources */ = {isa = PBXBuildFile; fileRef = D698A4081325DE7800371985 /* SignaturePad.m */; };
 		D698A4C31325E9D900371985 /* Particle.png in Resources */ = {isa = PBXBuildFile; fileRef = D698A4A91325E83300371985 /* Particle.png */; };
-		D6999508145B106B007752F1 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D654C1AC145B02E7008CCAA7 /* libOPIFoundationCore.a */; };
-		D699950B145B1084007752F1 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D654C1AC145B02E7008CCAA7 /* libOPIFoundationCore.a */; };
-		D699950E145B10AB007752F1 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D654C1AC145B02E7008CCAA7 /* libOPIFoundationCore.a */; };
-		D6999511145B10C3007752F1 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D654C1AC145B02E7008CCAA7 /* libOPIFoundationCore.a */; };
-		D6999514145B10EA007752F1 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D654C1AC145B02E7008CCAA7 /* libOPIFoundationCore.a */; };
 		D6999515145B10FE007752F1 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D6902349144F222700174E59 /* libz.1.2.5.dylib */; };
 		D6999516145B1114007752F1 /* libIBAForms.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 364B56BF1430CF5D0028FE09 /* libIBAForms.a */; };
 		D6B1935C133BEF22004C4FD1 /* XmlMarshaller.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B1935B133BEF22004C4FD1 /* XmlMarshaller.h */; };
@@ -438,6 +438,27 @@
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = IBAForms;
 		};
+		D60AAFB3147DD7C400FBA576 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D6F7542A145B026000B117E1;
+			remoteInfo = "OPIFoundation-Core";
+		};
+		D60AAFB5147DD7CB00FBA576 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D6F7542A145B026000B117E1;
+			remoteInfo = "OPIFoundation-Core";
+		};
+		D60AAFB7147DD7D400FBA576 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D6F7542A145B026000B117E1;
+			remoteInfo = "OPIFoundation-Core";
+		};
 		D62AE4BC147C495500D4A625 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -451,34 +472,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = D679438B131607A8004B8254;
 			remoteInfo = IntTests;
-		};
-		D642EEA8145AFE7500D64F0E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D6A97EC413FDB26C00EAC098;
-			remoteInfo = OPIFoundation;
-		};
-		D642EEAA145AFE7500D64F0E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D6A97ED113FDB26D00EAC098;
-			remoteInfo = OPIFoundationTests;
-		};
-		D654C1AB145B02E7008CCAA7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D6F754D3145B026000B117E1;
-			remoteInfo = "OPIFoundation-Core";
-		};
-		D654C1AE145B02FA008CCAA7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D6F7542A145B026000B117E1;
-			remoteInfo = "OPIFoundation-Core";
 		};
 		D65B25BF1331C8B60052AEE2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -494,40 +487,26 @@
 			remoteGlobalIDString = D6B4366E1315A7DD000C0AA8;
 			remoteInfo = iPOSFoundation;
 		};
-		D6999506145B105E007752F1 /* PBXContainerItemProxy */ = {
+		D67B5886147DD6CD00C2ED5D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D6F7542A145B026000B117E1;
+			proxyType = 2;
+			remoteGlobalIDString = D6A97EC413FDB26C00EAC098;
+			remoteInfo = OPIFoundation;
+		};
+		D67B5888147DD6CD00C2ED5D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D6F754D3145B026000B117E1;
 			remoteInfo = "OPIFoundation-Core";
 		};
-		D6999509145B107D007752F1 /* PBXContainerItemProxy */ = {
+		D67B588A147DD6CD00C2ED5D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D6F7542A145B026000B117E1;
-			remoteInfo = "OPIFoundation-Core";
-		};
-		D699950C145B10A4007752F1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D6F7542A145B026000B117E1;
-			remoteInfo = "OPIFoundation-Core";
-		};
-		D699950F145B10BB007752F1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D6F7542A145B026000B117E1;
-			remoteInfo = "OPIFoundation-Core";
-		};
-		D6999512145B10E3007752F1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D6F7542A145B026000B117E1;
-			remoteInfo = "OPIFoundation-Core";
+			proxyType = 2;
+			remoteGlobalIDString = D6A97ED113FDB26D00EAC098;
+			remoteInfo = OPIFoundationTests;
 		};
 		D6999517145B111A007752F1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -810,7 +789,7 @@
 		D6412B9413563216002AC1AC /* PaymentSignature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentSignature.m; sourceTree = "<group>"; };
 		D6412B9713563229002AC1AC /* PaymentSignatureXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentSignatureXmlMarshaller.h; sourceTree = "<group>"; };
 		D6412B9813563229002AC1AC /* PaymentSignatureXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentSignatureXmlMarshaller.m; sourceTree = "<group>"; };
-		D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OPIFoundation.xcodeproj; path = ../OPIFoundation/OPIFoundation.xcodeproj; sourceTree = "<group>"; };
+		D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OPIFoundation.xcodeproj; path = ../OPIFoundation/OPIFoundation.xcodeproj; sourceTree = SOURCE_ROOT; };
 		D64783721354AE240017178D /* OrderItemCalculationTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderItemCalculationTestCase.m; sourceTree = "<group>"; };
 		D647843E1355FA440017178D /* PaymentService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentService.h; sourceTree = "<group>"; };
 		D64784401355FB9A0017178D /* PaymentServiceImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentServiceImpl.h; sourceTree = "<group>"; };
@@ -1049,7 +1028,7 @@
 			files = (
 				D690234A144F222700174E59 /* libz.1.2.5.dylib in Frameworks */,
 				36F3E99A1434BB38004376B8 /* libIBAForms.a in Frameworks */,
-				D6999508145B106B007752F1 /* libOPIFoundationCore.a in Frameworks */,
+				D60AAFB0147DD79A00FBA576 /* libOPIFoundationCore.a in Frameworks */,
 				D6B438DB1315B00B000C0AA8 /* libiPOSFoundation.a in Frameworks */,
 				D6D952581471B74800FF26ED /* libdtdev.a in Frameworks */,
 				D6DB96CF135FABE000877788 /* OpenGLES.framework in Frameworks */,
@@ -1068,10 +1047,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D60AAFBB147DD81300FBA576 /* libOPIFoundationCore.a in Frameworks */,
 				D6999515145B10FE007752F1 /* libz.1.2.5.dylib in Frameworks */,
 				D6999516145B1114007752F1 /* libIBAForms.a in Frameworks */,
 				D6CC18DF1331D1690042745E /* libiPOSFoundation.a in Frameworks */,
-				D6999514145B10EA007752F1 /* libOPIFoundationCore.a in Frameworks */,
 				D6CC18DB1331D1690042745E /* CFNetwork.framework in Frameworks */,
 				D6CC18DC1331D1690042745E /* CoreGraphics.framework in Frameworks */,
 				D6CC18DD1331D1690042745E /* ExternalAccessory.framework in Frameworks */,
@@ -1088,10 +1067,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D60AAFB9147DD80400FBA576 /* libOPIFoundationCore.a in Frameworks */,
 				D62AE4BA147C463400D4A625 /* libdtdev.a in Frameworks */,
 				36444E171455B78F0024C24F /* libz.1.2.5.dylib in Frameworks */,
 				36F3E9941434B9B6004376B8 /* libIBAForms.a in Frameworks */,
-				D699950E145B10AB007752F1 /* libOPIFoundationCore.a in Frameworks */,
 				36F3E9951434BA22004376B8 /* libiPOSFoundation.a in Frameworks */,
 				D679459513160D05004B8254 /* CFNetwork.framework in Frameworks */,
 				D679459613160D05004B8254 /* CoreGraphics.framework in Frameworks */,
@@ -1111,7 +1090,7 @@
 			files = (
 				D690234E144F226800174E59 /* libz.1.2.5.dylib in Frameworks */,
 				36F3E99D1434BB6D004376B8 /* libIBAForms.a in Frameworks */,
-				D699950B145B1084007752F1 /* libOPIFoundationCore.a in Frameworks */,
+				D60AAFB2147DD7B400FBA576 /* libOPIFoundationCore.a in Frameworks */,
 				D690234C144F226100174E59 /* libiPOSFoundation.a in Frameworks */,
 				D6D9525A1471B75400FF26ED /* libdtdev.a in Frameworks */,
 				D6DB96D0135FABF000877788 /* OpenGLES.framework in Frameworks */,
@@ -1130,10 +1109,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D60AAFBA147DD80C00FBA576 /* libOPIFoundationCore.a in Frameworks */,
 				D62AE4BB147C464B00D4A625 /* libdtdev.a in Frameworks */,
 				36444E181455B7A30024C24F /* libz.1.2.5.dylib in Frameworks */,
 				36F3E9991434BA4E004376B8 /* libIBAForms.a in Frameworks */,
-				D6999511145B10C3007752F1 /* libOPIFoundationCore.a in Frameworks */,
 				D67943B6131608C1004B8254 /* libiPOSFoundation.a in Frameworks */,
 				D67943B2131608C1004B8254 /* CFNetwork.framework in Frameworks */,
 				D67943B3131608C1004B8254 /* CoreGraphics.framework in Frameworks */,
@@ -1153,7 +1132,7 @@
 			files = (
 				D690234B144F224800174E59 /* libz.1.2.5.dylib in Frameworks */,
 				364B56C61430D02D0028FE09 /* libIBAForms.a in Frameworks */,
-				D654C1B1145B0337008CCAA7 /* libOPIFoundationCore.a in Frameworks */,
+				D60AAFB1147DD7A800FBA576 /* libOPIFoundationCore.a in Frameworks */,
 				D6E9E9D11316037900FF1498 /* libiPOSFoundation.a in Frameworks */,
 				D6D952591471B74F00FF26ED /* libdtdev.a in Frameworks */,
 				D6DB9711135FAC0300877788 /* OpenGLES.framework in Frameworks */,
@@ -1721,16 +1700,6 @@
 			path = tuneup;
 			sourceTree = "<group>";
 		};
-		D642EEA1145AFE7400D64F0E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D642EEA9145AFE7500D64F0E /* libOPIFoundation.a */,
-				D654C1AC145B02E7008CCAA7 /* libOPIFoundationCore.a */,
-				D642EEAB145AFE7500D64F0E /* OPIFoundationTests.octest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		D64B7E2612F9D869006AB141 /* LogicalUnitTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1906,6 +1875,16 @@
 				D6334A351331CA25000DEDBB /* BasicAppTestCase.m */,
 			);
 			path = AppTests;
+			sourceTree = "<group>";
+		};
+		D67B5881147DD6CD00C2ED5D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D67B5887147DD6CD00C2ED5D /* libOPIFoundation.a */,
+				D67B5889147DD6CD00C2ED5D /* libOPIFoundationCore.a */,
+				D67B588B147DD6CD00C2ED5D /* OPIFoundationTests.octest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		D69BEFD412F9C66A0035D358 /* iPOSInterface */ = {
@@ -2212,8 +2191,8 @@
 			dependencies = (
 				D62AE4BD147C495500D4A625 /* PBXTargetDependency */,
 				D62AE4BF147C495500D4A625 /* PBXTargetDependency */,
+				D60AAFB8147DD7D400FBA576 /* PBXTargetDependency */,
 				364B56C11430CFD80028FE09 /* PBXTargetDependency */,
-				D6999507145B105E007752F1 /* PBXTargetDependency */,
 				D6B4386F1315ABA8000C0AA8 /* PBXTargetDependency */,
 			);
 			name = iPOS;
@@ -2234,7 +2213,6 @@
 			);
 			dependencies = (
 				D6999518145B111A007752F1 /* PBXTargetDependency */,
-				D6999513145B10E3007752F1 /* PBXTargetDependency */,
 				D6CC18BD1331D1150042745E /* PBXTargetDependency */,
 			);
 			name = AppTests;
@@ -2255,7 +2233,6 @@
 			);
 			dependencies = (
 				36F3E9931434B9AD004376B8 /* PBXTargetDependency */,
-				D699950D145B10A4007752F1 /* PBXTargetDependency */,
 				D6B439111315B242000C0AA8 /* PBXTargetDependency */,
 			);
 			name = UnitTests;
@@ -2274,8 +2251,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				D60AAFB4147DD7C400FBA576 /* PBXTargetDependency */,
 				36F3E99C1434BB68004376B8 /* PBXTargetDependency */,
-				D699950A145B107D007752F1 /* PBXTargetDependency */,
 				D65B25BE1331C8B60052AEE2 /* PBXTargetDependency */,
 			);
 			name = iPOSTesting;
@@ -2296,7 +2273,6 @@
 			);
 			dependencies = (
 				36F3E9981434BA49004376B8 /* PBXTargetDependency */,
-				D6999510145B10BB007752F1 /* PBXTargetDependency */,
 				D67943A81316089C004B8254 /* PBXTargetDependency */,
 			);
 			name = IntTests;
@@ -2315,8 +2291,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				D60AAFB6147DD7CB00FBA576 /* PBXTargetDependency */,
 				364B56C51430CFE10028FE09 /* PBXTargetDependency */,
-				D654C1AF145B02FA008CCAA7 /* PBXTargetDependency */,
 				D6E9E9CE1316036B00FF1498 /* PBXTargetDependency */,
 			);
 			name = iPOSDemo;
@@ -2367,7 +2343,7 @@
 					ProjectRef = 364B56B71430CF5C0028FE09 /* IBAForms.xcodeproj */;
 				},
 				{
-					ProductGroup = D642EEA1145AFE7400D64F0E /* Products */;
+					ProductGroup = D67B5881147DD6CD00C2ED5D /* Products */;
 					ProjectRef = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
 				},
 			);
@@ -2392,25 +2368,25 @@
 			remoteRef = 364B56BE1430CF5D0028FE09 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D642EEA9145AFE7500D64F0E /* libOPIFoundation.a */ = {
+		D67B5887147DD6CD00C2ED5D /* libOPIFoundation.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libOPIFoundation.a;
-			remoteRef = D642EEA8145AFE7500D64F0E /* PBXContainerItemProxy */;
+			remoteRef = D67B5886147DD6CD00C2ED5D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D642EEAB145AFE7500D64F0E /* OPIFoundationTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = OPIFoundationTests.octest;
-			remoteRef = D642EEAA145AFE7500D64F0E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D654C1AC145B02E7008CCAA7 /* libOPIFoundationCore.a */ = {
+		D67B5889147DD6CD00C2ED5D /* libOPIFoundationCore.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libOPIFoundationCore.a;
-			remoteRef = D654C1AB145B02E7008CCAA7 /* PBXContainerItemProxy */;
+			remoteRef = D67B5888147DD6CD00C2ED5D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D67B588B147DD6CD00C2ED5D /* OPIFoundationTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = OPIFoundationTests.octest;
+			remoteRef = D67B588A147DD6CD00C2ED5D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -2822,6 +2798,21 @@
 			name = IBAForms;
 			targetProxy = 36F3E99B1434BB68004376B8 /* PBXContainerItemProxy */;
 		};
+		D60AAFB4147DD7C400FBA576 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "OPIFoundation-Core";
+			targetProxy = D60AAFB3147DD7C400FBA576 /* PBXContainerItemProxy */;
+		};
+		D60AAFB6147DD7CB00FBA576 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "OPIFoundation-Core";
+			targetProxy = D60AAFB5147DD7CB00FBA576 /* PBXContainerItemProxy */;
+		};
+		D60AAFB8147DD7D400FBA576 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "OPIFoundation-Core";
+			targetProxy = D60AAFB7147DD7D400FBA576 /* PBXContainerItemProxy */;
+		};
 		D62AE4BD147C495500D4A625 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D64B7E1212F9D7EA006AB141 /* UnitTests */;
@@ -2832,11 +2823,6 @@
 			target = D679438B131607A8004B8254 /* IntTests */;
 			targetProxy = D62AE4BE147C495500D4A625 /* PBXContainerItemProxy */;
 		};
-		D654C1AF145B02FA008CCAA7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "OPIFoundation-Core";
-			targetProxy = D654C1AE145B02FA008CCAA7 /* PBXContainerItemProxy */;
-		};
 		D65B25BE1331C8B60052AEE2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D6B4366E1315A7DD000C0AA8 /* iPOSFoundation */;
@@ -2846,31 +2832,6 @@
 			isa = PBXTargetDependency;
 			target = D6B4366E1315A7DD000C0AA8 /* iPOSFoundation */;
 			targetProxy = D67943A71316089C004B8254 /* PBXContainerItemProxy */;
-		};
-		D6999507145B105E007752F1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "OPIFoundation-Core";
-			targetProxy = D6999506145B105E007752F1 /* PBXContainerItemProxy */;
-		};
-		D699950A145B107D007752F1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "OPIFoundation-Core";
-			targetProxy = D6999509145B107D007752F1 /* PBXContainerItemProxy */;
-		};
-		D699950D145B10A4007752F1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "OPIFoundation-Core";
-			targetProxy = D699950C145B10A4007752F1 /* PBXContainerItemProxy */;
-		};
-		D6999510145B10BB007752F1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "OPIFoundation-Core";
-			targetProxy = D699950F145B10BB007752F1 /* PBXContainerItemProxy */;
-		};
-		D6999513145B10E3007752F1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "OPIFoundation-Core";
-			targetProxy = D6999512145B10E3007752F1 /* PBXContainerItemProxy */;
 		};
 		D6999518145B111A007752F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
