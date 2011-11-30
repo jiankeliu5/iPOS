@@ -88,7 +88,6 @@
 		[stateFormField setMaxLength:[NSNumber numberWithInt:2]];
 		stateFormField.textFormFieldCell.textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
 		
-		
 		/*
 		NSArray *pickListOptions = [IBAPickListFormOption pickListOptionsForStrings:[Address usStateCodes]];
 		IBAPickListFormOptionsStringTransformer *transformer = [[[IBAPickListFormOptionsStringTransformer alloc] initWithPickListOptions:pickListOptions] autorelease];
@@ -99,10 +98,9 @@
 																			 options:pickListOptions] autorelease]];
 		*/
 		IBATextFormField *zipFormField = [[IBATextFormField alloc] initWithKeyPath:@"zipPostalCode" title:@"Zip"];
+        [customerFormSection addFormField:[zipFormField autorelease]];
 		[zipFormField setMaxLength:[NSNumber numberWithInt:5]];
 		zipFormField.textFormFieldCell.textField.keyboardType = UIKeyboardTypeNumberPad;
-		[customerFormSection addFormField:[zipFormField autorelease]];
-		
 	}
 	
 	return self;

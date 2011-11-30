@@ -164,9 +164,9 @@
         return YES;
     }
     
-    // Determine if all items are closed or some are open
+    // Determine if all items are closed or some are open (ignore returned)
     for (OrderItem *orderItem in orderItemList) {
-        if (![orderItem isClosed]) {
+        if (![orderItem isClosed] && ![orderItem isReturned]) {
             return NO;
         }
     }
@@ -179,9 +179,9 @@
         return YES;
     }
     
-    // Determine if all items are closed or some are open
+    // Determine if all items are canceled (ignore returned)
     for (OrderItem *orderItem in orderItemList) {
-        if (![orderItem isCanceled]) {
+        if (![orderItem isCanceled] && ![orderItem isReturned]) {
             return NO;
         }
     }
@@ -213,6 +213,16 @@
         }
         return YES;
     }
+    return NO;
+}
+
+- (BOOL) canApplyDiscount: (NSDecimalNumber *) discountAmt {
+    NSDecimalNumber *openItemTotal = [self calcOpenItemsSubTotal];
+    
+    if ([discountAmt compare:openItemTotal] == NSOrderedAscending) {
+        return YES;
+    }
+    
     return NO;
 }
 
@@ -441,6 +451,18 @@
     
     for (OrderItem *item in orderItemList) {
         if ([item isOpen] || [item isClosed]) {
+            subTotal = [[item calcLineSubTotal] decimalNumberByAdding:subTotal];
+        }
+    }
+    
+    return subTotal;
+}
+
+- (NSDecimalNumber *) calcOpenItemsSubTotal {
+    NSDecimalNumber *subTotal = [NSDecimalNumber zero];
+    
+    for (OrderItem *item in orderItemList) {
+        if ([item isOpen]) {
             subTotal = [[item calcLineSubTotal] decimalNumberByAdding:subTotal];
         }
     }

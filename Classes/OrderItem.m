@@ -9,6 +9,8 @@
 #import "OrderItem.h"
 #import "NSString+StringFormatters.h"
 
+#import "NSString+Extensions.h"
+
 // Private interface
 @interface OrderItem()
 - (void) convertToQuantity: (NSDecimalNumber *) productQuantity;
@@ -278,21 +280,45 @@
 
 - (BOOL) allowClose {
     BOOL canClose = NO;
+    NSString *storeIdAsStr = @""; 
+    NSDecimalNumber *onHandInStore = [NSDecimalNumber zero];
+    NSDecimalNumber *numberAvailableInStore= [NSDecimalNumber zero];
     
+    if (!item || !item.store || !item.store.availability) {
+        return NO;
+    }
+    
+    onHandInStore = item.store.availability.onHandPrimary;
+    numberAvailableInStore = item.store.availability.availablePrimary;
+    storeIdAsStr = [NSString stringWithFormat:@"%@", item.store.storeId];
+    
+    NSComparisonResult onHandGreaterOrEqualToQuantity = [onHandInStore compare:quantityPrimary];
+    NSComparisonResult availableGreaterOrEqualToQuantity = [numberAvailableInStore compare:quantityPrimary];
+    NSComparisonResult onHandGreaterOrEqualAvailable = [onHandInStore compare:numberAvailableInStore];
     if (isNew) {
-        // For a newly added line item, it can be closed if the store shows availability
-        NSDecimalNumber *numberAvailableInStore = item.store.availability.availablePrimary;
-        // If quantity is greater do not allow a close
-        if ([self.quantityPrimary compare:numberAvailableInStore] == NSOrderedDescending){
-            canClose = NO;
-        } else {
+        if ((onHandGreaterOrEqualToQuantity == NSOrderedDescending || onHandGreaterOrEqualToQuantity == NSOrderedSame) 
+            && (availableGreaterOrEqualToQuantity == NSOrderedDescending || availableGreaterOrEqualToQuantity == NSOrderedSame) 
+            && (onHandGreaterOrEqualAvailable == NSOrderedDescending || onHandGreaterOrEqualAvailable == NSOrderedSame)){
             canClose = YES;
-        }
+        } 
     } else {
-        // For an existing line item, it can be closed if the status of the line item is 
-        // store received
-        if (self.openItemStatus != nil && [self.openItemStatus compare:OPEN_STATUS_STORE_RECEIVED] == NSOrderedSame) {
+        if (openItemStatus && [openItemStatus compare:OPEN_STATUS_STORE_RECEIVED] == NSOrderedSame) {
             canClose = YES;
+        } else if ([item.statusCode compare:ITEM_STATUS_NON_STOCK] == NSOrderedSame ||
+                   [item.statusCode compare:ITEM_STATUS_FREIGHT] == NSOrderedSame) {
+            canClose = YES;
+        } else {
+            if ([lotn isEmpty] || ![mcu isEqualToString:storeIdAsStr] || ![locn isEqualToString:@"STORE"]) {
+                if ((onHandGreaterOrEqualToQuantity == NSOrderedDescending || onHandGreaterOrEqualToQuantity == NSOrderedSame) 
+                    && (availableGreaterOrEqualToQuantity == NSOrderedDescending || availableGreaterOrEqualToQuantity == NSOrderedSame) 
+                    && (onHandGreaterOrEqualAvailable == NSOrderedDescending || onHandGreaterOrEqualAvailable == NSOrderedSame)) {
+                    canClose = YES;
+                } 
+            } else { 
+                if (onHandGreaterOrEqualAvailable == NSOrderedDescending || onHandGreaterOrEqualAvailable == NSOrderedSame) {
+                    canClose = YES;
+                }
+            }
         }
     }
     
@@ -316,7 +342,7 @@
 }
 
 - (BOOL) isClosed {
-    return [self.statusId isEqualToNumber: [NSNumber numberWithInt: LINE_ORDERSTATUS_CLOSED]];
+    return ([self.statusId intValue] == LINE_ORDERSTATUS_CLOSED);
 }
 
 - (BOOL) isOpen {
@@ -325,6 +351,10 @@
 
 - (BOOL) isCanceled {
     return ([self.statusId intValue] == LINE_ORDERSTATUS_CANCEL);
+}
+
+- (BOOL) isReturned {
+    return ([self.statusId intValue] == LINE_ORDERSTATUS_RETURN);
 }
 
 #pragma mark -
@@ -345,6 +375,13 @@
     NSDecimalNumber *lineTax = [[item.taxRate decimalNumberByMultiplyingBy:sellingPricePrimary] decimalNumberByMultiplyingBy:quantityPrimary];
     
     return lineTax;
+}
+
+- (NSDecimalNumber *) calcDiscountFromPrimarySellingPrice:(NSDecimalNumber *) newSellingPrice {
+    NSDecimalNumber *actualTotal = [self calcLineSubTotal];
+    NSDecimalNumber *discountedTotal = [newSellingPrice decimalNumberByMultiplyingBy:quantityPrimary];
+    
+    return [actualTotal decimalNumberBySubtracting:discountedTotal];
 }
 
 -(NSDecimalNumber *) calcSellingPricePrimaryFrom:(NSDecimalNumber *)discount {

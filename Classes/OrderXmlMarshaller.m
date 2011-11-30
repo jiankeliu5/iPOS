@@ -361,11 +361,8 @@ static NSString * const PREVIOUSORDER_LINEITEM_XML = @""
         productItem.taxRate = [node elementDecimalValue:@"TaxRate"];
         
         // Set the store for the product item
-        Store *productStore = [[Store alloc] init];
-        productStore.storeId = [node elementNumberValue:@"StoreID"];
+        Store *productStore = [POSOxmUtils toStore:node];
         productItem.store = productStore; 
-        [productStore release];
-        productStore = nil;
         
         // Create the order item and set its properties
         orderItem = [[OrderItem alloc] initWithItem:productItem AndQuantity:[node elementDecimalValue:@"QuantityOrderedPrimary"]];
@@ -396,10 +393,11 @@ static NSString * const PREVIOUSORDER_LINEITEM_XML = @""
         
         [order addOrderItemToOrder:orderItem];
         
-        [orderItem release];
-        orderItem = nil;
         [productItem release];
         productItem = nil;
+        
+        [orderItem release];
+        orderItem = nil;
     }
     
     if (order.orderId) {

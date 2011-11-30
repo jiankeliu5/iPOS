@@ -276,7 +276,7 @@
 
 #pragma mark UIButton targets
 - (void) submitPriceAdjustment:(id)sender {
-	NSDecimalNumber *discount;
+	NSDecimalNumber *discountOrPrice;
 	ManagerInfo *mgr = nil;
 	
 	[self resignFirstResponderIfPossible];
@@ -285,8 +285,8 @@
 		[AlertUtils showModalAlertMessage:@"Please enter discount amount." withTitle:@"iPOS"];
 		return;
 	} else {
-		discount = (NSDecimalNumber *)[discountFormatter numberFromString:discountField.text];
-		if (discount == nil) {
+		discountOrPrice = (NSDecimalNumber *)[discountFormatter numberFromString:discountField.text];
+		if (discountOrPrice == nil) {
 			[AlertUtils showModalAlertMessage:@"Incorrect format entered for discount." withTitle:@"iPOS"];
 			return;
 		}
@@ -304,12 +304,15 @@
     
     // Do we do a full order discount or just item discount
     if (order) {
-        if ([facade orderDiscountFor:order withDiscountAmount:discount managerApproval:mgr] == NO) {
+        if ([facade orderDiscountFor:order withDiscountAmount:discountOrPrice managerApproval:mgr] == NO) {
             [AlertUtils showModalAlertMessage:@"Order Discount was rejected.  Please enter a different value or manager credentials." withTitle:@"iPOS"];
         } else {
             [self.navigationController popViewControllerAnimated:YES];
         }
     } else if (orderItem) {
+        // Calculate Discount amount
+        NSDecimalNumber *discount = [orderItem calcDiscountFromPrimarySellingPrice:discountOrPrice];
+        
         if ([facade adjustSellingPriceFor:orderItem withDiscountAmount:discount managerApproval:mgr] == NO) {
             [AlertUtils showModalAlertMessage:@"Discount adjustment was rejected.  Please enter a different value or manager credentials." withTitle:@"iPOS"];
         } else {
@@ -353,12 +356,24 @@
 									BUTTON_WIDTH, 
 									BUTTON_HEIGHT);
 	
-	NSDecimalNumber *retailTotal = [self.orderItem calcLineRetailSubTotal];
-	retailTotalValueLabel.text = [NSString formatDecimalNumberAsMoney:retailTotal];
-	
-	NSDecimalNumber *sellingTotal = [self.orderItem calcLineSubTotal];
-	sellingTotalValueLabel.text = [NSString formatDecimalNumberAsMoney:sellingTotal];
-	
+    NSDecimalNumber *retailTotal = [NSDecimalNumber zero];
+    NSDecimalNumber *sellingTotal = [NSDecimalNumber zero];
+    if (self.order) {
+        retailTotal = [self.order calcOrderRetailSubTotal];
+        sellingTotal = [self.order calcOrderSubTotal];
+        retailTotalLabel.text = @"Retail Total";
+        sellingTotalLabel.text = @"Actual Total";
+        discountLabel.text = @"Discount";
+    } else if (self.orderItem) {
+        retailTotal = self.orderItem.item.retailPricePrimary;
+        sellingTotal = self.orderItem.sellingPricePrimary;
+        retailTotalLabel.text = @"Retail Price";
+        sellingTotalLabel.text = [NSString stringWithFormat:@"Price (%@)", orderItem.item.primaryUnitOfMeasure];
+        discountLabel.text = @"New Price $";
+    }
+    
+    retailTotalValueLabel.text = [NSString formatDecimalNumberAsMoney:retailTotal];
+    sellingTotalValueLabel.text = [NSString formatDecimalNumberAsMoney:sellingTotal];
 }
 
 @end

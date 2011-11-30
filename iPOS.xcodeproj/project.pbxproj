@@ -459,20 +459,6 @@
 			remoteGlobalIDString = D6F7542A145B026000B117E1;
 			remoteInfo = "OPIFoundation-Core";
 		};
-		D62AE4BC147C495500D4A625 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D64B7E1212F9D7EA006AB141;
-			remoteInfo = UnitTests;
-		};
-		D62AE4BE147C495500D4A625 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D679438B131607A8004B8254;
-			remoteInfo = IntTests;
-		};
 		D65B25BF1331C8B60052AEE2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -542,6 +528,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = D6B4366E1315A7DD000C0AA8;
 			remoteInfo = iPOSFoundation;
+		};
+		D6F0DF7C1485653D00109DE3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D697D1961312DCD0002C3EF6;
+			remoteInfo = iPOSDemo;
+		};
+		D6F0DF7E1485654700109DE3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D697D1961312DCD0002C3EF6;
+			remoteInfo = iPOSDemo;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -2189,8 +2189,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D62AE4BD147C495500D4A625 /* PBXTargetDependency */,
-				D62AE4BF147C495500D4A625 /* PBXTargetDependency */,
 				D60AAFB8147DD7D400FBA576 /* PBXTargetDependency */,
 				364B56C11430CFD80028FE09 /* PBXTargetDependency */,
 				D6B4386F1315ABA8000C0AA8 /* PBXTargetDependency */,
@@ -2234,6 +2232,7 @@
 			dependencies = (
 				36F3E9931434B9AD004376B8 /* PBXTargetDependency */,
 				D6B439111315B242000C0AA8 /* PBXTargetDependency */,
+				D6F0DF7D1485653D00109DE3 /* PBXTargetDependency */,
 			);
 			name = UnitTests;
 			productName = UnitTests;
@@ -2274,6 +2273,7 @@
 			dependencies = (
 				36F3E9981434BA49004376B8 /* PBXTargetDependency */,
 				D67943A81316089C004B8254 /* PBXTargetDependency */,
+				D6F0DF7F1485654700109DE3 /* PBXTargetDependency */,
 			);
 			name = IntTests;
 			productName = AppTests;
@@ -2813,16 +2813,6 @@
 			name = "OPIFoundation-Core";
 			targetProxy = D60AAFB7147DD7D400FBA576 /* PBXContainerItemProxy */;
 		};
-		D62AE4BD147C495500D4A625 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D64B7E1212F9D7EA006AB141 /* UnitTests */;
-			targetProxy = D62AE4BC147C495500D4A625 /* PBXContainerItemProxy */;
-		};
-		D62AE4BF147C495500D4A625 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D679438B131607A8004B8254 /* IntTests */;
-			targetProxy = D62AE4BE147C495500D4A625 /* PBXContainerItemProxy */;
-		};
 		D65B25BE1331C8B60052AEE2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D6B4366E1315A7DD000C0AA8 /* iPOSFoundation */;
@@ -2857,6 +2847,16 @@
 			isa = PBXTargetDependency;
 			target = D6B4366E1315A7DD000C0AA8 /* iPOSFoundation */;
 			targetProxy = D6E9E9CD1316036B00FF1498 /* PBXContainerItemProxy */;
+		};
+		D6F0DF7D1485653D00109DE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D697D1961312DCD0002C3EF6 /* iPOSDemo */;
+			targetProxy = D6F0DF7C1485653D00109DE3 /* PBXContainerItemProxy */;
+		};
+		D6F0DF7F1485654700109DE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D697D1961312DCD0002C3EF6 /* iPOSDemo */;
+			targetProxy = D6F0DF7E1485654700109DE3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -3054,8 +3054,8 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
@@ -3065,6 +3065,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "Resources/UnitTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -3095,8 +3096,8 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEMO_MODE=1";
@@ -3106,6 +3107,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "Resources/IntTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -3136,12 +3138,13 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Resources/AppTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -3235,14 +3238,15 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Resources/AppTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -3272,12 +3276,13 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Resources/AppTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -3308,8 +3313,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -3322,6 +3327,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "Resources/UnitTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -3339,7 +3345,7 @@
 				);
 				PRODUCT_NAME = UnitTests;
 				SDKROOT = iphoneos;
-				TEST_HOST = "$(BUNDLE_LOADER)";
+				TEST_HOST = "";
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
@@ -3352,8 +3358,8 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
@@ -3363,6 +3369,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "Resources/UnitTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -3459,8 +3466,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -3472,6 +3479,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "Resources/IntTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -3501,8 +3509,8 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEMO_MODE=1";
@@ -3512,6 +3520,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "Resources/IntTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",

@@ -100,6 +100,7 @@ typedef enum{
 - (BOOL) canViewDetails;
 - (BOOL) canEditDetails;
 - (BOOL) canCancel;
+- (BOOL) canApplyDiscount: (NSDecimalNumber *) discountAmt;
 
 - (BOOL) isModified;
 
@@ -118,6 +119,7 @@ typedef enum{
 #pragma mark Order Calculations
 - (NSDecimalNumber *) calcOrderRetailSubTotal;
 - (NSDecimalNumber *) calcOrderSubTotal;
+- (NSDecimalNumber *) calcOpenItemsSubTotal;
 - (NSDecimalNumber *) calcOrderTax;
 
 - (NSDecimalNumber *) calcOrderTotal;

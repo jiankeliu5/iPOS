@@ -38,19 +38,22 @@
                 NSMutableArray *tempApprovalList = [NSMutableArray arrayWithCapacity:[openOrderItems count]];
                 ItemSellingPriceApprovalRequest *sellingPriceApproval = nil;
                 
-                // Divide the discount amount evenly across order items
-                NSDecimalNumber *divideByNum = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%u", [openOrderItems count]]];
-                NSDecimalNumber *discountPerItem = [discount decimalNumberByDividingBy:divideByNum];
+                // Distribute the discount amount evenly across order items
+                NSDecimalNumber *discountPercent = [discountAmount decimalNumberByDividingBy:[order calcOpenItemsSubTotal]];
+                NSDecimalNumber *discountPerItem = nil;
                 
                 for (OrderItem *item in openOrderItems) {
-                    sellingPriceApproval = [[ItemSellingPriceApprovalRequest alloc] initWithOrderItem:item managerInfo:nil];
+                    discountPerItem = [[item calcLineSubTotal] decimalNumberByMultiplyingBy:discountPercent];
                     
+                    sellingPriceApproval = [[ItemSellingPriceApprovalRequest alloc] initWithOrderItem:item managerInfo:nil];
                     sellingPriceApproval.sellingPrice = [item calcSellingPricePrimaryFrom:discountPerItem];
                     
                     [tempApprovalList addObject:sellingPriceApproval];
                     
                     [sellingPriceApproval release];
+                    
                     sellingPriceApproval = nil;
+                    discountPerItem = nil;
                 }
                 
                 self.itemSellingApprovalList = [NSArray arrayWithArray:tempApprovalList];

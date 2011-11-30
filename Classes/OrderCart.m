@@ -262,7 +262,7 @@ static OrderCart *cart = nil;
 - (BOOL) saveOrder {
     Order *cartOrder = [self getOrder];
     
-    // Make sure the state of the order is updated properly
+    // Make sure the state of the order is updated properly (change the order type id)
     if (!cartOrder.isNewOrder && [cartOrder isQuote]) {
         [cartOrder setAsNewOrder];
     } if (cartOrder.isNewOrder) {

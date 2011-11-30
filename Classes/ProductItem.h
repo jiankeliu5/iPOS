@@ -11,6 +11,9 @@
 #import "DistributionCenter.h"
 #import "Store.h"
 
+static NSString * const ITEM_STATUS_NON_STOCK = @"N";
+static NSString * const ITEM_STATUS_FREIGHT = @"F";
+
 typedef enum { 
     UOMPrimary = 0,
     UOMSecondary = 1 
@@ -100,6 +103,7 @@ extern NSString * const UOM_SQFT;
 - (BOOL) isUOMConversionRequired;
 - (void) toggleUOM;
 - (NSString *) getSelectedUOMForDisplay;
+
 - (NSString *) getRetailPriceForDisplay;
 -(NSString *) unitOfMeasureDisplay:(NSString*)uom;
 - (NSComparisonResult)compare:(id)otherObject;

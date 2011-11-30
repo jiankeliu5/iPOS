@@ -1,4 +1,4 @@
-//
+    //
 //  POSServiceImpl.m
 //  iPOS
 //
@@ -304,7 +304,7 @@
     [order removeAllErrors];
     
     if (order.isNewOrder) {
-        NSLog(@"Saving order as new quote");
+        NSLog(@"Saving order as new quote or order");
         
         // Wipe out the order id for new
         order.orderId = nil;
@@ -373,6 +373,11 @@
 - (BOOL) orderDiscountFor:(Order *)order withDiscountAmount:(NSDecimalNumber *)discountAmount 
                                             managerApproval:(ManagerInfo *)managerApprover withSession:(SessionInfo *)sessionInfo {
     
+    // Determine if we can actually apply the discount
+    if (![order canApplyDiscount:discountAmount]) {
+        return NO;
+    }
+    
     BOOL allowAdjustment = NO;
     OrderDiscountApprovalRequest *discountApprovalRequest = [[OrderDiscountApprovalRequest alloc] 
                                                                                             initWithOrder:order 
@@ -403,16 +408,26 @@
         if (openItems && [openItems count] == [approvalResponse.itemSellingPriceApprovalList count]) {
             ItemSellingPriceApprovalResponse *approval = nil;
             OrderItem *item = nil;
+            
+            // Distribute the discount amount evenly across order items
+            NSDecimalNumber *discountPercent = [discountAmount decimalNumberByDividingBy:[order calcOpenItemsSubTotal]];
+            NSDecimalNumber *discountForItem = nil;
+            
             for (int i=0; i < [openItems count]; i++) {
                 approval = [approvalResponse.itemSellingPriceApprovalList objectAtIndex:i];
                 item = [openItems objectAtIndex:i];
+                discountForItem = [[item calcLineSubTotal] decimalNumberByMultiplyingBy:discountPercent];
                 
                 if ([approval.authorizationId compare: [NSDecimalNumber zero]] != NSOrderedSame) {
                     item.priceAuthorizationId = approval.authorizationId;
                 }
                 
                 // Divide the discount amount evenly across order items
-                [item setSellingPriceFrom:[discountApprovalRequest getDiscountPerItem]];
+                [item setSellingPriceFrom:discountForItem];
+                
+                approval = nil;
+                item = nil;
+                discountForItem = nil;
             }
         }
         

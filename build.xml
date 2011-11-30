@@ -1,0 +1,173 @@
+<!--
+iOS Ant Build Targets:
+	clean
+	compile
+	compileDebug
+	test
+	prepare
+	tag
+-->
+<project name="The Tile Shop iPOS iOS" default="Compile" basedir=".">
+
+	<property name="xcodeProject" value="iPOS.xcodeproj" />
+	<property name="appName" value="iPOS" />
+	<property name="buildDir" value="${basedir}/build" />
+	<property name="releaseBuildDir" value="${buildDir}/Release-iphoneos" />
+	<property name="debugBuildDir" value="${buildDir}/Debug-iphoneos" />
+	<property name="distributionBuildDir" value="${buildDir}/Distribution-iphoneos" />
+	<property name="ipaDir" value="${buildDir}" />
+	<property name="developerName" value="iPhone Distribution: The Tile Shop LLC" />
+	<property name="provisioningProfile" value="/Users/tlomenda/Library/MobileDevice/Provisioning Profiles/C4EBD5F7-4031-4666-98FA-7288F49636E7.mobileprovision" />
+	
+	<property name="distributionTargetDir" value="/Developer/myIOSDev/Distributions/${appName}" />
+	
+	<property name="svnDir" value = "https://opi.svn.cvsdude.com/tileshop/iPOS" />
+	<property name="svnTrunk" value = "${svnDir}/trunk" />
+	<property name="svnTags" value = "${svnDir}/tags" />
+	<property name="svnBranches" value = "${svnDir}/branches" />
+	
+	<property name="IOS_PROJECT_ROOT" value="${basedir}"/>
+	
+	<!-- Cleaning the xcode build -->
+	<target name="clean">
+		<echo level="info">Cleaning ...</echo>
+		<exec executable="xcodebuild" dir="${IOS_PROJECT_ROOT}" 
+			failonerror="true">
+		        
+			<arg line="-project ${xcodeProject}"/>
+			<arg line="-alltargets clean" />	            
+		</exec>
+		
+		<delete dir="${buildDir}" />
+	</target>
+	
+	<!-- Compile Targets -->
+	<target name="compile" depends="clean">        
+		<echo level="info">Compiling...</echo>
+		
+		<antcall target="xcodebuild">
+			<param name="xcode.target" value="iPOS" />
+			<param name="xcode.config" value="Release" />
+		</antcall>
+		<antcall target="xcodebuild">
+			<param name="xcode.target" value="iPOSDemo" />
+			<param name="xcode.config" value="Release" />
+		</antcall>
+	</target>
+	
+	<!-- Test Targets -->
+	<target name="test" depends="clean">        
+		<echo level="info">Testing...</echo>
+		<exec executable="xcodebuild" dir="${IOS_PROJECT_ROOT}" 
+			failonerror="true">
+			<arg line="-project ${xcodeProject}"/>
+			<arg line="-target UnitTests" />
+			<arg line="-sdk iphonesimulator5.0" />
+			<arg line="-configuration Release" />
+			<arg line="build" />
+		</exec>
+		<exec executable="xcodebuild" dir="${IOS_PROJECT_ROOT}" 
+			failonerror="true">    
+			<arg line="-project ${xcodeProject}"/>
+			<arg line="-target IntTests" />
+			<arg line="-sdk iphonesimulator5.0" />
+			<arg line="-configuration Release" />
+			<arg line="build" />
+		</exec>
+	</target>
+	
+	<!-- Prepare Targets -->
+	<target name="prepare" depends="test, buildForDistribution">        
+		<echo level="info">Preparing app for Distribution (creating IPA file)...</echo>
+		<exec executable="agvtool" dir="${IOS_PROJECT_ROOT}" 
+			failonerror="true" outputproperty="appVersion">
+		        
+			<arg line="vers"/>
+			<arg line="-terse" />
+		</exec>
+		<exec executable="agvtool" dir="${IOS_PROJECT_ROOT}" 
+			failonerror="true" outputproperty="appMarketVersion">
+		        
+			<arg line="mvers"/>
+			<arg line="-terse1" />
+		</exec>
+		
+		<!-- The Production Version -->
+		<exec executable="xcrun" dir="${IOS_PROJECT_ROOT}" 
+			failonerror="true">
+		        
+			<arg line="-sdk iphoneos5.0" />
+			<arg line="PackageApplication" />
+			<arg line="${distributionBuildDir}/${appName}.app" />
+			<arg line="-o ${ipaDir}/${appName}-${appMarketVersion}b${appVersion}.ipa" />
+			<arg line="--sign" />
+			<arg line="&quot;${developerName}&quot;" />
+			<arg line="--embed" />
+			<arg line="&quot;${provisioningProfile}&quot;" />
+		</exec>
+
+		<!-- The Demo Version -->
+		<exec executable="xcrun" dir="${IOS_PROJECT_ROOT}" 
+			failonerror="true">
+		        
+			<arg line="-sdk iphoneos5.0" />
+			<arg line="PackageApplication" />
+			<arg line="${distributionBuildDir}/${appName}Demo.app" />
+			<arg line="-o ${ipaDir}/${appName}Demo-${appMarketVersion}b${appVersion}.ipa" />
+			<arg line="--sign" />
+			<arg line="&quot;${developerName}&quot;" />
+			<arg line="--embed" />
+			<arg line="&quot;${provisioningProfile}&quot;" />
+		</exec>
+		
+		<echo level="info">IPA files signed and ready for distribution</echo>
+		<input message="Where would you like to copy the IPA files for distribution?" 
+		  		addproperty="distribution.target" defaultvalue="${distributionTargetDir}"/>
+		  		
+	 	<copy overwrite="true" file="${ipaDir}/${appName}-${appMarketVersion}b${appVersion}.ipa" todir="${distribution.target}" />
+		<copy overwrite="true" file="${ipaDir}/${appName}Demo-${appMarketVersion}b${appVersion}.ipa" todir="${distribution.target}" />
+	</target>
+	
+	<!-- SCM Targets -->
+	<target name="tag">
+		<echo level="info">Tagging version in SVN...</echo>
+		<exec executable="agvtool" dir="${IOS_PROJECT_ROOT}" 
+			failonerror="true">
+			<arg line="-usesvn"/>
+			<arg line="tag" />
+			<arg line="-baseurlfortag" />
+			<arg line="${svnTags}" />
+		</exec>
+		<exec executable="agvtool" dir="${IOS_PROJECT_ROOT}" 
+			failonerror="true">
+			<arg line="bump"/>
+			<arg line="-all" />
+		</exec>
+	</target>
+	
+	<!-- Helpers -->
+	<target name="buildForDistribution" depends="clean">        
+		<echo level="info">Compiling...</echo>
+		<antcall target="xcodebuild">
+			<param name="xcode.target" value="iPOS" />
+			<param name="xcode.config" value="Distribution" />
+		</antcall>
+		<antcall target="xcodebuild">
+			<param name="xcode.target" value="iPOSDemo" />
+			<param name="xcode.config" value="Distribution" />
+		</antcall>
+	</target>
+	
+	<target name="xcodebuild">
+		<exec executable="xcodebuild" dir="${IOS_PROJECT_ROOT}" 
+			failonerror="true">
+		       
+		    <arg line="-sdk iphoneos5.0" />
+			<arg line="-project ${xcodeProject}"/>
+			<arg line="-target &quot;${xcode.target}&quot;" />
+			<arg line="-configuration ${xcode.config}" />
+			<arg line="clean build" />
+		</exec>
+	</target>
+
+</project>

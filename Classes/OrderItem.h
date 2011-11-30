@@ -125,6 +125,7 @@ typedef enum {
 - (BOOL) isClosed;
 - (BOOL) isOpen;
 - (BOOL) isCanceled;
+- (BOOL) isReturned;
 - (BOOL) allowClose;
 - (BOOL) allowEdit;
 - (BOOL) allowQuantityChange;
@@ -141,6 +142,7 @@ typedef enum {
 
 #pragma mark -
 #pragma mark Order Item Calculations
+- (NSDecimalNumber *) calcDiscountFromPrimarySellingPrice: (NSDecimalNumber *) newSellingPrice;
 - (NSDecimalNumber *) calcSellingPricePrimaryFrom: (NSDecimalNumber *) discount;
 - (NSDecimalNumber *) calcSellingPriceSecondaryFrom: (NSDecimalNumber *) discount;
 - (NSDecimalNumber *) calcLineRetailSubTotal;

@@ -73,7 +73,7 @@
     }
     
     // Fetch the list
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@", baseUrl, orderHistoryUri, orderId]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@", baseUrl, orderHistoryUri, orderId, sessionInfo.storeId]];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     
     [request setValidatesSecureCertificate:NO];
