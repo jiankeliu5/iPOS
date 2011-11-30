@@ -773,12 +773,9 @@
 		if ([clickedButtonTitle isEqualToString:@"Save"]) {
             
             Order *order = [orderCart getOrder];
-            [facade saveOrder:order];
             
-            if (order.errorList != nil && [order.errorList count] > 0) {
-                [AlertUtils showModalAlertForErrors:order.errorList withTitle:@"iPOS"];
-			} else {
-				// Go clear back to the login screen.
+            if ([orderCart saveOrder]) {
+                // Go clear back to the login screen.
                 [AlertUtils showModalAlertMessage:[NSString stringWithFormat: @"Order %@ was successfully saved.", order.orderId] withTitle:@"iPOS"];
 				[self.navigationController popToRootViewControllerAnimated:YES];
 			}
