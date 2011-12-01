@@ -23,7 +23,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>14</string>
+	<string>15</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UISupportedExternalAccessoryProtocols</key>
@@ -37,5 +37,9 @@
 	<string>tsipos01</string>
 	<key>ipos.app.update.url</key>
 	<string>https://tsipos01/webservices/ipos/install</string>
+	<key>ipos.app.update.user</key>
+	<string></string>
+	<key>ipos.app.update.password</key>
+	<string></string>
 </dict>
 </plist>

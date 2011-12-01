@@ -82,7 +82,7 @@
 	[reachability startNotifier];
     
     // Check for new app version
-    [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(checkAppVersion:) userInfo:nil repeats: NO];   
+    [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(checkAppVersion:) userInfo:nil repeats: NO];   
 }
 
 - (void) applicationDidBecomeActive:(UIApplication *)application {
@@ -303,6 +303,9 @@
     
     if (appUpdater == nil) {
         appUpdater = [[InAppUpdater alloc] initWithAppInstallUrl:[bundle objectForInfoDictionaryKey:@"ipos.app.update.url"]];
+        
+        appUpdater.username = [bundle objectForInfoDictionaryKey:@"ipos.app.update.user"];
+        appUpdater.password = [bundle objectForInfoDictionaryKey:@"ipos.app.update.password"];
         appUpdater.delegate = self;
     }
     
