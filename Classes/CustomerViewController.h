@@ -22,27 +22,29 @@
     iPOSFacade *facade;
     
 	ExtUITextField *custPhoneField;
-	MOGlassButton *custSearchButton;
-	MOGlassButton *confirmButton;
+    ExtUITextField *custNameField;
+    
+//	MOGlassButton *custSearchButton;
+//	MOGlassButton *confirmButton;
 	
-	UIView *detailView;
-	UILabel *firstLabel;
-	UILabel *firstName;
-	UILabel *lastLabel;
-	UILabel *lastName;
-	UILabel *emailLabel;
-	UILabel *email;
-	UILabel *zipLabel;
-	UILabel *zip;
-    UILabel *holdStatusLabel;
-    UILabel *holdStatus;
-	
-	BOOL custDetailsOpen;
-	
-	Customer *customer;
+//	UIView *detailView;
+//	UILabel *firstLabel;
+//	UILabel *firstName;
+//	UILabel *lastLabel;
+//	UILabel *lastName;
+//	UILabel *emailLabel;
+//	UILabel *email;
+//	UILabel *zipLabel;
+//	UILabel *zip;
+//    UILabel *holdStatusLabel;
+//    UILabel *holdStatus;
+//	
+//	BOOL custDetailsOpen;
+//	
+//	Customer *customer;
 	
 }
 
-@property (nonatomic, retain) Customer *customer;
+// @property (nonatomic, retain) Customer *customer;
 
 @end

@@ -48,6 +48,7 @@
     Linea *linea;
     
     BOOL orderIsSaved;
+    BOOL doNavToReceiptAfterOnAcctPayment;
 }
 
 @property (nonatomic, retain) NSDecimalNumber *paymentAmount;

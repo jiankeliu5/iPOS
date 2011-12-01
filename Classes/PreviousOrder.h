@@ -15,6 +15,8 @@
     NSDecimalNumber *orderTotal;
     NSString *orderType;
     NSNumber *orderTypeId;
+    
+    NSString *purchaseOrderNum;
 }
 
 @property (nonatomic, retain) NSString *orderDate;
@@ -22,6 +24,7 @@
 @property (nonatomic, retain) NSDecimalNumber *orderTotal;
 @property (nonatomic, retain) NSString *orderType;
 @property (nonatomic, retain) NSNumber *orderTypeId;
+@property (nonatomic, retain) NSString *purchaseOrderNum;
 
 - (BOOL) canViewDetails;
 

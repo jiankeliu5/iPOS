@@ -68,8 +68,6 @@
 
 - (void) handleLogout:(id) sender;
 
-- (CustomerViewController *)findCustomerViewController;
-
 - (void) searchforItem:(id)sender;
 - (void) restoreDefaultToolbar;
 - (void) updateSelectionCount;
@@ -529,28 +527,10 @@
 }
 
 - (void) addOrEditCustomer:(id)sender {
-	CustomerViewController *custViewController = [self findCustomerViewController];
-	if (custViewController == nil) {
-		// Pop ourselves and push to the customer view controller.
-		// When the customer is confirmed we get pushed back here.
-		
-		// Locally store the navigation controller since
-		// self.navigationController will be nil once we are popped
-		UINavigationController *navController = self.navigationController;
-		
-		// retain ourselves so that the controller will still exist once it's popped off
-		[[self retain] autorelease];
-		
-		custViewController = [[[CustomerViewController alloc] init] autorelease];
-		
-		// Pop this controller and replace with another
-		[navController popViewControllerAnimated:NO];
-		[navController pushViewController:custViewController animated:YES];
-	} else {
-		// Go back to the customer controller, when we confirm we end up back at the cart.
-		[self.navigationController popToViewController:custViewController animated:YES];
-	}
-
+    CustomerViewController *custViewController = [[CustomerViewController alloc] init];
+    [self.navigationController pushViewController:custViewController animated:YES];
+    
+    [custViewController release];
 }
 
 - (void) tenderOrder:(id)sender {
@@ -563,18 +543,6 @@
 
 - (void)calculateProfitMargin:(id) sender{
     [self displayProfitMarginOverlay];
-}
-
-- (CustomerViewController *)findCustomerViewController {
-	if ([self navigationController] != nil) {
-		NSArray *controllers = [[self navigationController] viewControllers];
-		for (UIViewController *vc in controllers) {
-			if ([vc title] != nil && [[vc title] isEqualToString:@"Customer"] && [vc isKindOfClass:[CustomerViewController class]]) {
-				return (CustomerViewController*)vc;
-			}
-		}
-	}
-	return nil;
 }
 
 - (void) sendOrderAsQuote:(id)sender {

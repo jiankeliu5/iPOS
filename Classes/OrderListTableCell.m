@@ -73,7 +73,7 @@
     
     dateLabel.text = [previousOrder.orderDate stringByReplacingOccurrencesOfString:@"T" withString:@" "];
     totalLabel.text = [NSString formatDecimalNumberAsMoney:previousOrder.orderTotal];
-    orderIdLabel.text = [NSString formatNumber:previousOrder.orderId toScale:0];
+    orderIdLabel.text = [NSString stringWithFormat:@"%@ (%@)", [NSString formatNumber:previousOrder.orderId toScale:0], previousOrder.purchaseOrderNum];
     statusLabel.text = previousOrder.orderType;
 }
 

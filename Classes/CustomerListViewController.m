@@ -9,9 +9,12 @@
 #import "CustomerListViewController.h"
 #import "CustomerListTableCell.h"
 
+#import "CustomerDetailViewController.h"
+
 #import "UIScreen+Helpers.h"
 
 #import "LookupOrderUtil.h"
+#import "AlertUtils.h"
 
 @interface CustomerListViewController()
 
@@ -23,6 +26,7 @@
 @implementation CustomerListViewController
 @synthesize customerList;
 @synthesize searchString;
+@synthesize doGetOrdersOnSelection;
 
 
 #pragma mark -
@@ -33,16 +37,19 @@
     if (self) {
         // Set up the items that will appear in a navigation controller bar if
         // this view controller is added to a UINavigationController.
-        [[self navigationItem] setTitle:@"Customers"];
+        [[self navigationItem] setTitle:@"Cust List"];
         [self setTitle:@"Customers"];
         
         facade = [iPOSFacade sharedInstance];
+        
+        doGetOrdersOnSelection = NO;
     }
     
     return self;
 }
 
 - (void) dealloc {
+    
     [customerList release];
     customerList = nil;
     
@@ -117,7 +124,7 @@
 - (void) viewWillAppear:(BOOL)animated {
     if (self.navigationController != nil) {
 		[self.navigationController setNavigationBarHidden:NO];
-		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Customers" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
+		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"Cust List" style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
 	}
     
     [self layoutView:[UIApplication sharedApplication].statusBarOrientation];
@@ -179,8 +186,26 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [customerListTableView deselectRowAtIndexPath:indexPath animated:YES];
 	Customer *customer = (Customer *) [customerList objectAtIndex:indexPath.row];
+    
 	if (customer != nil) {
-        [LookupOrderUtil showOrdersFrom:self withPhone:customer.phoneNumber];
+        
+        if (doGetOrdersOnSelection) {
+            [LookupOrderUtil showOrdersFrom:self withPhone:customer.phoneNumber];
+        } else {
+            // Load the customer details
+            Customer *customerFromLookup = [facade lookupCustomerByPhone:customer.phoneNumber];
+            
+            if (customerFromLookup) {
+                CustomerDetailViewController *custDetailsController = [[CustomerDetailViewController alloc] init];
+                
+                custDetailsController.customer = customerFromLookup;
+                [self.navigationController pushViewController:custDetailsController animated:YES];
+                
+                [custDetailsController release];
+            } else {
+                [AlertUtils showModalAlertMessage:@"Problem loading customer details." withTitle:@"iPOS"];
+            }
+        }
 	}
 }
 

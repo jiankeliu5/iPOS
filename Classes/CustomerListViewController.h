@@ -20,9 +20,12 @@
     NSString *searchString;
     
     NSArray *customerList;
+    
+    BOOL doGetOrdersOnSelection;
 }
 
 @property (nonatomic, retain) NSArray *customerList;
 @property (nonatomic, retain) NSString *searchString;
+@property (nonatomic, assign, getter=isDoGetOrdersOnSelection) BOOL doGetOrdersOnSelection;
 
 @end

@@ -98,6 +98,7 @@ static NSString * const CREDIT = @"credit";
     orderCart = [OrderCart sharedInstance];
 	
     orderIsSaved = NO;
+    doNavToReceiptAfterOnAcctPayment = NO;
     return self;
 }
 
@@ -323,11 +324,10 @@ static NSString * const CREDIT = @"credit";
 
 #pragma mark -
 #pragma mark ChargeCreditCardViewDelegate
-- (void) setupKeyboardSupport:(id)theChargeCCView {
+- (void) setupKeyboardSupport:(id) theChargeView {
     
-    if([theChargeCCView conformsToProtocol:@protocol(PaymentView)] == YES)
-    {
-        ExtUITextField *chargeAmtField = [theChargeCCView getChargeAmountTextField];
+    if([theChargeView conformsToProtocol:@protocol(PaymentView)] == YES) {
+        ExtUITextField *chargeAmtField = [theChargeView getChargeAmountTextField];
         
         chargeAmtField.returnKeyType = UIReturnKeyDone;
         chargeAmtField.keyboardType = UIKeyboardTypeDecimalPad;
@@ -335,7 +335,6 @@ static NSString * const CREDIT = @"credit";
         
         chargeAmtField.delegate = self;  
     }
-    
 }
 
 - (void) cancelCardSwipe: (ChargeCreditCardView *) theChargeCCView {
@@ -348,10 +347,11 @@ static NSString * const CREDIT = @"credit";
     theChargeCCView.frame = frame;
     
     // Just remove the view
-    self.navigationItem.hidesBackButton = NO;
-    [self.navigationItem.leftBarButtonItem setEnabled:YES];
-    [self.navigationItem.rightBarButtonItem setEnabled:YES];
-    
+    if (!orderIsSaved) {
+        self.navigationItem.hidesBackButton = NO;
+        [self.navigationItem.leftBarButtonItem setEnabled:YES];
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    }
     if (chargeCCView) {
         [chargeCCView removeFromSuperview];
         chargeCCView = nil;
@@ -442,17 +442,23 @@ static NSString * const CREDIT = @"credit";
             return;        
         }
         else {
-            if([amount compare:balanceDue] == NSOrderedSame){
-                if ([orderCart saveOrder]) {
-                    [self sendPaymentOnAccount:amount];
-                }
+            BOOL onAcctPaymentSuccessful = NO;
+            
+            if ([orderCart saveOrder]) {
+                orderIsSaved = YES;
+                onAcctPaymentSuccessful = [self sendPaymentOnAccount:amount];
+            } else {
+                orderIsSaved = NO;
             }
-            else {
-                [orderCart saveOrder];
-                if ([self sendPaymentOnAccount:amount]) {
+            
+            if (onAcctPaymentSuccessful) {
+                // Do I navigate to the receipt view or stay on tender??
+                if([amount compare:balanceDue] == NSOrderedSame || [amount compare:balanceDue] == NSOrderedDescending) {
+                    doNavToReceiptAfterOnAcctPayment = YES;
+                } else {
                     // Fetch the payments for the order (to reflect current order state with payments)
                     order.previousPayments = [NSMutableArray arrayWithArray:[facade getPaymentHistoryForOrderid:order.orderId]];
-                };
+                }
             }
         }
     } else if (textField.tagName == CREDIT) {
@@ -466,13 +472,17 @@ static NSString * const CREDIT = @"credit";
         
         // If the amount was $0.00 at this point, Just save the order
         if ([amount compare:[NSDecimalNumber zero]] == NSOrderedSame) {
-            BOOL isOrderSaved = [orderCart saveOrder];
+            BOOL isOrderSaved = orderIsSaved;
             
-            orderIsSaved = isOrderSaved;
+            if (!isOrderSaved) {
+                [orderCart saveOrder];
+                orderIsSaved = isOrderSaved;
+            }
             
             if (isOrderSaved) {
                 [self navToReceipt];
             }
+            
         } else {
             // We are good at this point so show the message to have user swipe credit card
             if (chargeCCView) {
@@ -512,19 +522,17 @@ static NSString * const CREDIT = @"credit";
     textLabel.textColor = [UIColor whiteColor];
     textLabel.layer.cornerRadius = 5.0f;
     textLabel.text = @"Payment Successful";
-    textLabel.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
+    textLabel.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.7f];
     textLabel.textAlignment = UITextAlignmentCenter;
     
-	[UIView beginAnimations: @"Fade Out" context:nil];
-	
-	// wait for time before begin
-	[UIView setAnimationDelay:0.0];
-	[self.view addSubview:textLabel];
-    [textLabel release];
-	// druation of animation
-	[UIView setAnimationDuration:3.0];
-	textLabel.alpha = 0.0;
-	[UIView commitAnimations];
+    [UIView animateWithDuration:1.5 animations:^ {
+        [self.view addSubview:textLabel];
+        textLabel.alpha = 0.0;
+    } completion:^(BOOL isFinished) {
+        if (doNavToReceiptAfterOnAcctPayment) {
+            [self navToReceipt];
+        }
+    }];
 }
 
 #pragma mark -
@@ -966,10 +974,12 @@ static NSString * const CREDIT = @"credit";
 
 #pragma mark - Payment on Account
 -(void)cancelAccountPayment:(id)sender {
-    self.navigationItem.hidesBackButton = NO;
-    [self.navigationItem.leftBarButtonItem setEnabled:YES];
-    [self.navigationItem.rightBarButtonItem setEnabled:YES];
     
+    if (!orderIsSaved) {
+        self.navigationItem.hidesBackButton = NO;
+        [self.navigationItem.leftBarButtonItem setEnabled:YES];
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    }
     if (accountPaymentView) {
         [accountPaymentView removeFromSuperview];
         accountPaymentView = nil;

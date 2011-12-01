@@ -9,18 +9,23 @@
 #import "CustomerEditViewController.h"
 #import "IBAInputManager.h"
 #import "UIViewController+ViewControllerLayout.h"
+#import "UIViewController+Helpers.h"
+
 #import "AlertUtils.h"
 
 #import "Customer.h"
+
 #import "CartItemsViewController.h"
 #import "CustomerViewController.h"
+#import "CustomerDetailViewController.h"
+#import "CustomerListViewController.h"
 
 #pragma mark -
 #pragma mark Private Interface
 @interface CustomerEditViewController ()
 - (void) saveCustomer:(id)sender;
 - (void) confirmCustomer:(id)sender;
-- (CustomerViewController *)findCustomerViewController;
+
 @end
 
 #pragma mark -
@@ -29,6 +34,22 @@
 @synthesize lastSavedCustomer;
 
 #pragma mark Constructors
+#pragma mark -
+#pragma mark init/dealloc
+- (id) init {
+    self = [super init];
+    
+    if (self) {
+        if (self.navigationController != nil) 
+        {
+            [self.navigationController setNavigationBarHidden:NO];
+            [[self navigationItem] setTitle:@"Edit Customer"];
+            [self setTitle:@"Edit Customer"];
+        }
+    }
+    
+    return self;
+}
 
 - (void) dealloc {
 	[self setLastSavedCustomer:nil];
@@ -57,13 +78,6 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
-	
-	if (self.navigationController != nil) 
-	{
-		[self.navigationController setNavigationBarHidden:NO];
-		[[self navigationItem] setTitle:@"Edit Customer"];
-		[self setTitle:@"Edit Customer"];
-	}
 }	
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -183,34 +197,46 @@
         
         // Bind the customer to the order cart
 		[orderCart bindCustomerToOrder:custCopy];
-        // Clear the saved customer entry in the search customer view controller to keep it
-		// from showing if we navigate back.
-		CustomerViewController *custViewController = [self findCustomerViewController];
-		if (custViewController != nil) {
-			[custViewController setCustomer:nil];
-		}
         
         if (custCopy.errorList && [custCopy.errorList count] > 0) {
             [AlertUtils showModalAlertForErrors:custCopy.errorList withTitle:@"iPOS"];
             return;
         }
 		
-		// Going to pop this controller while pushing to the cart view.
-		// This should allow us to go back to the initial customer search
-		// screen from the cart view.
-		
-		// Locally store the navigation controller since
-		// self.navigationController will be nil once we are popped
-		UINavigationController *navController = self.navigationController;
-		
-		// retain ourselves so that the controller will still exist once it's popped off
-		[[self retain] autorelease];
-		
-		CartItemsViewController *cart = [[[CartItemsViewController alloc] init] autorelease];
-		
-		// Pop this controller and replace with another
-		[navController popViewControllerAnimated:NO];
-		[navController pushViewController:cart animated:YES];
+		// This is where you pop to the order cart or pop the customer controllers and push the order cart
+        UIViewController *cartItemsController = [self getOnNavStackByType:[CartItemsViewController class]];
+        
+        if (cartItemsController) {
+            [self.navigationController popToViewController:cartItemsController animated:YES];
+        } else {
+            // Pop all relevant customer controllers including self
+            UINavigationController *navController = self.navigationController;
+            UIViewController *custDetailController = [self getOnNavStackByType:[CustomerDetailViewController class]];
+            UIViewController *custListController = [self getOnNavStackByType:[CustomerListViewController class]];
+            UIViewController *custController = [self getOnNavStackByType:[CustomerViewController class]];
+            
+            
+            [[self retain] autorelease];
+            
+            // Pop all customer related view controllers
+            [navController popViewControllerAnimated:NO];
+            
+            if (custDetailController) {
+                [navController popViewControllerAnimated:NO];
+            }
+            if (custListController) {
+                [navController popViewControllerAnimated:NO];
+            }
+            if (custController) {
+                [navController popViewControllerAnimated:NO];
+            }
+            
+            // Push the cart items controller
+            CartItemsViewController *cartItemsController = [[CartItemsViewController alloc] init];
+            [navController pushViewController:cartItemsController animated:YES];
+            [cartItemsController release];
+        }
+
 		
 	}
 	
@@ -220,18 +246,6 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations.
     return YES;
-}
-
-- (CustomerViewController *)findCustomerViewController {
-	if ([self navigationController] != nil) {
-		NSArray *controllers = [[self navigationController] viewControllers];
-		for (UIViewController *vc in controllers) {
-			if ([vc title] != nil && [[vc title] isEqualToString:@"Customer"]) {
-				return (CustomerViewController*)vc;
-			}
-		}
-	}
-	return nil;
 }
 
 @end

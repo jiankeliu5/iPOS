@@ -277,6 +277,7 @@
                     
                     custListViewController.customerList = customerList;
                     custListViewController.searchString = textField.text;
+                    custListViewController.doGetOrdersOnSelection = YES;
                     [[self navigationController] pushViewController:custListViewController animated:TRUE];
                     [custListViewController release];
                 }

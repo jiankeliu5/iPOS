@@ -13,45 +13,29 @@
 #import "NSString+StringFormatters.h"
 #import "AlertUtils.h"
 #import "CustomerFormDataSource.h"
-#import "CustomerEditViewController.h"
+
 #import "CartItemsViewController.h"
+
+#import "CustomerDetailViewController.h"
+#import "CustomerListViewController.h"
+#import "CustomerEditViewController.h"
 
 #define MARGIN_TOP 40.0f
 #define SPACING 20.0f
 
-#define TEXT_FIELD_HEIGHT 30.0f
+#define TEXT_FIELD_HEIGHT 40.0f
 #define TEXT_FIELD_WIDTH 200.0f
-#define BUTTON_HEIGHT 30.0f
-#define BUTTON_WIDTH 100.0f
-#define LABEL_FONT_SIZE 12.0f
-#define LABEL_HEIGHT 12.0f
-#define LABEL_SPACING 7.0f
-
-#define DETAIL_VIEW_WIDTH 280.0f
-#define DETAIL_VIEW_HEIGHT 102.0f
-#define DETAIL_LABEL_X 0.0f
-#define DETAIL_LABEL_WIDTH 40.0f
-#define DETAIL_DATA_X 40.0f
-#define DETAIL_DATA_WIDTH 260.0f
-#define CONFIRM_BUTTON_X 180.0f
 
 @interface CustomerViewController()
-- (void) handleSearchButton:(id)sender;
-- (void) handleConfirmButton:(id)sender;
-- (UILabel *) createNormalLabel:(NSString *)text withRect:(CGRect)rect;
-- (UILabel *) createBoldLabel:(NSString *)text withRect:(CGRect)rect;
-
+- (void)performSearch:(ExtUITextField *) textField;
 
 - (void) layoutView: (UIInterfaceOrientation) orientation;
-- (void) layoutButtons;
-- (void) updateDisplayValues;
 
-- (void) editExistingCustomer:(id)sender;
 @end
 
 @implementation CustomerViewController
 
-@synthesize customer;
+// @synthesize customer;
 
 #pragma mark Constructors
 - (id)init
@@ -74,7 +58,6 @@
 }
 
 - (void)dealloc {
-	[self setCustomer:nil];
     [super dealloc];
 }
 
@@ -108,63 +91,28 @@
 	custPhoneField.returnKeyType = UIReturnKeySearch;
 	custPhoneField.keyboardType = UIKeyboardTypeNumberPad;
 	custPhoneField.mask = @"999-999-9999";
-	[self addDoneToolbarForTextField:custPhoneField];
+	[super addSearchAndCancelToolbarForTextField:custPhoneField];
 	
 	[self.view addSubview:custPhoneField];
 	[custPhoneField release];
-	
-	custSearchButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
-	[custSearchButton setupAsSmallBlackButton];
-	custSearchButton.titleLabel.textAlignment = UITextAlignmentCenter;
-	[custSearchButton setTitle:@"Search" forState:UIControlStateNormal];
-	[self.view addSubview:custSearchButton];
-	[custSearchButton release];
-	
-	// Set up the detail view for showing customer summary information when fetched by the search.
-	detailView = [[UIView alloc] initWithFrame:CGRectZero];
-	
-	firstLabel = [self createNormalLabel:@"First" withRect:CGRectZero];
-	[detailView addSubview:firstLabel];
-
-	firstName = [self createBoldLabel:nil withRect:CGRectZero];
-	[detailView addSubview:firstName];
-	
-	lastLabel = [self createNormalLabel:@"Last" withRect:CGRectZero];
-	[detailView addSubview:lastLabel];
-
-	lastName = [self createBoldLabel:nil withRect:CGRectZero];
-	[detailView addSubview:lastName];
-	
-	emailLabel = [self createNormalLabel:@"Email" withRect:CGRectZero];
-	[detailView addSubview:emailLabel];
-
-	email = [self createBoldLabel:nil withRect:CGRectZero];
-	[detailView addSubview:email];
-	
-	zipLabel = [self createNormalLabel:@"Zip" withRect:CGRectZero];
-	[detailView addSubview:zipLabel];
-
-	zip = [self createBoldLabel:nil withRect:CGRectZero];
-	[detailView addSubview:zip];
     
-    holdStatusLabel = [self createNormalLabel:@"Status" withRect:CGRectZero];
-    holdStatus = [self createBoldLabel:nil withRect:CGRectZero];
-    
-    [detailView addSubview:holdStatusLabel];
-    [detailView addSubview:holdStatus];
+    custNameField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
+	custNameField.textColor = [UIColor blackColor];
+	custNameField.borderStyle = UITextBorderStyleRoundedRect;
+	custNameField.textAlignment = UITextAlignmentCenter;
+	custNameField.clearsOnBeginEditing = YES;
+	custNameField.placeholder = @"Name";
+	custNameField.tagName = @"CustName";
+    custNameField.autocorrectionType = UITextAutocorrectionTypeNo;
+    custNameField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+	custNameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+	custNameField.clearButtonMode = UITextFieldViewModeWhileEditing;
+	custNameField.returnKeyType = UIReturnKeySearch;
+	custNameField.keyboardType = UIKeyboardTypeDefault;
+	[super addSearchAndCancelToolbarForTextField:custNameField];
 	
-	detailView.hidden = YES;
-	[self.view addSubview:detailView];
-	[detailView release];
-	
-	confirmButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
-	[confirmButton setupAsSmallBlackButton];
-	confirmButton.titleLabel.textAlignment = UITextAlignmentCenter;
-	[confirmButton setTitle:@"Confirm" forState:UIControlStateNormal];
-    confirmButton.hidden = YES;
-	[self.view addSubview:confirmButton];
-	[confirmButton release];
-	
+	[self.view addSubview:custNameField];
+	[custNameField release];	
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -178,8 +126,8 @@
 	
 	self.delegate = self;
 	custPhoneField.delegate = self;
-	[custSearchButton addTarget:self action:@selector(handleSearchButton:) forControlEvents:UIControlEventTouchUpInside];
-	[confirmButton addTarget:self action:@selector(handleConfirmButton:) forControlEvents:UIControlEventTouchUpInside];
+    custNameField.delegate = self;
+
 	
 }
 
@@ -196,19 +144,9 @@
 	}
 	
     [self layoutView:[UIApplication sharedApplication].statusBarOrientation];
-	[self updateDisplayValues];
 	
-	if (self.customer == nil) {
-		custPhoneField.text = nil;
-		custDetailsOpen = NO;
-		if (self.navigationItem.rightBarButtonItem != nil) {
-			[self.navigationItem setRightBarButtonItem:nil];
-		}
-	} else {
-		custPhoneField.text = [NSString formatAsUSPhone:[self.customer phoneNumber]];
-	}
-
-	[self updateDisplayValues];
+    custPhoneField.text = @"";
+    custPhoneField.text = @"";
 	
 	// Do this last
 	[super viewWillAppear:animated];
@@ -253,103 +191,90 @@
 	// Nothing to do.
 }
 
+- (void) dismissKeyboard:(id)sender {
+    ExtUITextField *textField = (ExtUITextField *) self.currentFirstResponder;
+    
+    [super dismissKeyboard:sender];
+    
+    [self performSearch:textField];
+}
+
+- (BOOL)textFieldShouldReturn:(ExtUITextField *)textField {
+	[textField resignFirstResponder];
+    
+    [self performSearch:textField];
+	return YES;
+}
+
+- (void)textFieldDidBeginEditing:(ExtUITextField *)textField {
+    if ([textField.tagName isEqualToString:@"CustName"]) {
+        custPhoneField.text = nil;
+    } else if ([textField.tagName isEqualToString:@"CustPhone"]) {
+        custNameField.text = nil;
+    }
+}
+
 #pragma mark -
-#pragma mark UIButton callbacks
-- (void)handleSearchButton:(id)sender {
-	
-	[self.navigationItem setRightBarButtonItem:nil];
-	[self setCustomer:nil];
-	
-	[self resignFirstResponderIfPossible];
-	
-	NSString *searchString = [custPhoneField.text stringByReplacingOccurrencesOfString:@"-" withString:@""];
-	NSString *regex = @"[0-9]{10}";
-	NSPredicate *regextest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-	if ([regextest evaluateWithObject:searchString] == YES) {
-		[self setCustomer:[facade lookupCustomerByPhone:searchString]];
-		
-		if (customer == nil) {
-			NSMutableDictionary *customerFormModel = [[[NSMutableDictionary alloc] init] autorelease];
-			[customerFormModel setValue:[NSString stringWithString:searchString] forKey:@"phoneNumber"];
-			CustomerFormDataSource *customerFormDataSource = [[[CustomerFormDataSource alloc] initWithModel:customerFormModel] autorelease];
-			CustomerEditViewController *customerEditViewController = [[[CustomerEditViewController alloc] initWithNibName:nil bundle:nil formDataSource:customerFormDataSource] autorelease];
-			[customerEditViewController setTitle:@"Customer Edit"];
+#pragma mark Performing Searches
+- (void) performSearch:(ExtUITextField *)textField {
+    
+    if (textField && [textField.text length] > 0) {
+        NSLog(@"Incoming text: %@", textField.text);
+        
+        if ([textField.tagName isEqualToString:@"CustName"] && [textField.text length] > 0) {
+            if (textField.text.length < 3) {
+                [AlertUtils showModalAlertMessage:@"You must enter at least 3 characters for the search." withTitle:@"iPOS"];
+            } else {
+                NSArray *customerList = [facade lookupCustomerByName:textField.text];
+                
+                if (customerList == nil || [customerList count] == 0) {
+                    [AlertUtils showModalAlertMessage:@"No customer matches found." withTitle:@"iPOS"];
+                } else {
+                    CustomerListViewController *custListViewController = [[CustomerListViewController alloc] init];
+                    
+                    custListViewController.customerList = customerList;
+                    custListViewController.searchString = textField.text;
+                    [[self navigationController] pushViewController:custListViewController animated:YES];
+                    [custListViewController release];
+                }
+            }
+        } else if ([textField.tagName isEqualToString:@"CustPhone"] && [textField.text length] > 0) {
+            NSString *searchString = [textField.text stringByReplacingOccurrencesOfString:@"-" withString:@""];
+            NSString *regex = @"[0-9]{10}";
+            NSPredicate *regextest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];          
             
-            custDetailsOpen = NO;
-            [self updateDisplayValues];
-            
-			[[self navigationController] pushViewController:customerEditViewController animated:TRUE];
-		} else {
-			if (custDetailsOpen == NO) {
-				custDetailsOpen = YES;
-			} 
-			
-			UIBarButtonItem *editButton = [[UIBarButtonItem alloc] init];
-			editButton.title = @"Edit";
-			editButton.target = self;
-			[editButton setAction:@selector(editExistingCustomer:)];
-			self.navigationItem.rightBarButtonItem = editButton;
-			[editButton release];
-			
-			[self updateDisplayValues];
-		}
-	} else {
-		[AlertUtils showModalAlertMessage:@"Please enter a 10 digit phone number" withTitle:@"iPOS"];
-	}
-}
+            if ([regextest evaluateWithObject:searchString] == YES) {
+                Customer *customer = [facade lookupCustomerByPhone:searchString];
+                
+                // Load the details or go right to edit customer
+                if (customer) {
+                    // Load the customer details
+                    CustomerDetailViewController *custDetailsController = [[CustomerDetailViewController alloc] init];
+                    
+                    custDetailsController.customer = customer;
+                    
+                    [[self navigationController] pushViewController:custDetailsController animated:TRUE];
+                    [custDetailsController release];
+                } else {
+                    NSMutableDictionary *customerFormModel = [[[NSMutableDictionary alloc] init] autorelease];
+                    [customerFormModel setValue:[NSString stringWithString:searchString] forKey:@"phoneNumber"];
+                    CustomerFormDataSource *customerFormDataSource = [[CustomerFormDataSource alloc] initWithModel:customerFormModel];
+                    CustomerEditViewController *customerEditViewController = [[CustomerEditViewController alloc] initWithNibName:nil bundle:nil formDataSource:customerFormDataSource];
+                    [customerEditViewController setTitle: @"New Customer"];
+                    
+                    [[self navigationController] pushViewController:customerEditViewController animated:YES];
 
-- (void) editExistingCustomer:(id)sender {
-	if (self.customer != nil) {
-		NSMutableDictionary *customerFormModel = [self.customer modelFromCustomer];
-		CustomerFormDataSource *customerFormDataSource = [[[CustomerFormDataSource alloc] initWithModel:customerFormModel] autorelease];
-		CustomerEditViewController *customerEditViewController = [[[CustomerEditViewController alloc] initWithNibName:nil bundle:nil formDataSource:customerFormDataSource] autorelease];
-		[customerEditViewController setTitle:@"Customer Edit"];
-		[[self navigationController] pushViewController:customerEditViewController animated:TRUE];
-	} else {
-		NSLog(@"Should not be trying to edit if customer is nil");
-	}
-
-}
-
-- (void) handleConfirmButton:(id)sender {
-	NSLog(@"Got confirm button press");
-	if (self.customer != nil) {
-		NSMutableDictionary *cpy = [self.customer modelFromCustomer];
-		Customer *custCpy = [[[Customer alloc] initWithModel:cpy] autorelease];
-        
-        
-        [orderCart bindCustomerToOrder:custCpy];
-        [self setCustomer:nil];
-        
-        // There may have been issues binding the customer
-        if (custCpy.errorList && [custCpy.errorList count] > 0) {
-            [AlertUtils showModalAlertForErrors:custCpy.errorList withTitle:@"iPOS"];
-            return;
+                    [customerFormDataSource release];
+                    [customerEditViewController release];
+                }
+                
+            } else {
+                [AlertUtils showModalAlertMessage:@"Please enter a 10 digit phone number" withTitle:@"iPOS"];
+            }
         }
         
-        CartItemsViewController *cart = [[CartItemsViewController alloc] init];
-		[[self navigationController] pushViewController:cart animated:TRUE];
-		[cart release];
-	}
-}
+    }
 
-#pragma mark -
-#pragma mark UILabel creation
-- (UILabel *) createNormalLabel:(NSString *)text withRect:(CGRect)rect {
-	UILabel *label;
-	label = [[UILabel alloc] initWithFrame:rect];
-	label.text = text;
-	label.backgroundColor = [UIColor clearColor];
-	label.textColor = [UIColor blackColor];
-	label.textAlignment = UITextAlignmentLeft;
-	label.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
-	return [label autorelease];
-}
-
-- (UILabel *) createBoldLabel:(NSString *)text withRect:(CGRect)rect {
-	UILabel *label = [self createNormalLabel:text withRect:rect];
-	label.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
-	return label;
 }
 
 #pragma mark -
@@ -365,80 +290,9 @@
     custPhoneField.frame = CGRectMake(0, cy, TEXT_FIELD_WIDTH, TEXT_FIELD_HEIGHT);
     custPhoneField.center = [self.view centerAt:cy];
     
-    // detailView (firstLabel, firstName, lastLabel, lastName, emailLabel, email, zipLabel, zip, holdStatusLabel, holdStatus)
     cy += TEXT_FIELD_HEIGHT + SPACING;
-    detailView.frame = CGRectMake((viewBounds.size.width - DETAIL_VIEW_WIDTH)/2, cy, DETAIL_VIEW_WIDTH, DETAIL_VIEW_HEIGHT);
-    
-    CGFloat labelY = LABEL_SPACING;
-    firstLabel.frame = CGRectMake(0, labelY, DETAIL_LABEL_WIDTH, LABEL_HEIGHT);
-    firstName.frame = CGRectMake(DETAIL_LABEL_WIDTH, labelY, DETAIL_DATA_WIDTH, LABEL_HEIGHT);
-    
-    labelY += LABEL_HEIGHT + LABEL_SPACING;
-    lastLabel.frame = CGRectMake(0, labelY, DETAIL_LABEL_WIDTH, LABEL_HEIGHT);
-    lastName.frame = CGRectMake(DETAIL_LABEL_WIDTH, labelY, DETAIL_DATA_WIDTH, LABEL_HEIGHT);
-    
-    labelY += LABEL_HEIGHT + LABEL_SPACING;
-    emailLabel.frame = CGRectMake(0, labelY, DETAIL_LABEL_WIDTH, LABEL_HEIGHT);
-    email.frame = CGRectMake(DETAIL_LABEL_WIDTH, labelY, DETAIL_DATA_WIDTH, LABEL_HEIGHT);
-    
-    labelY += LABEL_HEIGHT + LABEL_SPACING;
-    zipLabel.frame = CGRectMake(0, labelY, DETAIL_LABEL_WIDTH, LABEL_HEIGHT);
-    zip.frame = CGRectMake(DETAIL_LABEL_WIDTH, labelY, DETAIL_DATA_WIDTH, LABEL_HEIGHT);
-    
-    labelY += LABEL_HEIGHT + LABEL_SPACING;
-    holdStatusLabel.frame = CGRectMake(0, labelY, DETAIL_LABEL_WIDTH, LABEL_HEIGHT);
-    holdStatus.frame = CGRectMake(DETAIL_LABEL_WIDTH, labelY, DETAIL_DATA_WIDTH, LABEL_HEIGHT);
-    
-    [self layoutButtons];
-}
-
-- (void) layoutButtons {
-    CGFloat cy = MARGIN_TOP + TEXT_FIELD_HEIGHT + SPACING;
-    CGFloat width = self.view.bounds.size.width;
-    
-    if (custDetailsOpen) {
-        cy = MARGIN_TOP + TEXT_FIELD_HEIGHT + DETAIL_VIEW_HEIGHT + SPACING;
-        if (![customer isOnHold]) {
-            detailView.hidden = NO;
-            CGFloat buttonSpace = floorf((width - BUTTON_WIDTH * 2.0f) / 3.0f);
-            custSearchButton.frame = CGRectMake(buttonSpace, cy, BUTTON_WIDTH, BUTTON_HEIGHT);
-            confirmButton.frame = CGRectMake(((buttonSpace * 2.0f) + BUTTON_WIDTH), cy, BUTTON_WIDTH, BUTTON_HEIGHT);
-            confirmButton.hidden = NO;
-            [confirmButton setEnabled:YES];
-            holdStatus.textColor = [UIColor blackColor];
-        }
-        else {
-            holdStatus.textColor = [UIColor redColor];
-            detailView.hidden = NO;
-            CGFloat buttonSpace = floorf((width - BUTTON_WIDTH * 2.0f) / 3.0f);
-            custSearchButton.frame = CGRectMake(buttonSpace, cy, BUTTON_WIDTH, BUTTON_HEIGHT);
-            confirmButton.frame = CGRectMake(((buttonSpace * 2.0f) + BUTTON_WIDTH), cy, BUTTON_WIDTH, BUTTON_HEIGHT);
-            
-            confirmButton.hidden = NO;
-            [confirmButton setEnabled:NO];
-        }
-    } else {
-        custSearchButton.frame = CGRectMake(0, cy, BUTTON_WIDTH, BUTTON_HEIGHT);
-        custSearchButton.center = [self.view centerAt:cy];
-        confirmButton.hidden = YES;
-
-    }
-}
-
-#pragma mark -
-#pragma mark UIView update
-- (void) updateDisplayValues {
-	if (customer != nil) {
-		firstName.text = customer.firstName;
-		lastName.text = customer.lastName;
-		email.text = customer.emailAddress;
-		zip.text = customer.address.zipPostalCode;
-        holdStatus.text = customer.holdStatusText;
-	} else {
-        detailView.hidden = TRUE;
-    }
-	
-	[self layoutButtons];
+    custNameField.frame = CGRectMake(0, cy, TEXT_FIELD_WIDTH, TEXT_FIELD_HEIGHT);
+    custNameField.center = [self.view centerAt:cy];
 }
 
 @end

@@ -19,6 +19,7 @@
 @synthesize orderTotal;
 @synthesize orderType;
 @synthesize orderTypeId;
+@synthesize purchaseOrderNum;
 
 - (id)init
 {
@@ -42,6 +43,8 @@
     orderType = nil;
     [orderTypeId release];
     orderTypeId = nil;
+    [purchaseOrderNum release];
+    purchaseOrderNum = nil;
     
     [super dealloc];
 }
