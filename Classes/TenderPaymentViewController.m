@@ -450,22 +450,27 @@ static NSString * const CREDIT = @"credit";
             return;        
         }
         else {
-            BOOL onAcctPaymentSuccessful = NO;
+            BOOL isOrderSaved = orderIsSaved;
             
-            if ([orderCart saveOrder]) {
-                orderIsSaved = YES;
-                onAcctPaymentSuccessful = [self sendPaymentOnAccount:amount];
-            } else {
-                orderIsSaved = NO;
+            if (!isOrderSaved) {
+                orderIsSaved = [orderCart saveOrder];
+                isOrderSaved = orderIsSaved;
             }
             
-            if (onAcctPaymentSuccessful) {
-                // Do I navigate to the receipt view or stay on tender??
-                if([amount compare:balanceDue] == NSOrderedSame || [amount compare:balanceDue] == NSOrderedDescending) {
-                    doNavToReceiptAfterOnAcctPayment = YES;
-                } else {
-                    // Fetch the payments for the order (to reflect current order state with payments)
-                    order.previousPayments = [NSMutableArray arrayWithArray:[facade getPaymentHistoryForOrderid:order.orderId]];
+            // Just go to receipt view or continue with payment
+            if (isOrderSaved && [amount compare:[NSDecimalNumber zero]] == NSOrderedSame) {
+                [self navToReceipt];
+            } else {
+                BOOL onAcctPaymentSuccessful = [self sendPaymentOnAccount:amount];
+                
+                if (onAcctPaymentSuccessful) {
+                    // Do I navigate to the receipt view or stay on tender??
+                    if([amount compare:balanceDue] == NSOrderedSame || [amount compare:balanceDue] == NSOrderedDescending) {
+                        doNavToReceiptAfterOnAcctPayment = YES;
+                    } else {
+                        // Fetch the payments for the order (to reflect current order state with payments)
+                        order.previousPayments = [NSMutableArray arrayWithArray:[facade getPaymentHistoryForOrderid:order.orderId]];
+                    }
                 }
             }
         }
