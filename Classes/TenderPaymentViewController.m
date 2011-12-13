@@ -21,6 +21,7 @@
 #import "SignatureViewController.h"
 
 #import "NSString+StringFormatters.h"
+#import "NSString+Extensions.h"
 
 #import "CreditCardPayment.h"
 #import "AccountPayment.h"
@@ -58,6 +59,7 @@ static NSString * const CREDIT = @"credit";
 - (UIView *) buildSeparatorView;
 
 - (void) handleCreditCardPayment:(id)sender;
+- (void) handleAccountPayment:(id)sender;
 - (void) handleSuspendOrder: (id) sender;
 
 - (void) layoutView: (UIInterfaceOrientation) orientation;
@@ -202,9 +204,15 @@ static NSString * const CREDIT = @"credit";
                                                             action:@selector(handleAccountPayment:)] autorelease];
     
     
-    if (![orderCart getCustomerForOrder].isPaymentOnAccountEligable)
-    {
+    if (![orderCart getCustomerForOrder].isPaymentOnAccountEligable) {
         [accountPaymentButton setEnabled:NO];
+    } else {
+        Order *order = [orderCart getOrder];
+        NSArray *closedItems = [order getOrderItems:LINE_ORDERSTATUS_CLOSED];
+        
+        if ([[order calcBalanceDue] compare:[NSDecimalNumber zero]] == NSOrderedSame && [closedItems count] == 0) {
+            [accountPaymentButton setEnabled:NO];
+        }
     }
     
     UIBarButtonItem *creditCardButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"CreditCard.png"] 
@@ -475,8 +483,8 @@ static NSString * const CREDIT = @"credit";
             BOOL isOrderSaved = orderIsSaved;
             
             if (!isOrderSaved) {
-                [orderCart saveOrder];
-                orderIsSaved = isOrderSaved;
+                orderIsSaved = [orderCart saveOrder];
+                isOrderSaved = orderIsSaved;
             }
             
             if (isOrderSaved) {
@@ -846,20 +854,25 @@ static NSString * const CREDIT = @"credit";
 }
 
 -(void)handleAccountPayment:(id)sender {
-    self.navigationItem.hidesBackButton = YES;
-    [self.navigationItem.leftBarButtonItem setEnabled:NO];
-    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    Order *order = [orderCart getOrder];
     
-    CGRect overlayRect = self.view.bounds;
-    accountPaymentView = [[AccountPaymentView alloc] initWithFrame:overlayRect];
-    accountPaymentView.viewDelegate = self;
-    accountPaymentView.balanceDue = balanceDueLabel.text;
-    accountPaymentView.totalAccountBalance =  [NSString formatDecimalNumberAsMoney:[[orderCart getCustomerForOrder] calculateAccountBalance]];
-    
-    [self.view addSubview:accountPaymentView];
-    
-    [accountPaymentView release];
-    
+    if (order.purchaseOrderId == nil || [order.purchaseOrderId isEmpty]) {
+        [AlertUtils showModalAlertMessage:@"Please enter a PO before accepting an On Account payment." withTitle:@"iPOS"];
+    } else {
+        self.navigationItem.hidesBackButton = YES;
+        [self.navigationItem.leftBarButtonItem setEnabled:NO];
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+        
+        CGRect overlayRect = self.view.bounds;
+        accountPaymentView = [[AccountPaymentView alloc] initWithFrame:overlayRect];
+        accountPaymentView.viewDelegate = self;
+        accountPaymentView.balanceDue = balanceDueLabel.text;
+        accountPaymentView.totalAccountBalance =  [NSString formatDecimalNumberAsMoney:[[orderCart getCustomerForOrder] calculateAccountBalance]];
+        
+        [self.view addSubview:accountPaymentView];
+        
+        [accountPaymentView release];
+    }
 }
 
 -(void)displayNotesAndPOView:(id)sender {

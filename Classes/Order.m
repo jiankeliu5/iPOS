@@ -329,7 +329,7 @@
     
     if (orderItemList && [orderItemList count] > 0) {
         for (OrderItem *item in orderItemList) {
-            if ([item isOpen]) {
+            if ([item.statusId intValue] == lineItemStatus) {
                 [itemsByStatus addObject:item];
             }
         }

@@ -292,7 +292,7 @@
 }
 
 - (void) dismissAlert {
-    if (reachabilityAlert != nil && [reachabilityAlert isVisible]) {
+    if (reachabilityAlert != nil) {
         [reachabilityAlert dismissWithClickedButtonIndex:0 animated:NO];
         reachabilityAlert = nil;
     }
