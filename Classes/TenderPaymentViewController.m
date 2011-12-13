@@ -206,14 +206,7 @@ static NSString * const CREDIT = @"credit";
     
     if (![orderCart getCustomerForOrder].isPaymentOnAccountEligable) {
         [accountPaymentButton setEnabled:NO];
-    } else {
-        Order *order = [orderCart getOrder];
-        NSArray *closedItems = [order getOrderItems:LINE_ORDERSTATUS_CLOSED];
-        
-        if ([[order calcBalanceDue] compare:[NSDecimalNumber zero]] == NSOrderedSame && [closedItems count] == 0) {
-            [accountPaymentButton setEnabled:NO];
-        }
-    }
+    } 
     
     UIBarButtonItem *creditCardButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"CreditCard.png"] 
                                                                           style:UIBarButtonItemStylePlain 
@@ -437,19 +430,22 @@ static NSString * const CREDIT = @"credit";
     NSDecimalNumber *balanceDue = [[order calcBalanceDue] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
     NSDecimalNumber *orderAmount = [[[order calcOrderSubTotal] decimalNumberByAdding:[order calcOrderTax]] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
     
-    if (textField.tagName == ACCOUNT)
-    {
+    if (textField.tagName == ACCOUNT) {
+        Order *order = [orderCart getOrder];
+        NSArray *closedItems = [order getOrderItems:LINE_ORDERSTATUS_CLOSED];
+        
         //If the amount is greater than our credit available then display a warning
         if([amount compare:[[orderCart getCustomerForOrder] calculateAccountBalance]] == NSOrderedDescending)
         {
             [AlertUtils showModalAlertMessage:@"Cannot charge more than the account balance." withTitle:@"iPOS"];
             return; 
-        }
-        else if ([amount compare:orderAmount] == NSOrderedDescending) {
+        } else if ([amount compare:orderAmount] == NSOrderedDescending) {
             [AlertUtils showModalAlertMessage:@"Cannot charge more than the order total balance." withTitle:@"iPOS"];
             return;        
-        }
-        else {
+        } else if ([[order calcBalanceDue] compare:[NSDecimalNumber zero]] == NSOrderedSame && [closedItems count] == 0 
+                   && [amount compare:[NSDecimalNumber zero]] != NSOrderedSame) {
+            [AlertUtils showModalAlertMessage:@"No closed items in the order.  You must enter a charge of $0.00." withTitle:@"iPOS"];
+        } else {
             BOOL isOrderSaved = orderIsSaved;
             
             if (!isOrderSaved) {
