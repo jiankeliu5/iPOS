@@ -393,13 +393,25 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	static NSString *LoginTableIdentifier = @"LoginTableIdentifier";
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:LoginTableIdentifier];
+	static NSString *EmpIDIdentifier = @"EmpIDIdentifier";
+    static NSString *PasswordIdentifier = @"PasswordIdentifier";
+	UITableViewCell *cell = nil;
 	
 	NSInteger row = indexPath.row;
+    
+    if (row == 0) {
+        cell = [tableView dequeueReusableCellWithIdentifier:EmpIDIdentifier];
+    } else if (row == 1) {
+        cell = [tableView dequeueReusableCellWithIdentifier:PasswordIdentifier];
+    }
 
 	if (cell == nil) {
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:LoginTableIdentifier] autorelease];
+        if (row == 0) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:EmpIDIdentifier] autorelease];
+        } else if (row == 1) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:PasswordIdentifier] autorelease];
+        }
+        
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 		
 		
