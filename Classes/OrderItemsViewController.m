@@ -657,8 +657,8 @@
 	[orderToolBar setItems:self.toolbarEditMode];
 	[self updateSelectionCount];
 	[self setMultiEditMode:YES];
+    
 	[orderTable reloadData];
-	 
 }
 
 - (void) cancelEditMode:(id)sender {
@@ -670,6 +670,7 @@
 	[self setMultiEditMode:NO];
 	self.countMarkDelete = 0;
 	self.countMarkClose = 0;
+    
 	[orderTable reloadData];
 	[self restoreDefaultToolbar];
 	
@@ -705,7 +706,9 @@
 	[self setMultiEditMode:NO];
 	self.countMarkDelete = 0;
 	self.countMarkClose = 0;
+    
 	[orderTable reloadData];
+    
 	[self restoreDefaultToolbar];
 	[self updateSelectionCount];
     
@@ -827,39 +830,35 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
+    static NSString *orderCellIdentifier = @"PreviousOrderItemCell";
     Order *order = [orderCart getOrder];
 	OrderItem *orderItem = [[order getOrderItemsSortedByStatusFilterCanceled] objectAtIndex:indexPath.row];
-	NSString *orderCellIdentifier = orderItem.item.sku;
 	
 	CartItemTableCell *cell = (CartItemTableCell *)[tableView dequeueReusableCellWithIdentifier:orderCellIdentifier];
 	
 	if (cell == nil) {
 		cell = [[[CartItemTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:orderCellIdentifier] autorelease];
-	}
+	} 
+    
+    cell.cellDelegate = self;
 	cell.orderItem = orderItem;
-	cell.cellDelegate = self;
-
+	
     if ([order canEditDetails] == NO) {
         cell.multiEditing = NO;
         cell.deleteChecked = NO;
         cell.closeChecked = NO;
-        cell.accessoryType = UITableViewCellAccessoryNone;
         cell.disabledLook = YES;
     } else {
         if ([orderItem allowEdit]) {
             cell.multiEditing = self.multiEditMode;
-            cell.deleteChecked = orderItem.shouldDelete;
-            cell.closeChecked = orderItem.shouldClose = [orderItem isClosed];
             cell.disabledLook = NO;
         } else {
             cell.multiEditing = NO;
-            cell.deleteChecked = NO;
-            cell.closeChecked = NO;
             cell.disabledLook = YES;
         }
-        
-        cell.accessoryType = UITableViewCellAccessoryNone;
     }
+    
+    cell.accessoryType = UITableViewCellAccessoryNone;
     
 	return cell;
 }
@@ -900,7 +899,7 @@
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Order *order = [orderCart getOrder];
     // Prevent didSelectRowAtIndexPath from being called for any order item on a closed or returned order.
-    if ([order canEditDetails] == NO) {
+    if ([order canEditDetails] == NO || self.multiEditMode) {
         return nil;
     }
     
@@ -923,6 +922,7 @@
 		[cartDetail release];
 	}
 }
+
 
 #pragma mark -
 #pragma mark SearchItemView delegate

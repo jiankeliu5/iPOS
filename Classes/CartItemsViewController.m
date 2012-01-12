@@ -701,19 +701,18 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
+    static NSString *orderCellIdentifier = @"NewOrderItemCell";
 	OrderItem *orderItem = [[[orderCart getOrder] getOrderItemsSortedByStatus] objectAtIndex:indexPath.row];
-	NSString *orderCellIdentifier = orderItem.item.sku;
 	
 	CartItemTableCell *cell = (CartItemTableCell *)[tableView dequeueReusableCellWithIdentifier:orderCellIdentifier];
 	
 	if (cell == nil) {
 		cell = [[[CartItemTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:orderCellIdentifier] autorelease];
 	}
+    
+    cell.cellDelegate = self;
 	cell.orderItem = orderItem;
 	cell.multiEditing = self.multiEditMode;
-	cell.deleteChecked = orderItem.shouldDelete;
-	cell.closeChecked = orderItem.shouldClose = [orderItem isClosed];
-	cell.cellDelegate = self;
 	
     cell.accessoryType = UITableViewCellAccessoryNone;
 
@@ -740,9 +739,25 @@
 	
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+   
+    // Prevent didSelectRowAtIndexPath from being called in multi edit mode
+    if (self.multiEditMode) {
+        return nil;
+    }
+    
+    OrderItem *orderItem = [[[orderCart getOrder] getOrderItemsSortedByStatusFilterCanceled] objectAtIndex:indexPath.row];
+    // Prevent didSelectRowAtIndexPath from being called for cancelled, closed or returned line items
+    if ([orderItem allowEdit] == NO) {
+        return nil;
+	}
+    
+    return indexPath;
+}
+
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	OrderItem *orderItem = [[[orderCart getOrder] getOrderItemsSortedByStatus] objectAtIndex:indexPath.row];
-	if (orderItem != nil) {
+	if (orderItem != nil && !self.multiEditMode) {
 		CartItemDetailViewController *cartDetail = [[CartItemDetailViewController alloc] init];
 		[cartDetail setOrderItem:orderItem];
 		[[self navigationController] pushViewController:cartDetail animated:YES];

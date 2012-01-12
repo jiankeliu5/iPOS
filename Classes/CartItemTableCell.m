@@ -26,8 +26,13 @@
 #pragma mark Private Interface
 @interface CartItemTableCell ()
 
+- (void) animateLayout;
+
 - (void) layoutLabelsDefault;
+- (void) updateDeleteButtonImage;
 - (void) updateDeleteButtonState;
+
+- (void) updateCloseButtonImage;
 - (void) updateCloseButtonState;
 @end
 
@@ -90,8 +95,8 @@
 		closeCheckButton.backgroundColor = self.backgroundColor;
 		closeCheckButton.hidden = YES;
 		[self.contentView addSubview:closeCheckButton];
-
 	}
+    
 	return self;
 }
 
@@ -185,57 +190,91 @@
 	UIImage *imageForClose = (self.closeChecked) ? closeCheckedImage : [UIImage imageNamed:@"NotSelected.png"];
 	[closeCheckButton setImage:imageForClose forState:UIControlStateNormal];
 	
-	if (self.multiEditing == NO) {
+    if ((multiEditing && deleteCheckButton.hidden && closeCheckButton.hidden) || 
+        (!multiEditing && !deleteCheckButton.hidden && !closeCheckButton.hidden)) {
+        [self animateLayout];
+    } else {
+        if (self.multiEditing == NO) {
+            closeCheckButton.hidden = YES;
+            deleteCheckButton.hidden = YES;
+            [self layoutLabelsDefault];
+        } else {
+            [self layoutLabelsDefault];
+            CGFloat offsetX = deleteCheckButton.frame.size.width + MARGIN_SIDE + closeCheckButton.frame.size.width + MARGIN_SIDE;
+                                 
+            CGRect rect;
+            rect = descriptionLabel.frame;
+            descriptionLabel.frame = CGRectMake(rect.origin.x + offsetX, rect.origin.y, rect.size.width - offsetX, rect.size.height);
+
+            CGFloat labelAdjust = floorf(offsetX / 3.0f);
+
+            rect = itemStatusLabel.frame;
+            itemStatusLabel.frame = CGRectMake(rect.origin.x + offsetX, rect.origin.y, rect.size.width - labelAdjust, rect.size.height);
+
+            rect = quantityLabel.frame;
+            quantityLabel.frame = CGRectMake(rect.origin.x + offsetX - labelAdjust, rect.origin.y, rect.size.width - labelAdjust, rect.size.height);
+
+            rect = lineCostLabel.frame;
+            lineCostLabel.frame = CGRectMake(rect.origin.x + offsetX - (labelAdjust * 2.0f), rect.origin.y, rect.size.width - labelAdjust, rect.size.height);
+                                 
+            deleteCheckButton.hidden = NO;
+            closeCheckButton.hidden = NO;
+        }
+
+    }
+}
+
+#pragma mark -
+#pragma mark Private Methods
+- (void) animateLayout {
+    if (self.multiEditing == NO) {
 		[UIView animateWithDuration:0.1 
-						 animations:^{
-							 closeCheckButton.hidden = YES;
-							 deleteCheckButton.hidden = YES;
-						 }
-						 completion:^(BOOL finished) {
-							 [UIView animateWithDuration:0.2
-											  animations:^{
-												  [self layoutLabelsDefault];
-											  }
-											  completion:^(BOOL finished) {
-												  ;
-											  }];
-						 }];
+                         animations:^{
+                             closeCheckButton.hidden = YES;
+                             deleteCheckButton.hidden = YES;
+                         }
+                         completion:^(BOOL finished) {
+                             [UIView animateWithDuration:0.2
+                                              animations:^{
+                                                  [self layoutLabelsDefault];
+                                              }
+                                              completion:^(BOOL finished) {
+                                                  ;
+                                              }];
+                         }];
 	} else {
         [self layoutLabelsDefault];
 		[UIView animateWithDuration:0.2 
-						 animations:^{
-							 CGFloat offsetX = deleteCheckButton.frame.size.width + MARGIN_SIDE + closeCheckButton.frame.size.width + MARGIN_SIDE;
-							 
-							 CGRect rect;
-							 rect = descriptionLabel.frame;
-							 descriptionLabel.frame = CGRectMake(rect.origin.x + offsetX, rect.origin.y, rect.size.width - offsetX, rect.size.height);
+                         animations:^{
+                             CGFloat offsetX = deleteCheckButton.frame.size.width + MARGIN_SIDE + closeCheckButton.frame.size.width + MARGIN_SIDE;
+                             
+                             CGRect rect;
+                             rect = descriptionLabel.frame;
+                             descriptionLabel.frame = CGRectMake(rect.origin.x + offsetX, rect.origin.y, rect.size.width - offsetX, rect.size.height);
                              
                              CGFloat labelAdjust = floorf(offsetX / 3.0f);
                              
                              rect = itemStatusLabel.frame;
                              itemStatusLabel.frame = CGRectMake(rect.origin.x + offsetX, rect.origin.y, rect.size.width - labelAdjust, rect.size.height);
                              
-							 rect = quantityLabel.frame;
-							 quantityLabel.frame = CGRectMake(rect.origin.x + offsetX - labelAdjust, rect.origin.y, rect.size.width - labelAdjust, rect.size.height);
+                             rect = quantityLabel.frame;
+                             quantityLabel.frame = CGRectMake(rect.origin.x + offsetX - labelAdjust, rect.origin.y, rect.size.width - labelAdjust, rect.size.height);
                              
                              rect = lineCostLabel.frame;
-							 lineCostLabel.frame = CGRectMake(rect.origin.x + offsetX - (labelAdjust * 2.0f), rect.origin.y, rect.size.width - labelAdjust, rect.size.height);
+                             lineCostLabel.frame = CGRectMake(rect.origin.x + offsetX - (labelAdjust * 2.0f), rect.origin.y, rect.size.width - labelAdjust, rect.size.height);
                              
-						 }
-						 completion:^(BOOL finished) {
-							 [UIView animateWithDuration:0.1 
-											  animations:^{
-												  deleteCheckButton.hidden = NO;
-												  closeCheckButton.hidden = NO;
-											  }
-											  completion:^(BOOL finished) {
-											  }];
-						 }];
+                         }
+                         completion:^(BOOL finished) {
+                             [UIView animateWithDuration:0.1 
+                                              animations:^{
+                                                  deleteCheckButton.hidden = NO;
+                                                  closeCheckButton.hidden = NO;
+                                              }
+                                              completion:^(BOOL finished) {
+                                              }];
+                         }];
 	}
-	
-	
 }
-
 - (void) layoutLabelsDefault {
     CGRect cellRect = self.contentView.bounds;
 	CGFloat cellWidth = cellRect.size.width;
@@ -272,10 +311,15 @@
 	}
 }
 
+- (void) updateDeleteButtonImage {
+    UIImage *checkImage = (self.deleteChecked) ? [UIImage imageNamed:@"DeleteSelected.png"] : [UIImage imageNamed:@"NotSelected.png"];
+	[deleteCheckButton setImage:checkImage forState:UIControlStateNormal];
+}
 - (void) updateDeleteButtonState {
 	orderItem.shouldDelete = self.deleteChecked;
-	UIImage *checkImage = (self.deleteChecked) ? [UIImage imageNamed:@"DeleteSelected.png"] : [UIImage imageNamed:@"NotSelected.png"];
-	[deleteCheckButton setImage:checkImage forState:UIControlStateNormal];
+	
+    [self updateDeleteButtonImage];
+    
 	if (self.cellDelegate != nil && [self.cellDelegate respondsToSelector:@selector(cartItemCell:markForDelete:)]) {
 		[self.cellDelegate cartItemCell:self markForDelete:self.deleteChecked];
 	}
@@ -296,10 +340,16 @@
 	}
 }
 
+- (void) updateCloseButtonImage {
+    UIImage *checkImage = (self.closeChecked) ? [UIImage imageNamed:@"CloseSelected.png"] : [UIImage imageNamed:@"NotSelected.png"];
+	[closeCheckButton setImage:checkImage forState:UIControlStateNormal];
+}
+
 - (void) updateCloseButtonState {
 	orderItem.shouldClose = self.closeChecked;
-	UIImage *checkImage = (self.closeChecked) ? [UIImage imageNamed:@"CloseSelected.png"] : [UIImage imageNamed:@"NotSelected.png"];
-	[closeCheckButton setImage:checkImage forState:UIControlStateNormal];
+	
+    [self updateCloseButtonImage];
+    
 	if (self.cellDelegate != nil && [self.cellDelegate respondsToSelector:@selector(cartItemCell:markForClose:)]) {
 		[self.cellDelegate cartItemCell:self markForClose:self.closeChecked];
 	}

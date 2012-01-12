@@ -300,7 +300,9 @@
     if ([orderItemList count] > 0) {
         NSSortDescriptor *itemDetailStatusDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"statusId"
                                                                             ascending:YES] autorelease];
-        NSArray *sortDescriptors = [NSArray arrayWithObjects:itemDetailStatusDescriptor, nil];
+        NSSortDescriptor *openItemStatusDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"openItemStatus"
+                                                                                    ascending:YES] autorelease];
+        NSArray *sortDescriptors = [NSArray arrayWithObjects:itemDetailStatusDescriptor, openItemStatusDescriptor, nil];
         sortedOrderItemsList = [[NSArray arrayWithArray: orderItemList] sortedArrayUsingDescriptors:sortDescriptors];
         
         return sortedOrderItemsList;
@@ -374,7 +376,6 @@
         // Remove the instance of order item
         for (OrderItem *orderItem in orderItemList) {
             if (orderItem == item) {
-                
                 // Set the item to canceled if it is an existing item
                 if (isNewOrder || orderItem.isNew) {
                     [orderItemList removeObject:orderItem];
@@ -385,10 +386,17 @@
             }
         }   
         
-        // Adjust the line number for the remaining order items (Start at 1)
-        int index = 1;
-        for (OrderItem *orderItem in orderItemList) {
-            orderItem.lineNumber = [NSNumber numberWithInt:index++];
+        // Adjust the line number for the remaining order items (Start at 1) for new orders
+        if (isNewOrder || item.isNew) {
+            int index = 1;
+            for (OrderItem *orderItem in orderItemList) {
+                if (orderItem.isNew || orderItem.orderId == nil) {
+                    orderItem.lineNumber = [NSNumber numberWithInt:index++];
+                } else {
+                    // Do not change line numbers for existing line items.
+                    index++;
+                }
+            }
         }
     }
     

@@ -28,6 +28,7 @@
     UILabel *itemStatusLabel;
 	UILabel *quantityLabel;
 	UILabel *lineCostLabel;
+    
 	BOOL deleteChecked;
 	BOOL closeChecked;
 	BOOL multiEditing;
@@ -41,6 +42,7 @@
 // in a singleton.
 @property (nonatomic, assign) OrderItem *orderItem;
 @property (nonatomic, assign) NSObject<CartItemCellDelegate>* cellDelegate;
+
 
 @property (nonatomic, assign) BOOL deleteChecked;
 @property (nonatomic, assign) BOOL closeChecked;

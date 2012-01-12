@@ -62,6 +62,7 @@
 	UIView *editHeaderView;
 	
 	BOOL multiEditMode;
+    
 	NSInteger countMarkedDelete;
 	NSInteger countMarkedClose;
 	
