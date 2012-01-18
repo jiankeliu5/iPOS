@@ -173,17 +173,17 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-    NSString *orderListTableIdentifier = [NSString stringWithFormat:@"OrderListTableIdentifier-%d", indexPath.row];
+	static NSString *orderListTableIdentifier = @"OrderListTableIdentifier";
 	
 	OrderListTableCell *cell = (OrderListTableCell *)[tableView dequeueReusableCellWithIdentifier:orderListTableIdentifier];
-	
-	NSInteger row = indexPath.row;
-    PreviousOrder *pOrder = (PreviousOrder *)[orderCart.previousOrderList objectAtIndex:row];
     
 	if (cell == nil) {
 		cell = [[[OrderListTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:orderListTableIdentifier] autorelease];
     }
+    
+    NSInteger row = indexPath.row;
+    PreviousOrder *pOrder = (PreviousOrder *)[orderCart.previousOrderList objectAtIndex:row];
+    
     cell.previousOrder = pOrder;
 
     if ([pOrder canViewDetails]) {

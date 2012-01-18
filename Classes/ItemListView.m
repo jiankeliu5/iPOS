@@ -129,7 +129,7 @@
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	ProductItem *item = [self.itemList objectAtIndex:indexPath.row];
-	NSString *itemCellIdentifier = item.sku;
+    static NSString *itemCellIdentifier = @"ItemTableIdentifier";
 	
 	ItemTableCell *cell = (ItemTableCell *)[tableView dequeueReusableCellWithIdentifier:itemCellIdentifier];
 	
