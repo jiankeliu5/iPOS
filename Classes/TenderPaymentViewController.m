@@ -204,7 +204,7 @@ static NSString * const CREDIT = @"credit";
                                                             action:@selector(handleAccountPayment:)] autorelease];
     
     
-    if (![orderCart getCustomerForOrder].isPaymentOnAccountEligable) {
+    if (![[orderCart getCustomerForOrder] isPaymentOnAccountEligable]) {
         [accountPaymentButton setEnabled:NO];
     } 
     
@@ -456,7 +456,7 @@ static NSString * const CREDIT = @"credit";
             // Just go to receipt view or continue with payment
             if (isOrderSaved && [amount compare:[NSDecimalNumber zero]] == NSOrderedSame) {
                 [self navToReceipt];
-            } else {
+            } else if (isOrderSaved) {
                 BOOL onAcctPaymentSuccessful = [self sendPaymentOnAccount:amount];
                 
                 if (onAcctPaymentSuccessful) {

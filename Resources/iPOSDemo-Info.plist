@@ -23,7 +23,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>21</string>
+	<string>22</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UISupportedExternalAccessoryProtocols</key>
@@ -34,9 +34,9 @@
 	<key>ipos.demo.enableSignature</key>
 	<string>YES</string>
 	<key>ipos.service.baseurl</key>
-	<string>https://tstipos/webservices/ipostest</string>
+	<string>https://tsipos01/webservices/ipostest</string>
 	<key>ipos.service.host</key>
-	<string>tstipos</string>
+	<string>tsipos01</string>
 	<key>ipos.service.demo.baseurl</key>
 	<string>http://ipad.demo.objectpartners.com:8080/ipos-demo-services-0.1/webservices/ipos</string>
 	<key>ipos.service.demo.host</key>

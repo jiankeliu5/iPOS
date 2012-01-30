@@ -189,9 +189,11 @@
     if ([pOrder canViewDetails]) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+        cell.disabledLook = NO;
     } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.disabledLook = true;
+        cell.disabledLook = YES;
     }
     
     return cell;

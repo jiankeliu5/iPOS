@@ -170,6 +170,11 @@ static NSString * const CUSTOMER_XML = @""
     customer.phoneNumber = [root elementStringValue:@"CustomerPhone"];
     customer.emailAddress = [root elementStringValue:@"Email"];
     customer.priceLevelId = [root elementNumberValue:@"PriceLevelID"];
+    
+    customer.creditBalance = [root elementDecimalValue:@"CreditBalance"];
+    customer.creditLimit = [root elementDecimalValue:@"CreditLimit"];
+    customer.termsTypeId = [root elementNumberValue:@"TermsTypeID"];
+    
     Address *address = [[Address alloc] init];
     address.zipPostalCode = [root elementStringValue:@"Zip"];
     
