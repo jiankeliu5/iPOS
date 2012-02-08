@@ -446,7 +446,7 @@
     NSDecimalNumber *retailTotal = [NSDecimalNumber zero];
     
     for (OrderItem *item in orderItemList) {
-        if ([item isOpen] || [item isClosed]) {
+        if ([item isOpen] || [item isClosed] || [item isReturned]) {
             retailTotal = [[item calcLineRetailSubTotal] decimalNumberByAdding:retailTotal];
         }
     }
@@ -458,7 +458,7 @@
     NSDecimalNumber *subTotal = [NSDecimalNumber zero];
     
     for (OrderItem *item in orderItemList) {
-        if ([item isOpen] || [item isClosed]) {
+        if ([item isOpen] || [item isClosed] || [item isReturned]) {
             subTotal = [[item calcLineSubTotal] decimalNumberByAdding:subTotal];
         }
     }
@@ -491,7 +491,7 @@
         // If the customer is tax exempt we won't bother with checking further or calculating the tax amount for the line item
         // If the customer is not tax exempt we also need to see if the line item itself is tax exempt or not.
         // Possible concern:  We are allocating a lot of autoreleased NSDecimalNumber objects here.  Performance issue?
-        if ([item isOpen] || [item isClosed]) {
+        if ([item isOpen] || [item isClosed] || [item isReturned]) {
             if (custTaxExempt == NO && ![item isTaxExempt]) {
                 taxTotal = [[item calcLineTax] decimalNumberByAdding:taxTotal];
             }

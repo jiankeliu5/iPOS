@@ -395,6 +395,9 @@
 		D6E5C7521365F5C1009BCA68 /* Particle.png in Resources */ = {isa = PBXBuildFile; fileRef = D698A4A91325E83300371985 /* Particle.png */; };
 		D6E5C7531365F5C9009BCA68 /* Particle.png in Resources */ = {isa = PBXBuildFile; fileRef = D698A4A91325E83300371985 /* Particle.png */; };
 		D6E9E9D11316037900FF1498 /* libiPOSFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B4366F1315A7DD000C0AA8 /* libiPOSFoundation.a */; };
+		D6FDDB1114E315670085298A /* libASIHTTPRequest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D60E92E714E314560028647B /* libASIHTTPRequest.a */; };
+		D6FDDB1614E318AD0085298A /* libASIHTTPRequest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D60E92E714E314560028647B /* libASIHTTPRequest.a */; };
+		D6FDDB1F14E318CE0085298A /* libASIHTTPRequest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D60E92E714E314560028647B /* libASIHTTPRequest.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -403,41 +406,6 @@
 			containerPortal = 364B56B71430CF5C0028FE09 /* IBAForms.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = D2AAC07E0554694100DB518D;
-			remoteInfo = IBAForms;
-		};
-		364B56C01430CFD80028FE09 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 364B56B71430CF5C0028FE09 /* IBAForms.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = IBAForms;
-		};
-		364B56C41430CFE10028FE09 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 364B56B71430CF5C0028FE09 /* IBAForms.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = IBAForms;
-		};
-		36F3E9921434B9AD004376B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 364B56B71430CF5C0028FE09 /* IBAForms.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = IBAForms;
-		};
-		36F3E9971434BA49004376B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 364B56B71430CF5C0028FE09 /* IBAForms.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = IBAForms;
-		};
-		36F3E99B1434BB68004376B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 364B56B71430CF5C0028FE09 /* IBAForms.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = IBAForms;
 		};
 		D60AAFB3147DD7C400FBA576 /* PBXContainerItemProxy */ = {
@@ -460,6 +428,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = D6F7542A145B026000B117E1;
 			remoteInfo = "OPIFoundation-Core";
+		};
+		D60E92E614E314560028647B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D60E92DF14E314550028647B /* ASIHTTPRequest.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 41580FC414E1BC6800A3AE09;
+			remoteInfo = ASIHTTPRequest;
 		};
 		D65B25BF1331C8B60052AEE2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -495,13 +470,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = D6A97ED113FDB26D00EAC098;
 			remoteInfo = OPIFoundationTests;
-		};
-		D6999517145B111A007752F1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 364B56B71430CF5C0028FE09 /* IBAForms.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = IBAForms;
 		};
 		D6B4386E1315ABA8000C0AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -544,6 +512,55 @@
 			proxyType = 1;
 			remoteGlobalIDString = D697D1961312DCD0002C3EF6;
 			remoteInfo = iPOSDemo;
+		};
+		D6FDDB0F14E3155B0085298A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D60E92DF14E314550028647B /* ASIHTTPRequest.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 41580FC314E1BC6800A3AE09;
+			remoteInfo = ASIHTTPRequest;
+		};
+		D6FDDB1214E3189B0085298A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D60E92DF14E314550028647B /* ASIHTTPRequest.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 41580FC314E1BC6800A3AE09;
+			remoteInfo = ASIHTTPRequest;
+		};
+		D6FDDB1414E318A20085298A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 364B56B71430CF5C0028FE09 /* IBAForms.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = IBAForms;
+		};
+		D6FDDB1714E318BB0085298A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D60E92DF14E314550028647B /* ASIHTTPRequest.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 41580FC314E1BC6800A3AE09;
+			remoteInfo = ASIHTTPRequest;
+		};
+		D6FDDB1914E318BB0085298A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D6F7542A145B026000B117E1;
+			remoteInfo = "OPIFoundation-Core";
+		};
+		D6FDDB1B14E318BB0085298A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 364B56B71430CF5C0028FE09 /* IBAForms.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = IBAForms;
+		};
+		D6FDDB1D14E318C40085298A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D6F7542A145B026000B117E1;
+			remoteInfo = "OPIFoundation-Core";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -724,6 +741,7 @@
 		B4CEE05413527F330067DEBC /* EditConfirmDelete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EditConfirmDelete@2x.png"; sourceTree = "<group>"; };
 		B4D308261367B86400F26C5E /* SessionVerificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionVerificationView.h; sourceTree = "<group>"; };
 		B4D308271367B86400F26C5E /* SessionVerificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionVerificationView.m; sourceTree = "<group>"; };
+		D60E92DF14E314550028647B /* ASIHTTPRequest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ASIHTTPRequest.xcodeproj; path = ../ThirdParty/ASIHTTPRequest/ASIHTTPRequest.xcodeproj; sourceTree = "<group>"; };
 		D60F74D91475A53E0055CB15 /* OrderDiscountApprovalRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDiscountApprovalRequest.h; sourceTree = "<group>"; };
 		D60F74DA1475A53E0055CB15 /* OrderDiscountApprovalRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDiscountApprovalRequest.m; sourceTree = "<group>"; };
 		D60F74DD1475AD820055CB15 /* OrderDiscountApprovalResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDiscountApprovalResponse.h; sourceTree = "<group>"; };
@@ -732,7 +750,6 @@
 		D60F74E21475BD240055CB15 /* OrderDiscountApprovalXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDiscountApprovalXmlMarshaller.m; sourceTree = "<group>"; };
 		D6105EAF1487EA9100170AEA /* CustomerDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerDetailViewController.h; sourceTree = "<group>"; };
 		D6105EB01487EA9100170AEA /* CustomerDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerDetailViewController.m; sourceTree = "<group>"; };
-		D6105EB91488067D00170AEA /* UIViewController+Helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIViewController+Helpers.h"; path = "../OPIFoundation/OPIFoundation/Categories/UIViewController+Helpers.h"; sourceTree = "<group>"; };
 		D6179DF21317DBEE00ACAFDD /* iPOSServiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPOSServiceMock.m; sourceTree = "<group>"; };
 		D6179DF31317DBEE00ACAFDD /* iPOSServiceMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPOSServiceMock.h; sourceTree = "<group>"; };
 		D6179DF41317DBEE00ACAFDD /* InventoryServiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryServiceMock.m; sourceTree = "<group>"; };
@@ -839,123 +856,6 @@
 		D698A4081325DE7800371985 /* SignaturePad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignaturePad.m; sourceTree = "<group>"; };
 		D698A47E1325E50E00371985 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		D698A4A91325E83300371985 /* Particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Particle.png; sourceTree = "<group>"; };
-		D6999491145B0FD4007752F1 /* Error.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Error.h; path = ../OPIFoundation/OPIFoundation/Error.h; sourceTree = "<group>"; };
-		D6999492145B0FD4007752F1 /* PDColoredProgressView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PDColoredProgressView.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/PDColoredProgressView/PDColoredProgressView.h; sourceTree = "<group>"; };
-		D6999493145B0FD4007752F1 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ASIAuthenticationDialog.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/ASIHTTPRequest/ASIAuthenticationDialog.h; sourceTree = "<group>"; };
-		D6999494145B0FD4007752F1 /* ASICacheDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ASICacheDelegate.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/ASIHTTPRequest/ASICacheDelegate.h; sourceTree = "<group>"; };
-		D6999495145B0FD4007752F1 /* ASIDataCompressor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ASIDataCompressor.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/ASIHTTPRequest/ASIDataCompressor.h; sourceTree = "<group>"; };
-		D6999496145B0FD4007752F1 /* ASIDataDecompressor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ASIDataDecompressor.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/ASIHTTPRequest/ASIDataDecompressor.h; sourceTree = "<group>"; };
-		D6999497145B0FD4007752F1 /* ASIDownloadCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ASIDownloadCache.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/ASIHTTPRequest/ASIDownloadCache.h; sourceTree = "<group>"; };
-		D6999498145B0FD4007752F1 /* ASIFormDataRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ASIFormDataRequest.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/ASIHTTPRequest/ASIFormDataRequest.h; sourceTree = "<group>"; };
-		D6999499145B0FD4007752F1 /* ASIHTTPRequest+Validate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "ASIHTTPRequest+Validate.h"; path = "../OPIFoundation/OPIFoundation/ThirdParty/ASIHTTPRequest/ASIHTTPRequest+Validate.h"; sourceTree = "<group>"; };
-		D699949A145B0FD4007752F1 /* ASIHTTPRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ASIHTTPRequest.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/ASIHTTPRequest/ASIHTTPRequest.h; sourceTree = "<group>"; };
-		D699949B145B0FD4007752F1 /* ASIHTTPRequestConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ASIHTTPRequestConfig.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/ASIHTTPRequest/ASIHTTPRequestConfig.h; sourceTree = "<group>"; };
-		D699949C145B0FD4007752F1 /* ASIHTTPRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ASIHTTPRequestDelegate.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/ASIHTTPRequest/ASIHTTPRequestDelegate.h; sourceTree = "<group>"; };
-		D699949D145B0FD4007752F1 /* ASIInputStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ASIInputStream.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/ASIHTTPRequest/ASIInputStream.h; sourceTree = "<group>"; };
-		D699949E145B0FD4007752F1 /* ASINetworkQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ASINetworkQueue.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/ASIHTTPRequest/ASINetworkQueue.h; sourceTree = "<group>"; };
-		D699949F145B0FD4007752F1 /* ASIProgressDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ASIProgressDelegate.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/ASIHTTPRequest/ASIProgressDelegate.h; sourceTree = "<group>"; };
-		D69994A0145B0FD4007752F1 /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/ASIHTTPRequest/Reachability.h; sourceTree = "<group>"; };
-		D69994A1145B0FD4007752F1 /* CustomBadge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CustomBadge.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/CustomBadge/CustomBadge.h; sourceTree = "<group>"; };
-		D69994A2145B0FD4007752F1 /* iCarousel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = iCarousel.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/iCarousel/iCarousel.h; sourceTree = "<group>"; };
-		D69994A3145B0FD4007752F1 /* CDataScanner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CDataScanner.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchJSON/CDataScanner.h; sourceTree = "<group>"; };
-		D69994A4145B0FD4007752F1 /* CDataScanner_Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CDataScanner_Extensions.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchJSON/Extensions/CDataScanner_Extensions.h; sourceTree = "<group>"; };
-		D69994A5145B0FD4007752F1 /* NSDictionary_JSONExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NSDictionary_JSONExtensions.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchJSON/Extensions/NSDictionary_JSONExtensions.h; sourceTree = "<group>"; };
-		D69994A6145B0FD4007752F1 /* CJSONDeserializer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CJSONDeserializer.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchJSON/JSON/CJSONDeserializer.h; sourceTree = "<group>"; };
-		D69994A7145B0FD4007752F1 /* CJSONScanner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CJSONScanner.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchJSON/JSON/CJSONScanner.h; sourceTree = "<group>"; };
-		D69994A8145B0FD4007752F1 /* CJSONSerializer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CJSONSerializer.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchJSON/JSON/CJSONSerializer.h; sourceTree = "<group>"; };
-		D69994A9145B0FD4007752F1 /* JSONRepresentation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JSONRepresentation.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchJSON/JSON/JSONRepresentation.h; sourceTree = "<group>"; };
-		D69994AA145B0FD4007752F1 /* CXMLDocument_CreationExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CXMLDocument_CreationExtensions.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchXML/Creation/CXMLDocument_CreationExtensions.h; sourceTree = "<group>"; };
-		D69994AB145B0FD4007752F1 /* CXMLNode_CreationExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CXMLNode_CreationExtensions.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchXML/Creation/CXMLNode_CreationExtensions.h; sourceTree = "<group>"; };
-		D69994AC145B0FD4007752F1 /* CTidy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CTidy.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchXML/Tidy/CTidy.h; sourceTree = "<group>"; };
-		D69994AD145B0FD4007752F1 /* CXHTMLDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CXHTMLDocument.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchXML/CXHTMLDocument.h; sourceTree = "<group>"; };
-		D69994AE145B0FD4007752F1 /* CXMLDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CXMLDocument.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchXML/CXMLDocument.h; sourceTree = "<group>"; };
-		D69994AF145B0FD4007752F1 /* CXMLDocument_PrivateExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CXMLDocument_PrivateExtensions.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchXML/CXMLDocument_PrivateExtensions.h; sourceTree = "<group>"; };
-		D69994B0145B0FD4007752F1 /* CXMLElement.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CXMLElement.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchXML/CXMLElement.h; sourceTree = "<group>"; };
-		D69994B1145B0FD4007752F1 /* CXMLElement_CreationExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CXMLElement_CreationExtensions.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchXML/CXMLElement_CreationExtensions.h; sourceTree = "<group>"; };
-		D69994B2145B0FD4007752F1 /* CXMLElement_ElementTreeExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CXMLElement_ElementTreeExtensions.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchXML/CXMLElement_ElementTreeExtensions.h; sourceTree = "<group>"; };
-		D69994B3145B0FD4007752F1 /* CXMLNamespaceNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CXMLNamespaceNode.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchXML/CXMLNamespaceNode.h; sourceTree = "<group>"; };
-		D69994B4145B0FD4007752F1 /* CXMLNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CXMLNode.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchXML/CXMLNode.h; sourceTree = "<group>"; };
-		D69994B5145B0FD4007752F1 /* CXMLNode_PrivateExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CXMLNode_PrivateExtensions.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchXML/CXMLNode_PrivateExtensions.h; sourceTree = "<group>"; };
-		D69994B6145B0FD4007752F1 /* CXMLNode_XPathExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CXMLNode_XPathExtensions.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchXML/CXMLNode_XPathExtensions.h; sourceTree = "<group>"; };
-		D69994B7145B0FD4007752F1 /* TouchXML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TouchXML.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/TouchXML/TouchXML.h; sourceTree = "<group>"; };
-		D69994B8145B0FD4007752F1 /* AlertUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AlertUtils.h; path = ../OPIFoundation/OPIFoundation/Utils/AlertUtils.h; sourceTree = "<group>"; };
-		D69994B9145B0FD4007752F1 /* PropertyUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropertyUtils.h; path = ../OPIFoundation/OPIFoundation/Utils/PropertyUtils.h; sourceTree = "<group>"; };
-		D69994BA145B0FD4007752F1 /* Global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Global.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/GlassButton/Global.h; sourceTree = "<group>"; };
-		D69994BB145B0FD4007752F1 /* MOButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MOButton.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/GlassButton/MOButton.h; sourceTree = "<group>"; };
-		D69994BC145B0FD4007752F1 /* MOGlassButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MOGlassButton.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/GlassButton/MOGlassButton.h; sourceTree = "<group>"; };
-		D69994BD145B0FD4007752F1 /* UIScreen+Helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIScreen+Helpers.h"; path = "../OPIFoundation/OPIFoundation/Categories/UIScreen+Helpers.h"; sourceTree = "<group>"; };
-		D69994BE145B0FD4007752F1 /* NSFileManager+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSFileManager+Extensions.h"; path = "../OPIFoundation/OPIFoundation/Categories/NSFileManager+Extensions.h"; sourceTree = "<group>"; };
-		D69994BF145B0FD4007752F1 /* NSString+Base64Encode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSString+Base64Encode.h"; path = "../OPIFoundation/OPIFoundation/Categories/NSString+Base64Encode.h"; sourceTree = "<group>"; };
-		D69994C0145B0FD4007752F1 /* NSString+CamelCaseUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSString+CamelCaseUtils.h"; path = "../OPIFoundation/OPIFoundation/Categories/NSString+CamelCaseUtils.h"; sourceTree = "<group>"; };
-		D69994C1145B0FD4007752F1 /* NSString+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSString+Extensions.h"; path = "../OPIFoundation/OPIFoundation/Categories/NSString+Extensions.h"; sourceTree = "<group>"; };
-		D69994C2145B0FD4007752F1 /* UIColor+Chooser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIColor+Chooser.h"; path = "../OPIFoundation/OPIFoundation/Categories/UIColor+Chooser.h"; sourceTree = "<group>"; };
-		D69994C3145B0FD4007752F1 /* UIImage+Alpha.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIImage+Alpha.h"; path = "../OPIFoundation/OPIFoundation/Categories/UIImage+Alpha.h"; sourceTree = "<group>"; };
-		D69994C4145B0FD4007752F1 /* UIImage+Resize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "../OPIFoundation/OPIFoundation/Categories/UIImage+Resize.h"; sourceTree = "<group>"; };
-		D69994C5145B0FD4007752F1 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIImage+RoundedCorner.h"; path = "../OPIFoundation/OPIFoundation/Categories/UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
-		D69994C6145B0FD4007752F1 /* UIImage+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIImage+Extensions.h"; path = "../OPIFoundation/OPIFoundation/Categories/UIImage+Extensions.h"; sourceTree = "<group>"; };
-		D69994C7145B0FD4007752F1 /* UIView+ImageRender.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIView+ImageRender.h"; path = "../OPIFoundation/OPIFoundation/Categories/UIView+ImageRender.h"; sourceTree = "<group>"; };
-		D69994C8145B0FD4007752F1 /* UIView+ViewLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIView+ViewLayout.h"; path = "../OPIFoundation/OPIFoundation/Categories/UIView+ViewLayout.h"; sourceTree = "<group>"; };
-		D69994C9145B0FD4007752F1 /* UIViewController+ViewControllerLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIViewController+ViewControllerLayout.h"; path = "../OPIFoundation/OPIFoundation/Categories/UIViewController+ViewControllerLayout.h"; sourceTree = "<group>"; };
-		D69994CA145B0FD4007752F1 /* UIViewController+Transitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIViewController+Transitions.h"; path = "../OPIFoundation/OPIFoundation/Categories/UIViewController+Transitions.h"; sourceTree = "<group>"; };
-		D69994CB145B0FD4007752F1 /* UITextView+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UITextView+Extensions.h"; path = "../OPIFoundation/OPIFoundation/Categories/UITextView+Extensions.h"; sourceTree = "<group>"; };
-		D69994CC145B0FD4007752F1 /* NSDictionary+Extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+Extensions.h"; path = "../OPIFoundation/OPIFoundation/Categories/NSDictionary+Extensions.h"; sourceTree = "<group>"; };
-		D69994CD145B0FD4007752F1 /* NSArray+SSToolkitAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSArray+SSToolkitAdditions.h"; path = "../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/NSArray+SSToolkitAdditions.h"; sourceTree = "<group>"; };
-		D69994CE145B0FD4007752F1 /* NSData+SSToolkitAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSData+SSToolkitAdditions.h"; path = "../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/NSData+SSToolkitAdditions.h"; sourceTree = "<group>"; };
-		D69994CF145B0FD4007752F1 /* NSDate+SSToolkitAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSDate+SSToolkitAdditions.h"; path = "../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/NSDate+SSToolkitAdditions.h"; sourceTree = "<group>"; };
-		D69994D0145B0FD4007752F1 /* NSDictionary+SSToolkitAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+SSToolkitAdditions.h"; path = "../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/NSDictionary+SSToolkitAdditions.h"; sourceTree = "<group>"; };
-		D69994D1145B0FD4007752F1 /* NSString+SSToolkitAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSString+SSToolkitAdditions.h"; path = "../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/NSString+SSToolkitAdditions.h"; sourceTree = "<group>"; };
-		D69994D2145B0FD4007752F1 /* NSURL+SSToolkitAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSURL+SSToolkitAdditions.h"; path = "../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/NSURL+SSToolkitAdditions.h"; sourceTree = "<group>"; };
-		D69994D3145B0FD4007752F1 /* SSAddressBarTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSAddressBarTextField.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSAddressBarTextField.h; sourceTree = "<group>"; };
-		D69994D4145B0FD4007752F1 /* SSAddressBarTextFieldBackgroundView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSAddressBarTextFieldBackgroundView.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSAddressBarTextFieldBackgroundView.h; sourceTree = "<group>"; };
-		D69994D5145B0FD4007752F1 /* SSAddressBarTextFieldBackgroundViewInnerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSAddressBarTextFieldBackgroundViewInnerView.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSAddressBarTextFieldBackgroundViewInnerView.h; sourceTree = "<group>"; };
-		D69994D6145B0FD4007752F1 /* SSAnimatedImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSAnimatedImageView.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSAnimatedImageView.h; sourceTree = "<group>"; };
-		D69994D7145B0FD4007752F1 /* SSBadgeTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSBadgeTableViewCell.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSBadgeTableViewCell.h; sourceTree = "<group>"; };
-		D69994D8145B0FD4007752F1 /* SSBadgeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSBadgeView.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSBadgeView.h; sourceTree = "<group>"; };
-		D69994D9145B0FD4007752F1 /* SSBorderedView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSBorderedView.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSBorderedView.h; sourceTree = "<group>"; };
-		D69994DA145B0FD4007752F1 /* SSCategories.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSCategories.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSCategories.h; sourceTree = "<group>"; };
-		D69994DB145B0FD4007752F1 /* SSCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSCollectionView.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSCollectionView.h; sourceTree = "<group>"; };
-		D69994DC145B0FD4007752F1 /* SSCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSCollectionViewController.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSCollectionViewController.h; sourceTree = "<group>"; };
-		D69994DD145B0FD4007752F1 /* SSCollectionViewExtremityTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSCollectionViewExtremityTableViewCell.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSCollectionViewExtremityTableViewCell.h; sourceTree = "<group>"; };
-		D69994DE145B0FD4007752F1 /* SSCollectionViewInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSCollectionViewInternal.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSCollectionViewInternal.h; sourceTree = "<group>"; };
-		D69994DF145B0FD4007752F1 /* SSCollectionViewItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSCollectionViewItem.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSCollectionViewItem.h; sourceTree = "<group>"; };
-		D69994E0145B0FD4007752F1 /* SSCollectionViewItemInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSCollectionViewItemInternal.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSCollectionViewItemInternal.h; sourceTree = "<group>"; };
-		D69994E1145B0FD4007752F1 /* SSCollectionViewItemTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSCollectionViewItemTableViewCell.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSCollectionViewItemTableViewCell.h; sourceTree = "<group>"; };
-		D69994E2145B0FD4007752F1 /* SSCollectionViewTableView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSCollectionViewTableView.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSCollectionViewTableView.h; sourceTree = "<group>"; };
-		D69994E3145B0FD4007752F1 /* SSConcurrentOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSConcurrentOperation.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSConcurrentOperation.h; sourceTree = "<group>"; };
-		D69994E4145B0FD4007752F1 /* SSDrawingUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSDrawingUtilities.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSDrawingUtilities.h; sourceTree = "<group>"; };
-		D69994E5145B0FD4007752F1 /* SSGradientView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSGradientView.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSGradientView.h; sourceTree = "<group>"; };
-		D69994E6145B0FD4007752F1 /* SSHUDView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSHUDView.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSHUDView.h; sourceTree = "<group>"; };
-		D69994E7145B0FD4007752F1 /* SSHUDWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSHUDWindow.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSHUDWindow.h; sourceTree = "<group>"; };
-		D69994E8145B0FD4007752F1 /* SSLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSLabel.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSLabel.h; sourceTree = "<group>"; };
-		D69994E9145B0FD4007752F1 /* SSLineView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSLineView.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSLineView.h; sourceTree = "<group>"; };
-		D69994EA145B0FD4007752F1 /* SSLoadingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSLoadingView.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSLoadingView.h; sourceTree = "<group>"; };
-		D69994EB145B0FD4007752F1 /* SSModalViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSModalViewController.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSModalViewController.h; sourceTree = "<group>"; };
-		D69994EC145B0FD4007752F1 /* SSNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSNavigationController.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSNavigationController.h; sourceTree = "<group>"; };
-		D69994ED145B0FD4007752F1 /* SSPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSPickerViewController.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSPickerViewController.h; sourceTree = "<group>"; };
-		D69994EE145B0FD4007752F1 /* SSPieProgressView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSPieProgressView.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSPieProgressView.h; sourceTree = "<group>"; };
-		D69994EF145B0FD4007752F1 /* SSRatingPicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSRatingPicker.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSRatingPicker.h; sourceTree = "<group>"; };
-		D69994F0145B0FD4007752F1 /* SSRatingPickerScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSRatingPickerScrollView.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSRatingPickerScrollView.h; sourceTree = "<group>"; };
-		D69994F1145B0FD4007752F1 /* SSRatingPickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSRatingPickerViewController.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSRatingPickerViewController.h; sourceTree = "<group>"; };
-		D69994F2145B0FD4007752F1 /* SSSegmentedControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSSegmentedControl.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSSegmentedControl.h; sourceTree = "<group>"; };
-		D69994F3145B0FD4007752F1 /* SSSwitch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSSwitch.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSSwitch.h; sourceTree = "<group>"; };
-		D69994F4145B0FD4007752F1 /* SSTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSTableViewController.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSTableViewController.h; sourceTree = "<group>"; };
-		D69994F5145B0FD4007752F1 /* SSTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSTextField.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSTextField.h; sourceTree = "<group>"; };
-		D69994F6145B0FD4007752F1 /* SSTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSTextView.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSTextView.h; sourceTree = "<group>"; };
-		D69994F7145B0FD4007752F1 /* SSToolkit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSToolkit.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSToolkit.h; sourceTree = "<group>"; };
-		D69994F8145B0FD4007752F1 /* SSToolkitDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSToolkitDefines.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSToolkitDefines.h; sourceTree = "<group>"; };
-		D69994F9145B0FD4007752F1 /* SSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSViewController.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSViewController.h; sourceTree = "<group>"; };
-		D69994FA145B0FD4007752F1 /* SSWebView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SSWebView.h; path = ../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/SSWebView.h; sourceTree = "<group>"; };
-		D69994FB145B0FD4007752F1 /* UIApplication+SSToolkitAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIApplication+SSToolkitAdditions.h"; path = "../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/UIApplication+SSToolkitAdditions.h"; sourceTree = "<group>"; };
-		D69994FC145B0FD4007752F1 /* UIColor+SSToolkitAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIColor+SSToolkitAdditions.h"; path = "../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/UIColor+SSToolkitAdditions.h"; sourceTree = "<group>"; };
-		D69994FD145B0FD4007752F1 /* UIControl+SSToolkitAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIControl+SSToolkitAdditions.h"; path = "../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/UIControl+SSToolkitAdditions.h"; sourceTree = "<group>"; };
-		D69994FE145B0FD4007752F1 /* UIDevice+SSToolkitAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIDevice+SSToolkitAdditions.h"; path = "../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/UIDevice+SSToolkitAdditions.h"; sourceTree = "<group>"; };
-		D69994FF145B0FD4007752F1 /* UIImage+SSToolkitAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIImage+SSToolkitAdditions.h"; path = "../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/UIImage+SSToolkitAdditions.h"; sourceTree = "<group>"; };
-		D6999500145B0FD4007752F1 /* UIScreen+SSToolkitAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIScreen+SSToolkitAdditions.h"; path = "../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/UIScreen+SSToolkitAdditions.h"; sourceTree = "<group>"; };
-		D6999501145B0FD4007752F1 /* UIScrollView+SSToolkitAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+SSToolkitAdditions.h"; path = "../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/UIScrollView+SSToolkitAdditions.h"; sourceTree = "<group>"; };
-		D6999502145B0FD4007752F1 /* UIView+SSToolkitAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIView+SSToolkitAdditions.h"; path = "../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/UIView+SSToolkitAdditions.h"; sourceTree = "<group>"; };
-		D6999503145B0FD4007752F1 /* UIViewController+SSToolkitAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIViewController+SSToolkitAdditions.h"; path = "../OPIFoundation/OPIFoundation/ThirdParty/SSToolkit/UIViewController+SSToolkitAdditions.h"; sourceTree = "<group>"; };
-		D6999504145B0FD4007752F1 /* CXMLElement+CustomExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CXMLElement+CustomExtensions.h"; path = "../OPIFoundation/OPIFoundation/Categories/CXMLElement+CustomExtensions.h"; sourceTree = "<group>"; };
-		D6999505145B0FD4007752F1 /* NSString+StringFormatters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSString+StringFormatters.h"; path = "../OPIFoundation/OPIFoundation/Categories/NSString+StringFormatters.h"; sourceTree = "<group>"; };
 		D6A96658130F0C3C004D90C4 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		D6B0401213024FF6004D00CA /* LineaSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineaSDK.h; sourceTree = "<group>"; };
 		D6B1935B133BEF22004C4FD1 /* XmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XmlMarshaller.h; sourceTree = "<group>"; };
@@ -994,7 +894,6 @@
 		D6CB613E137321C200E024B6 /* ProductItemListXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductItemListXmlMarshaller.h; sourceTree = "<group>"; };
 		D6CB613F137321C200E024B6 /* ProductItemListXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductItemListXmlMarshaller.m; sourceTree = "<group>"; };
 		D6D11CC014437ED100AC822F /* exchange@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exchange@2x.png"; sourceTree = "<group>"; };
-		D6D6EFF3147BDEF40006A6FF /* InAppUpdater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InAppUpdater.h; path = ../OPIFoundation/OPIFoundation/InAppUpdater.h; sourceTree = "<group>"; };
 		D6D952421471768E00FF26ED /* InStoreCreditPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InStoreCreditPayment.h; sourceTree = "<group>"; };
 		D6D952431471768E00FF26ED /* InStoreCreditPayment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InStoreCreditPayment.m; sourceTree = "<group>"; };
 		D6D95246147176DA00FF26ED /* GiftCardPayment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GiftCardPayment.h; sourceTree = "<group>"; };
@@ -1072,6 +971,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6FDDB1614E318AD0085298A /* libASIHTTPRequest.a in Frameworks */,
 				D60AAFB9147DD80400FBA576 /* libOPIFoundationCore.a in Frameworks */,
 				D62AE4BA147C463400D4A625 /* libdtdev.a in Frameworks */,
 				36444E171455B78F0024C24F /* libz.1.2.5.dylib in Frameworks */,
@@ -1114,6 +1014,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6FDDB1F14E318CE0085298A /* libASIHTTPRequest.a in Frameworks */,
 				D60AAFBA147DD80C00FBA576 /* libOPIFoundationCore.a in Frameworks */,
 				D62AE4BB147C464B00D4A625 /* libdtdev.a in Frameworks */,
 				36444E181455B7A30024C24F /* libz.1.2.5.dylib in Frameworks */,
@@ -1137,6 +1038,7 @@
 			files = (
 				D690234B144F224800174E59 /* libz.1.2.5.dylib in Frameworks */,
 				364B56C61430D02D0028FE09 /* libIBAForms.a in Frameworks */,
+				D6FDDB1114E315670085298A /* libASIHTTPRequest.a in Frameworks */,
 				D60AAFB1147DD7A800FBA576 /* libOPIFoundationCore.a in Frameworks */,
 				D6E9E9D11316037900FF1498 /* libiPOSFoundation.a in Frameworks */,
 				D6D952591471B74F00FF26ED /* libdtdev.a in Frameworks */,
@@ -1207,6 +1109,7 @@
 			isa = PBXGroup;
 			children = (
 				D6902349144F222700174E59 /* libz.1.2.5.dylib */,
+				D6A96658130F0C3C004D90C4 /* Settings.bundle */,
 				36525D1214333EFE0009C6A5 /* main */,
 				36F34096141E997A00913116 /* external */,
 				D64B7E3312F9D8B4006AB141 /* TestSuites */,
@@ -1216,10 +1119,9 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				D654C1B8145B03D0008CCAA7 /* OPIFoundationRef */,
-				D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */,
+				D60E92DF14E314550028647B /* ASIHTTPRequest.xcodeproj */,
 				364B56B71430CF5C0028FE09 /* IBAForms.xcodeproj */,
-				D6A96658130F0C3C004D90C4 /* Settings.bundle */,
+				D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -1639,6 +1541,14 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		D60E92E014E314550028647B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D60E92E714E314560028647B /* libASIHTTPRequest.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		D61BB068137DADAC0014D547 /* UIAutomation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1748,132 +1658,6 @@
 				D64B7E2712F9D87C006AB141 /* LogicalIntTests */,
 			);
 			path = TestSuites;
-			sourceTree = "<group>";
-		};
-		D654C1B8145B03D0008CCAA7 /* OPIFoundationRef */ = {
-			isa = PBXGroup;
-			children = (
-				D6105EB91488067D00170AEA /* UIViewController+Helpers.h */,
-				D6D6EFF3147BDEF40006A6FF /* InAppUpdater.h */,
-				D6999491145B0FD4007752F1 /* Error.h */,
-				D6999492145B0FD4007752F1 /* PDColoredProgressView.h */,
-				D6999493145B0FD4007752F1 /* ASIAuthenticationDialog.h */,
-				D6999494145B0FD4007752F1 /* ASICacheDelegate.h */,
-				D6999495145B0FD4007752F1 /* ASIDataCompressor.h */,
-				D6999496145B0FD4007752F1 /* ASIDataDecompressor.h */,
-				D6999497145B0FD4007752F1 /* ASIDownloadCache.h */,
-				D6999498145B0FD4007752F1 /* ASIFormDataRequest.h */,
-				D6999499145B0FD4007752F1 /* ASIHTTPRequest+Validate.h */,
-				D699949A145B0FD4007752F1 /* ASIHTTPRequest.h */,
-				D699949B145B0FD4007752F1 /* ASIHTTPRequestConfig.h */,
-				D699949C145B0FD4007752F1 /* ASIHTTPRequestDelegate.h */,
-				D699949D145B0FD4007752F1 /* ASIInputStream.h */,
-				D699949E145B0FD4007752F1 /* ASINetworkQueue.h */,
-				D699949F145B0FD4007752F1 /* ASIProgressDelegate.h */,
-				D69994A0145B0FD4007752F1 /* Reachability.h */,
-				D69994A1145B0FD4007752F1 /* CustomBadge.h */,
-				D69994A2145B0FD4007752F1 /* iCarousel.h */,
-				D69994A3145B0FD4007752F1 /* CDataScanner.h */,
-				D69994A4145B0FD4007752F1 /* CDataScanner_Extensions.h */,
-				D69994A5145B0FD4007752F1 /* NSDictionary_JSONExtensions.h */,
-				D69994A6145B0FD4007752F1 /* CJSONDeserializer.h */,
-				D69994A7145B0FD4007752F1 /* CJSONScanner.h */,
-				D69994A8145B0FD4007752F1 /* CJSONSerializer.h */,
-				D69994A9145B0FD4007752F1 /* JSONRepresentation.h */,
-				D69994AA145B0FD4007752F1 /* CXMLDocument_CreationExtensions.h */,
-				D69994AB145B0FD4007752F1 /* CXMLNode_CreationExtensions.h */,
-				D69994AC145B0FD4007752F1 /* CTidy.h */,
-				D69994AD145B0FD4007752F1 /* CXHTMLDocument.h */,
-				D69994AE145B0FD4007752F1 /* CXMLDocument.h */,
-				D69994AF145B0FD4007752F1 /* CXMLDocument_PrivateExtensions.h */,
-				D69994B0145B0FD4007752F1 /* CXMLElement.h */,
-				D69994B1145B0FD4007752F1 /* CXMLElement_CreationExtensions.h */,
-				D69994B2145B0FD4007752F1 /* CXMLElement_ElementTreeExtensions.h */,
-				D69994B3145B0FD4007752F1 /* CXMLNamespaceNode.h */,
-				D69994B4145B0FD4007752F1 /* CXMLNode.h */,
-				D69994B5145B0FD4007752F1 /* CXMLNode_PrivateExtensions.h */,
-				D69994B6145B0FD4007752F1 /* CXMLNode_XPathExtensions.h */,
-				D69994B7145B0FD4007752F1 /* TouchXML.h */,
-				D69994B8145B0FD4007752F1 /* AlertUtils.h */,
-				D69994B9145B0FD4007752F1 /* PropertyUtils.h */,
-				D69994BA145B0FD4007752F1 /* Global.h */,
-				D69994BB145B0FD4007752F1 /* MOButton.h */,
-				D69994BC145B0FD4007752F1 /* MOGlassButton.h */,
-				D69994BD145B0FD4007752F1 /* UIScreen+Helpers.h */,
-				D69994BE145B0FD4007752F1 /* NSFileManager+Extensions.h */,
-				D69994BF145B0FD4007752F1 /* NSString+Base64Encode.h */,
-				D69994C0145B0FD4007752F1 /* NSString+CamelCaseUtils.h */,
-				D69994C1145B0FD4007752F1 /* NSString+Extensions.h */,
-				D69994C2145B0FD4007752F1 /* UIColor+Chooser.h */,
-				D69994C3145B0FD4007752F1 /* UIImage+Alpha.h */,
-				D69994C4145B0FD4007752F1 /* UIImage+Resize.h */,
-				D69994C5145B0FD4007752F1 /* UIImage+RoundedCorner.h */,
-				D69994C6145B0FD4007752F1 /* UIImage+Extensions.h */,
-				D69994C7145B0FD4007752F1 /* UIView+ImageRender.h */,
-				D69994C8145B0FD4007752F1 /* UIView+ViewLayout.h */,
-				D69994C9145B0FD4007752F1 /* UIViewController+ViewControllerLayout.h */,
-				D69994CA145B0FD4007752F1 /* UIViewController+Transitions.h */,
-				D69994CB145B0FD4007752F1 /* UITextView+Extensions.h */,
-				D69994CC145B0FD4007752F1 /* NSDictionary+Extensions.h */,
-				D69994CD145B0FD4007752F1 /* NSArray+SSToolkitAdditions.h */,
-				D69994CE145B0FD4007752F1 /* NSData+SSToolkitAdditions.h */,
-				D69994CF145B0FD4007752F1 /* NSDate+SSToolkitAdditions.h */,
-				D69994D0145B0FD4007752F1 /* NSDictionary+SSToolkitAdditions.h */,
-				D69994D1145B0FD4007752F1 /* NSString+SSToolkitAdditions.h */,
-				D69994D2145B0FD4007752F1 /* NSURL+SSToolkitAdditions.h */,
-				D69994D3145B0FD4007752F1 /* SSAddressBarTextField.h */,
-				D69994D4145B0FD4007752F1 /* SSAddressBarTextFieldBackgroundView.h */,
-				D69994D5145B0FD4007752F1 /* SSAddressBarTextFieldBackgroundViewInnerView.h */,
-				D69994D6145B0FD4007752F1 /* SSAnimatedImageView.h */,
-				D69994D7145B0FD4007752F1 /* SSBadgeTableViewCell.h */,
-				D69994D8145B0FD4007752F1 /* SSBadgeView.h */,
-				D69994D9145B0FD4007752F1 /* SSBorderedView.h */,
-				D69994DA145B0FD4007752F1 /* SSCategories.h */,
-				D69994DB145B0FD4007752F1 /* SSCollectionView.h */,
-				D69994DC145B0FD4007752F1 /* SSCollectionViewController.h */,
-				D69994DD145B0FD4007752F1 /* SSCollectionViewExtremityTableViewCell.h */,
-				D69994DE145B0FD4007752F1 /* SSCollectionViewInternal.h */,
-				D69994DF145B0FD4007752F1 /* SSCollectionViewItem.h */,
-				D69994E0145B0FD4007752F1 /* SSCollectionViewItemInternal.h */,
-				D69994E1145B0FD4007752F1 /* SSCollectionViewItemTableViewCell.h */,
-				D69994E2145B0FD4007752F1 /* SSCollectionViewTableView.h */,
-				D69994E3145B0FD4007752F1 /* SSConcurrentOperation.h */,
-				D69994E4145B0FD4007752F1 /* SSDrawingUtilities.h */,
-				D69994E5145B0FD4007752F1 /* SSGradientView.h */,
-				D69994E6145B0FD4007752F1 /* SSHUDView.h */,
-				D69994E7145B0FD4007752F1 /* SSHUDWindow.h */,
-				D69994E8145B0FD4007752F1 /* SSLabel.h */,
-				D69994E9145B0FD4007752F1 /* SSLineView.h */,
-				D69994EA145B0FD4007752F1 /* SSLoadingView.h */,
-				D69994EB145B0FD4007752F1 /* SSModalViewController.h */,
-				D69994EC145B0FD4007752F1 /* SSNavigationController.h */,
-				D69994ED145B0FD4007752F1 /* SSPickerViewController.h */,
-				D69994EE145B0FD4007752F1 /* SSPieProgressView.h */,
-				D69994EF145B0FD4007752F1 /* SSRatingPicker.h */,
-				D69994F0145B0FD4007752F1 /* SSRatingPickerScrollView.h */,
-				D69994F1145B0FD4007752F1 /* SSRatingPickerViewController.h */,
-				D69994F2145B0FD4007752F1 /* SSSegmentedControl.h */,
-				D69994F3145B0FD4007752F1 /* SSSwitch.h */,
-				D69994F4145B0FD4007752F1 /* SSTableViewController.h */,
-				D69994F5145B0FD4007752F1 /* SSTextField.h */,
-				D69994F6145B0FD4007752F1 /* SSTextView.h */,
-				D69994F7145B0FD4007752F1 /* SSToolkit.h */,
-				D69994F8145B0FD4007752F1 /* SSToolkitDefines.h */,
-				D69994F9145B0FD4007752F1 /* SSViewController.h */,
-				D69994FA145B0FD4007752F1 /* SSWebView.h */,
-				D69994FB145B0FD4007752F1 /* UIApplication+SSToolkitAdditions.h */,
-				D69994FC145B0FD4007752F1 /* UIColor+SSToolkitAdditions.h */,
-				D69994FD145B0FD4007752F1 /* UIControl+SSToolkitAdditions.h */,
-				D69994FE145B0FD4007752F1 /* UIDevice+SSToolkitAdditions.h */,
-				D69994FF145B0FD4007752F1 /* UIImage+SSToolkitAdditions.h */,
-				D6999500145B0FD4007752F1 /* UIScreen+SSToolkitAdditions.h */,
-				D6999501145B0FD4007752F1 /* UIScrollView+SSToolkitAdditions.h */,
-				D6999502145B0FD4007752F1 /* UIView+SSToolkitAdditions.h */,
-				D6999503145B0FD4007752F1 /* UIViewController+SSToolkitAdditions.h */,
-				D6999504145B0FD4007752F1 /* CXMLElement+CustomExtensions.h */,
-				D6999505145B0FD4007752F1 /* NSString+StringFormatters.h */,
-			);
-			name = OPIFoundationRef;
 			sourceTree = "<group>";
 		};
 		D65B25B61331C8A40052AEE2 /* AppTests */ = {
@@ -2199,7 +1983,6 @@
 			);
 			dependencies = (
 				D60AAFB8147DD7D400FBA576 /* PBXTargetDependency */,
-				364B56C11430CFD80028FE09 /* PBXTargetDependency */,
 				D6B4386F1315ABA8000C0AA8 /* PBXTargetDependency */,
 			);
 			name = iPOS;
@@ -2219,7 +2002,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D6999518145B111A007752F1 /* PBXTargetDependency */,
 				D6CC18BD1331D1150042745E /* PBXTargetDependency */,
 			);
 			name = AppTests;
@@ -2239,7 +2021,9 @@
 			buildRules = (
 			);
 			dependencies = (
-				36F3E9931434B9AD004376B8 /* PBXTargetDependency */,
+				D6FDDB1E14E318C40085298A /* PBXTargetDependency */,
+				D6FDDB1514E318A20085298A /* PBXTargetDependency */,
+				D6FDDB1314E3189B0085298A /* PBXTargetDependency */,
 				D6B439111315B242000C0AA8 /* PBXTargetDependency */,
 				D6F0DF7D1485653D00109DE3 /* PBXTargetDependency */,
 			);
@@ -2260,7 +2044,6 @@
 			);
 			dependencies = (
 				D60AAFB4147DD7C400FBA576 /* PBXTargetDependency */,
-				36F3E99C1434BB68004376B8 /* PBXTargetDependency */,
 				D65B25BE1331C8B60052AEE2 /* PBXTargetDependency */,
 			);
 			name = iPOSTesting;
@@ -2280,7 +2063,9 @@
 			buildRules = (
 			);
 			dependencies = (
-				36F3E9981434BA49004376B8 /* PBXTargetDependency */,
+				D6FDDB1814E318BB0085298A /* PBXTargetDependency */,
+				D6FDDB1A14E318BB0085298A /* PBXTargetDependency */,
+				D6FDDB1C14E318BB0085298A /* PBXTargetDependency */,
 				D67943A81316089C004B8254 /* PBXTargetDependency */,
 				D6F0DF7F1485654700109DE3 /* PBXTargetDependency */,
 			);
@@ -2300,8 +2085,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				D6FDDB1014E3155B0085298A /* PBXTargetDependency */,
 				D60AAFB6147DD7CB00FBA576 /* PBXTargetDependency */,
-				364B56C51430CFE10028FE09 /* PBXTargetDependency */,
 				D6E9E9CE1316036B00FF1498 /* PBXTargetDependency */,
 			);
 			name = iPOSDemo;
@@ -2348,6 +2133,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = D60E92E014E314550028647B /* Products */;
+					ProjectRef = D60E92DF14E314550028647B /* ASIHTTPRequest.xcodeproj */;
+				},
+				{
 					ProductGroup = 364B56B81430CF5C0028FE09 /* Products */;
 					ProjectRef = 364B56B71430CF5C0028FE09 /* IBAForms.xcodeproj */;
 				},
@@ -2375,6 +2164,13 @@
 			fileType = archive.ar;
 			path = libIBAForms.a;
 			remoteRef = 364B56BE1430CF5D0028FE09 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D60E92E714E314560028647B /* libASIHTTPRequest.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libASIHTTPRequest.a;
+			remoteRef = D60E92E614E314560028647B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D67B5887147DD6CD00C2ED5D /* libOPIFoundation.a */ = {
@@ -2783,31 +2579,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		364B56C11430CFD80028FE09 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = IBAForms;
-			targetProxy = 364B56C01430CFD80028FE09 /* PBXContainerItemProxy */;
-		};
-		364B56C51430CFE10028FE09 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = IBAForms;
-			targetProxy = 364B56C41430CFE10028FE09 /* PBXContainerItemProxy */;
-		};
-		36F3E9931434B9AD004376B8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = IBAForms;
-			targetProxy = 36F3E9921434B9AD004376B8 /* PBXContainerItemProxy */;
-		};
-		36F3E9981434BA49004376B8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = IBAForms;
-			targetProxy = 36F3E9971434BA49004376B8 /* PBXContainerItemProxy */;
-		};
-		36F3E99C1434BB68004376B8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = IBAForms;
-			targetProxy = 36F3E99B1434BB68004376B8 /* PBXContainerItemProxy */;
-		};
 		D60AAFB4147DD7C400FBA576 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "OPIFoundation-Core";
@@ -2832,11 +2603,6 @@
 			isa = PBXTargetDependency;
 			target = D6B4366E1315A7DD000C0AA8 /* iPOSFoundation */;
 			targetProxy = D67943A71316089C004B8254 /* PBXContainerItemProxy */;
-		};
-		D6999518145B111A007752F1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = IBAForms;
-			targetProxy = D6999517145B111A007752F1 /* PBXContainerItemProxy */;
 		};
 		D6B4386F1315ABA8000C0AA8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2868,6 +2634,41 @@
 			target = D697D1961312DCD0002C3EF6 /* iPOSDemo */;
 			targetProxy = D6F0DF7E1485654700109DE3 /* PBXContainerItemProxy */;
 		};
+		D6FDDB1014E3155B0085298A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ASIHTTPRequest;
+			targetProxy = D6FDDB0F14E3155B0085298A /* PBXContainerItemProxy */;
+		};
+		D6FDDB1314E3189B0085298A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ASIHTTPRequest;
+			targetProxy = D6FDDB1214E3189B0085298A /* PBXContainerItemProxy */;
+		};
+		D6FDDB1514E318A20085298A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = IBAForms;
+			targetProxy = D6FDDB1414E318A20085298A /* PBXContainerItemProxy */;
+		};
+		D6FDDB1814E318BB0085298A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ASIHTTPRequest;
+			targetProxy = D6FDDB1714E318BB0085298A /* PBXContainerItemProxy */;
+		};
+		D6FDDB1A14E318BB0085298A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "OPIFoundation-Core";
+			targetProxy = D6FDDB1914E318BB0085298A /* PBXContainerItemProxy */;
+		};
+		D6FDDB1C14E318BB0085298A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = IBAForms;
+			targetProxy = D6FDDB1B14E318BB0085298A /* PBXContainerItemProxy */;
+		};
+		D6FDDB1E14E318C40085298A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "OPIFoundation-Core";
+			targetProxy = D6FDDB1D14E318C40085298A /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -2886,7 +2687,9 @@
 				GCC_USE_STANDARD_INCLUDE_SEARCHING = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../OPIFoundation/OPIFoundation/**",
 					"$(SRCROOT)/../ThirdParty/IBAForms/headers/IBAForms",
+					"$(SRCROOT)/../ThirdParty/ASIHTTPRequest/ASIHTTPRequest/**",
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "Resources/iPOS-Info.plist";
@@ -2918,7 +2721,9 @@
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../OPIFoundation/OPIFoundation/**",
 					"$(SRCROOT)/../ThirdParty/IBAForms/headers/IBAForms",
+					"$(SRCROOT)/../ThirdParty/ASIHTTPRequest/ASIHTTPRequest/**",
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "Resources/iPOS-Info.plist";
@@ -2942,7 +2747,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 23;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2970,7 +2775,9 @@
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../OPIFoundation/OPIFoundation/**",
 					"$(SRCROOT)/../ThirdParty/IBAForms/headers/IBAForms",
+					"$(SRCROOT)/../ThirdParty/ASIHTTPRequest/ASIHTTPRequest/**",
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "Resources/iPOS-Info.plist";
@@ -3001,6 +2808,8 @@
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../OPIFoundation/OPIFoundation/**",
+					"$(SRCROOT)/../ThirdParty/ASIHTTPRequest/ASIHTTPRequest/**",
 					"$(SRCROOT)/../ThirdParty/IBAForms/headers/IBAForms",
 					/usr/include/libxml2,
 				);
@@ -3034,6 +2843,8 @@
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../OPIFoundation/OPIFoundation/**",
+					"$(SRCROOT)/../ThirdParty/ASIHTTPRequest/ASIHTTPRequest/**",
 					"$(SRCROOT)/../ThirdParty/IBAForms/headers/IBAForms",
 					/usr/include/libxml2,
 				);
@@ -3071,7 +2882,9 @@
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../IBAForms",
+					"$(SRCROOT)/../OPIFoundation/OPIFoundation/**",
+					"$(SRCROOT)/../ThirdParty/ASIHTTPRequest/ASIHTTPRequest/**",
+					"$(SRCROOT)/../ThirdParty/IBAForms/headers/IBAForms",
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "Resources/UnitTests-Info.plist";
@@ -3113,7 +2926,9 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "DEMO_MODE=1";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../IBAForms",
+					"$(SRCROOT)/../OPIFoundation/OPIFoundation/**",
+					"$(SRCROOT)/../ThirdParty/ASIHTTPRequest/ASIHTTPRequest/**",
+					"$(SRCROOT)/../ThirdParty/IBAForms/headers/IBAForms",
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "Resources/IntTests-Info.plist";
@@ -3185,7 +3000,12 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PREFIX_HEADER = IPOS_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../OPIFoundation/OPIFoundation/**",
+					"$(SRCROOT)/../ThirdParty/ASIHTTPRequest/ASIHTTPRequest/**",
+					"$(SRCROOT)/../ThirdParty/IBAForms/headers/IBAForms",
+					/usr/include/libxml2,
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -3204,7 +3024,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 23;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -3226,7 +3046,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 23;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -3333,7 +3153,9 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "DEMO_MODE=1";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../IBAForms",
+					"$(SRCROOT)/../OPIFoundation/OPIFoundation/**",
+					"$(SRCROOT)/../ThirdParty/ASIHTTPRequest/ASIHTTPRequest/**",
+					"$(SRCROOT)/../ThirdParty/IBAForms/headers/IBAForms",
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "Resources/UnitTests-Info.plist";
@@ -3375,7 +3197,9 @@
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../IBAForms",
+					"$(SRCROOT)/../OPIFoundation/OPIFoundation/**",
+					"$(SRCROOT)/../ThirdParty/ASIHTTPRequest/ASIHTTPRequest/**",
+					"$(SRCROOT)/../ThirdParty/IBAForms/headers/IBAForms",
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "Resources/UnitTests-Info.plist";
@@ -3416,6 +3240,8 @@
 				GCC_USE_STANDARD_INCLUDE_SEARCHING = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../OPIFoundation/OPIFoundation/**",
+					"$(SRCROOT)/../ThirdParty/ASIHTTPRequest/ASIHTTPRequest/**",
 					"$(SRCROOT)/../ThirdParty/IBAForms/headers/IBAForms",
 					/usr/include/libxml2,
 				);
@@ -3448,6 +3274,8 @@
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../OPIFoundation/OPIFoundation/**",
+					"$(SRCROOT)/../ThirdParty/ASIHTTPRequest/ASIHTTPRequest/**",
 					"$(SRCROOT)/../ThirdParty/IBAForms/headers/IBAForms",
 					/usr/include/libxml2,
 				);
@@ -3485,7 +3313,9 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "DEMO_MODE=1";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../IBAForms",
+					"$(SRCROOT)/../OPIFoundation/OPIFoundation/**",
+					"$(SRCROOT)/../ThirdParty/ASIHTTPRequest/ASIHTTPRequest/**",
+					"$(SRCROOT)/../ThirdParty/IBAForms/headers/IBAForms",
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "Resources/IntTests-Info.plist";
@@ -3526,7 +3356,9 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "DEMO_MODE=1";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../IBAForms",
+					"$(SRCROOT)/../OPIFoundation/OPIFoundation/**",
+					"$(SRCROOT)/../ThirdParty/ASIHTTPRequest/ASIHTTPRequest/**",
+					"$(SRCROOT)/../ThirdParty/IBAForms/headers/IBAForms",
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "Resources/IntTests-Info.plist";
@@ -3569,6 +3401,8 @@
 				GCC_USE_STANDARD_INCLUDE_SEARCHING = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../OPIFoundation/OPIFoundation/**",
+					"$(SRCROOT)/../ThirdParty/ASIHTTPRequest/ASIHTTPRequest/**",
 					"$(SRCROOT)/../ThirdParty/IBAForms/headers/IBAForms",
 					/usr/include/libxml2,
 				);
@@ -3601,6 +3435,8 @@
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../OPIFoundation/OPIFoundation/**",
+					"$(SRCROOT)/../ThirdParty/ASIHTTPRequest/ASIHTTPRequest/**",
 					"$(SRCROOT)/../ThirdParty/IBAForms/headers/IBAForms",
 					/usr/include/libxml2,
 				);
@@ -3633,7 +3469,12 @@
 				GCC_PREFIX_HEADER = IPOS_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../OPIFoundation/OPIFoundation/**",
+					"$(SRCROOT)/../ThirdParty/ASIHTTPRequest/ASIHTTPRequest/**",
+					"$(SRCROOT)/../ThirdParty/IBAForms/headers/IBAForms",
+					/usr/include/libxml2,
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -3655,7 +3496,12 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PREFIX_HEADER = IPOS_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../OPIFoundation/OPIFoundation/**",
+					"$(SRCROOT)/../ThirdParty/ASIHTTPRequest/ASIHTTPRequest/**",
+					"$(SRCROOT)/../ThirdParty/IBAForms/headers/IBAForms",
+					/usr/include/libxml2,
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
