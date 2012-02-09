@@ -21,6 +21,8 @@
 
 - (ASIHTTPRequest *) startGetRequest: (NSString *) urlString withSession: (SessionInfo *) sessionInfo;
 
+- (NSString *) escapeXMLForParsing: (NSString *) xmlString;
+
 @end
 
 @implementation InventoryServiceImpl
@@ -110,7 +112,7 @@
     [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     
-    NSString *requestXml = [NSString stringWithFormat:@"<ItemSearch>%@</ItemSearch>", itemName];    
+    NSString *requestXml = [self escapeXMLForParsing:[NSString stringWithFormat:@"<ItemSearch>%@</ItemSearch>", itemName]];   
     [request appendPostData:[requestXml dataUsingEncoding:NSUTF8StringEncoding]];
     
     [request startSynchronous];
@@ -188,7 +190,8 @@
         [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
         [request addRequestHeader:@"Content-Type" value:@"text/xml"];
         
-        NSString *requestXml = [sellingApprovalReq toXml];    
+        NSString *requestXml = [self escapeXMLForParsing:[sellingApprovalReq toXml]];
+
         [request appendPostData:[requestXml dataUsingEncoding:NSUTF8StringEncoding]];
         
         [request startSynchronous];
@@ -232,5 +235,12 @@
     return request;
 }
 
+- (NSString *) escapeXMLForParsing: (NSString *) xmlString {
+    
+    // Replace any entity reference or XML special characters that could impact parsing
+    NSString *escapedString = [xmlString stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"];
+    
+    return escapedString;
+}
 
 @end

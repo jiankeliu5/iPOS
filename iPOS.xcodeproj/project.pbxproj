@@ -398,6 +398,8 @@
 		D6FDDB1114E315670085298A /* libASIHTTPRequest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D60E92E714E314560028647B /* libASIHTTPRequest.a */; };
 		D6FDDB1614E318AD0085298A /* libASIHTTPRequest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D60E92E714E314560028647B /* libASIHTTPRequest.a */; };
 		D6FDDB1F14E318CE0085298A /* libASIHTTPRequest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D60E92E714E314560028647B /* libASIHTTPRequest.a */; };
+		D6FDDB2414E31A110085298A /* libASIHTTPRequest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D60E92E714E314560028647B /* libASIHTTPRequest.a */; };
+		D6FDDB2B14E31A2B0085298A /* libASIHTTPRequest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D60E92E714E314560028647B /* libASIHTTPRequest.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -561,6 +563,41 @@
 			proxyType = 1;
 			remoteGlobalIDString = D6F7542A145B026000B117E1;
 			remoteInfo = "OPIFoundation-Core";
+		};
+		D6FDDB2014E31A0A0085298A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D60E92DF14E314550028647B /* ASIHTTPRequest.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 41580FC314E1BC6800A3AE09;
+			remoteInfo = ASIHTTPRequest;
+		};
+		D6FDDB2214E31A0A0085298A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 364B56B71430CF5C0028FE09 /* IBAForms.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = IBAForms;
+		};
+		D6FDDB2514E31A1C0085298A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 364B56B71430CF5C0028FE09 /* IBAForms.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = IBAForms;
+		};
+		D6FDDB2714E31A250085298A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D60E92DF14E314550028647B /* ASIHTTPRequest.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 41580FC314E1BC6800A3AE09;
+			remoteInfo = ASIHTTPRequest;
+		};
+		D6FDDB2914E31A250085298A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 364B56B71430CF5C0028FE09 /* IBAForms.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = IBAForms;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -931,6 +968,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D690234A144F222700174E59 /* libz.1.2.5.dylib in Frameworks */,
+				D6FDDB2414E31A110085298A /* libASIHTTPRequest.a in Frameworks */,
 				36F3E99A1434BB38004376B8 /* libIBAForms.a in Frameworks */,
 				D60AAFB0147DD79A00FBA576 /* libOPIFoundationCore.a in Frameworks */,
 				D6B438DB1315B00B000C0AA8 /* libiPOSFoundation.a in Frameworks */,
@@ -994,6 +1032,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D690234E144F226800174E59 /* libz.1.2.5.dylib in Frameworks */,
+				D6FDDB2B14E31A2B0085298A /* libASIHTTPRequest.a in Frameworks */,
 				36F3E99D1434BB6D004376B8 /* libIBAForms.a in Frameworks */,
 				D60AAFB2147DD7B400FBA576 /* libOPIFoundationCore.a in Frameworks */,
 				D690234C144F226100174E59 /* libiPOSFoundation.a in Frameworks */,
@@ -1982,6 +2021,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				D6FDDB2114E31A0A0085298A /* PBXTargetDependency */,
+				D6FDDB2314E31A0A0085298A /* PBXTargetDependency */,
 				D60AAFB8147DD7D400FBA576 /* PBXTargetDependency */,
 				D6B4386F1315ABA8000C0AA8 /* PBXTargetDependency */,
 			);
@@ -2043,6 +2084,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				D6FDDB2814E31A250085298A /* PBXTargetDependency */,
+				D6FDDB2A14E31A250085298A /* PBXTargetDependency */,
 				D60AAFB4147DD7C400FBA576 /* PBXTargetDependency */,
 				D65B25BE1331C8B60052AEE2 /* PBXTargetDependency */,
 			);
@@ -2085,6 +2128,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D6FDDB2614E31A1C0085298A /* PBXTargetDependency */,
 				D6FDDB1014E3155B0085298A /* PBXTargetDependency */,
 				D60AAFB6147DD7CB00FBA576 /* PBXTargetDependency */,
 				D6E9E9CE1316036B00FF1498 /* PBXTargetDependency */,
@@ -2669,6 +2713,31 @@
 			name = "OPIFoundation-Core";
 			targetProxy = D6FDDB1D14E318C40085298A /* PBXContainerItemProxy */;
 		};
+		D6FDDB2114E31A0A0085298A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ASIHTTPRequest;
+			targetProxy = D6FDDB2014E31A0A0085298A /* PBXContainerItemProxy */;
+		};
+		D6FDDB2314E31A0A0085298A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = IBAForms;
+			targetProxy = D6FDDB2214E31A0A0085298A /* PBXContainerItemProxy */;
+		};
+		D6FDDB2614E31A1C0085298A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = IBAForms;
+			targetProxy = D6FDDB2514E31A1C0085298A /* PBXContainerItemProxy */;
+		};
+		D6FDDB2814E31A250085298A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ASIHTTPRequest;
+			targetProxy = D6FDDB2714E31A250085298A /* PBXContainerItemProxy */;
+		};
+		D6FDDB2A14E31A250085298A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = IBAForms;
+			targetProxy = D6FDDB2914E31A250085298A /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -2747,7 +2816,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -3024,7 +3093,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -3046,7 +3115,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

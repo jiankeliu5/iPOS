@@ -15,6 +15,8 @@
 
 @interface PaymentServiceImpl()
 
+- (NSString *) escapeXMLForParsing: (NSString *) xmlString;
+
 - (BOOL) sendSignatureRequest:(NSString *)signatureXml forPayment:(Payment *) payment withSessionInfo:(SessionInfo *) sessionInfo;
 @end
 
@@ -92,7 +94,7 @@
     // Post data for payment
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     
-    NSString *paymentXml = [ccPayment toXml];    
+    NSString *paymentXml = [self escapeXMLForParsing:[ccPayment toXml]];    
     [request appendPostData:[paymentXml dataUsingEncoding:NSUTF8StringEncoding]];
     
     [request startSynchronous];
@@ -233,7 +235,7 @@
     // Post data for payment
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     
-    NSString *paymentXml = [accountPayment toXml];    
+    NSString *paymentXml = [self escapeXMLForParsing:[accountPayment toXml]];   
     [request appendPostData:[paymentXml dataUsingEncoding:NSUTF8StringEncoding]];
     
     [request startSynchronous];
@@ -281,7 +283,7 @@
     // Post data for payment
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     
-    [request appendPostData:[[refund toXml] dataUsingEncoding:NSUTF8StringEncoding]];
+    [request appendPostData:[[self escapeXMLForParsing:[refund toXml]] dataUsingEncoding:NSUTF8StringEncoding]];
     
     [request startSynchronous];
     
@@ -302,6 +304,14 @@
     
     // Return result
     return isSuccessful;
+}
+
+- (NSString *) escapeXMLForParsing: (NSString *) xmlString {
+    
+    // Replace any entity reference or XML special characters that could impact parsing
+    NSString *escapedString = [xmlString stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"];
+    
+    return escapedString;
 }
 
 @end

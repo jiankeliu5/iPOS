@@ -603,7 +603,8 @@
     NSDecimalNumber *balance = [NSDecimalNumber zero];
     
     for (OrderItem *item in orderItemList) {
-        if ([item isClosed]) {
+        // FIX:  Need to include returned items in the closed items balance (subtract from total)
+        if ([item isClosed] || [item isReturned]) {
             // Fixed to ensure balance is accumulative [Defect:  2011-06-01]
             balance = [balance decimalNumberByAdding:[[item calcLineSubTotal] decimalNumberByAdding: [item calcLineTax]]];
         }

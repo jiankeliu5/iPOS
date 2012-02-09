@@ -16,6 +16,7 @@
 #import "PaymentHistoryXMLMarshaller.h"
 
 @interface OrderHistoryService()
+- (NSString *) escapeXMLForParsing: (NSString *) xmlString;
 
 -(void) setToDemoMode;
 -(void) setToReleaseMode;
@@ -109,7 +110,7 @@
     [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     
-    NSString *requestXml = [NSString stringWithFormat:@"<OrderSearch>%@</OrderSearch>", phoneNumber];    
+    NSString *requestXml = [self escapeXMLForParsing:[NSString stringWithFormat:@"<OrderSearch>%@</OrderSearch>", phoneNumber]];    
     [request appendPostData:[requestXml dataUsingEncoding:NSUTF8StringEncoding]];
     
     [request startSynchronous];
@@ -149,5 +150,12 @@
     return [[[[PaymentHistoryXMLMarshaller alloc] init] autorelease] toObject:[request responseString]];
 }
 
+- (NSString *) escapeXMLForParsing: (NSString *) xmlString {
+    
+    // Replace any entity reference or XML special characters that could impact parsing
+    NSString *escapedString = [xmlString stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"];
+    
+    return escapedString;
+}
 
 @end

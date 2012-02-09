@@ -21,10 +21,12 @@
 
 // Private interface
 @interface iPOSServiceImpl()
-    - (ASIHTTPRequest *) getRequestForSession:(SessionInfo *) sessionInfo serviceDomainUri: (NSString *) serviceDomainUri serviceUri: (NSString *) serviceUri;
-    - (ASIHTTPRequest *) getRequestForSession:(SessionInfo *) sessionInfo url: (NSString *) urlString;
+- (NSString *) escapeXMLForParsing: (NSString *) xmlString;
 
-    - (void) saveOrder: (Order *) order withSession: (SessionInfo *) sessionInfo;
+- (ASIHTTPRequest *) getRequestForSession:(SessionInfo *) sessionInfo serviceDomainUri: (NSString *) serviceDomainUri serviceUri: (NSString *) serviceUri;
+- (ASIHTTPRequest *) getRequestForSession:(SessionInfo *) sessionInfo url: (NSString *) urlString;
+
+- (void) saveOrder: (Order *) order withSession: (SessionInfo *) sessionInfo;
 @end
 
 @implementation iPOSServiceImpl
@@ -101,7 +103,7 @@
     sessionInfo.loginUserName = employeeNumber;
     sessionInfo.passwordForVerification = password;
     
-    NSString *loginXML = [sessionInfo toLoginRequestXml];
+    NSString *loginXML = [self escapeXMLForParsing:[sessionInfo toLoginRequestXml]];
     [request appendPostData:[loginXML dataUsingEncoding:NSUTF8StringEncoding]];
 
     [request startSynchronous];
@@ -183,7 +185,7 @@
     
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     
-    NSString *requestXml = [NSString stringWithFormat:@"<CustomerSearch>%@</CustomerSearch>", customerName];    
+    NSString *requestXml = [self escapeXMLForParsing:[NSString stringWithFormat:@"<CustomerSearch>%@</CustomerSearch>", customerName]];
     [request appendPostData:[requestXml dataUsingEncoding:NSUTF8StringEncoding]];
     
     [request startSynchronous];
@@ -244,7 +246,7 @@
     // Post data for customer
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     
-    NSString *customerXml = [customer toXml];    
+    NSString *customerXml = [self escapeXMLForParsing:[customer toXml]];    
     [request appendPostData:[customerXml dataUsingEncoding:NSUTF8StringEncoding]];
     
     [request startSynchronous];
@@ -274,7 +276,7 @@
     // Post data for customer
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     
-    NSString *customerXml = [customer toXml];
+    NSString *customerXml = [self escapeXMLForParsing:[customer toXml]];
     [request appendPostData:[customerXml dataUsingEncoding:NSUTF8StringEncoding]];
     [request startSynchronous];
 
@@ -342,7 +344,7 @@
     // Post data for order
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     
-    NSString *orderXml = [order toXml];  
+    NSString *orderXml = [self escapeXMLForParsing:[order toXml]];  
     
     
     [request appendPostData:[orderXml dataUsingEncoding:NSUTF8StringEncoding]];
@@ -388,7 +390,7 @@
     // Send the request
     ASIHTTPRequest *request = [self getRequestForSession:sessionInfo serviceDomainUri:posOrderMgmtUri serviceUri:@"changePriceApproval"];
     
-    NSString *orderDiscountRequestXml = [discountApprovalRequest toXml];
+    NSString *orderDiscountRequestXml = [self escapeXMLForParsing:[discountApprovalRequest toXml]];
     
     [request appendPostData:[orderDiscountRequestXml dataUsingEncoding:NSUTF8StringEncoding]];
     [request startSynchronous];
@@ -468,6 +470,14 @@
 
 #pragma mark -
 #pragma mark Private interface
+- (NSString *) escapeXMLForParsing: (NSString *) xmlString {
+    
+    // Replace any entity reference or XML special characters that could impact parsing
+    NSString *escapedString = [xmlString stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"];
+    
+    return escapedString;
+}
+
 -(ASIHTTPRequest *) getRequestForSession:(SessionInfo *)sessionInfo serviceDomainUri:(NSString *)serviceDomainUri serviceUri:(NSString *)serviceUri {
     // Make Synchronous HTTP request to verify the login session
     NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@", baseUrl, serviceDomainUri, serviceUri];
