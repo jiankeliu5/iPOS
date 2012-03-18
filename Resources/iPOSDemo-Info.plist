@@ -38,7 +38,7 @@
 	<key>ipos.service.host</key>
 	<string>tsipos01</string>
 	<key>ipos.service.demo.baseurl</key>
-	<string>http://ipad.demo.objectpartners.com:8080/ipos-demo-services-0.1/webservices/ipos</string>
+	<string>http://localhost:8080/ipos-demo-services/webservices/ipos</string>
 	<key>ipos.service.demo.host</key>
 	<string>ipad.demo.objectpartners.com</string>
 	<key>ipos.service.demo.local.baseurl</key>

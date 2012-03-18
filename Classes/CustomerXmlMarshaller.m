@@ -129,6 +129,7 @@ static NSString * const CUSTOMER_XML = @""
         customer.customerTypeId = [root elementNumberValue:@"CustomerTypeID"];
         customer.priceLevelId = [root elementNumberValue:@"PriceLevelID"];
         customer.phoneNumber = [root elementStringValue:@"Phone1"];
+        customer.phoneNumber = [root elementStringValue:@"CustomerPhone"];
         customer.emailAddress = [root elementStringValue:@"Email"];
         customer.taxExempt = [root elementBoolValue:@"TaxExempt"];
         customer.holdStatus = [root elementNumberValue:@"HoldTypeID"];
@@ -149,7 +150,7 @@ static NSString * const CUSTOMER_XML = @""
         
         // Address
         CXMLElement *addressElement = [root firstElementNamed:@"Address"];
-        customer.address = [POSOxmUtils toAddress:[addressElement firstElementNamed:@"CustomerAddress"]];
+        customer.address = [POSOxmUtils toAddress:addressElement];
         
         // Store
         customer.store = [POSOxmUtils toStore:root];    

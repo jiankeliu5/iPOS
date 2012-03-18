@@ -41,6 +41,9 @@
     if (addressXmlElement == nil) {
         return nil;
     }
+    if ([addressXmlElement childCount] == 1) {
+        addressXmlElement = [addressXmlElement.children objectAtIndex:0];
+    }
     
     Address *address = [[[Address alloc] init] autorelease];
     

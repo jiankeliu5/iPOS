@@ -30,6 +30,7 @@
 @synthesize store;
 @synthesize address;
 @synthesize taxExempt;
+@synthesize contractor;
 
 #pragma mark Initializer and Memory Mgmt
 -(id) init {
@@ -39,6 +40,7 @@
         
         return nil;
     }
+    self.contractor = NO;
     
     return self;
 }
@@ -90,6 +92,13 @@
 		BOOL b = [taxExemptWrapper boolValue];
 		[self setTaxExempt:b];
 	}
+    
+    NSNumber *contractorWrapper = [aModel valueForKey:@"contractor"];
+	if (contractorWrapper != nil) {
+		BOOL b = [contractorWrapper boolValue];
+		self.contractor = b;
+	}
+
 	
 	return self;
 	
@@ -260,6 +269,15 @@
 		[self addError:error];
 	}
 	
+    if(self.emailAddress == nil && !self.contractor) {
+		Error *error = [[[Error alloc] init] autorelease];
+		
+		error.message = @"Email address must be set.";
+		error.reference = self;
+		
+		[self addError:error];
+	}
+    
 	if(self.emailAddress != nil && [self.emailAddress length ] > 100) {
 		Error *error = [[[Error alloc] init] autorelease];
 		

@@ -79,6 +79,7 @@ extern NSString * const UOM_SQFT;
 @property(nonatomic, retain) NSString *statusCode;
 @property(nonatomic, retain) NSString *type;
 @property(nonatomic, retain) NSNumber *typeId;
+@property(nonatomic, retain) NSNumber *itemQty;
 @property(nonatomic, retain) NSString *binLocation;
 @property(nonatomic, retain) NSString *stockingCode;
 

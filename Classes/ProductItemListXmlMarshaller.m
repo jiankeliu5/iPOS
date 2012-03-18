@@ -24,7 +24,7 @@
     CXMLElement *root = [xmlParser rootElement];
     
     // Add the items to the list
-    for (CXMLElement *node in [root elementsForName:@"Item"]) {
+    for (CXMLElement *node in [root children]) {
         item = [[ProductItem alloc] init];
         
         item.description = [node elementStringValue:@"ItemDescription"];

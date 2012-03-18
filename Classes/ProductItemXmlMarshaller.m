@@ -56,6 +56,7 @@
     item.taxExempt = [root elementBoolValue:@"TaxExempt"];
     item.taxRate = [root elementDecimalValue:@"TaxRate"];
     item.vendorName = [root elementStringValue:@"VendorName"];
+    item.itemQty = [root elementDecimalValue:@"ItemQty"];
     
     // Determine selected UOM.  If there is a conversion select the second UOM as the default
     if (![item.primaryUnitOfMeasure isEqualToString:item.secondaryUnitOfMeasure] && [item.conversion compare: [NSDecimalNumber decimalNumberWithString:@"1.0"]] != NSOrderedSame) {
