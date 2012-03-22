@@ -25,16 +25,18 @@
     
     // Add the items to the list
     for (CXMLElement *node in [root children]) {
-        item = [[ProductItem alloc] init];
-        
-        item.description = [node elementStringValue:@"ItemDescription"];
-        item.itemId = [node elementNumberValue:@"ItemID"];
-        item.sku = [node elementStringValue:@"ItemNumber"];
-        
-        [itemList addObject:item];
-        
-        [item release];
-        item = nil;
+        if (![node.name isEqualToString:@"text"]) {
+            item = [[ProductItem alloc] init];
+            
+            item.description = [node elementStringValue:@"ItemDescription"];
+            item.itemId = [node elementNumberValue:@"ItemID"];
+            item.sku = [node elementStringValue:@"ItemNumber"];
+            
+            [itemList addObject:item];
+            
+            [item release];
+            item = nil;
+        }
     }
     
     // Sort the items by description

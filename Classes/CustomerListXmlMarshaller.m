@@ -23,7 +23,6 @@
     NSMutableArray *custList = [NSMutableArray arrayWithCapacity:0];    
     CXMLDocument *xmlParser = [[[CXMLDocument alloc] initWithXMLString:xmlString options:0 error:nil] autorelease];
     CXMLElement *root = [xmlParser rootElement];
-     NSLog(@"Root is %@",root.name);
     // Add the items to the list
     for (CXMLElement *node in [root children]) {
         if (![node.name isEqualToString:@"text"]) {
