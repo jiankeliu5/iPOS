@@ -12,7 +12,7 @@
 #import "iPOSFacade.h"
 #import "OrderCart.h"
 #import "OrderItem.h"
-#import "SSLineView.h"
+#import "LineView.h"
 #import "MOGlassButton.h"
 
 
@@ -30,7 +30,7 @@
 	UILabel *sellingTotalValueLabel;
 	UILabel *discountLabel;
 	ExtUITextField *discountField;
-	SSLineView *lineView;
+	LineView *lineView;
 	UILabel *mgrIdLabel;
 	ExtUITextField *mgrIdField;
 	UILabel *mgrPasswordLabel;

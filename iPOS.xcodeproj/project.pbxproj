@@ -3460,7 +3460,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_ENTITLEMENTS = Resources/Entitlements.plist;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Torey Lomenda (2CKR55B92A)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -3488,7 +3488,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = iPOSDemo;
-				PROVISIONING_PROFILE = "B3AD3768-CC1D-4898-8887-FF3E6AE4F5E1";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 			};

@@ -146,7 +146,7 @@
 	[self addDoneAndCancelToolbarForTextField:discountField];
 	[roundView addSubview:discountField];
 	
-	lineView = [[[SSLineView alloc] initWithFrame:CGRectZero] autorelease];
+	lineView = [[[LineView alloc] initWithFrame:CGRectZero] autorelease];
 	[roundView addSubview:lineView];
 	
 	mgrIdLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];

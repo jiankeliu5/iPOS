@@ -13,7 +13,7 @@
 #import "UIViewController+ViewControllerLayout.h"
 #import "UIScreen+Helpers.h"
 
-#import "SSLineView.h"
+#import "LineView.h"
 
 
 #import "ChargeCreditCardView.h"
@@ -711,7 +711,7 @@ static NSString * const CREDIT = @"credit";
     discountTotalLabel.text = @"($0.00)";
     
     // line
-    SSLineView *discountLine = [[[SSLineView alloc] initWithFrame:CGRectMake(LABEL_STARTX+LABEL_TITLE_WIDTH+LABEL_WIDTH-LINE_WIDTH, currentY+LABEL_HEIGHT+LINE_HEIGHT, LINE_WIDTH, LINE_HEIGHT)] autorelease];
+    LineView *discountLine = [[[LineView alloc] initWithFrame:CGRectMake(LABEL_STARTX+LABEL_TITLE_WIDTH+LABEL_WIDTH-LINE_WIDTH, currentY+LABEL_HEIGHT+LINE_HEIGHT, LINE_WIDTH, LINE_HEIGHT)] autorelease];
     
     currentY += LABEL_HEIGHT + 2*LABEL_SPACING;
     
@@ -740,7 +740,7 @@ static NSString * const CREDIT = @"credit";
     taxTotalLabel.text = @"$0.00";
     
     // line
-    SSLineView *totalLine = [[[SSLineView alloc] initWithFrame:CGRectMake(LABEL_STARTX+LABEL_TITLE_WIDTH+LABEL_WIDTH-LINE_WIDTH, currentY+LABEL_HEIGHT+LINE_HEIGHT, LINE_WIDTH, LINE_HEIGHT)] autorelease];
+    LineView *totalLine = [[[LineView alloc] initWithFrame:CGRectMake(LABEL_STARTX+LABEL_TITLE_WIDTH+LABEL_WIDTH-LINE_WIDTH, currentY+LABEL_HEIGHT+LINE_HEIGHT, LINE_WIDTH, LINE_HEIGHT)] autorelease];
     
     currentY += LABEL_HEIGHT + 2*LABEL_SPACING;
     UILabel *totalTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(LABEL_STARTX, currentY, LABEL_TITLE_WIDTH, LABEL_HEIGHT)];
