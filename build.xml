@@ -17,7 +17,7 @@ iOS Ant Build Targets:
 	<property name="distributionBuildDir" value="${buildDir}/Distribution-iphoneos" />
 	<property name="ipaDir" value="${buildDir}" />
 	<property name="developerName" value="iPhone Distribution: The Tile Shop LLC" />
-	<property name="provisioningProfile" value="/Users/tlomenda/Library/MobileDevice/Provisioning Profiles/C4EBD5F7-4031-4666-98FA-7288F49636E7.mobileprovision" />
+	<property name="provisioningProfile" value="/Users/tlomenda/Library/MobileDevice/Provisioning Profiles/85E3A82A-3D89-4514-A4EA-04B494EE45CA.mobileprovision" />
 	
 	<property name="distributionTargetDir" value="/Developer/myIOSDev/Distributions/${appName}" />
 	
@@ -62,7 +62,7 @@ iOS Ant Build Targets:
 			failonerror="true">
 			<arg line="-project ${xcodeProject}"/>
 			<arg line="-target UnitTests" />
-			<arg line="-sdk iphonesimulator5.0" />
+			<arg line="-sdk iphonesimulator5.1" />
 			<arg line="-configuration Release" />
 			<arg line="build" />
 		</exec>
@@ -70,7 +70,7 @@ iOS Ant Build Targets:
 			failonerror="true">    
 			<arg line="-project ${xcodeProject}"/>
 			<arg line="-target IntTests" />
-			<arg line="-sdk iphonesimulator5.0" />
+			<arg line="-sdk iphonesimulator5.1" />
 			<arg line="-configuration Release" />
 			<arg line="build" />
 		</exec>
@@ -96,7 +96,7 @@ iOS Ant Build Targets:
 		<exec executable="xcrun" dir="${IOS_PROJECT_ROOT}" 
 			failonerror="true">
 		        
-			<arg line="-sdk iphoneos5.0" />
+			<arg line="-sdk iphoneos5.1" />
 			<arg line="PackageApplication" />
 			<arg line="${distributionBuildDir}/${appName}.app" />
 			<arg line="-o ${ipaDir}/${appName}-${appMarketVersion}b${appVersion}.ipa" />
@@ -110,7 +110,7 @@ iOS Ant Build Targets:
 		<exec executable="xcrun" dir="${IOS_PROJECT_ROOT}" 
 			failonerror="true">
 		        
-			<arg line="-sdk iphoneos5.0" />
+			<arg line="-sdk iphoneos5.1" />
 			<arg line="PackageApplication" />
 			<arg line="${distributionBuildDir}/${appName}Demo.app" />
 			<arg line="-o ${ipaDir}/${appName}Demo-${appMarketVersion}b${appVersion}.ipa" />
@@ -162,7 +162,7 @@ iOS Ant Build Targets:
 		<exec executable="xcodebuild" dir="${IOS_PROJECT_ROOT}" 
 			failonerror="true">
 		       
-		    <arg line="-sdk iphoneos5.0" />
+		    <arg line="-sdk iphoneos5.1" />
 			<arg line="-project ${xcodeProject}"/>
 			<arg line="-target &quot;${xcode.target}&quot;" />
 			<arg line="-configuration ${xcode.config}" />

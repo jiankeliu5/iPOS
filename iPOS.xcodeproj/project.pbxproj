@@ -2161,7 +2161,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "iPOS" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -2816,7 +2816,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2861,8 +2861,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = iPOS;
-				PROVISIONING_PROFILE = "C4EBD5F7-4031-4666-98FA-7288F49636E7";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C4EBD5F7-4031-4666-98FA-7288F49636E7";
+				PROVISIONING_PROFILE = "85E3A82A-3D89-4514-A4EA-04B494EE45CA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "85E3A82A-3D89-4514-A4EA-04B494EE45CA";
 				SDKROOT = iphoneos;
 			};
 			name = Distribution;
@@ -2905,7 +2905,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = Resources/Entitlements.plist;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: The Tile Shop LLC";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: The Tile Shop LLC";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2930,7 +2930,8 @@
 				);
 				PRIVATE_HEADERS_FOLDER_PATH = iPOSDemo.app/PrivateHeaders;
 				PRODUCT_NAME = iPOSDemo;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C4EBD5F7-4031-4666-98FA-7288F49636E7";
+				PROVISIONING_PROFILE = "85E3A82A-3D89-4514-A4EA-04B494EE45CA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "85E3A82A-3D89-4514-A4EA-04B494EE45CA";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 			};
@@ -3093,7 +3094,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -3115,7 +3116,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
