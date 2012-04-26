@@ -41,9 +41,6 @@
     if (addressXmlElement == nil) {
         return nil;
     }
-    if ([addressXmlElement childCount] == 1) {
-        addressXmlElement = [addressXmlElement.children objectAtIndex:0];
-    }
     
     Address *address = [[[Address alloc] init] autorelease];
     
@@ -93,29 +90,27 @@
     ItemAvailability *availability = nil;
     NSMutableArray *dcList = [[[NSMutableArray alloc] init] autorelease];        
     
-    for (CXMLElement *node in [parentXmlElement children]) {
-        if (![node.name isEqualToString:@"text"]) {
-            dc = [[[DistributionCenter alloc] init] autorelease];
-            availability = [[[ItemAvailability alloc] init] autorelease];
-            
-            dc.dcId = [node elementNumberValue:@"dcID"];
-            dc.isPrimary = [node elementBoolValue:@"primary"];
-            
-            availability.availablePrimary = [node elementDecimalValue:@"availabilityPrimary"];
-            availability.onHandPrimary = [node elementDecimalValue:@"onHandPrimary"];
-            availability.availableSecondary = [node elementDecimalValue:@"availabilitySecondary"];
-            availability.onHandSecondary = [node elementDecimalValue:@"onHandSecondary"];
+    for (CXMLElement *node in [parentXmlElement elementsForName:@"DC"]) {
+        dc = [[[DistributionCenter alloc] init] autorelease];
+        availability = [[[ItemAvailability alloc] init] autorelease];
+        
+        dc.dcId = [node elementNumberValue:@"dcID"];
+        dc.isPrimary = [node elementBoolValue:@"primary"];
+        
+        availability.availablePrimary = [node elementDecimalValue:@"availabilityPrimary"];
+        availability.onHandPrimary = [node elementDecimalValue:@"onHandPrimary"];
+        availability.availableSecondary = [node elementDecimalValue:@"availabilitySecondary"];
+        availability.onHandSecondary = [node elementDecimalValue:@"onHandSecondary"];
 
-            availability.etaDateAsString = [node elementStringValue:@"eta"];
-            
-            availability.item = item;
-            dc.availability = availability;
-            
-            [dcList addObject: dc];
-            
-            dc = nil;
-            availability = nil;
-        }
+        availability.etaDateAsString = [node elementStringValue:@"eta"];
+        
+        availability.item = item;
+        dc.availability = availability;
+        
+        [dcList addObject: dc];
+        
+        dc = nil;
+        availability = nil;
     }
         
     // Copy to the item sorted with primary first

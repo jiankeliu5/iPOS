@@ -45,7 +45,6 @@ NSString * const UOM_SQFT = @"SF";
 @synthesize taxExempt;
 @synthesize store;
 @synthesize distributionCenterList;
-@synthesize itemQty;
 
 #pragma mark Constuctor/Deconstructor
 -(id) init {
@@ -121,7 +120,6 @@ NSString * const UOM_SQFT = @"SF";
     store = nil;
     [distributionCenterList release];
     distributionCenterList = nil;
-    [itemQty release];
     
     [super dealloc];
 }

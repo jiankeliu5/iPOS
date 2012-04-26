@@ -23,12 +23,10 @@
     NSMutableArray *custList = [NSMutableArray arrayWithCapacity:0];    
     CXMLDocument *xmlParser = [[[CXMLDocument alloc] initWithXMLString:xmlString options:0 error:nil] autorelease];
     CXMLElement *root = [xmlParser rootElement];
-    // Add the items to the list
-    for (CXMLElement *node in [root children]) {
-        if (![node.name isEqualToString:@"text"]) {
-            
+    
+	// Add the items to the list
+    for (CXMLElement *node in [root elementsForName:@"Customer"]) {
         cust = [[Customer alloc] init];
-        NSLog(@"Node is %@",node.name);
         
         cust.customerId = [node elementNumberValue:@"CustomerID"];
         cust.customerTypeId = [node elementNumberValue:@"CustomerTypeID"]; 
@@ -48,7 +46,6 @@
         
         [cust release];
         cust = nil;
-        }
     }
     
     // Sort the items by description

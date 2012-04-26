@@ -410,6 +410,13 @@
 			remoteGlobalIDString = D2AAC07E0554694100DB518D;
 			remoteInfo = IBAForms;
 		};
+		D6063EDB15497812008E1852 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D6A7A47715419F7B00F17282;
+			remoteInfo = "OPIFoundation-CoreAppStore";
+		};
 		D60AAFB3147DD7C400FBA576 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
@@ -1713,6 +1720,7 @@
 			children = (
 				D67B5887147DD6CD00C2ED5D /* libOPIFoundation.a */,
 				D67B5889147DD6CD00C2ED5D /* libOPIFoundationCore.a */,
+				D6063EDC15497812008E1852 /* libOPIFoundation-CoreAppStore.a */,
 				D67B588B147DD6CD00C2ED5D /* OPIFoundationTests.octest */,
 			);
 			name = Products;
@@ -2208,6 +2216,13 @@
 			fileType = archive.ar;
 			path = libIBAForms.a;
 			remoteRef = 364B56BE1430CF5D0028FE09 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D6063EDC15497812008E1852 /* libOPIFoundation-CoreAppStore.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libOPIFoundation-CoreAppStore.a";
+			remoteRef = D6063EDB15497812008E1852 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D60E92E714E314560028647B /* libASIHTTPRequest.a */ = {
@@ -2816,7 +2831,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 27;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -3094,7 +3109,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 27;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -3116,7 +3131,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 27;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

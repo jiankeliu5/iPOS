@@ -34,7 +34,6 @@
     Address *address; 
     
     BOOL taxExempt;
-    BOOL contractor;
 }
 
 @property (nonatomic, retain) NSNumber *customerId;
@@ -57,7 +56,6 @@
 @property (nonatomic, retain) Address *address;
 
 @property                     BOOL taxExempt;
-@property                     BOOL contractor;
 
 - (id) initWithModel:(id)aModel;
 - (id) modelFromCustomer;
