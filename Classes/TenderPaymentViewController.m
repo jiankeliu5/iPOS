@@ -550,7 +550,6 @@ static NSString * const CREDIT = @"credit";
 
     if (payment && signature) {
         if([payment isKindOfClass:[CreditCardPayment class]]) {
-            NSLog(@"It is a credit card!");
             [self.payment attachSignature:signature];
             
             if (![facade acceptSignatureFor:self.payment]) {
@@ -560,12 +559,10 @@ static NSString * const CREDIT = @"credit";
                 [payment addError:error];
                 
                 [AlertUtils showModalAlertForErrors:((Payment *)  payment).errorList withTitle: @"iPOS"];
-                //isSignatureAccepted = NO;
-            } else {
-                [self dismissModalViewControllerAnimated:YES];
-                [self navToReceipt];
-            }
-            
+            } 
+        
+            [self dismissModalViewControllerAnimated:YES];
+            [self navToReceipt];
         } else if ([payment isKindOfClass:[AccountPayment class]]) {
             [self.payment attachSignature:signature];
 
@@ -576,10 +573,12 @@ static NSString * const CREDIT = @"credit";
                 [payment addError:error];
                 
                 [AlertUtils showModalAlertForErrors:((Payment *)  payment).errorList withTitle: @"iPOS"];
+                [self dismissModalViewControllerAnimated:YES];
+                [self navToReceipt];
             } else {
                 if([[payment paymentAmount] compare:[[orderCart getOrder] calcBalanceDue]] == NSOrderedSame) {
                     [self dismissModalViewControllerAnimated:YES];
-                     [self navToReceipt];
+                    [self navToReceipt];
                 } else {
                     [self dismissModalViewControllerAnimated:YES];
                     [accountPaymentView removeFromSuperview];

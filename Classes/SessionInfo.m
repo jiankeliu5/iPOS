@@ -25,7 +25,7 @@
     }
     
     // Set the device id based on the current device's unique identifer
-    deviceId = [[[UIDevice currentDevice] uniqueIdentifier] copy];
+    deviceId = @"5aa81df03de8e96da04225e81c8b54499897e685"; // [[[UIDevice currentDevice] uniqueIdentifier] copy];
 
     return self;
 }

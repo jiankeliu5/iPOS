@@ -579,11 +579,13 @@ static NSString * const PREVIOUSORDER_LINEITEM_XML = @""
                 if (orderItem.item.store && orderItem.item.store.storeId) {
                     storeId = [NSString stringWithFormat: @"%@", orderItem.item.store.storeId];
                 }
-                if (orderItem.item.taxExempt) {
+                if (order.customer.taxExempt || orderItem.item.taxExempt) {
                     taxExempt = @"true";
-                }
-                if (orderItem.item.taxRate) {
-                    taxRate = [NSString stringWithFormat: @"%@", orderItem.item.taxRate];
+                    taxRate = @"0";
+                } else {
+                    if (orderItem.item.taxRate) {
+                        taxRate = [NSString stringWithFormat: @"%@", orderItem.item.taxRate];
+                    }
                 }
                 
                 // New items

@@ -606,7 +606,12 @@
         // FIX:  Need to include returned items in the closed items balance (subtract from total)
         if ([item isClosed] || [item isReturned]) {
             // Fixed to ensure balance is accumulative [Defect:  2011-06-01]
-            balance = [balance decimalNumberByAdding:[[item calcLineSubTotal] decimalNumberByAdding: [item calcLineTax]]];
+            NSDecimalNumber *tax = [NSDecimalNumber decimalNumberWithString:@"0.00"];
+            
+            if (!customer.taxExempt && ![item isTaxExempt]) {
+                tax = [item calcLineTax];
+            }
+            balance = [balance decimalNumberByAdding:[[item calcLineSubTotal] decimalNumberByAdding:tax]];
         }
     }
     
