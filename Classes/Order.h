@@ -109,6 +109,8 @@ typedef enum{
 - (BOOL) validateAsNew;
 - (BOOL) validateAsNewQuote;
 - (BOOL) validateAsNewOrder;
+
+- (BOOL) purchaseOrderInfoRequired;
  
 #pragma mark -
 #pragma mark Marshalling methods

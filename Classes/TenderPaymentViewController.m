@@ -837,26 +837,32 @@ static NSString * const CREDIT = @"credit";
 }
 
 - (void) handleCreditCardPayment:(id)sender {
-    self.navigationItem.hidesBackButton = YES;
-    [self.navigationItem.leftBarButtonItem setEnabled:NO];
-    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    Order *order = [orderCart getOrder];
     
-    CGRect overlayRect = self.view.bounds;
-    chargeCCView = [[ChargeCreditCardView alloc] initWithFrame:overlayRect];
-    
-    chargeCCView.viewDelegate = self;
-    chargeCCView.balanceDue = balanceDueLabel.text;
-    chargeCCView.totalBalance = totalLabel.text;
-    
-    [self.view addSubview:chargeCCView];
-    
-    [chargeCCView release];
+    if ([order purchaseOrderInfoRequired] && (order.purchaseOrderId == nil || [order.purchaseOrderId isEmpty])) {
+        [AlertUtils showModalAlertMessage:@"Please enter a PO before accepting an On Account payment." withTitle:@"iPOS"];
+    } else {
+        self.navigationItem.hidesBackButton = YES;
+        [self.navigationItem.leftBarButtonItem setEnabled:NO];
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+        
+        CGRect overlayRect = self.view.bounds;
+        chargeCCView = [[ChargeCreditCardView alloc] initWithFrame:overlayRect];
+        
+        chargeCCView.viewDelegate = self;
+        chargeCCView.balanceDue = balanceDueLabel.text;
+        chargeCCView.totalBalance = totalLabel.text;
+        
+        [self.view addSubview:chargeCCView];
+        
+        [chargeCCView release];
+    }
 }
 
 -(void)handleAccountPayment:(id)sender {
     Order *order = [orderCart getOrder];
     
-    if (order.purchaseOrderId == nil || [order.purchaseOrderId isEmpty]) {
+    if ([order purchaseOrderInfoRequired] && (order.purchaseOrderId == nil || [order.purchaseOrderId isEmpty])) {
         [AlertUtils showModalAlertMessage:@"Please enter a PO before accepting an On Account payment." withTitle:@"iPOS"];
     } else {
         self.navigationItem.hidesBackButton = YES;

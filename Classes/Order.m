@@ -287,6 +287,14 @@
     return YES;
 }
 
+- (BOOL) purchaseOrderInfoRequired {
+    if (customer && [customer isPaymentOnAccountEligable]) {
+        return YES;
+    } 
+    
+    return NO;
+}
+
 #pragma mark -
 #pragma mark OrderItems Get Accessors
 -(NSArray *) getOrderItems {
