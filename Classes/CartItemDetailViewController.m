@@ -334,9 +334,12 @@
 - (void) extTextFieldFinishedEditing:(ExtUITextField *) textField {
 	if (textField.text != nil) {
 		NSDecimalNumber *newQuantity = (NSDecimalNumber *)[quantityFormatter numberFromString:textField.text];
+        
 		if (newQuantity != nil) {
-            // Has the value even changed??
-            if (![textField.text isEqualToString:[self.orderItem getQuantityForDisplay]]) {
+            if ([newQuantity floatValue] <= 0) {
+                [AlertUtils showModalAlertMessage:@"You need to enter a quantity greater than zero" withTitle:@"iPOS"];
+            } else if (![textField.text isEqualToString:[self.orderItem getQuantityForDisplay]]) {
+                // Has the value even changed??
                 [self.orderItem setQuantity:newQuantity];
                 
                 // Can I still attempt a close of item based on current item availability when the item was retrieved

@@ -534,7 +534,11 @@
 	self.currentFirstResponder = nil;
 	
 	NSDecimalNumber *quantity = ([textField.text length] > 0) ? (NSDecimalNumber *)[quantityFormatter numberFromString:textField.text] : nil;
-	if (self.keyboardCancelled == NO && quantity != nil) {
+	if (self.keyboardCancelled == NO && quantity != nil && [quantity floatValue] <= 0) {
+        [AlertUtils showModalAlertMessage:@"You need to enter a quantity greater than zero" withTitle:@"iPOS"];
+        addQuantityView.hidden = YES;
+		self.keyboardCancelled = NO;
+    } else if (self.keyboardCancelled == NO && quantity != nil) {
 		ProductItem *pi = itemToAdd;
 		if (viewDelegate != nil && [viewDelegate respondsToSelector:@selector(addItem:orderQuantity:ofUnits:)]) {
 			[viewDelegate addItem:self orderQuantity:quantity ofUnits:pi.primaryUnitOfMeasure];
