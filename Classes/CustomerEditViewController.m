@@ -129,7 +129,7 @@
 		[errMsg appendString:@"Error in customer save"];
 		for (Error *e in [editedCust errorList]) {
 			NSLog(@"Error Id: %@ %@", [e errorId], [e message]);
-			[errMsg appendFormat:@"\nError (%d): %@", [e errorId], [e message]];
+			[errMsg appendFormat:@"\nError (%@): %@", [e errorId], [e message]];
 		}
 		[AlertUtils showModalAlertMessage:errMsg withTitle:@"iPOS"];
 	} else {
@@ -187,7 +187,7 @@
 		[errMsg appendString:@"Error in customer update!"];
 		for (Error *e in [editedCust errorList]) {
 			NSLog(@"Error Id: %@ %@", [e errorId], [e message]);
-			[errMsg appendFormat:@"\nError (%d): %@", [e errorId], [e message]];
+			[errMsg appendFormat:@"\nError (%@): %@", [e errorId], [e message]];
 		}
 		[AlertUtils showModalAlertMessage:errMsg withTitle:@"iPOS"];
 	} else {

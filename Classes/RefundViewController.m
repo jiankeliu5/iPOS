@@ -92,7 +92,7 @@
     [super viewDidLoad];
     
     // Get a handle to the shared Linea Device
-    linea = [Linea sharedDevice];
+    linea = [DTDevices sharedDevice];
 }
 
 - (void)viewDidUnload {
@@ -208,11 +208,11 @@
 #pragma mark Linea Delegate Methods
 - (void) magneticCardData:(NSString *)track1 track2:(NSString *)track2 track3:(NSString *)track3 {
     int sound[]={2730,150,0,30,2730,150};
-	[linea playSound:100 beepData:sound length:sizeof(sound)];
+	[linea playSound:100 beepData:sound length:sizeof(sound) error:nil];
     
-    financialCard card;
+    NSDictionary *card = [linea msProcessFinancialCard:track1 track2:track2];
 	
-    if([linea msProcessFinancialCard:&card track1:track1 track2:track2]) {
+    if(card) {
         // Does the card number (last 4) match the current card to swipe
         RefundItem *swipeItem = [refundInfo getCurrentRefundItemForSwipe];
         
@@ -220,15 +220,16 @@
         BOOL isMatch = YES;
         NSString *swipeCardNum = swipeItem.creditCard.cardNumber;
         
-        if (card.accountNumber.length == swipeCardNum.length) {
-            if (![card.accountNumber isEqualToString:swipeCardNum]) {
+        NSString *accountNumber = (NSString *)[card valueForKey:@"accountNumber"];
+        if (accountNumber.length == swipeCardNum.length) {
+            if (![accountNumber isEqualToString:swipeCardNum]) {
                 isMatch = NO;
             }
         }
         
         // Check last 4
         if (swipeCardNum.length == 4 
-            && ![swipeCardNum isEqualToString:[card.accountNumber substringFromIndex:card.accountNumber.length - 4]]) {
+            && ![swipeCardNum isEqualToString:[accountNumber substringFromIndex:accountNumber.length - 4]]) {
             isMatch = NO;
         }
         

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LineaSDK.h"
+#import "DTDevices.h"
 #import "iPOSFacade.h"
 #import "OrderCart.h"
 #import "NotesController.h"
@@ -27,7 +27,7 @@
     
     BOOL orderIsSaved;
     
-    Linea *linea;
+    DTDevices *linea;
 }
 
 @property (nonatomic, assign) iPOSFacade *facade;

@@ -69,7 +69,8 @@
     [lookupOrderViewController release];
 	
 	// Add the navigation controller view to the window
-	[window addSubview:[navigationController view]];
+	//[window addSubview:[navigationController view]];
+    [self.window setRootViewController:navigationController];
 	
     [window makeKeyAndVisible];
     

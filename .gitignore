@@ -1,0 +1,30 @@
+# files created by XCode 3
+*.pbxuser
+*.mode1
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xcclassmodel
+
+# files created by Xcode 4
+xcuserdata/
+
+# build products
+*.build/
+DerivedData
+build/
+
+# Misc
+.project
+.idea
+.svn
+.DS_Store
+
+#Submodules
+xcworkspace.projects/
+
+iPOS.xcworkspace/xcuserdata/
+
+iPOS.xcworkspace
+iPOS.xcodeproj/project.xcworkspace/xcuserdata/
+iPOS.xcodeproj/xcuserdata/

@@ -12,13 +12,13 @@
 #import "OrderCart.h"
 #import "ChargeCreditCardView.h"
 #import "SignatureViewController.h"
-#import "LineaSDK.h"
+#import "DTDevices.h"
 #import "NotesController.h"
 #import "AccountPaymentView.h"
 #import "PaymentView.h"
 #import "GradientView.h"
 
-@interface TenderPaymentViewController : ExtUIViewController<ExtUIViewControllerDelegate, ChargeCreditCardViewDelegate, LineaDelegate, SignatureDelegate, NotesControllerDelegate, AccountPaymentViewDelegate> {
+@interface TenderPaymentViewController : ExtUIViewController<ExtUIViewControllerDelegate, ChargeCreditCardViewDelegate, DTDeviceDelegate, SignatureDelegate, NotesControllerDelegate, AccountPaymentViewDelegate> {
 	NSDecimalNumber *paymentAmount;
     id payment;
     
@@ -45,7 +45,7 @@
     
     GradientView *separatorView;
     GradientView *tenderTotalView;
-    Linea *linea;
+    DTDevices *linea;
     
     BOOL orderIsSaved;
     BOOL doNavToReceiptAfterOnAcctPayment;

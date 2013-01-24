@@ -176,12 +176,6 @@
 		B4CEE06013527F330067DEBC /* EditConfirmDelete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4CEE05413527F330067DEBC /* EditConfirmDelete@2x.png */; };
 		B4D308281367B86400F26C5E /* SessionVerificationView.h in Headers */ = {isa = PBXBuildFile; fileRef = B4D308261367B86400F26C5E /* SessionVerificationView.h */; };
 		B4D308291367B86400F26C5E /* SessionVerificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4D308271367B86400F26C5E /* SessionVerificationView.m */; };
-		D60AAFB0147DD79A00FBA576 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67B5889147DD6CD00C2ED5D /* libOPIFoundationCore.a */; };
-		D60AAFB1147DD7A800FBA576 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67B5889147DD6CD00C2ED5D /* libOPIFoundationCore.a */; };
-		D60AAFB2147DD7B400FBA576 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67B5889147DD6CD00C2ED5D /* libOPIFoundationCore.a */; };
-		D60AAFB9147DD80400FBA576 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67B5889147DD6CD00C2ED5D /* libOPIFoundationCore.a */; };
-		D60AAFBA147DD80C00FBA576 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67B5889147DD6CD00C2ED5D /* libOPIFoundationCore.a */; };
-		D60AAFBB147DD81300FBA576 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67B5889147DD6CD00C2ED5D /* libOPIFoundationCore.a */; };
 		D60F74DB1475A53E0055CB15 /* OrderDiscountApprovalRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D60F74D91475A53E0055CB15 /* OrderDiscountApprovalRequest.h */; };
 		D60F74DC1475A53E0055CB15 /* OrderDiscountApprovalRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D60F74DA1475A53E0055CB15 /* OrderDiscountApprovalRequest.m */; };
 		D60F74DF1475AD820055CB15 /* OrderDiscountApprovalResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = D60F74DD1475AD820055CB15 /* OrderDiscountApprovalResponse.h */; };
@@ -410,33 +404,96 @@
 			remoteGlobalIDString = D2AAC07E0554694100DB518D;
 			remoteInfo = IBAForms;
 		};
-		D6063EDB15497812008E1852 /* PBXContainerItemProxy */ = {
+		B4C36AA716B08717007F2951 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D6A7A47715419F7B00F17282;
-			remoteInfo = "OPIFoundation-CoreAppStore";
+			remoteGlobalIDString = D659166E161B3B11009D64BF;
+			remoteInfo = OPISamples;
 		};
-		D60AAFB3147DD7C400FBA576 /* PBXContainerItemProxy */ = {
+		B4C36AA916B08717007F2951 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D6F7542A145B026000B117E1;
-			remoteInfo = "OPIFoundation-Core";
+			proxyType = 2;
+			remoteGlobalIDString = D65915D1161B2A61009D64BF;
+			remoteInfo = IOSFrameworkCategories;
 		};
-		D60AAFB5147DD7CB00FBA576 /* PBXContainerItemProxy */ = {
+		B4C36AAB16B08717007F2951 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D6F7542A145B026000B117E1;
-			remoteInfo = "OPIFoundation-Core";
+			proxyType = 2;
+			remoteGlobalIDString = D6591615161B2BA0009D64BF;
+			remoteInfo = UIThirdParty;
 		};
-		D60AAFB7147DD7D400FBA576 /* PBXContainerItemProxy */ = {
+		B4C36AAD16B08717007F2951 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D6F7542A145B026000B117E1;
-			remoteInfo = "OPIFoundation-Core";
+			proxyType = 2;
+			remoteGlobalIDString = D659156B161B2996009D64BF;
+			remoteInfo = UISketchPad;
+		};
+		B4C36AAF16B08717007F2951 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D659157C161B29CD009D64BF;
+			remoteInfo = UICustomViewsAndControllers;
+		};
+		B4C36AB116B08717007F2951 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D659155A161B2952009D64BF;
+			remoteInfo = UILayoutManagers;
+		};
+		B4C36AB316B08717007F2951 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D659158D161B29F1009D64BF;
+			remoteInfo = AppRater;
+		};
+		B4C36AB516B08717007F2951 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D659159E161B2A01009D64BF;
+			remoteInfo = AppUpdater;
+		};
+		B4C36AB716B08717007F2951 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D65915AF161B2A14009D64BF;
+			remoteInfo = CoreDataTools;
+		};
+		B4C36AB916B08717007F2951 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D6591604161B2AB5009D64BF;
+			remoteInfo = UtilHelpers;
+		};
+		B4C36ABB16B08717007F2951 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D6591626161B2BF0009D64BF;
+			remoteInfo = ZipArchive;
+		};
+		B4C36ABD16B08717007F2951 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D65915E2161B2A73009D64BF;
+			remoteInfo = ASIHTTPRequestExtensions;
+		};
+		B4C36ABF16B08717007F2951 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D65915F3161B2A87009D64BF;
+			remoteInfo = TouchXMLExtensions;
 		};
 		D60E92E614E314560028647B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -458,20 +515,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = D6B4366E1315A7DD000C0AA8;
 			remoteInfo = iPOSFoundation;
-		};
-		D67B5886147DD6CD00C2ED5D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D6A97EC413FDB26C00EAC098;
-			remoteInfo = OPIFoundation;
-		};
-		D67B5888147DD6CD00C2ED5D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D6F754D3145B026000B117E1;
-			remoteInfo = "OPIFoundation-Core";
 		};
 		D67B588A147DD6CD00C2ED5D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -550,26 +593,12 @@
 			remoteGlobalIDString = 41580FC314E1BC6800A3AE09;
 			remoteInfo = ASIHTTPRequest;
 		};
-		D6FDDB1914E318BB0085298A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D6F7542A145B026000B117E1;
-			remoteInfo = "OPIFoundation-Core";
-		};
 		D6FDDB1B14E318BB0085298A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 364B56B71430CF5C0028FE09 /* IBAForms.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = IBAForms;
-		};
-		D6FDDB1D14E318C40085298A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D6F7542A145B026000B117E1;
-			remoteInfo = "OPIFoundation-Core";
 		};
 		D6FDDB2014E31A0A0085298A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -785,6 +814,7 @@
 		B4CEE05413527F330067DEBC /* EditConfirmDelete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EditConfirmDelete@2x.png"; sourceTree = "<group>"; };
 		B4D308261367B86400F26C5E /* SessionVerificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionVerificationView.h; sourceTree = "<group>"; };
 		B4D308271367B86400F26C5E /* SessionVerificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionVerificationView.m; sourceTree = "<group>"; };
+		B4EE74DA167FA038008033B4 /* DTDevices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTDevices.h; sourceTree = "<group>"; };
 		D60E92DF14E314550028647B /* ASIHTTPRequest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ASIHTTPRequest.xcodeproj; path = ../ThirdParty/ASIHTTPRequest/ASIHTTPRequest.xcodeproj; sourceTree = "<group>"; };
 		D60F74D91475A53E0055CB15 /* OrderDiscountApprovalRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDiscountApprovalRequest.h; sourceTree = "<group>"; };
 		D60F74DA1475A53E0055CB15 /* OrderDiscountApprovalRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDiscountApprovalRequest.m; sourceTree = "<group>"; };
@@ -901,7 +931,6 @@
 		D698A47E1325E50E00371985 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		D698A4A91325E83300371985 /* Particle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Particle.png; sourceTree = "<group>"; };
 		D6A96658130F0C3C004D90C4 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		D6B0401213024FF6004D00CA /* LineaSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineaSDK.h; sourceTree = "<group>"; };
 		D6B1935B133BEF22004C4FD1 /* XmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XmlMarshaller.h; sourceTree = "<group>"; };
 		D6B19361133C02B7004C4FD1 /* CustomerXmlMarshaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerXmlMarshaller.h; sourceTree = "<group>"; };
 		D6B19362133C02B7004C4FD1 /* CustomerXmlMarshaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerXmlMarshaller.m; sourceTree = "<group>"; };
@@ -977,7 +1006,6 @@
 				D690234A144F222700174E59 /* libz.1.2.5.dylib in Frameworks */,
 				D6FDDB2414E31A110085298A /* libASIHTTPRequest.a in Frameworks */,
 				36F3E99A1434BB38004376B8 /* libIBAForms.a in Frameworks */,
-				D60AAFB0147DD79A00FBA576 /* libOPIFoundationCore.a in Frameworks */,
 				D6B438DB1315B00B000C0AA8 /* libiPOSFoundation.a in Frameworks */,
 				D6D952581471B74800FF26ED /* libdtdev.a in Frameworks */,
 				D6DB96CF135FABE000877788 /* OpenGLES.framework in Frameworks */,
@@ -996,7 +1024,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D60AAFBB147DD81300FBA576 /* libOPIFoundationCore.a in Frameworks */,
 				D6999515145B10FE007752F1 /* libz.1.2.5.dylib in Frameworks */,
 				D6999516145B1114007752F1 /* libIBAForms.a in Frameworks */,
 				D6CC18DF1331D1690042745E /* libiPOSFoundation.a in Frameworks */,
@@ -1017,7 +1044,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6FDDB1614E318AD0085298A /* libASIHTTPRequest.a in Frameworks */,
-				D60AAFB9147DD80400FBA576 /* libOPIFoundationCore.a in Frameworks */,
 				D62AE4BA147C463400D4A625 /* libdtdev.a in Frameworks */,
 				36444E171455B78F0024C24F /* libz.1.2.5.dylib in Frameworks */,
 				36F3E9941434B9B6004376B8 /* libIBAForms.a in Frameworks */,
@@ -1041,7 +1067,6 @@
 				D690234E144F226800174E59 /* libz.1.2.5.dylib in Frameworks */,
 				D6FDDB2B14E31A2B0085298A /* libASIHTTPRequest.a in Frameworks */,
 				36F3E99D1434BB6D004376B8 /* libIBAForms.a in Frameworks */,
-				D60AAFB2147DD7B400FBA576 /* libOPIFoundationCore.a in Frameworks */,
 				D690234C144F226100174E59 /* libiPOSFoundation.a in Frameworks */,
 				D6D9525A1471B75400FF26ED /* libdtdev.a in Frameworks */,
 				D6DB96D0135FABF000877788 /* OpenGLES.framework in Frameworks */,
@@ -1061,7 +1086,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6FDDB1F14E318CE0085298A /* libASIHTTPRequest.a in Frameworks */,
-				D60AAFBA147DD80C00FBA576 /* libOPIFoundationCore.a in Frameworks */,
 				D62AE4BB147C464B00D4A625 /* libdtdev.a in Frameworks */,
 				36444E181455B7A30024C24F /* libz.1.2.5.dylib in Frameworks */,
 				36F3E9991434BA4E004376B8 /* libIBAForms.a in Frameworks */,
@@ -1085,7 +1109,6 @@
 				D690234B144F224800174E59 /* libz.1.2.5.dylib in Frameworks */,
 				364B56C61430D02D0028FE09 /* libIBAForms.a in Frameworks */,
 				D6FDDB1114E315670085298A /* libASIHTTPRequest.a in Frameworks */,
-				D60AAFB1147DD7A800FBA576 /* libOPIFoundationCore.a in Frameworks */,
 				D6E9E9D11316037900FF1498 /* libiPOSFoundation.a in Frameworks */,
 				D6D952591471B74F00FF26ED /* libdtdev.a in Frameworks */,
 				D6DB9711135FAC0300877788 /* OpenGLES.framework in Frameworks */,
@@ -1718,9 +1741,19 @@
 		D67B5881147DD6CD00C2ED5D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D67B5887147DD6CD00C2ED5D /* libOPIFoundation.a */,
-				D67B5889147DD6CD00C2ED5D /* libOPIFoundationCore.a */,
-				D6063EDC15497812008E1852 /* libOPIFoundation-CoreAppStore.a */,
+				B4C36AA816B08717007F2951 /* OPISamples.app */,
+				B4C36AAA16B08717007F2951 /* libIOSFrameworkCategories.a */,
+				B4C36AAC16B08717007F2951 /* libUIThirdParty.a */,
+				B4C36AAE16B08717007F2951 /* libUISketchPad.a */,
+				B4C36AB016B08717007F2951 /* libUICustomViewsAndControllers.a */,
+				B4C36AB216B08717007F2951 /* libUILayoutManagers.a */,
+				B4C36AB416B08717007F2951 /* libAppRater.a */,
+				B4C36AB616B08717007F2951 /* libAppUpdater.a */,
+				B4C36AB816B08717007F2951 /* libCoreDataTools.a */,
+				B4C36ABA16B08717007F2951 /* libUtilHelpers.a */,
+				B4C36ABC16B08717007F2951 /* libZipArchive.a */,
+				B4C36ABE16B08717007F2951 /* libASIHTTPRequestExtensions.a */,
+				B4C36AC016B08717007F2951 /* libTouchXMLExtensions.a */,
 				D67B588B147DD6CD00C2ED5D /* OPIFoundationTests.octest */,
 			);
 			name = Products;
@@ -1937,8 +1970,8 @@
 		D6F7963212F9FD6B00B467CA /* LineaSDK */ = {
 			isa = PBXGroup;
 			children = (
+				B4EE74DA167FA038008033B4 /* DTDevices.h */,
 				D6D952561471B73100FF26ED /* libdtdev.a */,
-				D6B0401213024FF6004D00CA /* LineaSDK.h */,
 			);
 			name = LineaSDK;
 			sourceTree = "<group>";
@@ -2031,7 +2064,6 @@
 			dependencies = (
 				D6FDDB2114E31A0A0085298A /* PBXTargetDependency */,
 				D6FDDB2314E31A0A0085298A /* PBXTargetDependency */,
-				D60AAFB8147DD7D400FBA576 /* PBXTargetDependency */,
 				D6B4386F1315ABA8000C0AA8 /* PBXTargetDependency */,
 			);
 			name = iPOS;
@@ -2070,7 +2102,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D6FDDB1E14E318C40085298A /* PBXTargetDependency */,
 				D6FDDB1514E318A20085298A /* PBXTargetDependency */,
 				D6FDDB1314E3189B0085298A /* PBXTargetDependency */,
 				D6B439111315B242000C0AA8 /* PBXTargetDependency */,
@@ -2094,7 +2125,6 @@
 			dependencies = (
 				D6FDDB2814E31A250085298A /* PBXTargetDependency */,
 				D6FDDB2A14E31A250085298A /* PBXTargetDependency */,
-				D60AAFB4147DD7C400FBA576 /* PBXTargetDependency */,
 				D65B25BE1331C8B60052AEE2 /* PBXTargetDependency */,
 			);
 			name = iPOSTesting;
@@ -2115,7 +2145,6 @@
 			);
 			dependencies = (
 				D6FDDB1814E318BB0085298A /* PBXTargetDependency */,
-				D6FDDB1A14E318BB0085298A /* PBXTargetDependency */,
 				D6FDDB1C14E318BB0085298A /* PBXTargetDependency */,
 				D67943A81316089C004B8254 /* PBXTargetDependency */,
 				D6F0DF7F1485654700109DE3 /* PBXTargetDependency */,
@@ -2138,7 +2167,6 @@
 			dependencies = (
 				D6FDDB2614E31A1C0085298A /* PBXTargetDependency */,
 				D6FDDB1014E3155B0085298A /* PBXTargetDependency */,
-				D60AAFB6147DD7CB00FBA576 /* PBXTargetDependency */,
 				D6E9E9CE1316036B00FF1498 /* PBXTargetDependency */,
 			);
 			name = iPOSDemo;
@@ -2218,11 +2246,95 @@
 			remoteRef = 364B56BE1430CF5D0028FE09 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D6063EDC15497812008E1852 /* libOPIFoundation-CoreAppStore.a */ = {
+		B4C36AA816B08717007F2951 /* OPISamples.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = OPISamples.app;
+			remoteRef = B4C36AA716B08717007F2951 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B4C36AAA16B08717007F2951 /* libIOSFrameworkCategories.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libOPIFoundation-CoreAppStore.a";
-			remoteRef = D6063EDB15497812008E1852 /* PBXContainerItemProxy */;
+			path = libIOSFrameworkCategories.a;
+			remoteRef = B4C36AA916B08717007F2951 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B4C36AAC16B08717007F2951 /* libUIThirdParty.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libUIThirdParty.a;
+			remoteRef = B4C36AAB16B08717007F2951 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B4C36AAE16B08717007F2951 /* libUISketchPad.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libUISketchPad.a;
+			remoteRef = B4C36AAD16B08717007F2951 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B4C36AB016B08717007F2951 /* libUICustomViewsAndControllers.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libUICustomViewsAndControllers.a;
+			remoteRef = B4C36AAF16B08717007F2951 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B4C36AB216B08717007F2951 /* libUILayoutManagers.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libUILayoutManagers.a;
+			remoteRef = B4C36AB116B08717007F2951 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B4C36AB416B08717007F2951 /* libAppRater.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAppRater.a;
+			remoteRef = B4C36AB316B08717007F2951 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B4C36AB616B08717007F2951 /* libAppUpdater.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAppUpdater.a;
+			remoteRef = B4C36AB516B08717007F2951 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B4C36AB816B08717007F2951 /* libCoreDataTools.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCoreDataTools.a;
+			remoteRef = B4C36AB716B08717007F2951 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B4C36ABA16B08717007F2951 /* libUtilHelpers.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libUtilHelpers.a;
+			remoteRef = B4C36AB916B08717007F2951 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B4C36ABC16B08717007F2951 /* libZipArchive.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libZipArchive.a;
+			remoteRef = B4C36ABB16B08717007F2951 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B4C36ABE16B08717007F2951 /* libASIHTTPRequestExtensions.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libASIHTTPRequestExtensions.a;
+			remoteRef = B4C36ABD16B08717007F2951 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B4C36AC016B08717007F2951 /* libTouchXMLExtensions.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libTouchXMLExtensions.a;
+			remoteRef = B4C36ABF16B08717007F2951 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D60E92E714E314560028647B /* libASIHTTPRequest.a */ = {
@@ -2230,20 +2342,6 @@
 			fileType = archive.ar;
 			path = libASIHTTPRequest.a;
 			remoteRef = D60E92E614E314560028647B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D67B5887147DD6CD00C2ED5D /* libOPIFoundation.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libOPIFoundation.a;
-			remoteRef = D67B5886147DD6CD00C2ED5D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D67B5889147DD6CD00C2ED5D /* libOPIFoundationCore.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libOPIFoundationCore.a;
-			remoteRef = D67B5888147DD6CD00C2ED5D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D67B588B147DD6CD00C2ED5D /* OPIFoundationTests.octest */ = {
@@ -2638,21 +2736,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		D60AAFB4147DD7C400FBA576 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "OPIFoundation-Core";
-			targetProxy = D60AAFB3147DD7C400FBA576 /* PBXContainerItemProxy */;
-		};
-		D60AAFB6147DD7CB00FBA576 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "OPIFoundation-Core";
-			targetProxy = D60AAFB5147DD7CB00FBA576 /* PBXContainerItemProxy */;
-		};
-		D60AAFB8147DD7D400FBA576 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "OPIFoundation-Core";
-			targetProxy = D60AAFB7147DD7D400FBA576 /* PBXContainerItemProxy */;
-		};
 		D65B25BE1331C8B60052AEE2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D6B4366E1315A7DD000C0AA8 /* iPOSFoundation */;
@@ -2713,20 +2796,10 @@
 			name = ASIHTTPRequest;
 			targetProxy = D6FDDB1714E318BB0085298A /* PBXContainerItemProxy */;
 		};
-		D6FDDB1A14E318BB0085298A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "OPIFoundation-Core";
-			targetProxy = D6FDDB1914E318BB0085298A /* PBXContainerItemProxy */;
-		};
 		D6FDDB1C14E318BB0085298A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = IBAForms;
 			targetProxy = D6FDDB1B14E318BB0085298A /* PBXContainerItemProxy */;
-		};
-		D6FDDB1E14E318C40085298A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "OPIFoundation-Core";
-			targetProxy = D6FDDB1D14E318C40085298A /* PBXContainerItemProxy */;
 		};
 		D6FDDB2114E31A0A0085298A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

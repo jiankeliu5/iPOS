@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "iPOSFacade.h"
 #import "OrderCart.h"
-#import "LineaSDK.h"
+#import "DTDevices.h"
 
-@interface LoginViewController : UIViewController <LineaDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface LoginViewController : UIViewController <DTDeviceDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 {
 	
 	// I'm assuming at some point we will have a domain/model object for this?  For now
@@ -29,7 +29,7 @@
    	iPOSFacade *facade;
     OrderCart *orderCart;
     
-    Linea *linea;
+    DTDevices *linea;
 }
 
 @property (nonatomic, copy) NSString *empId;

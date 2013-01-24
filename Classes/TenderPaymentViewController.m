@@ -230,7 +230,7 @@ static NSString * const CREDIT = @"credit";
     self.delegate = self;
     
     // Get a handle to the shared Linea Device
-    linea = [Linea sharedDevice];
+    linea = [DTDevices sharedDevice];
 	
 }
 
@@ -380,7 +380,7 @@ static NSString * const CREDIT = @"credit";
     BOOL isPaymentTendered = NO;
     
     int sound[]={2730,150,0,30,2730,150};
-	[linea playSound:100 beepData:sound length:sizeof(sound)];
+	[linea playSound:100 beepData:sound length:sizeof(sound) error:nil];
     
     // When the Credit Card is scanned we are going to:
     // 1.  Create the order in POS
@@ -899,18 +899,18 @@ static NSString * const CREDIT = @"credit";
 
 - (BOOL) tenderPaymentFromCardData:(NSString *)track1 track2:(NSString *)track2 track3:(NSString *)track3 {
     BOOL isPaymentTendered = NO;
-    financialCard card;
+    NSDictionary *card = [linea msProcessFinancialCard:track1 track2:track2];
 	
-    if([linea msProcessFinancialCard:&card track1:track1 track2:track2]) {
+    if(card) {
         NSDecimalNumberHandler *bankersRoundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:2 
                                                                                                       raiseOnExactness:NO raiseOnOverflow:NO 
                                                                                                       raiseOnUnderflow:NO raiseOnDivideByZero:NO];
 		self.payment = [[[CreditCardPayment alloc] initWithOrder:[orderCart getOrder]] autorelease];
-        [payment setNameOnCard:[[card.cardholderName copy] autorelease]];
-        [payment setCardNumber:[[card.accountNumber copy] autorelease]];
+        [payment setNameOnCard:[[(NSString *)[card valueForKey:@"cardholderName"] copy] autorelease]];
+        [payment setCardNumber:[[(NSString *)[card valueForKey:@"accountNumber"] copy] autorelease]];
         [payment setPaymentAmount:[[self paymentAmount] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior]];
-        [payment setExpireDateMonthYear:[NSString stringWithFormat:@"%d",card.exirationMonth] 
-                                     year:[NSString stringWithFormat:@"%d",card.exirationYear]] ;
+        [payment setExpireDateMonthYear:[[(NSString *)[card valueForKey:@"expirationMonth"] copy] autorelease] 
+                                     year:[[(NSString *)[card valueForKey:@"expirationYear"] copy] autorelease]] ;
         
         [facade tenderPaymentWithCC:payment];
         

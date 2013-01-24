@@ -99,8 +99,8 @@
         case CONN_CONNECTING:
             break; 
 		case CONN_CONNECTED:
-            [linea msStartScan];
-            [linea setMSCardDataMode:MS_PROCESSED_CARD_DATA];
+            [linea barcodeStartScan:nil];
+            [linea msSetCardDataMode:MS_PROCESSED_CARD_DATA error:nil] ;
             break;
 	}
     
@@ -121,6 +121,7 @@
 	[iv release];
 	
 	loginTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    loginTableView.backgroundView = nil;
 	loginTableView.backgroundColor = [UIColor clearColor];
 	
 	[self.view addSubview:loginTableView];
@@ -136,7 +137,7 @@
 	loginTableView.delegate = self;   
     
     // Get a reference to the shared Linea instance and add this controller as a delegate
-    linea = [Linea sharedDevice];
+    linea = [DTDevices sharedDevice];
     [linea addDelegate:self];
 }
 

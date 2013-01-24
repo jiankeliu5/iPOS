@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LineaSDK.h"
+#import "DTDevices.h"
 #import "ProfitMarginViewController.h"
 #import "OrderCart.h"
 #import "AddItemView.h"
@@ -18,11 +18,11 @@
 #import "MOGlassButton.h"
 
 
-@interface OrderItemsViewController : UIViewController <LineaDelegate, AddItemViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, SearchItemViewDelegate, CartItemCellDelegate, ProfitMarginViewDelegate> {
+@interface OrderItemsViewController : UIViewController <DTDeviceDelegate, AddItemViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, SearchItemViewDelegate, CartItemCellDelegate, ProfitMarginViewDelegate> {
 	iPOSFacade *facade;
     OrderCart *orderCart;
     
-    Linea *linea;
+    DTDevices *linea;
 	
     SearchItemView *searchOverlay;
     AddItemView *addItemOverlay;

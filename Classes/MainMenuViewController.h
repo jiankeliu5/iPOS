@@ -14,9 +14,9 @@
 #import "MOGlassButton.h"
 
 #import "OrderCart.h"
-#import "LineaSDK.h"
+#import "DTDevices.h"
 
-@interface MainMenuViewController : ExtUIViewController <LineaDelegate, ExtUIViewControllerDelegate, AddItemViewDelegate> {
+@interface MainMenuViewController : ExtUIViewController <DTDeviceDelegate, ExtUIViewControllerDelegate, AddItemViewDelegate> {
 	iPOSFacade *facade;
 	
     OrderCart *orderCart;
@@ -30,7 +30,7 @@
     
     AddItemView *addItemOverlay;
     
-    Linea *linea;
+    DTDevices *linea;
 	
 }
 

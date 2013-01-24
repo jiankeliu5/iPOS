@@ -342,7 +342,7 @@
 	}
 	
     // Add itself as a delegate
-    linea = [Linea sharedDevice];
+    linea = [DTDevices sharedDevice];
 	
 }
 

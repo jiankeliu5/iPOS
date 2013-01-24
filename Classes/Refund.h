@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "RefundItem.h"
-#import "LineaSDK.h"
+#import "DTDevices.h"
 
 @interface Refund : AbstractModel {
     NSNumber *orderId;
@@ -42,5 +42,5 @@
 - (BOOL) isSignatureRequired;
 
 - (RefundItem *) getCurrentRefundItemForSwipe;
-- (void) setCardData: (financialCard) cardData;
+- (void) setCardData: (NSDictionary *) cardData;
 @end

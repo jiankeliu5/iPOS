@@ -178,7 +178,7 @@
     [cartButton addTarget:self action:@selector(cartPressed:) forControlEvents:UIControlEventTouchUpInside];
 	
     // Add itself as a delegate
-    linea = [Linea sharedDevice];
+    linea = [DTDevices sharedDevice];
 }
 
 - (void)viewDidUnload {
