@@ -8,6 +8,7 @@
 
 #import "iPOSAppDelegate.h"
 #import "AlertUtils.h"
+#import "UINavigationController+Rotation.h"
 
 #define MAX_PASSWORD_RETRIES 3
 #define TIMEOUT_VALUE 300.0
@@ -87,6 +88,10 @@
 }
 
 - (void) applicationDidBecomeActive:(UIApplication *)application {
+    
+    linea = [DTDevices sharedDevice];
+    [linea connect];
+    
 	// If we had a live session and resigned as the active application
 	// due to inactivity or being backgrounded, we need to have the user
 	// input their password and re-validate the session.
@@ -148,6 +153,9 @@
     [endTime release];
     startTime = [[NSDate alloc] init];
 	self.resignedActive = YES;
+    
+    linea = [DTDevices sharedDevice];
+    [linea disconnect];
 }
 
 - (void) applicationWillTerminate:(UIApplication*)application {	
@@ -310,7 +318,13 @@
         appUpdater.delegate = self;
     }
     
-    [appUpdater checkForUpdate];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL demoEnabled = [defaults boolForKey:@"enableDemoMode"];
+    
+    // Only check for updates if we are not in demo mode.
+    if (demoEnabled == NO) {
+        [appUpdater checkForUpdate];
+    }
 
 }
 

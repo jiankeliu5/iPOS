@@ -58,7 +58,7 @@
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    [linea disconnect];
+    //[linea disconnect];
     
     [topRowBeforeKeyboardShown release];
 	
@@ -99,7 +99,7 @@
         case CONN_CONNECTING:
             break; 
 		case CONN_CONNECTED:
-            [linea barcodeStartScan:nil];
+            //[linea barcodeStartScan:nil];
             [linea msSetCardDataMode:MS_PROCESSED_CARD_DATA error:nil] ;
             break;
 	}
@@ -160,7 +160,7 @@
     
     [facade logout]; 
     
-    [linea disconnect];
+    //[linea disconnect];
     
     // Clear out all sections of the order cart
     [orderCart clearAllCart];
@@ -223,16 +223,31 @@
 	[super viewDidDisappear:animated];
 }
 
-- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
+{
+    return UIInterfaceOrientationPortrait;
+}
+
+- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation//
 {
 	// This will keep the interface locked to portrait
 	return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation 
-{
-	NSLog(@"called did rotate");
-}
+//- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+//{
+//	NSLog(@"called did rotate");
+//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -283,7 +298,7 @@
 				[mainMenuViewController release];
 				
 				// This is where we would connect to the linea-pro device
-				[linea connect];
+				//[linea connect];
 				
 			} else {
 				[AlertUtils dismissAlertMessage:alert];

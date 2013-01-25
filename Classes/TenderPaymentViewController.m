@@ -240,6 +240,16 @@ static NSString * const CREDIT = @"credit";
     [super viewWillAppear:animated];
 }
 
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAll;
+}
+
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations.
@@ -395,7 +405,13 @@ static NSString * const CREDIT = @"credit";
     }
     
     if (isOrderSaved) {
-        isPaymentTendered = [self tenderPaymentFromCardData:track1 track2:track2 track3:track3];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        BOOL demoEnabled = [defaults boolForKey:@"enableDemoMode"];
+        if (demoEnabled == YES) {
+            isPaymentTendered = [self tenderDemoPayment];
+        } else {
+            isPaymentTendered = [self tenderPaymentFromCardData:track1 track2:track2 track3:track3];
+        }
     }
     
     if (isPaymentTendered) {

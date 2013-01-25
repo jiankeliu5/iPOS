@@ -330,7 +330,6 @@
 		[self.navigationController setNavigationBarHidden:NO];
 	}
 	
-    // Add itself as a delegate
     linea = [DTDevices sharedDevice];
 	
 }
@@ -400,6 +399,16 @@
 
     // Do this at the end
 	[super viewWillDisappear:animated];
+}
+
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAll;
 }
 
 // Override to allow orientations other than the default portrait orientation.

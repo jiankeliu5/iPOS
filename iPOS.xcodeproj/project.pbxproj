@@ -176,6 +176,12 @@
 		B4CEE06013527F330067DEBC /* EditConfirmDelete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4CEE05413527F330067DEBC /* EditConfirmDelete@2x.png */; };
 		B4D308281367B86400F26C5E /* SessionVerificationView.h in Headers */ = {isa = PBXBuildFile; fileRef = B4D308261367B86400F26C5E /* SessionVerificationView.h */; };
 		B4D308291367B86400F26C5E /* SessionVerificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4D308271367B86400F26C5E /* SessionVerificationView.m */; };
+		B4E6A51416B255B500B91C65 /* UINavigationController+Rotation.m in Sources */ = {isa = PBXBuildFile; fileRef = B4E6A51316B255B500B91C65 /* UINavigationController+Rotation.m */; };
+		B4E6A51516B255B500B91C65 /* UINavigationController+Rotation.m in Sources */ = {isa = PBXBuildFile; fileRef = B4E6A51316B255B500B91C65 /* UINavigationController+Rotation.m */; };
+		B4E6A51616B255B500B91C65 /* UINavigationController+Rotation.m in Sources */ = {isa = PBXBuildFile; fileRef = B4E6A51316B255B500B91C65 /* UINavigationController+Rotation.m */; };
+		B4EC5B8916B207580062F8BC /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4EC5B8516B207480062F8BC /* libOPIFoundationCore.a */; };
+		B4EC5B8A16B2075F0062F8BC /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4EC5B8516B207480062F8BC /* libOPIFoundationCore.a */; };
+		B4EC5B8B16B207650062F8BC /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4EC5B8516B207480062F8BC /* libOPIFoundationCore.a */; };
 		D60F74DB1475A53E0055CB15 /* OrderDiscountApprovalRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = D60F74D91475A53E0055CB15 /* OrderDiscountApprovalRequest.h */; };
 		D60F74DC1475A53E0055CB15 /* OrderDiscountApprovalRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D60F74DA1475A53E0055CB15 /* OrderDiscountApprovalRequest.m */; };
 		D60F74DF1475AD820055CB15 /* OrderDiscountApprovalResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = D60F74DD1475AD820055CB15 /* OrderDiscountApprovalResponse.h */; };
@@ -404,96 +410,33 @@
 			remoteGlobalIDString = D2AAC07E0554694100DB518D;
 			remoteInfo = IBAForms;
 		};
-		B4C36AA716B08717007F2951 /* PBXContainerItemProxy */ = {
+		B4EC5B8016B207480062F8BC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D659166E161B3B11009D64BF;
-			remoteInfo = OPISamples;
+			remoteGlobalIDString = D6A97EC413FDB26C00EAC098;
+			remoteInfo = OPIFoundation;
 		};
-		B4C36AA916B08717007F2951 /* PBXContainerItemProxy */ = {
+		B4EC5B8216B207480062F8BC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D65915D1161B2A61009D64BF;
-			remoteInfo = IOSFrameworkCategories;
+			remoteGlobalIDString = D6987A9515CC30AB00A52EE6;
+			remoteInfo = "OPIFoundation-withCoreData";
 		};
-		B4C36AAB16B08717007F2951 /* PBXContainerItemProxy */ = {
+		B4EC5B8416B207480062F8BC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D6591615161B2BA0009D64BF;
-			remoteInfo = UIThirdParty;
+			remoteGlobalIDString = D6F754D3145B026000B117E1;
+			remoteInfo = "OPIFoundation-Core";
 		};
-		B4C36AAD16B08717007F2951 /* PBXContainerItemProxy */ = {
+		B4EC5B8616B207480062F8BC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D659156B161B2996009D64BF;
-			remoteInfo = UISketchPad;
-		};
-		B4C36AAF16B08717007F2951 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D659157C161B29CD009D64BF;
-			remoteInfo = UICustomViewsAndControllers;
-		};
-		B4C36AB116B08717007F2951 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D659155A161B2952009D64BF;
-			remoteInfo = UILayoutManagers;
-		};
-		B4C36AB316B08717007F2951 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D659158D161B29F1009D64BF;
-			remoteInfo = AppRater;
-		};
-		B4C36AB516B08717007F2951 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D659159E161B2A01009D64BF;
-			remoteInfo = AppUpdater;
-		};
-		B4C36AB716B08717007F2951 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D65915AF161B2A14009D64BF;
-			remoteInfo = CoreDataTools;
-		};
-		B4C36AB916B08717007F2951 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D6591604161B2AB5009D64BF;
-			remoteInfo = UtilHelpers;
-		};
-		B4C36ABB16B08717007F2951 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D6591626161B2BF0009D64BF;
-			remoteInfo = ZipArchive;
-		};
-		B4C36ABD16B08717007F2951 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D65915E2161B2A73009D64BF;
-			remoteInfo = ASIHTTPRequestExtensions;
-		};
-		B4C36ABF16B08717007F2951 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D642EEA0145AFE7400D64F0E /* OPIFoundation.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D65915F3161B2A87009D64BF;
-			remoteInfo = TouchXMLExtensions;
+			remoteGlobalIDString = D6A7A47715419F7B00F17282;
+			remoteInfo = "OPIFoundation-CoreAppStore";
 		};
 		D60E92E614E314560028647B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -764,7 +707,6 @@
 		B4300B30131B4300000210C7 /* iPosIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPosIcon@2x.png"; sourceTree = "<group>"; };
 		B4300B33131B4312000210C7 /* iPosLogin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPosLogin.png; sourceTree = "<group>"; };
 		B4300B34131B4312000210C7 /* iPosLogin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPosLogin@2x.png"; sourceTree = "<group>"; };
-		B43E1BDA135745DE00E49615 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		B44BB2B514411C2F00E383CB /* OrderListTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderListTableCell.h; sourceTree = "<group>"; };
 		B44BB2B614411C2F00E383CB /* OrderListTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderListTableCell.m; sourceTree = "<group>"; };
 		B44D1E5B133E985E004E7EDE /* icon-magnify2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-magnify2.png"; sourceTree = "<group>"; };
@@ -814,6 +756,8 @@
 		B4CEE05413527F330067DEBC /* EditConfirmDelete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EditConfirmDelete@2x.png"; sourceTree = "<group>"; };
 		B4D308261367B86400F26C5E /* SessionVerificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionVerificationView.h; sourceTree = "<group>"; };
 		B4D308271367B86400F26C5E /* SessionVerificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionVerificationView.m; sourceTree = "<group>"; };
+		B4E6A51216B255B500B91C65 /* UINavigationController+Rotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+Rotation.h"; sourceTree = "<group>"; };
+		B4E6A51316B255B500B91C65 /* UINavigationController+Rotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+Rotation.m"; sourceTree = "<group>"; };
 		B4EE74DA167FA038008033B4 /* DTDevices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTDevices.h; sourceTree = "<group>"; };
 		D60E92DF14E314550028647B /* ASIHTTPRequest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ASIHTTPRequest.xcodeproj; path = ../ThirdParty/ASIHTTPRequest/ASIHTTPRequest.xcodeproj; sourceTree = "<group>"; };
 		D60F74D91475A53E0055CB15 /* OrderDiscountApprovalRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDiscountApprovalRequest.h; sourceTree = "<group>"; };
@@ -1003,6 +947,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4EC5B8B16B207650062F8BC /* libOPIFoundationCore.a in Frameworks */,
 				D690234A144F222700174E59 /* libz.1.2.5.dylib in Frameworks */,
 				D6FDDB2414E31A110085298A /* libASIHTTPRequest.a in Frameworks */,
 				36F3E99A1434BB38004376B8 /* libIBAForms.a in Frameworks */,
@@ -1064,6 +1009,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4EC5B8916B207580062F8BC /* libOPIFoundationCore.a in Frameworks */,
 				D690234E144F226800174E59 /* libz.1.2.5.dylib in Frameworks */,
 				D6FDDB2B14E31A2B0085298A /* libASIHTTPRequest.a in Frameworks */,
 				36F3E99D1434BB6D004376B8 /* libIBAForms.a in Frameworks */,
@@ -1106,6 +1052,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4EC5B8A16B2075F0062F8BC /* libOPIFoundationCore.a in Frameworks */,
 				D690234B144F224800174E59 /* libz.1.2.5.dylib in Frameworks */,
 				364B56C61430D02D0028FE09 /* libIBAForms.a in Frameworks */,
 				D6FDDB1114E315670085298A /* libASIHTTPRequest.a in Frameworks */,
@@ -1252,7 +1199,6 @@
 				B4300B34131B4312000210C7 /* iPosLogin@2x.png */,
 				B4300B2F131B4300000210C7 /* iPosIcon.png */,
 				B4300B30131B4300000210C7 /* iPosIcon@2x.png */,
-				B43E1BDA135745DE00E49615 /* Entitlements.plist */,
 				D6334A2E1331C9CE000DEDBB /* AppTests-Info.plist */,
 				D64B7E1412F9D7EA006AB141 /* UnitTests-Info.plist */,
 				D64B7EB112F9DFA7006AB141 /* IntTests-Info.plist */,
@@ -1606,6 +1552,8 @@
 		B4D1983C1326BDF0007CCE08 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				B4E6A51216B255B500B91C65 /* UINavigationController+Rotation.h */,
+				B4E6A51316B255B500B91C65 /* UINavigationController+Rotation.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -1741,19 +1689,10 @@
 		D67B5881147DD6CD00C2ED5D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B4C36AA816B08717007F2951 /* OPISamples.app */,
-				B4C36AAA16B08717007F2951 /* libIOSFrameworkCategories.a */,
-				B4C36AAC16B08717007F2951 /* libUIThirdParty.a */,
-				B4C36AAE16B08717007F2951 /* libUISketchPad.a */,
-				B4C36AB016B08717007F2951 /* libUICustomViewsAndControllers.a */,
-				B4C36AB216B08717007F2951 /* libUILayoutManagers.a */,
-				B4C36AB416B08717007F2951 /* libAppRater.a */,
-				B4C36AB616B08717007F2951 /* libAppUpdater.a */,
-				B4C36AB816B08717007F2951 /* libCoreDataTools.a */,
-				B4C36ABA16B08717007F2951 /* libUtilHelpers.a */,
-				B4C36ABC16B08717007F2951 /* libZipArchive.a */,
-				B4C36ABE16B08717007F2951 /* libASIHTTPRequestExtensions.a */,
-				B4C36AC016B08717007F2951 /* libTouchXMLExtensions.a */,
+				B4EC5B8116B207480062F8BC /* libOPIFoundation.a */,
+				B4EC5B8316B207480062F8BC /* libOPIFoundation-withCoreData.a */,
+				B4EC5B8516B207480062F8BC /* libOPIFoundationCore.a */,
+				B4EC5B8716B207480062F8BC /* libOPIFoundation-CoreAppStore.a */,
 				D67B588B147DD6CD00C2ED5D /* OPIFoundationTests.octest */,
 			);
 			name = Products;
@@ -2246,95 +2185,32 @@
 			remoteRef = 364B56BE1430CF5D0028FE09 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B4C36AA816B08717007F2951 /* OPISamples.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = OPISamples.app;
-			remoteRef = B4C36AA716B08717007F2951 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B4C36AAA16B08717007F2951 /* libIOSFrameworkCategories.a */ = {
+		B4EC5B8116B207480062F8BC /* libOPIFoundation.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libIOSFrameworkCategories.a;
-			remoteRef = B4C36AA916B08717007F2951 /* PBXContainerItemProxy */;
+			path = libOPIFoundation.a;
+			remoteRef = B4EC5B8016B207480062F8BC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B4C36AAC16B08717007F2951 /* libUIThirdParty.a */ = {
+		B4EC5B8316B207480062F8BC /* libOPIFoundation-withCoreData.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libUIThirdParty.a;
-			remoteRef = B4C36AAB16B08717007F2951 /* PBXContainerItemProxy */;
+			path = "libOPIFoundation-withCoreData.a";
+			remoteRef = B4EC5B8216B207480062F8BC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B4C36AAE16B08717007F2951 /* libUISketchPad.a */ = {
+		B4EC5B8516B207480062F8BC /* libOPIFoundationCore.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libUISketchPad.a;
-			remoteRef = B4C36AAD16B08717007F2951 /* PBXContainerItemProxy */;
+			path = libOPIFoundationCore.a;
+			remoteRef = B4EC5B8416B207480062F8BC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B4C36AB016B08717007F2951 /* libUICustomViewsAndControllers.a */ = {
+		B4EC5B8716B207480062F8BC /* libOPIFoundation-CoreAppStore.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libUICustomViewsAndControllers.a;
-			remoteRef = B4C36AAF16B08717007F2951 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B4C36AB216B08717007F2951 /* libUILayoutManagers.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libUILayoutManagers.a;
-			remoteRef = B4C36AB116B08717007F2951 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B4C36AB416B08717007F2951 /* libAppRater.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libAppRater.a;
-			remoteRef = B4C36AB316B08717007F2951 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B4C36AB616B08717007F2951 /* libAppUpdater.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libAppUpdater.a;
-			remoteRef = B4C36AB516B08717007F2951 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B4C36AB816B08717007F2951 /* libCoreDataTools.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libCoreDataTools.a;
-			remoteRef = B4C36AB716B08717007F2951 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B4C36ABA16B08717007F2951 /* libUtilHelpers.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libUtilHelpers.a;
-			remoteRef = B4C36AB916B08717007F2951 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B4C36ABC16B08717007F2951 /* libZipArchive.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libZipArchive.a;
-			remoteRef = B4C36ABB16B08717007F2951 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B4C36ABE16B08717007F2951 /* libASIHTTPRequestExtensions.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libASIHTTPRequestExtensions.a;
-			remoteRef = B4C36ABD16B08717007F2951 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B4C36AC016B08717007F2951 /* libTouchXMLExtensions.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libTouchXMLExtensions.a;
-			remoteRef = B4C36ABF16B08717007F2951 /* PBXContainerItemProxy */;
+			path = "libOPIFoundation-CoreAppStore.a";
+			remoteRef = B4EC5B8616B207480062F8BC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		D60E92E714E314560028647B /* libASIHTTPRequest.a */ = {
@@ -2578,6 +2454,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6B4359F13159ECD000C0AA8 /* main.m in Sources */,
+				B4E6A51416B255B500B91C65 /* UINavigationController+Rotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2613,6 +2490,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D65B25CC1331C8B60052AEE2 /* main.m in Sources */,
+				B4E6A51616B255B500B91C65 /* UINavigationController+Rotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2631,6 +2509,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D697D19A1312DCD0002C3EF6 /* main.m in Sources */,
+				B4E6A51516B255B500B91C65 /* UINavigationController+Rotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2903,8 +2782,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 31;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Object Partners Incorporated";
+				CURRENT_PROJECT_VERSION = 32;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2912,7 +2791,7 @@
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_LDFLAGS = "-lxml2";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "20784AA8-4A3F-4488-927F-44EE35BB74D4";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2993,7 +2872,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -3018,7 +2897,6 @@
 				);
 				PRIVATE_HEADERS_FOLDER_PATH = iPOSDemo.app/PrivateHeaders;
 				PRODUCT_NAME = iPOSDemo;
-				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -3182,7 +3060,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 32;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -3203,8 +3081,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 31;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CURRENT_PROJECT_VERSION = 32;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -3588,8 +3466,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = iPOS_Prefix.pch;
@@ -3613,7 +3491,6 @@
 				);
 				PRIVATE_HEADERS_FOLDER_PATH = iPOSDemo.app/PrivateHeaders;
 				PRODUCT_NAME = iPOSDemo;
-				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "$(ARCHS_STANDARD_32_BIT)";

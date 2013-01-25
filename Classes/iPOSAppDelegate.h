@@ -34,6 +34,8 @@
     UIAlertView *reachabilityAlert;
     
     InAppUpdater *appUpdater;
+    
+    DTDevices *linea;
 }
 
 @property (nonatomic, retain) UIWindow* window;
