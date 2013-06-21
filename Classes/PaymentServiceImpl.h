@@ -10,6 +10,10 @@
 
 #import "PaymentService.h"
 
+#import "CXMLDocument.h"
+#import "CXMLElement.h"
+#import "CXMLElement+CustomExtensions.h"
+
 @interface PaymentServiceImpl : NSObject<PaymentService> {
     NSString *baseUrl;
     NSString *posPaymentMgmtUri;

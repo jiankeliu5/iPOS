@@ -10,6 +10,7 @@
 #import "POSOxmUtils.h"
 
 #import "ProductItem.h"
+#import "iPOSFacade.h"
 
 @implementation ProductItemXmlMarshaller
 
@@ -30,6 +31,11 @@
     
     // Map the object
     ProductItem *item = [[[ProductItem alloc] init] autorelease];
+    //Enning Tang check availability 11/19/2012
+    //ProductItem *StoreItem = [[[ProductItem alloc] init] autorelease];
+    //iPOSFacade *facade;
+    //facade = [iPOSFacade sharedInstance];
+    
         
     CXMLDocument *xmlParser = [[[CXMLDocument alloc] initWithXMLString:xmlString options:0 error:nil] autorelease];
     CXMLElement *root = [xmlParser rootElement];
@@ -64,11 +70,20 @@
         item.selectedUOM = UOMPrimary;
     }
     
+    
     // Store (Set the item on availability
     item.store = [POSOxmUtils toStore:root];
     if (item.store.availability) {
         item.store.availability.item = item;
     }
+    
+    //Enning Tang Change check store availability to shiptostore
+    //StoreItem = [facade lookupProductItemByStore:item.sku withStoreid:item.ShipToStoreID];
+    //if (item.store.availability) {
+    //    item.store.availability.item = StoreItem;
+    //    NSLog(@"Store Ava storeid = %@", StoreItem.store.storeId.stringValue);
+    //}
+    //==========================================================
     
     // Distribution Centers
    item.distributionCenterList = [POSOxmUtils toDistributionCenterList:[root firstElementNamed:@"Distribution"] forItem: item];

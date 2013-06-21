@@ -38,7 +38,7 @@
         // Add the label to the view
         matchesLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         matchesLabel.font = [UIFont boldSystemFontOfSize:MATCHES_LABEL_FONT_SIZE];
-        matchesLabel.textAlignment = UITextAlignmentCenter;
+        matchesLabel.textAlignment = NSTextAlignmentCenter;
         matchesLabel.backgroundColor = [UIColor colorWithRed:170.0f/255.0f green:204.0f/255.0f blue:0.0f alpha:1.0f];
         
         [self addSubview:matchesLabel];

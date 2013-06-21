@@ -48,7 +48,7 @@
 		descriptionLabel = [[[UILabel alloc] init] autorelease];
 		descriptionLabel.backgroundColor = [UIColor clearColor];
 		descriptionLabel.textColor = [UIColor blackColor];
-		descriptionLabel.textAlignment = UITextAlignmentCenter;
+		descriptionLabel.textAlignment = NSTextAlignmentCenter;
 		descriptionLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
 		descriptionLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:descriptionLabel];
@@ -56,7 +56,7 @@
         itemStatusLabel = [[[UILabel alloc] init] autorelease];
 		itemStatusLabel.backgroundColor = [UIColor clearColor];
 		itemStatusLabel.textColor = [UIColor blackColor];
-		itemStatusLabel.textAlignment = UITextAlignmentLeft;
+		itemStatusLabel.textAlignment = NSTextAlignmentLeft;
 		itemStatusLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
 		itemStatusLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:itemStatusLabel];
@@ -64,7 +64,7 @@
 		quantityLabel = [[[UILabel alloc] init] autorelease];
 		quantityLabel.backgroundColor = [UIColor clearColor];
 		quantityLabel.textColor = [UIColor blackColor];
-		quantityLabel.textAlignment = UITextAlignmentCenter;
+		quantityLabel.textAlignment = NSTextAlignmentCenter;
 		quantityLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
 		quantityLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:quantityLabel];
@@ -72,7 +72,7 @@
 		lineCostLabel = [[[UILabel alloc] init] autorelease];
 		lineCostLabel.backgroundColor = [UIColor clearColor];
 		lineCostLabel.textColor = [UIColor blackColor];
-		lineCostLabel.textAlignment = UITextAlignmentRight;
+		lineCostLabel.textAlignment = NSTextAlignmentRight;
 		lineCostLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
 		lineCostLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:lineCostLabel];

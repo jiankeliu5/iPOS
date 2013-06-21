@@ -14,7 +14,7 @@
 
 static iPOSFacade *facade = nil;
 
-@synthesize posService, inventoryService, paymentService, sessionInfo, orderHistoryService;
+@synthesize posService, inventoryService, paymentService, sessionInfo, sssessionInfo, orderHistoryService;
 
 #pragma mark Singleton Initializer
 + (iPOSFacade *) sharedInstance {
@@ -51,6 +51,7 @@ static iPOSFacade *facade = nil;
     [inventoryService release];
     [paymentService release];
     [sessionInfo release];
+    [sssessionInfo release];
     
     [super dealloc];
 }
@@ -83,6 +84,33 @@ static iPOSFacade *facade = nil;
 
 
 #pragma mark -
+#pragma mark SS Session Mgmt
+- (BOOL) sslogin: (NSString *) username password: (NSString *) password {
+    sssessionInfo = [[self.posService sslogin:username withPassword:password] retain];
+    
+    if (sssessionInfo != nil) {
+        return TRUE;
+    }
+    
+	return FALSE;
+}
+
+-(SessionStatus) ssverifySession:(NSString *)passwordToVerify {
+	if (passwordToVerify && ![passwordToVerify isEqualToString:self.sssessionInfo.passwordForVerification]) {
+		return SessionBadPassword;
+	}
+    return ([self.posService ssverifySession:sessionInfo withPassword:passwordToVerify]) ? SessionOk : SessionExpired;
+}
+
+-(BOOL) sslogout {
+	BOOL logoutStatus = [posService sslogout:sessionInfo];
+	[sssessionInfo release];
+	sssessionInfo = nil;
+    return logoutStatus;
+}
+
+
+#pragma mark -
 #pragma mark Customer Management
 - (NSArray *) lookupCustomerByName:(NSString *)customerName {
     return [self.posService lookupCustomerByName:customerName withSession:sessionInfo];
@@ -102,12 +130,59 @@ static iPOSFacade *facade = nil;
 
 #pragma mark -
 #pragma mark Order Management
+-(void) saveSheet:(SelectionSheet *)sheet {
+    [self.posService save:sheet withSession:sssessionInfo];
+}
+
+-(NSArray *) lookupSheetByProduct:(NSString *) product andCustomer:(NSString *) customer andContractor:(NSString *) contractor andArchived:(Boolean) archived{
+    return [self.posService lookupSheetByProduct:product andCustomer:customer andContractor:contractor andArchived:archived withSession:self.sssessionInfo];
+}
+
+-(NSString *) lookupSelection:(NSString *) projectUID{
+    return [self.posService lookupSelection:projectUID withSession:self.sssessionInfo];
+}
+
+-(SelectionSheet *) lookupSheetById:(NSString *) sheetId {
+    return [self.posService lookupSheetById:sheetId withSession:self.sssessionInfo];
+}
+
+
+-(NSArray *) lookupRooms {
+    return [self.posService lookupRoomsWithSession:self.sssessionInfo];
+}
+-(NSArray *) lookupAreas {
+    return [self.posService lookupAreasWithSession:self.sssessionInfo];
+}
+
+
+#pragma mark -
+#pragma mark Order Management
 -(void) saveOrder:(Order *)order {
     [self.posService save:order withSession:sessionInfo];
 }
 
+-(NSArray *) storelookup{
+    return [self.posService storelookup:sessionInfo];
+}
+
+-(NSString *) storelookupbysalesperson: (NSString *) salesperson{
+    return [self.posService storelookupbysalesperson:sessionInfo salesperson:salesperson];
+}
+
+-(NSDecimalNumber *) taxratelookupbystoreid: (NSString *) shiptostoreid{
+    return [self.posService taxratelookupbystoreid:sessionInfo shiptostoreid:shiptostoreid];
+}
+
+-(void) closeOrderByOrderId:(NSString *) orderId{
+    return [self.posService closeOrderByOrderId:sessionInfo orderId:orderId];
+}
+
 - (BOOL) emailReceipt:(Order *)order {
     return [self.posService emailReceipt:order withSession:sessionInfo];
+}
+
+- (BOOL) emailReceiptWithEmail:(Order *)order withEmail:(NSString *)emailAddress{
+    return [self.posService emailReceiptWithEmail:order withEmail:emailAddress withSession:sessionInfo];
 }
 
 - (BOOL) orderDiscountFor: (Order *) order withDiscountAmount: (NSDecimalNumber *) discountAmount managerApproval: (ManagerInfo *) managerApprover {
@@ -121,6 +196,7 @@ static iPOSFacade *facade = nil;
 }
 
 - (NSArray *) lookupProductItemByName:(NSString *)itemName {
+    //return [self.posService lookupProductItemByName:itemName withSession:sessionInfo];
     return [self.inventoryService lookupProductItemByName:itemName withSession:sessionInfo];
 }
 
@@ -137,9 +213,28 @@ static iPOSFacade *facade = nil;
 }
 
 #pragma mark -
+#pragma mark Transaction Lock Enning Tang 3/21/2013
+- (NSArray *) transactionLockCheck:(NSString *)orderId {
+    return [self.posService transactionLockCheck:orderId withSession:sessionInfo];
+}
+
+- (NSString *) setTransactionLock:(NSString *)orderId salesPersonId:(NSString *)salesPersonId storeId:(NSString *)storeId sysUserId:(NSString *)sysUserId salesPersonName:(NSString *)salesPersonName dateLogin:(NSString *)dateLogin {
+    return [self.posService setTransactionLock:orderId salesPersonId:salesPersonId storeId:storeId sysUserId:sysUserId salesPersonName:salesPersonName dateLogin:dateLogin withSession:sessionInfo];
+}
+
+- (NSString *) releaseTransactionLock:(NSString *)orderId {
+    return  [self.posService releaseTransactionLock:orderId withSession:sessionInfo];
+}
+
+#pragma mark Insert Other Payment Enning Tang 3/28/2013
+- (BOOL)insertOtherPayment:(Order *)order amountPayment:(NSDecimalNumber *)amountPayment paymentType:(NSString *)paymentType{
+    return [self.posService insertOtherPayment:order amountPayment:amountPayment paymentType:paymentType withSession:sessionInfo];
+}
+
+#pragma mark -
 #pragma mark Payment Management
-- (void) tenderPaymentWithCC:(CreditCardPayment *)ccPayment {
-    [self.paymentService tenderPaymentWithCC:ccPayment withSession:sessionInfo];
+- (BOOL) tenderPaymentWithCC:(CreditCardPayment *)ccPayment {
+    return [self.paymentService tenderPaymentWithCC:ccPayment withSession:sessionInfo];
 }
 
 - (BOOL) acceptSignatureOnAccount:(AccountPayment *)payment {
@@ -161,6 +256,11 @@ static iPOSFacade *facade = nil;
     return [self.orderHistoryService lookupOrderByPhoneNumber:phoneNumber withSessionInfo:sessionInfo];
 }
 
+//Enning Tang added 5/2/2013
+-(NSArray *) lookupOrderBySalesPersonId:(NSString *)salesPersonId{
+    return [self.orderHistoryService lookupOrderBySalesPersonId:salesPersonId withSessionInfo:sessionInfo];
+}
+
 -(Order *) lookupOrderByOrderId:(NSNumber *) orderId {
     return [self.orderHistoryService lookupOrderByOrderId:[orderId stringValue] withSessionInfo:sessionInfo];
 }
@@ -172,5 +272,14 @@ static iPOSFacade *facade = nil;
 -(BOOL) sendRefundRequest:(Refund *)refund{
     return [self.paymentService sendRefundRequest:refund withSession:sessionInfo];
 }
+
+-(ProductItem *) lookupProductItemByStore:(NSString *)itemSku withStoreid:(NSString *)StoreID{
+    return [self.posService lookupProductItemByStore:itemSku withStoreid:StoreID withSession:sessionInfo];
+}
+
+-(NSNumber *) getLTLWeight:(NSNumber *)ItemID withQuantity:(NSNumber *)Quantity{
+    return [self.posService getLTLWeight:ItemID withQuantity:Quantity withSession:sessionInfo];
+}
+
 
 @end

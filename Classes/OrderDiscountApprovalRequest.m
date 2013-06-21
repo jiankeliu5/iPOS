@@ -39,6 +39,7 @@
                 ItemSellingPriceApprovalRequest *sellingPriceApproval = nil;
                 
                 // Distribute the discount amount evenly across order items
+                NSLog(@"1");
                 NSDecimalNumber *discountPercent = [discountAmount decimalNumberByDividingBy:[order calcOpenItemsSubTotal]];
                 NSDecimalNumber *discountPerItem = nil;
                 

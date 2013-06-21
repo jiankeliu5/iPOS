@@ -75,9 +75,10 @@
 
 #pragma mark -
 #pragma mark Payment Service Implementations
-- (void) tenderPaymentWithCC:(CreditCardPayment *)ccPayment withSession:(SessionInfo *)sessionInfo {
+- (BOOL) tenderPaymentWithCC:(CreditCardPayment *)ccPayment withSession:(SessionInfo *)sessionInfo {
+    NSLog(@"PaymentWithCC called");
     if (sessionInfo == nil || ccPayment == nil || ![ccPayment validate]) {
-        return;
+        return false;
     }
     
     // Send the request to tender payment
@@ -97,30 +98,51 @@
     NSString *paymentXml = [self escapeXMLForParsing:[ccPayment toXml]];    
     [request appendPostData:[paymentXml dataUsingEncoding:NSUTF8StringEncoding]];
     
+    NSLog(@"PaymentWithCC request is %@", paymentXml);
+    
     [request startSynchronous];
     
-    // Post verification and complete request
-    NSArray *requestErrors = [request validateAsXmlContent];
-    if ([requestErrors count] > 0) {
-        // Clear out any errors previously set
-        [ccPayment removeAllErrors];
-        
-        Error *paymentError = [[[Error alloc] init] autorelease];
-        paymentError.errorId = @"ERR_PAY";
-        paymentError.message = [NSString stringWithFormat:@"Could not process payment for order '%@'.", ccPayment.orderId];
-        [ccPayment addError:paymentError];
-        
-        for (Error *error in requestErrors) {
-            [ccPayment addError:error];
+    NSLog(@"PaymentWithCC response string: %@", [request responseString]);
+    
+    CXMLDocument *xmlParser = [[[CXMLDocument alloc] initWithXMLString:request.responseString options:0 error:nil] autorelease];
+    CXMLElement *node = [xmlParser rootElement];
+    
+    NSString *success = [node elementStringValue:@"Success"];
+    
+    NSLog(@"Success? %@", success);
+    
+    if ([success isEqualToString:@"false"])
+    {
+        return NO;
+    }
+    else
+    {
+        // Post verification and complete request
+        NSArray *requestErrors = [request validateAsXmlContent];
+        if ([requestErrors count] > 0) {
+            NSLog(@"TenderPaymentWithCC error");
+            // Clear out any errors previously set
+            [ccPayment removeAllErrors];
+            
+            Error *paymentError = [[[Error alloc] init] autorelease];
+            paymentError.errorId = @"ERR_PAY";
+            paymentError.message = [NSString stringWithFormat:@"Could not process payment for order '%@'.", ccPayment.orderId];
+            [ccPayment addError:paymentError];
+            
+            for (Error *error in requestErrors) {
+                [ccPayment addError:error];
+                NSLog(@"CCPAYMENT ERROR");
+            }
+            
+            return NO;
         }
         
-        return;   
+        
+        // Parse the XML response for the order details
+        CreditCardPayment *paymentReturned =  [CreditCardPayment fromXml:[request responseString]];
+        [ccPayment mergeWith:paymentReturned];
+        return YES;
     }
-    
-    
-    // Parse the XML response for the order details
-    CreditCardPayment *paymentReturned =  [CreditCardPayment fromXml:[request responseString]];
-    [ccPayment mergeWith:paymentReturned];
 }
 
 
@@ -153,7 +175,11 @@
     NSString *signatureXml = [ccPayment.signature toXml];    
     [request appendPostData:[signatureXml dataUsingEncoding:NSUTF8StringEncoding]];
     
+    NSLog(@"signature request string: %@", signatureXml);
+    
     [request startSynchronous];
+    
+    NSLog(@"Response String: %@", [request responseString]);
     
     // Post verification and complete request
     NSArray *requestErrors = [request validateAsXmlContent];
@@ -216,6 +242,7 @@
 
 }
 
+//Enning Tang fix Tender Payment onAccount
 - (void) tenderPaymentOnAccount:(AccountPayment *)accountPayment withSession:(SessionInfo *)sessionInfo {
     if (sessionInfo == nil || accountPayment == nil) {
         return;

@@ -7,22 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DTDevices.h"
+#import "LineaSDK.h"
 #import "ProfitMarginViewController.h"
 #import "OrderCart.h"
-#import "AddItemView.h"
 #import "ExtUITextField.h"
 #import "SearchItemView.h"
 #import "CartItemTableCell.h"
 
 #import "MOGlassButton.h"
+#import "AddItemView.h"
+#import "SpecialItem.h"
 
-
-@interface CartItemsViewController : UIViewController <DTDeviceDelegate, AddItemViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, SearchItemViewDelegate, CartItemCellDelegate, ProfitMarginViewDelegate> {
+@interface CartItemsViewController : UIViewController <LineaDelegate, AddItemViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, SearchItemViewDelegate, CartItemCellDelegate, ProfitMarginViewDelegate, SpecialItemDelegate> {
 	iPOSFacade *facade;
     OrderCart *orderCart;
     
-    DTDevices *linea;
+    Linea *linea;
     
     SearchItemView *searchOverlay;
     AddItemView *addItemOverlay;
@@ -56,6 +56,8 @@
     UIBarButtonItem *logoutButton;
     UIBarButtonItem *editButton;
     UIBarButtonItem *cancelEditButton;
+    //Enning Tang Add LTLWeight Button 2013/2/26
+    UIBarButtonItem *LTLButton;
     
     UIButton *commitEditsButton;
 	UILabel *markDeleteLabel;
@@ -71,6 +73,8 @@
 @property (nonatomic, retain) NSArray *toolbarBasic;
 @property (nonatomic, retain) NSArray *toolbarWithQuoteAndOrder;
 @property (nonatomic, retain) NSArray *toolbarEditMode;
+//Enning Tang Added toolbarRunning
+@property (nonatomic, retain) NSArray *toolbarRunning;
 
 @property (nonatomic, retain) UIButton *commitEditsButton;
 @property (nonatomic, retain) UILabel *markDeleteLabel;

@@ -139,7 +139,7 @@
 		locationIdLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, y, self.frame.size.width, SMALL_LABEL_HEIGHT)];
 		locationIdLabel.backgroundColor = [UIColor clearColor];
 		locationIdLabel.textColor = [UIColor blackColor];
-		locationIdLabel.textAlignment = UITextAlignmentCenter;
+		locationIdLabel.textAlignment = NSTextAlignmentCenter;
 		locationIdLabel.font = [UIFont boldSystemFontOfSize:SMALL_FONT_SIZE];
 		locationIdLabel.text = @"NA";
 		[self addSubview:locationIdLabel];
@@ -152,7 +152,7 @@
 		locationAvailableLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, y, self.frame.size.width, SMALL_LABEL_HEIGHT)];
 		locationAvailableLabel.backgroundColor = [UIColor clearColor];
 		locationAvailableLabel.textColor = [UIColor blackColor];
-		locationAvailableLabel.textAlignment = UITextAlignmentCenter;
+		locationAvailableLabel.textAlignment = NSTextAlignmentCenter;
 		locationAvailableLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
 		locationAvailableLabel.text = @"NA";
 		[self addSubview:locationAvailableLabel];
@@ -165,7 +165,7 @@
 		locationOnHandLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, y, self.frame.size.width, SMALL_LABEL_HEIGHT)];
 		locationOnHandLabel.backgroundColor = [UIColor clearColor];
 		locationOnHandLabel.textColor = [UIColor blackColor];
-		locationOnHandLabel.textAlignment = UITextAlignmentCenter;
+		locationOnHandLabel.textAlignment = NSTextAlignmentCenter;
 		locationOnHandLabel.font = [UIFont systemFontOfSize:SMALL_FONT_SIZE];
 		locationOnHandLabel.text = @"NA";
 		[self addSubview:locationOnHandLabel];
@@ -218,7 +218,7 @@
 					etaLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX + onHandSize.width, onHandFrame.origin.y, etaSize.width, SMALL_LABEL_HEIGHT)];
 					etaLabel.backgroundColor = [UIColor clearColor];
 					etaLabel.textColor = [UIColor blackColor];
-					etaLabel.textAlignment = UITextAlignmentCenter;
+					etaLabel.textAlignment = NSTextAlignmentCenter;
 					etaLabel.font = [UIFont boldSystemFontOfSize:SMALL_FONT_SIZE];
 					etaLabel.text = etaText;
 					[self addSubview:etaLabel];

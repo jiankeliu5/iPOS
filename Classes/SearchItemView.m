@@ -90,13 +90,13 @@
 	lookupSkuLabel.backgroundColor = [UIColor clearColor];
 	lookupSkuLabel.textColor = [UIColor blackColor];
 	lookupSkuLabel.text = @"Lookup Item";
-	lookupSkuLabel.textAlignment = UITextAlignmentCenter;
+	lookupSkuLabel.textAlignment = NSTextAlignmentCenter;
 	[roundedView addSubview:lookupSkuLabel];
 	
 	lookupNameField = [[[ExtUITextField alloc] initWithFrame:CGRectZero] autorelease];
 	lookupNameField.textColor = [UIColor blackColor];
 	lookupNameField.borderStyle = UITextBorderStyleRoundedRect;
-	lookupNameField.textAlignment = UITextAlignmentCenter;
+	lookupNameField.textAlignment = NSTextAlignmentCenter;
 	lookupNameField.clearsOnBeginEditing = NO;
 	lookupNameField.placeholder = @"Item By Name";
 	lookupNameField.tagName = @"LookupItemName";
@@ -109,7 +109,7 @@
     lookupSkuField = [[[ExtUITextField alloc] initWithFrame:CGRectZero] autorelease];
 	lookupSkuField.textColor = [UIColor blackColor];
 	lookupSkuField.borderStyle = UITextBorderStyleRoundedRect;
-	lookupSkuField.textAlignment = UITextAlignmentCenter;
+	lookupSkuField.textAlignment = NSTextAlignmentCenter;
 	lookupSkuField.clearsOnBeginEditing = NO;
 	lookupSkuField.placeholder = @"Item By SKU";
 	lookupSkuField.tagName = @"LookupItemSku";
@@ -214,6 +214,7 @@
 }
 
 - (void) performSearch: (ExtUITextField *) textField {
+    NSLog(@"performSearch");
     if (textField && textField.text != nil) {
         if ([textField.tagName isEqualToString:@"LookupItemName"]) {
             if (self.delegate != nil && [self.delegate respondsToSelector:@selector(searchItem:withName:)]) {

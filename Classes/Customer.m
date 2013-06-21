@@ -392,6 +392,11 @@
     return [customerTypeId isEqualToNumber:[NSNumber numberWithInt:1]];
 }
 
+//Enning Tang Check if customer is contractor 1 11/9/2012
+- (BOOL) isContractor1 {
+    return [customerTypeId isEqualToNumber:[NSNumber numberWithInt:2]];
+}
+
 -(BOOL) isOnHold {
     
     if ([self.holdStatus integerValue] == 0)
@@ -419,8 +424,12 @@
     NSDecimalNumberHandler *bankersRoundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:2 
                                                                                                   raiseOnExactness:NO raiseOnOverflow:NO 
                                                                                                   raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+    //Calculate On Account Payment
+    NSLog(@"Credit Limit: %@", self.creditLimit.stringValue);
+    NSLog(@"Credit balance: %@", self.creditBalance.stringValue);
     
-    NSDecimalNumber *availCredit = [self.creditLimit decimalNumberByAdding:self.creditBalance];
+    NSDecimalNumber *availCredit = [self.creditLimit decimalNumberBySubtracting:self.creditBalance];
+    //NSDecimalNumber *availCredit = self.creditBalance;
     
     return [availCredit decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior]; ;
     

@@ -20,6 +20,8 @@
 #import "CustomerDetailViewController.h"
 #import "CustomerListViewController.h"
 
+#import "TenderPaymentViewController.h"
+
 #pragma mark -
 #pragma mark Private Interface
 @interface CustomerEditViewController ()
@@ -205,6 +207,13 @@
 		
 		// This is where you pop to the order cart or pop the customer controllers and push the order cart
         UIViewController *cartItemsController = [self getOnNavStackByType:[CartItemsViewController class]];
+        //Enning Tang Add tender view controller
+        UIViewController *tenderView = [self getOnNavStackByType:[TenderPaymentViewController class]];
+        
+        if (tenderView)
+        {
+            [self.navigationController popToViewController:tenderView animated:YES];
+        }
         
         if (cartItemsController) {
             [self.navigationController popToViewController:cartItemsController animated:YES];
@@ -240,16 +249,6 @@
 		
 	}
 	
-}
-
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAll;
 }
 
 // Override to allow orientations other than the default portrait orientation.

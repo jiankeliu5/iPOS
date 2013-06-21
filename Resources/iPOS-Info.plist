@@ -23,7 +23,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>32</string>
+	<string>53</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UISupportedExternalAccessoryProtocols</key>
@@ -31,22 +31,25 @@
 		<string>com.datecs.linea.pro.msr</string>
 		<string>com.datecs.linea.pro.bar</string>
 	</array>
-	<key>ipos.service.baseurl</key>
-	<string>https://tsipos01/webservices/ipos</string>
-	<key>ipos.service.host</key>
-	<string>tsipos01</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array/>
+	<key>currentVersion</key>
+	<string>2.0b54Test3</string>
+	<key>ipos.app.update.password</key>
+	<string></string>
 	<key>ipos.app.update.url</key>
 	<string>http://tsipos01/webservices/ipos/install</string>
 	<key>ipos.app.update.user</key>
 	<string></string>
-	<key>ipos.app.update.password</key>
-	<string></string>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
+	<key>ipos.service.baseurl</key>
+	<string>https://tsipos01/webservices/ipos50</string>
+	<key>ipos.service.host</key>
+	<string>tsipos01</string>
+	<key>ipos.service.testbaseurl</key>
+	<string>http://tsipos20/webservices/ipostest</string>
+	<key>selsheet.service.baseurl</key>
+	<string>https://tstipos/WebServices/SelRestService</string>
+	<key>selsheet.service.host</key>
+	<string>tstipos</string>
 </dict>
 </plist>

@@ -32,7 +32,7 @@
         customerNameLabel = [[UILabel alloc] init];
 		customerNameLabel.backgroundColor = [UIColor clearColor];
 		customerNameLabel.textColor = [UIColor blackColor];
-		customerNameLabel.textAlignment = UITextAlignmentLeft;
+		customerNameLabel.textAlignment = NSTextAlignmentLeft;
 		customerNameLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
 		customerNameLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:customerNameLabel];
@@ -40,7 +40,7 @@
         customerPhoneLabel = [[UILabel alloc] init];
 		customerPhoneLabel.backgroundColor = [UIColor clearColor];
 		customerPhoneLabel.textColor = [UIColor blackColor];
-		customerPhoneLabel.textAlignment = UITextAlignmentRight;
+		customerPhoneLabel.textAlignment = NSTextAlignmentRight;
 		customerPhoneLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
 		customerPhoneLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:customerPhoneLabel];
@@ -48,7 +48,7 @@
         customerTypeLabel = [[UILabel alloc] init];
 		customerTypeLabel.backgroundColor = [UIColor clearColor];
         customerTypeLabel.text = @"Signature Required";
-		customerTypeLabel.textAlignment = UITextAlignmentLeft;
+		customerTypeLabel.textAlignment = NSTextAlignmentLeft;
 		customerTypeLabel.font = [UIFont systemFontOfSize:12];
 		customerTypeLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:customerTypeLabel];

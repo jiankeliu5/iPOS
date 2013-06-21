@@ -92,7 +92,7 @@
     [super viewDidLoad];
     
     // Get a handle to the shared Linea Device
-    linea = [DTDevices sharedDevice];
+    linea = [Linea sharedDevice];
 }
 
 - (void)viewDidUnload {
@@ -124,16 +124,6 @@
 
 #pragma mark -
 #pragma mark Rotation Support
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAll;
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
 	return YES;
@@ -148,7 +138,7 @@
 - (void) signatureController:(SignatureViewController *)signatureController signatureAsBase64:(NSString *)signature savePressed:(id)sender {
     if (signature) {
         refundInfo.signature = signature;
-        [self dismissModalViewControllerAnimated:YES];
+        [self dismissViewControllerAnimated:YES completion:nil];
         
         [self processRefund];
     } else {
@@ -218,11 +208,11 @@
 #pragma mark Linea Delegate Methods
 - (void) magneticCardData:(NSString *)track1 track2:(NSString *)track2 track3:(NSString *)track3 {
     int sound[]={2730,150,0,30,2730,150};
-	[linea playSound:100 beepData:sound length:sizeof(sound) error:nil];
+	[linea playSound:100 beepData:sound length:sizeof(sound)];
     
-    NSDictionary *card = [linea msProcessFinancialCard:track1 track2:track2];
+    financialCard card;
 	
-    if(card) {
+    if([linea msProcessFinancialCard:&card track1:track1 track2:track2]) {
         // Does the card number (last 4) match the current card to swipe
         RefundItem *swipeItem = [refundInfo getCurrentRefundItemForSwipe];
         
@@ -230,16 +220,15 @@
         BOOL isMatch = YES;
         NSString *swipeCardNum = swipeItem.creditCard.cardNumber;
         
-        NSString *accountNumber = (NSString *)[card valueForKey:@"accountNumber"];
-        if (accountNumber.length == swipeCardNum.length) {
-            if (![accountNumber isEqualToString:swipeCardNum]) {
+        if (card.accountNumber.length == swipeCardNum.length) {
+            if (![card.accountNumber isEqualToString:swipeCardNum]) {
                 isMatch = NO;
             }
         }
         
         // Check last 4
         if (swipeCardNum.length == 4 
-            && ![swipeCardNum isEqualToString:[accountNumber substringFromIndex:accountNumber.length - 4]]) {
+            && ![swipeCardNum isEqualToString:[card.accountNumber substringFromIndex:card.accountNumber.length - 4]]) {
             isMatch = NO;
         }
         
@@ -286,9 +275,9 @@
 	}
     
     // Cancel and logout modal.
-    if ([anAlertView.title isEqualToString:@"Cancel and Logout?"]) {
+    if ([anAlertView.title isEqualToString:@"Do you want to cancel this order?"]) {
 		NSString *clickedButtonTitle = [anAlertView buttonTitleAtIndex:aButtonIndex];
-		if ([clickedButtonTitle isEqualToString:@"Logout"]) {
+		if ([clickedButtonTitle isEqualToString:@"Cancel Order"]) {
             [self.navigationController popToRootViewControllerAnimated:YES];
 		}
 	}
@@ -341,7 +330,7 @@
             
             refundSignatureController.delegate = self;
             
-            [self presentModalViewController:refundSignatureController animated:YES];
+            [self presentViewController:refundSignatureController animated:YES completion:nil];
             refundSignatureController.signingLabel.text = @"By signing below, I agree to a refund of";
             refundSignatureController.payAmountLabel.text =  [NSString formatDecimalNumberAsMoney:[refundInfo getTotalRefundAmount]];
             [refundSignatureController release];

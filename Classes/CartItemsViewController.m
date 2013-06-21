@@ -24,6 +24,8 @@
 
 #import "UIScreen+Helpers.h"
 
+#import "SpecialItem.h"
+
 #define CUST_SELECTED_COLOR [UIColor colorWithRed:170.0f/255.0f green:204.0f/255.0f blue:0.0f alpha:1.0f]
 #define NO_CUST_SELECTED_COLOR [UIColor colorWithRed:255.0f/255.0f green:70.0f/255.0f blue:0.0f alpha:1.0f]
 
@@ -84,6 +86,8 @@
 @synthesize toolbarBasic;
 @synthesize toolbarWithQuoteAndOrder;
 @synthesize toolbarEditMode;
+//Enning Tang Added tool bar running 2/26/2013
+@synthesize toolbarRunning;
 
 @synthesize commitEditsButton;
 @synthesize markDeleteLabel;
@@ -148,19 +152,19 @@
     // Add the customer info
 	custPhoneLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	custPhoneLabel.font = [UIFont systemFontOfSize:CUST_LABEL_FONT_SIZE];
-	custPhoneLabel.textAlignment = UITextAlignmentCenter;
+	custPhoneLabel.textAlignment = NSTextAlignmentCenter;
 	[self.view addSubview:custPhoneLabel];
 	[custPhoneLabel release];
 	
 	custNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	custNameLabel.font = [UIFont systemFontOfSize:CUST_LABEL_FONT_SIZE];
-	custNameLabel.textAlignment = UITextAlignmentCenter;
+	custNameLabel.textAlignment = NSTextAlignmentCenter;
 	[self.view addSubview:custNameLabel];
 	[custNameLabel release];
 
 	custZipLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	custZipLabel.font = [UIFont systemFontOfSize:CUST_LABEL_FONT_SIZE];
-	custZipLabel.textAlignment = UITextAlignmentCenter;
+	custZipLabel.textAlignment = NSTextAlignmentCenter;
 	[self.view addSubview:custZipLabel];
 	[custZipLabel release];
 	
@@ -177,7 +181,7 @@
     // Add discount button
     discountButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
     [discountButton setupAsSmallBlackButton];
-    discountButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    discountButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     [discountButton setTitle:@"Discount" forState:UIControlStateNormal];
     [discountButton addTarget:self action:@selector(handleDiscountButton:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -185,22 +189,22 @@
     [discountButton release];
     
     // Add the labels
-	subTotalLabel = [self createOrderLabel:@"Subtotal:" withRect:CGRectZero andAlignment:UITextAlignmentRight];
+	subTotalLabel = [self createOrderLabel:@"Subtotal:" withRect:CGRectZero andAlignment:NSTextAlignmentRight];
 	[self.view addSubview:subTotalLabel];
 	
-	subTotalValue = [self createOrderLabel:@"$0.00" withRect:CGRectZero andAlignment:UITextAlignmentLeft];
+	subTotalValue = [self createOrderLabel:@"$0.00" withRect:CGRectZero andAlignment:NSTextAlignmentLeft];
 	[self.view addSubview:subTotalValue];
 	
-	taxLabel = [self createOrderLabel:@"Tax:" withRect:CGRectZero andAlignment:UITextAlignmentRight];
+	taxLabel = [self createOrderLabel:@"Tax:" withRect:CGRectZero andAlignment:NSTextAlignmentRight];
 	[self.view addSubview:taxLabel];
 	
-	taxValue = [self createOrderLabel:@"$0.00" withRect:CGRectZero andAlignment:UITextAlignmentLeft];
+	taxValue = [self createOrderLabel:@"$0.00" withRect:CGRectZero andAlignment:NSTextAlignmentLeft];
 	[self.view addSubview:taxValue];
 	
-	totalLabel = [self createOrderLabel:@"Total:" withRect:CGRectZero andAlignment:UITextAlignmentRight];
+	totalLabel = [self createOrderLabel:@"Total:" withRect:CGRectZero andAlignment:NSTextAlignmentRight];
 	[self.view addSubview:totalLabel];
 	
-	totalValue = [self createOrderLabel:@"$0.00" withRect:CGRectZero andAlignment:UITextAlignmentLeft];
+	totalValue = [self createOrderLabel:@"$0.00" withRect:CGRectZero andAlignment:NSTextAlignmentLeft];
 	[self.view addSubview:totalValue];
 	
 	// Create a toolbar for the bottom of the screen
@@ -252,12 +256,17 @@
                                                   target:self 
                                                   action:@selector(cancelEditMode:)] autorelease];
     
+    LTLButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"scale.png"]
+                                                  style:UIBarButtonItemStylePlain
+                                                 target:self
+                                                 action:@selector(showLTLWeight:)] autorelease];
+    
 	// Basic toolbar
     self.toolbarBasic = [[[NSArray alloc] initWithObjects:searchButton, tbFixed, custButton, tbFlex, editButton, tbFixed, logoutButton, nil] autorelease];
 	self.toolbarWithQuoteAndOrder = [[[NSArray alloc] initWithObjects:
                                       searchButton, 
                                       tbFixed, 
-                                      custButton, 
+                                      LTLButton,
                                       tbFlex,
                                       marginButton,
                                       tbFixed,
@@ -269,11 +278,29 @@
                                       tbFixed,
                                       logoutButton,
                                       nil] autorelease];
+    
+    //Enning Tang Added running tool bar
+	self.toolbarRunning = [[[NSArray alloc] initWithObjects:
+                                      searchButton,
+                                      tbFixed,
+                                      custButton,
+                                      tbFlex,
+                                      marginButton,
+                                      tbFixed,
+                                      quoteButton,
+                                      tbFixed,
+                                      orderButton,
+                                      tbFixed,
+                                      editButton,
+                                      tbFixed,
+                                      logoutButton,
+                                      nil] autorelease];
+    //=====================================
 	
 	// Edit mode toolbar
 	UIView *customToolbarView = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, COMMIT_EDIT_BUTTON_WIDTH, COMMIT_EDIT_HEIGHT)] autorelease];
 	self.markDeleteLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, COMMIT_EDIT_BUTTON_WIDTH / 2.0f, COMMIT_EDIT_HEIGHT)] autorelease];
-	self.markDeleteLabel.textAlignment = UITextAlignmentCenter;
+	self.markDeleteLabel.textAlignment = NSTextAlignmentCenter;
 	self.markDeleteLabel.textColor = [UIColor whiteColor];
 	self.markDeleteLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"EditConfirmDelete.png"]];
 	self.markDeleteLabel.font = [UIFont systemFontOfSize:COMMIT_BUTTON_FONT_SIZE];
@@ -281,7 +308,7 @@
 	[customToolbarView addSubview:self.markDeleteLabel];
 
 	self.markCloseLabel = [[[UILabel alloc] initWithFrame:CGRectMake(COMMIT_EDIT_BUTTON_WIDTH / 2.0f, 0.0f, COMMIT_EDIT_BUTTON_WIDTH / 2.0f, COMMIT_EDIT_HEIGHT)] autorelease];
-	self.markCloseLabel.textAlignment = UITextAlignmentCenter;
+	self.markCloseLabel.textAlignment = NSTextAlignmentCenter;
 	self.markCloseLabel.textColor = [UIColor whiteColor];
 	self.markCloseLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"EditConfirmClose.png"]];
 	self.markCloseLabel.font = [UIFont systemFontOfSize:COMMIT_BUTTON_FONT_SIZE];
@@ -306,7 +333,7 @@
 	UILabel *deleteLabel = [[[UILabel alloc] initWithFrame:CGRectMake(EDIT_HEADER_LABEL_X, 0.0f, EDIT_HEADER_DELETE_LABEL_WIDTH, EDIT_HEADER_HEIGHT)] autorelease];
 	deleteLabel.backgroundColor = [UIColor whiteColor];
 	deleteLabel.textColor = [UIColor blackColor];
-	deleteLabel.textAlignment = UITextAlignmentCenter;
+	deleteLabel.textAlignment = NSTextAlignmentCenter;
 	deleteLabel.font = [UIFont boldSystemFontOfSize:EDIT_HEADER_FONT_SIZE];
 	deleteLabel.text = @"Delete";
 	[self.editHeaderView addSubview:deleteLabel];
@@ -314,7 +341,7 @@
 	UILabel *closeLabel = [[[UILabel alloc] initWithFrame:CGRectMake((EDIT_HEADER_LABEL_X * 3.0f) + EDIT_HEADER_DELETE_LABEL_WIDTH, 0.0f, EDIT_HEADER_CLOSE_LABEL_WIDTH, EDIT_HEADER_HEIGHT)] autorelease];
 	closeLabel.backgroundColor = [UIColor whiteColor];
 	closeLabel.textColor = [UIColor blackColor];
-	closeLabel.textAlignment = UITextAlignmentCenter;
+	closeLabel.textAlignment = NSTextAlignmentCenter;
 	closeLabel.font = [UIFont boldSystemFontOfSize:EDIT_HEADER_FONT_SIZE];
 	closeLabel.text = @"Close";
 	[self.editHeaderView addSubview:closeLabel];
@@ -330,7 +357,8 @@
 		[self.navigationController setNavigationBarHidden:NO];
 	}
 	
-    linea = [DTDevices sharedDevice];
+    // Add itself as a delegate
+    linea = [Linea sharedDevice];
 	
 }
 
@@ -342,6 +370,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [self layoutView:[UIApplication sharedApplication].statusBarOrientation];
+    
+    NSLog(@"CartItemsViewController viewWillAppear called");
     
     // Add this controller as a Linea Device Delegate
     [linea addDelegate:self];
@@ -375,6 +405,16 @@
 		custNameLabel.text = (cust.lastName == nil) ? cust.firstName : cust.lastName;
 		custZipLabel.backgroundColor = CUST_SELECTED_COLOR;
 		custZipLabel.text = cust.address.zipPostalCode;
+        //Enning Tang check for TaxExempt for customer 11/1/2012
+        NSLog(@"Customer TaxExempt = %@", [NSString stringWithFormat:@"%d", cust.taxExempt]);
+        /*
+        if (cust.taxExempt == TRUE)
+        {
+            NSLog(@"Add Items Check for TaxExempt called, set item taxrate to zero");
+            for (OrderItem *item in [[orderCart getOrder] getOrderItems]) {
+                item.item.taxRate = [NSDecimalNumber zero];
+            }
+        }*/
 	}
 	
 	[orderTable reloadData];
@@ -399,16 +439,6 @@
 
     // Do this at the end
 	[super viewWillDisappear:animated];
-}
-
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAll;
 }
 
 // Override to allow orientations other than the default portrait orientation.
@@ -493,7 +523,7 @@
     iPOSAppDelegate *app = (iPOSAppDelegate *)[[UIApplication sharedApplication] delegate];
     UINavigationController *orderNav = [app orderNavigationController];
     [orderNav setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-    [self presentModalViewController:orderNav animated:YES];
+    [self presentViewController:orderNav animated:YES completion:nil];
 }
 
 - (void) handleDiscountButton:(id)sender {
@@ -567,11 +597,11 @@
 
 - (void) handleLogout: (id) sender {
     UIAlertView *logoutAlert = [[UIAlertView alloc] init];
-	logoutAlert.title = @"Cancel and Logout?";
+	logoutAlert.title = @"Do you want to cancel this order?";
 	logoutAlert.message = @"This will cancel the order and return to the login screen.  Are you sure you wish to do this?";
 	logoutAlert.delegate = self;
-	[logoutAlert addButtonWithTitle:@"Cancel"];
-	[logoutAlert addButtonWithTitle:@"Logout"];
+	[logoutAlert addButtonWithTitle:@"Continue"];
+	[logoutAlert addButtonWithTitle:@"Cancel Order"];
 	[logoutAlert show];
 	[logoutAlert release];
 }
@@ -672,9 +702,14 @@
 	}
 
     // Cancel and logout modal.
-    if ([anAlertView.title isEqualToString:@"Cancel and Logout?"]) {
+    if ([anAlertView.title isEqualToString:@"Do you want to cancel this order?"]) {
 		NSString *clickedButtonTitle = [anAlertView buttonTitleAtIndex:aButtonIndex];
-		if ([clickedButtonTitle isEqualToString:@"Logout"]) {
+		if ([clickedButtonTitle isEqualToString:@"Cancel Order"]) {
+            //Enning Tang release order lock before exit 3/26/2013
+            /*if (![[orderCart getOrder]isNewOrder])
+            {
+                [facade releaseTransactionLock:[orderCart getOrder].orderId.stringValue];
+            }*/
             [self.navigationController popToRootViewControllerAnimated:YES];
 		}
 	}
@@ -778,15 +813,15 @@
 #pragma mark SearchItemView delegate
 - (void) searchforItem:(id)sender {
 	[linea removeDelegate:self];
-	 
     searchOverlay = [[SearchItemView alloc] initWithFrame:self.view.bounds];
-	[searchOverlay setDelegate:self];
-	[self.view addSubview:searchOverlay];
-	[searchOverlay release];
+    [searchOverlay setDelegate:self];
+    [self.view addSubview:searchOverlay];
+    [searchOverlay release];
 }
 
 - (void) searchItem:(SearchItemView *)aSearchItemView withSku:(NSString *)aSku {
 	
+    NSLog(@"CartItemsViewController: searchItem called");
 	[aSearchItemView removeFromSuperview];
 	[linea addDelegate:self];
     
@@ -801,7 +836,46 @@
             foundItems = [NSArray arrayWithObject:item];
         }
         
-        [self showAddItemOverlay:foundItems];        
+        //Enning Tang 6/4/2013 add special sku here
+        ProductItem *getSpecialItem = [[[ProductItem alloc]init]autorelease];
+        getSpecialItem = [foundItems objectAtIndex:0];
+        NSLog(@"ItemID: %@", getSpecialItem.typeId.stringValue);
+        if ([getSpecialItem.typeId isEqualToNumber:[NSNumber numberWithInt:23]])
+        {
+            NSLog(@"Special Sku recognized");
+            CGRect overlayRect = self.view.bounds;
+            SpecialItem *specialItem = [[SpecialItem alloc] initWithFrame:overlayRect];
+            
+            specialItem.viewDelegate = self;
+            //specialItem.navigationController = self.navigationController;
+            specialItem.itemToAdd = getSpecialItem;
+            
+            [self.view addSubview:specialItem];
+            
+            [specialItem release];
+            
+            if ([orderCart getOrder].errorList && [[orderCart getOrder].errorList count] > 0) {
+                [AlertUtils showModalAlertForErrors:[orderCart getOrder].errorList withTitle:@"iPOS"];
+                return;
+            }
+            
+            addItemOverlay = nil;
+            
+            [linea addDelegate:self];
+            
+            [orderTable reloadData];
+            
+            [self calculateOrder];
+            
+            [addItemOverlay setItemToAdd:getSpecialItem];
+            
+        }
+        else
+        {
+            [self showAddItemOverlay:foundItems];
+        }
+        //===========================================
+        //[self showAddItemOverlay:foundItems];
 	}
 }
 
@@ -810,7 +884,16 @@
 	[linea addDelegate:self];
     
     searchOverlay = nil;
-	
+    
+    /*
+    UIAlertView *longPress = [[UIAlertView alloc] init];
+    longPress.title = @"Message";
+    longPress.message = [NSString stringWithFormat:@"item name: %@", aName];
+    [longPress addButtonWithTitle:@"OK"];
+    [longPress show];
+    [longPress release];
+	*/
+    
 	// Set the values and do the work here
 	if (aName && [aName length] > 0) {
 		NSArray *foundItems = [facade lookupProductItemByName:aName];
@@ -821,11 +904,19 @@
             foundItems = [NSArray arrayWithObjects:foundItem, nil];
         }
 
-        [self showAddItemOverlay:foundItems];        
+        [self showAddItemOverlay:foundItems];
 	}
 }
 
 - (void) cancelSearchItem:(SearchItemView *)aSearchItemView {
+	[aSearchItemView removeFromSuperview];
+	[linea addDelegate:self];
+    
+    searchOverlay = nil;
+}
+
+- (void) cancelSpecialItem:(SpecialItem *)aSearchItemView {
+    NSLog(@"cancelSpecialItem from CartItemsView");
 	[aSearchItemView removeFromSuperview];
 	[linea addDelegate:self];
     
@@ -851,6 +942,7 @@
 	
 	ProductItem *item = addItemView.itemToAdd;
 	
+    NSLog(@"Item quantity: %@", quantity);
     [orderCart addItem:item withQuantity:quantity];
     if ([orderCart getOrder].errorList && [[orderCart getOrder].errorList count] > 0) {
         [AlertUtils showModalAlertForErrors:[orderCart getOrder].errorList withTitle:@"iPOS"];
@@ -858,6 +950,29 @@
     }
 	
 	[addItemView removeFromSuperview];
+    addItemOverlay = nil;
+	
+	[linea addDelegate:self];
+	
+	[orderTable reloadData];
+    
+    logoutButton.enabled = YES;
+    
+	[self calculateOrder];
+    
+}
+
+- (void) addSpecialItem:(ProductItem *)Item orderQuantity:(NSDecimalNumber *)quantity ofUnits:(NSString *)unitOfMeasure {
+	
+	ProductItem *item = Item;
+	
+    NSLog(@"Item quantity: %@", quantity);
+    [orderCart addItem:item withQuantity:quantity];
+    if ([orderCart getOrder].errorList && [[orderCart getOrder].errorList count] > 0) {
+        [AlertUtils showModalAlertForErrors:[orderCart getOrder].errorList withTitle:@"iPOS"];
+        return;
+    }
+	
     addItemOverlay = nil;
 	
 	[linea addDelegate:self];
@@ -884,7 +999,7 @@
 -(void) exit:(id)sender
 {
     NSLog(@"exiting profit margin view");
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
     
     
 }
@@ -939,7 +1054,7 @@
     //textLabel.layer.cornerRadius = 5.0f;
     textLabel.text = [NSString stringWithFormat:@"PM %@", [[orderCart getOrder] calculateProfitMargin]];
     textLabel.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.3f];
-    textLabel.textAlignment = UITextAlignmentCenter;
+    textLabel.textAlignment = NSTextAlignmentCenter;
     
 	[UIView beginAnimations: @"Fade Out" context:nil];
 	
@@ -953,5 +1068,15 @@
 	[UIView commitAnimations];
 }
 
+-(void) showLTLWeight:(id)sender
+{
+    Order *order = [orderCart getOrder];
+    UIAlertView *longPress = [[UIAlertView alloc] init];
+    longPress.title = @"LTL Weight";
+    longPress.message = [NSString stringWithFormat:@"Open Items weight is approximately %@ lbs.", [[order calcOpenItemsWeight] stringValue]];
+    [longPress addButtonWithTitle:@"OK"];
+    [longPress show];
+    [longPress release];
+}
 
 @end

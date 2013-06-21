@@ -46,6 +46,13 @@ NSString * const UOM_SQFT = @"SF";
 @synthesize store;
 @synthesize distributionCenterList;
 
+@synthesize itemQty;
+
+@synthesize ShipToStoreID;
+
+//Enning Tang Added itemLTLWeight 2013/02/06
+@synthesize itemLTLWeight;
+
 #pragma mark Constuctor/Deconstructor
 -(id) init {
     self = [super init];
@@ -120,6 +127,9 @@ NSString * const UOM_SQFT = @"SF";
     store = nil;
     [distributionCenterList release];
     distributionCenterList = nil;
+    //Enning Tang dealloc itemLTLWeight
+    [itemLTLWeight release];
+    itemLTLWeight = nil;
     
     [super dealloc];
 }

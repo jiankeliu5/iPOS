@@ -76,11 +76,11 @@
     // Add the labels and signature pad
     signingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 54, 480, 20)];
     signingLabel.font = [UIFont systemFontOfSize:14.0f];
-    signingLabel.textAlignment = UITextAlignmentCenter;
+    signingLabel.textAlignment = NSTextAlignmentCenter;
     signingLabel.text = @"By signing below, I agree to pay a total credit card charge of";
     
     payAmountLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 74, 480, 20)];
-    payAmountLabel.textAlignment = UITextAlignmentCenter;
+    payAmountLabel.textAlignment = NSTextAlignmentCenter;
     payAmountLabel.font = [UIFont boldSystemFontOfSize:14.0f];
     payAmountLabel.text = @"0.00";
     
@@ -108,25 +108,35 @@
 	
     // Rotate to landscape
     //self.view.transform = CGAffineTransformIdentity;
-//    self.view.transform = CGAffineTransformMakeRotation((M_PI * (90) / 180.0)); 
-    // self.view.bounds = CGRectMake(0.0, 0.0, 480, 320);    
-}
-
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskLandscape;
+    //self.view.transform = CGAffineTransformMakeRotation((M_PI * (90) / 180.0));
+    //self.view.bounds = CGRectMake(0.0, 0.0, 480, 320);
 }
 
 // Override to allow orientations other than the default portrait orientation.
+
+
+//Deprecated in iOS6
+/*
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations.
     return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
+}*/
+
+//These two functions is for force landscape orientation -- Enning Tang 9/28/2012
+//------------------
+- (BOOL)shouldAutorotate{
+    return YES;
 }
+
+- (NSUInteger)supportedInterfaceOrientations{
+    return UIInterfaceOrientationMaskLandscape;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation{
+    return UIInterfaceOrientationLandscapeLeft;
+}
+
+//------------------
 
 - (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
 }
@@ -151,6 +161,7 @@
 }
 
 -(void) savePressed: (id) sender {
+    NSLog(@"Signature save button called");
     // The delegate may accept the signature as an image or a base64 encoded string.  The base64 encoded signature 
     // is invoked if the delegate has implementations for both SignatureDelegate methods
     if (delegate && [delegate respondsToSelector:@selector(signatureController:signatureAsBase64:savePressed:)]) {

@@ -79,6 +79,7 @@ typedef enum {
     // line item.
     BOOL isNew;
     BOOL isModified;
+
 }
 
 @property (nonatomic, retain) NSNumber *lineNumber;
@@ -116,10 +117,12 @@ typedef enum {
 @property(nonatomic, retain) NSString *openItemStatus;
 
 -(id) initWithItem: (ProductItem *) productItem AndQuantity: (NSDecimalNumber *) productQuantity;
+-(id) initWithReturnItem:(ProductItem *) productItem AndQuantity:(NSDecimalNumber *) productQuantity SellingPricePrimary:(NSDecimalNumber *) SellingPricePrimary SellingPriceSecondary:(NSDecimalNumber *) SellingPriceSecondary;
 
 - (void) setStatusToClosed;
 - (void) setStatusToOpen;
 - (void) setStatusToCancel;
+- (void) setStatusToReturn;
 
 - (BOOL) isTaxExempt;
 - (BOOL) isClosed;
@@ -151,6 +154,7 @@ typedef enum {
 - (NSDecimalNumber *) calcLineDiscount;
 - (NSDecimalNumber *) calculateExtendedCost;
 - (NSDecimalNumber *) calculateExtendedPrice;
+- (NSNumber *) calcLineWeight;
 
 #pragma mark -
 #pragma mark UOM Switching support

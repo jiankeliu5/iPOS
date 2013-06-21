@@ -174,6 +174,8 @@ static OrderCart *cart = nil;
             doAdjustSellingPrice = YES;
         }
         
+        NSLog(@"Customer Price Level ID: %@", customer.priceLevelId.stringValue);
+        
         if (doAdjustSellingPrice) {
             NSArray *orderItemList = [order getOrderItems];
             
@@ -202,27 +204,96 @@ static OrderCart *cart = nil;
 - (void) addItem:  (ProductItem *) item withQuantity: (NSDecimalNumber *) quantity {
     Order *order = [self getOrder];
     
+    NSLog(@"OrderCart.m addItem called");
+    
+    NSLog(@"Order is %@", order);
+    
+    if (order == NULL){
+        NSLog(@"order is nil");
+        order = [[Order alloc]init];
+    }
+    
+    NSLog(@"item desc %@", item.description);
+    NSLog(@"Item quantity: %@", quantity.stringValue);
+    
     [order addItemToOrder:item withQuantity:quantity];
     
+    NSLog(@"After additemtoorder");
+    
     // We may need to adjust the selling price of the item based on the customer
+    //Enning Tang 10/26/2012 adj price issue
     if (order.customer) {
-        OrderItem *orderItem = [[order getOrderItems] lastObject];
-        if (![facade adjustSellingPriceFor:orderItem withCustomer:order.customer]) {
-            [order removeAllErrors];
-            
-            //attach error to order
-            Error *error = [[[Error alloc] init] autorelease];
-            error.errorId = @"SRV_ERR_ADJ_PRICE";
-            error.message = [NSString stringWithFormat: @"Could not set selling price for item with sku '%@'.  Possible server error.", orderItem.item.sku];
-            
-            [order addError:error];
-            
-            // Remove the order item since we could not set its selling price
-            [order removeItemFromOrder:orderItem];
+        NSLog(@"1");
+        @try {
+            OrderItem *orderItem = [[order getOrderItems] lastObject];
+            if (![facade adjustSellingPriceFor:orderItem withCustomer:order.customer]) {
+                NSLog(@"2");
+                [order removeAllErrors];
+                
+                //attach error to order
+                Error *error = [[[Error alloc] init] autorelease];
+                error.errorId = @"SRV_ERR_ADJ_PRICE";
+                error.message = [NSString stringWithFormat: @"Could not set selling price for item with sku '%@'.  Possible server error.", orderItem.item.sku];
+                
+                [order addError:error];
+                
+                // Remove the order item since we could not set its selling price
+                [order removeItemFromOrder:orderItem];
+                return;
+            };
+        }
+        @catch (NSException *exception) {
             return;
-        };
+        }        
     }
 }
+
+//Enning Tang addReturnItem 3/22/2013
+- (void) addReturnItem:  (ProductItem *) item withQuantity: (NSDecimalNumber *) quantity SellingPricePrimary:SellingPricePrimary SellingPriceSecondary:SellingPriceSecondary{
+    Order *order = [self getOrder];
+    
+    NSLog(@"OrderCart.m addReturnItem called");
+    
+    if (order == NULL){
+        NSLog(@"order is nil");
+        order = [[Order alloc]init];
+    }
+    
+    NSLog(@"item desc %@", item.description);
+    NSLog(@"Item quantity: %@", quantity.stringValue);
+    
+    [order addReturnItemToOrder:item withQuantity:quantity SellingPricePrimary:SellingPricePrimary SellingPriceSecondary:SellingPriceSecondary];
+    
+    NSLog(@"After additemtoorder");
+    
+    // We may need to adjust the selling price of the item based on the customer
+    //Enning Tang 10/26/2012 adj price issue
+    /*if (order.customer) {
+        NSLog(@"1");
+        @try {
+            OrderItem *orderItem = [[order getOrderItems] lastObject];
+            if (![facade adjustSellingPriceFor:orderItem withCustomer:order.customer]) {
+                NSLog(@"2");
+                [order removeAllErrors];
+                
+                //attach error to order
+                Error *error = [[[Error alloc] init] autorelease];
+                error.errorId = @"SRV_ERR_ADJ_PRICE";
+                error.message = [NSString stringWithFormat: @"Could not set selling price for item with sku '%@'.  Possible server error.", orderItem.item.sku];
+                
+                [order addError:error];
+                
+                // Remove the order item since we could not set its selling price
+                [order removeItemFromOrder:orderItem];
+                return;
+            };
+        }
+        @catch (NSException *exception) {
+            return;
+        }
+    }*/
+}
+//===================================
 
 - (void) removeItem:(OrderItem *)orderItem {
     Order *order = [self getOrder];
@@ -330,6 +401,11 @@ static OrderCart *cart = nil;
     
     return unSortedArray;
 
+}
+
+- (void) setOrder:(Order *)order{
+    NSLog(@"Set Order Called");
+    self.previousOrder = order;
 }
 
 @end

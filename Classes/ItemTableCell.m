@@ -27,7 +27,7 @@
         itemDescriptionLabel = [[[UILabel alloc] init] autorelease];
 		itemDescriptionLabel.backgroundColor = [UIColor clearColor];
 		itemDescriptionLabel.textColor = [UIColor blackColor];
-		itemDescriptionLabel.textAlignment = UITextAlignmentLeft;
+		itemDescriptionLabel.textAlignment = NSTextAlignmentLeft;
 		itemDescriptionLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
 		itemDescriptionLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:itemDescriptionLabel];

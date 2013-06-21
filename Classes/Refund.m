@@ -127,10 +127,10 @@
     return nil;
 }
 
-- (void) setCardData:(NSDictionary *)cardData {
-    if ([cardData valueForKey:@"accountNumber"]) {
+- (void) setCardData:(financialCard)cardData {
+    if (cardData.accountNumber) {
         // Find the card with the matching last 4 numbers (would the same customer have 2 cards with the same 4 numbers used as payment??)
-        NSString *swipedNumber = (NSString *)[cardData valueForKey:@"accountNumber"];
+        NSString *swipedNumber = cardData.accountNumber;
         NSString *paymentCardNumber;
         
         if (swipedNumber.length > 4) {
@@ -147,10 +147,10 @@
 
                     // Assumed to be the match
                     if ([paymentCardNumber isEqualToString:swipedNumber]) {
-                        item.creditCard.cardNumber = [[(NSString *)[cardData valueForKey:@"accountNumber"] copy] autorelease];
-                        item.creditCard.nameOnCard = [[(NSString *)[cardData valueForKey:@"cardholderName"] copy] autorelease];
-                        [item.creditCard setExpireDateMonthYear:[[(NSString *)[cardData valueForKey:@"expirationMonth"] copy] autorelease]
-                                                           year:[[(NSString *)[cardData valueForKey:@"expirationYear"] copy] autorelease]];
+                        item.creditCard.cardNumber = cardData.accountNumber;
+                        item.creditCard.nameOnCard = cardData.cardholderName;
+                        [item.creditCard setExpireDateMonthYear:[NSString stringWithFormat:@"%d",cardData.expirationMonth]
+                                                           year:[NSString stringWithFormat:@"%d",cardData.expirationYear]];
                         item.isSwipeCaptured = YES;
                     }
                     

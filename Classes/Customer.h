@@ -65,6 +65,8 @@
 #pragma mark -
 #pragma mark Accessors
 - (BOOL) isRetailCustomer;
+//Enning Tang check if customer is contractor 1
+- (BOOL) isContractor1;
 - (BOOL) isOnHold;
 -(BOOL) isPaymentOnAccountEligable;
 -(NSDecimalNumber *) calculateAccountBalance;

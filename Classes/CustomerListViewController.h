@@ -15,7 +15,7 @@
     iPOSFacade *facade;
     
     UITableView *customerListTableView;
-    UIBarButtonItem *closeBarButton;
+    //UIBarButtonItem *closeBarButton;
     
     NSString *searchString;
     

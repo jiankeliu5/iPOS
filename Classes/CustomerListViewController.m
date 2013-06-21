@@ -102,8 +102,8 @@
     [mainView addSubview:customerListTableView];
     [customerListTableView release];
     
-    closeBarButton = [[[UIBarButtonItem alloc] initWithTitle:@"New Order" style:UIBarButtonItemStyleBordered target:self action:@selector(handleClose:)] autorelease];
-    [[self navigationItem] setRightBarButtonItem:closeBarButton];
+    //closeBarButton = [[[UIBarButtonItem alloc] initWithTitle:@"New Order" style:UIBarButtonItemStyleBordered target:self action:@selector(handleClose:)] autorelease];
+    //[[self navigationItem] setRightBarButtonItem:closeBarButton];
     
     
     [self setView: mainView];
@@ -136,16 +136,6 @@
 - (void) viewDidAppear:(BOOL)animated {
 	// Call super first
 	[super viewDidAppear:animated];
-}
-
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAll;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

@@ -14,6 +14,8 @@
 #import "OrderSummaryXmlMarshaller.h"
 #import "OrderXmlMarshaller.h"
 #import "PaymentHistoryXMLMarshaller.h"
+#import "iPOSFacade.h"
+#import "OrderCart.h"
 
 @interface OrderHistoryService()
 - (NSString *) escapeXMLForParsing: (NSString *) xmlString;
@@ -69,27 +71,64 @@
 
 -(Order *) lookupOrderByOrderId:(NSString *) orderId withSessionInfo: (SessionInfo *) sessionInfo {
     
+    NSLog(@"Lookup orders called");
     if (sessionInfo == nil) {
+        NSLog(@"Session is null");
         return nil;
     }
+    //Enning Tang 3/22/2013 transactionLock
+    /*
+    iPOSFacade *facade = [iPOSFacade sharedInstance];
+    OrderCart *orderCart = [OrderCart sharedInstance];
+    NSArray *lock = [facade transactionLockCheck:orderId];
+    NSString *getOrderId = [lock objectAtIndex:0];
+    if (![getOrderId isEqualToString:@"0"]) //if order has been locked.
+    {
+        NSString *getSalesPersonId = [lock objectAtIndex:1];
+        NSString *getStoreId = [lock objectAtIndex:2];
+        NSString *getSysUserId = [lock objectAtIndex:3];
+        NSString *getSalesPersonName = [lock objectAtIndex:4];
+        NSString *getdateLogin = [lock objectAtIndex:5];
+        NSString *lockMessage = [NSString stringWithFormat:@"This order has been locked by %@(%@) from store %@ (%@) at %@, please contact the sales person to finish this order.", getSalesPersonName, getSalesPersonId, getStoreId, getSysUserId, getdateLogin];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Order has been locked" message:lockMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+        return nil;
+    }else //release previous order lock and set new order lock
+    {
+        NSString *previousOrderId = [orderCart getOrder].orderId.stringValue;
+        NSDate *currdate = [NSDate date];
+        NSString *currDateString = [NSString stringWithFormat:@"%@",currdate];
+        [facade releaseTransactionLock:previousOrderId];
+        [facade setTransactionLock:orderId salesPersonId:facade.sessionInfo.employeeId.stringValue storeId:facade.sessionInfo.storeId.stringValue sysUserId:[NSString stringWithFormat:@"IPOS%@", facade.sessionInfo.storeId.stringValue] salesPersonName:facade.sessionInfo.loginUserName dateLogin:currDateString];
+    }*/
+    //===========================================
     
     // Fetch the list
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@", baseUrl, orderHistoryUri, orderId, sessionInfo.storeId]];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    
+    //NSString *requestXml = [self escapeXMLForParsing:[NSString stringWithFormat:@"<Salesperson>%@</Salesperson>", orderId]];
+    //[request appendPostData:[requestXml dataUsingEncoding:NSUTF8StringEncoding]];
+    
     
     [request setValidatesSecureCertificate:NO];
     [request setTimeOutSeconds:30];
     [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     
+    NSLog(@"request method: %@", [request responseString]);
+    
     [request startSynchronous];
+    
+    NSLog(@"order select by order id response string: %@", [request responseString]);
     
     NSArray *requestErrors = [request validateAsXmlContent];
     if ([requestErrors count] > 0) {
+        NSLog(@"Error");
         return nil;   
     } 
     
-    // NSLog(@"response string: %@", [request responseString]);
+    //NSLog(@"order select by order id response string: %@", [request responseString]);
     
     Order * order = [[[[OrderXmlMarshaller alloc] init] autorelease] toObject:[request responseString]];
     
@@ -119,6 +158,34 @@
     if ([requestErrors count] > 0) {
         return nil;   
     } 
+    
+    NSArray *orders = [[[[OrderSummaryXmlMarshaller alloc] init] autorelease] toObject:[request responseString]];
+    
+    return orders;
+}
+
+-(NSArray *) lookupOrderBySalesPersonId:(NSString *)salesPersonId withSessionInfo:(SessionInfo *)sessionInfo{
+    if (sessionInfo == nil) {
+        return nil;
+    }
+    
+    // Fetch the list
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/orderlookupbysalesperson", baseUrl, orderHistoryUri]];
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    [request setValidatesSecureCertificate:NO];
+    [request setTimeOutSeconds:30];
+    [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    
+    NSString *requestXml = [self escapeXMLForParsing:[NSString stringWithFormat:@"<OrderSearch>%@</OrderSearch>", salesPersonId]];
+    [request appendPostData:[requestXml dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [request startSynchronous];
+    
+    NSArray *requestErrors = [request validateAsXmlContent];
+    if ([requestErrors count] > 0) {
+        return nil;
+    }
     
     NSArray *orders = [[[[OrderSummaryXmlMarshaller alloc] init] autorelease] toObject:[request responseString]];
     

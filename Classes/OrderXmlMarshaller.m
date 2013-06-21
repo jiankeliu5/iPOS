@@ -31,8 +31,10 @@ static NSString * const NEW_ORDER_XML = @""
         "<OrderID>%@</OrderID>"
         "<OrderTypeID>%@</OrderTypeID>"
         "<PO>%@</PO>"
+        "<RequestDate>%@</RequestDate>"
         "<SalesPersonID>%@</SalesPersonID>"
         "<StoreID>%@</StoreID>"
+        "<currentVersion>%@</currentVersion>"
         "<New>true</New>"
     "</OrderHeader>"
     "<OrderDetail>"
@@ -45,10 +47,12 @@ static NSString * const NEW_ORDER_LINEITEM_XML = @""
     @"<Conversion>%@</Conversion>"
     @"<DefaultToBox>%@</DefaultToBox>"
     @"<ItemDescription>%@</ItemDescription>"
+    @"<ShipToStoreID>%@</ShipToStoreID>"
     @"<ItemID>%@</ItemID>"
     @"<ItemNumber>%@</ItemNumber>"
     @"<ItemStatusCode>%@</ItemStatusCode>"
     @"<ItemTypeID>%@</ItemTypeID>"
+    @"<RequestDate>%@</RequestDate>"
     @"<LineID>%@</LineID>"
     @"<LineState>add</LineState>"
     @"<OrderDetailsStatusID>%@</OrderDetailsStatusID>"
@@ -90,6 +94,7 @@ static NSString * const PREVIOUS_ORDER_XML = @""
         "<SalesPersonID>%@</SalesPersonID>"
         "<SelectionID>%@</SelectionID>"
         "<StoreID>%@</StoreID>"
+        "<currentVersion>%@</currentVersion>"
         "<New>false</New>"
     "</OrderHeader>"
     "<OrderDetail>"
@@ -102,6 +107,7 @@ static NSString * const PREVIOUSORDER_LINEITEM_XML = @""
         @"<Conversion>%@</Conversion>"
         @"<DefaultToBox>%@</DefaultToBox>"
         @"<ItemDescription>%@</ItemDescription>"
+        @"<ShipToStoreID>%@</ShipToStoreID>"
         @"<ItemID>%@</ItemID>"
         @"<ItemNumber>%@</ItemNumber>"
         @"<ItemStatusCode>%@</ItemStatusCode>"
@@ -184,6 +190,9 @@ static NSString * const PREVIOUSORDER_LINEITEM_XML = @""
         NSString *orderTypeId = @"1"; // Default to Quote
         NSString *salespersonEmpId = @"";
         NSString *storeId = @"0";
+        
+        //Enning Tang Added version string 3/20/2013
+        NSString *currentVersion = @"";
        
         
         // For existing/previous orders
@@ -257,16 +266,19 @@ static NSString * const PREVIOUSORDER_LINEITEM_XML = @""
             }
         }
         
+        //Enning Tang Added currentVersion 3/20/2013
+        currentVersion = order.currentVersion;
+        
         // Create the XML (new or previous)
         if ([orderId isNotEmpty] && !order.isNewOrder) {
              orderXml = [NSString stringWithFormat: PREVIOUS_ORDER_XML, 
                             commentNotes, customerId, customerTypeId, customerTaxExempt, customerZip,
                             depositAuthorizationID, followUpDate, orderDCTO, orderId, orderTypeId, purchaseOrder,
-                            promiseDate, requestDate, salespersonEmpId, selectionId, storeId];
+                            promiseDate, requestDate, salespersonEmpId, selectionId, storeId, currentVersion];
         } else {
             orderXml = [NSString stringWithFormat: NEW_ORDER_XML, 
                             commentNotes, customerId, customerTypeId, customerTaxExempt, customerZip,
-                            orderId, orderTypeId, purchaseOrder, salespersonEmpId, storeId];
+                            orderId, orderTypeId, purchaseOrder, requestDate, salespersonEmpId, storeId, currentVersion];
         }
         
         // The Order items xml
@@ -293,6 +305,7 @@ static NSString * const PREVIOUSORDER_LINEITEM_XML = @""
 }
 
 - (Order *) toOrderFromOrderDetail:(NSString *)xmlString {
+    
     CXMLDocument *xmlParser = [[[CXMLDocument alloc] initWithXMLString:xmlString options:0 error:nil] autorelease];
     CXMLElement *root = [xmlParser rootElement];
     
@@ -359,10 +372,25 @@ static NSString * const PREVIOUSORDER_LINEITEM_XML = @""
         productItem.stockingCode = [node elementStringValue:@"StockingCode"];
         productItem.taxExempt = [node elementBoolValue:@"TaxExempt"];
         productItem.taxRate = [node elementDecimalValue:@"TaxRate"];
+        //Enning Tang add ShipToStoreID
+        productItem.ShipToStoreID = [node elementNumberValue:@"ShipToStoreID"].stringValue;
         
         // Set the store for the product item
         Store *productStore = [POSOxmUtils toStore:node];
-        productItem.store = productStore; 
+        productItem.store = productStore;
+        
+        //Enning Tang check for freeTax outside freight
+        //deal with taxFree outside freight
+        NSLog(@"TAX RATE FORM XML: %@", productItem.taxRate.stringValue);
+        if ([productItem.sku isEqualToString:@"999100"])
+        {
+            NSLog(@"sku is 999100");
+            if ([productItem.store.storeId isEqualToNumber:[NSNumber numberWithInt:100]] || [productItem.store.storeId isEqualToNumber:[NSNumber numberWithInt:900]] || [productItem.store.storeId isEqualToNumber:[NSNumber numberWithInt:1700]] || [productItem.store.storeId isEqualToNumber:[NSNumber numberWithInt:1900]] || [productItem.store.storeId isEqualToNumber:[NSNumber numberWithInt:2400]] || [productItem.store.storeId isEqualToNumber:[NSNumber numberWithInt:3400]] || [productItem.store.storeId isEqualToNumber:[NSNumber numberWithInt:3600]] || [productItem.store.storeId isEqualToNumber:[NSNumber numberWithInt:4200]] || [productItem.store.storeId isEqualToNumber:[NSNumber numberWithInt:4300]] || [productItem.store.storeId isEqualToNumber:[NSNumber numberWithInt:4500]] || [productItem.store.storeId isEqualToNumber:[NSNumber numberWithInt:5000]] || [productItem.store.storeId isEqualToNumber:[NSNumber numberWithInt:6400]] || [productItem.store.storeId isEqualToNumber:[NSNumber numberWithInt:7000]] || [productItem.store.storeId isEqualToNumber:[NSNumber numberWithInt:7100]])
+            {
+                NSLog(@"outside freight taxFree");
+                productItem.taxRate = [NSDecimalNumber zero];
+            }
+        }
         
         // Create the order item and set its properties
         orderItem = [[OrderItem alloc] initWithItem:productItem AndQuantity:[node elementDecimalValue:@"QuantityOrderedPrimary"]];
@@ -436,6 +464,8 @@ static NSString * const PREVIOUSORDER_LINEITEM_XML = @""
     NSString *storeId = nil;
     NSString *taxExempt = nil;
     NSString *taxRate = nil;
+    //Enning Tang Add ShipToStoreID
+    NSString *ShipToStoreID = nil;
     
     // New elements for existing/previous orders
     NSString *locn = @"";
@@ -517,6 +547,19 @@ static NSString * const PREVIOUSORDER_LINEITEM_XML = @""
                 if (orderItem.lineNumber) {
                     lineNumber = [NSString stringWithFormat: @"%@", orderItem.lineNumber];
                 }
+                //add request date
+                if (order.requestDate){
+                    requestDate = [NSString stringWithFormat:@"%@", order.requestDate];
+                }
+                //Enning Tang Add ShipToStoreID 10/26/2012
+                if (orderItem.item.ShipToStoreID)
+                {
+                    ShipToStoreID = [NSString stringWithFormat:@"%@", orderItem.item.ShipToStoreID];
+                }else
+                    ShipToStoreID = storeId;
+                
+                if ([ShipToStoreID isEqualToString:@"0"])
+                    ShipToStoreID = storeId;
                 
                 // Determine the lineStatus
                 switch ([orderItem getLineStatus]) {
@@ -629,15 +672,15 @@ static NSString * const PREVIOUSORDER_LINEITEM_XML = @""
                 
                 if (orderId && !order.isNewOrder) {
                     lineItemXml = [lineItemXml stringByAppendingFormat:PREVIOUSORDER_LINEITEM_XML,
-                                    conversion, defaultToBox, itemDescription, itemId, itemNumber, itemStatusCode, itemTypeId,
+                                    conversion, defaultToBox, itemDescription, ShipToStoreID, itemId, itemNumber, itemStatusCode, itemTypeId,
                                     locn, lotn, lttr, lineNumber, lineState, mcu, nxtr, openItemStatus, orderDetailStatus, orderId,
                                     piecesPerBox, primaryUom, quantityPrimary, quantitySecondary, requestDate, retailPrice, returnedReferenceID,
                                     salepersonEmpId, secondaryUom, sellingPricePrimary, sellingPriceSecondary, spiff, split, stdCost, stockingCode, storeId, 
                                     taxExempt, taxRate, urrf];
                 } else {
                     lineItemXml = [lineItemXml stringByAppendingFormat:NEW_ORDER_LINEITEM_XML,
-                                    conversion, defaultToBox, itemDescription, itemId, itemNumber, itemStatusCode, itemTypeId, 
-                                    lineNumber, orderDetailStatus, piecesPerBox, primaryUom, quantityPrimary, quantitySecondary,
+                                    conversion, defaultToBox, itemDescription, ShipToStoreID, itemId, itemNumber, itemStatusCode, itemTypeId,
+                                    requestDate, lineNumber, orderDetailStatus, piecesPerBox, primaryUom, quantityPrimary, quantitySecondary,
                                     retailPrice, salepersonEmpId, secondaryUom, sellingPricePrimary, sellingPriceSecondary, 
                                     stdCost, stockingCode, storeId, taxExempt, taxRate];
                 }

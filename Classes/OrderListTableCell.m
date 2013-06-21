@@ -23,7 +23,7 @@
         dateLabel = [[[UILabel alloc] init] autorelease];
 		dateLabel.backgroundColor = [UIColor clearColor];
 		dateLabel.textColor = [UIColor blackColor];
-		dateLabel.textAlignment = UITextAlignmentLeft;
+		dateLabel.textAlignment = NSTextAlignmentLeft;
 		dateLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
 		dateLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:dateLabel];
@@ -31,7 +31,7 @@
         totalLabel = [[[UILabel alloc] init] autorelease];
 		totalLabel.backgroundColor = [UIColor clearColor];
 		totalLabel.textColor = [UIColor blackColor];
-		totalLabel.textAlignment = UITextAlignmentRight;
+		totalLabel.textAlignment = NSTextAlignmentRight;
 		totalLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
 		totalLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:totalLabel];
@@ -39,7 +39,7 @@
         orderIdLabel = [[[UILabel alloc] init] autorelease];
 		orderIdLabel.backgroundColor = [UIColor clearColor];
 		orderIdLabel.textColor = [UIColor blackColor];
-		orderIdLabel.textAlignment = UITextAlignmentLeft;
+		orderIdLabel.textAlignment = NSTextAlignmentLeft;
 		orderIdLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
 		orderIdLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:orderIdLabel];
@@ -47,7 +47,7 @@
         statusLabel = [[[UILabel alloc] init] autorelease];
 		statusLabel.backgroundColor = [UIColor clearColor];
 		statusLabel.textColor = [UIColor blackColor];
-		statusLabel.textAlignment = UITextAlignmentRight;
+		statusLabel.textAlignment = NSTextAlignmentRight;
 		statusLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
 		statusLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:statusLabel];

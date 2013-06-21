@@ -11,6 +11,9 @@
 #import "UIViewController+ViewControllerLayout.h"
 #import "UIView+ViewLayout.h"
 #import "UIScreen+Helpers.h"
+#import "LoginViewController.h"
+
+#import "MainMenuViewController.h"
 
 #define OVERLAY_MARGIN_TOP 10.0f
 #define OVERLAY_MARGIN_LEFT 40.0f
@@ -80,22 +83,22 @@
     [emailReceiptButton setupAsSmallBlackButton];
     [emailReceiptButton setTitle:@"E-Mail Receipt" forState:UIControlStateNormal];
     [emailReceiptButton addTarget:self action:@selector(handleEmailReceiptButton:) forControlEvents:UIControlEventTouchUpInside];
-    emailReceiptButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    emailReceiptButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     
     [printReceiptButton setupAsSmallBlackButton];
     [printReceiptButton setTitle:@"Print Receipt" forState:UIControlStateNormal];
-    printReceiptButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    printReceiptButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     printReceiptButton.enabled = NO;
     
     [printEmailReceiptButton setupAsSmallBlackButton];
     [printEmailReceiptButton setTitle:@"Print & E-Mail Receipt" forState:UIControlStateNormal];
-    printEmailReceiptButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    printEmailReceiptButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     printEmailReceiptButton.enabled = NO;
     
     [exitWithoutReceiptButton setupAsSmallBlackButton];
     [exitWithoutReceiptButton setTitle:@"Exit Without Receipt" forState:UIControlStateNormal];
     [exitWithoutReceiptButton addTarget:self action:@selector(handleExitWithoutReceiptButton:) forControlEvents:UIControlEventTouchUpInside];
-    exitWithoutReceiptButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    exitWithoutReceiptButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     
     [roundedView addSubview:emailReceiptButton];  
     [roundedView addSubview:printReceiptButton];
@@ -144,16 +147,6 @@
 - (void) viewDidDisappear:(BOOL)animated {
 	// Do this at the end
 	[super viewDidDisappear:animated];
-}
-
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAll;
 }
 
 // Override to allow orientations other than the default portrait orientation.
@@ -229,11 +222,27 @@
     }
     
     // Logoff or back to root Order Lookup view
+    //Enning Tang re-initialize loginView
+    //LoginViewController *login = [[LoginViewController alloc] init];
+    //[self.navigationController popToViewController:login animated:YES];
     [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    //Enning Tang nav to MainMenu
+    //MainMenuViewController *mainMenuViewController = [[MainMenuViewController alloc] init];
+    //[[self navigationController] pushViewController:mainMenuViewController animated:TRUE];
+    //[mainMenuViewController release];
 }
 
 -(void)handleExitWithoutReceiptButton:(id)sender {
+    //Enning Tang re-initialize loginView
+    //LoginViewController *login = [[LoginViewController alloc] init];
+    //[self.navigationController popToViewController:login animated:YES];
     [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    //Enning Tang nav to MainMenu
+    //MainMenuViewController *mainMenuViewController = [[MainMenuViewController alloc] init];
+    //[[self navigationController] pushViewController:mainMenuViewController animated:TRUE];
+    //[mainMenuViewController release];
 }
 
 @end

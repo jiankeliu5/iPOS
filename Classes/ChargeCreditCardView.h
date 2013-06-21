@@ -34,6 +34,9 @@
     UIView *ccChargeAmountView;
     UIView *ccSwipeMsgView;
     
+    UILabel *totalBalanceDueTitle;
+    UILabel *totalBalanceDueLabel;
+    
     ExtUITextField *chargeAmountTextField;
     MOGlassButton *cancelButton;
     

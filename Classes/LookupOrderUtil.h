@@ -11,5 +11,6 @@
 @interface LookupOrderUtil : NSObject
 
 + (void) showOrdersFrom: (UIViewController *) parentController withPhone: (NSString *) phoneNumber;
++ (void) showOrdersFrom:(UIViewController *)parentController withSalesPersonId:(NSString *)salesPersonId;
 
 @end

@@ -43,6 +43,7 @@
                     NSLog(@"Single return from search by phone.  Found Order: %@", order.orderId);
                     [orderCart setPreviousOrder:order];
                     OrderItemsViewController *orderItemsViewController = [[OrderItemsViewController alloc] init];
+                    orderItemsViewController.restorationIdentifier = @"orderItemVCID";
                     [[parentController navigationController] pushViewController:orderItemsViewController animated:TRUE];
                     [orderItemsViewController release];
                 } else {
@@ -66,5 +67,21 @@
         [AlertUtils showModalAlertMessage:@"Please enter a 10 digit phone number" withTitle:@"iPOS"];
     }
 }
+
++ (void) showOrdersFrom:(UIViewController *)parentController withSalesPersonId:(NSString *)salesPersonId {
+    iPOSFacade *facade = [iPOSFacade sharedInstance];
+    OrderCart *orderCart = [OrderCart sharedInstance];
     
+    NSArray *foundOrderList = [facade lookupOrderBySalesPersonId:salesPersonId];
+    NSLog(@"Found %d previous orders.", [foundOrderList count]);
+    
+    // Set the previous order list on the order cart singleton
+    [orderCart setPreviousOrderList:foundOrderList];
+    
+    OrderListViewController *orderListController = [[OrderListViewController alloc] init];
+    [orderListController setSearchPhone:salesPersonId];
+    [[parentController navigationController] pushViewController:orderListController animated:TRUE];
+    [orderListController release];
+}
+
 @end

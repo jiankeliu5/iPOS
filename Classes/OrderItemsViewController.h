@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DTDevices.h"
+#import "LineaSDK.h"
 #import "ProfitMarginViewController.h"
 #import "OrderCart.h"
 #import "AddItemView.h"
@@ -16,13 +16,14 @@
 #import "CartItemTableCell.h"
 #import "SearchItemView.h"
 #import "MOGlassButton.h"
+#import "SpecialItem.h"
 
 
-@interface OrderItemsViewController : UIViewController <DTDeviceDelegate, AddItemViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, SearchItemViewDelegate, CartItemCellDelegate, ProfitMarginViewDelegate> {
+@interface OrderItemsViewController : UIViewController <LineaDelegate, AddItemViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, SearchItemViewDelegate, CartItemCellDelegate, ProfitMarginViewDelegate, SpecialItemDelegate> {
 	iPOSFacade *facade;
     OrderCart *orderCart;
     
-    DTDevices *linea;
+    Linea *linea;
 	
     SearchItemView *searchOverlay;
     AddItemView *addItemOverlay;
@@ -55,6 +56,8 @@
     UIBarButtonItem *cancelOrderButton;
     UIBarButtonItem *editButton;
     UIBarButtonItem *cancelEditButton;
+    //Enning Tang Add LTLWeight Button 2013/2/8
+    UIBarButtonItem *LTLButton;
     
     UIButton *commitEditsButton;
 	UILabel *markDeleteLabel;

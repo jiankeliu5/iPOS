@@ -107,6 +107,15 @@
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/name/%@", baseUrl, posInventoryMgmtUri, sessionInfo.storeId]];
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     
+    /*
+    UIAlertView *longPress = [[UIAlertView alloc] init];
+    longPress.title = @"Message";
+    longPress.message = [NSString stringWithFormat:@"here!"];
+    [longPress addButtonWithTitle:@"OK"];
+    [longPress show];
+    [longPress release];
+    */
+    
     [request setValidatesSecureCertificate:NO];
     [request setTimeOutSeconds:30];
     [request addRequestHeader:@"DeviceID" value:sessionInfo.deviceId];
@@ -122,9 +131,19 @@
         return nil;   
     } 
     
+    /*
+    UIAlertView *longPress = [[UIAlertView alloc] init];
+    longPress.title = @"Message";
+    longPress.message = [NSString stringWithFormat:@"responseString: %@", [request responseString]];
+    [longPress addButtonWithTitle:@"OK"];
+    [longPress show];
+    [longPress release];
+    */
+     
     NSArray *items = [ProductItem listFromXml:[request responseString]];
     
-    return [items sortedArrayUsingSelector:@selector(compare:)];
+    //return [items sortedArrayUsingSelector:@selector(compare:)];
+    return items;
 }
     
 

@@ -9,9 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "iPOSFacade.h"
 #import "OrderCart.h"
-#import "DTDevices.h"
+#import "LineaSDK.h"
+#import "MOGlassButton.h"
+#import "LogonSubView.h"
+#import "ExtUITextField.h"
+#import "UIView+ViewLayout.h"
 
-@interface LoginViewController : UIViewController <DTDeviceDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface LoginViewController : UIViewController <LineaDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 {
 	
 	// I'm assuming at some point we will have a domain/model object for this?  For now
@@ -29,7 +33,16 @@
    	iPOSFacade *facade;
     OrderCart *orderCart;
     
-    DTDevices *linea;
+    MOGlassButton *loginButton;
+    
+    UILabel *versionNumber;
+    LogonSubView *getlogonSubView;
+    
+    Linea *linea;
+    
+    ExtUITextField *userName;
+    ExtUITextField *passWord;
+    CGPoint originalCenter;
 }
 
 @property (nonatomic, copy) NSString *empId;
@@ -39,5 +52,6 @@
 
 @property (nonatomic, retain) id currentFirstResponder;
 @property (nonatomic, assign) BOOL keyboardCancelled;
+@property (nonatomic, assign) CGPoint originalCenter;
 
 @end

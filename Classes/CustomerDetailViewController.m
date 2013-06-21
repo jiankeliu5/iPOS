@@ -126,14 +126,14 @@
 	    
     confirmButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
     [confirmButton setupAsSmallBlackButton];
-    confirmButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    confirmButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     [confirmButton setTitle:@"Confirm" forState:UIControlStateNormal];
     [mainView addSubview:confirmButton];
     [confirmButton release];
 
     editButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
     [editButton setupAsSmallBlackButton];
-    editButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    editButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     [editButton setTitle:@"Edit" forState:UIControlStateNormal];
     
     [confirmButton addTarget:self action:@selector(handleConfirmButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -184,16 +184,6 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
-}
-
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAll;
 }
 
 // Override to allow orientations other than the default portrait orientation.
@@ -269,7 +259,7 @@
 	label.text = text;
 	label.backgroundColor = [UIColor clearColor];
 	label.textColor = [UIColor blackColor];
-	label.textAlignment = UITextAlignmentLeft;
+	label.textAlignment = NSTextAlignmentLeft;
 	label.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
 	return [label autorelease];
 }
@@ -314,6 +304,7 @@
 - (void) handleConfirmButton:(id)sender {
 	NSLog(@"Got confirm button press");
 	if (self.customer != nil) {
+        NSLog(@"Current Customer is nil");
 		NSMutableDictionary *cpy = [self.customer modelFromCustomer];
 		Customer *custCpy = [[[Customer alloc] initWithModel:cpy] autorelease];
         
@@ -331,8 +322,10 @@
         UIViewController *cartItemsController = [self getOnNavStackByType:[CartItemsViewController class]];
         
         if (cartItemsController) {
+            NSLog(@"cartitemscontroller is true");
             [self.navigationController popToViewController:cartItemsController animated:YES];
         } else {
+            NSLog(@"cartitemscontroller is false");
             // Pop all relevant customer controllers including self
             UINavigationController *navController = self.navigationController;
             UIViewController *custListController = [self getOnNavStackByType:[CustomerListViewController class]];

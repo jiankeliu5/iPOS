@@ -53,7 +53,7 @@
 
 @implementation AccountPaymentView
 
-@synthesize viewDelegate, balanceDue, totalAccountBalance;
+@synthesize viewDelegate, balanceDue, totalAccountBalance, totalBalance;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -94,6 +94,22 @@
     // Add balance due labels
     [self layoutCreditAvailableLabels: mainRoundedView];
     [self layoutBalanceDueLabels: mainRoundedView];
+    // Add totalBalance
+    /*totalBalanceDueTitle = [[[UILabel alloc] initWithFrame:CGRectMake(MARGIN_LEFT, MARGIN_TOP + 30.0f, LABEL_WIDTH, LABEL_HEIGHT)] autorelease];
+    totalBalanceDueLabel = [[[UILabel alloc] initWithFrame:CGRectMake(MARGIN_LEFT+LABEL_WIDTH, MARGIN_TOP + 30.0f, LABEL_WIDTH, LABEL_HEIGHT)] autorelease];
+    
+    totalBalanceDueTitle.textAlignment = NSTextAlignmentLeft;
+    totalBalanceDueTitle.text = @"Sale Total";
+    totalBalanceDueTitle.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
+    
+    totalBalanceDueLabel.textAlignment = NSTextAlignmentRight;
+    totalBalanceDueLabel.textColor = [UIColor blueColor];
+    totalBalanceDueLabel.text = [NSString stringWithFormat:@"%@", self.totalBalance];
+    totalBalanceDueLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
+    
+    [mainRoundedView addSubview:totalBalanceDueTitle];
+    [mainRoundedView addSubview:totalBalanceDueLabel];
+     */
     
     // Add subviews
     [self layoutChargeAmountView:mainRoundedView];
@@ -104,7 +120,7 @@
                                               mainRoundedView.bounds.size.height - BUTTON_HEIGHT - MARGIN_BOTTOM, BUTTON_WIDTH, BUTTON_HEIGHT)] 
                     autorelease];
 	[cancelButton setupAsSmallRedButton];
-	cancelButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	cancelButton.titleLabel.textAlignment = NSTextAlignmentCenter;
 	[cancelButton setTitle:@"Cancel" forState:UIControlStateNormal];
     [cancelButton addTarget:self action:@selector(handleCancelButton:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -120,11 +136,11 @@
     creditAvailableTitle = [[[UILabel alloc] initWithFrame:CGRectMake(MARGIN_LEFT, MARGIN_TOP, LABEL_WIDTH, LABEL_HEIGHT)] autorelease];
     creditAvailableLabel = [[[UILabel alloc] initWithFrame:CGRectMake(MARGIN_LEFT+LABEL_WIDTH, MARGIN_TOP, LABEL_WIDTH, LABEL_HEIGHT)] autorelease];
     
-    creditAvailableTitle.textAlignment = UITextAlignmentLeft;
+    creditAvailableTitle.textAlignment = NSTextAlignmentLeft;
     creditAvailableTitle.text = @"Credit Avail";
     creditAvailableTitle.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];    
     
-    creditAvailableLabel.textAlignment = UITextAlignmentRight;
+    creditAvailableLabel.textAlignment = NSTextAlignmentRight;
     creditAvailableLabel.textColor = [UIColor blueColor];
     creditAvailableLabel.text = self.totalAccountBalance;
     creditAvailableLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];   
@@ -137,11 +153,11 @@
     balanceDueTitle = [[[UILabel alloc] initWithFrame:CGRectMake(MARGIN_LEFT, MARGIN_TOP + 20, LABEL_WIDTH, LABEL_HEIGHT)] autorelease];
     balanceDueLabel = [[[UILabel alloc] initWithFrame:CGRectMake(MARGIN_LEFT+LABEL_WIDTH, MARGIN_TOP + 20, LABEL_WIDTH, LABEL_HEIGHT)] autorelease];
     
-    balanceDueTitle.textAlignment = UITextAlignmentLeft;
+    balanceDueTitle.textAlignment = NSTextAlignmentLeft;
     balanceDueTitle.text = @"Balance Due";
     balanceDueTitle.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];    
     
-    balanceDueLabel.textAlignment = UITextAlignmentRight;
+    balanceDueLabel.textAlignment = NSTextAlignmentRight;
     balanceDueLabel.textColor = [UIColor blueColor];
     balanceDueLabel.text = self.balanceDue;
     balanceDueLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];    
@@ -166,12 +182,12 @@
     
     enterAmountText.backgroundColor = [UIColor clearColor];
     enterAmountText.textColor = [UIColor blackColor];
-    enterAmountText.textAlignment = UITextAlignmentCenter;
+    enterAmountText.textAlignment = NSTextAlignmentCenter;
     enterAmountText.font = [UIFont systemFontOfSize:LABEL_SMALL_FONT_SIZE];
     enterAmountText.text = @"ENTER AMOUNT TO BE CHARGED VIA";
     creditCardText.backgroundColor = [UIColor clearColor];
     creditCardText.textColor = [UIColor blackColor];
-    creditCardText.textAlignment = UITextAlignmentCenter;
+    creditCardText.textAlignment = NSTextAlignmentCenter;
     creditCardText.font = [UIFont boldSystemFontOfSize:LABEL_LARGE_FONT_SIZE];
     creditCardText.text = @"ACCOUNT";
     
@@ -194,7 +210,7 @@
     
     dollarSignLabel.backgroundColor = [UIColor clearColor];
     dollarSignLabel.textColor = [UIColor whiteColor];
-    dollarSignLabel.textAlignment = UITextAlignmentCenter;
+    dollarSignLabel.textAlignment = NSTextAlignmentCenter;
     dollarSignLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
     dollarSignLabel.text = @"$";
     
@@ -204,7 +220,7 @@
     chargeAmountTextField.tagName =@"account";
 	chargeAmountTextField.textColor = [UIColor blackColor];
 	chargeAmountTextField.borderStyle = UITextBorderStyleRoundedRect;
-	chargeAmountTextField.textAlignment = UITextAlignmentLeft;
+	chargeAmountTextField.textAlignment = NSTextAlignmentLeft;
     chargeAmountTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	chargeAmountTextField.clearsOnBeginEditing = YES;
 	//chargeAmountTextField.tagName = @"ChargeAmount";    

@@ -8,6 +8,8 @@
 
 #import "SessionInfo.h"
 #import "LoginXmlMarshaller.h"
+#import "UIDevice+IdentifierAddition.h"
+#import "NSString+MD5Addition.h"
 
 @implementation SessionInfo
 
@@ -25,8 +27,16 @@
     }
     
     // Set the device id based on the current device's unique identifer
-    deviceId = [[[UIDevice currentDevice] uniqueIdentifier] copy];
-
+    deviceId = [[[UIDevice currentDevice] uniqueIdentifier] copy]; //-- deprecated iOS 5
+    
+    //Enning Tang Change deviceId to new function 11/12/2012
+    //deviceId = [[[UIDevice currentDevice] uniqueDeviceIdentifier] copy]; //use mac address
+    
+    //Enning Tang Fix the uniqueIdentifier issue (we cannot use MacAddress for now)
+    NSLog(@"DeviceID: %@", deviceId);
+    //NSLog(@"New ID: %@", [[UIDevice currentDevice] uniqueDeviceIdentifier]);
+    //NSLog(@"New Global ID: %@", [[UIDevice currentDevice] uniqueGlobalDeviceIdentifier]);
+    
     return self;
 }
 

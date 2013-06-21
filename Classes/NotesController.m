@@ -113,7 +113,7 @@
 	purchaseOrder.textColor = [UIColor blackColor];
     purchaseOrder.placeholder = @"PO";
     purchaseOrder.borderStyle = UITextBorderStyleRoundedRect;
-	purchaseOrder.textAlignment = UITextAlignmentLeft;
+	purchaseOrder.textAlignment = NSTextAlignmentLeft;
     purchaseOrder.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	purchaseOrder.delegate = self;
     [super addDoneToolbarForTextField:purchaseOrder];
@@ -192,15 +192,6 @@
     
 }
 
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAll;
-}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

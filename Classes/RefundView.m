@@ -60,13 +60,13 @@
         refundTitle.backgroundColor = [UIColor clearColor];
         refundTitle.text = @"Total Refund";
         refundTitle.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
-        refundTitle.textAlignment = UITextAlignmentLeft;
+        refundTitle.textAlignment = NSTextAlignmentLeft;
         
         refundTotalLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         refundTotalLabel.backgroundColor = [UIColor clearColor];
         refundTotalLabel.text = @"$0.00";
         refundTotalLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
-        refundTotalLabel.textAlignment = UITextAlignmentLeft;
+        refundTotalLabel.textAlignment = NSTextAlignmentLeft;
         
         // The table view
         refundAmountsTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];

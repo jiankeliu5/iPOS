@@ -78,18 +78,18 @@
 	_roundedView = [[UIView alloc] initWithFrame:CGRectZero];
 	
 	_promptLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
-	_promptLabel.lineBreakMode = UILineBreakModeWordWrap;
+	_promptLabel.lineBreakMode = NSLineBreakByWordWrapping;
 	_promptLabel.numberOfLines = 0;
 	_promptLabel.backgroundColor = [UIColor clearColor];
 	_promptLabel.textColor = [UIColor blackColor];
 	_promptLabel.text = @"Enter password to validate session:";
-	_promptLabel.textAlignment = UITextAlignmentLeft;
+	_promptLabel.textAlignment = NSTextAlignmentLeft;
 	[_roundedView addSubview:_promptLabel];
 	
 	_passwordField = [[[UITextField alloc] initWithFrame:CGRectZero] autorelease];
 	_passwordField.textColor = [UIColor blackColor];
 	_passwordField.borderStyle = UITextBorderStyleRoundedRect;
-	_passwordField.textAlignment = UITextAlignmentLeft;
+	_passwordField.textAlignment = NSTextAlignmentLeft;
 	_passwordField.clearsOnBeginEditing = YES;
 	_passwordField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     _passwordField.autocapitalizationType = UITextAutocapitalizationTypeNone;

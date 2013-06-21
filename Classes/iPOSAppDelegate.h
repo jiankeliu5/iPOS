@@ -14,8 +14,11 @@
 
 #import "Reachability.h"
 #import "InAppUpdater.h"
+#import "CalendarController.h"
+#import "OrderCart.h"
+//#import "NSCondition+NSCondition_dealloc.h"
 
-@interface iPOSAppDelegate : NSObject <UIApplicationDelegate, SessionVerificationViewDelegate, UIAlertViewDelegate, InAppUpdaterDelegate> 
+@interface iPOSAppDelegate : NSObject <UIApplicationDelegate, SessionVerificationViewDelegate, UIAlertViewDelegate, InAppUpdaterDelegate>
 {
     UIWindow* window;
 	UINavigationController* navigationController;
@@ -24,6 +27,7 @@
     LookupOrderViewController *lookupOrderViewController;
 	BOOL resignedActive;
 	iPOSFacade *facade;
+    
 	SessionVerificationView *verificationView;
     NSDate *startTime;
     NSDate *endTime;
@@ -34,8 +38,10 @@
     UIAlertView *reachabilityAlert;
     
     InAppUpdater *appUpdater;
+	CalendarController *calendarController;
     
-    DTDevices *linea;
+    OrderCart *orderCart;
+    
 }
 
 @property (nonatomic, retain) UIWindow* window;
@@ -48,6 +54,10 @@
 
 @property (nonatomic, retain) Reachability *reachability;
 @property (nonatomic, retain) InAppUpdater *appUpdater;
+@property (nonatomic, retain) CalendarController *calendarController;
+
+@property (strong, nonatomic) UIViewController *viewController;
 
 @end
+
 

@@ -8,7 +8,14 @@
 
 #import "iPOSAppDelegate.h"
 #import "AlertUtils.h"
-#import "UINavigationController+Rotation.h"
+#import "CalendarController.h"
+#import "LineaSDK.h"
+
+#import "MainMenuViewController.h"
+
+#import "ViewController.h"
+
+
 
 #define MAX_PASSWORD_RETRIES 3
 #define TIMEOUT_VALUE 300.0
@@ -27,7 +34,7 @@
 #pragma mark -
 @implementation iPOSAppDelegate
 
-@synthesize window;
+@synthesize window = _window;
 @synthesize navigationController;
 @synthesize loginViewController;
 @synthesize orderNavigationController;
@@ -36,11 +43,13 @@
 @synthesize verifyPasswordTries;
 @synthesize reachability;
 @synthesize appUpdater;
-
+@synthesize calendarController;
+@synthesize viewController = _viewController;
 
 #pragma mark Constructors
-- (void) applicationDidFinishLaunching:(UIApplication*)application {   
+- (void) applicationDidFinishLaunching:(UIApplication*)application {
     // Set the application setting defaults
+    //NSLog(@"AppDelegate 1");
     isNotReachableDetected = NO;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *appDefaults = [NSDictionary dictionaryWithObject:@"NO" forKey:@"enableDemoMode"];
@@ -68,12 +77,17 @@
     orderNavigationController = [[UINavigationController alloc] initWithRootViewController:lookupOrderViewController];
     orderNavigationController.navigationBar.barStyle = UIBarStyleBlack;
     [lookupOrderViewController release];
+    
+    //create calendar
+    calendarController = [[CalendarController alloc] initWithNibName:nil bundle:nil];
 	
 	// Add the navigation controller view to the window
-	//[window addSubview:[navigationController view]];
-    [self.window setRootViewController:navigationController];
+	[window addSubview:[navigationController view]];
 	
     [window makeKeyAndVisible];
+    
+    //Enning Tang 9/28/2012
+    [window setRootViewController:navigationController];
     
     // Register for reachability (Detect changes to network
     [[NSNotificationCenter defaultCenter] addObserver:self 
@@ -88,77 +102,146 @@
 }
 
 - (void) applicationDidBecomeActive:(UIApplication *)application {
-    
-    linea = [DTDevices sharedDevice];
-    [linea connect];
-    
 	// If we had a live session and resigned as the active application
 	// due to inactivity or being backgrounded, we need to have the user
 	// input their password and re-validate the session.
+    //NSLog(@"AppDelegate 2");
+    
+    Linea *linea = [Linea sharedDevice];
+    
     endTime = [[NSDate alloc] init];
+    NSLog(@"1");
     
     NSTimeInterval interval = [endTime timeIntervalSinceDate:startTime];
-    [startTime release];
+    NSLog(@"2");
+    //Enning Tang try switching out to other apps 11/14/2012
+    @try {
+        [startTime release];
+        NSLog(@"3");
+    }
+    @catch (NSException *exception) {
+        NSLog(@"EXCEPTION: %@", exception.description);
+        NSLog(@"4");
+    }
     
     if (!isnan(interval) && (interval >= TIMEOUT_VALUE))
     {
-        
+        NSLog(@"5");
         if (self.resignedActive == YES && facade.sessionInfo != nil) {
+            NSLog(@"6");
             verificationView = [[[SessionVerificationView alloc] initWithFrame:window.bounds] autorelease];
+            NSLog(@"7");
             verificationView.delegate = self;
+            NSLog(@"8");
             [window addSubview:verificationView];
+            NSLog(@"9");
             UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+            NSLog(@"10");
             
             CGFloat angle = 0.0;
+            NSLog(@"11");
             CGRect newFrame = verificationView.window.bounds;
+            NSLog(@"12");
             CGSize statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
+            NSLog(@"12");
             
-            switch (orientation) { 
+            switch (orientation) {
                 case UIInterfaceOrientationPortraitUpsideDown:
-                    angle = M_PI; 
+                    NSLog(@"13");
+                    angle = M_PI;
+                    NSLog(@"14");
                     newFrame.size.height -= statusBarSize.height;
+                    NSLog(@"15");
                     break;
                 case UIInterfaceOrientationLandscapeLeft:
+                    NSLog(@"16");
                     angle = - M_PI / 2.0f;
+                    NSLog(@"17");
                     newFrame.origin.x += statusBarSize.width;
-                    newFrame.size.width -= statusBarSize.width; 
+                    NSLog(@"18");
+                    newFrame.size.width -= statusBarSize.width;
+                    NSLog(@"19");
                     break;
                 case UIInterfaceOrientationLandscapeRight:
+                    NSLog(@"20");
                     angle = M_PI / 2.0f;
+                    NSLog(@"21");
                     newFrame.size.width -= statusBarSize.width;
+                    NSLog(@"22");
                     break;
                 default: // as UIInterfaceOrientationPortrait
+                    NSLog(@"23");
                     angle = 0.0;
+                    NSLog(@"24");
                     newFrame.origin.y += statusBarSize.height;
+                    NSLog(@"25");
                     newFrame.size.height -= statusBarSize.height;
+                    NSLog(@"26");
                     break;
             } 
             
+            NSLog(@"27");
             verificationView.transform = CGAffineTransformMakeRotation(angle);
+            NSLog(@"28");
             verificationView.frame = newFrame;
+            NSLog(@"29");
             [verificationView makePasswordFieldFirstResponder];
+            NSLog(@"30");
         }
         
     }
-	self.resignedActive = NO;
+    NSLog(@"31");
+	//self.resignedActive = NO;
+    NSLog(@"32");
+    [linea connect];
+    
 }
 
 
 -(void)releaseTimer:(NSDate *)date {
+    //NSLog(@"AppDelegate 3");
     [date release];
+}
+
+- (void) applicationWillEnterForeground:(UIApplication *)application {
+    NSLog(@"Come in....");
 }
 
 - (void) applicationWillResignActive:(UIApplication *)application {
 	// So we know to check our session when we come back.
+    //NSLog(@"AppDelegate 4");
+    
+    Linea *linea = [Linea sharedDevice];
+    
+    orderCart = [OrderCart sharedInstance];
+    Order *order = [orderCart getOrder];
+    
+    NSLog(@"Object 0: %d", [[order getOrderItems] count]);
+    
+    //[application should]
+    
+    //NSString *ItemCount = [NSNumber numberWithInteger:[order getOrderItems] count];
+    
+    /*
+    if ([[order getOrderItems] count] > 0)
+    {
+        UIAlertView *saveOrderNotify = [[UIAlertView alloc] init];
+        saveOrderNotify.title = @"Message";
+        saveOrderNotify.message = @"Please save your order before switching out from iPOS.";
+        [saveOrderNotify addButtonWithTitle:@"OK"];
+        [saveOrderNotify show];
+        [saveOrderNotify release];
+    }*/
+    
     [endTime release];
     startTime = [[NSDate alloc] init];
 	self.resignedActive = YES;
     
-    linea = [DTDevices sharedDevice];
     [linea disconnect];
 }
 
-- (void) applicationWillTerminate:(UIApplication*)application {	
+- (void) applicationWillTerminate:(UIApplication*)application {
+    //NSLog(@"AppDelegate 5");
 	[navigationController release];
     [orderNavigationController release];
     [endTime release];
@@ -177,12 +260,40 @@
 }
 
 - (void) verificationView:(SessionVerificationView *)aVerificationView submitPassword:(NSString *)password {
+    //NSLog(@"AppDelegate 6");
 	if ([password length] == 0) {
 		[AlertUtils showModalAlertMessage:@"Please input a password." withTitle:@"iPOS"];
 		[aVerificationView makePasswordFieldFirstResponder];
 	} else {
 		SessionStatus sessionValid = [facade verifySession:password];
+        SessionStatus sssessionValid = [facade ssverifySession:password];
 		switch (sessionValid) {
+			case SessionOk:
+				[aVerificationView removeFromSuperview];
+				self.verifyPasswordTries = 0;
+				break;
+			case SessionBadPassword:
+				self.verifyPasswordTries++;
+				if (self.verifyPasswordTries >= MAX_PASSWORD_RETRIES) {
+					[AlertUtils showModalAlertMessage:@"Password retry limit exceeded.  Logging out." withTitle:@"iPOS"];
+					self.verifyPasswordTries = 0;
+					[aVerificationView removeFromSuperview];
+					[navigationController popToRootViewControllerAnimated:YES];
+				} else {
+					[AlertUtils showModalAlertMessage:@"Invalid Password.  Please try again." withTitle:@"iPOS"];
+					[aVerificationView makePasswordFieldFirstResponder];
+				}
+				break;
+			case SessionExpired:
+				[AlertUtils showModalAlertMessage:@"Session expired, please login again." withTitle:@"iPOS"];
+				self.verifyPasswordTries = 0;
+				[aVerificationView removeFromSuperview];
+				[navigationController popToRootViewControllerAnimated:YES];
+				break;
+			default:
+				break;
+		}
+        switch (sssessionValid) {
 			case SessionOk:
 				[aVerificationView removeFromSuperview];
 				self.verifyPasswordTries = 0;
@@ -212,6 +323,7 @@
 }
 
 - (void) cancelVerificationView:(SessionVerificationView *)aVerificationView {
+    //NSLog(@"AppDelegate 7");
 	[aVerificationView removeFromSuperview];
 	[navigationController popToRootViewControllerAnimated:YES];
 }
@@ -219,6 +331,7 @@
 #pragma mark -
 #pragma mark UIAlertViewDelegate
 -(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    //NSLog(@"AppDelegate 8");
     if (reachabilityAlert) {
         reachabilityAlert = nil;
     }
@@ -236,6 +349,7 @@
 #pragma mark -
 #pragma mark InAppUpdaterDelegate Methods
 - (void) appUpdateStatus:(AppUpdateStatusType)updateStatus {
+    //NSLog(@"AppDelegate 9");
     if (updateStatus == APP_UPDATE_AVAILABLE) {
         UIAlertView *questionnaireAlert = [[UIAlertView alloc] init];
         questionnaireAlert.title = @"Update Available";
@@ -255,6 +369,7 @@
 #pragma mark -
 #pragma mark Private Methods
 - (void) reachabilityChanged:(NSNotification *) note {
+    //NSLog(@"AppDelegate 10");
     Reachability* r = [note object];
 	NetworkStatus ns = r.currentReachabilityStatus;
     
@@ -285,6 +400,7 @@
 }
 
 - (NSString *) reachabilityHost {
+    //NSLog(@"AppDelegate 11");
     // Get user preference for demo mode
     NSString *hostName = nil;
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
@@ -301,6 +417,7 @@
 }
 
 - (void) dismissAlert {
+    //NSLog(@"AppDelegate 12");
     if (reachabilityAlert != nil) {
         [reachabilityAlert dismissWithClickedButtonIndex:0 animated:NO];
         reachabilityAlert = nil;
@@ -308,6 +425,7 @@
 }
 
 - (void) checkAppVersion:(id)sender {
+    //NSLog(@"AppDelegate 13");
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     
     if (appUpdater == nil) {
@@ -318,15 +436,21 @@
         appUpdater.delegate = self;
     }
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL demoEnabled = [defaults boolForKey:@"enableDemoMode"];
-    
-    // Only check for updates if we are not in demo mode.
-    if (demoEnabled == NO) {
-        [appUpdater checkForUpdate];
-    }
+    [appUpdater checkForUpdate];
 
 }
 
+//Enning Tang implement Preserve & Restore 11/20/2012
+/*
+-(BOOL) application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder
+{
+    return YES;
+}
+
+-(BOOL) application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder
+{
+    return YES;
+}
+*/
 
 @end

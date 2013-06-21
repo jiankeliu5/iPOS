@@ -13,6 +13,7 @@
 
 #import "AlertUtils.h"
 #import "PriceAdjustViewController.h"
+#import "ShipToViewController.h"
 
 #import "UIScreen+Helpers.h"
 
@@ -34,9 +35,9 @@
 //#define CONVERT_TO_BOX_SWITCH_HEIGHT 27.0f
 //
 
-#define BUTTON_HEIGHT 40.0f
+#define BUTTON_HEIGHT 80.0f
 #define BUTTON_HEIGHT_LANDSCAPE 30.0f
-#define BUTTON_WIDTH 212.0f
+#define BUTTON_WIDTH 120.0f
 #define BUTTON_SPACE 10.0f
 //
 #define UOM_EXCHANGE_BUTTON_SIZE 37.0f
@@ -71,7 +72,7 @@
 	// Set up the items that will appear in a navigation controller bar if
 	// this view controller is added to a UINavigationController.
 	// [[self navigationItem] setTitle:@"Item Number Here"];
-
+    
 	// Set up the right side button if desired, edit button for example.
 	//[[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
 	nextRotationDegreesForExchangeButton = 180;
@@ -81,7 +82,7 @@
 	[quantityFormatter setGeneratesDecimalNumbers:YES];
     
     orderCart = [OrderCart sharedInstance];
-
+    
     return self;
 }
 
@@ -136,11 +137,11 @@
         uomExchangeButton.hidden = NO;
         [uomExchangeButton release];
     }
-
+    
 	skuLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	skuLabel.backgroundColor = [UIColor clearColor];
 	skuLabel.textColor = [UIColor blackColor];
-	skuLabel.textAlignment = UITextAlignmentCenter;
+	skuLabel.textAlignment = NSTextAlignmentCenter;
 	skuLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
 	[productItemView addSubview:skuLabel];
 	[skuLabel release];
@@ -148,7 +149,7 @@
 	descLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	descLabel.backgroundColor = [UIColor clearColor];
 	descLabel.textColor = [UIColor blackColor];
-	descLabel.textAlignment = UITextAlignmentCenter;
+	descLabel.textAlignment = NSTextAlignmentCenter;
 	descLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
 	[productItemView addSubview:descLabel];
 	[descLabel release];
@@ -156,21 +157,21 @@
 	priceLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	priceLabel.backgroundColor = [UIColor clearColor];
 	priceLabel.textColor = [UIColor blackColor];
-	priceLabel.textAlignment = UITextAlignmentCenter;
+	priceLabel.textAlignment = NSTextAlignmentCenter;
 	priceLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
 	[productItemView addSubview:priceLabel];
 	[priceLabel release];
 	
 	[self.view addSubview:productItemView];
 	[productItemView release];
-		
+    
 	orderItemView = [[UIView alloc] initWithFrame:CGRectZero];
 	orderItemView.backgroundColor = [UIColor colorWithWhite:0.50f alpha:1.0f];
 	
 	quantityField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
 	quantityField.textColor = [UIColor blackColor];
 	quantityField.borderStyle = UITextBorderStyleRoundedRect;
-	quantityField.textAlignment = UITextAlignmentCenter;
+	quantityField.textAlignment = NSTextAlignmentCenter;
     quantityField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     
     if (orderItem && [orderItem allowQuantityChange] == NO) {
@@ -199,7 +200,7 @@
 	itemTotalLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 	itemTotalLabel.backgroundColor = [UIColor clearColor];
 	itemTotalLabel.textColor = [UIColor blackColor];
-	itemTotalLabel.textAlignment = UITextAlignmentCenter;
+	itemTotalLabel.textAlignment = NSTextAlignmentCenter;
 	itemTotalLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
 	[orderItemView addSubview:itemTotalLabel];
 	[itemTotalLabel release];
@@ -219,7 +220,7 @@
     
     convertToBoxesLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     convertToBoxesLabel.text = @"Full Boxes";
-    convertToBoxesLabel.textAlignment = UITextAlignmentRight;
+    convertToBoxesLabel.textAlignment = NSTextAlignmentRight;
     convertToBoxesLabel.backgroundColor = [UIColor clearColor];
 	convertToBoxesLabel.textColor = [UIColor blackColor];
 	convertToBoxesLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
@@ -232,7 +233,7 @@
 	
 	deleteButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
 	[deleteButton setupAsRedButton];
-	deleteButton.titleLabel.textAlignment = UITextAlignmentCenter;
+	deleteButton.titleLabel.textAlignment = NSTextAlignmentCenter;
 	[deleteButton setTitle:@"Delete" forState:UIControlStateNormal];
 	[self.view addSubview:deleteButton];
 	[deleteButton release];
@@ -241,14 +242,14 @@
     if (orderItem && [orderItem isClosed]) {
         openButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
         [openButton setupAsBlackButton];
-        openButton.titleLabel.textAlignment = UITextAlignmentCenter;
+        openButton.titleLabel.textAlignment = NSTextAlignmentCenter;
         [openButton setTitle:@"Open" forState:UIControlStateNormal];
         [self.view addSubview:openButton];
         [openButton release];
     } else {
         closeLineButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
         [closeLineButton setupAsGreenButton];
-        closeLineButton.titleLabel.textAlignment = UITextAlignmentCenter;
+        closeLineButton.titleLabel.textAlignment = NSTextAlignmentCenter;
         [closeLineButton setTitle:@"Close Line" forState:UIControlStateNormal];
         
         // Is the close line allowed with current quantity or not ?
@@ -258,14 +259,27 @@
         
         [self.view addSubview:closeLineButton];
         [closeLineButton release];
-    
+        
         priceButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
         [priceButton setupAsBlueButton];
-        priceButton.titleLabel.textAlignment = UITextAlignmentCenter;
+        priceButton.titleLabel.textAlignment = NSTextAlignmentCenter;
         [priceButton setTitle:@"Price" forState:UIControlStateNormal];
         
         [self.view addSubview:priceButton];
         [priceButton release];
+        
+        //Enning Tang add ship button 10/30/2012
+        shipButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
+        [shipButton setupAsGrayButton];
+        shipButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+        [shipButton setTitle:@"Ship" forState:UIControlStateNormal];
+        [self.view addSubview:shipButton];
+        [shipButton release];
+        
+        if (![orderCart getOrder].isNewOrder)
+        {
+            shipButton.enabled = NO;
+        }
     }
 }
 
@@ -282,6 +296,7 @@
 	quantityField.delegate = self;
     
 	[deleteButton addTarget:self action:@selector(handleDeleteButton:) forControlEvents:UIControlEventTouchUpInside];
+    [shipButton addTarget:self action:@selector(handleShipButton:) forControlEvents:UIControlEventTouchUpInside];
     
     if (orderItem && [orderItem isClosed]) {
         [openButton addTarget:self action:@selector(handleOpenButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -311,15 +326,6 @@
 	[super viewDidAppear:animated];
 }
 
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAll;
-}
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -388,6 +394,13 @@
     PriceAdjustViewController *priceAdjust = [[[PriceAdjustViewController alloc] initWithOrderItem:self.orderItem] autorelease];
 	[self.navigationController pushViewController:priceAdjust animated:YES];
 }
+
+//Enning Tang add handleShipButton
+- (void) handleShipButton:(id)sender {
+    ShipToViewController *shipTo = [[[ShipToViewController alloc] initWithOrderItem:orderItem] autorelease];
+	[self.navigationController pushViewController:shipTo animated:YES];
+}
+
 
 - (void) handleConvertToBoxesSwitch: (id) sender {
     if (orderItem != nil) {
@@ -474,13 +487,16 @@
         buttonSpace -= 3;
     }
     
-    deleteButton.frame = CGRectMake((viewBounds.size.width - BUTTON_WIDTH)/2, actionListRect.origin.y + buttonSpace, BUTTON_WIDTH, buttonHeight);
-        
+    deleteButton.frame = CGRectMake(viewBounds.size.width - 140.f, viewBounds.size.height - 90.f, BUTTON_WIDTH, buttonHeight);
+    
+    //Enning Tang Add ship button 10/30/2012
+    shipButton.frame = CGRectMake(viewBounds.size.width - 300.f, viewBounds.size.height - 90.f, BUTTON_WIDTH, buttonHeight);
+    
     if (openButton) {
-        openButton.frame = CGRectMake((viewBounds.size.width - BUTTON_WIDTH)/2, deleteButton.frame.origin.y + buttonSpace + buttonHeight, BUTTON_WIDTH, buttonHeight);
+        openButton.frame = CGRectMake(viewBounds.size.width - 300.f, viewBounds.size.height - 180.f, BUTTON_WIDTH, buttonHeight);
     } else {
-        closeLineButton.frame = CGRectMake((viewBounds.size.width - BUTTON_WIDTH)/2, deleteButton.frame.origin.y + buttonSpace + buttonHeight, BUTTON_WIDTH, buttonHeight);
-        priceButton.frame = CGRectMake((viewBounds.size.width - BUTTON_WIDTH)/2, closeLineButton.frame.origin.y + buttonSpace + buttonHeight, BUTTON_WIDTH, buttonHeight);
+        closeLineButton.frame = CGRectMake(viewBounds.size.width - 300.f, viewBounds.size.height - 180.f, BUTTON_WIDTH, buttonHeight);
+        priceButton.frame = CGRectMake(viewBounds.size.width - 140.f, viewBounds.size.height - 180.f, BUTTON_WIDTH, buttonHeight);
     }
 }
 
@@ -498,10 +514,10 @@
         
         // De we hide or show the default to box (only when item needs conversion)
         if ([orderItem isConversionNeeded]) {
-        
+            
             // The switch on/off is based on the order item flag
             convertToBoxesSwitch.on = orderItem.doConversionToFullBoxes;
-        
+            
             convertToBoxesLabel.hidden = NO;
             convertToBoxesSwitch.hidden = NO;
         } else {

@@ -33,10 +33,12 @@
 
 @synthesize currentFirstResponder;
 @synthesize keyboardCancelled;
+@synthesize originalCenter;
 
 #pragma mark Constructors
 - (id)init
 {
+    NSLog(@"lOGIN INITIALIZED");
     self = [super init];
     if (self == nil)
         return nil;
@@ -99,8 +101,8 @@
         case CONN_CONNECTING:
             break; 
 		case CONN_CONNECTED:
-            //[linea barcodeStartScan:nil];
-            [linea msSetCardDataMode:MS_PROCESSED_CARD_DATA error:nil] ;
+            [linea msStartScan];
+            [linea setMSCardDataMode:MS_PROCESSED_CARD_DATA];
             break;
 	}
     
@@ -108,11 +110,12 @@
 #pragma mark UIViewController overrides
 - (void)loadView
 {
+    NSLog(@"LOGIN LOADVIEW");
 	UIView *bgView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
 	[self setView:bgView];
 	[bgView release];
 	
-	UIImage *img = [UIImage imageNamed:@"iPosLogin"];
+	UIImage *img = [UIImage imageNamed:@"iPosLogin.png"];
 	UIImageView *iv = [[UIImageView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
 	iv.contentMode = UIViewContentModeBottomLeft;
 	iv.clipsToBounds = YES;
@@ -120,24 +123,107 @@
 	[self.view addSubview:iv];
 	[iv release];
 	
+    
 	loginTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-    loginTableView.backgroundView = nil;
+    //loginTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStyleGrouped];
 	loginTableView.backgroundColor = [UIColor clearColor];
+    //These two lines of code solved the ios 6 group view problem -- Enning Tang 9/28/2012
+    loginTableView.opaque = NO;
+    loginTableView.backgroundView = nil;
+    //loginTableView.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"iPosLogin.png"]];
 	
-	[self.view addSubview:loginTableView];
-	[loginTableView release];
+	//[self.view addSubview:loginTableView];
+	//[loginTableView release];
+     
+    
+    //Enning Tang Added textbox instead of using tableview 4/15/2013
+    CGFloat labelButtonWidth = self.view.bounds.size.width * 0.60f;
+	CGFloat	labelButtonSpacing = self.view.bounds.size.height * 0.15f;
+    userName = [[ExtUITextField alloc] initWithFrame:CGRectZero];
+    userName.textColor = [UIColor blackColor];
+    userName.borderStyle = UITextBorderStyleRoundedRect;
+    userName.textAlignment = NSTextAlignmentLeft;
+    userName.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    userName.clearsOnBeginEditing = YES;
+    userName.tag = 0;
+    userName.placeholder = @"Employee ID";
+    userName.textAlignment = NSTextAlignmentCenter;
+    [userName setKeyboardType:UIKeyboardTypeDecimalPad];
+    userName.returnKeyType = UIReturnKeyDone;
+    userName.delegate = self;
+    userName.userInteractionEnabled = true;
+    [self addDoneAndCancelToolbarForTextField:userName];
+    
+    [self.view addSubview:userName];
+    
+    passWord = [[ExtUITextField alloc] initWithFrame:CGRectZero];
+    passWord.textColor = [UIColor blackColor];
+    passWord.borderStyle = UITextBorderStyleRoundedRect;
+    passWord.textAlignment = NSTextAlignmentLeft;
+    passWord.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    passWord.clearsOnBeginEditing = YES;
+    passWord.tag = 1;
+    passWord.placeholder = @"Password";
+    passWord.textAlignment = NSTextAlignmentCenter;
+    passWord.secureTextEntry = YES;
+    [passWord setKeyboardType:UIKeyboardTypeDecimalPad];
+    passWord.returnKeyType = UIReturnKeyDone;
+    passWord.delegate = self;
+    passWord.userInteractionEnabled = true;
+    [self addDoneAndCancelToolbarForTextField:passWord];
+    
+    [self.view addSubview:passWord];
+    
+    userName.frame = CGRectMake(0.0f, 0.0f, labelButtonWidth + 80.0f, 40.0f);
+    userName.center = CGPointMake((self.view.bounds.size.width / 2.0f), 300.0f);
+    
+    passWord.frame = CGRectMake(0.0f, 0.0f, labelButtonWidth + 80.0f, 40.0f);
+    passWord.center = CGPointMake((self.view.bounds.size.width / 2.0f), 300.0f + userName.frame.size.height);
+    
+    //==============================================================
+    
+    /*
+    loginButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
+    [loginButton setupAsGreenButton];
+    loginButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    loginButton.titleLabel.font = [UIFont systemFontOfSize:15];
+    [loginButton setTitle:@"Log on" forState:UIControlStateNormal];
+    
+    loginButton.frame = CGRectMake(0.0f, 0.0f, self.view.bounds.size.width - 100.f, self.view.bounds.size.height - 400.f);
+    loginButton.center = CGPointMake((self.view.bounds.size.width / 2.0f), self.view.bounds.size.height - 150.f);
+    [loginButton addTarget:self action:@selector(handleLogonButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:loginButton];
+    [loginButton release];
+    */
+    
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    versionNumber = [[UILabel alloc] initWithFrame:CGRectZero];
+	versionNumber.backgroundColor = [UIColor clearColor];
+	versionNumber.textColor = [UIColor whiteColor];
+	versionNumber.text = [NSString stringWithFormat:@"%@%@", @"ver.", (NSString *) [bundle objectForInfoDictionaryKey:@"currentVersion"]];
+	versionNumber.textAlignment = NSTextAlignmentCenter;
+    
+	[self.view addSubview:versionNumber];
+	[versionNumber release];
+    versionNumber.frame = CGRectMake(0.0f, 0.0f, labelButtonWidth, 80.0f);
+    versionNumber.center = CGPointMake((self.view.bounds.size.width / 2.0f), labelButtonSpacing + 330);
 }
 
 - (void)viewDidLoad
 {
+    NSLog(@"lOGIN DIDLOAD");
 	// Do this at the beginning
 	[super viewDidLoad];
 	
 	loginTableView.dataSource = self;
-	loginTableView.delegate = self;   
+	loginTableView.delegate = self;
+    
+    userName.delegate = self;
+    passWord.delegate = self;
     
     // Get a reference to the shared Linea instance and add this controller as a delegate
-    linea = [DTDevices sharedDevice];
+    linea = [Linea sharedDevice];
     [linea addDelegate:self];
 }
 
@@ -148,6 +234,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    NSLog(@"lOGIN WILLAPPEAR");
 	
 	if (self.navigationController != nil) 
 	{
@@ -158,7 +245,11 @@
 	[self setEmpId:nil];
 	[self setPassword:nil];
     
-    [facade logout]; 
+    userName.delegate = self;
+    passWord.delegate = self;
+    
+    [facade logout];
+    [facade sslogout];
     
     //[linea disconnect];
     
@@ -195,9 +286,13 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    NSLog(@"lOGIN DIDAPPEAR");
 	// Do these at the beginning
 	[loginTableView flashScrollIndicators];
 	[super viewDidAppear:animated];
+    
+    userName.delegate = self;
+    passWord.delegate = self;
 	
 	NSNotificationCenter *noteCenter = [NSNotificationCenter defaultCenter];
 	[noteCenter addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -223,31 +318,16 @@
 	[super viewDidDisappear:animated];
 }
 
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskPortrait;
-}
-
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
-{
-    return UIInterfaceOrientationPortrait;
-}
-
-- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation//
+- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
 	// This will keep the interface locked to portrait
 	return (toInterfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-//- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
-//{
-//	NSLog(@"called did rotate");
-//}
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation 
+{
+	NSLog(@"called did rotate");
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -257,23 +337,29 @@
 #pragma mark UITextFieldDelegate
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
+    NSLog(@"Should Begin Editing");
 	self.currentFirstResponder = textField;
 	return YES;
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
+    NSLog(@"Begin Editing");
+    self.originalCenter = self.view.center;
+    self.view.center = CGPointMake(self.originalCenter.x, self.originalCenter.y - 160.0f);
 	self.currentFirstResponder = textField;
-	if ([loginTableView indexPathsForVisibleRows].count) {
-		[self setTopRowBeforeKeyboardShown:(NSIndexPath *) [[loginTableView indexPathsForVisibleRows] objectAtIndex:0]];
-	} else {
-        [self setTopRowBeforeKeyboardShown:[NSIndexPath indexPathForRow:0 inSection:0]];
-		[textField resignFirstResponder];
-	}
+	//if ([loginTableView indexPathsForVisibleRows].count) {
+	//	[self setTopRowBeforeKeyboardShown:(NSIndexPath *) [[loginTableView indexPathsForVisibleRows] objectAtIndex:0]];
+	//} else {
+    //    [self setTopRowBeforeKeyboardShown:[NSIndexPath indexPathForRow:0 inSection:0]];
+	//	[textField resignFirstResponder];
+	//}
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+    NSLog(@"End Editing");
+    self.view.center = CGPointMake(self.originalCenter.x, self.originalCenter.y);
 	self.currentFirstResponder = nil;
 
 	if (self.keyboardCancelled == NO) {
@@ -288,14 +374,17 @@
 			[self setPassword:textField.text];
 		}
 		
-		if (self.empId != nil && self.password != nil) {
+		if (self.empId != nil && self.password != nil && textField.text != nil && ![self.empId isEqualToString:@""] && ![self.password isEqualToString:@""]) {
 			UIAlertView *alert = [AlertUtils showProgressAlertMessage:@"Logging In"];
-			if([facade login:self.empId password:self.password]) {
+            if([facade login:self.empId password:self.password] && [facade sslogin:self.empId password:self.password]) {
+			//if([facade login:self.empId password:self.password]) {
 				[AlertUtils dismissAlertMessage: alert];
 				
 				MainMenuViewController *mainMenuViewController = [[MainMenuViewController alloc] init];
 				[[self navigationController] pushViewController:mainMenuViewController animated:TRUE];
 				[mainMenuViewController release];
+                //userName.text = nil;
+                //passWord.text = nil;
 				
 				// This is where we would connect to the linea-pro device
 				//[linea connect];
@@ -308,13 +397,14 @@
 			[self setEmpId:nil];
 			[self setPassword:nil];
 			[loginTableView reloadData];
+            userName.text = nil;
+            passWord.text = nil;
 			
 		}
 	} else {
 		// User cancelled out
 		self.keyboardCancelled = NO;
 	}
-
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -327,26 +417,33 @@
 // and are from the InAppSettingsKit open source project.
 #pragma mark Keyboard Management
 - (void)keyboardWillShow:(NSNotification*)notification {
-	if (self.navigationController.topViewController == self) {
-		NSDictionary* userInfo = [notification userInfo];
+    NSLog(@"Keyboard will show");
+	//if (self.navigationController.topViewController == self) {
+		//NSDictionary* userInfo = [notification userInfo];
 		
 		// we don't use SDK constants here to be universally compatible with all SDKs ≥ 3.0
-		NSValue* keyboardFrameValue = [userInfo objectForKey:@"UIKeyboardBoundsUserInfoKey"];
-		if (!keyboardFrameValue) {
-			keyboardFrameValue = [userInfo objectForKey:@"UIKeyboardFrameEndUserInfoKey"];
-		}
+		//NSValue* keyboardFrameValue = [userInfo objectForKey:@"UIKeyboardBoundsUserInfoKey"];
+		//if (!keyboardFrameValue) {
+		//	keyboardFrameValue = [userInfo objectForKey:@"UIKeyboardFrameEndUserInfoKey"];
+		//}
 		
 		// Reduce the tableView height by the part of the keyboard that actually covers the tableView
-		CGRect windowRect = [[UIApplication sharedApplication] keyWindow].bounds;
-		if (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation ||UIInterfaceOrientationLandscapeRight == self.interfaceOrientation ) {
-			windowRect = [LayoutUtils swapRect:windowRect];
-		}
+		//CGRect windowRect = [[UIApplication sharedApplication] keyWindow].bounds;
+		//if (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation ||UIInterfaceOrientationLandscapeRight == self.interfaceOrientation ) {
+		//	windowRect = [LayoutUtils swapRect:windowRect];
+		//}
 		
-		CGRect viewRectAbsolute = [loginTableView convertRect:loginTableView.bounds toView:[[UIApplication sharedApplication] keyWindow]];
-		if (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation ||UIInterfaceOrientationLandscapeRight == self.interfaceOrientation ) {
-			viewRectAbsolute = [LayoutUtils swapRect:viewRectAbsolute];
-		}
-		
+		//CGRect viewRectAbsolute = [loginTableView convertRect:loginTableView.bounds toView:[[UIApplication sharedApplication] keyWindow]];
+		//if (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation ||UIInterfaceOrientationLandscapeRight == self.interfaceOrientation ) {
+		//	viewRectAbsolute = [LayoutUtils swapRect:viewRectAbsolute];
+		//}
+    
+        //CGRect viewRectAbsolute = [userName convertRect:userName.bounds toView:[[UIApplication sharedApplication] keyWindow]];
+        //if (UIInterfaceOrientationLandscapeLeft == self.interfaceOrientation ||UIInterfaceOrientationLandscapeRight == self.interfaceOrientation ) {
+        //    viewRectAbsolute = [LayoutUtils swapRect:viewRectAbsolute];
+        //}
+    
+		/*
 		CGRect frame = loginTableView.frame;
 		frame.size.height -= [keyboardFrameValue CGRectValue].size.height - CGRectGetMaxY(windowRect) + CGRectGetMaxY(viewRectAbsolute);
 		
@@ -367,7 +464,8 @@
 		[NSObject cancelPreviousPerformRequestsWithTarget:self];
 		
 		[loginTableView scrollToRowAtIndexPath:textFieldIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-	}
+         */
+	//}
 }
 
 
@@ -376,17 +474,25 @@
 }
 
 - (void)keyboardWillHide:(NSNotification*)notification {
-	if (self.navigationController.topViewController == self) {
+    NSLog(@"keyboardWillHide");
+	/*if (self.navigationController.topViewController == self) {
 		NSDictionary* userInfo = [notification userInfo];
 		
 		[UIView beginAnimations:nil context:NULL];
 		[UIView setAnimationDuration:[[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
 		[UIView setAnimationCurve:[[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
-		loginTableView.frame = self.view.bounds;
+		//loginTableView.frame = self.view.bounds;
 		[UIView commitAnimations];
 		
-		[self performSelector:@selector(scrollToOldPosition) withObject:nil afterDelay:0.1];
-	}
+		//[self performSelector:@selector(scrollToOldPosition) withObject:nil afterDelay:0.1];
+	}*/
+    NSDictionary* userInfo = [notification userInfo];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:[[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue]];
+    [UIView setAnimationCurve:[[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue]];
+    //loginTableView.frame = self.view.bounds;
+    [UIView commitAnimations];
 }	
 
 #pragma mark UITableViewDelegate
@@ -408,6 +514,7 @@
 	return nil;
 }
 
+/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *EmpIDIdentifier = @"EmpIDIdentifier";
     static NSString *PasswordIdentifier = @"PasswordIdentifier";
@@ -475,6 +582,7 @@
 	return cell;
 
 }
+ */
 
 - (void) addDoneAndCancelToolbarForTextField:(UITextField *)textField {
 	UIToolbar *keyboardToolbar = [[[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, KEYBOARD_TOOLBAR_WIDTH, KEYBOARD_TOOLBAR_HEIGHT)] autorelease];
@@ -490,6 +598,7 @@
 }
 
 - (void) dismissKeyboard:(id)sender {
+    NSLog(@"dismissKeyboard");
 	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
 		// The toolbar done button calls this.  Allows the delegate to be called.
 		self.keyboardCancelled = NO;
@@ -498,11 +607,25 @@
 }
 
 - (void) cancelAndDismissKeyboard:(id)sender {
+    NSLog(@"cancelAndDismissKeyboard");
 	if (self.currentFirstResponder != nil && [self.currentFirstResponder canResignFirstResponder]) {
 		// Have to let the text field delegate know we cancelled.
 		self.keyboardCancelled = YES;
 		[self.currentFirstResponder resignFirstResponder];
 	}
+}
+
+- (void) handleLogonButton:(id)sender {
+    NSLog(@"Logon Called");
+    
+    
+    CGRect overlayRect = self.view.bounds;
+    getlogonSubView = [[LogonSubView alloc] initWithFrame:overlayRect];
+    
+    [self.view addSubview:getlogonSubView];
+    
+    [getlogonSubView release];
+    
 }
 
 @end

@@ -103,41 +103,41 @@
 	retailTotalLabel.backgroundColor = [UIColor clearColor];
 	retailTotalLabel.textColor = [UIColor blackColor];
 	retailTotalLabel.text = @"Retail Total";
-	retailTotalLabel.textAlignment = UITextAlignmentLeft;
+	retailTotalLabel.textAlignment = NSTextAlignmentLeft;
 	[roundView addSubview:retailTotalLabel];
 	
 	retailTotalValueLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
 	retailTotalValueLabel.backgroundColor = [UIColor clearColor];
 	retailTotalValueLabel.textColor = [UIColor blackColor];
 	retailTotalValueLabel.text = @"$0.00";
-	retailTotalValueLabel.textAlignment = UITextAlignmentLeft;
+	retailTotalValueLabel.textAlignment = NSTextAlignmentLeft;
 	[roundView addSubview:retailTotalValueLabel];
 	
 	sellingTotalLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
 	sellingTotalLabel.backgroundColor = [UIColor clearColor];
 	sellingTotalLabel.textColor = [UIColor blackColor];
 	sellingTotalLabel.text = @"Total";
-	sellingTotalLabel.textAlignment = UITextAlignmentLeft;
+	sellingTotalLabel.textAlignment = NSTextAlignmentLeft;
 	[roundView addSubview:sellingTotalLabel];
 	
 	sellingTotalValueLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
 	sellingTotalValueLabel.backgroundColor = [UIColor clearColor];
 	sellingTotalValueLabel.textColor = [UIColor blackColor];
 	sellingTotalValueLabel.text = @"$0.00";
-	sellingTotalValueLabel.textAlignment = UITextAlignmentLeft;
+	sellingTotalValueLabel.textAlignment = NSTextAlignmentLeft;
 	[roundView addSubview:sellingTotalValueLabel];
 	
 	discountLabel = [[[UILabel alloc] initWithFrame:CGRectZero] autorelease];
 	discountLabel.backgroundColor = [UIColor clearColor];
 	discountLabel.textColor = [UIColor blackColor];
 	discountLabel.text = @"Discount";
-	discountLabel.textAlignment = UITextAlignmentLeft;
+	discountLabel.textAlignment = NSTextAlignmentLeft;
 	[roundView addSubview:discountLabel];
 	
 	discountField = [[[ExtUITextField alloc] initWithFrame:CGRectZero] autorelease];
 	discountField.textColor = [UIColor blackColor];
 	discountField.borderStyle = UITextBorderStyleLine;
-	discountField.textAlignment = UITextAlignmentLeft;
+	discountField.textAlignment = NSTextAlignmentLeft;
     discountField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	discountField.clearsOnBeginEditing = YES;
 	discountField.tagName = @"DiscountAmount";
@@ -153,13 +153,13 @@
 	mgrIdLabel.backgroundColor = [UIColor clearColor];
 	mgrIdLabel.textColor = [UIColor blackColor];
 	mgrIdLabel.text = @"Manager Id";
-	mgrIdLabel.textAlignment = UITextAlignmentLeft;
+	mgrIdLabel.textAlignment = NSTextAlignmentLeft;
 	[roundView addSubview:mgrIdLabel];
 	
 	mgrIdField = [[[ExtUITextField alloc] initWithFrame:CGRectZero] autorelease];
 	mgrIdField.textColor = [UIColor blackColor];
 	mgrIdField.borderStyle = UITextBorderStyleLine;
-	mgrIdField.textAlignment = UITextAlignmentLeft;
+	mgrIdField.textAlignment = NSTextAlignmentLeft;
     mgrIdField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	mgrIdField.clearsOnBeginEditing = YES;
 	mgrIdField.tagName = @"ManagerId";
@@ -172,13 +172,13 @@
 	mgrPasswordLabel.backgroundColor = [UIColor clearColor];
 	mgrPasswordLabel.textColor = [UIColor blackColor];
 	mgrPasswordLabel.text = @"Password";
-	mgrPasswordLabel.textAlignment = UITextAlignmentLeft;
+	mgrPasswordLabel.textAlignment = NSTextAlignmentLeft;
 	[roundView addSubview:mgrPasswordLabel];
 	
 	mgrPasswordField = [[[ExtUITextField alloc] initWithFrame:CGRectZero] autorelease];
 	mgrPasswordField.textColor = [UIColor blackColor];
 	mgrPasswordField.borderStyle = UITextBorderStyleLine;
-	mgrPasswordField.textAlignment = UITextAlignmentLeft;
+	mgrPasswordField.textAlignment = NSTextAlignmentLeft;
     mgrPasswordField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	mgrPasswordField.clearsOnBeginEditing = YES;
 	mgrPasswordField.tagName = @"ManagerPassword";
@@ -231,16 +231,6 @@
 	[super viewDidAppear:animated];
 }
 
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAll;
-}
-
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations.
@@ -286,6 +276,7 @@
 
 #pragma mark UIButton targets
 - (void) submitPriceAdjustment:(id)sender {
+    NSLog(@"submitPriceAdjustment called");
 	NSDecimalNumber *discountOrPrice;
 	ManagerInfo *mgr = nil;
 	
@@ -314,7 +305,9 @@
     
     // Do we do a full order discount or just item discount
     if (order) {
+        NSLog(@"before");
         if ([facade orderDiscountFor:order withDiscountAmount:discountOrPrice managerApproval:mgr] == NO) {
+            NSLog(@"after");
             [AlertUtils showModalAlertMessage:@"Order Discount was rejected.  Please enter a different value or manager credentials." withTitle:@"iPOS"];
         } else {
             [self.navigationController popViewControllerAnimated:YES];
@@ -375,10 +368,13 @@
         sellingTotalLabel.text = @"Actual Total";
         discountLabel.text = @"Discount";
     } else if (self.orderItem) {
-        retailTotal = self.orderItem.item.retailPricePrimary;
-        sellingTotal = self.orderItem.sellingPricePrimary;
+        //retailTotal = self.orderItem.item.retailPricePrimary;
+        retailTotal = self.orderItem.item.retailPriceSecondary;
+        //sellingTotal = self.orderItem.sellingPricePrimary;
+        sellingTotal = self.orderItem.sellingPriceSecondary;
         retailTotalLabel.text = @"Retail Price";
-        sellingTotalLabel.text = [NSString stringWithFormat:@"Price (%@)", orderItem.item.primaryUnitOfMeasure];
+        //sellingTotalLabel.text = [NSString stringWithFormat:@"Price (%@)", orderItem.item.primaryUnitOfMeasure];
+        sellingTotalLabel.text = [NSString stringWithFormat:@"Price (%@)", orderItem.item.secondaryUnitOfMeasure];
         discountLabel.text = @"New Price $";
     }
     

@@ -43,6 +43,7 @@
 
 - (void) handleExitButton:(id)sender;
 - (void) handleAddToCartButton:(id)sender;
+- (void) handleconfirmButton:(id)sender;
 
 - (void) addKeyboardListeners;
 - (void) removeKeyboardListeners;
@@ -66,6 +67,14 @@
 @synthesize currentFirstResponder;
 
 @synthesize keyboardCancelled;
+
+@synthesize stores;
+
+@synthesize quantity;
+
+@synthesize ShipToStoreID;
+
+@synthesize currentStoreID;
 
 #pragma mark Constructors
 - (id) initWithFrame:(CGRect) frame {
@@ -96,23 +105,65 @@
     toolsContentView = [[UIView alloc] initWithFrame:CGRectZero];
     toolsContentView.backgroundColor = [UIColor whiteColor];
     
+    //Enning Tang Add ShipToStoreID View Initialize
+    ShipToStoreIDView = [[UIView alloc] initWithFrame:CGRectZero];
+    ShipToStoreIDView.backgroundColor = [UIColor whiteColor];
+    ShipToStoreIDView.hidden = YES;
+    
+    
     addToCartButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
     [addToCartButton setupAsBlackButton];
-    addToCartButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
-    addToCartButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    addToCartButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    addToCartButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     [addToCartButton setTitle:@"ADD\nTO\nCART" forState:UIControlStateNormal];
     [addToCartButton addTarget:self action:@selector(handleAddToCartButton:) forControlEvents:UIControlEventTouchUpInside];
     [toolsContentView addSubview:addToCartButton];
     [addToCartButton release];
-
+    
+    //Enning Tang Initialize StorePicker
+    StorePicker = [[UIPickerView alloc] init];
+    //StorePicker.frame = CGRectMake(CGRectZero.size.width - BUTTON_SIZE - BUTTON_SPACING/2 + 100,
+      //                                 (CGRectZero.size.height - BUTTON_SIZE/2),
+        //                               BUTTON_SIZE + 150, BUTTON_SIZE + 100);
+    StorePicker.frame = CGRectMake(0.f - 40.f, 0.f - 20.f, 0.f, 0.f - 50.f);
+    //CGRect pickerFrame = StorePicker.frame;
+    //pickerFrame.size.width = 10;
+    //pickerFrame.size.height = 20;
+    StorePicker.transform = CGAffineTransformMakeScale(0.7, 0.7);
+    facade = [iPOSFacade sharedInstance];
+    self.stores = [facade storelookup];
+    //NSLog(@"Done");
+    self.currentStoreID = [facade storelookupbysalesperson:facade.sessionInfo.loginUserName];
+    //[StorePicker selectedRowInComponent:10];
+    //NSLog(@"Get ------ %@",);
+    
+    
+    
+    StorePicker.delegate = self;
+    StorePicker.showsSelectionIndicator = YES;
+    [ShipToStoreIDView addSubview:StorePicker];
+    
+    
     exitButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
     [exitButton setupAsBlackButton];
-    exitButton.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
-    exitButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    exitButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    exitButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     [exitButton setTitle:@"EXIT" forState:UIControlStateNormal];
     [exitButton addTarget:self action:@selector(handleExitButton:) forControlEvents:UIControlEventTouchUpInside];
     [toolsContentView addSubview:exitButton];
     [exitButton release];
+    
+    //Enning Tang Add ShitToStoreID 10/25/2012
+    confirmButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
+    [confirmButton setupAsBlackButton];
+    confirmButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    confirmButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    //confirmButton.titleLabel.font = [UIFont systemFontOfSize:20];
+    confirmButton.titleLabel.font = [UIFont boldSystemFontOfSize:10];
+    [confirmButton setTitle:@"Confirm\nItem" forState:UIControlStateNormal];
+    [confirmButton addTarget:self action:@selector(handleconfirmButton:) forControlEvents:UIControlEventTouchUpInside];
+    [ShipToStoreIDView addSubview:confirmButton];
+    [confirmButton release];
     
     
     addQuantityView = [[GradientView alloc] initWithFrame:CGRectZero];
@@ -126,7 +177,7 @@
     addQuantityField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
     addQuantityField.textColor = [UIColor blackColor];
     addQuantityField.borderStyle = UITextBorderStyleRoundedRect;
-    addQuantityField.textAlignment = UITextAlignmentCenter;
+    addQuantityField.textAlignment = NSTextAlignmentCenter;
     addQuantityField.clearsOnBeginEditing = YES;
     addQuantityField.placeholder = @"Quantity";
     addQuantityField.tagName = @"AddQuantity";
@@ -148,7 +199,7 @@
     [addQuantityField release];
     
     addQuantityUnitsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    addQuantityUnitsLabel.textAlignment = UITextAlignmentLeft;
+    addQuantityUnitsLabel.textAlignment = NSTextAlignmentLeft;
     addQuantityUnitsLabel.textColor = [UIColor whiteColor];
     addQuantityUnitsLabel.backgroundColor = [UIColor clearColor];
     [addQuantityView addSubview:addQuantityUnitsLabel];
@@ -156,7 +207,7 @@
     
     addQuantityFullBoxesLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     addQuantityFullBoxesLabel.text = @"Full Boxes";
-    addQuantityFullBoxesLabel.textAlignment = UITextAlignmentLeft;
+    addQuantityFullBoxesLabel.textAlignment = NSTextAlignmentLeft;
     addQuantityFullBoxesLabel.textColor = [UIColor whiteColor];
     addQuantityFullBoxesLabel.backgroundColor = [UIColor clearColor];
     addQuantityFullBoxesLabel.hidden = YES;
@@ -171,12 +222,57 @@
     [addQuantityFullBoxSwitch release];
     
     [toolsContentView addSubview:addQuantityView];
-
+    
+    //Enning Tang 10/24/2012 Add StorePicker
     [roundedView addSubview:toolsContentView];
+    [roundedView addSubview:ShipToStoreIDView];
+    //toolsContentView.hidden = YES;
+    //ShipToStoreIDView.hidden = NO;
+    //[ShipToStoreIDView addSubview:StorePicker];
     [toolsContentView release];
+    [ShipToStoreIDView release];
 	
     return self;
 }
+
+//Enning Tang Add PickerView Functionalities
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow: (NSInteger)row inComponent:(NSInteger)component {
+    // Handle the selection
+    NSArray *getstoreid = [[self.stores objectAtIndex:row] componentsSeparatedByString:@","];
+    self.ShipToStoreID = getstoreid[0];
+}
+
+// tell the picker how many rows are available for a given component
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    //NSUInteger numRows = sizeof(stores);
+    
+    return [self.stores count];
+    //return 68;
+}
+
+// tell the picker how many components it will have
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+// tell the picker the title for a given component
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    //NSString *title;
+    //title = [@"" stringByAppendingFormat:@"%d",row];
+    
+    
+    //return title;
+    return [self.stores objectAtIndex:row];
+}
+
+// tell the picker the width of each row for a given component
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
+    int sectionWidth = 300;
+    
+    return sectionWidth;
+}
+
+//=================================================================================
 
 - (void) dealloc {
 	
@@ -246,7 +342,7 @@
                 [itemListView release];
             }
         }
-
+        
         if ([self.subviews count] > 0) {
             [self updateDisplayValues];
             [self setNeedsDisplay];
@@ -269,7 +365,7 @@
     
     self.keyboardCancelled = NO;
     [self updateDisplayValues];
-	}
+}
 
 - (void) layoutInPortrait {
     CGRect bounds = self.bounds;  
@@ -286,6 +382,7 @@
     
     itemContentView.frame = topContainerRect;
     toolsContentView.frame = bottomContainerRect;
+    ShipToStoreIDView.frame = bottomContainerRect;
     
     // Resize the Item Content
     if (itemDetailView) {
@@ -302,10 +399,13 @@
     
     addToCartButton.frame = CGRectMake(addToCartRect.size.width - BUTTON_SIZE - BUTTON_SPACING/2, 
                                        (addToCartRect.size.height - BUTTON_SIZE)/2, 
-                                      BUTTON_SIZE, BUTTON_SIZE);
+                                       BUTTON_SIZE, BUTTON_SIZE);
     exitButton.frame = CGRectMake(exitRect.origin.x + BUTTON_SPACING/2, 
                                   (exitRect.size.height - BUTTON_SIZE)/2, 
-                                  BUTTON_SIZE, BUTTON_SIZE);   
+                                  BUTTON_SIZE, BUTTON_SIZE);
+    confirmButton.frame = CGRectMake(exitRect.origin.x + BUTTON_SPACING/2 + 65,
+                                  (exitRect.size.height - BUTTON_SIZE)/2,
+                                  BUTTON_SIZE - 20, BUTTON_SIZE);
 }
 
 
@@ -324,6 +424,7 @@
     
     itemContentView.frame = leftContainerRect;
     toolsContentView.frame = rightContainerRect;
+    ShipToStoreIDView.frame = rightContainerRect;
     
     // Resize the Item Content
     if (itemDetailView) {
@@ -343,6 +444,9 @@
     exitButton.frame = CGRectMake((exitRect.size.width - BUTTON_SIZE)/2, 
                                   exitRect.origin.y + BUTTON_SPACING/2, 
                                   BUTTON_SIZE, BUTTON_SIZE);
+    confirmButton.frame = CGRectMake((exitRect.size.width - BUTTON_SIZE)/2,
+                                  exitRect.origin.y + BUTTON_SPACING/2,
+                                  BUTTON_SIZE, BUTTON_SIZE);
     
     // Resize the addQuantity Fields
     addQuantityField.inputAccessoryView.frame = CGRectMake(0.0f, 0.0f, width, KEYBOARD_TOOLBAR_HEIGHT);
@@ -353,7 +457,7 @@
     CGFloat width = bounds.size.width;
     CGFloat height = bounds.size.height;
     
-     
+    
     
     addQuantityField.inputAccessoryView.frame = CGRectMake(0.0f, 0.0f, width, KEYBOARD_TOOLBAR_HEIGHT);
     
@@ -380,7 +484,7 @@
         // Lay out the views
         addQuantityField.frame = CGRectMake(MARGIN*3, (addQuantityFieldRect.size.height - ADDQUANTITY_FIELD_HEIGHT)/2, addQuantityFieldRect.size.width - MARGIN*3, ADDQUANTITY_FIELD_HEIGHT);
         addQuantityUnitsLabel.frame = CGRectMake(addQuantityLabelRect.origin.x + MARGIN*2, (addQuantityLabelRect.size.height - ADDQUANTITY_FIELD_HEIGHT)/2, addQuantityLabelRect.size.width, ADDQUANTITY_FIELD_HEIGHT);
-        addQuantityUnitsLabel.textAlignment = UITextAlignmentLeft;
+        addQuantityUnitsLabel.textAlignment = NSTextAlignmentLeft;
         
         addQuantityFullBoxesLabel.frame = CGRectMake(MARGIN*3, addQuantityFieldRect.size.height + (addQuantityFullBoxLabelRect.size.height - ADDQUANTITY_FIELD_HEIGHT)/2, 
                                                      addQuantityFullBoxLabelRect.size.width - MARGIN*3, ADDQUANTITY_FIELD_HEIGHT);
@@ -405,14 +509,14 @@
         // Lay out the views
         addQuantityField.frame = CGRectMake(MARGIN, addQuantityFieldRect.size.height - ADDQUANTITY_FIELD_HEIGHT, addQuantityFieldRect.size.width - MARGIN*2, ADDQUANTITY_FIELD_HEIGHT);
         addQuantityUnitsLabel.frame = CGRectMake(MARGIN, addQuantityLabelRect.origin.y, addQuantityLabelRect.size.width, ADDQUANTITY_FIELD_HEIGHT);
-        addQuantityUnitsLabel.textAlignment = UITextAlignmentLeft;
+        addQuantityUnitsLabel.textAlignment = NSTextAlignmentLeft;
         
         addQuantityFullBoxesLabel.frame = CGRectMake(MARGIN, addQuantityFullBoxLabelRect.origin.y + (addQuantityFullBoxLabelRect.size.height - ADDQUANTITY_FIELD_HEIGHT), 
                                                      addQuantityFullBoxLabelRect.size.width - MARGIN*2, ADDQUANTITY_FIELD_HEIGHT);
         addQuantityFullBoxSwitch.frame = CGRectMake(MARGIN, addQuantityFullBoxSwitchRect.origin.y,
                                                     addQuantityFullBoxSwitchRect.size.width, 0);
     }
-
+    
     
 }
 
@@ -462,7 +566,7 @@
     
     // Do I show the convert to boxes toggle
     if ([pi isUOMConversionRequired]) {
-      addQuantityFullBoxSwitch.on = pi.defaultToBox;
+        addQuantityFullBoxSwitch.on = pi.defaultToBox;
         addQuantityFullBoxesLabel.hidden = NO;
         addQuantityFullBoxSwitch.hidden = NO;
         
@@ -472,9 +576,80 @@
         addQuantityFullBoxSwitch.hidden = YES;
     }
     
+    //Enning Tang Add ShipToStoreID here
     [self layoutAddQuantityView];
     
 	addQuantityView.hidden = NO;
+}
+
+- (void) handleconfirmButton:(id)sender {
+    NSLog(@"Confirm Button called");
+    [self removeKeyboardListeners];
+	self.currentFirstResponder = nil;
+    
+	//NSDecimalNumber *getquantity = self.quantity;
+    /*
+	if (self.keyboardCancelled == NO && getquantity != nil && [getquantity floatValue] <= 0) {
+        [AlertUtils showModalAlertMessage:@"You need to enter a quantity greater than zero" withTitle:@"iPOS"];
+        addQuantityView.hidden = YES;
+		self.keyboardCancelled = NO;
+    } else if (self.keyboardCancelled == NO && quantity != nil) {
+		ProductItem *pi = itemToAdd;
+		if (viewDelegate != nil && [viewDelegate respondsToSelector:@selector(addItem:orderQuantity:ofUnits:)]) {
+			[viewDelegate addItem:self orderQuantity:getquantity ofUnits:pi.primaryUnitOfMeasure];
+		}
+	} else {
+		addQuantityView.hidden = YES;
+		self.keyboardCancelled = NO;
+	}*/
+    NSLog(@"%@", self.ShipToStoreID);
+    NSString *message = [NSString stringWithFormat:@"%@%@%@", @"Ship this item to Store ", self.ShipToStoreID, @"?"];
+    UIAlertView *quoteAlert = [[UIAlertView alloc] init];
+	quoteAlert.title = @"Confirm Item?";
+	quoteAlert.message = message;
+	quoteAlert.delegate = self;
+	[quoteAlert addButtonWithTitle:@"Cancel"];
+	[quoteAlert addButtonWithTitle:@"OK"];
+	[quoteAlert show];
+	[quoteAlert release];
+    /*
+    ProductItem *pi = itemToAdd;
+    if (viewDelegate != nil && [viewDelegate respondsToSelector:@selector(addItem:orderQuantity:ofUnits:)]) {
+        [viewDelegate addItem:self orderQuantity:getquantity ofUnits:pi.primaryUnitOfMeasure];
+    }*/
+}
+
+- (void)alertView:(UIAlertView *)anAlertView clickedButtonAtIndex:(NSInteger)aButtonIndex {
+	
+    // Send quote modal.
+    if ([anAlertView.title isEqualToString:@"Confirm Item?"]) {
+		// Check by titles rather than index since documentation suggests that different
+		// devices can set the indexes differently.
+		NSString *clickedButtonTitle = [anAlertView buttonTitleAtIndex:aButtonIndex];
+		if ([clickedButtonTitle isEqualToString:@"OK"]) {
+            NSDecimalNumber *getquantity = self.quantity;
+            itemToAdd.ShipToStoreID = self.ShipToStoreID;
+            //Enning Tang Add ShipToStoreID TaxRate here
+            itemToAdd.taxRate = (NSDecimalNumber *)[facade taxratelookupbystoreid:self.ShipToStoreID];
+            NSString *str = [facade taxratelookupbystoreid:self.ShipToStoreID].stringValue;
+            NSLog(@"TaxRate Get: -- %@", str);
+            ProductItem *pi = itemToAdd;
+            NSLog(@"PI: %@", pi.ShipToStoreID);
+            if (viewDelegate != nil && [viewDelegate respondsToSelector:@selector(addItem:orderQuantity:ofUnits:)]) {
+                [viewDelegate addItem:self orderQuantity:getquantity ofUnits:pi.primaryUnitOfMeasure];
+            }
+		}
+	}
+    
+    // Cancel and logout modal.
+    if ([anAlertView.title isEqualToString:@"Do you want to cancel this order?"]) {
+		NSString *clickedButtonTitle = [anAlertView buttonTitleAtIndex:aButtonIndex];
+		if ([clickedButtonTitle isEqualToString:@"Cancel Order"]) {
+            
+		}
+	}
+    
+	// Other generic alerts will just fall through and dismiss with no other actions.
 }
 
 - (void) handleDefaultFullBoxesSwitch:(id)sender {
@@ -507,9 +682,11 @@
 #pragma mark -
 #pragma mark ItemDetailViewDelegate
 - (void) unitOfMeasureExchange:(ItemDetailView *)itemDetailView selectedUOM:(NSString *)uom {
+    NSLog(@"unitOfMeasureExchange");
     if (!addQuantityView.hidden) {
         ProductItem *pi = itemToAdd;
         addQuantityUnitsLabel.text = [pi unitOfMeasureDisplay:[pi getSelectedUOMForDisplay]];
+        NSLog(@"PI PRIMARY UOM FROM UNITOFMEASURE EXCHANGE: %@", pi.primaryUnitOfMeasure);
     }
 }
 
@@ -517,7 +694,7 @@
 #pragma mark ExtUITextField delegates
 - (BOOL)textFieldShouldBeginEditing:(ExtUITextField *)textField {
 	self.currentFirstResponder = textField;
-	 return YES;
+    return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(ExtUITextField *)textField {
@@ -532,22 +709,109 @@
 - (void)textFieldDidEndEditing:(ExtUITextField *)textField {
 	[self removeKeyboardListeners];
 	self.currentFirstResponder = nil;
-	
-	NSDecimalNumber *quantity = ([textField.text length] > 0) ? (NSDecimalNumber *)[quantityFormatter numberFromString:textField.text] : nil;
-	if (self.keyboardCancelled == NO && quantity != nil && [quantity floatValue] <= 0) {
-        [AlertUtils showModalAlertMessage:@"You need to enter a quantity greater than zero" withTitle:@"iPOS"];
+    
+    self.quantity = ([textField.text length] > 0) ? (NSDecimalNumber *)[quantityFormatter numberFromString:textField.text] : nil;
+    //Set default value
+    NSInteger temp = [self.currentStoreID integerValue];
+    int getstoreidint = temp;
+    int rows = getstoreidint/100 - 2;
+    [StorePicker selectRow:rows inComponent:0 animated:YES];
+    self.ShipToStoreID = [NSString stringWithFormat:@"%d", temp];
+    
+    //quantity = 0;
+    NSLog(@"%@", textField.text);
+    //Enning Tang Add check customer info 11/2/2012
+    NSLog(@"Check Customer info");
+    orderCart = [OrderCart sharedInstance];
+    Order *order = [orderCart getOrder];
+    Customer *cust = [orderCart getCustomerForOrder];
+    facade = [iPOSFacade sharedInstance];
+    Customer *getcust = [facade lookupCustomerByPhone:cust.phoneNumber];
+    
+    NSLog(@"OrderID: %@", order.orderId.stringValue);
+    NSLog(@"order.taxexempt: %@", [NSString stringWithFormat:@"%d", order.taxExempt]);
+    NSLog(@"customer.taxexempt: %@", [NSString stringWithFormat:@"%d", getcust.taxExempt]);
+    NSLog(@"order.customertypeid: %@", order.customer.customerTypeId.stringValue);
+    NSLog(@"customer.customertypeid: %@", getcust.customerTypeId.stringValue);
+    if (order.taxExempt != getcust.taxExempt)
+    {
+        if (order.orderId != nil)
+        {
+            [AlertUtils showModalAlertMessage:@"The Customer's taxExempt has been updated, please create a new order." withTitle:@"iPOS"];
+            [self removeFromSuperview];
+            return;
+        }
+    }
+    else if (order.customer.customerTypeId != getcust.customerTypeId)
+    {
+        if (order.orderId != nil)
+        {
+            [AlertUtils showModalAlertMessage:@"The Customer Type info has been updated, please create a new order." withTitle:@"iPOS"];
+            [self removeFromSuperview];
+            return;
+        }
+        
+    }
+    
+    @try
+    {
+        self.quantity = ([textField.text length] > 0) ? (NSDecimalNumber *)[quantityFormatter numberFromString:textField.text] : 0;
+        if (self.keyboardCancelled == NO && quantity != nil && [quantity floatValue] <= 0) {
+            [AlertUtils showModalAlertMessage:@"You need to enter a quantity greater than zero" withTitle:@"iPOS"];
+            addQuantityView.hidden = YES;
+            self.keyboardCancelled = NO;
+        } else if (self.keyboardCancelled == NO && quantity != nil) {
+            //Enning Tang get ship to store id here 10/30/2012
+            NSDecimalNumber *getquantity = self.quantity;
+            
+            NSLog(@"Order Store id: %@", order.store.storeId.stringValue);
+            NSLog(@"Session Strore id: %@", [iPOSFacade sharedInstance].sessionInfo.storeId.stringValue);
+            
+            itemToAdd.ShipToStoreID = [iPOSFacade sharedInstance].sessionInfo.storeId.stringValue;
+            //Enning Tang Add ShipToStoreID TaxRate here
+            NSLog(@"!!!!!!!!!!!!TaxRate Before Changing: %@", itemToAdd.taxRate.stringValue);
+            NSLog(@"!!!!!!!!!!!!Self.ShipToStoreID: %@", self.ShipToStoreID);
+            
+            //itemToAdd.taxRate = (NSDecimalNumber *)[facade taxratelookupbystoreid:self.ShipToStoreID]; //Don't set default TaxRate
+            
+            NSString *str = [facade taxratelookupbystoreid:self.ShipToStoreID].stringValue;
+            NSLog(@"TaxRate Get: -- %@", str);
+            ProductItem *pi = itemToAdd;
+            NSLog(@"PI: %@", pi.ShipToStoreID);
+            if (viewDelegate != nil && [viewDelegate respondsToSelector:@selector(addItem:orderQuantity:ofUnits:)]) {
+                [viewDelegate addItem:self orderQuantity:getquantity ofUnits:pi.primaryUnitOfMeasure];
+            }
+            //Enning Tang Disable adding items with ship to store 10/30/2012
+            //addQuantityView.hidden = YES;
+            //toolsContentView.hidden = YES;
+            //ShipToStoreIDView.hidden = NO;
+        } else {
+            addQuantityView.hidden = YES;
+            self.keyboardCancelled = NO;
+            [AlertUtils showModalAlertMessage:@"Invalid input" withTitle:@"iPOS"];
+        }
+    }
+    @catch (NSException *exception)
+    {
+        NSLog(@"Caught");
+        [AlertUtils showModalAlertMessage:@"Invalid input" withTitle:@"iPOS"];
         addQuantityView.hidden = YES;
-		self.keyboardCancelled = NO;
-    } else if (self.keyboardCancelled == NO && quantity != nil) {
-		ProductItem *pi = itemToAdd;
-		if (viewDelegate != nil && [viewDelegate respondsToSelector:@selector(addItem:orderQuantity:ofUnits:)]) {
-			[viewDelegate addItem:self orderQuantity:quantity ofUnits:pi.primaryUnitOfMeasure];
-		}
-	} else {
-		addQuantityView.hidden = YES;
-		self.keyboardCancelled = NO;
-	}
-
+        self.keyboardCancelled = NO;
+        @throw exception;
+    }
+    //Enning Tang Add ShipToStoreID here
+    //facade = [iPOSFacade sharedInstance];
+    //stores = [facade storelookup];
+    
+    //addQuantityView.hidden = YES;
+    //toolsContentView.hidden = YES;
+    //ShipToStoreIDView.hidden = NO;
+    
+    //ShipToStoreIDView = [[ShipToStoreIDViewController alloc] initWithFrame:self.view.bounds];
+	//[ShipToStoreIDView setDelegate:self];
+	//[self.view addSubview:searchOverlay];
+	//[ShipToStoreIDView release];
+    
 }
 
 - (void)addKeyboardListeners {
@@ -581,7 +845,7 @@
 #pragma mark -
 #pragma mark Keyboard Management
 - (void)keyboardWillShow:(NSNotification *)notification {
-
+    
 	UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
 	
 	NSDictionary* userInfo = [notification userInfo];
@@ -623,8 +887,8 @@
 	// iOS 3 sends hide and show notifications right after each other
 	// when switching between textFields, so cancel -scrollToOldPosition requests
 	[NSObject cancelPreviousPerformRequestsWithTarget:self];
-		
-
+    
+    
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification {
@@ -657,11 +921,11 @@
         
         [UIView beginAnimations:nil context:nil];  
         [UIView setAnimationDuration:0.3];
-            slideOutFrame.origin.x = itemContentView.bounds.size.width;
-            slideInFrame.origin.x = 0.0f;
+        slideOutFrame.origin.x = itemContentView.bounds.size.width;
+        slideInFrame.origin.x = 0.0f;
         
-            itemDetailView.frame = slideOutFrame;
-            itemListView.frame = slideInFrame;
+        itemDetailView.frame = slideOutFrame;
+        itemListView.frame = slideInFrame;
         [UIView commitAnimations]; 
         
         addToCartButton.enabled = NO;
@@ -682,12 +946,12 @@
         
         [UIView beginAnimations:nil context:nil];  
         [UIView setAnimationDuration:0.3];
-            slideOutFrame.origin.x = - (itemContentView.bounds.size.width);
-            slideInFrame.origin.x = 0.0f;
+        slideOutFrame.origin.x = - (itemContentView.bounds.size.width);
+        slideInFrame.origin.x = 0.0f;
         
-            itemListView.frame = slideOutFrame;
-            itemDetailView.frame = slideInFrame;
-            itemDetailView.alpha = 1.0;
+        itemListView.frame = slideOutFrame;
+        itemDetailView.frame = slideInFrame;
+        itemDetailView.alpha = 1.0;
         [UIView commitAnimations]; 
         
         addToCartButton.enabled = YES;

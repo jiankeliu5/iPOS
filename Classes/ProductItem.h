@@ -61,6 +61,14 @@ typedef enum {
     NSArray *distributionCenterList;
 	
 	NSDictionary *unitOfMeasureLookup;
+    
+    //Enning Tang ShipToStoreID
+    NSString *ShipToStoreID;
+    
+    //Enning Tang Added LTL Weight 2013/02/06
+    NSNumber *itemLTLWeight;
+    
+    
 }
 
 extern NSString * const UOM_EACH;
@@ -73,6 +81,7 @@ extern NSString * const UOM_SET;
 extern NSString * const UOM_SQFT;
 
 @property(nonatomic, retain) NSNumber *itemId;
+@property(nonatomic, retain) NSNumber *itemQty;
 @property(nonatomic, retain) NSString *sku;
 @property(nonatomic, retain) NSString *description;
 @property(nonatomic, retain) NSString *vendorName;
@@ -99,6 +108,11 @@ extern NSString * const UOM_SQFT;
 @property(nonatomic, retain) NSArray *distributionCenterList;
 
 @property(nonatomic, retain) NSString *openItemStatus;
+
+@property (nonatomic, retain) NSString *ShipToStoreID;
+
+//Enning Tang Added itemLTLWeight 2013/02/06
+@property(nonatomic, retain) NSNumber *itemLTLWeight;
 
 - (BOOL) isUOMConversionRequired;
 - (void) toggleUOM;

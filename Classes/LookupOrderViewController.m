@@ -17,6 +17,8 @@
 #import "OrderItemsViewController.h"
 #import "CustomerListViewController.h"
 
+#import "LookupSheetViewController.h"
+
 #import "UIScreen+Helpers.h"
 
 #define TEXT_FIELD_HEIGHT 40.0f
@@ -25,6 +27,7 @@
 - (void)layoutView: (UIInterfaceOrientation) interfaceOrientation;
 - (void)performSearch:(ExtUITextField *) textField;
 - (void)handleClose:(id)sender;
+- (void)lookupSelectionProjectPressed:(id)sender;
 @end
 
 @implementation LookupOrderViewController
@@ -77,15 +80,6 @@
 
 #pragma mark -
 #pragma mark UIViewController overrides
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAll;
-}
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -114,7 +108,7 @@
     lookupCustomerField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
 	lookupCustomerField.textColor = [UIColor blackColor];
 	lookupCustomerField.borderStyle = UITextBorderStyleRoundedRect;
-	lookupCustomerField.textAlignment = UITextAlignmentCenter;
+	lookupCustomerField.textAlignment = NSTextAlignmentCenter;
 	lookupCustomerField.clearsOnBeginEditing = NO;
 	lookupCustomerField.placeholder = @"Customer By Name";
 	lookupCustomerField.tagName = @"LookupCustomerName";
@@ -128,7 +122,7 @@
     lookupOrderPhoneField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
 	lookupOrderPhoneField.textColor = [UIColor blackColor];
 	lookupOrderPhoneField.borderStyle = UITextBorderStyleRoundedRect;
-	lookupOrderPhoneField.textAlignment = UITextAlignmentCenter;
+	lookupOrderPhoneField.textAlignment = NSTextAlignmentCenter;
 	lookupOrderPhoneField.clearsOnBeginEditing = NO;
 	lookupOrderPhoneField.placeholder = @"Order By Phone #";
 	lookupOrderPhoneField.tagName = @"LookupOrderPhone";
@@ -142,7 +136,7 @@
     lookupOrderIdField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
 	lookupOrderIdField.textColor = [UIColor blackColor];
 	lookupOrderIdField.borderStyle = UITextBorderStyleRoundedRect;
-	lookupOrderIdField.textAlignment = UITextAlignmentCenter;
+	lookupOrderIdField.textAlignment = NSTextAlignmentCenter;
 	lookupOrderIdField.clearsOnBeginEditing = NO;
 	lookupOrderIdField.placeholder = @"Order By Id";
 	lookupOrderIdField.tagName = @"LookupOrderId";
@@ -151,8 +145,15 @@
 	[super addSearchAndCancelToolbarForTextField:lookupOrderIdField];
 	[self.view addSubview:lookupOrderIdField];
 	[lookupOrderIdField release];
+    
+    lookupSelectionProject = [[[MOGlassButton alloc] initWithFrame:CGRectZero] autorelease];
+    lookupSelectionProject.titleLabel.font = [UIFont systemFontOfSize:1];
+    [lookupSelectionProject setTitle:@"Lookup Selections" forState:UIControlStateNormal];
+	[lookupSelectionProject setupAsBlackButton];
+	[self.view addSubview:lookupSelectionProject];
+    
 	
-    self.closeBarButton = [[[UIBarButtonItem alloc] initWithTitle:@"New Order" style:UIBarButtonItemStyleBordered target:self action:@selector(handleClose:)] autorelease];
+    self.closeBarButton = [[[UIBarButtonItem alloc] initWithTitle:@"Main Menu" style:UIBarButtonItemStyleBordered target:self action:@selector(handleClose:)] autorelease];
     [[self navigationItem] setRightBarButtonItem:self.closeBarButton];
 }
 
@@ -170,17 +171,20 @@
 	
 	lookupOrderIdField.frame = CGRectOffset(lookupOrderPhoneField.frame, 0.0f, textFieldSpacing + (TEXT_FIELD_HEIGHT / 2.0f));
     
-    // UIKit bug.  Need to do this to re-center the placeholder text.
-    lookupOrderIdField.textAlignment = UITextAlignmentLeft;
-    lookupOrderIdField.textAlignment = UITextAlignmentCenter;
+    lookupSelectionProject.frame = CGRectOffset(lookupOrderIdField.frame, 0.0f, textFieldSpacing + (TEXT_FIELD_HEIGHT / 2.0f));
     
     // UIKit bug.  Need to do this to re-center the placeholder text.
-    lookupOrderPhoneField.textAlignment = UITextAlignmentLeft;
-    lookupOrderPhoneField.textAlignment = UITextAlignmentCenter;
+    lookupOrderIdField.textAlignment = NSTextAlignmentLeft;
+    lookupOrderIdField.textAlignment = NSTextAlignmentCenter;
     
     // UIKit bug.  Need to do this to re-center the placeholder text.
-    lookupCustomerField.textAlignment = UITextAlignmentLeft;
-    lookupCustomerField.textAlignment = UITextAlignmentCenter;
+    lookupOrderPhoneField.textAlignment = NSTextAlignmentLeft;
+    lookupOrderPhoneField.textAlignment = NSTextAlignmentCenter;
+    
+    // UIKit bug.  Need to do this to re-center the placeholder text.
+    lookupCustomerField.textAlignment = NSTextAlignmentLeft;
+    lookupCustomerField.textAlignment = NSTextAlignmentCenter;
+
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -196,6 +200,8 @@
 	lookupOrderIdField.delegate = self;
     lookupOrderPhoneField.delegate = self;
     lookupCustomerField.delegate = self;
+    
+    [lookupSelectionProject addTarget:self action:@selector(lookupSelectionProjectPressed:) forControlEvents:UIControlEventTouchUpInside];
     
 }
 
@@ -233,6 +239,16 @@
 {
 	// Do this at the end
 	[super viewDidDisappear:animated];
+}
+
+#pragma mark -
+#pragma mark Button Call Back
+- (void)lookupSelectionProjectPressed:(id)sender {
+	//[linea removeDelegate:self];
+	[self removeKeyboardListeners];
+    LookupSheetViewController *selectionViewController = [[LookupSheetViewController alloc] init];
+	[[self navigationController] pushViewController:selectionViewController animated:TRUE];
+	[selectionViewController release];
 }
 
 #pragma mark -
@@ -295,6 +311,7 @@
             NSNumber *orderIdInput = [orderIdFormatter numberFromString:textField.text];
             if (orderIdInput != nil) {
                 // order comes back autoreleased
+                NSLog(@"OrderID: %@", orderIdInput.stringValue);
                 Order *order = [facade lookupOrderByOrderId:orderIdInput];
                 if (order != nil) {
                     if (![order isCanceled]) {
@@ -303,6 +320,7 @@
                         textField.text = nil;
                         [orderCart setPreviousOrder:order];
                         OrderItemsViewController *orderItemsViewController = [[OrderItemsViewController alloc] init];
+                        orderItemsViewController.restorationIdentifier = @"orderItemVCID";
                         [[self navigationController] pushViewController:orderItemsViewController animated:TRUE];
                         [orderItemsViewController release];
                     } else {
@@ -328,7 +346,7 @@
 - (void)handleClose:(id)sender {
     // Switch the order cart back to working with a new order.
     [orderCart setNewOrder:YES];
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

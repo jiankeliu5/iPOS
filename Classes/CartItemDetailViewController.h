@@ -38,6 +38,8 @@
 	MOGlassButton *closeLineButton;
     MOGlassButton *openButton;
 	MOGlassButton *priceButton;
+    //Enning Tang Add ship Button
+    MOGlassButton *shipButton;
 	
 	NSNumberFormatter *quantityFormatter;
 	

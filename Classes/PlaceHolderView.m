@@ -36,7 +36,7 @@
 	// Just to see where the frame is for debugging.
 	// [_placeHolderLabel setBackgroundColor:[UIColor greenColor]];
 	
-	[_placeHolderLabel setTextAlignment:UITextAlignmentCenter];
+	[_placeHolderLabel setTextAlignment:NSTextAlignmentCenter];
 	[_placeHolderLabel setFont:[UIFont boldSystemFontOfSize:18.0f]];
 	
 	_strokeColor = PH_DEFAULT_STROKE_COLOR;

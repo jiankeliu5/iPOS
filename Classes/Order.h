@@ -48,6 +48,9 @@ typedef enum{
     NSMutableArray *previousPayments;
     
     @private NSMutableArray *orderItemList;
+    
+    //Enning Tang added currentVersion string 3/20/2013
+    NSString *currentVersion;
 }
 
 @property (nonatomic, retain) NSNumber *orderId;
@@ -69,6 +72,9 @@ typedef enum{
 
 @property (nonatomic, retain) NSMutableArray *previousPayments;
 
+//Enning Tang added currentVersion string 3/20/2013
+@property (nonatomic, retain) NSString *currentVersion;
+
 
 - (NSArray *) getOrderItems;
 - (NSArray *) getOrderItemsSortedByStatus;
@@ -77,6 +83,7 @@ typedef enum{
 - (NSArray *) getOrderItems:(LineOrderStatus) lineItemStatus;
 
 - (void) addItemToOrder: (ProductItem *) item withQuantity: (NSDecimalNumber *) quantity;
+-(void) addReturnItemToOrder:(ProductItem *)item withQuantity: (NSDecimalNumber *) quantity SellingPricePrimary:(NSDecimalNumber *) SellingPricePrimary SellingPriceSecondary:(NSDecimalNumber *) SellingPriceSecondary;
 - (void) addOrderItemToOrder:(OrderItem *)orderItem;
 - (void) removeItemFromOrder: (OrderItem *) item;
 - (void) removeAll;
@@ -87,6 +94,8 @@ typedef enum{
 - (void) setAsNewOrder;
 - (void) setAsClosed;
 - (void) setAsCanceled;
+//Enning Tang Set header closed 3/20/2013
+- (void) setHeaderClosed;
 
 - (BOOL) isQuote;
 - (BOOL) isClosed;
@@ -134,6 +143,8 @@ typedef enum{
 
 - (NSDecimalNumber *) calcClosedItemsBalance;
 - (NSDecimalNumber *) calculateProfitMargin;
+
+- (NSNumber *) calcOpenItemsWeight;
 
 #pragma mark -
 #pragma mark Refund methods

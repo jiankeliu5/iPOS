@@ -29,7 +29,7 @@
         refundInfoLabel = [[UILabel alloc] init];
 		refundInfoLabel.backgroundColor = [UIColor clearColor];
 		refundInfoLabel.textColor = [UIColor blackColor];
-		refundInfoLabel.textAlignment = UITextAlignmentLeft;
+		refundInfoLabel.textAlignment = NSTextAlignmentLeft;
 		refundInfoLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
 		refundInfoLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:refundInfoLabel];
@@ -37,7 +37,7 @@
         refundAmountLabel = [[UILabel alloc] init];
 		refundAmountLabel.backgroundColor = [UIColor clearColor];
 		refundAmountLabel.textColor = [UIColor blackColor];
-		refundAmountLabel.textAlignment = UITextAlignmentRight;
+		refundAmountLabel.textAlignment = NSTextAlignmentRight;
 		refundAmountLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
 		refundAmountLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:refundAmountLabel];
@@ -46,7 +46,7 @@
 		signatureRequiredLabel.backgroundColor = [UIColor clearColor];
         signatureRequiredLabel.text = @"Signature Required";
 		signatureRequiredLabel.textColor = [UIColor redColor];
-		signatureRequiredLabel.textAlignment = UITextAlignmentLeft;
+		signatureRequiredLabel.textAlignment = NSTextAlignmentLeft;
 		signatureRequiredLabel.font = [UIFont systemFontOfSize:LABEL_FONT_SIZE];
 		signatureRequiredLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:signatureRequiredLabel];

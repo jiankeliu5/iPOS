@@ -29,6 +29,8 @@
     NSString *balanceDue;
     NSString *totalAccountBalance;
     
+    NSString *totalBalance;
+    
     UIView *mainRoundedView;
     
     UILabel *balanceDueTitle;
@@ -39,6 +41,9 @@
     UIView *ccChargeAmountView;
     id<AccountPaymentViewDelegate> viewDelegate;
     
+    UILabel *totalBalanceDueTitle;
+    UILabel *totalBalanceDueLabel;
+    
     ExtUITextField *chargeAmountTextField;
     MOGlassButton *cancelButton;
 }
@@ -46,5 +51,6 @@
 @property (nonatomic, retain) NSString *balanceDue;
 @property (nonatomic, retain) NSString *totalAccountBalance;
 @property (nonatomic, retain) id viewDelegate;
+@property (nonatomic, retain) NSString *totalBalance;
 
 @end

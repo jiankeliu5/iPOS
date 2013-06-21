@@ -7,9 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+//#import "NSDebug.h"
 
 int main(int argc, char* argv[]) 
 {
+    /*
+    NSZombieEnabled = YES;
+    NSDeallocateZombies = NO;
+
+    if (getenv("NSZombieEnabled") || getenv("NSAutoreleaseFreedObjectCheckEnabled"))
+    {
+        NSLog(@"Zombie Enabled");
+    }*/
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     int retVal = UIApplicationMain(argc, argv, nil, @"iPOSAppDelegate");
     [pool release];

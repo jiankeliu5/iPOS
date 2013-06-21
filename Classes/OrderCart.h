@@ -40,6 +40,7 @@
 - (void) bindCustomerToOrder: (Customer * ) customer;
 
 - (void) addItem: (ProductItem *) item withQuantity: (NSDecimalNumber *) quantity;
+- (void) addReturnItem:  (ProductItem *) item withQuantity: (NSDecimalNumber *) quantity SellingPricePrimary:(NSDecimalNumber *)SellingPricePrimary SellingPriceSecondary:(NSDecimalNumber *) SellingPriceSecondary;
 - (void) removeItem: (OrderItem *) orderItem;
 
 - (void) openItem: (OrderItem *) orderItem;
@@ -47,5 +48,7 @@
 
 - (BOOL) saveOrder;
 - (BOOL) saveOrderAsQuote;
+
+- (void) setOrder: (Order *) order;
 
 @end

@@ -10,6 +10,7 @@
 #import "NSString+StringFormatters.h"
 
 #import "NSString+Extensions.h"
+#import "iPOSFacade.h"
 
 // Private interface
 @interface OrderItem()
@@ -54,6 +55,7 @@
 @synthesize isNew;
 @synthesize isModified;
 
+
 #pragma mark Constructor/Deconstructor
 -(id) init {
     self = [super init];
@@ -85,10 +87,39 @@
     item = [productItem retain];
     
     // Is the product item quantity in primary or secondary UOM ??
+    NSLog(@"productQuantity: %@", productQuantity.stringValue);
     [self convertToQuantity:productQuantity];
     
     return self;
 }
+
+//Enning Tang initWithReturnItem 3/22/2013
+-(id) initWithReturnItem:(ProductItem *) productItem AndQuantity:(NSDecimalNumber *) productQuantity SellingPricePrimary:(NSDecimalNumber *) SellingPricePrimary SellingPriceSecondary:(NSDecimalNumber *) SellingPriceSecondary{
+    self = [self init];
+    
+    if (self == nil) {
+        return nil;
+    }
+    
+    // Set the doConversionToBoxes based on item defaultToBoxes
+    doConversionToFullBoxes = productItem.defaultToBox;
+    
+    // Default the status to open
+    statusId = [[NSNumber numberWithInt:LINE_ORDERSTATUS_OPEN] retain];
+    
+    // Default selling price to retail price
+    //sellingPricePrimary = [productItem.retailPricePrimary copy];
+    //sellingPriceSecondary = [productItem.retailPriceSecondary copy];
+    NSLog(@"init set selling price: %@", SellingPricePrimary);
+    sellingPricePrimary = [SellingPricePrimary copy];
+    sellingPriceSecondary = [SellingPriceSecondary copy];
+    
+    item = [productItem retain];
+    self.quantityPrimary = productQuantity;
+    
+    return self;
+}
+//========================================
 
 -(void) dealloc {
     [lineNumber release];
@@ -278,6 +309,14 @@
     [self markAsModified];
 }
 
+//Enning Tang Added setStatusToRetrun 3/15/2013
+- (void) setStatusToReturn {
+    self.statusId = [NSNumber numberWithInt: LINE_ORDERSTATUS_RETURN];
+    
+    // Mark as modified
+    //[self markAsModified];
+}
+
 - (BOOL) allowClose {
     BOOL canClose = NO;
     NSString *storeIdAsStr = @""; 
@@ -287,18 +326,47 @@
     if (!item || !item.store || !item.store.availability) {
         return NO;
     }
+    //Enning Tang check availability 11/19/2012
+    ProductItem *StoreItem = [[[ProductItem alloc] init] autorelease];
+    iPOSFacade *facade;
+    facade = [iPOSFacade sharedInstance];
     
-    onHandInStore = item.store.availability.onHandPrimary;
-    numberAvailableInStore = item.store.availability.availablePrimary;
-    storeIdAsStr = [NSString stringWithFormat:@"%@", item.store.storeId];
+    //Enning Tang Change check store availability to shiptostore
+    StoreItem = [facade lookupProductItemByStore:item.sku withStoreid:item.ShipToStoreID];
+    if (item.store.availability) {
+        item.store.availability.item = StoreItem;
+        NSLog(@"Store Ava storeid = %@", StoreItem.store.storeId.stringValue);
+    }
+    //==========================================================
+    
+    //onHandInStore = item.store.availability.onHandPrimary;
+    //numberAvailableInStore = item.store.availability.availablePrimary;
+    //storeIdAsStr = [NSString stringWithFormat:@"%@", item.store.storeId];
+    
+    //NSLog(@"Item store: %@", item.store.storeId.stringValue);
+    
+    @try {
+        onHandInStore = StoreItem.store.availability.onHandPrimary;
+        numberAvailableInStore = StoreItem.store.availability.availablePrimary;
+        storeIdAsStr = [NSString stringWithFormat:@"%@", StoreItem.store.storeId];
+        
+        NSLog(@"Item store: %@", StoreItem.store.storeId.stringValue);
+    }
+    @catch (NSException *exception) {
+        onHandInStore = item.store.availability.onHandPrimary;
+        numberAvailableInStore = item.store.availability.availablePrimary;
+        storeIdAsStr = [NSString stringWithFormat:@"%@", item.store.storeId];
+        
+        NSLog(@"Item store: %@", item.store.storeId.stringValue);
+    }
     
     NSComparisonResult onHandGreaterOrEqualToQuantity = [onHandInStore compare:quantityPrimary];
     NSComparisonResult availableGreaterOrEqualToQuantity = [numberAvailableInStore compare:quantityPrimary];
     NSComparisonResult onHandGreaterOrEqualAvailable = [onHandInStore compare:numberAvailableInStore];
     if (isNew) {
         if ((onHandGreaterOrEqualToQuantity == NSOrderedDescending || onHandGreaterOrEqualToQuantity == NSOrderedSame) 
-            && (availableGreaterOrEqualToQuantity == NSOrderedDescending || availableGreaterOrEqualToQuantity == NSOrderedSame) 
-            && (onHandGreaterOrEqualAvailable == NSOrderedDescending || onHandGreaterOrEqualAvailable == NSOrderedSame)){
+            && (availableGreaterOrEqualToQuantity == NSOrderedDescending || availableGreaterOrEqualToQuantity == NSOrderedSame)
+            /*&& (onHandGreaterOrEqualAvailable == NSOrderedDescending || onHandGreaterOrEqualAvailable == NSOrderedSame)*/){
             canClose = YES;
         } 
     } else {
@@ -311,7 +379,7 @@
             if ([lotn isEmpty] || ![mcu isEqualToString:storeIdAsStr] || ![locn isEqualToString:@"STORE"]) {
                 if ((onHandGreaterOrEqualToQuantity == NSOrderedDescending || onHandGreaterOrEqualToQuantity == NSOrderedSame) 
                     && (availableGreaterOrEqualToQuantity == NSOrderedDescending || availableGreaterOrEqualToQuantity == NSOrderedSame) 
-                    && (onHandGreaterOrEqualAvailable == NSOrderedDescending || onHandGreaterOrEqualAvailable == NSOrderedSame)) {
+                    /*&& (onHandGreaterOrEqualAvailable == NSOrderedDescending || onHandGreaterOrEqualAvailable == NSOrderedSame)*/) {
                     canClose = YES;
                 } 
             } else { 
@@ -367,19 +435,32 @@
 
 - (NSDecimalNumber *) calcLineSubTotal {
     NSDecimalNumber *lineTotal = [sellingPricePrimary decimalNumberByMultiplyingBy:quantityPrimary];
-    
     return lineTotal;
+}
+
+- (NSNumber *) calcLineWeight {
+    iPOSFacade *facade;
+    facade = [iPOSFacade sharedInstance];
+    //NSNumber *lineWeight = [sellingPricePrimary decimalNumberByMultiplyingBy:quantityPrimary];
+    NSNumber *lineWeight = [facade getLTLWeight:item.itemId withQuantity:quantityPrimary];
+    
+    return lineWeight;
 }
 
 - (NSDecimalNumber *) calcLineTax {
     NSDecimalNumber *lineTax = [[item.taxRate decimalNumberByMultiplyingBy:sellingPricePrimary] decimalNumberByMultiplyingBy:quantityPrimary];
+    //Enning Tang show taxRate for items:
+    NSLog(@"TaxRate: %@", item.taxRate.stringValue);
+    NSLog(@"ShipToStoreID: %@", item.ShipToStoreID);
     
     return lineTax;
 }
 
 - (NSDecimalNumber *) calcDiscountFromPrimarySellingPrice:(NSDecimalNumber *) newSellingPrice {
     NSDecimalNumber *actualTotal = [self calcLineSubTotal];
-    NSDecimalNumber *discountedTotal = [newSellingPrice decimalNumberByMultiplyingBy:quantityPrimary];
+    //NSDecimalNumber *discountedTotal = [newSellingPrice decimalNumberByMultiplyingBy:quantityPrimary];
+    //Enning Tang Change to Secondary UOM
+    NSDecimalNumber *discountedTotal = [newSellingPrice decimalNumberByMultiplyingBy:quantitySecondary];
     
     return [actualTotal decimalNumberBySubtracting:discountedTotal];
 }
@@ -477,10 +558,38 @@
     
     quantityForConversion = [self adjustQuantity:productQuantity forUOM:selectedUOM];
     
+    NSLog(@"quantityForConversion: %@", quantityForConversion.stringValue);
+    
     if (![self isConversionNeeded]) {
-        self.quantityPrimary = quantityForConversion;
-        self.quantitySecondary = quantityForConversion;
+        NSLog(@"convertToQuantity1");
+        NSLog(@"item box? %d", item.defaultToBox);
+        NSLog(@"item piece per box: %@", item.piecesPerBox.stringValue);
+        NSLog(@"item conversion: %@", item.conversion.stringValue);
+        //Enning Tang check if defaultToBox 6/4/2013
+        if (doConversionToFullBoxes)
+        {
+            // Get the number of pieces needed
+            NSDecimalNumberHandler *roundUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:0
+                                                                                          raiseOnExactness:NO raiseOnOverflow:NO
+                                                                                          raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+            
+            // Do we convert to full boxes or not ??
+            NSDecimalNumber *piecesNeeded = [quantityForConversion decimalNumberByRoundingAccordingToBehavior:roundUp];
+            
+            NSDecimalNumber *piecesPerBox = [NSDecimalNumber decimalNumberWithDecimal:[item.piecesPerBox decimalValue]];
+            NSDecimalNumber *boxesNeeded = [[piecesNeeded decimalNumberByDividingBy:piecesPerBox] decimalNumberByRoundingAccordingToBehavior:roundUp];
+            self.quantityPrimary = [boxesNeeded decimalNumberByMultiplyingBy:piecesPerBox];
+            self.quantitySecondary = [boxesNeeded decimalNumberByMultiplyingBy:piecesPerBox];
+        }else
+        {
+            self.quantityPrimary = quantityForConversion;
+            self.quantitySecondary = quantityForConversion;
+        }
+        //==================================================================================================
+        //self.quantityPrimary = quantityForConversion;
+        //self.quantitySecondary = quantityForConversion;
     } else if ([item.primaryUnitOfMeasure isEqualToString:UOM_EACH]){
+        NSLog(@"convertToQuantity2");
         if (item.selectedUOM == UOMPrimary) {
             self.quantityPrimary = [self adjustQuantity:[self convertToBoxesWithPieces:quantityForConversion] forUOM:selectedUOM];
             self.quantitySecondary = [self convertToSquareFeet:quantityPrimary];
@@ -489,14 +598,19 @@
             self.quantitySecondary = [self convertToSquareFeet:quantityPrimary];
         }
     } else if ([item.primaryUnitOfMeasure isEqualToString:UOM_COVERAGE] || [item.primaryUnitOfMeasure isEqualToString:UOM_SQFT]) {
+        NSLog(@"convertToQuantity3");
         if (item.selectedUOM == UOMPrimary) {
+            NSLog(@"selectedUOM == UOMPrimary");
             self.quantityPrimary = [self convertToSquareFeet:quantityForConversion];
             self.quantitySecondary = [self adjustQuantity:[self convertToPieces:quantityForConversion] forUOM:item.secondaryUnitOfMeasure];
         } else {
+            NSLog(@"selectedUOM != UOMPrimary");
             self.quantitySecondary = [self adjustQuantity:[self convertToBoxesWithPieces:quantityForConversion] forUOM:item.secondaryUnitOfMeasure];
+            NSLog(@"quantitySecondary: %@", self.quantitySecondary.stringValue);
             self.quantityPrimary = [self convertToSquareFeet:quantitySecondary];
         }
     } else {
+        NSLog(@"convertToQuantity4");
         // Straight conversion (NOTE:  Based on feedback from The Tile Shop, this should not happen, but I am putting it here for completeness).
         if (item.selectedUOM == UOMPrimary) {
             self.quantityPrimary = quantityForConversion;
@@ -505,8 +619,8 @@
             self.quantityPrimary = [self adjustQuantity:[quantityForConversion decimalNumberByDividingBy:item.conversion] forUOM:item.primaryUnitOfMeasure];
             self.quantitySecondary = quantityForConversion;
         }
-
     }
+    NSLog(@"after conversion: %@", quantityPrimary.stringValue);
 }
 
 /**

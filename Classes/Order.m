@@ -44,11 +44,13 @@
 @synthesize store;
 @synthesize customer;
 @synthesize previousPayments;
+//Enning Tang added currentVersion 3/20/2013
+@synthesize currentVersion;
 
 #pragma mark Constructor/Deconstructor
 -(id) init {
     self = [super init];
-            
+    
     if (self == nil) {
         return self;
     }
@@ -140,6 +142,11 @@
             [item setStatusToClosed];
         }
     }
+}
+
+//Enning Tang set header closed 3/20/2013
+- (void) setHeaderClosed {
+    self.orderTypeId = [NSNumber numberWithInt:ORDER_TYPE_CLOSED];
 }
 
 - (NSNumber *) getOrderTypeId {
@@ -262,9 +269,9 @@
         
         [self addError:error];
         return NO;
-    } 
+    }
     
-    return YES;        
+    return YES;
 }
 
 - (BOOL) validateAsNewQuote {
@@ -290,7 +297,7 @@
 - (BOOL) purchaseOrderInfoRequired {
     if (customer && [customer isPaymentOnAccountEligable]) {
         return YES;
-    } 
+    }
     
     return NO;
 }
@@ -307,14 +314,14 @@
     
     if ([orderItemList count] > 0) {
         NSSortDescriptor *itemDetailStatusDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"statusId"
-                                                                            ascending:YES] autorelease];
-        NSSortDescriptor *openItemStatusDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"openItemStatus"
                                                                                     ascending:YES] autorelease];
+        NSSortDescriptor *openItemStatusDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"openItemStatus"
+                                                                                  ascending:YES] autorelease];
         NSArray *sortDescriptors = [NSArray arrayWithObjects:itemDetailStatusDescriptor, openItemStatusDescriptor, nil];
         sortedOrderItemsList = [[NSArray arrayWithArray: orderItemList] sortedArrayUsingDescriptors:sortDescriptors];
         
         return sortedOrderItemsList;
-    } 
+    }
     
     return orderItemList;
 }
@@ -350,12 +357,32 @@
 
 -(void) addItemToOrder:(ProductItem *)item withQuantity: (NSDecimalNumber *) quantity {
     
+    NSLog(@"Order.m addItemToOrder called");
+    
+    //Enning Tang Check if outside freight is taxFree
+    
+    NSLog(@"Item ID: %@", item.itemId.stringValue);
+    if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:5000042]])
+    {
+        NSLog(@"deal with outside freight order.m");
+        NSLog(@"Store ID: %@", item.store.storeId.stringValue);
+        //if ([iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:100] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:900] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:1700] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:1900] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:2400] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:3400] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:3600] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:4200] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:4300] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:4500] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:5000] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:6400] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:1200])
+        if ([item.store.storeId isEqualToNumber:[NSNumber numberWithInt:100]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:900]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:1700]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:1900]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:2400]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:3400]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:3600]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:4200]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:4300]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:4500]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:5000]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:6400]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:7000]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:7100]])
+        {
+            NSLog(@"Set to 0");
+            item.taxRate = [NSDecimalNumber zero];
+        }
+    }
+    
     if (orderItemList != nil) {
         // We can add multiple items of the same type to an order
+        NSLog(@"quantityAdded to array: %@", quantity.stringValue);
         OrderItem *orderItem = [[[OrderItem alloc] initWithItem:item AndQuantity:quantity] autorelease];
         
+        NSLog(@"item primaryUOM: %@", item.primaryUnitOfMeasure);
+        
         [orderItemList addObject:orderItem];
-
+        
         // Set the line number based on the index the item was added in
         orderItem.lineNumber = [NSNumber numberWithInt: [orderItemList count]];
         
@@ -365,8 +392,55 @@
         
         // Set the order item to be a newly added
         orderItem.isNew = YES;
+        
+    }
+    else {
+        NSLog(@"Order.m addItemToOrder orderItemList is nil");
     }
 }
+
+//Enning Tang addReturnItemToOrder 3/22/2013
+-(void) addReturnItemToOrder:(ProductItem *)item withQuantity: (NSDecimalNumber *) quantity SellingPricePrimary:SellingPricePrimary SellingPriceSecondary:SellingPriceSecondary{
+    
+    NSLog(@"Order.m addReturnItemToOrder called");
+    
+    //Enning Tang Check if outside freight is taxFree
+    
+    NSLog(@"Item ID: %@", item.itemId.stringValue);
+    if ([item.itemId isEqualToNumber:[NSNumber numberWithInt:5000042]])
+    {
+        NSLog(@"deal with outside freight order.m");
+        NSLog(@"Store ID: %@", item.store.storeId.stringValue);
+        //if ([iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:100] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:900] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:1700] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:1900] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:2400] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:3400] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:3600] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:4200] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:4300] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:4500] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:5000] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:6400] || [iPOSFacade sharedInstance].sessionInfo.storeId == [NSNumber numberWithInt:1200])
+        if ([item.store.storeId isEqualToNumber:[NSNumber numberWithInt:100]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:900]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:1700]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:1900]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:2400]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:3400]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:3600]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:4200]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:4300]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:4500]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:5000]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:6400]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:7000]] || [item.store.storeId isEqualToNumber:[NSNumber numberWithInt:7100]])
+        {
+            NSLog(@"Set to 0");
+            item.taxRate = [NSDecimalNumber zero];
+        }
+    }
+    
+    if (orderItemList != nil) {
+        // We can add multiple items of the same type to an order
+        NSLog(@"quantityAdded to array: %@", quantity.stringValue);
+        OrderItem *orderItem = [[OrderItem alloc] initWithReturnItem:item AndQuantity:quantity SellingPricePrimary:SellingPricePrimary SellingPriceSecondary:SellingPriceSecondary];
+        
+        [orderItemList addObject:orderItem];
+        
+        // Set the line number based on the index the item was added in
+        orderItem.lineNumber = [NSNumber numberWithInt: [orderItemList count]];
+        
+        // Set the selling price to the retail price
+        [orderItem setStatusToReturn];
+        
+        // Set the order item to be a newly added
+        orderItem.isNew = YES;
+        
+    }
+    else {
+        NSLog(@"Order.m addReturnItemToOrder orderItemList is nil");
+    }
+}
+//==========================================
 
 - (void) addOrderItemToOrder:(OrderItem *)orderItem {
     
@@ -388,11 +462,11 @@
                 if (isNewOrder || orderItem.isNew) {
                     [orderItemList removeObject:orderItem];
                 } else {
-                    [orderItem setStatusToCancel]; 
+                    [orderItem setStatusToCancel];
                 }
                 break;
             }
-        }   
+        }
         
         // Adjust the line number for the remaining order items (Start at 1) for new orders
         if (isNewOrder || item.isNew) {
@@ -422,7 +496,7 @@
         self.errorList = [NSArray arrayWithArray: mergeOrder.errorList];
         return;
     }
-
+    
     if (mergeOrder.orderId && ![mergeOrder.orderId isEqualToNumber:[NSNumber numberWithInt:0]]) {
         self.orderId = mergeOrder.orderId;
         
@@ -506,7 +580,7 @@
         }
     }
     
-    return taxTotal;        
+    return taxTotal;
 }
 
 - (NSDecimalNumber *) calcOrderTotal {
@@ -533,11 +607,12 @@
     if (customer) {
         NSDecimalNumber *balanceClosedItems = [self calcClosedItemsBalance];
         
-        if ([customer isRetailCustomer]) {
-            // Retail customers pay 50% of total balance or total of all closed items (whichever is greater)
-            NSDecimalNumber *balance50Percent = [[[self calcOrderSubTotal] 
-                                                  decimalNumberByAdding:[self calcOrderTax]] 
-                                                  decimalNumberByMultiplyingBy:[NSDecimalNumber decimalNumberWithString: @"0.5"]];
+        //Enning Tang added check contractor 1, if contractor 1 pay 50% first
+        if ([customer isRetailCustomer] || [customer isContractor1]) {
+            // Retail customers or Contractor 1 pay 50% of total balance or total of all closed items (whichever is greater)
+            NSDecimalNumber *balance50Percent = [[[self calcOrderSubTotal]
+                                                  decimalNumberByAdding:[self calcOrderTax]]
+                                                 decimalNumberByMultiplyingBy:[NSDecimalNumber decimalNumberWithString: @"0.5"]];
             if ([balanceClosedItems compare:balance50Percent] == NSOrderedDescending) {
                 balanceDue = [balanceDue decimalNumberByAdding:balanceClosedItems];
             } else {
@@ -567,7 +642,7 @@
 
 - (NSDecimalNumber *) calcBalancePaid {
     NSDecimalNumber *balancePaid = [NSDecimalNumber zero];
-
+    
     if (previousPayments && [previousPayments count] > 0) {
         for (Payment *payment in previousPayments) {
             balancePaid = [balancePaid decimalNumberByAdding:payment.paymentAmount];
@@ -577,13 +652,13 @@
     return balancePaid;
 }
 
-/* Calculates the profit margin for a given order 
+/* Calculates the profit margin for a given order
  For display use banker rounding - look at cart display for example*/
 -(NSDecimalNumber *) calculateProfitMargin {
     NSDecimalNumber *totalExtendedCost = [NSDecimalNumber zero];
     NSDecimalNumber *totalExtendedPrice = [NSDecimalNumber zero];
-    NSDecimalNumberHandler *roundUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:0 
-                                                                                  raiseOnExactness:NO raiseOnOverflow:NO 
+    NSDecimalNumberHandler *roundUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:0
+                                                                                  raiseOnExactness:NO raiseOnOverflow:NO
                                                                                   raiseOnUnderflow:NO raiseOnDivideByZero:NO];
     
     for (OrderItem *item in orderItemList) {
@@ -593,18 +668,23 @@
         }
     }
     
-    
-    NSDecimalNumber *costTimesPrice = [totalExtendedCost decimalNumberByDividingBy: totalExtendedPrice];
-    
-    NSDecimalNumber *oneMinusCostPrice = [[NSDecimalNumber one] decimalNumberBySubtracting: costTimesPrice  ];
+    @try {
+        NSDecimalNumber *costTimesPrice = [totalExtendedCost decimalNumberByDividingBy: totalExtendedPrice];
         
-    NSDecimalNumber *tempMargin = [oneMinusCostPrice decimalNumberByMultiplyingBy: 
-                                   [NSDecimalNumber decimalNumberWithString:@"100.0"] withBehavior: roundUp];
-    
-    NSDecimalNumber *pointFive = [NSDecimalNumber decimalNumberWithString:@"0.05"];
-    NSDecimalNumber *profitMargin = [tempMargin decimalNumberBySubtracting: [tempMargin decimalNumberByMultiplyingBy: pointFive]];
-    
-    return profitMargin;
+        NSDecimalNumber *oneMinusCostPrice = [[NSDecimalNumber one] decimalNumberBySubtracting: costTimesPrice  ];
+        
+        NSDecimalNumber *tempMargin = [oneMinusCostPrice decimalNumberByMultiplyingBy:
+                                       [NSDecimalNumber decimalNumberWithString:@"100.0"] withBehavior: roundUp];
+        
+        NSDecimalNumber *pointFive = [NSDecimalNumber decimalNumberWithString:@"0.05"];
+        NSDecimalNumber *profitMargin = [tempMargin decimalNumberBySubtracting: [tempMargin decimalNumberByMultiplyingBy: pointFive]];
+        return profitMargin;
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Exception: %@", exception);
+        return 0;
+    }
+    //return profitMargin;
 }
 
 - (NSDecimalNumber *) calcClosedItemsBalance {
@@ -624,7 +704,7 @@
     }
     
     return balance;
-        
+    
 }
 
 #pragma mark -
@@ -641,8 +721,8 @@
 }
 
 -(TenderDecision) isRefundEligble {
-    NSDecimalNumberHandler *bankersRoundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:2 
-                                                                                                  raiseOnExactness:NO raiseOnOverflow:NO 
+    NSDecimalNumberHandler *bankersRoundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundBankers scale:2
+                                                                                                  raiseOnExactness:NO raiseOnOverflow:NO
                                                                                                   raiseOnUnderflow:NO raiseOnDivideByZero:NO];
     NSDecimalNumber *balanceOwingInMoney = [[self calcBalanceOwing] decimalNumberByRoundingAccordingToBehavior:bankersRoundingBehavior];
     NSComparisonResult comparisonresult = [[NSDecimalNumber zero] compare:balanceOwingInMoney];
@@ -680,7 +760,7 @@
     if ([refundAmount intValue] > 0 && previousPayments && [previousPayments count] > 0) {
         // Build the refund items, by order of precedence (on acct, credit card signature only, credit card swipe & signature, to CCT, to POS)
         refundAmount = [self refundForOnAccount:refund withAmount:refundAmount];
-       
+        
         if ([refundAmount intValue] > 0) {
             refundAmount = [self refundForCCWithSignature:refund withAmount:refundAmount];
             
@@ -697,7 +777,7 @@
             }
         }
         
-        // There should be no refund balance remaining at this point since we distributed accordingly above.  
+        // There should be no refund balance remaining at this point since we distributed accordingly above.
         //If there is, add another cash refund
         if ([refundAmount intValue] > 0) {
             NSLog(@"There is a refund amount left over of $%@.  Applying it as a cach refund.", refundAmount);
@@ -723,34 +803,34 @@
     RefundItem *onAcctItem = [[RefundItem alloc] init];
     
     @try {
-    onAcctItem.orderPaymentTypeID = [NSNumber numberWithInt:ONACCT];
-    
-    // Loop through payments, find on account payments to determine how much to apply for the refund
-    if (previousPayments && [previousPayments count] > 0) {
-        for (Payment *payment in previousPayments) {
-            if ([payment.paymentTypeId intValue] == ONACCT) {
-                totalPaymentAmount = [totalPaymentAmount decimalNumberByAdding:payment.paymentAmount];
+        onAcctItem.orderPaymentTypeID = [NSNumber numberWithInt:ONACCT];
+        
+        // Loop through payments, find on account payments to determine how much to apply for the refund
+        if (previousPayments && [previousPayments count] > 0) {
+            for (Payment *payment in previousPayments) {
+                if ([payment.paymentTypeId intValue] == ONACCT) {
+                    totalPaymentAmount = [totalPaymentAmount decimalNumberByAdding:payment.paymentAmount];
+                }
             }
         }
-    }
-    
-    if ([totalPaymentAmount compare:[NSDecimalNumber zero]] == NSOrderedSame) {
+        
+        if ([totalPaymentAmount compare:[NSDecimalNumber zero]] == NSOrderedSame) {
+            return refundLeft;
+        }
+        
+        // Determine the refund amount to apply
+        if ([refundLeft compare:totalPaymentAmount] == NSOrderedAscending || [refundLeft compare:totalPaymentAmount] == NSOrderedSame) {
+            onAcctItem.amount = refundLeft;
+            refundLeft = [NSDecimalNumber zero];
+        } else {
+            onAcctItem.amount = totalPaymentAmount;
+            refundLeft = [refundLeft decimalNumberBySubtracting:totalPaymentAmount];
+        }
+        
+        onAcctItem.isSignatureRequired = YES;
+        [refund addRefundItem:onAcctItem];
+        
         return refundLeft;
-    }
-    
-    // Determine the refund amount to apply
-    if ([refundLeft compare:totalPaymentAmount] == NSOrderedAscending || [refundLeft compare:totalPaymentAmount] == NSOrderedSame) {
-        onAcctItem.amount = refundLeft;
-        refundLeft = [NSDecimalNumber zero];
-    } else {
-        onAcctItem.amount = totalPaymentAmount;
-        refundLeft = [refundLeft decimalNumberBySubtracting:totalPaymentAmount];
-    }    
-    
-    onAcctItem.isSignatureRequired = YES;
-    [refund addRefundItem:onAcctItem];
-   
-    return refundLeft;
     } @finally {
         [onAcctItem release];
         onAcctItem = nil;
@@ -765,16 +845,16 @@
         
         // Pass 1, pullout matching payments
         for (Payment *payment in previousPayments) {
-            if (payment.paymentTypeId && ([payment.paymentTypeId intValue] == CREDITCARD_VISA 
-                || [payment.paymentTypeId intValue] == CREDITCARD_MC
-                || [payment.paymentTypeId intValue] == CREDITCARD_DISCOVER
-                || [payment.paymentTypeId intValue] == CREDITCARD_AX)) {
+            if (payment.paymentTypeId && ([payment.paymentTypeId intValue] == CREDITCARD_VISA
+                                          || [payment.paymentTypeId intValue] == CREDITCARD_MC
+                                          || [payment.paymentTypeId intValue] == CREDITCARD_DISCOVER
+                                          || [payment.paymentTypeId intValue] == CREDITCARD_AX)) {
                 
                 // Do I add the payment to the array or not (has ref id and store IDs match)
-                if (payment.paymentRefId 
+                if (payment.paymentRefId
                     && ![payment.paymentRefId isEqualToString:@"0"]
                     && ![payment.paymentRefId isEqualToString:@""]
-                    && payment.storeId 
+                    && payment.storeId
                     && [payment.storeId isEqualToNumber:[iPOSFacade sharedInstance].sessionInfo.storeId]) {
                     [sameStoreCCWithRefIdList addObject:payment];
                 }
@@ -827,14 +907,14 @@
         
         // Pass 1, pullout matching payments
         for (Payment *payment in previousPayments) {
-            if (payment.paymentTypeId && ([payment.paymentTypeId intValue] == CREDITCARD_VISA 
-                  || [payment.paymentTypeId intValue] == CREDITCARD_MC
-                  || [payment.paymentTypeId intValue] == CREDITCARD_DISCOVER
-                  || [payment.paymentTypeId intValue] == CREDITCARD_AX)) {
+            if (payment.paymentTypeId && ([payment.paymentTypeId intValue] == CREDITCARD_VISA
+                                          || [payment.paymentTypeId intValue] == CREDITCARD_MC
+                                          || [payment.paymentTypeId intValue] == CREDITCARD_DISCOVER
+                                          || [payment.paymentTypeId intValue] == CREDITCARD_AX)) {
                 
                 // Do I add the payment to the array or not (has token and store IDs do not match)
-                if (((CreditCardPayment *) payment).lpToken 
-                    && ![((CreditCardPayment *) payment).lpToken isEqualToString:@""] 
+                if (((CreditCardPayment *) payment).lpToken
+                    && ![((CreditCardPayment *) payment).lpToken isEqualToString:@""]
                     && ![((CreditCardPayment *) payment).lpToken isEqualToString:@"0"]
                     && payment.storeId
                     && ![payment.storeId isEqualToNumber:[iPOSFacade sharedInstance].sessionInfo.storeId]) {
@@ -878,7 +958,7 @@
                 refundItem = nil;
             }
         }
-
+        
     }
     
     return refundLeft;
@@ -892,23 +972,23 @@
         
         // Pass 1, pullout matching payments (to CCT)
         for (Payment *payment in previousPayments) {
-            if (payment.paymentTypeId && ([payment.paymentTypeId intValue] == CREDITCARD_VISA 
-                  || [payment.paymentTypeId intValue] == CREDITCARD_MC
-                  || [payment.paymentTypeId intValue] == CREDITCARD_DISCOVER
-                  || [payment.paymentTypeId intValue] == CREDITCARD_AX)) {
+            if (payment.paymentTypeId && ([payment.paymentTypeId intValue] == CREDITCARD_VISA
+                                          || [payment.paymentTypeId intValue] == CREDITCARD_MC
+                                          || [payment.paymentTypeId intValue] == CREDITCARD_DISCOVER
+                                          || [payment.paymentTypeId intValue] == CREDITCARD_AX)) {
                 
                 // To CCT:  Different store and no token, or same store no ref id
                 if ((((CreditCardPayment *) payment).lpToken == nil
-                    || [((CreditCardPayment *) payment).lpToken isEqualToString:@""] 
-                    || [((CreditCardPayment *) payment).lpToken isEqualToString:@"0"])
+                     || [((CreditCardPayment *) payment).lpToken isEqualToString:@""]
+                     || [((CreditCardPayment *) payment).lpToken isEqualToString:@"0"])
                     && payment.storeId
                     && ![payment.storeId isEqualToNumber:[iPOSFacade sharedInstance].sessionInfo.storeId]) {
                     [toCCTPaymentList addObject:payment];
                 } else if ((payment.paymentRefId == nil
-                    || [payment.paymentRefId isEqualToString:@""] 
-                    || [payment.paymentRefId isEqualToString:@"0"])
-                    && payment.storeId
-                    && [payment.storeId isEqualToNumber:[iPOSFacade sharedInstance].sessionInfo.storeId]) {
+                            || [payment.paymentRefId isEqualToString:@""]
+                            || [payment.paymentRefId isEqualToString:@"0"])
+                           && payment.storeId
+                           && [payment.storeId isEqualToNumber:[iPOSFacade sharedInstance].sessionInfo.storeId]) {
                     [toCCTPaymentList addObject:payment];
                 }
             }
@@ -961,7 +1041,7 @@
         
         // Pass 1, pullout matching payments (to CCT)
         for (Payment *payment in previousPayments) {
-            if ([payment.paymentTypeId intValue] == CASH 
+            if ([payment.paymentTypeId intValue] == CASH
                 || [payment.paymentTypeId intValue] == CHECK
                 || [payment.paymentTypeId intValue] > ONACCT) {
                 // All other types
@@ -1100,7 +1180,7 @@
                 
                 [groupedPayment release];
                 groupedPayment = nil;
-
+                
             } else {
                 // Increase total amount
                 groupedPayment.paymentAmount = [groupedPayment.paymentAmount decimalNumberByAdding:payment.paymentAmount]; 
@@ -1109,6 +1189,19 @@
     }
     
     return [paymentDict allValues];
+}
+
+- (NSNumber *) calcOpenItemsWeight {
+    NSLog(@"calcOpenItemsWeight called");
+    NSNumber *WeightTotal = [NSNumber numberWithInt:0];
+    
+    for (OrderItem *item in orderItemList) {
+        if ([item isOpen]) {
+            WeightTotal = [NSNumber numberWithFloat:([[item calcLineWeight] floatValue] + [WeightTotal floatValue])];
+        }
+    }
+    
+    return WeightTotal;
 }
 
 @end

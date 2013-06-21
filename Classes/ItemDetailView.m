@@ -82,7 +82,7 @@
 		skuLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, cy, bounds.width, BIG_LABEL_HEIGHT)];
 		skuLabel.backgroundColor = [UIColor clearColor];
 		skuLabel.textColor = [UIColor blackColor];
-		skuLabel.textAlignment = UITextAlignmentCenter;
+		skuLabel.textAlignment = NSTextAlignmentCenter;
 		skuLabel.font = [UIFont boldSystemFontOfSize:LARGE_FONT_SIZE];
 		skuLabel.text = @"NA";
 		[self addSubview:skuLabel];
@@ -95,7 +95,7 @@
 		descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, cy, bounds.width, DESCRIPTION_HEIGHT)];
 		descriptionLabel.backgroundColor = [UIColor clearColor];
 		descriptionLabel.textColor = [UIColor blackColor];
-		descriptionLabel.textAlignment = UITextAlignmentCenter;
+		descriptionLabel.textAlignment = NSTextAlignmentCenter;
 		descriptionLabel.font = [UIFont boldSystemFontOfSize:LARGE_FONT_SIZE];
 		descriptionLabel.text = @"NA";
 		[self addSubview:descriptionLabel];
@@ -108,7 +108,7 @@
 		priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, cy, bounds.width, BIG_LABEL_HEIGHT)];
 		priceLabel.backgroundColor = [UIColor clearColor];
 		priceLabel.textColor = [UIColor blackColor];
-		priceLabel.textAlignment = UITextAlignmentCenter;
+		priceLabel.textAlignment = NSTextAlignmentCenter;
 		priceLabel.font = [UIFont boldSystemFontOfSize:LARGE_FONT_SIZE];
 		priceLabel.text = @"NA";
 		[self addSubview:priceLabel];

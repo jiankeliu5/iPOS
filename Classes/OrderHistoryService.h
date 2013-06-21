@@ -13,6 +13,8 @@
 @protocol OrderHistoryServiceProtocol <NSObject>
 -(Order *) lookupOrderByOrderId:(NSString *) orderId withSessionInfo: (SessionInfo *) sessionInfo;
 -(NSArray *) lookupOrderByPhoneNumber: (NSString *)phoneNumber withSessionInfo:(SessionInfo *) sessionInfo;
+//Enning Tang added 5/2/2013
+-(NSArray *) lookupOrderBySalesPersonId: (NSString *)salesPersonId withSessionInfo:(SessionInfo *) sessionInfo;
 -(NSArray *) getPaymentHistoryForOrderid: (NSString *)orderId withSessionInfo:(SessionInfo *) sessionInfo;
 
 @end

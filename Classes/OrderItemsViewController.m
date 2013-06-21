@@ -85,6 +85,7 @@
 
 - (void) handleCloseLookupOrder:(id)sender;
 - (void) handleDiscountButton:(id)sender;
+- (void) showLTLWeight:(id)sender;
 @end
 
 @implementation OrderItemsViewController
@@ -158,19 +159,19 @@
 	
 	custPhoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, cy, CUST_LABEL_END_WIDTH, CUST_LABEL_HEIGHT)];
 	custPhoneLabel.font = [UIFont systemFontOfSize:CUST_LABEL_FONT_SIZE];
-	custPhoneLabel.textAlignment = UITextAlignmentCenter;
+	custPhoneLabel.textAlignment = NSTextAlignmentCenter;
 	[self.view addSubview:custPhoneLabel];
 	[custPhoneLabel release];
 	
 	custNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(CUST_LABEL_END_WIDTH, cy, CUST_LABEL_MIDDLE_WIDTH, CUST_LABEL_HEIGHT)];
 	custNameLabel.font = [UIFont systemFontOfSize:CUST_LABEL_FONT_SIZE];
-	custNameLabel.textAlignment = UITextAlignmentCenter;
+	custNameLabel.textAlignment = NSTextAlignmentCenter;
 	[self.view addSubview:custNameLabel];
 	[custNameLabel release];
 
 	custZipLabel = [[UILabel alloc] initWithFrame:CGRectMake(CUST_LABEL_END_WIDTH +  CUST_LABEL_MIDDLE_WIDTH, cy, CUST_LABEL_END_WIDTH, CUST_LABEL_HEIGHT)];
 	custZipLabel.font = [UIFont systemFontOfSize:CUST_LABEL_FONT_SIZE];
-	custZipLabel.textAlignment = UITextAlignmentCenter;
+	custZipLabel.textAlignment = NSTextAlignmentCenter;
 	[self.view addSubview:custZipLabel];
 	[custZipLabel release];
 	
@@ -189,33 +190,33 @@
     // Add discount button
     discountButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
     [discountButton setupAsSmallBlackButton];
-    discountButton.titleLabel.textAlignment = UITextAlignmentCenter;
+    discountButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     [discountButton setTitle:@"Discount" forState:UIControlStateNormal];
     [discountButton addTarget:self action:@selector(handleDiscountButton:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:discountButton];
     [discountButton release];
 	
-	subTotalLabel = [self createOrderLabel:@"Subtotal:" withRect:CGRectMake(0.0f, cy, ORDER_LABEL_WIDTH, ORDER_LABEL_HEIGHT) andAlignment:UITextAlignmentRight];
+	subTotalLabel = [self createOrderLabel:@"Subtotal:" withRect:CGRectMake(0.0f, cy, ORDER_LABEL_WIDTH, ORDER_LABEL_HEIGHT) andAlignment:NSTextAlignmentRight];
 	[self.view addSubview:subTotalLabel];
 	
-	subTotalValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_VALUE_X, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:UITextAlignmentLeft];
+	subTotalValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_VALUE_X, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:NSTextAlignmentLeft];
 	[self.view addSubview:subTotalValue];
 	
 	cy += ORDER_LABEL_HEIGHT;
 	
-	taxLabel = [self createOrderLabel:@"Tax:" withRect:CGRectMake(0.0f, cy, ORDER_LABEL_WIDTH, ORDER_LABEL_HEIGHT) andAlignment:UITextAlignmentRight];
+	taxLabel = [self createOrderLabel:@"Tax:" withRect:CGRectMake(0.0f, cy, ORDER_LABEL_WIDTH, ORDER_LABEL_HEIGHT) andAlignment:NSTextAlignmentRight];
 	[self.view addSubview:taxLabel];
 	
-	taxValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_VALUE_X, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:UITextAlignmentLeft];
+	taxValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_VALUE_X, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:NSTextAlignmentLeft];
 	[self.view addSubview:taxValue];
 	
 	cy += ORDER_LABEL_HEIGHT;
 	
-	totalLabel = [self createOrderLabel:@"Total:" withRect:CGRectMake(0.0f, cy, ORDER_LABEL_WIDTH, ORDER_LABEL_HEIGHT) andAlignment:UITextAlignmentRight];
+	totalLabel = [self createOrderLabel:@"Total:" withRect:CGRectMake(0.0f, cy, ORDER_LABEL_WIDTH, ORDER_LABEL_HEIGHT) andAlignment:NSTextAlignmentRight];
 	[self.view addSubview:totalLabel];
 	
-	totalValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_VALUE_X, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:UITextAlignmentLeft];
+	totalValue = [self createOrderLabel:@"$0.00" withRect:CGRectMake(ORDER_VALUE_X, cy, ORDER_VALUE_WIDTH, ORDER_VALUE_HEIGHT) andAlignment:NSTextAlignmentLeft];
 	[self.view addSubview:totalValue];
 	
 	cy += ORDER_LABEL_HEIGHT;
@@ -265,11 +266,19 @@
                                                   target:self 
                                                   action:@selector(cancelEditMode:)] autorelease];
     
+    //Enning Tang Add LTL Button 2013/2/8
+    LTLButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"scale.png"]
+                                                     style:UIBarButtonItemStylePlain
+                                                    target:self
+                                                    action:@selector(showLTLWeight:)] autorelease];
+    
 	// Basic toolbar
     self.toolbarBasic = [[[NSArray alloc] initWithObjects:searchButton, tbFlex, editButton, tbFixed, cancelOrderButton, nil] autorelease];
 	self.toolbarWithQuoteAndOrder = [[[NSArray alloc] initWithObjects:
                                       searchButton,  
-                                      tbFlex,
+                                      tbFixed,
+                                      LTLButton,
+                                      tbFixed,
                                       marginButton,
                                       tbFixed,
                                       quoteButton,
@@ -284,7 +293,7 @@
 	// Edit mode toolbar
 	UIView *customToolbarView = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, COMMIT_EDIT_BUTTON_WIDTH, COMMIT_EDIT_HEIGHT)] autorelease];
 	self.markDeleteLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, COMMIT_EDIT_BUTTON_WIDTH / 2.0f, COMMIT_EDIT_HEIGHT)] autorelease];
-	self.markDeleteLabel.textAlignment = UITextAlignmentCenter;
+	self.markDeleteLabel.textAlignment = NSTextAlignmentCenter;
 	self.markDeleteLabel.textColor = [UIColor whiteColor];
 	self.markDeleteLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"EditConfirmDelete.png"]];
 	self.markDeleteLabel.font = [UIFont systemFontOfSize:COMMIT_BUTTON_FONT_SIZE];
@@ -292,7 +301,7 @@
 	[customToolbarView addSubview:self.markDeleteLabel];
 
 	self.markCloseLabel = [[[UILabel alloc] initWithFrame:CGRectMake(COMMIT_EDIT_BUTTON_WIDTH / 2.0f, 0.0f, COMMIT_EDIT_BUTTON_WIDTH / 2.0f, COMMIT_EDIT_HEIGHT)] autorelease];
-	self.markCloseLabel.textAlignment = UITextAlignmentCenter;
+	self.markCloseLabel.textAlignment = NSTextAlignmentCenter;
 	self.markCloseLabel.textColor = [UIColor whiteColor];
 	self.markCloseLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"EditConfirmClose.png"]];
 	self.markCloseLabel.font = [UIFont systemFontOfSize:COMMIT_BUTTON_FONT_SIZE];
@@ -317,7 +326,7 @@
 	UILabel *deleteLabel = [[[UILabel alloc] initWithFrame:CGRectMake(EDIT_HEADER_LABEL_X, 0.0f, EDIT_HEADER_DELETE_LABEL_WIDTH, EDIT_HEADER_HEIGHT)] autorelease];
 	deleteLabel.backgroundColor = [UIColor whiteColor];
 	deleteLabel.textColor = [UIColor blackColor];
-	deleteLabel.textAlignment = UITextAlignmentCenter;
+	deleteLabel.textAlignment = NSTextAlignmentCenter;
 	deleteLabel.font = [UIFont boldSystemFontOfSize:EDIT_HEADER_FONT_SIZE];
 	deleteLabel.text = @"Delete";
 	[self.editHeaderView addSubview:deleteLabel];
@@ -325,7 +334,7 @@
 	UILabel *closeLabel = [[[UILabel alloc] initWithFrame:CGRectMake((EDIT_HEADER_LABEL_X * 3.0f) + EDIT_HEADER_DELETE_LABEL_WIDTH, 0.0f, EDIT_HEADER_CLOSE_LABEL_WIDTH, EDIT_HEADER_HEIGHT)] autorelease];
 	closeLabel.backgroundColor = [UIColor whiteColor];
 	closeLabel.textColor = [UIColor blackColor];
-	closeLabel.textAlignment = UITextAlignmentCenter;
+	closeLabel.textAlignment = NSTextAlignmentCenter;
 	closeLabel.font = [UIFont boldSystemFontOfSize:EDIT_HEADER_FONT_SIZE];
 	closeLabel.text = @"Close";
 	[self.editHeaderView addSubview:closeLabel];
@@ -342,7 +351,7 @@
 	}
 	
     // Add itself as a delegate
-    linea = [DTDevices sharedDevice];
+    linea = [Linea sharedDevice];
 	
 }
 
@@ -372,15 +381,16 @@
 	if (self.navigationController != nil) {
 		[self.navigationController setNavigationBarHidden:NO];
 		// This is what shows up on the back button in the *next* controller.
-		self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:controllerTitle style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
+		//self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:controllerTitle style:UIBarButtonItemStyleBordered target:nil action:nil] autorelease];
         [[self navigationItem] setTitle:controllerTitle];
         [self setTitle:controllerTitle];
         
         // Set up the close button to go back the new order navigation controller
-        self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"New Order" 
-                                                                                   style:UIBarButtonItemStyleBordered 
-                                                                                  target:self 
+        self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithTitle:@"New Order"
+                                                                                   style:UIBarButtonItemStyleBordered
+                                                                                  target:self
                                                                                   action:@selector(handleCloseLookupOrder:)] autorelease];
+
 	}
 	
 	Customer *cust = [orderCart getCustomerForOrder];
@@ -421,16 +431,6 @@
 
     // Do this at the end
 	[super viewWillDisappear:animated];
-}
-
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAll;
 }
 
 // Override to allow orientations other than the default portrait orientation.
@@ -513,7 +513,7 @@
 - (void)handleCloseLookupOrder:(id)sender {
     // Switch the order cart back to working with a new order.
     [orderCart setNewOrder:YES];
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void) handleDiscountButton:(id)sender {
@@ -947,6 +947,7 @@
 
 - (void) searchItem:(SearchItemView *)aSearchItemView withSku:(NSString *)aSku {
 	
+    NSLog(@"OrderItemsViewController: searchItem called");
 	[aSearchItemView removeFromSuperview];
 	[linea addDelegate:self];
 	
@@ -1050,7 +1051,7 @@
 -(void) exit:(id)sender
 {
     NSLog(@"exiting profit margin view");
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
     
     
 }
@@ -1105,7 +1106,7 @@
     //textLabel.layer.cornerRadius = 5.0f;
     textLabel.text = [NSString stringWithFormat:@"PM %@", [[orderCart getOrder] calculateProfitMargin]];
     textLabel.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.3f];
-    textLabel.textAlignment = UITextAlignmentCenter;
+    textLabel.textAlignment = NSTextAlignmentCenter;
     
 	[UIView beginAnimations: @"Fade Out" context:nil];
 	
@@ -1117,6 +1118,17 @@
 	[UIView setAnimationDuration:2.0];
 	textLabel.alpha = 0.0;
 	[UIView commitAnimations];
+}
+
+-(void) showLTLWeight:(id)sender
+{
+    Order *order = [orderCart getOrder];
+    UIAlertView *longPress = [[UIAlertView alloc] init];
+    longPress.title = @"LTL Weight";
+    longPress.message = [NSString stringWithFormat:@"Open Items weight is approximately %@ lbs.", [[order calcOpenItemsWeight] stringValue]];
+    [longPress addButtonWithTitle:@"OK"];
+    [longPress show];
+    [longPress release];
 }
 
 

@@ -11,6 +11,7 @@
 #import "OrderCart.h"
 #import "ExtUIViewController.h"
 #import "ExtUITextField.h"
+#import "MOGlassButton.h"
 
 @interface LookupOrderViewController : ExtUIViewController <ExtUIViewControllerDelegate> {
     iPOSFacade *facade;
@@ -19,6 +20,7 @@
     ExtUITextField *lookupCustomerField;
     ExtUITextField *lookupOrderPhoneField;
     ExtUITextField *lookupOrderIdField;
+    MOGlassButton *lookupSelectionProject;
     
     UIBarButtonItem *closeBarButton;
     

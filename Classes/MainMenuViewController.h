@@ -14,9 +14,11 @@
 #import "MOGlassButton.h"
 
 #import "OrderCart.h"
-#import "DTDevices.h"
+#import "LineaSDK.h"
 
-@interface MainMenuViewController : ExtUIViewController <DTDeviceDelegate, ExtUIViewControllerDelegate, AddItemViewDelegate> {
+#import "FPPopoverController.h"
+
+@interface MainMenuViewController : ExtUIViewController <LineaDelegate, ExtUIViewControllerDelegate, AddItemViewDelegate, FPPopoverControllerDelegate> {
 	iPOSFacade *facade;
 	
     OrderCart *orderCart;
@@ -30,8 +32,20 @@
     
     AddItemView *addItemOverlay;
     
-    DTDevices *linea;
+    Linea *linea;
+    
+    UILabel *VersionLabel;
+    FPPopoverController *popover;
 	
 }
+
+-(IBAction)goToTableView:(id)sender;
+-(IBAction)navControllerPopover:(id)sender;
+
+-(void)selectedTableRow:(NSUInteger)rowNum;
+
+
+-(IBAction)noArrow:(id)sender;
+-(IBAction)popover:(id)sender;
 
 @end

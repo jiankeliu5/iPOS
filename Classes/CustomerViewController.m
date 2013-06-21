@@ -82,7 +82,7 @@
 	custPhoneField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
 	custPhoneField.textColor = [UIColor blackColor];
 	custPhoneField.borderStyle = UITextBorderStyleRoundedRect;
-	custPhoneField.textAlignment = UITextAlignmentCenter;
+	custPhoneField.textAlignment = NSTextAlignmentCenter;
 	custPhoneField.clearsOnBeginEditing = YES;
 	custPhoneField.placeholder = @"Phone Number";
 	custPhoneField.tagName = @"CustPhone";
@@ -99,7 +99,7 @@
     custNameField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
 	custNameField.textColor = [UIColor blackColor];
 	custNameField.borderStyle = UITextBorderStyleRoundedRect;
-	custNameField.textAlignment = UITextAlignmentCenter;
+	custNameField.textAlignment = NSTextAlignmentCenter;
 	custNameField.clearsOnBeginEditing = YES;
 	custNameField.placeholder = @"Name";
 	custNameField.tagName = @"CustName";
@@ -166,16 +166,6 @@
 - (void) viewDidDisappear:(BOOL)animated {
 	// Do this at the end
 	[super viewDidDisappear:animated];
-}
-
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAll;
 }
 
 // Override to allow orientations other than the default portrait orientation.

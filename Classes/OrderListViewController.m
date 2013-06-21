@@ -62,15 +62,6 @@
 
 #pragma mark -
 #pragma mark UIViewController overrides
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAll;
-}
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -163,7 +154,7 @@
 - (void)handleClose:(id)sender {
     // Switch the order cart back to working with a new order;
     [orderCart setNewOrder:YES];
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark -
@@ -214,10 +205,14 @@
 	if (pOrder != nil) {
         NSLog(@"Selected Order Number: %@ to edit.", [NSString formatNumber:pOrder.orderId toScale:0]);
         Order *order = [facade lookupOrderByOrderId:pOrder.orderId];
+        NSLog(@"Order Id: %@", order.orderId.stringValue);
         if (order != nil) {
+            NSLog(@"Order Id check: %@", order.orderId.stringValue);
             [orderCart setPreviousOrder:order];
+            NSLog(@"current orderid: %@", [orderCart getOrder].orderId.stringValue);
             
             OrderItemsViewController *orderItemsViewController = [[OrderItemsViewController alloc] init];
+            orderItemsViewController.restorationIdentifier = @"orderItemVCID";
 
             [[self navigationController] pushViewController:orderItemsViewController animated:YES];
             
