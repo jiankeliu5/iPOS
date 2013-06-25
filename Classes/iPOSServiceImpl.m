@@ -317,6 +317,33 @@
     return items;
 }
 
+- (NSArray *) lookupCustomerByEmail:(NSString *) customerEmail withSession:(SessionInfo *) sessionInfo {
+    if (sessionInfo == nil) {
+        return nil;
+    }
+    
+    // Fetch the list
+    NSString *lookupUri = @"emaillookup";
+    ASIHTTPRequest *request = [self getRequestForSession:sessionInfo serviceDomainUri:posCustomerMgmtUri serviceUri:lookupUri];
+    
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    
+    NSString *requestXml = [self escapeXMLForParsing:[NSString stringWithFormat:@"<CustomerSearchByEmail>%@</CustomerSearchByEmail>", customerEmail]];
+    [request appendPostData:[requestXml dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [request startSynchronous];
+    
+    NSArray *requestErrors = [request validateAsXmlContent];
+    if ([requestErrors count] > 0) {
+        return nil;
+    }
+    
+    NSArray *items = [Customer listFromXml:[request responseString]];
+    NSLog(@"Success!!!!");
+    
+    return items;
+}
+
 -(Customer *) lookupCustomerByPhone:(NSString *)phoneNumber withSession:(SessionInfo *)sessionInfo {
     if (sessionInfo == nil) {
         return nil;

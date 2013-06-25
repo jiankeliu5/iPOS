@@ -8,6 +8,7 @@
 
 #import "SendEmailViewController.h"
 #import "AlertUtils.h"
+#import "ValidationUtils.h"
 
 #import "UIScreen+Helpers.h"
 #include "iPOSAppDelegate.h"
@@ -273,7 +274,7 @@
             }
         }else if ([textField.tagName isEqualToString:@"emailAddress"] && [textField.text length] > 0) {
             // Call the service to get a list of items
-            if(![self validateEmail:lookupText]) {
+            if(![ValidationUtils validateEmail:lookupText]) {
                 // user entered invalid email address
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"iPOS" message:@"Please enter a valid email address." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
                 [alert show];
@@ -284,12 +285,6 @@
             }
         }
     }
-}
-
-- (BOOL)validateEmail:(NSString *)emailStr {
-    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
-    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
-    return [emailTest evaluateWithObject:emailStr];
 }
 
 - (void)alertView:(UIAlertView *)anAlertView clickedButtonAtIndex:(NSInteger)aButtonIndex {

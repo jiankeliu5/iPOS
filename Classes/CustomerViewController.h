@@ -23,6 +23,7 @@
     
 	ExtUITextField *custPhoneField;
     ExtUITextField *custNameField;
+    ExtUITextField *custEmailField;
     
 //	MOGlassButton *custSearchButton;
 //	MOGlassButton *confirmButton;

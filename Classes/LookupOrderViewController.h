@@ -18,6 +18,7 @@
     OrderCart *orderCart;
     
     ExtUITextField *lookupCustomerField;
+    ExtUITextField *lookupCustomerEmailField;
     ExtUITextField *lookupOrderPhoneField;
     ExtUITextField *lookupOrderIdField;
     MOGlassButton *lookupSelectionProject;

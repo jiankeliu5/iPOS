@@ -256,6 +256,8 @@
 		B4FAB1BF1767C453007F79C6 /* Room.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DE762A15C053E300F992F6 /* Room.m */; };
 		B4FAB1C01767C457007F79C6 /* Area.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DE762D15C0542000F992F6 /* Area.m */; };
 		B4FAB1C11767C4AA007F79C6 /* NSCondition+NSCondition_dealloc.m in Sources */ = {isa = PBXBuildFile; fileRef = 40FB11A3166D0B1300D64974 /* NSCondition+NSCondition_dealloc.m */; };
+		B4FF429A177A0BF800AB0134 /* ValidationUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = B4FF4298177A0BF800AB0134 /* ValidationUtils.h */; };
+		B4FF429B177A0BF800AB0134 /* ValidationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B4FF4299177A0BF800AB0134 /* ValidationUtils.m */; };
 		D60AAFB0147DD79A00FBA576 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67B5889147DD6CD00C2ED5D /* libOPIFoundationCore.a */; };
 		D60AAFB1147DD7A800FBA576 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67B5889147DD6CD00C2ED5D /* libOPIFoundationCore.a */; };
 		D60AAFB2147DD7B400FBA576 /* libOPIFoundationCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67B5889147DD6CD00C2ED5D /* libOPIFoundationCore.a */; };
@@ -995,6 +997,8 @@
 		B4FAB1611767B96E007F79C6 /* UIImage+TKCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+TKCategory.m"; sourceTree = "<group>"; };
 		B4FAB1621767B96E007F79C6 /* UIView+TKCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TKCategory.h"; sourceTree = "<group>"; };
 		B4FAB1631767B96E007F79C6 /* UIView+TKCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TKCategory.m"; sourceTree = "<group>"; };
+		B4FF4298177A0BF800AB0134 /* ValidationUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValidationUtils.h; sourceTree = "<group>"; };
+		B4FF4299177A0BF800AB0134 /* ValidationUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValidationUtils.m; sourceTree = "<group>"; };
 		D60E92DF14E314550028647B /* ASIHTTPRequest.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ASIHTTPRequest.xcodeproj; path = ../ThirdParty/ASIHTTPRequest/ASIHTTPRequest.xcodeproj; sourceTree = "<group>"; };
 		D60F74D91475A53E0055CB15 /* OrderDiscountApprovalRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDiscountApprovalRequest.h; sourceTree = "<group>"; };
 		D60F74DA1475A53E0055CB15 /* OrderDiscountApprovalRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDiscountApprovalRequest.m; sourceTree = "<group>"; };
@@ -1979,6 +1983,8 @@
 				B4B367C512F936AC00F37FE9 /* DrawUtils.m */,
 				40FB11A2166D0B1300D64974 /* NSCondition+NSCondition_dealloc.h */,
 				40FB11A3166D0B1300D64974 /* NSCondition+NSCondition_dealloc.m */,
+				B4FF4298177A0BF800AB0134 /* ValidationUtils.h */,
+				B4FF4299177A0BF800AB0134 /* ValidationUtils.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -2537,6 +2543,7 @@
 				D60F74DF1475AD820055CB15 /* OrderDiscountApprovalResponse.h in Headers */,
 				D60F74E31475BD240055CB15 /* OrderDiscountApprovalXmlMarshaller.h in Headers */,
 				D6105EB11487EA9100170AEA /* CustomerDetailViewController.h in Headers */,
+				B4FF429A177A0BF800AB0134 /* ValidationUtils.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3232,6 +3239,7 @@
 				B4FAB1BF1767C453007F79C6 /* Room.m in Sources */,
 				B4FAB1C01767C457007F79C6 /* Area.m in Sources */,
 				B4FAB1C11767C4AA007F79C6 /* NSCondition+NSCondition_dealloc.m in Sources */,
+				B4FF429B177A0BF800AB0134 /* ValidationUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

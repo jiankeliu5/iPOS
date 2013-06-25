@@ -116,6 +116,10 @@ static iPOSFacade *facade = nil;
     return [self.posService lookupCustomerByName:customerName withSession:sessionInfo];
 }
 
+- (NSArray *) lookupCustomerByEmail:(NSString *)customerEmail {
+    return [self.posService lookupCustomerByEmail:customerEmail withSession:sessionInfo];
+}
+
 -(Customer *) lookupCustomerByPhone:(NSString *)phoneNumber {
     return [self.posService lookupCustomerByPhone:phoneNumber withSession:sessionInfo];
 }

@@ -12,6 +12,7 @@
 #import "UIView+ViewLayout.h"
 #import "NSString+StringFormatters.h"
 #import "AlertUtils.h"
+#import "ValidationUtils.h"
 #import "CustomerFormDataSource.h"
 
 #import "CartItemsViewController.h"
@@ -112,7 +113,25 @@
 	[super addSearchAndCancelToolbarForTextField:custNameField];
 	
 	[self.view addSubview:custNameField];
-	[custNameField release];	
+	[custNameField release];
+	
+    custEmailField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
+	custEmailField.textColor = [UIColor blackColor];
+	custEmailField.borderStyle = UITextBorderStyleRoundedRect;
+	custEmailField.textAlignment = NSTextAlignmentCenter;
+	custEmailField.clearsOnBeginEditing = YES;
+	custEmailField.placeholder = @"Email";
+	custEmailField.tagName = @"CustEmail";
+    custEmailField.autocorrectionType = UITextAutocorrectionTypeNo;
+    custEmailField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+	custEmailField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+	custEmailField.clearButtonMode = UITextFieldViewModeWhileEditing;
+	custEmailField.returnKeyType = UIReturnKeySearch;
+	custEmailField.keyboardType = UIKeyboardTypeEmailAddress;
+	[super addSearchAndCancelToolbarForTextField:custEmailField];
+	
+	[self.view addSubview:custEmailField];
+	[custEmailField release];
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -127,7 +146,7 @@
 	self.delegate = self;
 	custPhoneField.delegate = self;
     custNameField.delegate = self;
-
+    custEmailField.delegate = self;
 	
 }
 
@@ -146,8 +165,9 @@
     [self layoutView:[UIApplication sharedApplication].statusBarOrientation];
 	
     custPhoneField.text = @"";
-    custPhoneField.text = @"";
-	
+    custNameField.text = @"";
+	custEmailField.text = @"";
+    
 	// Do this last
 	[super viewWillAppear:animated];
 	
@@ -209,8 +229,13 @@
 - (void)textFieldDidBeginEditing:(ExtUITextField *)textField {
     if ([textField.tagName isEqualToString:@"CustName"]) {
         custPhoneField.text = nil;
+        custEmailField.text = nil;
     } else if ([textField.tagName isEqualToString:@"CustPhone"]) {
         custNameField.text = nil;
+        custEmailField.text = nil;
+    } else if ([textField.tagName isEqualToString:@"CustEmail"]) {
+        custNameField.text = nil;
+        custPhoneField.text = nil;
     }
 }
 
@@ -223,7 +248,7 @@
         
         if ([textField.tagName isEqualToString:@"CustName"] && [textField.text length] > 0) {
             if (textField.text.length < 3) {
-                [AlertUtils showModalAlertMessage:@"You must enter at least 3 characters for the search." withTitle:@"iPOS"];
+                [AlertUtils showModalAlertMessage:@"You must enter at least 3 characters for the name search." withTitle:@"iPOS"];
             } else {
                 NSArray *customerList = [facade lookupCustomerByName:textField.text];
                 
@@ -271,6 +296,24 @@
             } else {
                 [AlertUtils showModalAlertMessage:@"Please enter a 10 digit phone number" withTitle:@"iPOS"];
             }
+        } else if ([textField.tagName isEqualToString:@"CustEmail"] && [textField.text length] > 0) {
+            if (textField.text.length < 3) {
+                [AlertUtils showModalAlertMessage:@"You must enter at least 3 characters for the e-mail search." withTitle:@"iPOS"];
+            } else {
+                NSArray *customerList = [facade lookupCustomerByEmail:textField.text];
+                
+                if (customerList == nil || [customerList count] == 0) {
+                    [AlertUtils showModalAlertMessage:@"No customer matches found." withTitle:@"iPOS"];
+                } else {
+                    CustomerListViewController *custListViewController = [[CustomerListViewController alloc] init];
+                    
+                    custListViewController.customerList = customerList;
+                    custListViewController.searchString = textField.text;
+                    [[self navigationController] pushViewController:custListViewController animated:YES];
+                    [custListViewController release];
+                }
+
+            }
         }
         
     }
@@ -293,6 +336,10 @@
     cy += TEXT_FIELD_HEIGHT + SPACING;
     custNameField.frame = CGRectMake(0, cy, TEXT_FIELD_WIDTH, TEXT_FIELD_HEIGHT);
     custNameField.center = [self.view centerAt:cy];
+    
+    cy += TEXT_FIELD_HEIGHT + SPACING;
+    custEmailField.frame = CGRectMake(0, cy, TEXT_FIELD_WIDTH, TEXT_FIELD_HEIGHT);
+    custEmailField.center = [self.view centerAt:cy];
 }
 
 @end

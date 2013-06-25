@@ -119,6 +119,21 @@
 	[self.view addSubview:lookupCustomerField];
 	[lookupCustomerField release];
     
+    lookupCustomerEmailField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
+	lookupCustomerEmailField.textColor = [UIColor blackColor];
+	lookupCustomerEmailField.borderStyle = UITextBorderStyleRoundedRect;
+	lookupCustomerEmailField.textAlignment = NSTextAlignmentCenter;
+	lookupCustomerEmailField.clearsOnBeginEditing = NO;
+	lookupCustomerEmailField.placeholder = @"Customer By Email";
+	lookupCustomerEmailField.tagName = @"LookupCustomerEmail";
+    lookupCustomerEmailField.autocorrectionType = UITextAutocorrectionTypeNo;
+    lookupCustomerEmailField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+	lookupCustomerEmailField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    lookupCustomerEmailField.keyboardType = UIKeyboardTypeEmailAddress;
+	[super addSearchAndCancelToolbarForTextField:lookupCustomerEmailField];
+	[self.view addSubview:lookupCustomerEmailField];
+	[lookupCustomerEmailField release];
+    
     lookupOrderPhoneField = [[ExtUITextField alloc] initWithFrame:CGRectZero];
 	lookupOrderPhoneField.textColor = [UIColor blackColor];
 	lookupOrderPhoneField.borderStyle = UITextBorderStyleRoundedRect;
@@ -167,7 +182,9 @@
     lookupCustomerField.frame = CGRectMake(0.0f, 0.0f, textFieldWidth, TEXT_FIELD_HEIGHT);
 	lookupCustomerField.center = CGPointMake((viewBounds.size.width / 2.0f), textFieldSpacing);
     
-	lookupOrderPhoneField.frame = CGRectOffset(lookupCustomerField.frame, 0.0f, textFieldSpacing + (TEXT_FIELD_HEIGHT / 2.0f));
+    lookupCustomerEmailField.frame = CGRectOffset(lookupCustomerField.frame, 0.0f, textFieldSpacing + (TEXT_FIELD_HEIGHT / 2.0f));
+    
+	lookupOrderPhoneField.frame = CGRectOffset(lookupCustomerEmailField.frame, 0.0f, textFieldSpacing + (TEXT_FIELD_HEIGHT / 2.0f));
 	
 	lookupOrderIdField.frame = CGRectOffset(lookupOrderPhoneField.frame, 0.0f, textFieldSpacing + (TEXT_FIELD_HEIGHT / 2.0f));
     
@@ -184,6 +201,10 @@
     // UIKit bug.  Need to do this to re-center the placeholder text.
     lookupCustomerField.textAlignment = NSTextAlignmentLeft;
     lookupCustomerField.textAlignment = NSTextAlignmentCenter;
+    
+    // UIKit bug.  Need to do this to re-center the placeholder text.
+    lookupCustomerEmailField.textAlignment = NSTextAlignmentLeft;
+    lookupCustomerEmailField.textAlignment = NSTextAlignmentCenter;
 
 }
 
@@ -200,6 +221,7 @@
 	lookupOrderIdField.delegate = self;
     lookupOrderPhoneField.delegate = self;
     lookupCustomerField.delegate = self;
+    lookupCustomerEmailField.delegate = self;
     
     [lookupSelectionProject addTarget:self action:@selector(lookupSelectionProjectPressed:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -222,7 +244,8 @@
     
     [self layoutView: [UIApplication sharedApplication].statusBarOrientation];
     
-    lookupCustomerField.text = @"";;
+    lookupCustomerField.text = @"";
+    lookupCustomerEmailField.text = @"";
     lookupOrderPhoneField.text = @"";
     lookupOrderIdField.text = @"";
     
@@ -276,12 +299,19 @@
     if ([textField.tagName isEqualToString:@"LookupCustomerName"]) {
         lookupOrderPhoneField.text = nil;
         lookupOrderIdField.text = nil;
+        lookupCustomerEmailField.text = nil;
     } else if ([textField.tagName isEqualToString:@"LookupOrderPhone"]) {
         lookupOrderIdField.text = nil;
         lookupCustomerField.text = nil;
+        lookupCustomerEmailField = nil;
     } else if ([textField.tagName isEqualToString:@"LookupOrderId"]) {
         lookupOrderPhoneField.text = nil;
         lookupCustomerField.text = nil;
+        lookupCustomerEmailField = nil;
+    } else if ([textField.tagName isEqualToString:@"LookupCustomerEmail"]) {
+        lookupCustomerField.text = nil;
+        lookupOrderIdField.text = nil;
+        lookupOrderPhoneField.text = nil;
     }
 }
 
@@ -291,9 +321,27 @@
         
         if ([textField.tagName isEqualToString:@"LookupCustomerName"] && [textField.text length] > 0) {
             if (textField.text.length < 3) {
-                [AlertUtils showModalAlertMessage:@"You must enter at least 3 characters for the search." withTitle:@"iPOS"];
+                [AlertUtils showModalAlertMessage:@"You must enter at least 3 characters for the name search." withTitle:@"iPOS"];
             } else {
                 NSArray *customerList = [facade lookupCustomerByName:textField.text];
+                
+                if (customerList == nil || [customerList count] == 0) {
+                    [AlertUtils showModalAlertMessage:@"No customer matches found." withTitle:@"iPOS"];
+                } else {
+                    CustomerListViewController *custListViewController = [[CustomerListViewController alloc] init];
+                    
+                    custListViewController.customerList = customerList;
+                    custListViewController.searchString = textField.text;
+                    custListViewController.doGetOrdersOnSelection = YES;
+                    [[self navigationController] pushViewController:custListViewController animated:TRUE];
+                    [custListViewController release];
+                }
+            }
+        } else if ([textField.tagName isEqualToString:@"LookupCustomerEmail"] && [textField.text length] > 0) {
+            if (textField.text.length < 3) {
+                [AlertUtils showModalAlertMessage:@"You must enter at least 3 characters for the e-mail search." withTitle:@"iPOS"];
+            } else {
+                NSArray *customerList = [facade lookupCustomerByEmail:textField.text];
                 
                 if (customerList == nil || [customerList count] == 0) {
                     [AlertUtils showModalAlertMessage:@"No customer matches found." withTitle:@"iPOS"];
