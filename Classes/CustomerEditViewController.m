@@ -12,6 +12,7 @@
 #import "UIViewController+Helpers.h"
 
 #import "AlertUtils.h"
+#import "ValidationUtils.h"
 
 #import "Customer.h"
 
@@ -123,7 +124,13 @@
 	NSLog(@"Current customer model:");
 	NSLog(@"%@", [custModel description]);
 	Customer *editedCust = [[[Customer alloc] initWithModel:custModel] autorelease];
-    
+  
+    // Customer must have an e-mail address set and it must be in a valid format.
+    if ([ValidationUtils validateEmail:editedCust.emailAddress] == NO) {
+        [AlertUtils showModalAlertMessage:@"Please enter a valid e-mail address." withTitle:@"iPOS"];
+        return;
+    }
+
 	[facade newCustomer:editedCust];
 
 	if ( ([editedCust errorList] != nil) && ([[editedCust errorList] count] > 0) ) {
@@ -180,6 +187,11 @@
 	Customer *editedCust = [[[Customer alloc] initWithModel:custModel] autorelease];
 	
 	if ([self lastSavedCustomer] == nil || ([[self lastSavedCustomer] isEqualToDictionary:custModel] == NO)) {
+        // Customer must have an e-mail address set and it must be in a valid format.
+        if ([ValidationUtils validateEmail:editedCust.emailAddress] == NO) {
+            [AlertUtils showModalAlertMessage:@"Please enter a valid e-mail address." withTitle:@"iPOS"];
+            return;
+        }
 		NSLog(@"Updating customer on commit because it changed.");
 		[facade updateCustomer:editedCust];
 	}
