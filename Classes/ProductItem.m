@@ -127,6 +127,8 @@ NSString * const UOM_SQFT = @"SF";
     store = nil;
     [distributionCenterList release];
     distributionCenterList = nil;
+    [unitOfMeasureLookup release];
+    unitOfMeasureLookup = nil;
     //Enning Tang dealloc itemLTLWeight
     [itemLTLWeight release];
     itemLTLWeight = nil;

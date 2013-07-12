@@ -76,13 +76,19 @@
 
 @synthesize currentStoreID;
 
+@synthesize showAvailabilityOnly;
+
 #pragma mark Constructors
 - (id) initWithFrame:(CGRect) frame {
     self = [super initWithFrame:frame];
     if (self == nil)
         return nil;
+
+    // Default to showing availability and being able to add items to
+    // the cart or order
+	showAvailabilityOnly = NO;
 	
-	quantityFormatter = [[NSNumberFormatter alloc] init];
+    quantityFormatter = [[NSNumberFormatter alloc] init];
 	[quantityFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
 	[quantityFormatter setGeneratesDecimalNumbers:YES];
     
@@ -393,19 +399,24 @@
     }
     
     // Resize the tools content
-    CGRect addToCartRect = CGRectZero;
-    CGRect exitRect = CGRectZero;
-    CGRectDivide(toolsContentView.frame, &addToCartRect, &exitRect, toolsContentView.frame.size.width * 0.5, CGRectMinXEdge);
-    
-    addToCartButton.frame = CGRectMake(addToCartRect.size.width - BUTTON_SIZE - BUTTON_SPACING/2, 
-                                       (addToCartRect.size.height - BUTTON_SIZE)/2, 
-                                       BUTTON_SIZE, BUTTON_SIZE);
-    exitButton.frame = CGRectMake(exitRect.origin.x + BUTTON_SPACING/2, 
-                                  (exitRect.size.height - BUTTON_SIZE)/2, 
-                                  BUTTON_SIZE, BUTTON_SIZE);
-    confirmButton.frame = CGRectMake(exitRect.origin.x + BUTTON_SPACING/2 + 65,
-                                  (exitRect.size.height - BUTTON_SIZE)/2,
-                                  BUTTON_SIZE - 20, BUTTON_SIZE);
+    if (showAvailabilityOnly == NO) {
+        CGRect addToCartRect = CGRectZero;
+        CGRect exitRect = CGRectZero;
+        CGRectDivide(toolsContentView.frame, &addToCartRect, &exitRect, toolsContentView.frame.size.width * 0.5, CGRectMinXEdge);
+        addToCartButton.frame = CGRectMake(addToCartRect.size.width - BUTTON_SIZE - BUTTON_SPACING/2,
+                                           (addToCartRect.size.height - BUTTON_SIZE)/2,
+                                           BUTTON_SIZE, BUTTON_SIZE);
+        exitButton.frame = CGRectMake(exitRect.origin.x + BUTTON_SPACING/2,
+                                      (exitRect.size.height - BUTTON_SIZE)/2,
+                                      BUTTON_SIZE, BUTTON_SIZE);
+        confirmButton.frame = CGRectMake(exitRect.origin.x + BUTTON_SPACING/2 + 65,
+                                         (exitRect.size.height - BUTTON_SIZE)/2,
+                                         BUTTON_SIZE - 20, BUTTON_SIZE);
+    } else {
+        CGRect exitFrame = CGRectMake((toolsContentView.frame.size.width - BUTTON_SIZE)/2, (toolsContentView.frame.size.height - BUTTON_SIZE)/2, BUTTON_SIZE, BUTTON_SIZE);
+        exitFrame = CGRectIntegral(exitFrame);
+        exitButton.frame = exitFrame;
+    }
 }
 
 
@@ -434,19 +445,25 @@
         itemListView.frame = itemContentView.frame;
     }
     
-    CGRect addToCartRect = CGRectZero;
-    CGRect exitRect = CGRectZero;
-    CGRectDivide(toolsContentView.frame, &addToCartRect, &exitRect, toolsContentView.frame.size.height * 0.5, CGRectMinYEdge);
-    
-    addToCartButton.frame = CGRectMake((addToCartRect.size.width - BUTTON_SIZE)/2, 
-                                       addToCartRect.size.height - BUTTON_SIZE - BUTTON_SPACING/2, 
-                                       BUTTON_SIZE, BUTTON_SIZE);
-    exitButton.frame = CGRectMake((exitRect.size.width - BUTTON_SIZE)/2, 
-                                  exitRect.origin.y + BUTTON_SPACING/2, 
-                                  BUTTON_SIZE, BUTTON_SIZE);
-    confirmButton.frame = CGRectMake((exitRect.size.width - BUTTON_SIZE)/2,
-                                  exitRect.origin.y + BUTTON_SPACING/2,
-                                  BUTTON_SIZE, BUTTON_SIZE);
+    if (showAvailabilityOnly == NO) {
+        CGRect addToCartRect = CGRectZero;
+        CGRect exitRect = CGRectZero;
+        CGRectDivide(toolsContentView.frame, &addToCartRect, &exitRect, toolsContentView.frame.size.height * 0.5, CGRectMinYEdge);
+        
+        addToCartButton.frame = CGRectMake((addToCartRect.size.width - BUTTON_SIZE)/2,
+                                           addToCartRect.size.height - BUTTON_SIZE - BUTTON_SPACING/2,
+                                           BUTTON_SIZE, BUTTON_SIZE);
+        exitButton.frame = CGRectMake((exitRect.size.width - BUTTON_SIZE)/2,
+                                      exitRect.origin.y + BUTTON_SPACING/2,
+                                      BUTTON_SIZE, BUTTON_SIZE);
+        confirmButton.frame = CGRectMake((exitRect.size.width - BUTTON_SIZE)/2,
+                                         exitRect.origin.y + BUTTON_SPACING/2,
+                                         BUTTON_SIZE, BUTTON_SIZE);
+    } else {
+        CGRect exitFrame = CGRectMake((toolsContentView.frame.size.width - BUTTON_SIZE)/2, (toolsContentView.frame.size.height - BUTTON_SIZE)/2, BUTTON_SIZE, BUTTON_SIZE);
+        exitFrame = CGRectIntegral(exitFrame);
+        exitButton.frame = exitFrame;
+    }
     
     // Resize the addQuantity Fields
     addQuantityField.inputAccessoryView.frame = CGRectMake(0.0f, 0.0f, width, KEYBOARD_TOOLBAR_HEIGHT);

@@ -15,6 +15,7 @@
     UILabel *customerNameLabel;
     UILabel *customerPhoneLabel;
     UILabel *customerTypeLabel;
+    UILabel *customerEmailLabel;
     
     Customer *customer;
 }
@@ -23,5 +24,6 @@
 @property (nonatomic, retain) UILabel *customerNameLabel;
 @property (nonatomic, retain) UILabel *customerPhoneLabel;
 @property (nonatomic, retain) UILabel *customerTypeLabel;
+@property (nonatomic, retain) UILabel *customerEmailLabel;
 
 @end

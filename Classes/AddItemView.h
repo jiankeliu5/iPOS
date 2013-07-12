@@ -73,6 +73,7 @@
     
     //Enning Tang Add for ShipToStoreID 10/24/2012
     
+    BOOL showAvailablityOnly;
     
 }
 
@@ -86,5 +87,6 @@
 @property (nonatomic, assign) NSObject<AddItemViewDelegate>* viewDelegate;
 @property (nonatomic, retain) id currentFirstResponder;
 @property                     BOOL keyboardCancelled;
+@property                     BOOL showAvailabilityOnly;
 
 @end

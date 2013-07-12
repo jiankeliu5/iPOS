@@ -22,6 +22,7 @@
 @synthesize customerNameLabel;
 @synthesize customerPhoneLabel;
 @synthesize customerTypeLabel;
+@synthesize customerEmailLabel;
 
 #pragma mark - 
 #pragma mark init/dealloc Methods
@@ -52,6 +53,15 @@
 		customerTypeLabel.font = [UIFont systemFontOfSize:12];
 		customerTypeLabel.adjustsFontSizeToFitWidth = YES;
 		[self.contentView addSubview:customerTypeLabel];
+        
+        customerEmailLabel = [[UILabel alloc] init];
+		customerEmailLabel.backgroundColor = [UIColor clearColor];
+		customerEmailLabel.textColor = [UIColor blackColor];
+		customerEmailLabel.textAlignment = NSTextAlignmentRight;
+		customerEmailLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
+		customerEmailLabel.adjustsFontSizeToFitWidth = YES;
+		[self.contentView addSubview:customerEmailLabel];
+        
     }
     return self;
 }
@@ -99,6 +109,8 @@
     CGRect phoneNumRect = CGRectZero;
     
     CGRect row2 = CGRectZero;
+    CGRect customerTypeRect = CGRectZero;
+    CGRect customerEmailRect = CGRectZero;
     
     CGRectDivide(bounds, &row1, &row2, bounds.size.height * 0.50f, CGRectMinYEdge);
     row1 = CGRectInset(row1, 10.0f, 0.0f);
@@ -109,7 +121,11 @@
     customerNameLabel.frame = customerNameRect;
     customerPhoneLabel.frame = phoneNumRect;
     
-    customerTypeLabel.frame = row2;
+    CGRectDivide(row2, &customerTypeRect, &customerEmailRect, row2.size.width * 0.30f, CGRectMinXEdge);
+    
+    customerTypeLabel.frame = customerTypeRect;
+    customerEmailLabel.frame = customerEmailRect;
+    
 }
 
 #pragma mark -
@@ -126,10 +142,12 @@
         
         customerPhoneLabel.text = customer.phoneNumber;
         customerTypeLabel.text = customer.customerType;
+        customerEmailLabel.text = customer.emailAddress;
     } else {
         customerNameLabel.text = @"";
         customerPhoneLabel.text = @"";
         customerTypeLabel.text = @"";
+        customerEmailLabel.text = @"";
     }
 }
 

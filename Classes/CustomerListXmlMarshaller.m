@@ -32,6 +32,7 @@
         cust.customerTypeId = [node elementNumberValue:@"CustomerTypeID"]; 
         cust.customerType = [node elementStringValue:@"CustomerType"];
         cust.phoneNumber = [node elementStringValue:@"CustomerPhone"];
+        cust.emailAddress = [node elementStringValue:@"Email"];
         
         // Customer Name
         NSArray *names = [[node elementStringValue:@"CustomerName"] componentsSeparatedByString:@","];

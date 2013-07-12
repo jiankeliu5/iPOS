@@ -17,6 +17,9 @@
 
 #import "UIScreen+Helpers.h"
 
+#import "AddItemView.h"
+#import "iPOSFacade.h"
+
 #define LABEL_FONT_SIZE 16.0f
 #define LABEL_HEIGHT 18.0f
 
@@ -35,7 +38,7 @@
 //#define CONVERT_TO_BOX_SWITCH_HEIGHT 27.0f
 //
 
-#define BUTTON_HEIGHT 80.0f
+#define BUTTON_HEIGHT 30.0f
 #define BUTTON_HEIGHT_LANDSCAPE 30.0f
 #define BUTTON_WIDTH 120.0f
 #define BUTTON_SPACE 10.0f
@@ -55,6 +58,7 @@
 - (void) handleOpenButton:(id)sender;
 - (void) handleCloseButton:(id)sender;
 - (void) handlePriceButton:(id)sender;
+- (void) handleInventoryButton:(id)sender;
 
 @end
 
@@ -232,7 +236,7 @@
 	[orderItemView release];
 	
 	deleteButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
-	[deleteButton setupAsRedButton];
+	[deleteButton setupAsSmallRedButton];
 	deleteButton.titleLabel.textAlignment = NSTextAlignmentCenter;
 	[deleteButton setTitle:@"Delete" forState:UIControlStateNormal];
 	[self.view addSubview:deleteButton];
@@ -241,14 +245,14 @@
     // Request to re-open item or close and adjust price
     if (orderItem && [orderItem isClosed]) {
         openButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
-        [openButton setupAsBlackButton];
+        [openButton setupAsSmallBlackButton];
         openButton.titleLabel.textAlignment = NSTextAlignmentCenter;
         [openButton setTitle:@"Open" forState:UIControlStateNormal];
         [self.view addSubview:openButton];
         [openButton release];
     } else {
         closeLineButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
-        [closeLineButton setupAsGreenButton];
+        [closeLineButton setupAsSmallGreenButton];
         closeLineButton.titleLabel.textAlignment = NSTextAlignmentCenter;
         [closeLineButton setTitle:@"Close Line" forState:UIControlStateNormal];
         
@@ -261,7 +265,7 @@
         [closeLineButton release];
         
         priceButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
-        [priceButton setupAsBlueButton];
+        [priceButton setupAsSmallBlueButton];
         priceButton.titleLabel.textAlignment = NSTextAlignmentCenter;
         [priceButton setTitle:@"Price" forState:UIControlStateNormal];
         
@@ -270,7 +274,7 @@
         
         //Enning Tang add ship button 10/30/2012
         shipButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
-        [shipButton setupAsGrayButton];
+        [shipButton setupAsSmallGrayButton];
         shipButton.titleLabel.textAlignment = NSTextAlignmentCenter;
         [shipButton setTitle:@"Ship" forState:UIControlStateNormal];
         [self.view addSubview:shipButton];
@@ -280,6 +284,14 @@
         {
             shipButton.enabled = NO;
         }
+        
+        inventoryButton = [[MOGlassButton alloc] initWithFrame:CGRectZero];
+        [inventoryButton setupAsSmallGreenButton];
+        inventoryButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+        [inventoryButton setTitle:@"Inventory" forState:UIControlStateNormal];
+        [self.view addSubview:inventoryButton];
+        [inventoryButton release];
+        
     }
 }
 
@@ -297,6 +309,7 @@
     
 	[deleteButton addTarget:self action:@selector(handleDeleteButton:) forControlEvents:UIControlEventTouchUpInside];
     [shipButton addTarget:self action:@selector(handleShipButton:) forControlEvents:UIControlEventTouchUpInside];
+    [inventoryButton addTarget:self action:@selector(handleInventoryButton:) forControlEvents:UIControlEventTouchUpInside];
     
     if (orderItem && [orderItem isClosed]) {
         [openButton addTarget:self action:@selector(handleOpenButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -401,6 +414,24 @@
 	[self.navigationController pushViewController:shipTo animated:YES];
 }
 
+- (void) handleInventoryButton:(id)sender {
+    if (orderItem.item) {
+        iPOSFacade *facade = [iPOSFacade sharedInstance];
+        ProductItem *pi = [facade lookupProductItem:orderItem.item.sku];
+        if (pi) {
+            addItemOverlay = [[AddItemView alloc] initWithFrame:self.view.bounds];
+            [addItemOverlay setViewDelegate:self];
+            [addItemOverlay setItemToAdd:pi];
+            [addItemOverlay setShowAvailabilityOnly:YES];
+            [self.view addSubview:addItemOverlay];
+            [addItemOverlay release];
+        } else {
+            [AlertUtils showModalAlertMessage:[NSString stringWithFormat:@"No details found for product %@", orderItem.item.sku] withTitle:@"iPOS"];
+        }
+    } else {
+        [AlertUtils showModalAlertMessage:@"No product record found for order item." withTitle:@"iPOS"];
+    }
+}
 
 - (void) handleConvertToBoxesSwitch: (id) sender {
     if (orderItem != nil) {
@@ -478,25 +509,58 @@
                                             convertBoxSwitchRect.origin.y + (convertToBoxesRect.size.height - convertToBoxesSwitch.frame.size.height)/2, 
                                             convertBoxSwitchRect.size.width, 0);
     
-    // The buttons (deleteButton, openButton, closeLineButton, priceButton)
-    CGFloat buttonHeight = BUTTON_HEIGHT;
-    CGFloat buttonSpace = BUTTON_SPACE;
-    
-    if (viewBounds.size.width > viewBounds.size.height) {
-        buttonHeight = BUTTON_HEIGHT_LANDSCAPE;
-        buttonSpace -= 3;
+    CGFloat buttonXInset = 20.0f;
+    CGFloat buttonYInset = 10.0f;
+    if (UIInterfaceOrientationIsLandscape(orientation)) {
+        buttonYInset = 5.0f;
     }
     
-    deleteButton.frame = CGRectMake(viewBounds.size.width - 140.f, viewBounds.size.height - 90.f, BUTTON_WIDTH, buttonHeight);
+    CGRect remainderFrame = CGRectZero;
+    CGRect rowFrame = CGRectZero;
+    CGRect closeFrame = CGRectZero;
+    CGRect priceFrame = CGRectZero;
     
-    //Enning Tang Add ship button 10/30/2012
-    shipButton.frame = CGRectMake(viewBounds.size.width - 300.f, viewBounds.size.height - 90.f, BUTTON_WIDTH, buttonHeight);
+    CGFloat rowHeight = actionListRect.size.height * 0.33f;
+    CGRectDivide(actionListRect, &rowFrame, &remainderFrame, rowHeight, CGRectMinYEdge);
+    CGRectDivide(rowFrame, &closeFrame, &priceFrame, rowFrame.size.width * 0.5f, CGRectMinXEdge);
+    closeFrame = CGRectInset(closeFrame, buttonXInset, buttonYInset);
+    priceFrame = CGRectInset(priceFrame, buttonXInset, buttonYInset);
+    closeFrame = CGRectIntegral(closeFrame);
+    priceFrame = CGRectIntegral(priceFrame);
+    
+    CGRect deleteFrame = CGRectZero;
+    CGRect shipFrame = CGRectZero;
+    
+    CGRectDivide(remainderFrame, &rowFrame, &remainderFrame, rowHeight, CGRectMinYEdge);
+    CGRectDivide(rowFrame, &shipFrame, &deleteFrame, rowFrame.size.width * 0.5f, CGRectMinXEdge);
+    shipFrame = CGRectInset(shipFrame, buttonXInset, buttonYInset);
+    deleteFrame = CGRectInset(deleteFrame, buttonXInset, buttonYInset);
+    shipFrame = CGRectIntegral(shipFrame);
+    deleteFrame = CGRectIntegral(deleteFrame);
+    
+    deleteButton.frame = deleteFrame;
+    shipButton.frame = shipFrame;
     
     if (openButton) {
-        openButton.frame = CGRectMake(viewBounds.size.width - 300.f, viewBounds.size.height - 180.f, BUTTON_WIDTH, buttonHeight);
+        openButton.frame = closeFrame;
     } else {
-        closeLineButton.frame = CGRectMake(viewBounds.size.width - 300.f, viewBounds.size.height - 180.f, BUTTON_WIDTH, buttonHeight);
-        priceButton.frame = CGRectMake(viewBounds.size.width - 140.f, viewBounds.size.height - 180.f, BUTTON_WIDTH, buttonHeight);
+        closeLineButton.frame = closeFrame;
+        priceButton.frame = priceFrame;
+    }
+    
+    CGRect inventoryFrame = CGRectZero;
+    CGRect returnFrame = CGRectZero;
+    
+    CGRectDivide(remainderFrame, &rowFrame, &remainderFrame, rowHeight, CGRectMinYEdge);
+    CGRectDivide(rowFrame, &inventoryFrame, &returnFrame, rowFrame.size.width * 0.5f, CGRectMinXEdge);
+    inventoryFrame = CGRectInset(inventoryFrame, buttonXInset, buttonYInset);
+    inventoryFrame = CGRectIntegral(inventoryFrame);
+    
+    inventoryButton.frame = inventoryFrame;
+    
+    // Layout add item overlay (adjusting frame triggers a layoutSubviews of add item overlay)
+    if (addItemOverlay) {
+        addItemOverlay.frame = viewBounds;
     }
 }
 
@@ -532,6 +596,18 @@
             uomExchangeButton.hidden = YES;  
         }
 	}
+}
+
+#pragma mark -
+#pragma mark AddItemViewDelegate
+- (void) cancelAddItem:(AddItemView *)addItemView {
+	[addItemView removeFromSuperview];
+    addItemOverlay = nil;
+}
+
+- (void) addItem:(AddItemView *)addItemView orderQuantity:(NSDecimalNumber *)quantity ofUnits:(NSString *)unitOfMeasure {
+    [addItemView removeFromSuperview];
+    addItemOverlay = nil;
 }
 
 #pragma mark -

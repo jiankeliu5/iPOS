@@ -13,8 +13,9 @@
 #import "MOGlassButton.h"
 #import "ExtUIViewController.h"
 #import "ExtUITextField.h"
+#import "AddItemView.h"
 
-@interface CartItemDetailViewController : ExtUIViewController <ExtUIViewControllerDelegate> {
+@interface CartItemDetailViewController : ExtUIViewController <ExtUIViewControllerDelegate, AddItemViewDelegate> {
 	OrderCart *orderCart;
 	OrderItem *orderItem;
 	
@@ -40,9 +41,14 @@
 	MOGlassButton *priceButton;
     //Enning Tang Add ship Button
     MOGlassButton *shipButton;
+    
+    MOGlassButton *inventoryButton;
+    // Not used yet.  SMM
+    // MOGlassButton *returnButton;
 	
 	NSNumberFormatter *quantityFormatter;
 	
+    AddItemView *addItemOverlay;
 }
 
 // Use assign instead of retain because the order items are kept in a singleton.
