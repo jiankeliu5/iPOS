@@ -1209,7 +1209,7 @@ Order *copyOriginalOrder;
     Order *order = [orderCart getOrder];
     
     if ([order purchaseOrderInfoRequired] && (order.purchaseOrderId == nil || [order.purchaseOrderId isEmpty])) {
-        [AlertUtils showModalAlertMessage:@"Please enter a PO before accepting an On Account payment." withTitle:@"iPOS"];
+        [AlertUtils showModalAlertMessage:@"PO required before accepting this payment, please enter one." withTitle:@"iPOS"];
     } else {
         
         //Enning Tang pop up a message box to notify promise date
@@ -1678,6 +1678,11 @@ Order *copyOriginalOrder;
 
 -(void)handleCashDrawer:(id)sender {
     
+    Order *order = [orderCart getOrder];
+    
+    if ([order purchaseOrderInfoRequiredForCash] && (order.purchaseOrderId == nil || [order.purchaseOrderId isEmpty])) {
+        [AlertUtils showModalAlertMessage:@"PO required before accepting this payment, please enter one." withTitle:@"iPOS"];
+    } else {
     UIAlertView *cashPaymentWarning = [[UIAlertView alloc] init];
     cashPaymentWarning.title = @"iPOS";
     cashPaymentWarning.message = [NSString stringWithFormat:@"iPOS will create the order and continue to the order payment screen, you may not go return to the previous screen or turn off your device, Continue?"];
@@ -1686,6 +1691,7 @@ Order *copyOriginalOrder;
     [cashPaymentWarning addButtonWithTitle:@"Continue"];
     [cashPaymentWarning show];
     [cashPaymentWarning release];
+    }
 }
 
 @end

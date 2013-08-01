@@ -120,7 +120,8 @@ typedef enum{
 - (BOOL) validateAsNewOrder;
 
 - (BOOL) purchaseOrderInfoRequired;
- 
+- (BOOL) purchaseOrderInfoRequiredForCash;
+
 #pragma mark -
 #pragma mark Marshalling methods
 + (Order *) fromXml: (NSString *) xmlString;

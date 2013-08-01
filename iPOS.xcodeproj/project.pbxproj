@@ -1395,7 +1395,6 @@
 				4066A2C2160D2A91002D5711 /* Default-568h@2x.png */,
 				D6902349144F222700174E59 /* libz.1.2.5.dylib */,
 				D6A96658130F0C3C004D90C4 /* Settings.bundle */,
-				36525D1214333EFE0009C6A5 /* main */,
 				36F34096141E997A00913116 /* external */,
 				D64B7E3312F9D8B4006AB141 /* TestSuites */,
 				D6F7963212F9FD6B00B467CA /* LineaSDK */,
@@ -1510,70 +1509,6 @@
 				364B56BF1430CF5D0028FE09 /* libIBAForms.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		36525D1214333EFE0009C6A5 /* main */ = {
-			isa = PBXGroup;
-			children = (
-				36525D1314333EFF0009C6A5 /* forms */,
-				36525D1614333EFF0009C6A5 /* input */,
-				36525D1914333EFF0009C6A5 /* utils */,
-			);
-			name = main;
-			path = Classes/main;
-			sourceTree = "<group>";
-		};
-		36525D1314333EFF0009C6A5 /* forms */ = {
-			isa = PBXGroup;
-			children = (
-				36525D1414333EFF0009C6A5 /* controllers */,
-				36525D1514333EFF0009C6A5 /* views */,
-			);
-			path = forms;
-			sourceTree = "<group>";
-		};
-		36525D1414333EFF0009C6A5 /* controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = controllers;
-			sourceTree = "<group>";
-		};
-		36525D1514333EFF0009C6A5 /* views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = views;
-			sourceTree = "<group>";
-		};
-		36525D1614333EFF0009C6A5 /* input */ = {
-			isa = PBXGroup;
-			children = (
-				36525D1714333EFF0009C6A5 /* controllers */,
-				36525D1814333EFF0009C6A5 /* views */,
-			);
-			path = input;
-			sourceTree = "<group>";
-		};
-		36525D1714333EFF0009C6A5 /* controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = controllers;
-			sourceTree = "<group>";
-		};
-		36525D1814333EFF0009C6A5 /* views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = views;
-			sourceTree = "<group>";
-		};
-		36525D1914333EFF0009C6A5 /* utils */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = utils;
 			sourceTree = "<group>";
 		};
 		365B5973140E8676000B0277 /* Notes */ = {

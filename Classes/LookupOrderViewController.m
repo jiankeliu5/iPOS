@@ -303,11 +303,11 @@
     } else if ([textField.tagName isEqualToString:@"LookupOrderPhone"]) {
         lookupOrderIdField.text = nil;
         lookupCustomerField.text = nil;
-        lookupCustomerEmailField = nil;
+        lookupCustomerEmailField.text = nil;
     } else if ([textField.tagName isEqualToString:@"LookupOrderId"]) {
         lookupOrderPhoneField.text = nil;
         lookupCustomerField.text = nil;
-        lookupCustomerEmailField = nil;
+        lookupCustomerEmailField.text = nil;
     } else if ([textField.tagName isEqualToString:@"LookupCustomerEmail"]) {
         lookupCustomerField.text = nil;
         lookupOrderIdField.text = nil;
