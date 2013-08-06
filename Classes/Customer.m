@@ -397,6 +397,13 @@
     return [customerTypeId isEqualToNumber:[NSNumber numberWithInt:2]];
 }
 
+- (BOOL) isContractor {
+    if (customerTypeId && [customerTypeId intValue] > 2) {
+        return YES;
+    }
+    return NO;
+}
+
 -(BOOL) isOnHold {
     
     if ([self.holdStatus integerValue] == 0)

@@ -67,9 +67,10 @@
 - (BOOL) isRetailCustomer;
 //Enning Tang check if customer is contractor 1
 - (BOOL) isContractor1;
+- (BOOL) isContractor;
 - (BOOL) isOnHold;
--(BOOL) isPaymentOnAccountEligable;
--(NSDecimalNumber *) calculateAccountBalance;
+- (BOOL) isPaymentOnAccountEligable;
+- (NSDecimalNumber *) calculateAccountBalance;
 
 #pragma mark -
 #pragma mark Marshalling methods

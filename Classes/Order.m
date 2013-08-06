@@ -295,7 +295,7 @@
 }
 
 - (BOOL) purchaseOrderInfoRequired {
-    if (customer && ([customer isPaymentOnAccountEligable] || [customer isContractor1])) {
+    if (customer && ([customer isPaymentOnAccountEligable] || [customer isContractor])) {
         return YES;
     }
     
@@ -303,7 +303,7 @@
 }
 
 - (BOOL) purchaseOrderInfoRequiredForCash {
-    if (customer && [customer isContractor1]) {
+    if (customer && [customer isContractor]) {
         return YES;
     }
     
