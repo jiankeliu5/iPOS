@@ -3424,7 +3424,7 @@
 			buildSettings = {
 				ARCHS = armv7;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: The Tile Shop LLC";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: The Tile Shop LLC";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 55;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
@@ -3435,7 +3435,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lxml2";
 				PROVISIONING_PROFILE = "EF7B05B6-A363-4EDB-95B2-CE78F6CA824C";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EF7B05B6-A363-4EDB-95B2-CE78F6CA824C";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = armv7;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -3716,8 +3715,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = armv7;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Enning Tang (6GSD9Z8FM9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 55;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
@@ -3727,8 +3726,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lxml2";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "DC4BCBC1-5D13-465C-A721-28016D8A50FA";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 i386";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -3739,8 +3737,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = armv7;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: The Tile Shop LLC";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 55;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
@@ -3750,7 +3748,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-lxml2";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "EF7B05B6-A363-4EDB-95B2-CE78F6CA824C";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = armv7;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -3935,6 +3933,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = armv7;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -3963,6 +3962,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = iPOSTesting;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 i386";
 			};

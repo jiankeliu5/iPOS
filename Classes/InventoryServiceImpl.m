@@ -93,6 +93,8 @@
     
     // Create an XML document parser
     NSString *response = [request responseString];
+    
+    NSLog(@"lookupProductItem response string: %@", response);
         
     ProductItem *item = [ProductItem fromXml:response];
     return item;
@@ -170,14 +172,25 @@
     if (sessionInfo == nil || orderItem == nil || customer == nil) {
         return NO;
     }
+    NSLog(@"adjustSellingPriceFor called");
+    NSLog(@"orderItem.retailPrice: %@", orderItem.item.retailPricePrimary.stringValue);
+    NSLog(@"orderItem.sellingPrice: %@", orderItem.item.sellingPricePrimary.stringValue);
     
     // If the customer is a retail customer, selling price is retail price
     if ([customer isRetailCustomer]) {
-        orderItem.sellingPricePrimary = [[orderItem.item.retailPricePrimary copy] autorelease];
-        orderItem.sellingPriceSecondary = [[orderItem.item.retailPriceSecondary copy] autorelease];
+        //orderItem.sellingPricePrimary = [[orderItem.item.retailPricePrimary copy] autorelease]; //commented 8/23/2013
+        //orderItem.sellingPriceSecondary = [[orderItem.item.retailPriceSecondary copy] autorelease]; //commented 8/23/2013
+        //Enning Tang 8/23/2013 change to copy selling price instead of retailPrice
+        orderItem.sellingPricePrimary = [[orderItem.item.sellingPricePrimary copy] autorelease];
+        orderItem.sellingPriceSecondary = [[orderItem.item.sellingPriceSecondary copy] autorelease];
     } else {
-        ASIHTTPRequest *request =  [self startGetRequest:[NSString stringWithFormat:@"%@/%@/customerSellingPrice/%@/%@/%@", 
+        //Enning Tang change to check retailPriceSecondary 8/23/2013
+        /*ASIHTTPRequest *request =  [self startGetRequest:[NSString stringWithFormat:@"%@/%@/customerSellingPrice/%@/%@/%@",
                                                                 baseUrl, posInventoryMgmtUri, customer.priceLevelId, orderItem.item.priceGroupId, orderItem.item.retailPricePrimary] withSession:sessionInfo];
+         */
+        ASIHTTPRequest *request =  [self startGetRequest:[NSString stringWithFormat:@"%@/%@/customerSellingPrice/%@/%@/%@",
+                                                          baseUrl, posInventoryMgmtUri, customer.priceLevelId, orderItem.item.priceGroupId, orderItem.item.retailPriceSecondary] withSession:sessionInfo];
+        
         NSArray *requestErrors = [request validateAsXmlContent];
         if ([requestErrors count] > 0) {
             return NO;   
@@ -185,9 +198,23 @@
             
         // Parse the result
         NSDecimalNumber *sellingPrice = [POSOxmUtils parseAsDecimal:[request responseString]];
+        //Enning Tang check if the new selling price is lower than the default selling price 8/23/2013
+        NSLog(@"itemSelling Price: %@", orderItem.item.sellingPriceSecondary.stringValue);
+        NSLog(@"Con price: %@", sellingPrice.stringValue);
+        if ([sellingPrice floatValue] > [orderItem.item.sellingPriceSecondary floatValue])
+        {
+            NSLog(@"item.sellingPricePrimary is smaller than Con price");
+            sellingPrice = orderItem.item.sellingPriceSecondary;
+        }
         
         if (sellingPrice) {
-            orderItem.sellingPricePrimary = sellingPrice;
+            orderItem.sellingPriceSecondary = sellingPrice;
+            NSLog(@"orderItem.item.primaryUnitOfMeasure: --%@--", orderItem.item.primaryUnitOfMeasure);
+            if ([orderItem.item.primaryUnitOfMeasure isEqualToString:@"BX"])
+            {
+                NSLog(@"!!!!!!!!!!!!!!!");
+                orderItem.sellingPricePrimary = sellingPrice;
+            }
         }
     }
     return YES;

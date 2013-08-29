@@ -795,6 +795,7 @@
             NSLog(@"TaxRate Get: -- %@", str);
             ProductItem *pi = itemToAdd;
             NSLog(@"PI: %@", pi.ShipToStoreID);
+            NSLog(@"Quantity entered: %@", getquantity.stringValue);
             if (viewDelegate != nil && [viewDelegate respondsToSelector:@selector(addItem:orderQuantity:ofUnits:)]) {
                 [viewDelegate addItem:self orderQuantity:getquantity ofUnits:pi.primaryUnitOfMeasure];
             }

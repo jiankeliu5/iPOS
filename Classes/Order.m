@@ -366,6 +366,7 @@
 -(void) addItemToOrder:(ProductItem *)item withQuantity: (NSDecimalNumber *) quantity {
     
     NSLog(@"Order.m addItemToOrder called");
+    NSLog(@"Item selling price: %@", item.retailPricePrimary.stringValue);
     
     //Enning Tang Check if outside freight is taxFree
     

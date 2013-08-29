@@ -45,6 +45,9 @@ NSString * const UOM_SQFT = @"SF";
 @synthesize taxExempt;
 @synthesize store;
 @synthesize distributionCenterList;
+//Enning Tang Added 8/23/2013
+@synthesize sellingPricePrimary;
+@synthesize sellingPriceSecondary;
 
 @synthesize itemQty;
 

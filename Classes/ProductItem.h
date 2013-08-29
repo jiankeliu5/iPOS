@@ -68,6 +68,9 @@ typedef enum {
     //Enning Tang Added LTL Weight 2013/02/06
     NSNumber *itemLTLWeight;
     
+    //Enning Tang Added SellingPrice
+    NSDecimalNumber *sellingPricePrimary;
+    NSDecimalNumber *sellingPriceSecondary;
     
 }
 
@@ -113,6 +116,11 @@ extern NSString * const UOM_SQFT;
 
 //Enning Tang Added itemLTLWeight 2013/02/06
 @property(nonatomic, retain) NSNumber *itemLTLWeight;
+
+//Enning Tang Added sellingPrice 8/23/2013
+@property (nonatomic, retain) NSDecimalNumber *sellingPricePrimary;
+@property (nonatomic, retain) NSDecimalNumber *sellingPriceSecondary;
+
 
 - (BOOL) isUOMConversionRequired;
 - (void) toggleUOM;

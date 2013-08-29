@@ -23,7 +23,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>55</string>
+	<string>58</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UISupportedExternalAccessoryProtocols</key>
@@ -34,7 +34,7 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array/>
 	<key>currentVersion</key>
-	<string>2.0b55Test4</string>
+	<string>2.0b58_2</string>
 	<key>ipos.app.update.password</key>
 	<string></string>
 	<key>ipos.app.update.url</key>

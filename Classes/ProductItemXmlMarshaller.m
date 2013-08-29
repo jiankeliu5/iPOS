@@ -62,6 +62,22 @@
     item.taxExempt = [root elementBoolValue:@"TaxExempt"];
     item.taxRate = [root elementDecimalValue:@"TaxRate"];
     item.vendorName = [root elementStringValue:@"VendorName"];
+    //Enning Tang Add SellingPrice 8/23/2013
+    item.sellingPricePrimary = [root elementDecimalValue:@"SellingPricePrimary"];
+    item.sellingPriceSecondary = [root elementDecimalValue:@"SellingPriceSecondary"];
+    //Enning Tang 8/23/2013 round up numbers before doing calculation
+    NSDecimalNumberHandler *roundingUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundPlain scale:2
+                                                                                     raiseOnExactness:NO raiseOnOverflow:NO
+                                                                                     raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+    //item.retailPricePrimary = [item.retailPricePrimary decimalNumberByRoundingAccordingToBehavior:roundingUp];
+    //item.retailPriceSecondary = [item.retailPriceSecondary decimalNumberByRoundingAccordingToBehavior:roundingUp];
+    item.sellingPricePrimary = [item.sellingPricePrimary decimalNumberByRoundingAccordingToBehavior:roundingUp];
+    item.sellingPriceSecondary = [item.sellingPriceSecondary decimalNumberByRoundingAccordingToBehavior:roundingUp];
+    NSLog(@"RetailPricePrimary: %@", item.retailPricePrimary.stringValue);
+    NSLog(@"RetailPriceSecondary: %@", item.retailPriceSecondary.stringValue);
+    NSLog(@"After rounding:");
+    NSLog(@"SellingPricePrimary: %@", item.sellingPricePrimary);
+    NSLog(@"SellingPriceSecondary: %@", item.sellingPriceSecondary);
     
     // Determine selected UOM.  If there is a conversion select the second UOM as the default
     if (![item.primaryUnitOfMeasure isEqualToString:item.secondaryUnitOfMeasure] && [item.conversion compare: [NSDecimalNumber decimalNumberWithString:@"1.0"]] != NSOrderedSame) {

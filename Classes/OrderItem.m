@@ -81,8 +81,12 @@
     statusId = [[NSNumber numberWithInt:LINE_ORDERSTATUS_OPEN] retain];
     
     // Default selling price to retail price
-    sellingPricePrimary = [productItem.retailPricePrimary copy];
-    sellingPriceSecondary = [productItem.retailPriceSecondary copy];
+    //sellingPricePrimary = [productItem.retailPricePrimary copy];  //commented 8/23/2013
+    //sellingPriceSecondary = [productItem.retailPriceSecondary copy]; //commented 8/23/2013
+    
+    //Enning Tang 8/23/2013 setting selling price to selling price
+    sellingPricePrimary = [productItem.sellingPricePrimary copy];
+    sellingPriceSecondary = [productItem.sellingPriceSecondary copy];
     
     item = [productItem retain];
     
@@ -434,7 +438,10 @@
 }
 
 - (NSDecimalNumber *) calcLineSubTotal {
-    NSDecimalNumber *lineTotal = [sellingPricePrimary decimalNumberByMultiplyingBy:quantityPrimary];
+    //Enning Tang change to Secondary 8/23/2013
+    //NSDecimalNumber *lineTotal = [sellingPricePrimary decimalNumberByMultiplyingBy:quantityPrimary];
+    NSLog(@"calcLineSubTotal quantitySecondary: %@", quantitySecondary.stringValue);
+    NSDecimalNumber *lineTotal = [sellingPriceSecondary decimalNumberByMultiplyingBy:quantitySecondary];
     return lineTotal;
 }
 
@@ -448,8 +455,12 @@
 }
 
 - (NSDecimalNumber *) calcLineTax {
-    NSDecimalNumber *lineTax = [[item.taxRate decimalNumberByMultiplyingBy:sellingPricePrimary] decimalNumberByMultiplyingBy:quantityPrimary];
+    //Enning Tang change to secondary 8/23/2013
+    //NSDecimalNumber *lineTax = [[item.taxRate decimalNumberByMultiplyingBy:sellingPricePrimary] decimalNumberByMultiplyingBy:quantityPrimary];
+    NSDecimalNumber *lineTax = [[item.taxRate decimalNumberByMultiplyingBy:sellingPriceSecondary] decimalNumberByMultiplyingBy:quantitySecondary];
     //Enning Tang show taxRate for items:
+    NSLog(@"-------------calcLineTax---------------");
+    NSLog(@"sellingPricePrimary: %@", sellingPricePrimary.stringValue);
     NSLog(@"TaxRate: %@", item.taxRate.stringValue);
     NSLog(@"ShipToStoreID: %@", item.ShipToStoreID);
     
@@ -457,6 +468,7 @@
 }
 
 - (NSDecimalNumber *) calcDiscountFromPrimarySellingPrice:(NSDecimalNumber *) newSellingPrice {
+    NSLog(@"calcDiscountFromPrimarySellingPrice called");
     NSDecimalNumber *actualTotal = [self calcLineSubTotal];
     //NSDecimalNumber *discountedTotal = [newSellingPrice decimalNumberByMultiplyingBy:quantityPrimary];
     //Enning Tang Change to Secondary UOM
@@ -466,6 +478,7 @@
 }
 
 -(NSDecimalNumber *) calcSellingPricePrimaryFrom:(NSDecimalNumber *)discount {
+    NSLog(@"calcSellingPricePrimaryFrom called");
     if (quantityPrimary == nil || 
         [quantityPrimary compare:[NSDecimalNumber zero]] == NSOrderedSame ||
         [quantityPrimary compare:[NSDecimalNumber zero]] == NSOrderedAscending) {
@@ -478,6 +491,7 @@
 }
 
 -(NSDecimalNumber *) calcSellingPriceSecondaryFrom:(NSDecimalNumber *)discount {
+    NSLog(@"calcSellingPriceSecondaryFrom");
     if (quantitySecondary == nil || 
         [quantitySecondary compare:[NSDecimalNumber zero]] == NSOrderedSame ||
         [quantitySecondary compare:[NSDecimalNumber zero]] == NSOrderedAscending) {
@@ -490,6 +504,7 @@
 }
 
 - (NSDecimalNumber *) calcLineDiscount {
+    NSLog(@"calcLineDiscount called");
     NSDecimalNumber *discount = [[self calcLineRetailSubTotal] decimalNumberBySubtracting:[self calcLineSubTotal]];
     return discount;
 }
@@ -499,7 +514,9 @@
 }
 
 -(NSDecimalNumber *)calculateExtendedPrice { //make sure to round up to two decimal places
-    return [self.quantityPrimary decimalNumberByMultiplyingBy:self.sellingPricePrimary withBehavior:[NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:2 raiseOnExactness:NO raiseOnOverflow:NO raiseOnUnderflow:NO raiseOnDivideByZero:YES]];
+    //Enning Tang changed to Secondary 8/23/2013
+    //return [self.quantityPrimary decimalNumberByMultiplyingBy:self.sellingPricePrimary withBehavior:[NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:2 raiseOnExactness:NO raiseOnOverflow:NO raiseOnUnderflow:NO raiseOnDivideByZero:YES]];
+    return [self.quantitySecondary decimalNumberByMultiplyingBy:self.sellingPriceSecondary withBehavior:[NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:2 raiseOnExactness:NO raiseOnOverflow:NO raiseOnUnderflow:NO raiseOnDivideByZero:YES]];
 }
 
 #pragma mark -
@@ -526,7 +543,7 @@
         displayQuantity = quantitySecondary;
     }
     
-    NSDecimalNumberHandler *roundingUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundUp scale:2 
+    NSDecimalNumberHandler *roundingUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundPlain scale:2  //changed to roundPlain 8/23/2013
                                                                                      raiseOnExactness:NO raiseOnOverflow:NO 
                                                                                      raiseOnUnderflow:NO raiseOnDivideByZero:NO]; 
     return [NSString stringWithFormat:@"%@", [displayQuantity decimalNumberByRoundingAccordingToBehavior:roundingUp]];
@@ -620,6 +637,12 @@
             self.quantitySecondary = quantityForConversion;
         }
     }
+    //Enning Tang round after conversion 8/23/2013
+    NSDecimalNumberHandler *roundingUp = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundPlain scale:2  //changed to roundPlain 8/23/2013
+                                                                                     raiseOnExactness:NO raiseOnOverflow:NO
+                                                                                     raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+    self.quantityPrimary = [self.quantityPrimary decimalNumberByRoundingAccordingToBehavior:roundingUp];
+    self.quantitySecondary = [self.quantitySecondary decimalNumberByRoundingAccordingToBehavior:roundingUp];
     NSLog(@"after conversion: %@", quantityPrimary.stringValue);
 }
 
